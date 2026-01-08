@@ -95,3 +95,146 @@ Conditional branches are a major problem for pipelines because they disrupt the 
     * **Dynamic**: Uses a history table to record previous outcomes and predict based on history (e.g., "Taken/Not Taken" switch).
     * **Delayed Branching**: The compiler rearranges instructions so that useful work (like an ADD) is performed while the branch is being resolved, preventing the pipeline from being flushed.
 
+# Topic 8: Control Unit
+
+## Control Unit Basics
+The Control Unit (CU) is the component responsible for managing the operations of the processor. To characterize the CU, one must define the basic elements of the processor and the functions the CU must perform.
+
+### Functional Requirements
+The Control Unit performs two basic tasks:
+1.  **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence.
+2.  **Execution:** Causing the performance of each micro-operation by producing Control Signals.
+
+### Inputs and Outputs
+For the Control Unit to perform its function, it relies on specific inputs to determine the state of the system and produces outputs to control system behavior.
+
+**Inputs:**
+* **Clock:** Used for sequencing; generally one micro-instruction (or set of parallel micro-instructions) is performed per clock cycle.
+* **Instruction Register (IR):** Contains the Op-code for the current instruction, determining which micro-instructions are performed.
+* **Flags:** Indicate the status of the CPU (e.g., results of previous ALU operations).
+* **Control Signals (from Control Bus):** Includes signals like interrupts and acknowledgments.
+
+**Outputs:**
+* **Control Signals within CPU:**
+    * Cause data movement between registers.
+    * Activate specific ALU functions.
+* **Control Signals to Control Bus:**
+    * To Memory (e.g., Read/Write).
+    * To I/O Modules.
+
+---
+
+## Micro-Operations
+A computer executes a program by cycling through instruction cycles. Each cycle is made up of a sequence of **micro-operations**.
+
+### Role of Registers
+* **Memory Address Register (MAR):** Connected to the address bus; specifies the address for a read or write operation.
+* **Memory Buffer Register (MBR):** Connected to the data bus; holds data to be written to memory or the last data read from memory.
+* **Program Counter (PC):** Holds the address of the next instruction to be fetched.
+* **Instruction Register (IR):** Holds the last instruction fetched.
+
+### The Fetch Sequence
+The fetch cycle reads the next instruction from memory into the IR.
+1.  **Step 1:** The address of the next instruction is moved from the **PC** to the **MAR** (since MAR is the only register connected to the address bus).
+2.  **Step 2:** The Control Unit issues a **READ** command. The result (instruction data) appears on the data bus and is copied into the **MBR**. In parallel, the **PC** is incremented to point to the next instruction.
+3.  **Step 3:** The instruction data is moved from the **MBR** to the **IR**, freeing the MBR for further data fetches.
+
+### Symbolic Micro-operations (Fetch Cycle)
+Using symbolic notation ($t$ = time unit/clock cycle, $I$ = instruction length):
+* $t_1: MAR \leftarrow (PC)$
+* $t_2: MBR \leftarrow Memory$
+* $t_2: PC \leftarrow (PC) + I$
+* $t_3: IR \leftarrow (MBR)$
+
+---
+
+## Instruction Cycles
+
+### Indirect Cycle
+Used to fetch the address of operands if indirect addressing is used.
+* $t_1: MAR \leftarrow (IR_{address})$
+* $t_2: MBR \leftarrow Memory$
+* $t_3: IR_{address} \leftarrow (MBR_{address})$
+
+### Interrupt Cycle
+At the end of an execute cycle, the processor checks for interrupts. If one occurs:
+* $t_1: MBR \leftarrow (PC)$
+* $t_2: MAR \leftarrow Save\_Address$
+* $t_2: PC \leftarrow Routine\_Address$
+* $t_3: Memory \leftarrow (MBR)$
+
+### Execute Cycles
+The micro-operations for the Execute cycle differ for every instruction.
+
+**ADD R1, X** (Add contents of location X to Register 1)
+* $t_1: MAR \leftarrow (IR_{address})$
+* $t_2: MBR \leftarrow Memory$
+* $t_3: R1 \leftarrow (R1) + (MBR)$
+
+**ISZ X** (Increment and Skip if Zero)
+* $t_1: MAR \leftarrow (IR_{address})$
+* $t_2: MBR \leftarrow Memory$
+* $t_3: MBR \leftarrow (MBR) + 1$
+* $t_4: Memory \leftarrow (MBR)$
+* $t_4: \text{IF } (MBR) = 0 \text{ THEN } PC \leftarrow (PC) + I$
+
+**BSA X** (Branch and Save Address)
+* $t_1: MAR \leftarrow (IR_{address})$
+* $t_2: MBR \leftarrow (PC)$
+* $t_3: PC \leftarrow (IR_{address})$
+* $t_4: Memory \leftarrow (MBR)$
+* $t_5: PC \leftarrow (PC) + I$
+
+### Rules for Clock Cycle Grouping
+1.  **Proper Sequence:** Events must happen in order (e.g., `MAR <- (PC)` must happen before `MBR <- Memory`).
+2.  **Avoid Conflicts:** You cannot read from and write to the same register in the same time unit.
+3.  **MBR Constraints:** `MBR <- Memory` and `IR <- (MBR)` should not occur in the same cycle.
+
+---
+
+## Implementation Types
+
+### Hardwired Implementation
+In a hardwired implementation, the Control Unit is a combinatorial circuit.
+* **Key Characteristics:**
+    * Uses a **Decoder** (takes Op-code and produces a single output).
+    * Uses a **Counter** and **Timing Generator** to distinguish distinct time steps ($t_1, t_2...$).
+    * Logic is unique for each Op-code.
+* **Disadvantages:**
+    * Complex sequencing and logic.
+    * Difficult to design, test, and modify (inflexible).
+    * New instructions are hard to add.
+
+### Micro-programmed Control
+Uses sequences of micro-instructions (firmware) to control complex operations. A micro-program acts as middleware between hardware and software.
+
+#### Horizontal vs. Vertical Microprogramming
+
+| Feature | Vertical Micro-programming | Horizontal Micro-programming |
+| :--- | :--- | :--- |
+| **Width** | Narrow (Compact) | Wide memory word |
+| **Encoding** | Highly encoded (log2 n bits) | Little encoding (Direct control) |
+| **Parallelism** | Limited ability to express parallelism | High degree of parallel operations |
+| **Mechanism** | Requires a decoder to identify control lines | Every bit attached to a control line |
+| **Speed** | Slower (due to decoding) | Fast execution |
+
+---
+
+## Microinstruction Sequencing
+In a micro-programmed unit, the sequence logic must determine the address of the next micro-instruction to be executed.
+
+### Design Considerations
+* **Size of Microinstructions:** Minimizing the size of the control memory reduces cost.
+* **Address Generation Time:** Must be fast enough to execute within the clock cycle.
+
+### Addressing Techniques
+The control memory address is generated based on the current micro-instruction, condition flags, and the Instruction Register (IR).
+
+**Techniques based on Address Format:**
+1.  **Two Address Fields:** The micro-instruction contains two address fields. A multiplexer selects between them or the Op-code to determine the next address.
+2.  **Single Address Field:** Offers options: Address field, IR code, or Next sequential address.
+3.  **Variable Format:** Uses one bit to designate format. One format allows for control signals; the other format is used for branching/addressing.
+
+**Address Generation Types:**
+* **Explicit:** The address is explicitly available in the micro-instruction (e.g., Two-field mapping).
+* **Implicit:** Additional logic is required to generate the address (e.g., Mapping Op-code to address, Adding/Combining portions of addresses, Residual control).
