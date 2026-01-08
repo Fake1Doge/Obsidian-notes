@@ -238,3 +238,91 @@ The control memory address is generated based on the current micro-instruction, 
 **Address Generation Types:**
 * **Explicit:** The address is explicitly available in the micro-instruction (e.g., Two-field mapping).
 * **Implicit:** Additional logic is required to generate the address (e.g., Mapping Op-code to address, Adding/Combining portions of addresses, Residual control).
+
+# Topic 9: Interfacing and Communication
+
+## 1. Introduction to I/O Interface
+The **Input-Output (I/O) Interface** acts as a bridge between the internal storage (Memory/CPU) and external I/O devices (Peripherals).
+
+### Why is Interfacing Needed?
+Peripherals cannot be connected directly to the system bus due to several mismatches:
+1.  **Speed:** Peripherals (keyboard, mouse, printer) are significantly slower than the CPU and Memory.
+2.  **Data Formats:** Peripherals may use different data formats (e.g., ASCII) compared to the CPU's word format.
+3.  **Operating Modes:** Peripherals are often electromechanical, whereas the CPU is purely electronic.
+4.  **Signal Levels:** Voltage levels and signal types often differ between devices and the motherboard.
+
+### Functions of an Interface
+* **Control & Timing:** Coordinates traffic flow between internal resources and external devices.
+* **Data Buffering:** Temporarily holds data to compensate for speed differences (e.g., network packet buffering).
+* **Error Detection:** Checks for transmission errors (e.g., using parity bits).
+* **Address Decoding:** Identifies the specific device the CPU is trying to communicate with.
+
+---
+
+## 2. I/O Data Transfer Modes
+There are three primary techniques for transferring data between the CPU and I/O modules.
+
+### A. Programmed I/O (Polling)
+The CPU takes full control and executes a program that constantly checks the status of the peripheral.
+* **Mechanism:**
+    1.  CPU issues a command to the I/O module.
+    2.  CPU enters a **busy-wait loop**, repeatedly reading the status register.
+    3.  Once the "Ready" bit is set, the CPU reads/writes the data.
+* **Drawback:** Wastes CPU cycles ("busy waiting") that could be used for other tasks.
+* **Use Case:** Simple, slow devices where hardware complexity must be kept low.
+
+### B. Interrupt-Driven I/O
+The CPU issues a command and continues with other tasks. The I/O module signals the CPU when it is ready.
+* **Mechanism:**
+    1.  CPU issues the I/O command and resumes normal execution.
+    2.  When the peripheral is ready, it sends an **Interrupt Request (IRQ)**.
+    3.  CPU pauses execution, pushes the current state (PC & Registers) to the stack.
+    4.  CPU executes the **Interrupt Service Routine (ISR)** to handle the transfer.
+    5.  CPU restores the state and resumes the original program.
+* **Advantage:** Eliminates busy waiting, improving CPU efficiency.
+* **Drawback:** Still requires CPU intervention for every single word transferred.
+
+### C. Direct Memory Access (DMA)
+Used for high-speed transfers (e.g., Hard Drives, GPUs). The CPU delegates the transfer to a **DMA Controller**.
+* **Mechanism:**
+    1.  CPU sends the starting address, block size, and control signals to the DMA Controller.
+    2.  CPU grants bus control to DMA and performs other tasks (not requiring the bus).
+    3.  DMA Controller transfers the entire block of data directly to/from memory.
+    4.  DMA interrupts the CPU only when the entire block transfer is finished.
+* **Types:**
+    * **Burst Mode:** DMA holds the bus until the whole block is transferred.
+    * **Cycle Stealing:** DMA takes control for one cycle to transfer one word, then releases it, interleaving with CPU execution.
+
+---
+
+## 3. Asynchronous Data Transfer
+Required when the source and destination units use independent clocks.
+
+### Strobe Control
+* Uses a single control line (Strobe) to indicate valid data is on the bus.
+* **Issue:** No feedback mechanism; the source assumes the destination received the data.
+
+### Handshaking
+* Uses a request-response mechanism for reliability.
+* **Sequence:**
+    1.  **Source:** Places data on the bus and asserts "Data Valid".
+    2.  **Destination:** Detects signal, reads data, and asserts "Data Accepted".
+    3.  **Source:** De-asserts "Data Valid" after receiving the acknowledgement.
+
+---
+
+## 4. I/O Mapping Methods
+How the CPU addresses I/O devices.
+
+| Feature | Isolated I/O (I/O Mapped) | Memory-Mapped I/O |
+| :--- | :--- | :--- |
+| **Addresses** | Separate address space for I/O. | I/O devices share memory address space. |
+| **Instructions** | Special instructions (`IN`, `OUT`). | Standard instructions (`MOV`, `LOAD`). |
+| **Control** | Distinct Read/Write control lines. | Same R/W lines for memory and I/O. |
+| **Efficiency** | Saves memory addresses for RAM. | Simpler programming; richer instruction set. |
+
+***
+
+### Reference Video
+[Computer Organization - I/O Interface & Modes of Transfer](https://www.youtube.com/watch?v=hcSVNyZG5BM)
+
