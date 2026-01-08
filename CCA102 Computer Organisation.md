@@ -94,3 +94,4 @@ Conditional branches are a major problem for pipelines because they disrupt the 
     * **Static**: Predict "never taken" or "always taken".
     * **Dynamic**: Uses a history table to record previous outcomes and predict based on history (e.g., "Taken/Not Taken" switch).
     * **Delayed Branching**: The compiler rearranges instructions so that useful work (like an ADD) is performed while the branch is being resolved, preventing the pipeline from being flushed.
+
