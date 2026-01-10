@@ -27,23 +27,18 @@ void displayValue(int);
 void displayValue(int num) {
     std::cout << "Value is " << num << std::endl;
 }
-**Pass by Reference:**
-
-C++
-
 ```
+
+**Pass by Reference:**
+```cpp
 void getDimensions(int &width, int &height) {
     width = 10; // Modifies the variable passed in
 }
 ```
 
 ### Code Examples
-
 **Static Local Variable:**
-
-C++
-
-```
+```cpp
 void showStatic() {
     static int calls = 0; // Initialized only the first time
     calls++;
@@ -52,10 +47,7 @@ void showStatic() {
 ```
 
 **Default Arguments:**
-
-C++
-
-```
+```cpp
 // Prototype with default values
 void displayStars(int cols = 10, int rows = 1);
 
@@ -66,77 +58,51 @@ displayStars(7, 3); // Uses 7, 3
 ```
 
 ### Critical Details
-
-- **Initialization:** Global variables initialize to zero by default. **Local variables do not**; they contain garbage data if not initialized.
-    
-- **Global Variables:** Avoid using them for data (debugging nightmare). Use **Global Constants** instead if needed.
-    
-- **Default Arguments:** Must be defined in the prototype. If an argument is omitted, all arguments to its right must also be omitted.
-    
-- **Reference Parameters:** You must pass a variable to a reference parameter, not a literal or expression (e.g., `func(5)` fails if `func` expects `int &`).
-    
+* **Initialization:** Global variables initialize to zero by default. **Local variables do not**; they contain garbage data if not initialized.
+* **Global Variables:** Avoid using them for data (debugging nightmare). Use **Global Constants** instead if needed.
+* **Default Arguments:** Must be defined in the prototype. If an argument is omitted, all arguments to its right must also be omitted.
+* **Reference Parameters:** You must pass a variable to a reference parameter, not a literal or expression (e.g., `func(5)` fails if `func` expects `int &`).
 
 ---
 
 ## 2. Arrays
 
-### Key Concepts & Definitions
 
-- **Definition:** A collection of values of the _same data type_ stored in adjacent memory locations.
-    
-- **Size Declarator:** The number in brackets (e.g., `int arr[5]`) indicating total elements.
-    
-- **Memory Size:** Total bytes = `(Number of elements) * (Size of each element)`.
-    
-- **Initialization List:** Values in `{}` used to populate the array upon creation.
-    
-- **Implicit Sizing:** If the size declarator is omitted, the compiler determines size based on the number of items in the initialization list.
-    
-- **Range-Based For Loop:** A simplified loop (introduced in C++11) to iterate through all elements.
-    
-- **Parallel Arrays:** Two or more arrays where the same index relates to the same entity (e.g., `names[i]` and `scores[i]`).
-    
-- **2D Arrays:** Arrays of arrays, visualized as rows and columns.
-    
+
+### Key Concepts & Definitions
+* **Definition:** A collection of values of the *same data type* stored in adjacent memory locations.
+* **Size Declarator:** The number in brackets (e.g., `int arr[5]`) indicating total elements.
+* **Memory Size:** Total bytes = `(Number of elements) * (Size of each element)`.
+* **Initialization List:** Values in `{}` used to populate the array upon creation.
+* **Implicit Sizing:** If the size declarator is omitted, the compiler determines size based on the number of items in the initialization list.
+* **Range-Based For Loop:** A simplified loop (introduced in C++11) to iterate through all elements.
+* **Parallel Arrays:** Two or more arrays where the same index relates to the same entity (e.g., `names[i]` and `scores[i]`).
+* **2D Arrays:** Arrays of arrays, visualized as rows and columns.
 
 ### Syntax
-
 **Declaration & Access:**
-
-C++
-
-```
+```cpp
 const int SIZE = 5;
 int tests[SIZE];     // Declaration
 tests[0] = 100;      // Accessing first element (index 0)
 ```
 
 **Initialization:**
-
-C++
-
-```
+```cpp
 int numbers[5] = {1, 2, 3}; // Partial init: indexes 3 and 4 become 0
 int ages[] = {25, 30, 45};  // Implicit size: 3 elements
 ```
 
 **Range-Based Loop:**
-
-C++
-
-```
+```cpp
 for (int val : numbers) {
     std::cout << val << endl;
 }
 ```
 
 ### Code Examples
-
 **Passing Array to Function:**
-
-C++
-
-```
+```cpp
 // Function acts on original array (passed by address)
 void doubleValues(int nums[], int size) {
     for (int i = 0; i < size; i++)
@@ -145,10 +111,7 @@ void doubleValues(int nums[], int size) {
 ```
 
 **2D Array Traversal:**
-
-C++
-
-```
+```cpp
 const int ROWS = 3, COLS = 4;
 int table[ROWS][COLS];
 
@@ -160,50 +123,34 @@ for (int r = 0; r < ROWS; r++) {
 ```
 
 ### Critical Details
-
-- **NO Bounds Checking:** C++ does not prevent you from accessing `tests[10]` in a 5-element array. This causes memory corruption or crashes.
-    
-- **Off-By-One Errors:** Remember indices run from `0` to `size - 1`.
-    
-- **Assignment:** You cannot copy arrays with `=` (`arr1 = arr2` is illegal). You must use a loop to copy element-by-element.
-    
+* **NO Bounds Checking:** C++ does not prevent you from accessing `tests[10]` in a 5-element array. This causes memory corruption or crashes.
+* **Off-By-One Errors:** Remember indices run from `0` to `size - 1`.
+* **Assignment:** You cannot copy arrays with `=` (`arr1 = arr2` is illegal). You must use a loop to copy element-by-element.
 
 ---
 
 ## 3. Pointers
 
-### Key Concepts & Definitions
 
-- **Pointer:** A variable that holds a memory address.
-    
-- **Address Operator (`&`):** Returns the memory address of a variable (e.g., `&num`).
-    
-- **Indirection/Dereference Operator (`*`):** Accesses the value at the address held by the pointer.
-    
-- **Relationship with Arrays:** An array name acts as a constant pointer to the first element. `array[i]` is equivalent to `*(array + i)`.
-    
-- **Dynamic Memory:** Memory allocated during runtime using `new`. Must be manually released.
-    
-- **`nullptr`:** Keyword (C++11) representing a null pointer (address 0).
-    
+
+### Key Concepts & Definitions
+* **Pointer:** A variable that holds a memory address.
+* **Address Operator (`&`):** Returns the memory address of a variable (e.g., `&num`).
+* **Indirection/Dereference Operator (`*`):** Accesses the value at the address held by the pointer.
+* **Relationship with Arrays:** An array name acts as a constant pointer to the first element. `array[i]` is equivalent to `*(array + i)`.
+* **Dynamic Memory:** Memory allocated during runtime using `new`. Must be manually released.
+* **`nullptr`:** Keyword (C++11) representing a null pointer (address 0).
 
 ### Syntax
-
 **Basics:**
-
-C++
-
-```
+```cpp
 int x = 25;
 int *ptr = &x;  // ptr holds address of x
 *ptr = 100;     // Changes value of x to 100
 ```
 
 **Dynamic Allocation:**
-
-C++
-
-```
+```cpp
 // Allocate single variable
 int *num = new int; 
 
@@ -212,22 +159,15 @@ double *sales = new double[days];
 ```
 
 **Releasing Memory:**
-
-C++
-
-```
+```cpp
 delete num;         // Single variable
 delete [] sales;    // Array
 sales = nullptr;    // Best practice to prevent dangling pointer
 ```
 
 ### Code Examples
-
 **Pointer Arithmetic:**
-
-C++
-
-```
+```cpp
 int vals[] = {10, 20, 30};
 int *valPtr = vals;
 
@@ -236,10 +176,7 @@ std::cout << *(valPtr + 1) << endl; // Prints 20
 ```
 
 **Pointers as Function Parameters:**
-
-C++
-
-```
+```cpp
 void getNum(int *input) {
     std::cin >> *input; // Stores input directly in the address provided
 }
@@ -250,13 +187,8 @@ getNum(&number);
 ```
 
 ### Critical Details
-
-- **Memory Leaks:** Failing to `delete` dynamically allocated memory keeps it occupied until the program ends.
-    
-- **Dangling Pointers:** Accessing a pointer after the memory it points to has been deleted causes undefined behavior.
-    
-- **Pointer Comparison:**
-    
-    - `ptr1 == ptr2` checks if they point to the **same location**.
-        
-    - `*ptr1 == *ptr2` checks if the **values** they point to are equal.
+* **Memory Leaks:** Failing to `delete` dynamically allocated memory keeps it occupied until the program ends.
+* **Dangling Pointers:** Accessing a pointer after the memory it points to has been deleted causes undefined behavior.
+* **Pointer Comparison:**
+    * `ptr1 == ptr2` checks if they point to the **same location**.
+    * `*ptr1 == *ptr2` checks if the **values** they point to are equal.
