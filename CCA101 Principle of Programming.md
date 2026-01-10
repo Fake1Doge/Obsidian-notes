@@ -67,8 +67,6 @@ displayStars(7, 3); // Uses 7, 3
 
 ## 2. Arrays
 
-
-
 ### Key Concepts & Definitions
 * **Definition:** A collection of values of the *same data type* stored in adjacent memory locations.
 * **Size Declarator:** The number in brackets (e.g., `int arr[5]`) indicating total elements.
@@ -130,8 +128,6 @@ for (int r = 0; r < ROWS; r++) {
 ---
 
 ## 3. Pointers
-
-
 
 ### Key Concepts & Definitions
 * **Pointer:** A variable that holds a memory address.
