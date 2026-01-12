@@ -1,6 +1,4 @@
-# C++ Study Notes: Functions, Arrays, and Pointers
-
-## 1. Functions
+# Functions
 
 ### Key Concepts & Definitions
 * **Modular Programming:** Breaking a program into smaller, manageable functions to improve maintainability and simplify code writing.
@@ -65,7 +63,7 @@ displayStars(7, 3); // Uses 7, 3
 
 ---
 
-## 2. Arrays
+# Arrays
 
 ### Key Concepts & Definitions
 * **Definition:** A collection of values of the *same data type* stored in adjacent memory locations.
@@ -127,7 +125,7 @@ for (int r = 0; r < ROWS; r++) {
 
 ---
 
-## 3. Pointers
+# Pointers
 
 ### Key Concepts & Definitions
 * **Pointer:** A variable that holds a memory address.
