@@ -53,8 +53,8 @@ aliases: [Markdown Guide]
 **Task List:**
 - [ ] To Do
 - [x] Done
-- [/] In Progress (Theme dependent)
-- [-] Canceled (Theme dependent)
+- [ ] In Progress (Theme dependent)
+- [ ] Canceled (Theme dependent)
 
 ## 5. Callouts (Obsidian Special)
 > [!NOTE] Title
