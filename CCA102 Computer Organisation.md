@@ -557,3 +557,5 @@ Basic DRAM has remained similar for decades; newer types improve speed and acces
 * **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
 * **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
 * **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
+
+
