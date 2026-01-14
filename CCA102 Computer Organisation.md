@@ -875,3 +875,140 @@ Modern processors use multiple layers to balance size and speed.
 * **Replacement:** **LRU** is the standard for associative caches. Direct mapping has no choice but to replace the resident block.
 * **Write Policy:** **Write Back** reduces bus traffic but requires "Dirty Bits"; **Write Through** is safer but slower.
 * **Structure:** Modern CPUs use **Split L1 Caches** (Instruction/Data) to support pipelining and **Multilevel (L1/L2/L3)** hierarchies to optimize access times.
+
+
+# Topic 12: Virtual Memory
+
+## 1. Memory Management Fundamentals
+
+Memory management is the task of subdividing memory to accommodate multiple processes. The OS must manage the trade-offs between swapping, overhead, and efficient usage.
+
+### Partitioning
+
+Partitioning involves splitting the main memory into sections to allocate to processes (including the Operating System).
+
+#### Fixed Partitioning
+* **Concept**: Memory is divided into static partitions. These can be **Equal-size** or **Unequal-size**.
+* **Allocation**: A process is loaded into a partition large enough to hold it.
+* **Issues**:
+    * **Internal Fragmentation**: If a process is smaller than the partition, the remaining space *inside* that partition is wasted.
+    * Limits the number of active processes to the number of partitions.
+
+#### Dynamic Partitioning
+* **Concept**: Partitions are created dynamically. The OS allocates exactly the required memory to a process.
+* **Allocation**: No pre-defined boundaries.
+* **Issues**:
+    * **External Fragmentation**: As processes are swapped in and out, memory becomes a checkerboard of used blocks and small "holes" too small to be useful.
+    * **Solution**: **Compaction** (De-fragmentation) — The OS shifts processes to coalesce holes into one large free block (resource-intensive).
+
+| Feature | Fixed Partitioning | Dynamic Partitioning |
+| :--- | :--- | :--- |
+| **Partition Size** | Fixed at boot time | Variable, determined by process size |
+| **Fragmentation** | **Internal** (waste inside block) | **External** (waste between blocks) |
+| **Complexity** | Low | Higher (requires compaction) |
+
+### Simple Paging
+Paging divides memory into fixed chunks to avoid external fragmentation.
+
+* **Frames**: Fixed-size, small chunks of **physical memory**.
+* **Pages**: Fixed-size, small chunks of the **process (logical memory)**.
+* **Mapping**: The Operating System maintains a **Page Table** for each process to map active Pages to physical Frames.
+    * A process does *not* require contiguous physical frames.
+
+### Simple Segmentation
+Segmentation allows the programmer to view memory as multiple address spaces (segments) rather than a linear sequence.
+
+* **Segments**: Variable-sized blocks usually allocated to logical units (e.g., Program segment, Data segment, Stack).
+* **Visibility**: Unlike paging, segmentation is **visible** to the programmer.
+* **Protection**: Useful for assigning access rights (read/write/execute) to specific logic blocks.
+
+---
+
+## 2. Virtual Memory Principles
+
+### Concept
+Virtual memory allows the execution of processes that are not completely in main memory.
+* **Real Memory**: The actual main memory (RAM) available.
+* **Virtual Memory**: The programmer sees a much larger memory space than physically exists.
+* **Mechanism**: The OS keeps only the currently active parts of a process in RAM and keeps the rest on the disk (Long-term queue).
+
+### Demand Paging
+* **Definition**: Pages are not loaded until they are actually required.
+* **Process**:
+    1.  CPU tries to access a page.
+    2.  If valid bit is not set (page not in RAM), a **Page Fault** is triggered.
+    3.  OS swaps the required page from disk into a free frame.
+    4.  If memory is full, a page replacement algorithm selects a victim page to swap out.
+
+> [!WARNING] Thrashing
+> **Thrashing** occurs when the system spends more time swapping pages in and out than actually executing instructions.
+> * **Cause**: Too many processes running with too little memory (over-committed).
+> * **Symptoms**: Disk light is on constantly; CPU utilization drops.
+> * **Solution**: Reduce degree of multiprogramming or add more RAM.
+
+### Principle of Locality
+Virtual memory relies on the observation that references to data and instructions tend to cluster.
+* **Temporal Locality**: Recently accessed items are likely to be accessed again soon.
+* **Spatial Locality**: Items near those recently accessed are likely to be accessed soon.
+* *Note: This principle prevents constant thrashing under normal loads.*
+
+---
+
+## 3. Hardware Support
+
+### Paging Address Translation
+The CPU uses a **Logical Address** which the MMU (Memory Management Unit) translates into a **Physical Address**.
+
+**Address Structure:**
+$$\text{Logical Address} = [ \text{Page Number} \mid \text{Offset} ]$$
+
+**The Translation Flow:**
+1.  **Page Number**: Used as an index into the Process Page Table.
+2.  **Frame Number**: Extracted from the Page Table entry.
+3.  **Physical Address**: Combined with the original offset.
+    $$\text{Physical Address} = [ \text{Frame Number} \mid \text{Offset} ]$$
+
+### TLB (Translation Lookaside Buffer)
+> [!INFO] What is the TLB?
+> The **TLB** is a specialized, high-speed hardware cache that stores recent Page Table entries. It avoids the "double memory access" penalty (one access to read the Page Table, one to read data).
+
+* **Operation**:
+    1.  CPU extracts the Page Number.
+    2.  **TLB Hit**: Frame number retrieved immediately (Fast).
+    3.  **TLB Miss**: CPU must access the Page Table in main memory to get the frame number, then update the TLB.
+
+### Page Table Structure
+As processes grow, Page Tables themselves become large.
+* **Multi-level Paging**: Using a Page Directory to point to secondary Page Tables (e.g., Pentium II uses a 2-level scheme).
+* **Inverted Page Table**:
+    * Instead of one entry per virtual page, there is one entry per **physical frame**.
+    * Uses a **Hash Algorithm** to map the Virtual Page Number to the Frame.
+    * Reduces memory required for tables but requires handling hash collisions (chaining).
+
+---
+
+## 4. OS Software Policies
+
+### Fetch Policy
+* **Demand Paging**: Bring pages in only when a Page Fault occurs. (Most common).
+* **Pre-paging**: Bring in pages likely to be needed soon (exploits locality).
+
+### Replacement Algorithms
+When memory is full, the OS must choose a "victim" page to evict.
+* **Locking**: Some frames (e.g., OS kernel, I/O buffers) are "locked" and cannot be swapped out.
+
+**Basic Algorithms:**
+1.  **Optimal**: Select the page that will not be used for the longest time. (Theoretical benchmark, impossible to implement perfectly).
+2.  **LRU (Least Recently Used)**: Replace the page that has not been used for the longest time. (Approximates locality well, but high overhead).
+3.  **FIFO (First-In-First-Out)**: Replace the oldest page in memory. (Simple, but can perform poorly).
+4.  **Clock**: A variation of FIFO using a "use bit." It gives pages a "second chance" if they have been referenced recently, approximating LRU with less overhead.
+
+---
+
+## 5. Summary/Key Takeaways
+
+* **Partitioning**: Fixed leads to internal fragmentation; Dynamic leads to external fragmentation.
+* **Paging vs. Segmentation**: Paging is physical (fixed size, invisible to user); Segmentation is logical (variable size, visible to user).
+* **Virtual Memory**: Allows execution of programs $>$ Physical RAM.
+* **TLB**: Critical for performance to minimize memory access latency during address translation.
+* **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
