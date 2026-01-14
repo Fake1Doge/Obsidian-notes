@@ -559,3 +559,151 @@ Basic DRAM has remained similar for decades; newer types improve speed and acces
 * **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
 
 
+# Topic 10: Memory Systems
+
+## 1. Memory Characteristics & Performance
+
+### Key Characteristics
+
+> [!INFO] Location
+> - **CPU:** Registers (internal).
+> - **Internal:** Main Memory (RAM), Cache.
+> - **External:** Peripheral storage (Disk, Tape), accessible via I/O processors.
+
+> [!INFO] Capacity
+> - **Word Size:** The natural unit of organization (typically 8, 16, 32 bits).
+> - **Addressable Units:** The smallest location that can be uniquely addressed.
+>   - Formula: $2^A = N$, where $A$ is the length of the address in bits and $N$ is the number of addressable units.
+
+> [!INFO] Unit of Transfer
+> - **Internal:** Usually governed by the data bus width (equal to word length or larger).
+> - **External:** Usually a block (much larger than a word).
+
+### Access Methods
+
+| Method | Description | Example |
+| :--- | :--- | :--- |
+| **Sequential** | Data is organized in records; read in specific linear sequence. Access time depends on location. | Tape |
+| **Direct** | Individual blocks have unique addresses. Access involves jumping to a vicinity + sequential search. | Disk |
+| **Random** | Individual addresses identify locations exactly. Access time is independent of location or previous access. | RAM |
+| **Associative** | Data is located by comparing contents (addressing by content, not location). Access time is independent of location. | Cache |
+
+### Performance Metrics
+
+> [!INFO] Definitions
+> - **Access Time:** >   - *RAM:* Time between presenting the address and getting valid data.
+>   - *Non-RAM:* Time to position the read-write mechanism.
+> - **Memory Cycle Time:** Access time + "recovery" time (time required for transients to die out on signal lines before next access).
+> - **Transfer Rate:** Rate at which data moves in/out of memory.
+>   - *RAM:* $1 / (\text{Cycle Time})$
+>   - *Non-RAM Formula:* $T_N = T_A + \frac{N}{R}$
+>     - $T_N$: Average time to read/write N bits
+>     - $T_A$: Average access time
+>     - $N$: Number of bits
+>     - $R$: Transfer rate (bps)
+
+---
+
+## 2. The Memory Hierarchy
+
+### The Hierarchy Pyramid
+The memory system is designed as a hierarchy to balance trade-offs.
+
+1.  **Registers** (In CPU)
+2.  **L1 Cache**
+3.  **L2 Cache**
+4.  **Main Memory** (RAM)
+5.  **Disk Cache**
+6.  **Magnetic Disk**
+7.  **Optical / Tape** (Offline Storage)
+
+### Key Relationships & Trade-offs
+As you move **down** the hierarchy (from Registers to Tape):
+* **Cost per bit:** Decreases
+* **Capacity:** Increases
+* **Access Time:** Increases (Slower)
+* **Frequency of Access:** Decreases (CPU accesses lower levels less often)
+
+> [!NOTE] Design Goal
+> The goal is to achieve the performance of the fastest memory at the cost of the cheapest memory by using a mix of technologies.
+
+---
+
+## 3. Semiconductor Memory (RAM & ROM)
+
+### RAM Types: SRAM vs. DRAM
+
+| Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
+| :--- | :--- | :--- |
+| **Storage Mechanism** | Digital flip-flop logic gates. | Capacitors (stores charge). |
+| **Refresh Required?** | **No** (stable as long as power is on). | **Yes** (charge leaks; needs periodic refresh). |
+| **Structure** | Complex, larger cells (multiple transistors). | Simple, smaller cells (1 transistor + 1 capacitor). |
+| **Density** | Lower density. | High density (more bits per chip). |
+| **Cost** | More expensive. | Less expensive. |
+| **Speed** | Faster. | Slower. |
+| **Usage** | **Cache Memory**. | **Main Memory**. |
+
+### ROM Types (Read-Only Memory)
+ROM is non-volatile; data remains when power is lost.
+
+* **Mask ROM:** Data wired into the chip during fabrication. High fixed cost; no error recovery.
+* **PROM (Programmable ROM):** Can be written once electronically. Needs special equipment.
+* **EPROM (Erasable PROM):** Erased by UV light. Entire chip must be erased before rewriting.
+* **EEPROM (Electrically Erasable PROM):** Can erase specific bytes electronically. Slower to write than read.
+* **Flash Memory:** Intermediate between EPROM and EEPROM. High density. Erases in blocks (faster than EPROM) but not byte-level.
+
+### Error Correction
+Memory requires logic to detect and correct errors.
+* **Hard Failure:** Permanent physical defect (wear, environmental abuse).
+* **Soft Error:** Random, non-destructive (power issues, alpha particles).
+
+> [!example] Hamming Error Correcting Code
+> Uses parity bits to detect and correct single-bit errors.
+> - **Syndrome Word:** Result of XORing stored check bits with recalculated check bits.
+>   - If **0**: No error.
+>   - If **1 bit set**: Error in check bit (ignore).
+>   - If **>1 bit set**: Indicates position of data bit error (invert to correct).
+> - **Formula:** $2^K - 1 \ge M + K$ (Where $M$ is data bits, $K$ is check bits).
+
+---
+
+## 4. Advanced DRAM & Internal Organization
+
+*> **Note:** While standard Cache Mapping (Direct/Associative) is not detailed in the source text, the file covers "Cache DRAM" and internal memory structure extensively.*
+
+### Internal Organization of Memory Chips
+* **Cell Array:** Cells are organized in a matrix ($W$ words $\times$ $B$ bits).
+* **Operation:**
+    * **Row Decoder:** Selects the row (Word line).
+    * **Sense/Write Circuit:** Reads or writes data via Bit lines.
+    * **Multiplexing:** To reduce pin count, row and column addresses are often multiplexed (sent sequentially) to the address buffer.
+
+### Advanced DRAM Architectures
+Basic DRAM has remained similar for decades; newer types improve speed and access logic.
+
+1.  **SDRAM (Synchronous DRAM):**
+    * Access is synchronized with the external system clock.
+    * CPU doesn't have to wait (idle); it knows exactly when data will be ready.
+    * **Burst Mode:** Allows a stream of data blocks to be fired out rapidly.
+
+2.  **DDR-SDRAM:**
+    * Sends data **twice** per clock cycle (on both the leading and trailing edges).
+
+3.  **RDRAM (Rambus DRAM):**
+    * Competitor to SDRAM (adopted by Intel for Pentium).
+    * Uses a high-speed vertical package bus (up to 1.6 Gbps).
+    * Impedances and clocking are very precisely defined.
+
+4.  **Cache DRAM (CDRAM):**
+    * Integrates a small **SRAM cache** (e.g., 16KB) directly onto the generic DRAM chip.
+    * The SRAM can act as a true cache or a serial buffer for block access.
+
+---
+
+## 5. Summary / Key Takeaways
+
+* **Hierarchy Principle:** Faster memory is more expensive and smaller. The CPU relies on a hierarchy (Registers $\to$ Cache $\to$ RAM $\to$ Disk) to optimize performance.
+* **SRAM vs. DRAM:** SRAM is fast/expensive (Flip-flops) used for **Cache**. DRAM is dense/cheap (Capacitors) used for **Main Memory**.
+* **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
+* **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
+* **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
