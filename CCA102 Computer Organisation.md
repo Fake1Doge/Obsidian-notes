@@ -138,6 +138,7 @@ Strategies to minimize the performance penalty of conditional branches:
 * **Branch Prediction** and **Loop Buffers** are critical architectural optimizations to maintain pipeline efficiency in the face of non-sequential code execution.
 * **Speedup Calculation**: Remember that ideal speedup approaches $k$ (number of stages) as $n$ (instructions) becomes very large.
 
+
 # Topic 8: Control Unit
 
 ## 1. Control Unit Overview
@@ -286,3 +287,5 @@ Determining the address of the next micro-instruction to execute.
 * **Micro-programmed = Flexibility:** Best for complex instruction sets (CISC). Logic is stored in ROM/Control Memory.
 * **Fetch Cycle:** Almost identical for all instructions ($PC \rightarrow MAR \rightarrow Memory \rightarrow MBR \rightarrow IR$).
 * **Micro-instruction Design:** A trade-off between word width (Horizontal) and encoding complexity (Vertical).
+
+
