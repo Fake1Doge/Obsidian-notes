@@ -709,3 +709,169 @@ Basic DRAM has remained similar for decades; newer types improve speed and acces
 * **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
 
 
+# Topic 11: Cache Memory Architecture
+
+## 1. Principles & Motivation
+
+### The Problem
+There is a significant speed mismatch between the fast CPU and the slower Main Memory. As processor speed increases, the external bus becomes a bottleneck, causing the CPU to waste cycles waiting for data.
+
+### The Solution: Cache Memory
+Cache is a small, fast memory sitting between the CPU and Main Memory. It acts as a buffer to provide the CPU with the data it needs as quickly as possible.
+
+> [!INFO] Locality of Reference
+> Cache relies on the **Principle of Locality**: When a block of data is fetched for a single memory reference, it is highly likely that future references will be to that same location or adjacent locations.
+> * **Temporal Locality:** reused data.
+> * **Spatial Locality:** nearby data.
+
+### Cache Operation
+The CPU requests contents of a memory location. The system checks the cache:
+1.  **Hit:** If present, data is delivered immediately (Fast).
+2.  **Miss:** If not present, the required block is read from Main Memory into the Cache.
+    * Then, the specific word is delivered to the CPU.
+
+---
+
+## 2. Cache Mapping Functions
+
+Since there are fewer cache lines than main memory blocks, we need algorithms to map main memory blocks into cache lines.
+
+### A. Direct Mapping
+Each block of main memory maps to only **one specific** cache line.
+
+* **Logic:**
+    $$i = j \pmod m$$
+    Where:
+    * $i$ = cache line number
+    * $j$ = main memory block number
+    * $m$ = number of lines in cache
+
+* **Address Structure:**
+    The address is split into three fields:
+    $$[ \text{Tag } (s-r) \mid \text{Line } (r) \mid \text{Word } (w) ]$$
+    * **Word:** Identifies the unique word/byte within a block.
+    * **Line (Slot):** Selects one specific line in the cache.
+    * **Tag:** Compared against the tag stored in the cache line to verify if it's the correct block.
+
+* **Pros:** Simple, inexpensive hardware.
+* **Cons:** Fixed location. If a program repeatedly accesses two different blocks that map to the same line, they will constantly evict each other. This is called **Thrashing**.
+
+### B. Associative Mapping
+A main memory block can load into **any** line of the cache.
+
+* **Logic:** No fixed mapping rule; flexibility is maximized.
+* **Address Structure:**
+    The address is interpreted as:
+    $$[ \text{Tag } (s) \mid \text{Word } (w) ]$$
+    * **Tag:** Uniquely identifies the block of memory.
+    * **Word:** Identifies the specific data within the block.
+
+* **Pros:** High hit ratio; prevents thrashing caused by fixed mappings.
+* **Cons:** Complex circuitry. Every line's tag must be examined simultaneously (parallel search) to check for a match, which is expensive.
+
+### C. Set Associative Mapping
+A compromise between Direct and Associative. The cache is divided into $v$ sets, and each set contains $k$ lines ($k$-way associative).
+
+* **Logic:**
+    A block maps to a specific **set**, but can occupy **any line** within that set.
+    $$i = j \pmod v$$
+    Where:
+    * $i$ = cache set number
+    * $j$ = main memory block number
+    * $v$ = number of sets
+
+* **Address Structure:**
+    $$[ \text{Tag } (s-d) \mid \text{Set } (d) \mid \text{Word } (w) ]$$
+    * **Set:** Determines which set to look in.
+    * **Tag:** Compared against all lines within that specific set.
+
+* **Benefit:** Reduces the comparison hardware needed (only compare tags within one set) while maintaining better flexibility than Direct Mapping.
+
+### Mapping Function Summary
+
+| Feature | Direct Mapping | Associative Mapping | Set Associative Mapping |
+| :--- | :--- | :--- | :--- |
+| **Placement** | Fixed (1 location) | Flexible (Anywhere) | Semi-Flexible (Any line in fixed set) |
+| **Hardware Cost** | Low (Simple) | High (Parallel Search) | Moderate |
+| **Thrashing Risk** | High | Low | Low |
+| **Search Speed** | Fastest | Slowest (due to complexity) | Fast |
+| **Best Used For** | Large Caches | Small, High-Performance Caches | General Purpose (Modern Standard) |
+
+---
+
+## 3. Replacement Algorithms
+
+When the cache (or a set) is full, a block must be replaced to make room for new data.
+
+1.  **Least Recently Used (LRU):**
+    * **Concept:** Replace the block that has gone unused for the longest time.
+    * **Effectiveness:** Most effective/popular.
+    * **Implementation:** Hardware maintains "USE" bits. e.g., in 2-way associative, if one line is referenced, the bit is set to 1, and the other is set to 0.
+2.  **First In First Out (FIFO):**
+    * **Concept:** Replace the block that has been in the cache the longest.
+    * **Implementation:** Round-robin or circular buffer.
+3.  **Least Frequently Used (LFU):**
+    * **Concept:** Replace the block with the fewest hits.
+    * **Implementation:** Associates a counter with each line.
+4.  **Random:**
+    * **Concept:** Pick a line at random.
+    * **Performance:** Slightly inferior to algorithms based on usage history.
+
+> [!Note]
+> Direct Mapping does not need a replacement algorithm because each block has only **one** possible location. If a new block maps there, the old one is automatically evicted.
+
+---
+
+## 4. Write Policies
+
+When data in the cache is altered, main memory must eventually be updated to maintain consistency.
+
+### Write Through
+* **Mechanism:** All writes go to **both** the Cache and Main Memory simultaneously.
+* **Consistency:** Main memory is always valid (up to date).
+* **Drawback:** Generates substantial memory traffic, which can slow down writes.
+
+### Write Back
+* **Mechanism:** Updates are made **only** in the cache initially. An "Update Bit" (or Dirty Bit) is set for that cache line.
+* **Sync:** The block is written to main memory **only when it is replaced/evicted**.
+* **Drawback:** Portions of main memory are invalid (out of sync) until the write-back occurs. I/O modules must access memory through the cache to ensure they get the correct data.
+
+### Comparison Table
+
+| Feature | Write Through | Write Back |
+| :--- | :--- | :--- |
+| **Update Timing** | Immediate (Simultaneous) | Deferred (On replacement) |
+| **Data Consistency** | Main Memory always valid | Main Memory temporarily invalid |
+| **Bus Traffic** | High (Every write accesses bus) | Low (Only accesses bus on eviction) |
+| **Complexity** | Simple | Complex (Needs Dirty Bit & Logic) |
+| **Speed** | Slower writes | Faster writes |
+
+---
+
+## 5. Cache Organization
+
+### Multilevel Caches
+Modern processors use multiple layers to balance size and speed.
+* **L1 (Level 1):** On-chip (internal). Fastest, smallest. Eliminates external bus access for internal operations.
+* **L2 (Level 2):** Originally external, now often on-chip. Accessed if data is not in L1.
+* **L3 (Level 3):** Usually external (or shared on-die for multi-core).
+* **Goal:** If SRAM (L2) is fast enough to match bus speed, data can be accessed with zero-wait states.
+
+### Unified vs. Split Caches
+* **Unified Cache:** Stores both Data and Instructions in the same cache.
+    * *Advantage:* Higher hit rate generally; load balances automatically (e.g., if a program has many instructions and little data, the cache fills with instructions).
+* **Split Cache:** Separate caches for **Instructions** and **Data**.
+    * *Advantage:* Essential for pipelining. It eliminates contention between the **Instruction Fetch Unit** (trying to read code) and the **Execution Unit** (trying to load/store data).
+    * *Usage:* Common in superscalar machines like Pentium and PowerPC.
+
+---
+
+## 6. Summary / Key Takeaways
+* **Goal:** Cache acts as a buffer to match CPU speed with slower memory using the **Principle of Locality**.
+* **Mapping:**
+    * **Direct:** Simple, fixed mapping ($i=j\%m$), prone to thrashing.
+    * **Associative:** Flexible, complex search, expensive.
+    * **Set Associative:** Best of both worlds; maps to a set ($i=j\%v$), associative within the set.
+* **Replacement:** **LRU** is the standard for associative caches. Direct mapping has no choice but to replace the resident block.
+* **Write Policy:** **Write Back** reduces bus traffic but requires "Dirty Bits"; **Write Through** is safer but slower.
+* **Structure:** Modern CPUs use **Split L1 Caches** (Instruction/Data) to support pipelining and **Multilevel (L1/L2/L3)** hierarchies to optimize access times.
