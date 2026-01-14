@@ -407,3 +407,5 @@ When an interrupt occurs, the CPU must determine which module issued it.
 * **DMA** is the standard for high-speed data transfer, allowing the CPU to delegate memory operations to a dedicated controller.
 * **Cycle Stealing** allows DMA to use the bus without a full CPU context switch.
 * **RAID** (Redundant Array of Independent Disks) uses striping (performance) and parity/mirroring (redundancy) to manage multiple disks as a single logical unit.
+
+
