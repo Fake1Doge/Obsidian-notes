@@ -289,3 +289,121 @@ Determining the address of the next micro-instruction to execute.
 * **Micro-instruction Design:** A trade-off between word width (Horizontal) and encoding complexity (Vertical).
 
 
+# Topic 9: Interfacing and Communication
+
+## 1. I/O Module Fundamentals
+
+### The Need for I/O Modules
+Peripherals (External Devices) are not directly connected to the system bus for several critical reasons:
+1.  **Variety:** Peripherals vary greatly in methods of operation.
+2.  **Data Transfer Rates:** Most peripherals are much slower than the CPU and RAM.
+3.  **Data Formats:** Peripherals often use different data formats and word lengths than the computer.
+
+> [!INFO] Role of the I/O Module
+> The I/O module acts as the "interface" or bridge. It isolates the CPU/Memory from the specific details of the peripheral device.
+
+### Major Functions
+The I/O module is responsible for:
+* **Control & Timing:** Coordinating the flow of traffic between internal resources and external devices.
+* **CPU Communication:**
+    * *Command Decoding:* Accepting commands (e.g., READ SECTOR) from the CPU.
+    * *Data:* Exchanging data between the CPU and the module.
+    * *Status Reporting:* Reporting device states (BUSY, READY, ERROR).
+    * *Address Recognition:* Recognizing the unique address for each peripheral.
+* **Device Communication:** Handling commands, status, and data with the peripheral.
+* **Data Buffering:** Essential for managing speed mismatches (transfer rates into the module can be high, while output to the device is slow).
+* **Error Detection:** Reporting transmission errors (parity bits) or mechanical errors (paper jam).
+
+### Structure
+* **External Interface:** Connects to the peripheral (Data, Status, Control signals).
+* **Internal Interface:** Connects to the System Bus (Address Lines, Data Lines, Control Lines).
+* **Registers:**
+    * *Data Registers:* Buffer data.
+    * *Status/Control Registers:* Store current state and configuration.
+
+---
+
+## 2. I/O Techniques (The Big Three)
+
+### A. Programmed I/O
+The CPU has direct control over the I/O operation including sensing status, sending commands, and transferring data.
+
+* **Process:**
+    1.  CPU issues an I/O command.
+    2.  CPU enters a wait loop, repeatedly checking (polling) the device status.
+    3.  Once the device is "Ready," the CPU transfers the data.
+* **Drawback:** Severe waste of CPU time ("Busy-waiting"). The processor is tied up checking status and cannot do other work.
+
+### B. Interrupt-Driven I/O
+Designed to overcome the CPU waiting problem.
+
+* **Process:**
+    1.  CPU issues a read command to the I/O module.
+    2.  **CPU continues with other work.**
+    3.  I/O module interrupts the CPU when data is ready.
+    4.  CPU pauses current execution, saves context (PC, Registers), and processes the interrupt.
+    5.  CPU reads the data and then restores the context to resume original work.
+* **Benefit:** Greatly improves CPU utilization by removing the wait loop.
+
+### C. Direct Memory Access (DMA)
+Used when large amounts of data need to be moved. It removes the CPU from the data transfer path almost entirely.
+
+* **Concept:** A dedicated DMA Controller module takes over the system bus to transfer blocks of data directly between the I/O device and Memory.
+* **The Workflow:**
+    1.  CPU tells DMA controller: Read/Write, Device Address, Starting Memory Address, Amount of Data.
+    2.  CPU goes back to other work.
+    3.  DMA handles the entire transfer.
+    4.  DMA interrupts the CPU only when the *entire* block transfer is complete.
+
+#### Transfer Modes
+> [!NOTE] DMA Efficiency
+> The CPU is only involved at the beginning (setup) and the end (interrupt).
+
+* **Cycle Stealing:** The DMA controller takes control of the bus for a single bus cycle to transfer one word of data. The CPU is suspended just before it accesses the bus. This slows the CPU down slightly but is not a full context switch (Interrupt).
+* **Burst Mode:** (Standard definition) The DMA holds the bus for a continuous block of data, preventing CPU access until the whole block is done.
+* **Fly-by Transfer:** (Standard definition) Data is transferred directly between the source and destination in a single bus cycle without passing through the DMA controller's internal registers, increasing speed.
+
+---
+
+## 3. Comparison of I/O Techniques
+
+| Technique | CPU Involvement | Hardware Complexity | Efficiency / Best Use Case |
+| :--- | :--- | :--- | :--- |
+| **Programmed I/O** | **High** (Busy-wait) | Low | Very low. Good for simple, low-speed devices where hardware cost must be minimized. |
+| **Interrupt-Driven** | **Medium** (Setup + ISR) | Medium | Efficient for moderate data rates (e.g., Keyboard, Mouse). Overhead of context switching limits high-speed transfers. |
+| **DMA** | **Low** (Setup + Finish) | High (Requires DMA Controller) | **High.** Best for block transfers (Disk Drives, Network Packets) where speed is critical. |
+
+---
+
+## 4. Interrupt Design Issues
+
+### Device Identification
+When an interrupt occurs, the CPU must determine which module issued it.
+1.  **Multiple Interrupt Lines:** Impractical to have a specific line for every device.
+2.  **Software Poll:** CPU jumps to a generic ISR and polls every module to see who is ready. (Slow).
+3.  **Daisy Chain (Hardware Poll):** An "Interrupt Acknowledge" signal is sent down a chain of modules. The requesting module blocks the signal and places its vector on the bus.
+4.  **Vectored Interrupt:** The module places a unique ID (Vector) on the data bus, which the CPU uses to jump directly to the specific handler routine.
+
+### Bus Arbitration
+* **Daisy Chain:** Priority is determined by the physical order of devices on the chain.
+* **Bus Master/Arbitration:** A module must claim control of the bus (become Master) before raising an interrupt (e.g., PCI, SCSI).
+
+---
+
+## 5. Bus Communication
+
+### Synchronous vs. Asynchronous
+* **Synchronous:** Events are determined by a clock signal. Operations occur at fixed time slots.
+* **Asynchronous:** Events depend on the occurrence of a previous event. Uses "Handshaking" (Request/Acknowledge) signals to coordinate data transfer.
+    * *Note:* FireWire (IEEE 1394) uses split transactions and supports both Asynchronous (variable data, addressed) and Isochronous (fixed rate, real-time) transmission.
+
+---
+
+## 6. Summary/Key Takeaways
+
+* **I/O Modules** are required to bridge the speed and format gap between the CPU and Peripherals.
+* **Programmed I/O** is simple but wastes CPU cycles waiting for devices.
+* **Interrupts** allow the CPU to multitask, processing I/O only when data is ready.
+* **DMA** is the standard for high-speed data transfer, allowing the CPU to delegate memory operations to a dedicated controller.
+* **Cycle Stealing** allows DMA to use the bus without a full CPU context switch.
+* **RAID** (Redundant Array of Independent Disks) uses striping (performance) and parity/mirroring (redundancy) to manage multiple disks as a single logical unit.
