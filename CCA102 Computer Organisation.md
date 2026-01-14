@@ -138,3 +138,151 @@ Strategies to minimize the performance penalty of conditional branches:
 * **Branch Prediction** and **Loop Buffers** are critical architectural optimizations to maintain pipeline efficiency in the face of non-sequential code execution.
 * **Speedup Calculation**: Remember that ideal speedup approaches $k$ (number of stages) as $n$ (instructions) becomes very large.
 
+# Topic 8: Control Unit
+
+## 1. Control Unit Overview
+
+The **Control Unit (CU)** is the nerve center of the processor, responsible for managing the execution of instructions by generating control signals.
+
+> [!INFO] Functional Requirements
+> The Control Unit must perform two basic tasks:
+> 1.  **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence based on the program logic.
+> 2.  **Execution:** Causing the performance of each individual micro-operation by generating specific control signals.
+
+### Inputs & Outputs
+To perform its function, the CU relies on specific inputs to determine the state of the system and produces outputs to control behavior.
+
+**Inputs:**
+* **Clock:** A repetitive sequence of pulses used to measure the duration of micro-operations.
+* **Instruction Register (IR):** Contains the Op-code of the current instruction, which determines which micro-instructions are performed.
+* **Flags:** Indicate the status of the CPU and results of previous ALU operations.
+* **Control Bus Signals:** Signals from the control bus, such as interrupt signals and acknowledgments.
+
+**Outputs:**
+* **Control Signals within the CPU:**
+    * Cause data movement (register-to-register).
+    * Activate specific ALU functions.
+* **Control Signals to System Bus:**
+    * **Control to Memory:** e.g., Read/Write signals.
+    * **Control to I/O Modules:** e.g., I/O Read/Write.
+
+---
+
+## 2. Micro-Operations
+
+> [!SUMMARY] Definition
+> A **Micro-operation ($\mu$-op)** is the functional atomic operation of a CPU. Each instruction cycle (Fetch, Indirect, Execute, Interrupt) is made up of a sequence of these smaller, fundamental steps.
+
+### The Cycles (Register Transfer Notation)
+
+#### Fetch Cycle
+The process of reading the next instruction from memory into the Instruction Register.
+* **t1:** $MAR \leftarrow (PC)$
+* **t2:** $MBR \leftarrow Memory$
+    * $PC \leftarrow (PC) + I$ (Increment PC in parallel)
+* **t3:** $IR \leftarrow (MBR)$
+
+#### Indirect Cycle
+Used if the instruction specifies an indirect address (pointer) for an operand.
+* **t1:** $MAR \leftarrow (IR_{address})$
+* **t2:** $MBR \leftarrow Memory$
+* **t3:** $IR_{address} \leftarrow (MBR_{address})$
+
+#### Interrupt Cycle
+Occurs at the end of the execute cycle if an interrupt is pending. Saves the current context.
+* **t1:** $MBR \leftarrow (PC)$
+* **t2:** $MAR \leftarrow SaveAddress$
+    * $PC \leftarrow RoutineAddress$
+* **t3:** $Memory \leftarrow (MBR)$
+
+#### Execute Cycle
+The sequence differs for every instruction. Examples:
+
+* **ADD R1, X** (Add content of X to R1):
+    * $MAR \leftarrow (IR_{address})$
+    * $MBR \leftarrow Memory$
+    * $R1 \leftarrow (R1) + (MBR)$
+* **ISZ X** (Increment and Skip if Zero):
+    * $MAR \leftarrow (IR_{address})$
+    * $MBR \leftarrow Memory$
+    * $MBR \leftarrow (MBR) + 1$
+    * $Memory \leftarrow (MBR)$
+    * IF $((MBR) == 0)$ THEN $PC \leftarrow (PC) + I$
+* **BSA X** (Branch and Save Address):
+    * $MAR \leftarrow (IR_{address})$
+    * $MBR \leftarrow (PC)$
+    * $PC \leftarrow (IR_{address})$
+    * $Memory \leftarrow (MBR)$
+    * $PC \leftarrow (PC) + I$
+
+### Instruction Cycle Code (ICC)
+A 2-bit register often used to designate the state of the processor:
+* **00:** Fetch
+* **01:** Indirect
+* **10:** Execute
+* **11:** Interrupt
+
+---
+
+## 3. Implementation Approaches
+
+There are two primary ways to design the logic of the Control Unit.
+
+### Hardwired Implementation
+The CU is a combinatorial circuit. The logic is implemented via gates, flip-flops, decoders, and counters.
+* **Logic:** The Inputs (IR, Clock, Flags) are fed into a decoder and timing generator. Boolean expressions are derived for each control signal (e.g., $C5 = \bar{P} \cdot \bar{Q} \cdot T_2$).
+* **Pros/Cons:** It is extremely fast (optimized for speed) but results in a complex, inflexible design that is difficult to test or modify (adding new instructions requires physical hardware changes). Preferred for **RISC** architectures.
+
+### Micro-programmed Implementation
+The CU logic is stored as a "program" (firmware) in a special memory called **Control Memory**.
+* **Concept:** Instructions are broken down into **micro-instructions**. A sequence of micro-instructions is a **micro-program**.
+* **Mechanism:** The opcode from the IR is mapped to a starting address in the Control Memory. The CU reads micro-instructions to generate control signals.
+* **Pros/Cons:** Simplifies the design and allows for flexibility (can update instruction sets by changing firmware). However, it is generally slower than hardwired because of the memory access time. Preferred for **CISC** architectures.
+
+### Comparison: Hardwired vs. Micro-programmed
+
+| Feature | Hardwired Control | Micro-programmed Control |
+| :--- | :--- | :--- |
+| **Speed** | Fast (Direct hardware execution) | Slow (Requires control memory access) |
+| **Complexity** | Complex (Combinatorial logic) | Simple (Systematic software-like structure) |
+| **Flexibility** | Inflexible (Difficult to modify) | Flexible (Easy to update firmware) |
+| **Cost** | Expensive (Design & testing complexity) | Cheaper (Regular memory structure) |
+| **Architecture** | Common in RISC | Common in CISC |
+
+---
+
+## 4. Micro-programmed Control Details
+
+### Horizontal vs. Vertical Micro-instructions
+
+| Feature | Horizontal Micro-programming | Vertical Micro-programming |
+| :--- | :--- | :--- |
+| **Word Width** | Wide (Long control words, e.g., 40-100 bits) | Narrow (Short control words, e.g., 16-40 bits) |
+| **Encoding** | Little to no encoding (Unpacked). | Highly encoded (Packed). |
+| **Parallelism** | High degree of parallel operations possible. | Limited ability to express parallelism. |
+| **Logic** | Simple control logic (Direct mapping to signals). | Complex control logic (Requires decoders). |
+
+### Sequencing Techniques
+Determining the address of the next micro-instruction to execute.
+1.  **Two Address Fields:** The micro-instruction contains two explicit address fields. A multiplexer selects one based on status flags. Simple but requires a wider word.
+2.  **Single Address Field:** Contains one address field. The "next" address is chosen from: the Address Field, the IR code (mapping), or the Next Sequential Address.
+3.  **Variable Format:** Uses a bit to designate the format. One format is for control signals; the other is for branching/sequencing.
+
+### Encoding
+* **Functional vs. Resource Encoding:**
+    * *Functional:* Identifies functions (e.g., ALU op) and designates fields by function type.
+    * *Resource:* Views the machine as independent resources and devotes one field to each resource.
+* **Direct vs. Indirect Encoding:**
+    * *Direct:* Bits directly control the line (or simple decode).
+    * *Indirect:* One field determines the interpretation of another field (similar to mode bits).
+
+---
+
+## 5. Summary/Key Takeaways
+
+* **Core Task:** The Control Unit bridges the gap between hardware (gates/ALU) and software (instructions) by converting Op-codes into electrical signals.
+* **Cycle Hierarchy:** Program $\rightarrow$ Instruction Cycles $\rightarrow$ Micro-Operations.
+* **Hardwired = Speed:** Best for simple instruction sets (RISC) where speed is critical. Logic is "baked in."
+* **Micro-programmed = Flexibility:** Best for complex instruction sets (CISC). Logic is stored in ROM/Control Memory.
+* **Fetch Cycle:** Almost identical for all instructions ($PC \rightarrow MAR \rightarrow Memory \rightarrow MBR \rightarrow IR$).
+* **Micro-instruction Design:** A trade-off between word width (Horizontal) and encoding complexity (Vertical).
