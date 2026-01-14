@@ -242,13 +242,13 @@ The CU logic is stored as a "program" (firmware) in a special memory called **Co
 
 ### Comparison: Hardwired vs. Micro-programmed
 
-| Feature | Hardwired Control | Micro-programmed Control |
-| :--- | :--- | :--- |
-| **Speed** | Fast (Direct hardware execution) | Slow (Requires control memory access) |
-| **Complexity** | Complex (Combinatorial logic) | Simple (Systematic software-like structure) |
-| **Flexibility** | Inflexible (Difficult to modify) | Flexible (Easy to update firmware) |
-| **Cost** | Expensive (Design & testing complexity) | Cheaper (Regular memory structure) |
-| **Architecture** | Common in RISC | Common in CISC |
+| Feature          | Hardwired Control                       | Micro-programmed Control                    |
+| :--------------- | :-------------------------------------- | :------------------------------------------ |
+| **Speed**        | Fast (Direct hardware execution)        | Slow (Requires control memory access)       |
+| **Complexity**   | Complex (Combinatorial logic)           | Simple (Systematic software-like structure) |
+| **Flexibility**  | Inflexible (Difficult to modify)        | Flexible (Easy to update firmware)          |
+| **Cost**         | Expensive (Design & testing complexity) | Cheaper (Regular memory structure)          |
+| **Architecture** | Common in RISC                          | Common in CISC                              |
 
 ---
 
