@@ -428,7 +428,29 @@ When an interrupt occurs, the CPU must determine which module issued it.
 
 ---
 
-## 7. Summary/Key Takeaways
+## 7. RAID Architectures
+**RAID** (Redundant Array of Independent Disks) is a technology that combines multiple physical disk drive components into one or more logical units.
+
+> [!INFO] Three Common Characteristics
+> 1. **Logical Drive:** A set of physical drives is viewed by the OS as a single logical drive.
+> 2. **Striping:** Data is distributed across the physical drives (improves speed).
+> 3. **Redundancy (Parity):** Redundant capacity is used to store parity info (guarantees recoverability).
+
+### Key RAID Levels
+
+| Level | Description | Redundancy Method | Pros/Cons |
+| :--- | :--- | :--- | :--- |
+| **RAID 0** | **Striping** (Non-redundant) | None | **High speed** (read/write). No failure protection. |
+| **RAID 1** | **Mirroring** | Mirrored Data | High availability. **Expensive** (Requires 2N disks). |
+| **RAID 2** | Parallel access | Hamming Code | Redundancy via Hamming code; rarely used. |
+| **RAID 3** | Parallel access | Bit-interleaved parity | High transfer rates; complex controller. |
+| **RAID 4** | Independent access | Block-interleaved parity | Dedicated parity disk can be a bottleneck. |
+| **RAID 5** | Independent access | **Distributed Parity** | Good balance. Parity is distributed across all disks (avoids bottleneck). |
+| **RAID 6** | Independent access | **Dual Distributed Parity** | Can survive two simultaneous disk failures. |
+
+---
+
+## 8. Summary/Key Takeaways
 
 * **I/O Modules** are required to bridge the speed and format gap between the CPU and Peripherals.
 * **I/O Mapping** defines how the CPU addresses devices: *Memory-Mapped* (shared address space) vs. *Isolated* (separate I/O commands).
@@ -436,7 +458,7 @@ When an interrupt occurs, the CPU must determine which module issued it.
 * **Interrupts** allow the CPU to multitask, processing I/O only when data is ready.
 * **DMA** is the standard for high-speed data transfer, allowing the CPU to delegate memory operations to a dedicated controller.
 * **Cycle Stealing** allows DMA to use the bus without a full CPU context switch.
-* **RAID** (Redundant Array of Independent Disks) uses striping (performance) and parity/mirroring (redundancy) to manage multiple disks as a single logical unit.
+* **RAID** levels offer different balances of performance (Striping - RAID 0) and protection (Mirroring - RAID 1, Parity - RAID 5/6).
 
 
 # Topic 10: Memory Systems
