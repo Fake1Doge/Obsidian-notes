@@ -323,7 +323,36 @@ The I/O module is responsible for:
 
 ---
 
-## 2. I/O Techniques (The Big Three)
+## 2. I/O Addressing (Mapping)
+
+When the processor, memory, and I/O share a common bus, the CPU needs a way to identify specific devices. There are two main methods for addressing peripherals:
+
+### A. Memory-Mapped I/O
+* **Concept:** Devices and main memory share a **single address space**.
+* **Operation:** The I/O module registers are treated as if they were memory locations.
+* **Commands:** There are **no special I/O commands**. The CPU uses standard memory instructions (e.g., `LOAD`, `STORE`) to read/write data to the device.
+* **Pros/Cons:**
+    * (+) Large selection of memory access commands available.
+    * (-) Valuable memory address space is "used up" by I/O devices.
+
+### B. Isolated I/O
+* **Concept:** The bus is equipped with separate control lines for "Memory Read/Write" and "I/O Read/Write". This creates **separate address spaces** for memory and I/O.
+* **Operation:** The CPU must use distinct logic to access these separate spaces.
+* **Commands:** Uses **special commands** (typically `IN` and `OUT`) limited specifically to I/O operations.
+* **Pros/Cons:**
+    * (+) Does not use up main memory address space.
+    * (-) Limited set of instructions available for I/O operations.
+
+| Feature | Memory-Mapped I/O | Isolated I/O |
+| :--- | :--- | :--- |
+| **Address Space** | Shared with Memory | Separate |
+| **Control Lines** | Single Read/Write lines | Separate Memory & I/O lines |
+| **Commands** | Standard (`LOAD`/`STORE`) | Special (`IN`/`OUT`) |
+| **Efficiency** | Flexible programming; eats address space | Efficient use of address space; limited commands |
+
+---
+
+## 3. I/O Techniques (The Big Three)
 
 ### A. Programmed I/O
 The CPU has direct control over the I/O operation including sensing status, sending commands, and transferring data.
@@ -365,7 +394,7 @@ Used when large amounts of data need to be moved. It removes the CPU from the da
 
 ---
 
-## 3. Comparison of I/O Techniques
+## 4. Comparison of I/O Techniques
 
 | Technique | CPU Involvement | Hardware Complexity | Efficiency / Best Use Case |
 | :--- | :--- | :--- | :--- |
@@ -375,7 +404,7 @@ Used when large amounts of data need to be moved. It removes the CPU from the da
 
 ---
 
-## 4. Interrupt Design Issues
+## 5. Interrupt Design Issues
 
 ### Device Identification
 When an interrupt occurs, the CPU must determine which module issued it.
@@ -390,7 +419,7 @@ When an interrupt occurs, the CPU must determine which module issued it.
 
 ---
 
-## 5. Bus Communication
+## 6. Bus Communication
 
 ### Synchronous vs. Asynchronous
 * **Synchronous:** Events are determined by a clock signal. Operations occur at fixed time slots.
@@ -399,9 +428,10 @@ When an interrupt occurs, the CPU must determine which module issued it.
 
 ---
 
-## 6. Summary/Key Takeaways
+## 7. Summary/Key Takeaways
 
 * **I/O Modules** are required to bridge the speed and format gap between the CPU and Peripherals.
+* **I/O Mapping** defines how the CPU addresses devices: *Memory-Mapped* (shared address space) vs. *Isolated* (separate I/O commands).
 * **Programmed I/O** is simple but wastes CPU cycles waiting for devices.
 * **Interrupts** allow the CPU to multitask, processing I/O only when data is ready.
 * **DMA** is the standard for high-speed data transfer, allowing the CPU to delegate memory operations to a dedicated controller.
