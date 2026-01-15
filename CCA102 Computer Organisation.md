@@ -289,11 +289,6 @@ Determining the address of the next micro-instruction to execute.
 * **Micro-instruction Design:** A trade-off between word width (Horizontal) and encoding complexity (Vertical).
 
 
----
-tags: [ #ComputerOrganization, #IO_Management, #CS ]
-topics: [ "Interfacing", "DMA", "Interrupts", "RAID", "Bus Architectures" ]
----
-
 # Topic 9: Interfacing and Communication
 
 ## 1. I/O Module Fundamentals
