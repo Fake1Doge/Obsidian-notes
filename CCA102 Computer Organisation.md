@@ -291,174 +291,148 @@ Determining the address of the next micro-instruction to execute.
 
 # Topic 9: Interfacing and Communication
 
-## 1. I/O Module Fundamentals
+## 1. External Devices
+External devices (peripherals) attach to the computer via an I/O module to exchange control, status, and data. They are generally classified into three categories:
 
-### The Need for I/O Modules
-Peripherals (External Devices) are not directly connected to the system bus for several critical reasons:
-1.  **Variety:** Peripherals vary greatly in methods of operation.
-2.  **Data Transfer Rates:** Most peripherals are much slower than the CPU and RAM.
-3.  **Data Formats:** Peripherals often use different data formats and word lengths than the computer.
+* **Human Readable:** Suitable for communicating with the computer user (e.g., Video Display Terminals, Printers, Keyboards).
+* **Machine Readable:** Suitable for communicating with equipment (e.g., Magnetic disks, sensors).
+* **Communication:** Suitable for communicating with remote devices (e.g., Modems, Network Interface Cards).
 
-> [!INFO] Role of the I/O Module
-> The I/O module acts as the "interface" or bridge. It isolates the CPU/Memory from the specific details of the peripheral device.
+> [!INFO] Structure of an External Device
+> * **Control Logic:** Controls the device's operation in response to commands from the I/O module.
+> * **Transducer:** Converts data from electrical signals to other forms of energy (e.g., light, sound, mechanical motion) and vice versa.
+> * **Buffer:** Temporarily holds data being transferred to manage speed differences.
+
+---
+
+## 2. I/O Modules
+The I/O module is the hardware interface that bridges the CPU/Memory and the peripheral devices.
+
+### Why Peripherals are not connected directly to the System Bus
+1.  **Variety:** There is a wide variety of peripherals with different operating methods.
+2.  **Speed Mismatch:** Peripherals are typically much slower than the CPU and RAM.
+3.  **Format Differences:** Peripherals use different data formats and word lengths than the computer.
 
 ### Major Functions
-The I/O module is responsible for:
-* **Control & Timing:** Coordinating the flow of traffic between internal resources and external devices.
-* **CPU Communication:**
-    * *Command Decoding:* Accepting commands (e.g., READ SECTOR) from the CPU.
-    * *Data:* Exchanging data between the CPU and the module.
-    * *Status Reporting:* Reporting device states (BUSY, READY, ERROR).
-    * *Address Recognition:* Recognizing the unique address for each peripheral.
-* **Device Communication:** Handling commands, status, and data with the peripheral.
-* **Data Buffering:** Essential for managing speed mismatches (transfer rates into the module can be high, while output to the device is slow).
-* **Error Detection:** Reporting transmission errors (parity bits) or mechanical errors (paper jam).
-
-### Structure
-* **External Interface:** Connects to the peripheral (Data, Status, Control signals).
-* **Internal Interface:** Connects to the System Bus (Address Lines, Data Lines, Control Lines).
-* **Registers:**
-    * *Data Registers:* Buffer data.
-    * *Status/Control Registers:* Store current state and configuration.
+* **Control & Timing:** Managing the flow of traffic between internal resources and external devices.
+* **CPU Communication:** Decoding commands, exchanging data, reporting status, and recognizing addresses.
+* **Device Communication:** Handling commands, status info, and data with the peripheral.
+* **Data Buffering:** Essential for managing the speed mismatch between the fast CPU and slow peripherals.
+* **Error Detection:** Detecting mechanical errors (e.g., printer paper jam) or transmission errors (e.g., parity bits).
 
 ---
 
-## 2. I/O Addressing (Mapping)
-
-When the processor, memory, and I/O share a common bus, the CPU needs a way to identify specific devices. There are two main methods for addressing peripherals:
-
-### A. Memory-Mapped I/O
-* **Concept:** Devices and main memory share a **single address space**.
-* **Operation:** The I/O module registers are treated as if they were memory locations.
-* **Commands:** There are **no special I/O commands**. The CPU uses standard memory instructions (e.g., `LOAD`, `STORE`) to read/write data to the device.
-* **Pros/Cons:**
-    * (+) Large selection of memory access commands available.
-    * (-) Valuable memory address space is "used up" by I/O devices.
-
-### B. Isolated I/O
-* **Concept:** The bus is equipped with separate control lines for "Memory Read/Write" and "I/O Read/Write". This creates **separate address spaces** for memory and I/O.
-* **Operation:** The CPU must use distinct logic to access these separate spaces.
-* **Commands:** Uses **special commands** (typically `IN` and `OUT`) limited specifically to I/O operations.
-* **Pros/Cons:**
-    * (+) Does not use up main memory address space.
-    * (-) Limited set of instructions available for I/O operations.
-
-| Feature | Memory-Mapped I/O | Isolated I/O |
-| :--- | :--- | :--- |
-| **Address Space** | Shared with Memory | Separate |
-| **Control Lines** | Single Read/Write lines | Separate Memory & I/O lines |
-| **Commands** | Standard (`LOAD`/`STORE`) | Special (`IN`/`OUT`) |
-| **Efficiency** | Flexible programming; eats address space | Efficient use of address space; limited commands |
-
----
-
-## 3. I/O Techniques (The Big Three)
+## 3. I/O Operations
+There are three main techniques for I/O operations, varying in CPU involvement and efficiency.
 
 ### A. Programmed I/O
-The CPU has direct control over the I/O operation including sensing status, sending commands, and transferring data.
-
-* **Process:**
-    1.  CPU issues an I/O command.
-    2.  CPU enters a wait loop, repeatedly checking (polling) the device status.
-    3.  Once the device is "Ready," the CPU transfers the data.
-* **Drawback:** Severe waste of CPU time ("Busy-waiting"). The processor is tied up checking status and cannot do other work.
+The CPU has direct control over the I/O operation.
+* **Process:** The CPU issues a command to the I/O module and then enters a **wait loop**, repeatedly checking (polling) the device status until it is ready.
+* **Addressing:** Data transfer is often handled like memory access (Memory-Mapped I/O) or using special commands (Isolated I/O).
+* **Drawback:** It severely wastes CPU time ("busy-waiting").
 
 ### B. Interrupt-Driven I/O
 Designed to overcome the CPU waiting problem.
-
 * **Process:**
-    1.  CPU issues a read command to the I/O module.
-    2.  **CPU continues with other work.**
-    3.  I/O module interrupts the CPU when data is ready.
-    4.  CPU pauses current execution, saves context (PC, Registers), and processes the interrupt.
-    5.  CPU reads the data and then restores the context to resume original work.
-* **Benefit:** Greatly improves CPU utilization by removing the wait loop.
+    1.  CPU issues a read command.
+    2.  CPU proceeds to do **other useful work**.
+    3.  I/O module **interrupts** the CPU when data is ready.
+    4.  CPU pauses, saves context, processes the interrupt (reads data), and restores context.
+* **Design Issues:**
+    * **Identifying the Module:** How does the CPU know who interrupted? (Daisy Chain/Hardware Poll vs. Vectored Interrupts).
+    * **Priority:** How to handle multiple simultaneous interrupts? (Bus Arbitration/Mastering).
 
 ### C. Direct Memory Access (DMA)
-Used when large amounts of data need to be moved. It removes the CPU from the data transfer path almost entirely.
+Used for large data transfers to avoid tying up the CPU with word-by-word transfers.
+* **Concept:** A dedicated **DMA Controller** module takes over the system bus to transfer blocks of data directly between the I/O device and Memory.
+* **CPU Involvement:** The CPU is involved only at the **beginning** (setup) and **end** (completion interrupt) of the transfer.
+* **Cycle Stealing:** The DMA controller "steals" the bus for a cycle to transfer one word of data. This suspends the CPU just before it accesses the bus, but it does *not* cause a context switch.
 
-* **Concept:** A dedicated DMA Controller module takes over the system bus to transfer blocks of data directly between the I/O device and Memory.
-* **The Workflow:**
-    1.  CPU tells DMA controller: Read/Write, Device Address, Starting Memory Address, Amount of Data.
-    2.  CPU goes back to other work.
-    3.  DMA handles the entire transfer.
-    4.  DMA interrupts the CPU only when the *entire* block transfer is complete.
-
-#### Transfer Modes
-> [!NOTE] DMA Efficiency
-> The CPU is only involved at the beginning (setup) and the end (interrupt).
-
-* **Cycle Stealing:** The DMA controller takes control of the bus for a single bus cycle to transfer one word of data. The CPU is suspended just before it accesses the bus. This slows the CPU down slightly but is not a full context switch (Interrupt).
-* **Burst Mode:** (Standard definition) The DMA holds the bus for a continuous block of data, preventing CPU access until the whole block is done.
-* **Fly-by Transfer:** (Standard definition) Data is transferred directly between the source and destination in a single bus cycle without passing through the DMA controller's internal registers, increasing speed.
+> [!SUMMARY] Comparison of I/O Techniques
+> | Technique | CPU Waiting? | Hardware Complexity | Best Use Case |
+> | :--- | :--- | :--- | :--- |
+> | **Programmed** | Yes (Busy-wait) | Low | Simple, slow devices |
+> | **Interrupt** | No | Medium | Keyboards, Mice |
+> | **DMA** | No | High | Disk Drives, Networks |
 
 ---
 
-## 4. Comparison of I/O Techniques
+## 4. I/O Channels and Processors
+As I/O devices became more sophisticated, the I/O module evolved into a separate processor to take the load off the main CPU.
 
-| Technique | CPU Involvement | Hardware Complexity | Efficiency / Best Use Case |
-| :--- | :--- | :--- | :--- |
-| **Programmed I/O** | **High** (Busy-wait) | Low | Very low. Good for simple, low-speed devices where hardware cost must be minimized. |
-| **Interrupt-Driven** | **Medium** (Setup + ISR) | Medium | Efficient for moderate data rates (e.g., Keyboard, Mouse). Overhead of context switching limits high-speed transfers. |
-| **DMA** | **Low** (Setup + Finish) | High (Requires DMA Controller) | **High.** Best for block transfers (Disk Drives, Network Packets) where speed is critical. |
-
----
-
-## 5. Interrupt Design Issues
-
-### Device Identification
-When an interrupt occurs, the CPU must determine which module issued it.
-1.  **Multiple Interrupt Lines:** Impractical to have a specific line for every device.
-2.  **Software Poll:** CPU jumps to a generic ISR and polls every module to see who is ready. (Slow).
-3.  **Daisy Chain (Hardware Poll):** An "Interrupt Acknowledge" signal is sent down a chain of modules. The requesting module blocks the signal and places its vector on the bus.
-4.  **Vectored Interrupt:** The module places a unique ID (Vector) on the data bus, which the CPU uses to jump directly to the specific handler routine.
-
-### Bus Arbitration
-* **Daisy Chain:** Priority is determined by the physical order of devices on the chain.
-* **Bus Master/Arbitration:** A module must claim control of the bus (become Master) before raising an interrupt (e.g., PCI, SCSI).
+* **I/O Channel:** An extension of the DMA concept. The CPU instructs the I/O Channel to execute a specific I/O program located in memory.
+* **Types of Channels:**
+    * **Selector Channel:** Controls multiple high-speed devices but selects **only one** for data transfer at a time.
+    * **Multiplexor Channel:** Handles **multiple** devices (usually slower ones) simultaneously by interleaving data.
 
 ---
 
-## 6. Bus Communication
+## 5. Interfaces
+The interface connects the I/O module to the peripheral device.
 
-### Synchronous vs. Asynchronous
-* **Synchronous:** Events are determined by a clock signal. Operations occur at fixed time slots.
-* **Asynchronous:** Events depend on the occurrence of a previous event. Uses "Handshaking" (Request/Acknowledge) signals to coordinate data transfer.
-    * *Note:* FireWire (IEEE 1394) uses split transactions and supports both Asynchronous (variable data, addressed) and Isochronous (fixed rate, real-time) transmission.
+### Parallel and Serial Interfaces
+* **Parallel Interface:**
+    * Multiple lines connect the I/O module and peripheral.
+    * Multiple bits are transferred simultaneously.
+    * Used for higher-speed peripherals (legacy printers, disks).
+* **Serial Interface:**
+    * Only one line is used to transmit data.
+    * Bits are transmitted one at a time.
+    * Used for modern peripherals (USB, FireWire).
+
+### FireWire (IEEE 1394)
+* **Type:** High-performance serial bus.
+* **Configuration:** Daisy chain topology (up to 63 devices).
+* **Arbitration:** Tree structure; the Root acts as the arbiter.
+* **Transmission:** Supports both Asynchronous (variable data) and Isochronous (real-time, fixed rate) transmission.
+
+### Universal Serial Bus (USB)
+* **Type:** Simple, low-cost serial bus.
+* **Configuration:** Tree structure controlled by a Root Hub (Host).
+* **Operation:** The host polls hubs to detect devices.
+* **Protocol:** Uses 1ms frames started by a Start-of-Frame (SOF) packet.
+
+---
+
+## 6. Introduction to Networks
+
+### Network Interface Adaptor (NIC)
+* Provides the physical link between the computer and the network.
+* Functions include buffering, Media Access Control (MAC), serial/parallel conversion, and encoding.
+
+### Physical Layer Devices
+* **Hubs/Repeaters:** Layer 1 devices that amplify and repeat signals to extend network distance. A hub broadcasts incoming data to all downstream ports.
+* **Ethernet Standards:**
+    * **10Base-T:** 10 Mbps over twisted pair, max 100m.
+    * **100Base-TX:** 100 Mbps.
+
+### Routers
+* **Layer:** Network Layer (Layer 3).
+* **Function:** Connects different networks (LANs).
+* **Routing:** Uses IP addressing and routing tables to forward packets.
+* **Isolation:** Routers define separate broadcast domains.
 
 ---
 
 ## 7. RAID Architectures
-**RAID** (Redundant Array of Independent Disks) is a technology that combines multiple physical disk drive components into one or more logical units.
+**RAID** (Redundant Array of Independent Disks) uses multiple physical drives viewed as a single logical drive to improve performance and/or reliability.
 
-> [!INFO] Three Common Characteristics
-> 1. **Logical Drive:** A set of physical drives is viewed by the OS as a single logical drive.
-> 2. **Striping:** Data is distributed across the physical drives (improves speed).
-> 3. **Redundancy (Parity):** Redundant capacity is used to store parity info (guarantees recoverability).
+### Key Characteristics
+1.  **Logical Unit:** OS sees one drive.
+2.  **Striping:** Data is distributed across drives (Performance).
+3.  **Redundancy:** Parity or mirroring is used to recover data (Reliability).
 
-### Key RAID Levels
+### RAID Levels Overview
 
-| Level | Description | Redundancy Method | Pros/Cons |
-| :--- | :--- | :--- | :--- |
-| **RAID 0** | **Striping** (Non-redundant) | None | **High speed** (read/write). No failure protection. |
-| **RAID 1** | **Mirroring** | Mirrored Data | High availability. **Expensive** (Requires 2N disks). |
-| **RAID 2** | Parallel access | Hamming Code | Redundancy via Hamming code; rarely used. |
-| **RAID 3** | Parallel access | Bit-interleaved parity | High transfer rates; complex controller. |
-| **RAID 4** | Independent access | Block-interleaved parity | Dedicated parity disk can be a bottleneck. |
-| **RAID 5** | Independent access | **Distributed Parity** | Good balance. Parity is distributed across all disks (avoids bottleneck). |
-| **RAID 6** | Independent access | **Dual Distributed Parity** | Can survive two simultaneous disk failures. |
-
----
-
-## 8. Summary/Key Takeaways
-
-* **I/O Modules** are required to bridge the speed and format gap between the CPU and Peripherals.
-* **I/O Mapping** defines how the CPU addresses devices: *Memory-Mapped* (shared address space) vs. *Isolated* (separate I/O commands).
-* **Programmed I/O** is simple but wastes CPU cycles waiting for devices.
-* **Interrupts** allow the CPU to multitask, processing I/O only when data is ready.
-* **DMA** is the standard for high-speed data transfer, allowing the CPU to delegate memory operations to a dedicated controller.
-* **Cycle Stealing** allows DMA to use the bus without a full CPU context switch.
-* **RAID** levels offer different balances of performance (Striping - RAID 0) and protection (Mirroring - RAID 1, Parity - RAID 5/6).
+| Level      | Description        | Key Mechanism                                 | Pros/Cons                                                   |
+| :--------- | :----------------- | :-------------------------------------------- | :---------------------------------------------------------- |
+| **RAID 0** | **Striping**       | Data striped across disks. **No Redundancy.** | **+** High speed.<br>**-** Data loss if *any* drive fails.  |
+| **RAID 1** | **Mirroring**      | Data duplicated on two drives.                | **+** High availability.<br>**-** Expensive (50% capacity). |
+| **RAID 2** | Parallel Access    | Redundancy via Hamming Code.                  | **-** Complex controller; rarely used.                      |
+| **RAID 3** | Parallel Access    | Parity bit stored on a dedicated disk.        | **+** High throughput for large transfers.                  |
+| **RAID 4** | Independent Access | Block-level striping + Dedicated Parity Disk. | **-** Parity disk becomes a write bottleneck.               |
+| **RAID 5** | Independent Access | **Distributed Parity**.                       | **+** Parity spread across all disks (removes bottleneck).  |
+| **RAID 6** | Independent Access | **Dual Distributed Parity**.                  | **+** Can survive two simultaneous drive failures.          |
 
 
 # Topic 10: Memory Systems
