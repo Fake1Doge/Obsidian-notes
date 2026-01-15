@@ -299,6 +299,7 @@ External devices (peripherals) attach to the computer via an I/O module to excha
 * **Communication:** Suitable for communicating with remote devices (e.g., Modems, Network Interface Cards).
 
 > [!INFO] Structure of an External Device
+> 
 > * **Control Logic:** Controls the device's operation in response to commands from the I/O module.
 > * **Transducer:** Converts data from electrical signals to other forms of energy (e.g., light, sound, mechanical motion) and vice versa.
 > * **Buffer:** Temporarily holds data being transferred to manage speed differences.
@@ -325,13 +326,21 @@ The I/O module is the hardware interface that bridges the CPU/Memory and the per
 ## 3. I/O Operations
 There are three main techniques for I/O operations, varying in CPU involvement and efficiency.
 
-### A. Programmed I/O
+### A. I/O Mapping (Addressing)
+When the processor and I/O share a common bus, the CPU needs a method to identify specific devices.
+
+
+| Method | Description | Pros/Cons |
+| :--- | :--- | :--- |
+| **Memory-Mapped I/O** | Devices and main memory share a **single address space**. The CPU uses standard memory instructions (e.g., `LOAD`, `STORE`) to read/write data. | **(+)** Large selection of memory access commands.<br>**(-)** Uses up memory address space. |
+| **Isolated I/O** | The bus uses separate control lines for "Memory" and "I/O", creating **separate address spaces**. Uses special commands (e.g., `IN`, `OUT`). | **(+)** Saves memory address space.<br>**(-)** Limited set of I/O instructions. |
+
+### B. Programmed I/O
 The CPU has direct control over the I/O operation.
 * **Process:** The CPU issues a command to the I/O module and then enters a **wait loop**, repeatedly checking (polling) the device status until it is ready.
-* **Addressing:** Data transfer is often handled like memory access (Memory-Mapped I/O) or using special commands (Isolated I/O).
 * **Drawback:** It severely wastes CPU time ("busy-waiting").
 
-### B. Interrupt-Driven I/O
+### C. Interrupt-Driven I/O
 Designed to overcome the CPU waiting problem.
 * **Process:**
     1.  CPU issues a read command.
@@ -339,11 +348,14 @@ Designed to overcome the CPU waiting problem.
     3.  I/O module **interrupts** the CPU when data is ready.
     4.  CPU pauses, saves context, processes the interrupt (reads data), and restores context.
 * **Design Issues:**
-    * **Identifying the Module:** How does the CPU know who interrupted? (Daisy Chain/Hardware Poll vs. Vectored Interrupts).
-    * **Priority:** How to handle multiple simultaneous interrupts? (Bus Arbitration/Mastering).
+    * **Identifying the Module:** How does the CPU know who interrupted?
+        * *Daisy Chain (Hardware Poll):* An acknowledge signal propagates through the chain; the requesting module places its vector on the bus.
+        * *Vectored Interrupts:* The module provides a specific ID (vector) to identify the handler.
+    * **Bus Arbitration:** A module must claim control of the bus (Master) before raising an interrupt.
 
-### C. Direct Memory Access (DMA)
+### D. Direct Memory Access (DMA)
 Used for large data transfers to avoid tying up the CPU with word-by-word transfers.
+
 * **Concept:** A dedicated **DMA Controller** module takes over the system bus to transfer blocks of data directly between the I/O device and Memory.
 * **CPU Involvement:** The CPU is involved only at the **beginning** (setup) and **end** (completion interrupt) of the transfer.
 * **Cycle Stealing:** The DMA controller "steals" the bus for a cycle to transfer one word of data. This suspends the CPU just before it accesses the bus, but it does *not* cause a context switch.
@@ -384,12 +396,12 @@ The interface connects the I/O module to the peripheral device.
 * **Type:** High-performance serial bus.
 * **Configuration:** Daisy chain topology (up to 63 devices).
 * **Arbitration:** Tree structure; the Root acts as the arbiter.
-* **Transmission:** Supports both Asynchronous (variable data) and Isochronous (real-time, fixed rate) transmission.
+* **Transmission:** Supports both **Asynchronous** (variable data) and **Isochronous** (real-time, fixed rate) transmission.
 
 ### Universal Serial Bus (USB)
 * **Type:** Simple, low-cost serial bus.
-* **Configuration:** Tree structure controlled by a Root Hub (Host).
-* **Operation:** The host polls hubs to detect devices.
+* **Configuration:** Tree structure where each node has a Hub; controlled by a Root Hub (Host).
+* **Operation:** The host polls hubs to detect devices; each device is assigned a unique 7-bit address.
 * **Protocol:** Uses 1ms frames started by a Start-of-Frame (SOF) packet.
 
 ---
@@ -401,6 +413,7 @@ The interface connects the I/O module to the peripheral device.
 * Functions include buffering, Media Access Control (MAC), serial/parallel conversion, and encoding.
 
 ### Physical Layer Devices
+
 * **Hubs/Repeaters:** Layer 1 devices that amplify and repeat signals to extend network distance. A hub broadcasts incoming data to all downstream ports.
 * **Ethernet Standards:**
     * **10Base-T:** 10 Mbps over twisted pair, max 100m.
@@ -417,6 +430,8 @@ The interface connects the I/O module to the peripheral device.
 ## 7. RAID Architectures
 **RAID** (Redundant Array of Independent Disks) uses multiple physical drives viewed as a single logical drive to improve performance and/or reliability.
 
+
+
 ### Key Characteristics
 1.  **Logical Unit:** OS sees one drive.
 2.  **Striping:** Data is distributed across drives (Performance).
@@ -424,16 +439,15 @@ The interface connects the I/O module to the peripheral device.
 
 ### RAID Levels Overview
 
-| Level      | Description        | Key Mechanism                                 | Pros/Cons                                                   |
-| :--------- | :----------------- | :-------------------------------------------- | :---------------------------------------------------------- |
-| **RAID 0** | **Striping**       | Data striped across disks. **No Redundancy.** | **+** High speed.<br>**-** Data loss if *any* drive fails.  |
-| **RAID 1** | **Mirroring**      | Data duplicated on two drives.                | **+** High availability.<br>**-** Expensive (50% capacity). |
-| **RAID 2** | Parallel Access    | Redundancy via Hamming Code.                  | **-** Complex controller; rarely used.                      |
-| **RAID 3** | Parallel Access    | Parity bit stored on a dedicated disk.        | **+** High throughput for large transfers.                  |
-| **RAID 4** | Independent Access | Block-level striping + Dedicated Parity Disk. | **-** Parity disk becomes a write bottleneck.               |
-| **RAID 5** | Independent Access | **Distributed Parity**.                       | **+** Parity spread across all disks (removes bottleneck).  |
-| **RAID 6** | Independent Access | **Dual Distributed Parity**.                  | **+** Can survive two simultaneous drive failures.          |
-
+| Level      | Description        | Key Mechanism                                 | Pros/Cons                                                            |
+| :--------- | :----------------- | :-------------------------------------------- | :------------------------------------------------------------------- |
+| **RAID 0** | **Striping**       | Data striped across disks. **No Redundancy.** | **(+)** High speed.<br>**(-)** Data loss if *any* drive fails.       |
+| **RAID 1** | **Mirroring**      | Data duplicated on two drives.                | **(+)** High availability.<br>**(-)** Expensive (requires 2N disks). |
+| **RAID 2** | Parallel Access    | Redundancy via Hamming Code.                  | **(-)** Complex controller; rarely used.                             |
+| **RAID 3** | Parallel Access    | Parity bit stored on a dedicated disk.        | **(+)** High throughput for large transfers.                         |
+| **RAID 4** | Independent Access | Block-level striping + Dedicated Parity Disk. | **(-)** Parity disk becomes a write bottleneck.                      |
+| **RAID 5** | Independent Access | **Distributed Parity**.                       | **(+)** Parity spread across all disks (removes bottleneck).         |
+| **RAID 6** | Independent Access | **Dual Distributed Parity**.                  | **(+)** Can survive two simultaneous drive failures.                 |
 
 # Topic 10: Memory Systems
 
