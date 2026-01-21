@@ -1129,3 +1129,207 @@ Mathematical induction is used to prove recursive algorithms produce correct out
 * **Inductive Step:** Assume the algorithm returns the correct value for input $k$ (Inductive Hypothesis), then prove it computes the correct result for $k+1$.
 
 ---
+# Discrete Structures: Counting (CKC111)
+
+> [!INFO] **Course Context**
+> This note covers **Topic 4: Counting** from the CKC111 Discrete Structures course. It details basic counting principles, the Pigeonhole Principle, and permutations and combinations (with and without repetition).
+
+---
+
+## 1. Basic Counting Principles
+
+### 1.1 The Product Rule
+The Product Rule applies when a procedure can be broken down into a sequence of distinct tasks.
+
+> [!INFO] Definition
+> If a procedure consists of a sequence of two tasks, where the first task can be done in $n_1$ ways and the second task in $n_2$ ways, then the total number of ways to perform the procedure is $n_1 \cdot n_2$.
+
+**In Terms of Sets:**
+If $A_1, A_2, ..., A_m$ are finite sets, the number of elements in their Cartesian product is the product of the number of elements in each set:
+$$|A_1 \times A_2 \times ... \times A_m| = |A_1| \cdot |A_2| \cdot ... \cdot |A_m|$$
+
+
+> [!EXAMPLE] Example: Bit Strings
+> **Question:** How many bit strings of length seven are there?
+> **Solution:**
+> 1.  Each of the 7 positions can be filled in 2 ways (0 or 1).
+> 2.  Apply the product rule: $2^7$.
+> 3.  **Result:** $128$ bit strings.
+
+### 1.2 The Sum Rule
+The Sum Rule applies when a task can be done in one of several mutually exclusive (disjoint) ways.
+
+> [!INFO] Definition
+> If a task can be done either in one of $n_1$ ways or in one of $n_2$ ways, where none of the $n_1$ ways is the same as any of the $n_2$ ways, then there are $n_1 + n_2$ ways to do the task.
+
+**In Terms of Sets:**
+$$|A \cup B| = |A| + |B|$$
+*Condition:* $A$ and $B$ must be disjoint sets ($A \cap B = \emptyset$).
+
+> [!EXAMPLE] Example: Committee Selection
+> **Scenario:** Choose a representative from either the math faculty (37 members) or math majors (83 students). No one is both.
+> **Solution:**
+> * Option A (Faculty): 37 ways.
+> * Option B (Student): 83 ways.
+> * **Total:** $37 + 83 = 120$ possible ways.
+
+### 1.3 The Subtraction Rule (Inclusion-Exclusion)
+Used when the sets of ways are **not** disjoint (i.e., there is overlap).
+
+> [!INFO] Definition
+> If a task can be done in $n_1$ or $n_2$ ways, the total number of ways is the sum of the ways minus the number of ways common to both.
+>
+> **Formula:** $|A \cup B| = |A| + |B| - |A \cap B|$.
+
+> [!EXAMPLE] Example: Bit Strings with Conditions
+> **Question:** How many bit strings of length 8 start with `1` OR end with `00`?
+> **Solution:**
+> 1.  **Set A (Start with 1):** $2^7 = 128$.
+> 2.  **Set B (End with 00):** $2^6 = 64$.
+> 3.  **Intersection $A \cap B$ (Start with 1 AND End with 00):** $2^5 = 32$.
+> 4.  **Calculation:** $128 + 64 - 32 = 160$.
+
+### 1.4 The Division Rule
+Used when counting items that are considered identical under certain symmetries (e.g., circular arrangements).
+
+> [!INFO] Definition
+> There are $n/d$ ways to do a task if it can be done in $n$ ways, but for every way $w$, exactly $d$ of the $n$ ways correspond to way $w$.
+
+> [!EXAMPLE] Example: Circular Seating
+> **Question:** How many ways to seat 4 people around a circular table where rotation implies the same seating?
+> **Solution:**
+> 1.  Linear arrangements of 4 people: $4! = 24$.
+> 2.  For any circular arrangement, there are 4 rotations that result in the same relative seating ($d=4$).
+> 3.  **Apply Division Rule:** $24 / 4 = 6$ arrangements.
+
+### 1.5 Tree Diagrams
+Tree diagrams are used to solve counting problems where branches represent possible choices and leaves represent outcomes.
+
+* **Structure:** Start with a root. Each branch represents a possible choice.
+* **Total Outcomes:** Count the number of leaves.
+
+---
+
+## 2. The Pigeonhole Principle
+
+### 2.1 Basic Principle
+> [!INFO] Definition
+> If $k+1$ objects (pigeons) are placed into $k$ boxes (pigeonholes), then **at least one box** contains two or more objects.
+
+**Corollary:** A function from a set with $k+1$ elements to a set with $k$ elements cannot be one-to-one.
+
+> [!EXAMPLE] Example: Exam Scores
+> **Question:** How many students are needed to guarantee two students get the same score (graded 0-100)?.
+> **Solution:**
+> * **Pigeonholes:** Possible scores (0 to 100) = 101 pigeonholes.
+> * **Pigeons:** Students.
+> * To guarantee a collision, we need more pigeons than holes.
+> * **Result:** $101 + 1 = 102$ students.
+
+### 2.2 Generalized Pigeonhole Principle
+> [!INFO] Definition
+> If $N$ objects are placed into $k$ boxes, then there is at least one box containing at least $\lceil N/k \rceil$ objects.
+
+> [!EXAMPLE] Example: Grading
+> **Question:** In a class of 52 students with 5 possible grades (A, B, C, D, F), show the distribution guarantee.
+> **Solution:**
+> * $N = 52$ (students).
+> * $k = 5$ (grades).
+> * **Calculation:** $\lceil 52/5 \rceil = \lceil 10.4 \rceil = 11$.
+> * **Result:** At least 11 students will receive the same grade.
+
+---
+
+## 3. Permutations and Combinations (No Repetition)
+
+> [!TIP] Key Difference
+> * **Permutation:** Order matters (Arrangement).
+> * **Combination:** Order does **not** matter (Selection/Subset).
+
+### 3.1 Permutations ($P(n, r)$)
+An ordered arrangement of distinct objects.
+
+**Formula:**
+The number of $r$-permutations of a set with $n$ distinct elements is:
+$$P(n, r) = \frac{n!}{(n-r)!}$$
+
+
+> [!EXAMPLE] Example: Selecting Winners
+> **Question:** Select 1st, 2nd, and 3rd place from 100 people.
+> **Solution:**
+> $P(100, 3) = \frac{100!}{97!} = 100 \cdot 99 \cdot 98 = 970,200$.
+
+### 3.2 Combinations ($C(n, r)$)
+An unordered selection of $r$ elements from a set. Also known as the binomial coefficient $\binom{n}{r}$.
+
+**Formula:**
+$$C(n, r) = \frac{n!}{r!(n-r)!}$$
+
+
+**Corollary:** $C(n, r) = C(n, n-r)$.
+
+> [!EXAMPLE] Example: Poker Hands
+> **Question:** How many 5-card hands can be dealt from 52 cards?.
+> **Solution:** Order doesn't matter.
+> $C(52, 5) = \frac{52!}{5!47!} = 2,598,960$.
+
+---
+
+## 4. Generalized Permutations and Combinations
+
+### 4.1 Summary Table
+| Type | Repetition Allowed? | Formula |
+| :--- | :--- | :--- |
+| **r-permutations** | No | $\frac{n!}{(n-r)!}$ |
+| **r-combinations** | No | $\frac{n!}{r!(n-r)!}$ |
+| **r-permutations** | **Yes** | $n^r$ |
+| **r-combinations** | **Yes** | $\frac{(n+r-1)!}{r!(n-1)!}$ |
+
+
+### 4.2 Permutations with Repetition
+The number of $r$-permutations of a set of $n$ objects with repetition allowed.
+
+**Formula:** $$n^r$$
+
+
+> [!EXAMPLE] Example: Strings
+> How many strings of length $r$ can be formed from uppercase English letters ($n=26$)?
+> **Answer:** $26^r$.
+
+### 4.3 Combinations with Repetition
+The number of $r$-combinations from a set with $n$ elements where repetition is allowed. This corresponds to the "Stars and Bars" method (placing items into categories).
+
+**Formula:**
+$$C(n+r-1, r) = C(n+r-1, n-1)$$
+
+
+> [!EXAMPLE] Example: Choosing Bills
+> **Question:** Select 5 bills ($r=5$) from 7 denominations ($n=7$) where repetition is allowed.
+> **Solution:**
+> * $n = 7$ (types), $r = 5$ (items).
+> * This corresponds to unordered selection of 5 objects from a set of 11.
+> * **Calculation:** $C(7+5-1, 5) = C(11, 5) = 462$ ways.
+
+> [!EXAMPLE] Example: Integer Solutions
+> **Question:** Solutions for $x_1 + x_2 + x_3 = 11$ where $x_i \ge 0$.
+> **Solution:**
+> * This is selecting 11 items ($r=11$) into 3 categories ($n=3$).
+> * **Calculation:** $C(3+11-1, 11) = C(13, 11) = 78$.
+
+### 4.4 Permutations with Indistinguishable Objects
+Used when reordering a set of objects where some objects are identical (e.g., letters in a word like "SUCCESS").
+
+**Theorem:**
+The number of permutations of $n$ objects with $n_1$ of type 1, $n_2$ of type 2, ..., $n_k$ of type k is:
+$$\frac{n!}{n_1! n_2! \cdot\cdot\cdot n_k!}$$
+
+
+> [!EXAMPLE] Example: "SUCCESS"
+> **Question:** Reorder letters in "SUCCESS".
+> **Breakdown:**
+> * Total letters ($n$): 7
+> * S: 3 ($n_1$), C: 2 ($n_2$), U: 1 ($n_3$), E: 1 ($n_4$).
+>
+> **Calculation:**
+> $$\frac{7!}{3! \cdot 2! \cdot 1! \cdot 1!} = \frac{5040}{6 \cdot 2 \cdot 1 \cdot 1} = 420$$
+>
