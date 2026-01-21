@@ -929,3 +929,182 @@ $$P = \begin{bmatrix} x & 7 \\ 5-3z & \dots \end{bmatrix}, \quad Q = \begin{bmat
 * **Multiplication ($A \times B$):**
     * Valid only if columns of $A$ = rows of $B$.
     * Element $c_{ij}$ is the dot product of Row $i$ of $A$ and Column $j$ of $B$.
+
+---
+# Mathematical & Strong Induction
+
+## 🪜 The Principle of Mathematical Induction
+
+### The Analogy: Climbing an Infinite Ladder
+Mathematical induction is often visualized as climbing a ladder:
+1.  **Basis:** You can reach the first rung (Step 1).
+2.  **Inductive Step:** If you can reach rung $k$, you can reach rung $k+1$.
+3.  **Conclusion:** Therefore, you can reach *any* rung on the ladder.
+
+### Formal Logic
+To prove that a propositional function $P(n)$ is true for all positive integers $n$:
+
+> [!IMPORTANT] The Two-Step Method
+> 1.  **Basis Step:** Verify that $P(1)$ is true.
+> 2.  **Inductive Step:** Show that the conditional statement $P(k) \rightarrow P(k+1)$ is true for all positive integers $k$.
+
+**Rule of Inference:**
+$$[P(1) \wedge \forall k(P(k) \rightarrow P(k+1))] \rightarrow \forall n P(n)$$
+
+---
+
+## 📝 Proof Guidelines & Examples
+
+### General Structure of a Proof
+1.  **Define $P(n)$**: Clearly state the proposition.
+2.  **Basis Step**: Show $P(b)$ is true (usually $b=1$).
+3.  **Inductive Step**:
+    * **State Hypothesis (IH)**: "Assume $P(k)$ is true for an arbitrary integer $k$."
+    * **Goal**: "We must show that $P(k+1)$ is true."
+    * **Derivation**: Use algebra and the IH to prove the goal.
+4.  **Conclusion**: State that $P(n)$ is true for all $n$.
+
+### Example 1: Summation Formula
+**Prove:** $1+2+\dots+n = \frac{n(n+1)}{2}$ for all positive integers $n$.
+
+> [!EXAMPLE] Solution
+> **Let $P(n)$ be:** $1+2+\dots+n = \frac{n(n+1)}{2}$
+>
+> **1. Basis Step ($n=1$):**
+> $$\text{LHS} = 1, \quad \text{RHS} = \frac{1(1+1)}{2} = 1$$
+> Since LHS = RHS, $P(1)$ is true.
+>
+> **2. Inductive Step:**
+> * **Hypothesis:** Assume $1+2+\dots+k = \frac{k(k+1)}{2}$.
+> * **To Prove ($P(k+1)$):** $1+2+\dots+k+(k+1) = \frac{(k+1)(k+2)}{2}$.
+>
+> **Derivation:**
+> $$ \begin{aligned}
+> \text{LHS} &= [1+2+\dots+k] + (k+1) \\
+> &= \frac{k(k+1)}{2} + (k+1) \quad \text{(Substitute IH)} \\
+> &= \frac{k(k+1) + 2(k+1)}{2} \quad \text{(Common denominator)} \\
+> &= \frac{(k+1)(k+2)}{2} \quad \text{(Factor out } k+1)
+> \end{aligned} $$
+> **Conclusion:** Since LHS matches the target formula, $P(n)$ is true for all positive integers.
+
+### Example 2: Sum of Odd Integers
+**Prove:** $1+3+5+\dots+(2n-1) = n^2$.
+
+> [!EXAMPLE] Solution
+> **1. Basis Step:** $1 = 1^2$. True.
+>
+> **2. Inductive Step:**
+> * **IH:** Assume $1+3+\dots+(2k-1) = k^2$.
+> * **To Prove:** $[1+3+\dots+(2k-1)] + (2k+1) = (k+1)^2$.
+>
+> **Derivation:**
+> $$ \begin{aligned}
+> \text{LHS} &= k^2 + (2k+1) \quad \text{(Using IH)} \\
+> &= (k+1)^2 \quad \text{(Factoring)}
+> \end{aligned} $$
+> **Conclusion:** Proven.
+
+### Example 3: Inequality
+**Prove:** $2^n < n!$ for every integer $n \ge 4$.
+
+> [!WARNING] Watch the Base Case
+> Here, $n$ starts at 4, not 1.
+>
+> **1. Basis Step ($n=4$):**
+> $2^4 = 16$ and $4! = 24$. Since $16 < 24$, $P(4)$ is true.
+>
+> **2. Inductive Step:**
+> * **IH:** Assume $2^k < k!$ for $k \ge 4$.
+> * **To Prove:** $2^{k+1} < (k+1)!$.
+>
+> **Derivation:**
+> $$ \begin{aligned}
+> 2^{k+1} &= 2 \cdot 2^k \\
+> &< 2 \cdot k! \quad \text{(Using IH)} \\
+> &< (k+1) \cdot k! \quad \text{(Since } 2 < k+1 \text{ for } k \ge 4) \\
+> &= (k+1)!
+> \end{aligned} $$
+> **Conclusion:** $P(n)$ is true for $n \ge 4$.
+
+### Example 4: Divisibility
+**Prove:** $n^3 - n$ is divisible by 3.
+
+> [!EXAMPLE] Solution
+> **1. Basis Step:** $1^3 - 1 = 0$, which is divisible by 3. True.
+>
+> **2. Inductive Step:**
+> * **IH:** Assume $k^3 - k$ is divisible by 3.
+> * **To Prove:** $(k+1)^3 - (k+1)$ is divisible by 3.
+>
+> **Derivation:**
+> Expand $(k+1)^3 - (k+1)$:
+> $$ \begin{aligned}
+> &= (k^3 + 3k^2 + 3k + 1) - k - 1 \\
+> &= k^3 + 3k^2 + 3k - k \\
+> &= (k^3 - k) + 3(k^2 + k) \quad \text{(Rearranging)}
+> \end{aligned} $$
+> * Term 1: $(k^3 - k)$ is divisible by 3 (by **IH**).
+> * Term 2: $3(k^2 + k)$ is clearly a multiple of 3.
+> * Therefore, the sum is divisible by 3.
+
+---
+
+## 💪 Strong Induction
+
+Strong induction is used when proving $P(k+1)$ requires assuming the truth of **multiple** preceding steps, not just $P(k)$.
+
+### Principle
+* **Basis Step:** Verify $P(1)$ is true.
+* **Inductive Step:** Show that $[P(1) \wedge P(2) \wedge \dots \wedge P(k)] \rightarrow P(k+1)$.
+* **Hypothesis:** Assume $P(j)$ is true for all $1 \le j \le k$.
+
+### Example 5: Fundamental Theorem of Arithmetic
+**Theorem:** Every integer $n > 1$ can be written as a product of primes.
+
+> [!NOTE] Logic
+> * **Basis ($n=2$):** 2 is prime. True.
+> * **Inductive Step:** Assume $P(j)$ is true for $2 \le j \le k$.
+> * **Consider $k+1$:**
+>     * Case 1: $k+1$ is prime. Done.
+>     * Case 2: $k+1$ is composite. It implies $k+1 = a \cdot b$ where $2 \le a, b < k+1$. By the **Strong IH**, $a$ and $b$ are products of primes. Thus, their product $a \cdot b$ is also a product of primes.
+
+### Example 6: Postage Stamps
+**Theorem:** Every postage of 12 cents or more can be formed using 4-cent and 5-cent stamps.
+
+> [!EXAMPLE] Strong Induction Proof
+> **1. Basis Step:**
+> We check 4 consecutive cases (since the smallest stamp is 4):
+> * $P(12): 4+4+4$
+> * $P(13): 4+4+5$
+> * $P(14): 4+5+5$
+> * $P(15): 5+5+5$
+>
+> **2. Inductive Step:**
+> * **IH:** Assume $P(j)$ is true for $12 \le j \le k$ (where $k \ge 15$).
+> * **To Prove:** $P(k+1)$.
+> * **Strategy:**
+>     * We want to form $k+1$.
+>     * Look back at $k-3$. Since we verified up to 15, and $k \ge 15$, $k-3 \ge 12$.
+>     * By IH, $P(k-3)$ is true.
+>     * Add one **4-cent stamp** to the solution for $k-3$.
+>     * $(k-3) + 4 = k+1$.
+> * **Conclusion:** $P(n)$ is true for all $n \ge 12$.
+
+---
+
+## 🧠 Review Question: Sum of Squares
+**Formula:** $1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$
+
+> [!TIP] Proof of Inductive Step
+> **Goal:** Show LHS becomes $\frac{(k+1)(k+2)(2k+3)}{6}$.
+>
+> $$ \begin{aligned}
+> \text{LHS} &= \sum_{i=1}^{k} i^2 + (k+1)^2 \\
+> &= \frac{k(k+1)(2k+1)}{6} + (k+1)^2 \quad \text{(IH)} \\
+> &= \frac{k(k+1)(2k+1) + 6(k+1)^2}{6} \\
+> &= \frac{(k+1)[k(2k+1) + 6(k+1)]}{6} \quad \text{(Factor out } k+1) \\
+> &= \frac{(k+1)(2k^2 + k + 6k + 6)}{6} \\
+> &= \frac{(k+1)(2k^2 + 7k + 6)}{6} \\
+> &= \frac{(k+1)(k+2)(2k+3)}{6} \quad \text{(Factor quadratic)}
+> \end{aligned} $$
+> Matches RHS. Proven.
