@@ -776,3 +776,156 @@ DFS and BFS can run on directed graphs, but the result is not necessarily a span
 | **Speed** | Slower than DFS. | Faster than BFS. |
 | **Decision Trees** | Not suitable (explores neighbors first). | Suitable (explores paths based on decisions). |
 | **Memory** | Less memory efficient (requires more). | **Memory efficient** (requires less). |
+
+---
+# Week 9 week 10
+
+## 1. Sets and Logic
+> [!INFO] Definition
+> A **set** is an unordered collection of distinct objects.
+> * **Notation:** $a \in A$ means element $a$ is in set $A$.
+> * **Roster Method:** $V = \{a, e, i, o, u\}$
+> * **Set-Builder:** $O = \{x \mid x \text{ is an odd positive integer } < 10\}$
+
+### Key Concepts
+* **Subset ($A \subseteq B$):** Every element of $A$ is also in $B$.
+* **Proper Subset ($A \subset B$):** $A \subseteq B$ but $A \neq B$.
+* **Power Set ($P(A)$):** The set of all subsets of $A$. If $|A| = n$, then $|P(A)| = 2^n$.
+* **Cartesian Product ($A \times B$):** Set of ordered pairs $(a,b)$ where $a \in A$ and $b \in B$.
+    * **Cardinality:** $|A \times B| = |A| \cdot |B|$.
+
+### Set Operations
+* **Union ($A \cup B$):** $\{x \mid x \in A \lor x \in B\}$
+* **Intersection ($A \cap B$):** $\{x \mid x \in A \land x \in B\}$
+* **Difference ($A - B$):** $\{x \mid x \in A \land x \notin B\}$
+* **Complement ($\overline{A}$):** $\{x \in U \mid x \notin A\}$
+
+> [!IMPORTANT] Inclusion-Exclusion Principle
+> For two sets $A$ and $B$:
+> $$|A \cup B| = |A| + |B| - |A \cap B|$$
+
+### Set Identities
+| Identity | Law |
+| :--- | :--- |
+| $A \cap U = A$ | **Identity Laws** |
+| $A \cup \emptyset = A$ | **Identity Laws** |
+| $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ | **Distributive Laws** |
+| $\overline{A \cap B} = \overline{A} \cup \overline{B}$ | **De Morgan's Laws** |
+
+---
+
+## 2. Functions
+> [!INFO] Definition
+> A function $f: A \to B$ assigns exactly one element of $B$ to each element of $A$.
+> * **Domain:** Set $A$.
+> * **Codomain:** Set $B$.
+> * **Range (Image):** The set of actual values mapped to in $B$.
+
+### Types of Functions
+* **Injective (One-to-One):** If $f(a) = f(b)$, then $a = b$. (Distinct elements map to distinct images).
+* **Surjective (Onto):** Every element in codomain $B$ is the image of some element in $A$.
+* **Bijective:** Both injective and surjective. (Invertible).
+
+### Inverse Function Example
+**Problem:** Find the inverse of $f(x) = 5x + 2$.
+**Step-by-Step Solution:**
+1.  Let $y = 5x + 2$.
+2.  Swap $x$ and $y$ (conceptually) or solve for $x$ in terms of $y$.
+3.  $y - 2 = 5x$
+4.  $x = \frac{y - 2}{5}$
+5.  **Result:** $f^{-1}(y) = \frac{y - 2}{5}$
+
+### Floor and Ceiling Functions
+* **Floor ($\lfloor x \rfloor$):** Largest integer $\le x$.
+    * *Example:* $\lfloor 0.5 \rfloor = 0$, $\lfloor -1.5 \rfloor = -2$.
+* **Ceiling ($\lceil x \rceil$):** Smallest integer $\ge x$.
+    * *Example:* $\lceil 0.5 \rceil = 1$, $\lceil -1.5 \rceil = -1$.
+
+---
+
+## 3. Sequences and Summations
+> [!INFO] Sequence
+> An ordered list of elements, often defined by a formula $a_n$ or a recurrence relation.
+
+### Recurrence Relations
+**Definition:** An equation expressing $a_n$ in terms of previous terms.
+
+#### Example: Arithmetic Progression
+**Given:** Recurrence relation $a_n = a_{n-1} + 3$ for $n = 1, 2, 3, \dots$ with initial term $a_1 = 2$.
+**Task:** Find $a_{12}$ and $a_{50}$.
+
+**Step-by-Step Solution:**
+1.  **Identify the pattern:**
+    * $a_1 = 2$
+    * $a_2 = a_1 + 3 = 2 + 3 = 5$
+    * $a_3 = a_2 + 3 = 5 + 3 = 8$
+    * This is an Arithmetic Progression with common difference $d = 3$.
+2.  **Find Closed Formula:**
+    * Formula: $a_n = a_1 + (n-1)d$
+    * Substitute values: $a_n = 2 + 3(n-1)$
+3.  **Solve for $a_{12}$:**
+    $$a_{12} = 2 + 3(12 - 1) = 2 + 3(11) = 2 + 33 = \mathbf{35}$$
+4.  **Solve for $a_{50}$:**
+    $$a_{50} = 2 + 3(50 - 1) = 2 + 3(49) = 2 + 147 = \mathbf{149}$$
+
+### Summations
+**Notation:** $\sum_{j=m}^{n} a_j$ represents the sum of terms from index $m$ to $n$.
+
+**Example:** Evaluate $\sum_{j=1}^{5} j^2$.
+* **Expansion:** $1^2 + 2^2 + 3^2 + 4^2 + 5^2$
+* **Calculation:** $1 + 4 + 9 + 16 + 25$
+* **Result:** **55**
+
+---
+
+## 4. Cardinality of Sets
+* **Finite Set:** Has a specific number of elements (e.g., $n$).
+* **Countably Infinite:** Can be put in one-to-one correspondence with Positive Integers ($\mathbb{Z}^+$).
+    * *Examples:* Integers ($\mathbb{Z}$), Rationals ($\mathbb{Q}$), Odd positive integers.
+    * **Cardinality:** $\aleph_0$ (Aleph-null).
+* **Uncountable:** Cannot be listed in a sequence.
+    * *Examples:* Real numbers ($\mathbb{R}$), Interval $[0, 1]$.
+    * **Cardinality:** $> \aleph_0$.
+
+> [!WARNING] Important Rule
+> * Any subset of a countable set is **countable**.
+> * Any superset of an uncountable set is **uncountable**.
+
+---
+
+## 5. Matrices
+> [!INFO] Definition
+> A rectangular array of numbers. A matrix with $m$ rows and $n$ columns has size **$m \times n$**.
+
+### Matrix Equality Example
+**Problem:** Determine values of $x, y, z$ if Matrix $P = Q$.
+$$P = \begin{bmatrix} x & 7 \\ 5-3z & \dots \end{bmatrix}, \quad Q = \begin{bmatrix} 5 & y+1 \\ 2z & \dots \end{bmatrix}$$
+*(Note: Full matrix content inferred from solved example context)*
+
+**Condition:** Two matrices are equal if **every corresponding element** is equal.
+
+**Step-by-Step Solution:**
+1.  **Find $x$:**
+    * Position (1,1): $x = 5$.
+2.  **Find $y$:**
+    * Position (1,2): $7 = y + 1$
+    * $y = 7 - 1$
+    * $y = \mathbf{6}$
+3.  **Find $z$:**
+    * Position (2,1): $5 - 3z = 2z$
+    * Move $z$ terms to one side: $5 = 2z + 3z$
+    * $5 = 5z$
+    * $z = \mathbf{1}$
+
+### Matrix Types
+* **Square Matrix:** Rows = Columns ($n \times n$).
+* **Row Matrix:** Only one row ($1 \times n$).
+* **Column Matrix:** Only one column ($m \times 1$).
+* **Identity Matrix ($I_n$):** Square matrix with 1s on the diagonal and 0s elsewhere.
+    $$I_3 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
+
+### Matrix Operations
+* **Addition:** Add corresponding elements. (Matrices must be same size).
+* **Multiplication ($A \times B$):**
+    * Valid only if columns of $A$ = rows of $B$.
+    * Element $c_{ij}$ is the dot product of Row $i$ of $A$ and Column $j$ of $B$.
