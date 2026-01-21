@@ -1256,3 +1256,195 @@ Show that $a \le 2b$ whenever $(a,b) \in S$.
 * **Structures** like Rooted Trees and Binary Trees are best defined recursively to handle their branching nature.
 * **Structural Induction** is the standard mathematical proof technique for verifying properties of these recursively defined objects, ensuring a property holds from the foundation (basis) up through every construction step (recursive).
 
+# Revision Note: Recursive Algorithms (CKC111)
+
+> [!ABSTRACT] Chapter Overview
+> This chapter covers the fundamental concepts of **Recursive Algorithms**, where a problem is solved by reducing it to an instance of the same problem with smaller input. It includes standard algorithms for Factorial, Exponentiation, GCD, Linear Search, Binary Search, and Merge Sort, along with methods for proving their correctness using induction.
+
+---
+
+## 1. Introduction to Recursion
+
+### Definition
+An algorithm is called **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input.
+
+> [!IMPORTANT] Termination Condition
+> For a recursive algorithm to terminate, the instance of the problem must eventually be reduced to an **initial case** (base case) for which the solution is known.
+
+---
+
+## 2. Basic Recursive Algorithms
+
+### A. Recursive Factorial Algorithm
+**Goal:** Compute $n!$ where $n$ is a nonnegative integer.
+**Logic:** $n! = n \cdot (n-1)!$ with a base case of $0! = 1$.
+
+#### Pseudocode
+```python
+procedure factorial(n: nonnegative integer)
+    if n = 0 then return 1
+    else return n * factorial(n - 1)
+```
+
+> [!EXAMPLE] Trace: Computing $4!$
+> **Forward Step (Recursive Calls):**
+> 1. $4! = 4 \cdot 3!$
+> 2. $3! = 3 \cdot 2!$
+> 3. $2! = 2 \cdot 1!$
+> 4. $1! = 1 \cdot 0!$
+> 5. Base case reached: $0! = 1$
+>
+> **Backward Step (Returning Values):**
+> 6. $1! = 1 \cdot 1 = 1$
+> 7. $2! = 2 \cdot 1 = 2$
+> 8. $3! = 3 \cdot 2 = 6$
+> 9. $4! = 4 \cdot 6 = 24$
+
+---
+
+### B. Recursive Exponentiation Algorithm
+**Goal:** Compute $a^n$, where $a$ is a nonzero real number and $n$ is a nonnegative integer.
+**Logic:** Use the definition $a^n = a \cdot a^{n-1}$ with base case $a^0 = 1$.
+
+#### Pseudocode
+```python
+procedure power(a: nonzero real number, n: nonnegative integer)
+    if n = 0 then return 1
+    else return a * power(a, n - 1)
+```
+
+> [!EXAMPLE] Trace: Computing $2^5$ ($a=2, n=5$)
+> **Recursive Steps:**
+> * $2^5 = 2 \cdot 2^4$
+> * $2^4 = 2 \cdot 2^3$
+> * $2^3 = 2 \cdot 2^2$
+> * $2^2 = 2 \cdot 2^1$
+> * $2^1 = 2 \cdot 2^0$
+> * Base Case: $2^0 = 1$
+>
+> **Calculation:**
+> $2^1 = 2$, $2^2 = 4$, $2^3 = 8$, $2^4 = 16$, $2^5 = 32$.
+
+---
+
+### C. Recursive GCD Algorithm
+**Goal:** Compute the Greatest Common Divisor (GCD) of nonnegative integers $a$ and $b$ with $a < b$.
+**Logic:** Uses the reduction $gcd(a, b) = gcd(b \mod a, a)$ and condition $gcd(0, b) = b$.
+
+#### Pseudocode
+```python
+procedure gcd(a, b: nonnegative integers with a < b)
+    if a = 0 then return b
+    else return gcd(b mod a, a)
+```
+
+> [!EXAMPLE] Trace: Computing $gcd(5, 8)$
+> 1. $gcd(5, 8) = gcd(8 \mod 5, 5) = gcd(3, 5)$
+> 2. $gcd(3, 5) = gcd(5 \mod 3, 3) = gcd(2, 3)$
+> 3. $gcd(2, 3) = gcd(3 \mod 2, 2) = gcd(1, 2)$
+> 4. $gcd(1, 2) = gcd(2 \mod 1, 1) = gcd(0, 1)$
+> 5. Base Case ($a=0$): Returns $1$.
+>
+> **Result:** $gcd(5, 8) = 1$.
+
+---
+
+## 3. Recursive Searching Algorithms
+
+### A. Recursive Linear Search
+**Logic:** Compare search term $x$ with the current element $a_i$. If equal, return index $i$. If not, search the rest of the sequence ($i+1$ to $n$). If list ends ($i=j$), return 0.
+
+#### Pseudocode
+```python
+procedure search(i, j, x: integers, 1 <= i <= j <= n)
+    if a_i = x then return i
+    else if i = j then return 0
+    else return search(i + 1, j, x)
+```
+
+### B. Recursive Binary Search
+**Logic:** Compare $x$ with the middle term $a_m$ where $m = \lfloor(i+j)/2\rfloor$.
+* If $x = a_m$, return $m$.
+* If $x < a_m$, search the left half ($i$ to $m-1$).
+* If $x > a_m$, search the right half ($m+1$ to $j$).
+
+#### Pseudocode
+```python
+procedure binary_search(i, j, x: integers, 1 <= i <= j <= n)
+    m := floor((i + j) / 2)
+    if x = a_m then return m
+    else if (x < a_m and i < m) then
+        return binary_search(i, m - 1, x)
+    else if (x > a_m and j > m) then
+        return binary_search(m + 1, j, x)
+    else return 0
+```
+
+---
+
+## 4. Proving Correctness
+**Method:** Use **Mathematical Induction** or **Strong Induction** to prove recursive algorithms produce correct output.
+
+> [!INFO] Proof Example: Power Algorithm
+> **Hypothesis:** Algorithm correctly computes $a^n$.
+> 1.  **Basis Step ($n=0$):** $power(a, 0) = 1$, which matches $a^0 = 1$.
+> 2.  **Inductive Step:** Assume $power(a, k) = a^k$.
+>     * We must show it holds for $k+1$.
+>     * Algorithm returns $a \cdot power(a, k)$.
+>     * Substituting hypothesis: $a \cdot a^k = a^{k+1}$.
+>     * Therefore, the algorithm is correct.
+
+---
+
+## 5. Merge Sort
+
+### Concept
+Merge sort iteratively splits a list into two sublists of equal length until each sublist has only one element. Then, it successively merges pairs of sublists into a sorted list.
+
+### A. Recursive Merge Sort Algorithm
+**Logic:**
+1.  Check if $n > 1$.
+2.  Split list at $m = \lfloor n/2 \rfloor$.
+3.  Recursively sort $L_1$ (left) and $L_2$ (right).
+4.  Merge the sorted sublists.
+
+#### Pseudocode
+```python
+procedure mergesort(L = a_1, ..., a_n)
+    if n > 1 then
+        m := floor(n / 2)
+        L1 := a_1, ..., a_m
+        L2 := a_{m+1}, ..., a_n
+        L := merge(mergesort(L1), mergesort(L2))
+```
+
+### B. Merging Two Lists
+**Logic:** Compare the first elements of two sorted lists ($L_1, L_2$). Move the smaller element to the end of the new list $L$. Repeat until one list is empty, then append the remainder of the other list.
+
+> [!EXAMPLE] Trace: Merging $\{2, 3, 5, 6\}$ and $\{1, 4\}$
+>
+> | First List ($L_1$) | Second List ($L_2$) | Merged List ($L$) | Comparison |
+> | :--- | :--- | :--- | :--- |
+> | 2, 3, 5, 6 | 1, 4 | Empty | $1 < 2$ (Take 1) |
+> | 2, 3, 5, 6 | 4 | 1 | $2 < 4$ (Take 2) |
+> | 3, 5, 6 | 4 | 1, 2 | $3 < 4$ (Take 3) |
+> | 5, 6 | 4 | 1, 2, 3 | $4 < 5$ (Take 4) |
+> | 5, 6 | Empty | 1, 2, 3, 4 | List 2 Empty |
+> | Empty | Empty | **1, 2, 3, 4, 5, 6** | Append Rest |
+>
+>
+
+### C. Full Merge Sort Visual Trace
+**Input:** `8, 2, 4, 6, 9, 7, 10, 1, 5, 3`
+
+1.  **Split Phase:**
+    * `8, 2, 4, 6, 9` | `7, 10, 1, 5, 3`
+    * `8, 2` | `4, 6, 9` || `7, 10` | `1, 5, 3`
+    * ...Splits down to single elements...
+2.  **Merge Phase:**
+    * Merge `8` & `2` $\rightarrow$ `2, 8`
+    * Merge `2, 8` & `4` $\rightarrow$ `2, 4, 8`
+    * ... (Merging continues up the tree) ...
+3.  **Final Result:** `1, 2, 3, 4, 5, 6, 7, 8, 9, 10`.
+
+---
