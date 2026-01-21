@@ -1536,3 +1536,184 @@ $$|S \cap F \cap R| = 7$$.
 * **Exercise 3:** Find the solution for $a_n = 2a_{n-1} + n + 5$ with $a_0=4$.
 * **Exercise 4:** What is the number of ways to pick either $n$ shirts or $n$ identical socks? (Given 4 shirts, 5 socks).
 * **Exercise 5:** Inclusion-Exclusion problem regarding Computer Science students taking Java, Linux, and C.
+
+---
+# Discrete Probability
+
+## 1. Basic Concepts & Finite Probability
+### Key Definitions
+This section introduces the classical theory of probability, initiated by Pierre-Simon Laplace in the 18th century while analyzing games of chance.
+
+> [!INFO] Fundamental Terms
+> * **Experiment:** A procedure that yields one of a given set of possible outcomes.
+> * **Sample Space ($S$):** The set of all possible outcomes of an experiment.
+> * **Event ($E$):** A subset of the sample space ($E \subseteq S$).
+
+### Laplace's Classical Definition
+If $S$ is a finite sample space of **equally likely outcomes**, the probability of an event $E$ is defined as:
+
+$$p(E) = \frac{|E|}{|S|}$$
+
+**Properties:**
+* The probability is between 0 and 1 because $0 \le |E| \le |S|$.
+* **Impossible Event:** Probability = 0.
+* **Certain Event:** Probability = 1.
+
+---
+
+### Standard Examples
+
+> [!EXAMPLE] Dice & Coins
+> **Rolling a Die:**
+> * Sample Space $S = \{1, 2, 3, 4, 5, 6\}$.
+> * Event $E$ (rolling a 2) = $\{2\}$.
+> * $p(E) = \frac{1}{6}$.
+>
+> **Tossing a Coin:**
+> * Sample Space $S = \{H, T\}$.
+> * Event $E$ (Heads) = $\{H\}$.
+> * $p(E) = \frac{1}{2}$.
+
+> [!EXAMPLE] Rolling Two Dice (Sum = 7)
+> * **Experiment:** Rolling two dice.
+> * **Sample Space Size:** By product rule, $|S| = 6^2 = 36$.
+> * **Event $E$ (Sum is 7):** $E = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}$ so $|E|=6$.
+> * **Calculation:**
+>   $$p(E) = \frac{6}{36} = \frac{1}{6}$$.
+
+> [!EXAMPLE] Sampling with vs. Without Replacement
+> **Scenario:** Drawing 5 specific numbers (11, 4, 17, 39, 23) in order from a bin of 50 balls.
+>
+> **1. Without Replacement:**
+> * The number of ways to choose 5 balls is a permutation: $50 \times 49 \times 48 \times 47 \times 46 = 254,251,200$.
+> * Probability: $1/254,251,200$.
+>
+> **2. With Replacement:**
+> * The number of outcomes is $50^5 = 312,500,000$.
+> * Probability: $1/312,500,000$.
+
+---
+
+## 2. Complements and Unions
+
+
+
+### Probability of Complements
+The probability of the event $\overline{E}$ (the complementary event of $E$, where $\overline{E} = S - E$) is:
+
+$$p(\overline{E}) = 1 - p(E)$$
+
+> [!TIP] Derivation
+> Since $|\overline{E}| = |S| - |E|$, we can derive:
+> $p(\overline{E}) = \frac{|S|-|E|}{|S|} = 1 - \frac{|E|}{|S|} = 1 - p(E)$.
+
+> [!EXAMPLE] Bit String Probability
+> **Question:** In a random 10-bit sequence, what is the probability of at least one '0'?
+> * Let $E$ be the event "at least one 0".
+> * $\overline{E}$ is the event "all bits are 1s".
+> * $|S| = 2^{10} = 1024$. Only 1 outcome has all 1s.
+> * $p(E) = 1 - p(\overline{E}) = 1 - \frac{1}{1024} = \frac{1023}{1024}$.
+
+### Probability of Unions
+Using the inclusion-exclusion principle:
+
+$$p(E_1 \cup E_2) = p(E_1) + p(E_2) - p(E_1 \cap E_2)$$
+
+> [!EXAMPLE] Divisibility
+> **Question:** Probability that a positive integer $\le 100$ is divisible by 2 or 5?
+> * $E_1$ (divisible by 2): $|E_1| = \lfloor \frac{100}{2} \rfloor = 50$.
+> * $E_2$ (divisible by 5): $|E_2| = \lfloor \frac{100}{5} \rfloor = 20$.
+> * $E_1 \cap E_2$ (divisible by 10): $|E_1 \cap E_2| = \lfloor \frac{100}{2.5} \rfloor = 10$.
+> * **Calculation:**
+>   $$p(E_1 \cup E_2) = \frac{50}{100} + \frac{20}{100} - \frac{10}{100} = \frac{60}{100} = \frac{3}{5}$$.
+
+---
+
+## 3. General Probability Theory
+Laplace's definition relies on "equally likely" outcomes. A more general definition assigns probabilities to specific outcomes to handle biased scenarios.
+
+### Assigning Probabilities
+Let $S$ be a sample space. We assign a probability $p(s)$ to each outcome $s$ such that:
+1.  **Range:** $0 \le p(s) \le 1$ for each $s \in S$.
+2.  **Sum:** $\sum_{s \in S} p(s) = 1$.
+
+The function $p$ is called a **probability distribution**. The probability of an event $E$ is the sum of the probabilities of the outcomes in $E$:
+$$p(E) = \sum_{s \in E} p(s)$$
+
+### Uniform Distribution
+This assigns the probability $1/n$ to each element of a set with $n$ elements. This effectively replicates Laplace's definition.
+
+> [!EXAMPLE] Biased Coin
+> **Scenario:** A coin is biased so Heads ($H$) comes up twice as often as Tails ($T$).
+> * Relation: $p(H) = 2p(T)$.
+> * Constraint: $p(H) + p(T) = 1$.
+> * Substitution: $2p(T) + p(T) = 3p(T) = 1$.
+> * **Result:** $p(T) = 1/3$ and $p(H) = 2/3$.
+
+> [!EXAMPLE] Biased Die
+> **Scenario:** The number 3 appears twice as often as any other number; the other five are equally likely.
+> * Let $p(1)=p(2)=p(4)=p(5)=p(6)=x$.
+> * Then $p(3) = 2x$.
+> * Sum: $5x + 2x = 7x = 1 \Rightarrow x = 1/7$.
+> * Therefore: $p(3) = 2/7$, others = $1/7$.
+> * **Probability of Odd Number ($E=\{1,3,5\}$):**
+>   $$p(E) = p(1) + p(3) + p(5) = \frac{1}{7} + \frac{2}{7} + \frac{1}{7} = \frac{4}{7}$$.
+
+---
+
+## 4. Conditional Probability
+The conditional probability of event $E$ given event $F$ (where $p(F) > 0$) is defined as:
+
+$$p(E|F) = \frac{p(E \cap F)}{p(F)}$$
+
+> [!EXAMPLE] Conditional Bit Strings
+> **Question:** Given a random bit string of length 4 starts with a 0 ($F$), what is the probability it contains at least two consecutive 0s ($E$)?
+> * $F$ (starts with 0): 8 strings (0000 to 0111). $p(F) = 8/16 = 1/2$.
+> * $E \cap F$ (starts with 0 AND has consecutive 0s): $\{0000, 0001, 0010, 0011, 0100\}$.
+> * $|E \cap F| = 5$, so $p(E \cap F) = 5/16$.
+> * **Result:**
+>   $$p(E|F) = \frac{5/16}{1/2} = \frac{5}{8}$$.
+
+> [!EXAMPLE] Family Composition
+> **Question:** Given a family with two children has at least one boy ($F$), what is the probability they have two boys ($E$)?
+> * Sample Space: $\{BB, BG, GB, GG\}$ (Equally likely).
+> * $F$ (At least one boy): $\{BB, BG, GB\}$. $p(F) = 3/4$.
+> * $E$ (Two boys): $\{BB\}$.
+> * $E \cap F$: $\{BB\}$. $p(E \cap F) = 1/4$.
+> * **Result:**
+>   $$p(E|F) = \frac{1/4}{3/4} = \frac{1}{3}$$.
+
+---
+
+## 5. Independence
+Two events $E$ and $F$ are independent if and only if:
+
+$$p(E \cap F) = p(E)p(F)$$
+
+> [!WARNING] Checking Independence
+> To determine independence, calculate $p(E)$, $p(F)$, and $p(E \cap F)$ separately and check if the equality holds.
+
+> [!EXAMPLE] Independent vs. Not Independent
+> **Case 1: Bit Strings (Length 4)**
+> * $E$: Starts with 1 ($8/16 = 1/2$).
+> * $F$: Even number of 1s ($8/16 = 1/2$).
+> * $E \cap F$: Starts with 1 AND even number of 1s (e.g., 1111, 1100, 1010, 1001). Count is 4.
+> * $p(E \cap F) = 4/16 = 1/4$.
+> * **Check:** $p(E)p(F) = (1/2)(1/2) = 1/4$.
+> * **Conclusion:** **Independent**.
+>
+> **Case 2: Family (Two Children)**
+> * $E$: Two boys ($1/4$).
+> * $F$: At least one boy ($3/4$).
+> * $E \cap F$: Two boys ($1/4$).
+> * **Check:** $p(E)p(F) = (1/4)(3/4) = 3/16$.
+> * **Observation:** $3/16 \ne 1/4$.
+> * **Conclusion:** **Not Independent**.
+
+---
+
+### Practice Exercises Summary
+* **Rain:** If $p(\text{rain}) = 0.3$, then $p(\text{no rain}) = 1 - 0.3 = 0.7$.
+* **Odd Integer:** Probability an integer in first 100 is odd = $50/100 = 1/2$.
+* **Even Sum (Dice):** Probability sum of two dice is even = $18/36 = 1/2$.
+* **Divisible by 3:** Probability integer $\le 100$ is divisible by 3 = $33/100$.
