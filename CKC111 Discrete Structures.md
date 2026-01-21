@@ -1127,3 +1127,5 @@ A divide-and-conquer algorithm that iteratively splits a list into two sublists 
 Mathematical induction is used to prove recursive algorithms produce correct output.
 * **Basis:** Show it works for the base case (e.g., $n=0$).
 * **Inductive Step:** Assume the algorithm returns the correct value for input $k$ (Inductive Hypothesis), then prove it computes the correct result for $k+1$.
+
+---
