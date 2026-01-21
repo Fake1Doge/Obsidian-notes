@@ -614,3 +614,165 @@ Calculates the minimum traveling cost from a source node to a destination node (
 | **8** | $0 \to 1 \to 2 \to 8$ ($4+8+2$) | **14** |
 
 **Final Output:** `0 4 12 19 21 11 9 8 14`
+
+---
+# Chapter 5: Trees & Spanning Trees
+
+## Chapter Overview
+This chapter explores the properties and applications of **Trees** in discrete structures. It covers the fundamental definitions of trees and forests, the structure of rooted trees (including $m$-ary and binary trees), and methods for traversing these structures (Preorder, Inorder, Postorder). Furthermore, it examines **Spanning Trees** (Section 9.3), detailing how to convert connected graphs into trees using Depth-First Search (DFS) and Breadth-First Search (BFS).
+
+---
+
+## 5.1 Introduction to Trees
+
+### Basic Definitions
+> [!INFO] Definition: Tree
+> A **tree** is a connected undirected graph with **no simple circuits**.
+
+> [!INFO] Definition: Forest
+> A **forest** is a graph that has **no simple circuit** but is **not connected**. Each connected component in a forest is a tree.
+
+* **Tree Property:** A graph is a tree if and only if there is a unique simple path between any two of its vertices.
+
+### Rooted Trees
+A **rooted tree** is a tree where one vertex is designated as the **root**, and every edge is directed away from the root.
+
+#### Terminology
+Given a vertex $h$ in a tree rooted at $g$:
+* **Parent:** The unique vertex $u$ such that there is a directed edge from $u$ to $v$ (e.g., $g$ is the parent of $h$).
+* **Child:** If $u$ is the parent of $v$, then $v$ is the child of $u$ (e.g., $k$ is a child of $h$).
+* **Siblings:** Vertices with the same parent (e.g., $i$ and $j$ are siblings of $h$).
+* **Ancestors:** All vertices in the path from the root to the vertex, excluding the vertex itself (e.g., $g$ is an ancestor of $h$).
+* **Descendants:** All vertices that have the vertex as an ancestor (e.g., $k$ is a descendant of $h$).
+* **Leaf:** A vertex with no children (e.g., $k, i, l, m$).
+* **Internal Vertex:** A vertex that has children (e.g., $h, g, j$).
+
+### $m$-ary Trees
+* **$m$-ary Tree:** A rooted tree is called an $m$-ary tree if every internal vertex has **no more than $m$ children**.
+* **Full $m$-ary Tree:** A tree where every internal vertex has **exactly $m$ children**.
+* **Binary Tree:** An $m$-ary tree where $m=2$.
+
+> [!EXAMPLE] Identifying $m$-ary Trees
+> * If every internal vertex has 2 children $\rightarrow$ **Full Binary Tree**.
+> * If every internal vertex has 3 children $\rightarrow$ **Full 3-ary Tree**.
+> * If some vertices have 2 children and others have 3 $\rightarrow$ **Not a full $m$-ary tree** for any $m$.
+
+### Ordered Rooted Trees
+An ordered rooted tree is one where the children of each internal vertex are ordered (drawn left to right).
+
+* **Binary Tree Structure:**
+    * **Left Child:** The first child.
+    * **Right Child:** The second child.
+    * **Left Subtree:** The tree rooted at the left child.
+    * **Right Subtree:** The tree rooted at the right child.
+
+### Level and Height
+* **Level:** The level of a vertex $v$ is the length of the unique path from the root to $v$. The root is at **Level 0**.
+* **Height:** The maximum of the levels of the vertices in the tree.
+
+---
+
+## 5.2 Tree Traversal
+
+Procedures for systematically visiting every vertex of an ordered tree are called traversals.
+
+### 1. Preorder Traversal
+**Logic:** Visit Root $\rightarrow$ Visit Subtrees Left to Right.
+1.  Visit the root $r$.
+2.  Traverse $T_1$ in preorder.
+3.  Traverse $T_2$ in preorder... until $T_n$.
+
+> [!NOTE] Algorithm
+> ```
+> list r
+> for each child c of r from left to right
+>    preorder(T(c))
+> ```
+
+### 2. Inorder Traversal
+**Logic:** Visit Leftmost Subtree $\rightarrow$ Visit Root $\rightarrow$ Visit Remaining Subtrees.
+*Note: Usually used for binary trees (Left Child $\rightarrow$ Root $\rightarrow$ Right Child).*
+1.  Traverse $T_1$ in inorder.
+2.  Visit the root $r$.
+3.  Traverse $T_2$ in inorder... until $T_n$.
+
+> [!NOTE] Algorithm
+> ```
+> if r is a leaf then list r
+> else
+>    l := first child of r
+>    inorder(T(l))
+>    list r
+>    for each child c of r (except l)
+>       inorder(T(c))
+> ```
+
+### 3. Postorder Traversal
+**Logic:** Visit Subtrees Left to Right $\rightarrow$ Visit Root.
+1.  Traverse $T_1$ in postorder.
+2.  Traverse $T_2$ in postorder... until $T_n$.
+3.  Visit the root $r$.
+
+> [!NOTE] Algorithm
+> ```
+> for each child c of r from left to right
+>    postorder(T(c))
+> list r
+> ```
+
+---
+
+## 9.3 Spanning Trees
+
+### Definition & Theorem
+> [!INFO] Definition: Spanning Tree
+> Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that is a tree containing **every vertex** of $G$.
+
+> [!IMPORTANT] Theorem
+> A simple graph is connected **if and only if** it has a spanning tree.
+
+**Method of Construction:**
+To create a spanning tree from a connected graph with circuits:
+1.  Find a simple circuit.
+2.  Remove an edge from that circuit (ensuring the graph stays connected).
+3.  Repeat until no simple circuits remain.
+
+### Depth-First Search (DFS)
+DFS builds a spanning tree by arbitrarily choosing a root and forming a path by successively adding vertices.
+
+**Algorithm Steps:**
+1.  Start at an arbitrary root.
+2.  Explore as deep as possible along each branch before backtracking.
+3.  If a vertex $w$ is adjacent to $v$ and not in the tree, add edge $\{v,w\}$ and visit $w$.
+4.  If stuck (no unvisited neighbors), backtrack to the previous vertex.
+
+* **Tree Edges:** The edges selected by the DFS algorithm.
+* **Back Edges:** Edges in the original graph connecting a vertex to an ancestor or descendant (not part of the spanning tree).
+
+### Breadth-First Search (BFS)
+BFS builds a spanning tree by processing vertices level by level.
+
+**Algorithm Steps:**
+1.  Choose a root ($v_1$). Add edges to all neighbors of the root (Level 1).
+2.  For each vertex at Level 1, add edges to their unvisited neighbors (Level 2).
+3.  Continue until all vertices are added.
+4.  **Data Structure:** Uses a **Queue** (First In, First Out).
+
+### Directed Graphs
+DFS and BFS can run on directed graphs, but the result is not necessarily a spanning tree; it may be a **spanning forest** (a collection of disjoint trees).
+
+---
+
+## Summary Table: BFS vs DFS
+
+| Feature | Breadth-First Search (BFS) | Depth-First Search (DFS) |
+| :--- | :--- | :--- |
+| **Data Structure** | **Queue** is used. | **Stack** (or recursion) is used. |
+| **Technique** | Vertex-based; finds shortest path. | Edge-based; explores path to end. |
+| **Traversal** | Explores all nodes at same level before moving deep. | Explores nodes as far as possible (deep) before backtracking. |
+| **Backtracking** | Does **not** use backtracking. | Uses **backtracking** to traverse unvisited nodes. |
+| **Edges** | Finds path with minimum number of edges (shortest path). | May produce path with more edges. |
+| **Optimality** | Optimal for vertices closer to source. | Optimal for solutions away from source. |
+| **Speed** | Slower than DFS. | Faster than BFS. |
+| **Decision Trees** | Not suitable (explores neighbors first). | Suitable (explores paths based on decisions). |
+| **Memory** | Less memory efficient (requires more). | **Memory efficient** (requires less). |
