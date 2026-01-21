@@ -1332,4 +1332,207 @@ $$\frac{n!}{n_1! n_2! \cdot\cdot\cdot n_k!}$$
 >
 > **Calculation:**
 > $$\frac{7!}{3! \cdot 2! \cdot 1! \cdot 1!} = \frac{5040}{6 \cdot 2 \cdot 1 \cdot 1} = 420$$
+
+---
+# Advanced Counting Techniques: Recurrence Relations & Generating Functions
+
+## 1. Applications of Recurrence Relations
+
+### Definition
+> [!INFO] Recurrence Relation
+> A recurrence relation for a sequence $\{a_{n}\}$ is an equation that expresses $a_{n}$ in terms of one or more of the previous terms of the sequence (e.g., $a_{0}, a_{1}, ..., a_{n-1}$) for all integers $n$ where $n \ge n_{0}$.
 >
+> * **Solution:** A sequence is a solution if its terms satisfy the relation.
+> * **Initial Conditions:** These specify the terms preceding the first term where the relation takes effect.
+
+### Example 1: Basic Arithmetic Sequence
+**Problem:** Let $\{a_{n}\}$ satisfy $a_{n}=a_{n-1}+3$ for $n=1,2,3...$ with initial condition $a_{0}=2$.
+
+**Solution Trace:**
+1.  $a_{1} = a_{0} + 3 = 2 + 3 = 5$
+2.  $a_{2} = a_{1} + 3 = 5 + 3 = 8$
+3.  $a_{3} = a_{2} + 3 = 8 + 3 = 11$
+
+---
+
+### Example 2: Rabbits & Fibonacci Numbers
+**Scenario:**
+* Rabbits do not breed until they are 2 months old.
+* After 2 months, each pair produces another pair every month.
+* Rabbits never die.
+
+**Deriving the Relation:**
+Let $f_n$ be the number of pairs after $n$ months.
+* **Month 1 ($f_1$):** 1 pair (initial).
+* **Month 2 ($f_2$):** 1 pair (still too young to breed).
+* **Month $n$ ($f_n$):** The total is the sum of:
+    1.  Rabbits present in the previous month ($f_{n-1}$).
+    2.  Newborn pairs produced by rabbits at least 2 months old ($f_{n-2}$).
+
+> [!EXAMPLE] Resulting Relation
+> $$f_{n} = f_{n-1} + f_{n-2}$$
+> for $n \ge 3$ with initial conditions $f_{1}=1, f_{2}=1$.
+
+---
+
+### Example 3: Counting Bit Strings
+**Problem:** Find a recurrence relation for the number of bit strings of length $n$ without two consecutive 0s.
+
+**Logic:**
+Let $a_n$ be the number of valid strings of length $n$.
+To form a valid string of length $n$, we look at the last bit:
+
+1.  **Ending in 1:** The prefix is a valid string of length $n-1$. Count = $a_{n-1}$.
+2.  **Ending in 0:** The bit before the 0 *must* be 1 (to avoid 00). Thus, the string ends in **10**. The prefix is a valid string of length $n-2$. Count = $a_{n-2}$.
+
+> [!EXAMPLE] Resulting Relation
+> $$a_{n} = a_{n-1} + a_{n-2}$$
+> **Initial Conditions:**
+> * $a_1 = 2$ (Strings: 0, 1)
+> * $a_2 = 3$ (Strings: 01, 10, 11)
+>
+> *Note:* This satisfies the Fibonacci relation where $a_n = f_{n+2}$.
+
+---
+
+## 2. Solving Linear Recurrence Relations
+
+### Linear Homogeneous Recurrence Relations
+> [!INFO] Definition
+> A relation of the form:
+> $$a_{n} = c_{1}a_{n-1} + c_{2}a_{n-2} + \dots + c_{k}a_{n-k}$$
+> * **Linear:** RHS is a sum of previous terms multiplied by constants.
+> * **Homogeneous:** No terms occur that are not multiples of $a_j$ (i.e., no constant constants or functions of $n$ added alone).
+> * **Constant Coefficients:** $c_1, \dots, c_k$ are real numbers.
+> * **Degree $k$:** Expressed in terms of previous $k$ terms.
+
+#### Method: Characteristic Equation
+We look for solutions of the form $a_n = r^n$.
+This yields the **Characteristic Equation**:
+$$r^k - c_1 r^{k-1} - c_2 r^{k-2} - \dots - c_k = 0$$
+
+**Theorem (Degree 2):**
+If $r^2 - c_1 r - c_2 = 0$ has two distinct roots $r_1$ and $r_2$, the general solution is:
+$$a_{n}^{(h)} = c_{1} \cdot r_{1}^{n} + c_{2} \cdot r_{2}^{n}$$
+where constants $c_1, c_2$ are determined by initial conditions.
+
+> [!EXAMPLE] Solving $a_{n} = a_{n-1} + 2a_{n-2}$
+> **Given:** $a_0 = 2, a_1 = 7$.
+>
+> **Step 1: Characteristic Equation**
+> $r^2 - r - 2 = 0 \Rightarrow (r-2)(r+1) = 0$.
+> Roots: $r_1 = 2, r_2 = -1$.
+>
+> **Step 2: General Form**
+> $a_n = c_1(2)^n + c_2(-1)^n$.
+>
+> **Step 3: Solve for Constants**
+> * For $n=0$: $c_1 + c_2 = 2$.
+> * For $n=1$: $2c_1 - c_2 = 7$.
+>
+> Solving the system: $c_1 = 3, c_2 = -1$.
+>
+> **Final Solution:**
+> $$a_{n} = 3 \cdot 2^{n} - (-1)^{n}$$
+
+---
+
+### Linear Non-homogeneous Recurrence Relations
+> [!INFO] Definition
+> $$a_{n} = c_{1}a_{n-1} + \dots + c_{k}a_{n-k} + F(n)$$
+> Where $F(n)$ is not identically zero.
+>
+> **Total Solution Structure:**
+> $$a_{n} = a_{n}^{(h)} + a_{n}^{(p)}$$
+> * $a_{n}^{(h)}$: Solution to the associated homogeneous relation.
+> * $a_{n}^{(p)}$: A particular solution specific to $F(n)$.
+
+> [!EXAMPLE] Solving $a_{n} = 3a_{n-1} + 2n$
+> **Given:** $a_1 = 3$.
+>
+> **Step 1: Homogeneous Part ($a_n - 3a_{n-1} = 0$)**
+> Char Eq: $r - 3 = 0 \Rightarrow r = 3$.
+> $a_{n}^{(h)} = \alpha \cdot 3^n$.
+>
+> **Step 2: Particular Solution ($F(n) = 2n$)**
+> Since $F(n)$ is linear, guess $p_n = cn + d$.
+> Substitute back into original equation:
+> $cn + d = 3(c(n-1) + d) + 2n$.
+>
+> Simplify and group terms:
+> $-2cn - 2n - 2d + 3c = 0$
+> $-2n(c+1) + (-2d + 3c) = 0$.
+>
+> Solve coefficients:
+> 1.  $c+1 = 0 \Rightarrow c = -1$.
+> 2.  $-2d + 3c = 0 \Rightarrow -2d - 3 = 0 \Rightarrow d = -3/2$.
+>
+> $a_{n}^{(p)} = -n - 3/2$.
+>
+> **Step 3: Total Solution & Constants**
+> $a_n = \alpha \cdot 3^n - n - 3/2$.
+> Using $a_1 = 3$:
+> $3 = \alpha(3)^1 - 1 - 3/2 \Rightarrow \alpha = 11/6$.
+>
+> **Final Solution:**
+> $$a_{n} = \frac{11}{6}3^{n} - n - \frac{3}{2}$$.
+
+---
+
+## 3. Generating Functions
+
+### Definition
+The generating function for a sequence $a_0, a_1, \dots, a_k, \dots$ is the infinite series:
+$$G(x) = \sum_{k=0}^{\infty} a_{k}x^{k}$$
+
+### Examples
+| Sequence $\{a_k\}$ | Generating Function $G(x)$ | Note |
+| :--- | :--- | :--- |
+| $1, 1, 1, 1, 1, 1$ | $1 + x + x^2 + x^3 + x^4 + x^5$ | Finite sequence |
+| $a_k = 3$ | $\sum_{k=0}^{\infty} 3x^k$ | Infinite constant sequence |
+| $a_k = k+1$ | $\sum_{k=0}^{\infty} (k+1)x^k$ | Linear growth |
+| $a_k = 2^k$ | $\sum_{k=0}^{\infty} 2^k x^k = \sum (2x)^k$ | Geometric |
+
+> [!EXAMPLE] Combinatorial Application (Shirts)
+> **Problem:** How many ways to pick $n$ shirts from 4 distinct shirts?
+> * Pick 0: 1 way
+> * Pick 1: 4 ways
+> * Pick 2: 6 ways
+> * Pick 3: 4 ways
+> * Pick 4: 1 way
+>
+> **Generating Function:** $1 + 4x + 6x^2 + 4x^3 + 1x^4$.
+
+---
+
+## 4. Principle of Inclusion-Exclusion
+
+### Formulas
+> [!INFO] Two Sets
+> $$|A \cup B| = |A| + |B| - |A \cap B|$$
+> Subtract the intersection because it is counted twice.
+
+> [!INFO] Three Sets
+> $$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$
+> Add singles, subtract pairs, add back the triple intersection.
+
+### Example: Language Classes
+**Data:**
+* **Total students taking at least one:** $|S \cup F \cup R| = 2092$.
+* **Singles:** Spanish ($S$) = 1232, French ($F$) = 879, Russian ($R$) = 114.
+* **Pairs:** $S \cap F = 103$, $S \cap R = 23$, $F \cap R = 14$.
+* **Goal:** Find $|S \cap F \cap R|$.
+
+**Calculation:**
+$$2092 = 1232 + 879 + 114 - 103 - 23 - 14 + |S \cap F \cap R|$$
+$$2092 = 2085 + |S \cap F \cap R|$$
+$$|S \cap F \cap R| = 7$$.
+
+---
+
+## 5. Exercises for Practice
+* **Exercise 1:** How many bit strings of length 7 contain no two consecutive 0s?
+* **Exercise 2:** Solve $a_n = 5a_{n-1} - 6a_{n-2}$ for $n \ge 2$, with $a_0=1, a_1=0$.
+* **Exercise 3:** Find the solution for $a_n = 2a_{n-1} + n + 5$ with $a_0=4$.
+* **Exercise 4:** What is the number of ways to pick either $n$ shirts or $n$ identical socks? (Given 4 shirts, 5 socks).
+* **Exercise 5:** Inclusion-Exclusion problem regarding Computer Science students taking Java, Linux, and C.
