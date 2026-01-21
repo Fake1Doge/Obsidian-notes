@@ -931,520 +931,199 @@ $$P = \begin{bmatrix} x & 7 \\ 5-3z & \dots \end{bmatrix}, \quad Q = \begin{bmat
     * Element $c_{ij}$ is the dot product of Row $i$ of $A$ and Column $j$ of $B$.
 
 ---
-# Mathematical & Strong Induction
+# 📘 Discrete Structures: Induction, Recursion & Algorithms
 
-## 🪜 The Principle of Mathematical Induction
+## 1. Mathematical & Strong Induction
 
-### The Analogy: Climbing an Infinite Ladder
-Mathematical induction is often visualized as climbing a ladder:
-1.  **Basis:** You can reach the first rung (Step 1).
+### The Principle of Mathematical Induction
+Mathematical induction is a proof technique used to verify statements for all positive integers. It is often visualized as climbing an infinite ladder.
+
+![[Ladder Analogy Diagram]]
+
+**The Analogy:**
+1.  **Basis Step:** You can reach the first rung.
 2.  **Inductive Step:** If you can reach rung $k$, you can reach rung $k+1$.
 3.  **Conclusion:** Therefore, you can reach *any* rung on the ladder.
 
-### Formal Logic
-To prove that a propositional function $P(n)$ is true for all positive integers $n$:
+**Formal Logic:**
+To prove a propositional function $P(n)$ is true for all positive integers $n$:
+1.  **Basis Step:** Verify that $P(1)$ is true.
+2.  **Inductive Step:** Show that the conditional statement $P(k) \rightarrow P(k+1)$ is true for all positive integers $k$.
 
-> [!IMPORTANT] The Two-Step Method
-> 1.  **Basis Step:** Verify that $P(1)$ is true.
-> 2.  **Inductive Step:** Show that the conditional statement $P(k) \rightarrow P(k+1)$ is true for all positive integers $k$.
-
-**Rule of Inference:**
 $$[P(1) \wedge \forall k(P(k) \rightarrow P(k+1))] \rightarrow \forall n P(n)$$
 
 ---
 
-## 📝 Proof Guidelines & Examples
+### Proof Examples
 
-### General Structure of a Proof
-1.  **Define $P(n)$**: Clearly state the proposition.
-2.  **Basis Step**: Show $P(b)$ is true (usually $b=1$).
-3.  **Inductive Step**:
-    * **State Hypothesis (IH)**: "Assume $P(k)$ is true for an arbitrary integer $k$."
-    * **Goal**: "We must show that $P(k+1)$ is true."
-    * **Derivation**: Use algebra and the IH to prove the goal.
-4.  **Conclusion**: State that $P(n)$ is true for all $n$.
+#### Example 1: Summation Formula
+**Prove:** $1+2+\dots+n = \frac{n(n+1)}{2}$.
 
-### Example 1: Summation Formula
-**Prove:** $1+2+\dots+n = \frac{n(n+1)}{2}$ for all positive integers $n$.
-
-> [!EXAMPLE] Solution
-> **Let $P(n)$ be:** $1+2+\dots+n = \frac{n(n+1)}{2}$
->
+> [!EXAMPLE] Proof Trace
 > **1. Basis Step ($n=1$):**
-> $$\text{LHS} = 1, \quad \text{RHS} = \frac{1(1+1)}{2} = 1$$
-> Since LHS = RHS, $P(1)$ is true.
+> $\text{LHS} = 1, \quad \text{RHS} = \frac{1(1+1)}{2} = 1$. Since LHS = RHS, $P(1)$ is true.
 >
 > **2. Inductive Step:**
-> * **Hypothesis:** Assume $1+2+\dots+k = \frac{k(k+1)}{2}$.
-> * **To Prove ($P(k+1)$):** $1+2+\dots+k+(k+1) = \frac{(k+1)(k+2)}{2}$.
+> * **Hypothesis ($P(k)$):** Assume $1+\dots+k = \frac{k(k+1)}{2}$.
+> * **To Prove ($P(k+1)$):** $1+\dots+k+(k+1) = \frac{(k+1)(k+2)}{2}$.
 >
 > **Derivation:**
 > $$ \begin{aligned}
-> \text{LHS} &= [1+2+\dots+k] + (k+1) \\
+> \text{LHS} &= [1+\dots+k] + (k+1) \\
 > &= \frac{k(k+1)}{2} + (k+1) \quad \text{(Substitute IH)} \\
 > &= \frac{k(k+1) + 2(k+1)}{2} \quad \text{(Common denominator)} \\
 > &= \frac{(k+1)(k+2)}{2} \quad \text{(Factor out } k+1)
 > \end{aligned} $$
-> **Conclusion:** Since LHS matches the target formula, $P(n)$ is true for all positive integers.
+> **Conclusion:** $P(n)$ is true for all positive integers $n$.
 
-### Example 2: Sum of Odd Integers
-**Prove:** $1+3+5+\dots+(2n-1) = n^2$.
+#### Example 2: Inequality
+**Prove:** $n < 2^n$ for all positive integers $n$.
 
-> [!EXAMPLE] Solution
-> **1. Basis Step:** $1 = 1^2$. True.
->
+> [!EXAMPLE] Proof Trace
+> **1. Basis Step:** $1 < 2^1$ is true.
 > **2. Inductive Step:**
-> * **IH:** Assume $1+3+\dots+(2k-1) = k^2$.
-> * **To Prove:** $[1+3+\dots+(2k-1)] + (2k+1) = (k+1)^2$.
->
-> **Derivation:**
-> $$ \begin{aligned}
-> \text{LHS} &= k^2 + (2k+1) \quad \text{(Using IH)} \\
-> &= (k+1)^2 \quad \text{(Factoring)}
-> \end{aligned} $$
-> **Conclusion:** Proven.
+> * Assume $k < 2^k$.
+> * To prove: $k+1 < 2^{k+1}$.
+> * Derivation:
+>   $$k+1 < 2^k + 1 \le 2^k + 2^k = 2^{k+1}$$
+>   *(Note: $1 \le 2^k$ is true for positive integers)*.
 
-### Example 3: Inequality
-**Prove:** $2^n < n!$ for every integer $n \ge 4$.
-
-> [!WARNING] Watch the Base Case
-> Here, $n$ starts at 4, not 1.
->
-> **1. Basis Step ($n=4$):**
-> $2^4 = 16$ and $4! = 24$. Since $16 < 24$, $P(4)$ is true.
->
-> **2. Inductive Step:**
-> * **IH:** Assume $2^k < k!$ for $k \ge 4$.
-> * **To Prove:** $2^{k+1} < (k+1)!$.
->
-> **Derivation:**
-> $$ \begin{aligned}
-> 2^{k+1} &= 2 \cdot 2^k \\
-> &< 2 \cdot k! \quad \text{(Using IH)} \\
-> &< (k+1) \cdot k! \quad \text{(Since } 2 < k+1 \text{ for } k \ge 4) \\
-> &= (k+1)!
-> \end{aligned} $$
-> **Conclusion:** $P(n)$ is true for $n \ge 4$.
-
-### Example 4: Divisibility
-**Prove:** $n^3 - n$ is divisible by 3.
-
-> [!EXAMPLE] Solution
-> **1. Basis Step:** $1^3 - 1 = 0$, which is divisible by 3. True.
->
-> **2. Inductive Step:**
-> * **IH:** Assume $k^3 - k$ is divisible by 3.
-> * **To Prove:** $(k+1)^3 - (k+1)$ is divisible by 3.
->
-> **Derivation:**
-> Expand $(k+1)^3 - (k+1)$:
-> $$ \begin{aligned}
-> &= (k^3 + 3k^2 + 3k + 1) - k - 1 \\
-> &= k^3 + 3k^2 + 3k - k \\
-> &= (k^3 - k) + 3(k^2 + k) \quad \text{(Rearranging)}
-> \end{aligned} $$
-> * Term 1: $(k^3 - k)$ is divisible by 3 (by **IH**).
-> * Term 2: $3(k^2 + k)$ is clearly a multiple of 3.
-> * Therefore, the sum is divisible by 3.
+#### Example 3: Divisibility
+**Prove:** $n^3 - n$ is divisible by 3 whenever $n$ is a positive integer.
+* **Basis Step:** $1^3 - 1 = 0$, which is divisible by 3.
+* **Inductive Step:**
+    * Expand $(k+1)^3 - (k+1)$ to get $(k^3 + 3k^2 + 3k + 1) - k - 1$.
+    * Rearrange to $(k^3 - k) + 3(k^2 + k)$.
+    * The first term is divisible by 3 (by Hypothesis) and the second term is a multiple of 3, so the sum is divisible by 3.
 
 ---
 
-## 💪 Strong Induction
+### Strong Induction
+Strong induction is used when proving $P(k+1)$ requires assuming the truth of **multiple** preceding steps (not just $P(k)$).
 
-Strong induction is used when proving $P(k+1)$ requires assuming the truth of **multiple** preceding steps, not just $P(k)$.
+> [!INFO] Principle
+> **Basis Step:** Verify $P(1)$ is true.
+> **Inductive Step:** Show that $[P(1) \wedge P(2) \wedge \dots \wedge P(k)] \rightarrow P(k+1)$.
+> **Hypothesis:** Assume $P(j)$ is true for all $j=1, 2, \dots, k$.
 
-### Principle
-* **Basis Step:** Verify $P(1)$ is true.
-* **Inductive Step:** Show that $[P(1) \wedge P(2) \wedge \dots \wedge P(k)] \rightarrow P(k+1)$.
-* **Hypothesis:** Assume $P(j)$ is true for all $1 \le j \le k$.
-
-### Example 5: Fundamental Theorem of Arithmetic
-**Theorem:** Every integer $n > 1$ can be written as a product of primes.
-
-> [!NOTE] Logic
-> * **Basis ($n=2$):** 2 is prime. True.
-> * **Inductive Step:** Assume $P(j)$ is true for $2 \le j \le k$.
-> * **Consider $k+1$:**
->     * Case 1: $k+1$ is prime. Done.
->     * Case 2: $k+1$ is composite. It implies $k+1 = a \cdot b$ where $2 \le a, b < k+1$. By the **Strong IH**, $a$ and $b$ are products of primes. Thus, their product $a \cdot b$ is also a product of primes.
-
-### Example 6: Postage Stamps
-**Theorem:** Every postage of 12 cents or more can be formed using 4-cent and 5-cent stamps.
-
-> [!EXAMPLE] Strong Induction Proof
-> **1. Basis Step:**
-> We check 4 consecutive cases (since the smallest stamp is 4):
-> * $P(12): 4+4+4$
-> * $P(13): 4+4+5$
-> * $P(14): 4+5+5$
-> * $P(15): 5+5+5$
->
-> **2. Inductive Step:**
-> * **IH:** Assume $P(j)$ is true for $12 \le j \le k$ (where $k \ge 15$).
-> * **To Prove:** $P(k+1)$.
-> * **Strategy:**
->     * We want to form $k+1$.
->     * Look back at $k-3$. Since we verified up to 15, and $k \ge 15$, $k-3 \ge 12$.
->     * By IH, $P(k-3)$ is true.
->     * Add one **4-cent stamp** to the solution for $k-3$.
->     * $(k-3) + 4 = k+1$.
-> * **Conclusion:** $P(n)$ is true for all $n \ge 12$.
+**Key Applications:**
+1.  **Fundamental Theorem of Arithmetic:** Every integer $n > 1$ can be written as a product of primes.
+    * *Reasoning:* If $k+1$ is composite ($a \cdot b$), both $a$ and $b$ are smaller than $k+1$. By strong induction, both $a$ and $b$ are products of primes, so $a \cdot b$ is also.
+2.  **Postage Stamps:** Every postage of 12 cents or more can be formed using 4-cent and 5-cent stamps.
+    * *Basis:* Verify for 12, 13, 14, 15.
+    * *Recursive:* For $k+1$, rely on $P(k-3)$ and add a 4-cent stamp.
 
 ---
 
-## 🧠 Review Question: Sum of Squares
-**Formula:** $1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6}$
+## 2. Recursive Definitions & Structural Induction
 
-> [!TIP] Proof of Inductive Step
-> **Goal:** Show LHS becomes $\frac{(k+1)(k+2)(2k+3)}{6}$.
->
-> $$ \begin{aligned}
-> \text{LHS} &= \sum_{i=1}^{k} i^2 + (k+1)^2 \\
-> &= \frac{k(k+1)(2k+1)}{6} + (k+1)^2 \quad \text{(IH)} \\
-> &= \frac{k(k+1)(2k+1) + 6(k+1)^2}{6} \\
-> &= \frac{(k+1)[k(2k+1) + 6(k+1)]}{6} \quad \text{(Factor out } k+1) \\
-> &= \frac{(k+1)(2k^2 + k + 6k + 6)}{6} \\
-> &= \frac{(k+1)(2k^2 + 7k + 6)}{6} \\
-> &= \frac{(k+1)(k+2)(2k+3)}{6} \quad \text{(Factor quadratic)}
-> \end{aligned} $$
-> Matches RHS. Proven.
+### Recursive Definitions
+Recursion defines objects in terms of themselves.
 
+* **Recursive Function:** Defined by a **Basis Step** (value at zero) and a **Recursive Step** (rule for finding value at $n$ from smaller integers).
+* **Recursive Set:** Defined by an initial collection of elements (basis) and rules for forming new elements from existing ones.
 
-# Recursive Definitions and Structural Induction
-
-## Key Concepts
-
-### 1. Recursive Definitions
-A recursive definition generally consists of two main parts:
-> [!INFO] Definition Structure
-> * **Basis Step:** Specifies the value of the function at zero or explicitly lists the initial elements of a set.
-> * **Recursive Step:** Provides a rule for finding new values or forming new elements based on those already known or defined.
-
-> [!WARNING] Exclusion Rule
-> Ideally, a recursive definition includes an **exclusion rule**, stating that the set contains *only* elements specified in the basis step or generated by the recursive step. We assume this holds even if not explicitly stated.
-
-### 2. Recursively Defined Functions
-A function $f(n)$ can be viewed as a sequence $a_0, a_1, \dots$ where $f(i) = a_i$.
-* **Basis Step:** Define $f(0)$.
-* **Recursive Step:** Define $f(n+1)$ or $f(n)$ using values at smaller integers (e.g., $f(n-1)$).
-
-### 3. Recursively Defined Sets and Structures
-We can define geometric or logical structures recursively.
-* **Rooted Trees:** A set of vertices containing a distinguished root and edges.
-* **Binary Trees:** A specific type of rooted tree where children are designated as left or right subtrees.
-
-### 4. Structural Induction
-> [!IMPORTANT] Definition
-> **Structural Induction** is a technique used specifically to prove results about recursively defined sets. It is a variant of mathematical induction.
-
-**The Proof Method:**
-1.  **Basis Step:** Show the result holds for elements specified in the definition's basis step.
-2.  **Recursive Step:** Show that if the statement is true for the existing elements used to build new ones, it remains true for the new elements generated.
-
----
-
-## Formulas & Logic
-
-### Common Recursive Function Patterns
-
-| Function Type | Basis Step | Recursive Step Rule |
+| Concept | Basis Step Example | Recursive Step Example |
 | :--- | :--- | :--- |
-| **Powers of 2** ($2^n$) | $a_0 = 1$ | $a_{n+1} = 2a_n$ |
-| **Fibonacci** ($f_n$) | $f_0=0, f_1=1$ | $f_n = f_{n-1} + f_{n-2}$ |
-| **Powers** ($a^n$) | $f(0) = 1$ | $f(n+1) = a \cdot f(n)$ |
-| **Factorial** ($n!$) | $f(0) = 1$ | $f(n+1) = (n+1)f(n)$ |
-| **Summation** ($\sum$) | $\sum_{k=0}^{0}a_k = a_0$ | $\sum_{k=0}^{n+1}a_k = (\sum_{k=0}^{n}a_k) + a_{n+1}$ |
+| **Powers of 2 ($2^n$)** | $a_0 = 1$ | $a_{n+1} = 2a_n$ |
+| **Factorial ($n!$)** | $f(0) = 1$ | $f(n+1) = (n+1)f(n)$ |
+| **Set $S$ (Multiples of 3)** | $3 \in S$ | If $n \in S$, then $n+3 \in S$ |
 
-### Tree Definitions
+### Tree Structures
+Recursion is the standard way to define tree data structures.
 
-**1. Rooted Trees**
-* **Basis:** A single vertex $r$ is a rooted tree.
-* **Recursive:** If $T_1, \dots, T_n$ are disjoint rooted trees with roots $r_1, \dots, r_n$, then connecting a new root $r$ to each $r_i$ forms a new rooted tree.
+1.  **Rooted Trees:**
+    * **Basis:** A single vertex $r$ is a rooted tree.
+    * **Recursive:** A graph formed by connecting a new root $r$ to the roots of disjoint trees $T_1, \dots, T_n$.
+2.  **Extended Binary Trees:**
+    * **Basis:** The empty set $\emptyset$ is an extended binary tree.
+    * **Recursive:** A root connecting a left subtree $T_1$ and right subtree $T_2$ is an extended binary tree.
+3.  **Full Binary Trees:**
+    * **Basis:** A single vertex $r$ is a full binary tree.
+    * **Recursive:** A root connected to disjoint full binary trees $T_1$ and $T_2$.
 
-**2. Extended Binary Trees**
-* **Basis:** The empty set $\emptyset$ is an extended binary tree.
-* **Recursive:** If $T_1$ and $T_2$ are disjoint extended binary trees, $T_1 \cdot T_2$ (a root connecting to left subtree $T_1$ and right subtree $T_2$) is an extended binary tree.
+### Structural Induction
+A proof method specific to recursively defined sets.
 
-**3. Full Binary Rooted Trees**
-* **Basis:** A single vertex $r$ is a full binary tree. (*Note: Unlike extended trees, this cannot be empty*).
-* **Recursive:** If $T_1$ and $T_2$ are disjoint full binary trees, connecting a root to both forms a new full binary tree.
+> [!TIP] Procedure
+> 1.  **Basis Step:** Show the result holds for elements specified in the basis definition.
+> 2.  **Recursive Step:** Show that if the property holds for elements used to build new ones, it also holds for the new elements generated.
 
----
-
-## Step-by-Step Examples
-
-### Example 1: Evaluating a Recursive Function
-**Problem:** Given the definition:
-* Basis: $f(0) = 3$
-* Recursive: $f(n+1) = 2f(n) + 3$
-Find $f(1), f(2), f(3), f(4)$.
-
-**Solution Trace:**
-1.  **Find $f(1)$:**
-    $$f(1) = 2f(0) + 3 = 2(3) + 3 = 9$$
-2.  **Find $f(2)$:**
-    $$f(2) = 2f(1) + 3 = 2(9) + 3 = 21$$
-3.  **Find $f(3)$:**
-    $$f(3) = 2f(2) + 3 = 2(21) + 3 = 45$$
-4.  **Find $f(4)$:**
-    $$f(4) = 2f(3) + 3 = 2(45) + 3 = 93$$
+**Example: Proving divisibility for Set $S$**
+* **Definition:** $3 \in S$; if $x, y \in S$, then $x+y \in S$.
+* **Goal:** Prove $3|x$ for all $x \in S$.
+* **Basis:** $3|3$ is true.
+* **Recursive:** Assume $3|a$ and $3|b$. Then $a=3m, b=3n$.
+    $a+b = 3m+3n = 3(m+n)$.
+    Since $m+n$ is an integer, $3|(a+b)$.
 
 ---
 
-### Example 2: Structural Induction (Divisibility)
-**Problem:** Let $S$ be a set defined by:
-1.  $3 \in S$
-2.  If $a \in S$ and $b \in S$, then $a+b \in S$.
-Prove that $3 | x$ (3 divides x) for all $x \in S$.
+## 3. Recursive Algorithms
 
-**Proof:**
-* **Basis Step:**
-    We must show the property holds for the basis element, 3.
-    Since $3 = 3(1)$, $3 | 3$. The statement is true.
-* **Recursive Step:**
-    Assume the property holds for elements $a$ and $b$ (Hypothesis).
-    * $a \in S \implies a = 3m$ for some integer $m$.
-    * $b \in S \implies b = 3n$ for some integer $n$.
-    
-    We examine the new element generated: $a + b$.
-    $$a + b = 3m + 3n = 3(m+n)$$.
-    
-    Since $(m+n)$ is an integer, $3 | (a+b)$.
-    **Conclusion:** By structural induction, $3 | x$ for all $x \in S$.
+### Concept
+An algorithm is **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input.
+* **Termination:** It must eventually be reduced to an **initial case** for which the solution is known.
 
----
+### Standard Algorithms
 
-### Example 3: Structural Induction (Inequality)
-**Problem:** Let $S$ be a subset of ordered pairs defined by:
-1.  Basis: $(0,0) \in S$
-2.  Recursive: If $(a,b) \in S$, then:
-    * $(a, b+1) \in S$
-    * $(a+1, b+1) \in S$
-    * $(a+2, b+1) \in S$
-Show that $a \le 2b$ whenever $(a,b) \in S$.
-
-**Proof:**
-* **Basis Step:**
-    For $(0,0)$, we check if $0 \le 2(0)$.
-    $$0 \le 0$$ (True).
-* **Recursive Step:**
-    Assume $a \le 2b$ is true for an arbitrary $(a,b) \in S$. We must prove the inequality holds for all three recursive generation rules:
-
-    **Case 1: $(a, b+1)$**
-    We need to show $a \le 2(b+1)$.
-    Since $a \le 2b$ (hypothesis) and $2b < 2b+2$, it follows that $a \le 2b + 2$.
-    Thus, $a \le 2(b+1)$ holds.
-
-    **Case 2: $(a+1, b+1)$**
-    We need to show $a+1 \le 2(b+1)$.
-    $$a+1 \le 2b + 2$$
-    From hypothesis $a \le 2b$, adding 1 gives $a+1 \le 2b+1 < 2b+2$.
-    Thus, this holds.
-
-    **Case 3: $(a+2, b+1)$**
-    We need to show $a+2 \le 2(b+1)$.
-    $$a+2 \le 2b + 2$$
-    From hypothesis $a \le 2b$, adding 2 gives $a+2 \le 2b+2$.
-    Thus, this holds strictly equal to the limit.
-
-    **Conclusion:** The property $a \le 2b$ holds for all pairs in $S$.
-
----
-
-## Summary
-* **Recursion** allows us to define complex functions and infinite sets using finite rules (Basis + Recursive Step).
-* **Structures** like Rooted Trees and Binary Trees are best defined recursively to handle their branching nature.
-* **Structural Induction** is the standard mathematical proof technique for verifying properties of these recursively defined objects, ensuring a property holds from the foundation (basis) up through every construction step (recursive).
-
-# Revision Note: Recursive Algorithms (CKC111)
-
-> [!ABSTRACT] Chapter Overview
-> This chapter covers the fundamental concepts of **Recursive Algorithms**, where a problem is solved by reducing it to an instance of the same problem with smaller input. It includes standard algorithms for Factorial, Exponentiation, GCD, Linear Search, Binary Search, and Merge Sort, along with methods for proving their correctness using induction.
-
----
-
-## 1. Introduction to Recursion
-
-### Definition
-An algorithm is called **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input.
-
-> [!IMPORTANT] Termination Condition
-> For a recursive algorithm to terminate, the instance of the problem must eventually be reduced to an **initial case** (base case) for which the solution is known.
-
----
-
-## 2. Basic Recursive Algorithms
-
-### A. Recursive Factorial Algorithm
-**Goal:** Compute $n!$ where $n$ is a nonnegative integer.
-**Logic:** $n! = n \cdot (n-1)!$ with a base case of $0! = 1$.
-
-#### Pseudocode
+#### 1. Factorial ($n!$)
 ```python
 procedure factorial(n: nonnegative integer)
     if n = 0 then return 1
     else return n * factorial(n - 1)
 ```
 
-> [!EXAMPLE] Trace: Computing $4!$
-> **Forward Step (Recursive Calls):**
-> 1. $4! = 4 \cdot 3!$
-> 2. $3! = 3 \cdot 2!$
-> 3. $2! = 2 \cdot 1!$
-> 4. $1! = 1 \cdot 0!$
-> 5. Base case reached: $0! = 1$
->
-> **Backward Step (Returning Values):**
-> 6. $1! = 1 \cdot 1 = 1$
-> 7. $2! = 2 \cdot 1 = 2$
-> 8. $3! = 3 \cdot 2 = 6$
-> 9. $4! = 4 \cdot 6 = 24$
-
----
-
-### B. Recursive Exponentiation Algorithm
-**Goal:** Compute $a^n$, where $a$ is a nonzero real number and $n$ is a nonnegative integer.
-**Logic:** Use the definition $a^n = a \cdot a^{n-1}$ with base case $a^0 = 1$.
-
-#### Pseudocode
+#### 2. Exponentiation ($a^n$)
 ```python
-procedure power(a: nonzero real number, n: nonnegative integer)
+procedure power(a: real, n: integer)
     if n = 0 then return 1
     else return a * power(a, n - 1)
 ```
 
-> [!EXAMPLE] Trace: Computing $2^5$ ($a=2, n=5$)
-> **Recursive Steps:**
-> * $2^5 = 2 \cdot 2^4$
-> * $2^4 = 2 \cdot 2^3$
-> * $2^3 = 2 \cdot 2^2$
-> * $2^2 = 2 \cdot 2^1$
-> * $2^1 = 2 \cdot 2^0$
-> * Base Case: $2^0 = 1$
->
-> **Calculation:**
-> $2^1 = 2$, $2^2 = 4$, $2^3 = 8$, $2^4 = 16$, $2^5 = 32$.
-
----
-
-### C. Recursive GCD Algorithm
-**Goal:** Compute the Greatest Common Divisor (GCD) of nonnegative integers $a$ and $b$ with $a < b$.
-**Logic:** Uses the reduction $gcd(a, b) = gcd(b \mod a, a)$ and condition $gcd(0, b) = b$.
-
-#### Pseudocode
+#### 3. Greatest Common Divisor (GCD)
+Uses the reduction $gcd(a, b) = gcd(b \mod a, a)$.
 ```python
-procedure gcd(a, b: nonnegative integers with a < b)
+procedure gcd(a, b: integers with a < b)
     if a = 0 then return b
     else return gcd(b mod a, a)
 ```
 
-> [!EXAMPLE] Trace: Computing $gcd(5, 8)$
-> 1. $gcd(5, 8) = gcd(8 \mod 5, 5) = gcd(3, 5)$
-> 2. $gcd(3, 5) = gcd(5 \mod 3, 3) = gcd(2, 3)$
-> 3. $gcd(2, 3) = gcd(3 \mod 2, 2) = gcd(1, 2)$
-> 4. $gcd(1, 2) = gcd(2 \mod 1, 1) = gcd(0, 1)$
-> 5. Base Case ($a=0$): Returns $1$.
->
-> **Result:** $gcd(5, 8) = 1$.
-
----
-
-## 3. Recursive Searching Algorithms
-
-### A. Recursive Linear Search
-**Logic:** Compare search term $x$ with the current element $a_i$. If equal, return index $i$. If not, search the rest of the sequence ($i+1$ to $n$). If list ends ($i=j$), return 0.
-
-#### Pseudocode
+#### 4. Binary Search
+Efficiently locates $x$ in a sorted list by comparing with the middle element.
 ```python
-procedure search(i, j, x: integers, 1 <= i <= j <= n)
-    if a_i = x then return i
-    else if i = j then return 0
-    else return search(i + 1, j, x)
-```
-
-### B. Recursive Binary Search
-**Logic:** Compare $x$ with the middle term $a_m$ where $m = \lfloor(i+j)/2\rfloor$.
-* If $x = a_m$, return $m$.
-* If $x < a_m$, search the left half ($i$ to $m-1$).
-* If $x > a_m$, search the right half ($m+1$ to $j$).
-
-#### Pseudocode
-```python
-procedure binary_search(i, j, x: integers, 1 <= i <= j <= n)
+procedure binary_search(i, j, x)
     m := floor((i + j) / 2)
     if x = a_m then return m
-    else if (x < a_m and i < m) then
-        return binary_search(i, m - 1, x)
-    else if (x > a_m and j > m) then
-        return binary_search(m + 1, j, x)
+    else if (x < a_m and i < m) then return binary_search(i, m - 1, x)
+    else if (x > a_m and j > m) then return binary_search(m + 1, j, x)
     else return 0
 ```
 
----
+### Merge Sort
+A divide-and-conquer algorithm that iteratively splits a list into two sublists until each has one element, then merges them.
 
-## 4. Proving Correctness
-**Method:** Use **Mathematical Induction** or **Strong Induction** to prove recursive algorithms produce correct output.
+![[Merge Sort Diagram]]
 
-> [!INFO] Proof Example: Power Algorithm
-> **Hypothesis:** Algorithm correctly computes $a^n$.
-> 1.  **Basis Step ($n=0$):** $power(a, 0) = 1$, which matches $a^0 = 1$.
-> 2.  **Inductive Step:** Assume $power(a, k) = a^k$.
->     * We must show it holds for $k+1$.
->     * Algorithm returns $a \cdot power(a, k)$.
->     * Substituting hypothesis: $a \cdot a^k = a^{k+1}$.
->     * Therefore, the algorithm is correct.
+**Algorithm Steps:**
+1.  **Split:** If $n > 1$, split list $L$ into $L_1$ and $L_2$ at $\lfloor n/2 \rfloor$.
+2.  **Sort:** Recursively call `mergesort(L1)` and `mergesort(L2)`.
+3.  **Merge:** Combine the two sorted lists into one.
 
----
+**The Merge Logic:**
+* Compare heads of $L_1$ and $L_2$. Remove smaller element and append to result list $L$.
+* Repeat until one list is empty, then append the rest.
 
-## 5. Merge Sort
-
-### Concept
-Merge sort iteratively splits a list into two sublists of equal length until each sublist has only one element. Then, it successively merges pairs of sublists into a sorted list.
-
-### A. Recursive Merge Sort Algorithm
-**Logic:**
-1.  Check if $n > 1$.
-2.  Split list at $m = \lfloor n/2 \rfloor$.
-3.  Recursively sort $L_1$ (left) and $L_2$ (right).
-4.  Merge the sorted sublists.
-
-#### Pseudocode
-```python
-procedure mergesort(L = a_1, ..., a_n)
-    if n > 1 then
-        m := floor(n / 2)
-        L1 := a_1, ..., a_m
-        L2 := a_{m+1}, ..., a_n
-        L := merge(mergesort(L1), mergesort(L2))
-```
-
-### B. Merging Two Lists
-**Logic:** Compare the first elements of two sorted lists ($L_1, L_2$). Move the smaller element to the end of the new list $L$. Repeat until one list is empty, then append the remainder of the other list.
-
-> [!EXAMPLE] Trace: Merging $\{2, 3, 5, 6\}$ and $\{1, 4\}$
->
-> | First List ($L_1$) | Second List ($L_2$) | Merged List ($L$) | Comparison |
+> [!EXAMPLE] Trace: Merging $\{2,3,5,6\}$ and $\{1,4\}$
+> | $L_1$ | $L_2$ | Result $L$ | Action |
 > | :--- | :--- | :--- | :--- |
-> | 2, 3, 5, 6 | 1, 4 | Empty | $1 < 2$ (Take 1) |
-> | 2, 3, 5, 6 | 4 | 1 | $2 < 4$ (Take 2) |
-> | 3, 5, 6 | 4 | 1, 2 | $3 < 4$ (Take 3) |
-> | 5, 6 | 4 | 1, 2, 3 | $4 < 5$ (Take 4) |
-> | 5, 6 | Empty | 1, 2, 3, 4 | List 2 Empty |
-> | Empty | Empty | **1, 2, 3, 4, 5, 6** | Append Rest |
->
->
+> | `2,3,5,6` | `1,4` | `[]` | $1 < 2$, take 1 |
+> | `2,3,5,6` | `4` | `1` | $2 < 4$, take 2 |
+> | `3,5,6` | `4` | `1, 2` | $3 < 4$, take 3 |
+> | `5,6` | `4` | `1, 2, 3` | $4 < 5$, take 4 |
+> | `5,6` | `[]` | `1, 2, 3, 4` | $L_2$ empty, append rest |
 
-### C. Full Merge Sort Visual Trace
-**Input:** `8, 2, 4, 6, 9, 7, 10, 1, 5, 3`
-
-1.  **Split Phase:**
-    * `8, 2, 4, 6, 9` | `7, 10, 1, 5, 3`
-    * `8, 2` | `4, 6, 9` || `7, 10` | `1, 5, 3`
-    * ...Splits down to single elements...
-2.  **Merge Phase:**
-    * Merge `8` & `2` $\rightarrow$ `2, 8`
-    * Merge `2, 8` & `4` $\rightarrow$ `2, 4, 8`
-    * ... (Merging continues up the tree) ...
-3.  **Final Result:** `1, 2, 3, 4, 5, 6, 7, 8, 9, 10`.
-
----
+### Proving Correctness
+Mathematical induction is used to prove recursive algorithms produce correct output.
+* **Basis:** Show it works for the base case (e.g., $n=0$).
+* **Inductive Step:** Assume the algorithm returns the correct value for input $k$ (Inductive Hypothesis), then prove it computes the correct result for $k+1$.
