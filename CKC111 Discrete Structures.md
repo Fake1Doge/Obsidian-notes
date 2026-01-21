@@ -1256,31 +1256,3 @@ Show that $a \le 2b$ whenever $(a,b) \in S$.
 * **Structures** like Rooted Trees and Binary Trees are best defined recursively to handle their branching nature.
 * **Structural Induction** is the standard mathematical proof technique for verifying properties of these recursively defined objects, ensuring a property holds from the foundation (basis) up through every construction step (recursive).
 
-# Revision Note: Recursive Algorithms (CKC111)
-
-> [!ABSTRACT] Chapter Overview
-> This chapter covers the fundamental concepts of **Recursive Algorithms**, where a problem is solved by reducing it to an instance of the same problem with smaller input. It includes standard algorithms for Factorial, Exponentiation, GCD, Linear Search, Binary Search, and Merge Sort, along with methods for proving their correctness using induction.
-
----
-
-## 1. Introduction to Recursion
-
-### Definition
-An algorithm is called **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input.
-
-> [!IMPORTANT] Termination Condition
-> For a recursive algorithm to terminate, the instance of the problem must eventually be reduced to an **initial case** (base case) for which the solution is known.
-
----
-
-## 2. Basic Recursive Algorithms
-
-### A. Recursive Factorial Algorithm
-**Goal:** Compute $n!$ where $n$ is a nonnegative integer.
-**Logic:** $n! = n \cdot (n-1)!$ with a base case of $0! = 1$.
-
-#### Pseudocode
-```python
-procedure factorial(n: nonnegative integer)
-    if n = 0 then return 1
-    else return n * factorial(n - 1)
