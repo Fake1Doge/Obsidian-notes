@@ -1,4 +1,4 @@
-# 📘 Chapter 1: Logic and Proofs
+# Chapter 1: Logic and Proofs
 
 ## 1. Propositional Logic
 
@@ -185,7 +185,7 @@ $$
 $$
 
 ---
-## CKC111: Chapter 2 - Algorithm Examples
+## Chapter 2 - Algorithm Examples
 
 ### 1. Properties of Algorithms
 An algorithm is defined as a finite set of precise instructions for performing a computation or for solving a problem.
@@ -328,3 +328,160 @@ procedure change(c1, c2, ..., cr: values of coins, where c1 > c2 > ... > cr; n: 
             n := n - ci
     [di counts the coins ci]
 ```
+
+
+---
+# Chapter 3: Relations and Their Properties
+
+## Chapter Overview
+This chapter explores the fundamental concept of **Relations** in discrete mathematics. It covers how to define relations between sets, specific properties of relations (reflexive, symmetric, antisymmetric, transitive), and how to represent them using matrices and directed graphs (digraphs). The chapter concludes with Equivalence Relations and their connection to partitions.
+
+---
+
+## Section 1: Relations and Their Properties
+
+### 1. Binary Relations
+> [!INFO] Definition
+> A **binary relation** $R$ from a set $A$ to a set $B$ is a subset $R \subseteq A \times B$.
+
+* **Example:**
+    * Let $A=\{0,1,2\}$ and $B=\{a,b\}$.
+    * $R = \{(0,a), (0, b), (1,a), (2, b)\}$ is a relation from $A$ to $B$.
+* **Representation:** Relations can be represented graphically or using a table.
+
+### 2. Relations on a Set
+A binary relation $R$ on a set $A$ is a subset of $A \times A$ (a relation from $A$ to $A$).
+
+### 3. Properties of Relations
+There are four primary properties used to classify relations on a set.
+
+#### A. Reflexive
+> [!NOTE] Definition
+> $R$ is **reflexive** iff $(a,a) \in R$ for every element $a \in A$.
+>
+> **Symbolic Logic:**
+> $$\forall x [x \in U \rightarrow (x,x) \in R]$$
+
+* **Example:** On set $X=\{a,b\}$, $R=\{(a,a), (b,b)\}$ is reflexive.
+
+#### B. Symmetric
+> [!NOTE] Definition
+> $R$ is **symmetric** iff $(b,a) \in R$ whenever $(a,b) \in R$ for all $(a,b) \in A$.
+>
+> **Symbolic Logic:**
+> $$\forall x \forall y [(x,y) \in R \rightarrow (y,x) \in R]$$
+
+* **Example:** On set $A=\{1,2,3\}$, $R=\{(1,2), (2,1), (3,2), (2,3)\}$ is symmetric.
+
+#### C. Antisymmetric
+> [!NOTE] Definition
+> $R$ is **antisymmetric** if for all $a, b \in A$, if $(a,b) \in R$ and $(b,a) \in R$, then $a=b$.
+>
+> **Symbolic Logic:**
+> $$\forall x \forall y [(x,y) \in R \wedge (y,x) \in R \rightarrow x=y]$$
+
+* **Logic:** It means you never have $x$ related to $y$ AND $y$ related to $x$ unless $x$ and $y$ are the same element.
+* **Example:** The relation $R = \{(x,y) \rightarrow N | x \le y\}$ is antisymmetric because $x \le y$ and $y \le x$ implies $x=y$.
+
+#### D. Transitive
+> [!NOTE] Definition
+> $R$ is **transitive** if whenever $(a,b) \in R$ and $(b,c) \in R$, then $(a,c) \in R$.
+>
+> **Symbolic Logic:**
+> $$\forall x \forall y \forall z [(x,y) \in R \wedge (y,z) \in R \rightarrow (x,z) \in R]$$
+
+* **Example:** On set $A=\{1,2,3\}$, $R = \{(1,2), (2,3), (1,3)\}$ is transitive.
+
+---
+
+### 4. Combining Relations
+Relations are sets, so they can be combined using standard set operations:
+* Union: $R_1 \cup R_2$
+* Intersection: $R_1 \cap R_2$
+* Difference: $R_1 - R_2$ or $R_2 - R_1$
+
+#### Composition
+> [!IMPORTANT] Definition
+> If $R_1$ is a relation from $A$ to $B$, and $R_2$ is a relation from $B$ to $C$, the **composition** $R_2 \circ R_1$ is a relation from $A$ to $C$.
+>
+> **Rule:** If $(x,y) \in R_1$ and $(y,z) \in R_2$, then $(x,z) \in R_2 \circ R_1$.
+
+* **Visual Example:**
+    * $R_1$ maps $b \to m$ and $b \to o$.
+    * $R_2$ maps $m \to x$ and $m \to z$.
+    * Result: $R_2 \circ R_1 = \{(b,x), (b,z)\}$.
+
+---
+
+## Section 2: Representing Relations
+
+### 1. Using Matrices (Zero-One Matrix)
+A relation between finite sets can be represented by a matrix $M_R = [m_{ij}]$.
+* Assume $A = \{a_1, a_2, ..., a_m\}$ and $B = \{b_1, b_2, ..., b_n\}$.
+* **Logic:**
+    $$m_{ij} = \begin{cases} 1 & \text{if } (a_i, b_j) \in R \\ 0 & \text{if } (a_i, b_j) \notin R \end{cases}$$
+
+#### Properties in Matrices
+| Property | Matrix Condition |
+| :--- | :--- |
+| **Reflexive** | All elements on the main diagonal are **1**. |
+| **Symmetric** | $m_{ij} = 1$ whenever $m_{ji} = 1$ (The matrix is symmetric across the diagonal). |
+| **Antisymmetric** | If $i \neq j$, then $m_{ij}=0$ or $m_{ji}=0$ (You cannot have 1s in symmetric positions off the diagonal). |
+
+### 2. Using Digraphs (Directed Graphs)
+> [!INFO] Definition
+> A **digraph** consists of a set $V$ of vertices (nodes) and a set $E$ of ordered pairs called edges (arcs).
+> * Edge $(a,b)$: Arrow from $a$ (initial) to $b$ (terminal).
+> * Edge $(a,a)$: A **loop**.
+
+#### Properties in Digraphs
+| Property | Visual Check |
+| :--- | :--- |
+| **Reflexive** | A **loop** must be present at **every** vertex in the graph. |
+| **Symmetric** | If there is an arrow from $x \to y$, there must be an arrow from $y \to x$ (double arrows everywhere). |
+| **Antisymmetric** | If there is an arrow from $x \to y$ ($x \neq y$), there is **no** arrow back from $y \to x$. |
+| **Transitive** | If there are arrows $x \to y$ and $y \to z$, there must be a direct arrow $x \to z$ ("shortcuts" exist). |
+
+---
+
+## Section 3: Equivalence Relations
+
+### 1. Definition
+> [!IMPORTANT] Equivalence Relation
+> A relation on a set $A$ is an **equivalence relation** if it satisfies three properties:
+> 1.  **Reflexive** ($(a,a) \in R$)
+> 2.  **Symmetric** (If $(a,b) \in R$, then $(b,a) \in R$)
+> 3.  **Transitive** (If $(a,b) \in R$ and $(b,c) \in R$, then $(a,c) \in R$).
+
+* **Terminology:** Two elements $a$ and $b$ related by an equivalence relation are called **equivalent**, denoted as $a \sim b$.
+
+### 2. Equivalence Classes
+Let $A$ be a set with an equivalence relation $\sim$.
+* **Notation:** $[a]$ is the equivalence class of $a$.
+* **Definition:** $[a] = \{x | x \sim a\}$.
+* **Key Law:** For any $a, b \in A$, either $[a] = [b]$ (they are identical) or $[a] \cap [b] = \emptyset$ (they are disjoint).
+
+### 3. Partitions
+> [!INFO] Definition
+> A **partition** of a set $S$ is a collection of disjoint nonempty subsets of $S$ that have $S$ as their union.
+
+**Conditions for Partition $\{A_i\}$:**
+1.  $A_i \neq \emptyset$ (Subsets are not empty).
+2.  $A_i \cap A_j = \emptyset$ when $i \neq j$ (Subsets do not overlap).
+3.  $\bigcup_{i \in I} A_i = S$ (Ideally covers the whole set).
+
+---
+
+## Summary
+* **Binary Relations** relate elements between sets or within a set.
+* **Key Properties:**
+    * **Reflexive:** Every element relates to itself.
+    * **Symmetric:** Relations are bidirectional.
+    * **Antisymmetric:** No bidirectional relations (except loops).
+    * **Transitive:** Relation "chains" imply direct links.
+* **Representations:**
+    * **Matrices:** Good for computational checks (diagonal checks, symmetry).
+    * **Digraphs:** Good for visual checks (loops, arrows).
+* **Equivalence Relations:** Must be Reflexive, Symmetric, and Transitive. These relations partition a set into disjoint Equivalence Classes.
+
+---
