@@ -485,3 +485,132 @@ Let $A$ be a set with an equivalence relation $\sim$.
 * **Equivalence Relations:** Must be Reflexive, Symmetric, and Transitive. These relations partition a set into disjoint Equivalence Classes.
 
 ---
+# Chapter 4: Graphs
+
+## 4.1 Graphs and Graph Terminology
+
+### Basic Definitions
+> [!INFO] Definition: Graph
+> A **graph** $G=(V,E)$ consists of a nonempty set $V$ of **vertices** (or nodes) and a set $E$ of **edges**. Each edge has either one or two vertices associated with it, called its **endpoints**.
+
+* **Undirected Graph:** Edges are unordered pairs. An edge connects its endpoints.
+* **Directed Graph (Digraph):** $G=(V,E)$ where edges are ordered pairs. The directed edge $(u,v)$ starts at $u$ and ends at $v$.
+
+### Terminology & Classifications
+
+> [!NOTE] Key Terms
+> * **Adjacent (Neighbors):** Two vertices $u, v$ in an undirected graph are adjacent if there is an edge connecting them.
+> * **Incident:** An edge is incident with the vertices it connects.
+> * **Loop:** An edge that connects a vertex to itself.
+> * **Multiplicity:** The number of edges connecting the same pair of vertices.
+
+#### Types of Graphs Summary
+| Type | Edges | Multiple Edges? | Loops? |
+| :--- | :--- | :--- | :--- |
+| **Simple graph** | Undirected | No | No |
+| **Multigraph** | Undirected | Yes | No |
+| **Pseudograph** | Undirected | Yes | Yes |
+| **Simple directed graph** | Directed | No | No |
+| **Directed multigraph** | Directed | Yes | Yes |
+| **Mixed graph** | Directed & Undirected | Yes | Yes |
+
+
+### Degrees and Neighborhoods
+* **Neighborhood ($N(v)$):** The set of all neighbors of a vertex $v$.
+* **Degree ($deg(v)$):** The number of edges incident with vertex $v$.
+
+> [!WARNING] Important Rule for Loops
+> A loop at a vertex contributes **two** to the degree of that vertex in an undirected graph.
+
+#### In-Degree and Out-Degree (Directed Graphs)
+* **In-degree ($deg^{-}(v)$):** Number of edges terminating at $v$.
+* **Out-degree ($deg^{+}(v)$):** Number of edges initiating from $v$.
+* *Note:* A loop contributes 1 to both in-degree and out-degree.
+
+> [!TIP] Theorem 3: The Handshaking Theorem for Digraphs
+> Let $G=(V,E)$ be a graph with directed edges.
+> $$|E| = \sum_{v \in V} deg^{-}(v) = \sum_{v \in V} deg^{+}(v)$$
+> This means the sum of in-degrees equals the sum of out-degrees, which equals the total number of edges.
+
+### Special Types of Graphs
+1.  **Complete Graph ($K_n$):** A simple graph with exactly one edge between each pair of distinct vertices.
+2.  **Cycle ($C_n, n \ge 3$):** Contains vertices $v_1, ..., v_n$ and edges $\{v_1, v_2\}, ..., \{v_n, v_1\}$.
+3.  **Wheel ($W_n$):** Obtained by adding a vertex to $C_n$ and connecting it to all vertices in $C_n$.
+4.  **Bipartite Graph:** Vertex set $V$ can be partitioned into disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ to one in $V_2$.
+    * *Coloring Test:* A graph is bipartite if vertices can be colored with two colors such that no two adjacent vertices have the same color.
+5.  **Complete Bipartite Graph ($K_{m,n}$):** Every vertex in set $V_1$ (size $m$) is connected to every vertex in set $V_2$ (size $n$).
+
+### New Graphs from Old
+* **Union ($G_1 \cup G_2$):** Vertex set is $V_1 \cup V_2$ and edge set is $E_1 \cup E_2$.
+
+---
+
+## 4.2 Representing Graphs
+
+### 1. Adjacency Lists
+Used for graphs with no multiple edges. Specifies vertices adjacent to each vertex.
+* **Best for:** Sparse graphs (few edges relative to possible edges).
+
+### 2. Adjacency Matrices
+Suppose $|V|=n$ and vertices are listed $v_1, ..., v_n$. The adjacency matrix $A_G = [a_{ij}]$ is an $n \times n$ matrix.
+
+* **Simple Graphs:** $a_{ij} = 1$ if adjacent, $0$ otherwise.
+    * Matrix is **symmetric** ($a_{ij} = a_{ji}$).
+    * Diagonal entries are always 0 (no loops).
+* **Multigraphs/Pseudographs:** $a_{ij}$ equals the **number of edges** connecting the vertices. Loops are represented by a 1 at $(i,i)$.
+* **Best for:** Dense graphs.
+
+### 3. Incidence Matrices
+Let $G=(V,E)$ with vertices $v_1...v_n$ and edges $e_1...e_m$. The matrix $M = [m_{ij}]$ is $n \times m$.
+$$m_{ij} = \begin{cases} 
+1 & \text{when edge } e_j \text{ is incident with } v_i \\
+0 & \text{otherwise}
+\end{cases}$$
+.
+
+---
+
+## 4.3 Connectivity
+
+### Paths and Circuits
+* **Path:** A sequence of edges traveling from vertex to vertex.
+* **Circuit:** A path that begins and ends at the same vertex and has length $>0$.
+* **Simple Path/Circuit:** Does not contain the same edge more than once.
+
+### Connectedness
+* **Undirected Graphs:**
+    * **Connected:** There is a path between *every* pair of vertices.
+    * **Connected Components:** Disjoint connected subgraphs that form the union of a disconnected graph.
+
+* **Directed Graphs:**
+    > [!NOTE] Strong vs. Weak
+    > * **Strongly Connected:** There is a directed path from $a$ to $b$ **AND** from $b$ to $a$ for all vertices.
+    > * **Weakly Connected:** There is a path between every two vertices in the **underlying undirected graph** (ignoring direction).
+
+* **Strongly Connected Components:** Maximal strongly connected subgraphs.
+
+---
+
+## 4.4 Shortest-Path Problems
+
+### Dijkstra's Algorithm
+Calculates the minimum traveling cost from a source node to a destination node (or all other nodes) in a weighted graph.
+
+#### Example Problem Trace
+**Given:** A weighted graph with Source Vertex = **0**.
+(Refer to graph visual in slides containing vertices 0-8 with weighted edges).
+
+**Calculated Minimum Distances from Node 0:**
+
+| Destination Vertex | Path Taken | Total Cost (Distance) |
+| :--- | :--- | :--- |
+| **1** | $0 \to 1$ | **4** |
+| **2** | $0 \to 1 \to 2$ ($4+8$) | **12** |
+| **3** | $0 \to 1 \to 2 \to 3$ ($4+8+7$) | **19** |
+| **4** | $0 \to 7 \to 6 \to 5 \to 4$ ($8+1+2+10$) | **21** |
+| **5** | $0 \to 7 \to 6 \to 5$ ($8+1+2$) | **11** |
+| **6** | $0 \to 7 \to 6$ ($8+1$) | **9** |
+| **7** | $0 \to 7$ | **8** |
+| **8** | $0 \to 1 \to 2 \to 8$ ($4+8+2$) | **14** |
+
+**Final Output:** `0 4 12 19 21 11 9 8 14`
