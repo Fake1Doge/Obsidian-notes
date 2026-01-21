@@ -155,31 +155,31 @@ From the conditional statement $p \to q$, we can form related statements:
 To prove $A \equiv B$, we produce a series of equivalences starting with $A$ and ending with $B$.
 
 ### Example 1: De Morgan & Distributive
-**Show that:** $\neg(p \lor (\neg p \land q)) \equiv \neg p \land \neg q$.
+**Show that:** $\neg(p \vee (\neg p \wedge q)) \equiv \neg p \wedge \neg q$
 
 $$
 \begin{aligned}
-&\neg(p \lor (\neg p \land q)) \\
-&\equiv \neg p \land \neg(\neg p \land q) & \text{(De Morgan's 2nd Law)} \\
-&\equiv \neg p \land [\neg(\neg p) \lor \neg q] & \text{(De Morgan's 1st Law)} \\
-&\equiv \neg p \land (p \lor \neg q) & \text{(Double Negation Law)} \\
-&\equiv (\neg p \land p) \lor (\neg p \land \neg q) & \text{(Distributive Law)} \\
-&\equiv F \lor (\neg p \land \neg q) & \text{(Negation Law: } \neg p \land p \equiv F) \\
-&\equiv (\neg p \land \neg q) \lor F & \text{(Commutative Law)} \\
-&\equiv (\neg p \land \neg q) & \text{(Identity Law for F)}
+& \neg(p \vee (\neg p \wedge q)) \\
+& \equiv \neg p \wedge \neg(\neg p \wedge q) & \text{(De Morgan's 2nd Law)} \\
+& \equiv \neg p \wedge [\neg(\neg p) \vee \neg q] & \text{(De Morgan's 1st Law)} \\
+& \equiv \neg p \wedge (p \vee \neg q) & \text{(Double Negation Law)} \\
+& \equiv (\neg p \wedge p) \vee (\neg p \wedge \neg q) & \text{(Distributive Law)} \\
+& \equiv F \vee (\neg p \wedge \neg q) & \text{(Negation Law: } \neg p \wedge p \equiv F \text{)} \\
+& \equiv (\neg p \wedge \neg q) \vee F & \text{(Commutative Law)} \\
+& \equiv \neg p \wedge \neg q & \text{(Identity Law for F)}
 \end{aligned}
 $$
 
 ### Example 2: Tautology Proof
-**Show that:** $(p \land q) \to (p \lor q)$ is a tautology.
+**Show that:** $(p \wedge q) \rightarrow (p \vee q)$ is a tautology (always True).
 
 $$
 \begin{aligned}
-&(p \land q) \to (p \lor q) \\
-&\equiv \neg(p \land q) \lor (p \lor q) & \text{(Implication Equivalence)} \\
-&\equiv (\neg p \lor \neg q) \lor (p \lor q) & \text{(De Morgan's 1st Law)} \\
-&\equiv (\neg p \lor p) \lor (\neg q \lor q) & \text{(Associative & Commutative Laws)} \\
-&\equiv T \lor T & \text{(Negation Law)} \\
-&\equiv T & \text{(Domination Law)}
+& (p \wedge q) \rightarrow (p \vee q) \\
+& \equiv \neg(p \wedge q) \vee (p \vee q) & \text{(Implication Law / Truth Table)} \\
+& \equiv (\neg p \vee \neg q) \vee (p \vee q) & \text{(De Morgan's 1st Law)} \\
+& \equiv (\neg p \vee p) \vee (\neg q \vee q) & \text{(Associative \& Commutative Laws)} \\
+& \equiv T \vee T & \text{(Negation Law)} \\
+& \equiv T & \text{(Domination Law)}
 \end{aligned}
 $$
