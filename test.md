@@ -11,9 +11,11 @@
 
 **Examples:**
 * $p$: "The sun rises in the East." (True Proposition)
-* $q$: "$1 + 1 = 3$." (False Proposition)
+* $q$: "$1 + 1 = 3$.
+" (False Proposition)
 * $r$: "What time is it?" (Not a proposition - Interrogative sentence)
-* $s$: "$x + 1 = 2$." (Not a proposition - Truth value depends on variable $x$)
+* $s$: "$x + 1 = 2$.
+" (Not a proposition - Truth value depends on variable $x$)
 
 ### 1.2 Logical Connectives & Truth Tables
 Compound propositions are constructed by combining existing propositions using logical operators. The truth value of a compound proposition depends on the truth values of its components.
@@ -125,7 +127,7 @@ Algorithms that solve optimization problems by making the "best" choice at each 
 * **Coin Set:** Quarters ($25$), Dimes ($10$), Nickels ($5$), Pennies ($1$).
 * **Strategy:** At each step, choose the coin with the largest possible value that does not exceed the amount of change left.
 * **Greedy Failure:** This approach works for standard US currency but fails for some arbitrary coin systems.
-    * *Example:* If coins are $\{1, 3, 4\}$ and you need to make $6$ cents.
+    * *Example:* If coins are {1, 3, 4} and you need to make $6$ cents.
     * Greedy approach: $4, 1, 1$ (3 coins).
     * Optimal solution: $3, 3$ (2 coins).
 
@@ -173,7 +175,7 @@ Let $R$ be an equivalence relation on set $A$. The set of all elements that are 
 
 **Degree of Vertex ($deg(v)$):** The number of edges incident with vertex $v$.
 * *Important Note:* A loop contributes **2** to the degree of a vertex in an undirected graph.
-* **Handshaking Theorem:** $2|E| = \sum_{v \in V} deg(v)$. (The sum of degrees is twice the number of edges, meaning the total degree count is always even).
+* **Handshaking Theorem:** $2|E| = \sum_{v \in V} deg(v)$. (The sum of degrees is twice the number of edges, meaning the total degree count is always even)
 
 ### 4.2 Graph Representation
 1.  **Adjacency List:** Specify the vertices adjacent to each vertex. Space efficient for sparse graphs.
@@ -285,7 +287,7 @@ A recursive sorting algorithm based on the divide-and-conquer paradigm.
 ## 📈 Chapter 9: Advanced Counting
 
 ### 9.1 Recurrence Relations
-A recurrence relation for a sequence $\{a_n\}$ is an equation that expresses $a_n$ in terms of one or more of the previous terms of the sequence.
+A recurrence relation for a sequence {a_n} is an equation that expresses $a_n$ in terms of one or more of the previous terms of the sequence.
 * **Example:** The Fibonacci sequence is defined by $f_n = f_{n-1} + f_{n-2}$ with initial conditions $f_0=0, f_1=1$.
 
 ### 9.2 Solving Linear Homogeneous Relations
@@ -308,7 +310,7 @@ A technique to count the size of the union of multiple sets by accounting for ov
 
 ### 10.1 Finite Probability (Laplace)
 If $S$ is a finite sample space of equally likely outcomes, and $E$ is an event (a subset of $S$):
-$$p(E) = \frac{|E|}{|S|}$$
+$$p(E) = \frac{|E|}{|S|}$$ 
 
 ### 10.2 Probability Rules
 * **Probability of Complement:** $p(\overline{E}) = 1 - p(E)$.
