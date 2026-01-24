@@ -747,17 +747,17 @@ DFS and BFS can run on directed graphs, but the result is not necessarily a span
 
 ## Summary Table: BFS vs DFS
 
-| Feature | Breadth-First Search (BFS) | Depth-First Search (DFS) |
-| :--- | :--- | :--- |
-| **Data Structure** | **Queue** is used. | **Stack** (or recursion) is used. |
-| **Technique** | Vertex-based; finds shortest path. | Edge-based; explores path to end. |
-| **Traversal** | Explores all nodes at same level before moving deep. | Explores nodes as far as possible (deep) before backtracking. |
-| **Backtracking** | Does **not** use backtracking. | Uses **backtracking** to traverse unvisited nodes. |
-| **Edges** | Finds path with minimum number of edges (shortest path). | May produce path with more edges. |
-| **Optimality** | Optimal for vertices closer to source. | Optimal for solutions away from source. |
-| **Speed** | Slower than DFS. | Faster than BFS. |
-| **Decision Trees** | Not suitable (explores neighbors first). | Suitable (explores paths based on decisions). |
-| **Memory** | Less memory efficient (requires more). | **Memory efficient** (requires less). |
+| Feature            | Breadth-First Search (BFS)                               | Depth-First Search (DFS)                                      |
+| :----------------- | :------------------------------------------------------- | :------------------------------------------------------------ |
+| **Data Structure** | **Queue** is used.                                       | **Stack** (or recursion) is used.                             |
+| **Technique**      | Vertex-based; finds shortest path.                       | Edge-based; explores path to end.                             |
+| **Traversal**      | Explores all nodes at same level before moving deep.     | Explores nodes as far as possible (deep) before backtracking. |
+| **Backtracking**   | Does **not** use backtracking.                           | Uses **backtracking** to traverse unvisited nodes.            |
+| **Edges**          | Finds path with minimum number of edges (shortest path). | May produce path with more edges.                             |
+| **Optimality**     | Optimal for vertices closer to source.                   | Optimal for solutions away from source.                       |
+| **Speed**          | Slower than DFS.                                         | Faster than BFS.                                              |
+| **Decision Trees** | Not suitable (explores neighbors first).                 | Suitable (explores paths based on decisions).                 |
+| **Memory**         | Less memory efficient (requires more).                   | **Memory efficient** (requires less).                         |
 
 ---
 # Week 9 week 10
