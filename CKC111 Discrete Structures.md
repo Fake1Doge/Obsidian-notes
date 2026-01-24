@@ -175,7 +175,7 @@ $$
 
 $$
 \begin{aligned}
-& (p \wedge q) \rightarrow (p \vee q) \\
+& $(p \wedge q) \rightarrow (p \vee q)$ \\
 & \equiv \neg(p \wedge q) \vee (p \vee q) & \text{(Implication Law / Truth Table)} \\
 & \equiv (\neg p \vee \neg q) \vee (p \vee q) & \text{(De Morgan's 1st Law)} \\
 & \equiv (\neg p \vee p) \vee (\neg q \vee q) & \text{(Associative \& Commutative Laws)} \\
@@ -333,10 +333,7 @@ procedure change(c1, c2, ..., cr: values of coins, where c1 > c2 > ... > cr; n: 
 ---
 # Chapter 3: Relations and Their Properties
 
-## Chapter Overview
-This chapter explores the fundamental concept of **Relations** in discrete mathematics. It covers how to define relations between sets, specific properties of relations (reflexive, symmetric, antisymmetric, transitive), and how to represent them using matrices and directed graphs (digraphs). The chapter concludes with Equivalence Relations and their connection to partitions.
 
----
 
 ## Section 1: Relations and Their Properties
 
@@ -472,19 +469,7 @@ Let $A$ be a set with an equivalence relation $\sim$.
 
 ---
 
-## Summary
-* **Binary Relations** relate elements between sets or within a set.
-* **Key Properties:**
-    * **Reflexive:** Every element relates to itself.
-    * **Symmetric:** Relations are bidirectional.
-    * **Antisymmetric:** No bidirectional relations (except loops).
-    * **Transitive:** Relation "chains" imply direct links.
-* **Representations:**
-    * **Matrices:** Good for computational checks (diagonal checks, symmetry).
-    * **Digraphs:** Good for visual checks (loops, arrows).
-* **Equivalence Relations:** Must be Reflexive, Symmetric, and Transitive. These relations partition a set into disjoint Equivalence Classes.
 
----
 # Chapter 4: Graphs
 
 ## 4.1 Graphs and Graph Terminology
@@ -618,10 +603,7 @@ Calculates the minimum traveling cost from a source node to a destination node (
 ---
 # Chapter 5: Trees & Spanning Trees
 
-## Chapter Overview
-This chapter explores the properties and applications of **Trees** in discrete structures. It covers the fundamental definitions of trees and forests, the structure of rooted trees (including $m$-ary and binary trees), and methods for traversing these structures (Preorder, Inorder, Postorder). Furthermore, it examines **Spanning Trees** (Section 9.3), detailing how to convert connected graphs into trees using Depth-First Search (DFS) and Breadth-First Search (BFS).
 
----
 
 ## 5.1 Introduction to Trees
 
@@ -837,9 +819,9 @@ DFS and BFS can run on directed graphs, but the result is not necessarily a span
 
 ### Floor and Ceiling Functions
 * **Floor ($\lfloor x \rfloor$):** Largest integer $\le x$.
-    * *Example:* $\lfloor 0.5 \rfloor = 0$, $\lfloor -1.5 \rfloor = -2$.
+    * *Example:** $\lfloor 0.5 \rfloor = 0$, $\lfloor -1.5 \rfloor = -2$.
 * **Ceiling ($\lceil x \rceil$):** Smallest integer $\ge x$.
-    * *Example:* $\lceil 0.5 \rceil = 1$, $\lceil -1.5 \rceil = -1$.
+    * *Example:** $\lceil 0.5 \rceil = 1$, $\lceil -1.5 \rceil = -1$.
 
 ---
 
@@ -881,10 +863,10 @@ DFS and BFS can run on directed graphs, but the result is not necessarily a span
 ## 4. Cardinality of Sets
 * **Finite Set:** Has a specific number of elements (e.g., $n$).
 * **Countably Infinite:** Can be put in one-to-one correspondence with Positive Integers ($\mathbb{Z}^+$).
-    * *Examples:* Integers ($\mathbb{Z}$), Rationals ($\mathbb{Q}$), Odd positive integers.
+    * *Examples:** Integers ($\mathbb{Z}$), Rationals ($\mathbb{Q}$), Odd positive integers.
     * **Cardinality:** $\aleph_0$ (Aleph-null).
 * **Uncountable:** Cannot be listed in a sequence.
-    * *Examples:* Real numbers ($\mathbb{R}$), Interval $[0, 1]$.
+    * *Examples:** Real numbers ($\mathbb{R}$), Interval $[0, 1]$.
     * **Cardinality:** $> \aleph_0$.
 
 > [!WARNING] Important Rule
@@ -1008,10 +990,10 @@ Strong induction is used when proving $P(k+1)$ requires assuming the truth of **
 
 **Key Applications:**
 1.  **Fundamental Theorem of Arithmetic:** Every integer $n > 1$ can be written as a product of primes.
-    * *Reasoning:* If $k+1$ is composite ($a \cdot b$), both $a$ and $b$ are smaller than $k+1$. By strong induction, both $a$ and $b$ are products of primes, so $a \cdot b$ is also.
+    * *Reasoning:** If $k+1$ is composite ($a \cdot b$), both $a$ and $b$ are smaller than $k+1$. By strong induction, both $a$ and $b$ are products of primes, so $a \cdot b$ is also.
 2.  **Postage Stamps:** Every postage of 12 cents or more can be formed using 4-cent and 5-cent stamps.
-    * *Basis:* Verify for 12, 13, 14, 15.
-    * *Recursive:* For $k+1$, rely on $P(k-3)$ and add a 4-cent stamp.
+    * *Basis:** Verify for 12, 13, 14, 15.
+    * *Recursive:** For $k+1$, rely on $P(k-3)$ and add a 4-cent stamp.
 
 ---
 
