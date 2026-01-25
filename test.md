@@ -9,34 +9,65 @@
 > A **proposition** is a declarative sentence that is either true ($T$) or false ($F$), but not both.
 > * **Notation:** Variables $p, q, r, s, \dots$ are used to represent propositions.
 
-**Examples:**
-* $p$: "The sun rises in the East." (True Proposition)
-* $q$: "$1 + 1 = 3$.
-" (False Proposition)
-* $r$: "What time is it?" (Not a proposition - Interrogative sentence)
-* $s$: "$x + 1 = 2$.
-" (Not a proposition - Truth value depends on variable $x$)
+**Examples of Propositions:**
+* "The Moon is made of green cheese." ($F$)
+* "Toronto is the capital of Canada." ($F$)
+* "1 + 0 = 1" ($T$)
+* "The piano is a multi-stringed instrument." ($T$)
 
-### 1.2 Logical Connectives & Truth Tables
-Compound propositions are constructed by combining existing propositions using logical operators. The truth value of a compound proposition depends on the truth values of its components.
+**NOT Propositions (Cannot be determined as T/F):**
+* "Sit down!" (Command)
+* "What time is it?" (Question)
+* "$x + 1 = 2$" (Variable/Function - depends on $x$)
 
-#### The Fundamental Operators
+### 1.2 Logical Connectives
+Compound propositions are constructed by combining existing propositions using logical operators.
 
 | Connective | Name | Notation | Meaning | Condition for Truth |
 | :--- | :--- | :---: | :--- | :--- |
 | **Negation** | NOT | $\neg p$ | It is not the case that $p$ | True when $p$ is False. |
 | **Conjunction** | AND | $p \land q$ | $p$ and $q$ | True **only if both** $p$ and $q$ are True. |
 | **Disjunction** | OR | $p \lor q$ | $p$ or $q$ (Inclusive) | True if **at least one** is True. |
-| **Exclusive OR** | XOR | $p \oplus q$ | $p$ or $q$, but not both | True if exactly one is True (False if both are True). |
+| **Exclusive OR** | XOR | $p \oplus q$ | $p$ or $q$, but not both | True if exactly one is True. |
 | **Implication** | IF-THEN | $p \to q$ | If $p$, then $q$ | False **only if** $p$ is True and $q$ is False. |
 | **Biconditional** | IFF | $p \leftrightarrow q$ | $p$ if and only if $q$ | True if $p$ and $q$ have the **same** truth value. |
 
-> [!WARNING] Critical Rule: Implication ($p \to q$)
-> The implication $p \to q$ is defined to be **vacuously true** whenever the hypothesis $p$ is False, regardless of the truth value of the conclusion $q$.
-> * Example: "If $1=2$, then I am the King of England." $\to$ **TRUE** (because the hypothesis "1=2" is false).
+#### Notes on Disjunction (OR)
+* **Inclusive Or ($p \lor q$):** "Students who have taken CS202 **or** Math120 may take this class." (Taking both is allowed).
+* **Exclusive Or ($p \oplus q$):** "Soup **or** salad comes with this entrée." (You cannot have both).
 
-### 1.3 Logical Equivalences
-Two compound propositions are **logically equivalent** ($p \equiv q$) if they have the same truth values in all possible cases (i.e., the biconditional $p \leftrightarrow q$ is a tautology).
+### 1.3 Implication and its Forms
+The conditional statement $p \to q$ is crucial in proofs.
+* **$p$:** Hypothesis / Antecedent / Premise
+* **$q$:** Conclusion / Consequence
+
+**Common Ways to Express $p \to q$:**
+* "If $p$, then $q$"
+* "$p$ implies $q$"
+* "$q$ unless $\neg p$"
+* "$p$ is sufficient for $q$"
+* "$q$ is necessary for $p$"
+
+**Related Conditionals:**
+1.  **Converse:** $q \to p$
+2.  **Inverse:** $\neg p \to \neg q$
+3.  **Contrapositive:** $\neg q \to \neg p$
+
+> [!TIP] Equivalence Rule
+> The **Contrapositive** is logically equivalent to the original implication ($p \to q \equiv \neg q \to \neg p$).
+> The Converse and Inverse are **not** equivalent to the original.
+
+### 1.4 Truth Tables & Proposition Types
+We can classify compound propositions based on their truth values across all possible cases.
+
+*   **Tautology:** A proposition that is always **True**.
+    *   *Example:* $p \lor \neg p$
+*   **Contradiction:** A proposition that is always **False**.
+    *   *Example:* $p \land \neg p$
+*   **Contingency:** A proposition that is neither a tautology nor a contradiction (values vary).
+
+### 1.5 Logical Equivalences
+Two compound propositions are **logically equivalent** ($p \equiv q$) if they have the same truth values in all possible cases.
 
 #### Key Laws of Logic
 1.  **Identity Laws:** $p \land T \equiv p$; $p \lor F \equiv p$
@@ -46,19 +77,32 @@ Two compound propositions are **logically equivalent** ($p \equiv q$) if they ha
 5.  **Distributive Laws:**
     * $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$
     * $p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$
-6.  **De Morgan's Laws:** (Crucial for manipulating negations)
+6.  **De Morgan's Laws:**
     * $\neg(p \land q) \equiv \neg p \lor \neg q$
     * $\neg(p \lor q) \equiv \neg p \land \neg q$
 7.  **Absorption Laws:**
     * $p \lor (p \land q) \equiv p$
     * $p \land (p \lor q) \equiv p$
 
-#### Implication Equivalences
-Understanding these forms is vital for proofs:
-* **Contrapositive:** $p \to q \equiv \neg q \to \neg p$ (Logically Equivalent to original)
-* **Implication Definition:** $p \to q \equiv \neg p \lor q$
-* **Converse:** $q \to p$ (NOT equivalent to original)
-* **Inverse:** $\neg p \to \neg q$ (NOT equivalent to original)
+#### Example: Step-by-Step Equivalence Proof
+**Show that** $\neg(p \lor (\neg p \land q)) \equiv \neg p \land \neg q$
+
+1.  $\neg p \land \neg(\neg p \land q)$ (By De Morgan's Law on the outer $\lor$)
+2.  $\neg p \land (\neg(\neg p) \lor \neg q)$ (By De Morgan's Law on the inner $\land$)
+3.  $\neg p \land (p \lor \neg q)$ (By Double Negation)
+4.  $(\neg p \land p) \lor (\neg p \land \neg q)$ (By Distributive Law)
+5.  $F \lor (\neg p \land \neg q)$ (By Negation Law: $\neg p \land p \equiv F$)
+6.  $\neg p \land \neg q$ (By Identity Law: $F \lor X \equiv X$)
+
+### 1.6 Translating English to Logic
+To analyze arguments, we often translate English sentences into logical expressions.
+
+**Example:**
+"If I go to Harry's or to the country, I will not go shopping."
+*   $p$: I go to Harry's.
+*   $q$: I go to the country.
+*   $r$: I will go shopping.
+*   **Translation:** $(p \lor q) \to \neg r$
 
 ---
 
@@ -68,122 +112,233 @@ Understanding these forms is vital for proofs:
 An **algorithm** is a finite set of precise instructions for performing a computation or solving a problem.
 
 > [!NOTE] 7 Essential Properties
-> 1.  **Input:** Values supplied from a specified set.
-> 2.  **Output:** Solution values produced by the algorithm.
-> 3.  **Definiteness:** Each step must be precisely defined.
-> 4.  **Correctness:** It must produce the correct output values for each set of input values.
-> 5.  **Finiteness:** It must produce the output after a finite number of steps.
-> 6.  **Effectiveness:** Each step must be capable of being performed exactly and in a finite amount of time.
-> 7.  **Generality:** The procedure should be applicable for all problems of the desired form, not just a single specific instance.
+> 1.  **Input:** An algorithm has input values from a specified set.
+> 2.  **Output:** From the input values, the algorithm produces the output values from a specified set.
+> 3.  **Definiteness:** Each step of the algorithm must be precisely defined.
+> 4.  **Correctness:** An algorithm should produce the correct output values for each set of input values.
+> 5.  **Finiteness:** An algorithm should produce the output after a finite number of steps for any input.
+> 6.  **Effectiveness:** It must be possible to perform each step of the algorithm correctly and in a finite amount of time.
+> 7.  **Generality:** The algorithm should work for all problems of the desired form, not just a single specific instance.
 
 ### 2.2 Searching Algorithms
-The problem of locating an element $x$ in a list of distinct elements $a_1, a_2, \dots, a_n$, or determining that it is not in the list.
+The general searching problem is to locate an element $x$ in a list of distinct elements $a_1, a_2, \dots, a_n$, or determine that it is not in the list.
 
 #### Linear Search
-Locates an item by examining elements in the sequence one at a time, usually from the beginning.
-* **Complexity:** $O(n)$
-* **Requirement:** None (list can be unsorted).
+The linear search algorithm locates an item in a list by examining elements in the sequence one at a time, starting at the beginning.
 
 ```pascal
-procedure linear_search(x: integer, a1...an: integers)
+procedure linear_search(x: integer, a1, a2, ..., an: distinct integers)
    i := 1
    while (i <= n and x != ai)
       i := i + 1
-   if i <= n then return i else return 0
+   if i <= n then location := i
+   else location := 0
+   return location {location is the subscript of the term that equals x, or 0 if x is not found}
 ```
 
 #### Binary Search
-Locates an item by repeatedly splitting the list in half. It compares the target value to the middle element of the list.
-* **Complexity:** $O(\log n)$
-* **Requirement:** List **must be sorted** (increasing order).
+The binary search algorithm locates an item in a list by repeatedly splitting the list in half.
+*   **Requirement:** The input list **must be sorted** in increasing order.
 
 ```pascal
-procedure binary_search(x: integer, a1...an: increasing integers)
-   i := 1 {left endpoint}
-   j := n {right endpoint}
+procedure binary_search(x: integer, a1, a2, ..., an: increasing integers)
+   i := 1 {i is left endpoint of search interval}
+   j := n {j is right endpoint of search interval}
    while i < j
       m := floor((i + j)/2)
       if x > am then i := m + 1
       else j := m
-   if x = ai then return i else return 0
+   if x = ai then location := i
+   else location := 0
+   return location {location is the subscript i of the term ai equal to x, or 0 if x is not found}
 ```
 
 ### 2.3 Sorting Algorithms
-Sorting puts elements of a list into increasing order.
+Sorting is the process of putting elements of a list into increasing order (numerical, alphabetic, etc.).
 
 #### Bubble Sort
-Makes multiple passes through a list. It repeatedly swaps adjacent elements if they are in the wrong order. The largest element "bubbles" to the end after the first pass.
-* **Pass 1:** Largest element moves to $a_n$.
-* **Pass 2:** Second largest moves to $a_{n-1}$.
+Bubble sort makes multiple passes through a list. Every pair of adjacent elements that are found to be out of order are interchanged.
+*   The largest element "bubbles" to the end (correct position) after the first pass.
+
+```pascal
+procedure bubblesort(a1, ..., an: real numbers with n >= 2)
+   for i := 1 to n - 1
+      for j := 1 to n - i
+         if aj > aj+1 then interchange aj and aj+1
+   {a1, ..., an is now in increasing order}
+```
 
 #### Insertion Sort
-Builds the final sorted array one item at a time. It assumes the first $j-1$ elements are already sorted and inserts the $j$-th element into its correct position among them.
+Insertion sort begins with the 2nd element. It compares the 2nd element with the 1st and puts it before the first if it is not larger. It proceeds to insert the 3rd element into its correct position among the first 3, and so on.
+
+```pascal
+procedure insertion_sort(a1, ..., an: real numbers with n >= 2)
+   for j := 2 to n
+      i := 1
+      while aj > ai
+         i := i + 1
+      m := aj
+      for k := 0 to j - i - 1
+         aj-k := aj-k-1
+      ai := m
+   {Now a1, ..., an is in increasing order}
+```
 
 ### 2.4 Greedy Algorithms
-Algorithms that solve optimization problems by making the "best" choice at each step (local optimum) with the hope of finding the global optimum.
+Algorithms that solve optimization problems (minimizing or maximizing a parameter) by making the "best" choice at each step.
+*   **Strategy:** At each step, choose the locally optimal choice in the hope that it will lead to a globally optimal solution.
 
-**Example: The Change-Making Algorithm**
-* **Goal:** Give change for $n$ cents using the minimum total number of coins.
-* **Coin Set:** Quarters ($25$), Dimes ($10$), Nickels ($5$), Pennies ($1$).
-* **Strategy:** At each step, choose the coin with the largest possible value that does not exceed the amount of change left.
-* **Greedy Failure:** This approach works for standard US currency but fails for some arbitrary coin systems.
-    * *Example:* If coins are {1, 3, 4} and you need to make $6$ cents.
-    * Greedy approach: $4, 1, 1$ (3 coins).
-    * Optimal solution: $3, 3$ (2 coins).
+#### Example: Making Change
+Design a greedy algorithm for making change for $n$ cents using the following coins: quarters (25 cents), dimes (10 cents), nickels (5 cents), and pennies (1 cent), using the **least total number of coins**.
+
+```pascal
+procedure change(c1, c2, ..., cr: values of coins, where c1 > c2 > ... > cr; n: a positive integer)
+   for i := 1 to r
+      di := 0 {di counts the coins of denomination ci}
+      while n >= ci
+         di := di + 1 {add a coin of denomination ci}
+         n := n - ci
+   {di counts the coins ci}
+```
+
+#### Greedy Failure
+The greedy approach does not always yield the optimal solution for all coin systems.
+*   **Scenario:** Coins = {25, 10, 1} (Standard US coins). Greedy works.
+*   **Scenario:** Coins = {4, 3, 1}. Target = 6 cents.
+    *   **Greedy Approach:** Selects 4 (largest < 6), then 1, then 1. Total = **3 coins** (4, 1, 1).
+    *   **Optimal Solution:** Select 3, then 3. Total = **2 coins** (3, 3).
+    *   *Result:* Greedy algorithm failed to find the global optimum.
 
 ---
 
 ## 🔗 Chapter 3: Relations
 
 ### 3.1 Binary Relations
-A binary relation $R$ from a set $A$ to a set $B$ is a subset of the Cartesian product $A \times B$.
-* **Notation:** If $(a,b) \in R$, we say $a$ is related to $b$ by $R$ (written $a R b$).
-* If $A=B$, we call it a "relation on set $A$".
+A **binary relation** $R$ from a set $A$ to a set $B$ is a subset of the Cartesian product $A \times B$.
+*   **Notation:** If $(a,b) \in R$, we write $a R b$ (a is related to b).
+*   **Relation on a Set:** A relation from set $A$ to itself ($A \times A$).
+
+> [!EXAMPLE] Divisibility Relation
+> Let $A = \{1, 2, 3, 4\}$.
+> Let $R = \{(a,b) \mid a \text{ divides } b\}$.
+> $R = \{(1,1), (1,2), (1,3), (1,4), (2,2), (2,4), (3,3), (4,4)\}$.
 
 ### 3.2 Properties of Relations
 Let $R$ be a relation on set $A$.
 
-| Property | Definition | Matrix $M_R$ Condition | Digraph Condition |
-| :--- | :--- | :--- | :--- |
-| **Reflexive** | $\forall a \in A, (a,a) \in R$ | Main diagonal is all 1s. | Every vertex has a self-loop. |
-| **Symmetric** | If $(a,b) \in R \to (b,a) \in R$ | $M_R = M_R^T$ (Matrix is symmetric). | If there is an edge $a \to b$, there is an edge $b \to a$. |
-| **Antisymmetric** | If $(a,b) \in R \land (b,a) \in R \to a=b$ | No 1s symmetric off the main diagonal. | No pair of vertices has bidirectional edges between them. |
-| **Transitive** | If $(a,b) \in R \land (b,c) \in R \to (a,c) \in R$ | If $M^2$ has a non-zero entry at $(i,j)$, $M$ must have a 1 at $(i,j)$. | If a path $a \to b \to c$ exists, a direct edge $a \to c$ must exist. |
+1.  **Reflexive:** $\forall a \in A, (a,a) \in R$.
+    *   *Visually:* Every element relates to itself.
+    *   *Example:* $R = \{(1,1), (2,2), (3,3)\}$ on $\{1,2,3\}$.
+2.  **Symmetric:** $\forall a,b \in A, (a,b) \in R \to (b,a) \in R$.
+    *   *Visually:* If $a$ goes to $b$, $b$ goes back to $a$.
+3.  **Antisymmetric:** $\forall a,b \in A, [(a,b) \in R \land (b,a) \in R] \to a=b$.
+    *   *Meaning:* Mutual relationship is impossible unless elements are identical.
+    *   *Example:* "Less than or equal to" ($\leq$). If $x \leq y$ and $y \leq x$, then $x = y$.
+4.  **Transitive:** $\forall a,b,c \in A, [(a,b) \in R \land (b,c) \in R] \to (a,c) \in R$.
+    *   *Visually:* The "shortcut" path must exist.
 
-### 3.3 Equivalence Relations
-A relation on a set $A$ is called an **Equivalence Relation** if it satisfies three properties:
+### 3.3 Combining Relations
+Since relations are sets, we can use set operations.
+*   **Union ($R_1 \cup R_2$):** Elements in $R_1$ OR $R_2$.
+*   **Intersection ($R_1 \cap R_2$):** Elements in BOTH $R_1$ AND $R_2$.
+*   **Difference ($R_1 - R_2$):** Elements in $R_1$ but NOT in $R_2$.
+
+#### Composition of Relations
+Let $R$ be a relation from $A$ to $B$, and $S$ be a relation from $B$ to $C$. The **composition** $S \circ R$ is a relation from $A$ to $C$:
+*   If $(a,b) \in R$ and $(b,c) \in S$, then $(a,c) \in S \circ R$.
+
+### 3.4 Representing Relations
+
+#### Using Matrices (Zero-One Matrix)
+Relation $R$ can be represented by a matrix $M_R = [m_{ij}]$:
+*   $m_{ij} = 1$ if $(a_i, b_j) \in R$.
+*   $m_{ij} = 0$ if $(a_i, b_j) \notin R$.
+
+**Properties in Matrix Form:**
+*   **Reflexive:** Main diagonal is all 1s ($m_{ii} = 1$).
+*   **Symmetric:** Matrix is symmetric ($M = M^T$). $m_{ij} = m_{ji}$.
+*   **Antisymmetric:** If $i \neq j$, then $m_{ij} = 0$ or $m_{ji} = 0$.
+
+#### Using Digraphs (Directed Graphs)
+*   **Vertices:** Elements of set $A$.
+*   **Edges:** An arrow from $a$ to $b$ exists if $(a,b) \in R$.
+*   **Reflexive:** Every vertex has a loop.
+*   **Symmetric:** Edges are bidirectional (or represented as single undirected lines).
+
+### 3.5 Equivalence Relations
+A relation on a set $A$ is an **Equivalence Relation** if it is:
 1.  **Reflexive**
 2.  **Symmetric**
 3.  **Transitive**
 
-**Equivalence Classes:**
-Let $R$ be an equivalence relation on set $A$. The set of all elements that are related to an element $a$ is called the equivalence class of $a$, denoted by $[a]$.
-* $[a] = \{s \mid (a,s) \in R\}$.
-* Equivalence classes form a **partition** of the set $A$ (they are disjoint and their union is $A$).
+*   *Notation:* $a \sim b$ (a is equivalent to b).
+
+#### Equivalence Classes
+Let $R$ be an equivalence relation on $A$. The **equivalence class** of an element $a$, denoted by $[a]$, is the set of all elements related to $a$:
+$$[a] = \{s \in A \mid (a,s) \in R\}$$
+
+#### Partitions
+The set of equivalence classes forms a **partition** of $A$:
+1.  **Disjoint:** Classes are either identical or share no elements ($[a] \cap [b] = \emptyset$ if $[a] \neq [b]$).
+2.  **Union:** The union of all classes covers the entire set $A$ ($\bigcup [a]_i = A$).
 
 ---
 
 ## 🕸️ Chapter 4: Graphs
 
 ### 4.1 Graph Terminology
-* **Simple Graph:** Undirected, no loops, and no multiple edges between the same pair of vertices.
-* **Multigraph:** Undirected, allows multiple edges between the same vertices.
-* **Pseudograph:** Undirected, allows loops and multiple edges.
-* **Directed Graph (Digraph):** Edges have a direction ($u \to v$).
-* **Complete Graph ($K_n$):** A simple graph with exactly one edge between each pair of distinct vertices.
-* **Bipartite Graph:** Vertex set $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ to one in $V_2$.
+A **Graph** $G = (V, E)$ consists of a nonempty set $V$ of **vertices** (or nodes) and a set $E$ of **edges** that connect the vertices.
 
-**Degree of Vertex ($deg(v)$):** The number of edges incident with vertex $v$.
-* *Important Note:* A loop contributes **2** to the degree of a vertex in an undirected graph.
-* **Handshaking Theorem:** $2|E| = \sum_{v \in V} deg(v)$. (The sum of degrees is twice the number of edges, meaning the total degree count is always even)
+#### Types of Graphs
+1.  **Simple Graph:** Undirected, no loops, and no multiple edges between the same pair of vertices.
+2.  **Multigraph:** Undirected, allows **multiple edges** between the same vertices.
+3.  **Pseudograph:** Undirected, allows **loops** and multiple edges.
+4.  **Directed Graph (Digraph):** Edges have a direction (ordered pairs $(u, v)$).
+    *   *Simple Directed Graph:* No loops, no multiple directed edges.
+    *   *Directed Multigraph:* Allows multiple directed edges.
+
+#### Special Graphs
+*   **Complete Graph ($K_n$):** A simple graph with exactly one edge between each pair of distinct vertices.
+*   **Cycle ($C_n$):** $n$ vertices $v_1, \dots, v_n$ and edges $\{v_1, v_2\}, \{v_2, v_3\}, \dots, \{v_n, v_1\}$.
+*   **Wheel ($W_n$):** Obtained by adding an additional vertex to $C_n$ and connecting it to all $n$ vertices.
+*   **Bipartite Graph:** Vertex set $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ to one in $V_2$. (No edges connect vertices within the same subset).
+
+#### Degrees of Vertices
+*   **Undirected Graph:**
+    *   **Degree ($deg(v)$):** Number of edges incident with vertex $v$.
+    *   *Crucial Rule:* A **loop** contributes **2** to the degree.
+    *   **Handshaking Theorem:** $2|E| = \sum_{v \in V} deg(v)$. (Total degree count is always even).
+*   **Directed Graph:**
+    *   **In-degree ($deg^-(v)$):** Number of edges coming **into** $v$.
+    *   **Out-degree ($deg^+(v)$):** Number of edges going **out of** $v$.
+    *   **Theorem:** $|E| = \sum_{v \in V} deg^-(v) = \sum_{v \in V} deg^+(v)$.
 
 ### 4.2 Graph Representation
-1.  **Adjacency List:** Specify the vertices adjacent to each vertex. Space efficient for sparse graphs.
-2.  **Adjacency Matrix:** An $n \times n$ matrix where $A_{ij} = 1$ if there is an edge between $v_i$ and $v_j$, and $0$ otherwise. Space efficient for dense graphs.
-3.  **Incidence Matrix:** An $n \times m$ matrix (vertices $\times$ edges) where $M_{ij} = 1$ if edge $e_j$ is incident with $v_i$.
+Choosing the right representation depends on the graph's density and operations needed.
 
-### 4.3 Shortest Path: Dijkstra’s Algorithm
-An algorithm to find the shortest path from a specific source node to all other nodes in a weighted graph (where edges have non-negative weights).
+1.  **Adjacency List:**
+    *   Specifies the vertices adjacent to each vertex.
+    *   **Pros:** Space efficient for **sparse graphs**.
+    *   **Example:**
+        *   $a \to b, c, e$
+        *   $b \to a$
+2.  **Adjacency Matrix:**
+    *   An $n \times n$ matrix $A_G$ where $a_{ij} = 1$ if there is an edge from $v_i$ to $v_j$, and $0$ otherwise.
+    *   **Pros:** Fast edge lookups ($O(1)$). Good for **dense graphs**.
+    *   *Note:* For undirected graphs, the matrix is symmetric ($a_{ij} = a_{ji}$). Loops result in $1$s on the main diagonal.
+3.  **Incidence Matrix:**
+    *   An $n \times m$ matrix (vertices $\times$ edges) where $m_{ij} = 1$ if edge $e_j$ is incident with vertex $v_i$.
+
+### 4.3 Connectivity
+*   **Path:** A sequence of edges that begins at a vertex and travels along edges to other vertices.
+*   **Connected Graph (Undirected):** There is a path between every pair of distinct vertices.
+*   **Connected Components:** Disjoint connected subgraphs that make up a non-connected graph.
+*   **Directed Connectivity:**
+    *   **Strongly Connected:** There is a directed path from $a$ to $b$ **AND** from $b$ to $a$ for every pair of vertices.
+    *   **Weakly Connected:** The underlying undirected graph is connected (ignoring edge directions).
+
+### 4.4 Shortest Path: Dijkstra’s Algorithm
+An algorithm to find the shortest path from a specific **source node** to all other nodes in a **weighted graph** (where edges have non-negative weights).
 
 > [!EXAMPLE] Algorithm Logic
 > 1.  Assign a tentative distance value to every node: set it to zero for the initial node and to infinity for all other nodes.
@@ -192,32 +347,110 @@ An algorithm to find the shortest path from a specific source node to all other 
 > 4.  After considering all of the unvisited neighbors of the current node, mark the current node as visited. A visited node will never be checked again.
 > 5.  Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node," and go back to step 3.
 
+**Example Trace:**
+Given nodes $0$ to $8$ with weights.
+*   Start at $0$. Distance to neighbors updated.
+*   Shortest path from $0 \to 1$ might be $4$.
+*   Shortest path from $0 \to 2$ might be $12$ (via intermediate nodes).
+*   **Output:** List of minimum costs to reach each node (e.g., $0, 4, 12, 19, 21, 11, 9, 8, 14$).
+
 ---
 
 ## 🌳 Chapter 5: Trees
 
-### 5.1 Tree Definitions
-> [!INFO] Definition
-> A **Tree** is a connected undirected graph with no simple circuits.
-> * **Forest:** A graph that contains no simple circuits but is not connected. Each connected component of a forest is a tree.
+### 5.1 Introduction to Trees
+*   **Tree:** A connected undirected graph with no simple circuits.
+*   **Forest:** A graph that contains no simple circuits but is not necessarily connected. Each connected component of a forest is a tree.
 
-**Rooted Trees:** A tree in which one vertex has been designated as the root and every edge is directed away from the root.
-* **Parent/Child:** If $u \to v$, $u$ is the parent, $v$ is the child.
-* **Leaf:** A vertex with no children (or degree 1 in unrooted context).
-* **Internal Vertex:** A vertex that has children.
-* **m-ary Tree:** A rooted tree where every internal vertex has no more than $m$ children.
-* **Full m-ary Tree:** Every internal vertex has *exactly* $m$ children.
+### 5.2 Rooted Trees
+A **rooted tree** is a tree in which one vertex has been designated as the **root** and every edge is directed away from the root.
 
-### 5.2 Tree Traversal
-Systematic procedures for visiting every vertex of an ordered rooted tree.
-1.  **Preorder Traversal:** Visit Root $\to$ Traverse Left Subtree $\to$ Traverse Right Subtree.
-2.  **Inorder Traversal:** Traverse Left Subtree $\to$ Visit Root $\to$ Traverse Right Subtree (Typically for binary trees).
-3.  **Postorder Traversal:** Traverse Left Subtree $\to$ Traverse Right Subtree $\to$ Visit Root.
+#### Terminology
+*   **Parent:** If $u \to v$, $u$ is the parent of $v$.
+*   **Child:** If $u \to v$, $v$ is the child of $u$.
+*   **Siblings:** Vertices with the same parent.
+*   **Ancestors:** Vertices on the path from the root to a vertex (excluding the vertex itself, usually).
+*   **Descendants:** Vertices that have a specific vertex as an ancestor.
+*   **Leaf:** A vertex with no children.
+*   **Internal Vertex:** A vertex that has children.
 
-### 5.3 Spanning Trees
-Let $G$ be a simple graph. A spanning tree of $G$ is a subgraph of $G$ that is a tree containing every vertex of $G$.
-* **DFS (Depth-First Search):** Explores as far as possible along each branch before backtracking. Typically implemented using a **Stack** (or recursion).
-* **BFS (Breadth-First Search):** Explores all neighbor nodes at the present depth prior to moving to the nodes at the next depth level. Typically implemented using a **Queue**.
+#### Types of Rooted Trees
+*   **m-ary Tree:** A rooted tree where every internal vertex has no more than $m$ children.
+*   **Full m-ary Tree:** Every internal vertex has **exactly** $m$ children.
+*   **Binary Tree:** An m-ary tree with $m=2$.
+*   **Ordered Rooted Tree:** A rooted tree where the children of each internal vertex are ordered (e.g., first child, second child).
+
+#### Properties
+*   **Level of a vertex:** The length of the unique path from the root to the vertex. (Root is at level 0).
+*   **Height of a tree:** The maximum of the levels of the vertices.
+
+### 5.3 Tree Traversal
+Procedures for systematically visiting every vertex of an ordered rooted tree.
+
+#### 1. Preorder Traversal
+**Order:** Root $\to$ Left Subtree $\to$ Right Subtree
+```pascal
+procedure preorder(T: ordered rooted tree)
+   r := root of T
+   list r
+   for each child c of r from left to right
+      T(c) := subtree with c as root
+      preorder(T(c))
+```
+
+#### 2. Inorder Traversal
+**Order:** Left Subtree $\to$ Root $\to$ Right Subtree
+*(Typically used for binary trees)*
+```pascal
+procedure inorder(T: ordered rooted tree)
+   r := root of T
+   if r is a leaf then list r
+   else
+      l := first child of r from left to right
+      T(l) := subtree with l as root
+      inorder(T(l))
+      list r
+      for each child c of r from left to right (except l)
+         T(c) := subtree with c as root
+         inorder(T(c))
+```
+
+#### 3. Postorder Traversal
+**Order:** Left Subtree $\to$ Right Subtree $\to$ Root
+```pascal
+procedure postorder(T: ordered rooted tree)
+   r := root of T
+   for each child c of r from left to right
+      T(c) := subtree with c as root
+      postorder(T(c))
+   list r
+```
+
+### 5.4 Spanning Trees
+Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that is a tree containing **every vertex** of $G$.
+
+#### Depth-First Search (DFS)
+*   **Strategy:** Explore as far as possible along each branch before backtracking.
+*   **Data Structure:** Stack (or Recursion).
+*   **Memory:** More efficient.
+*   **Backtracking:** Yes.
+
+#### Breadth-First Search (BFS)
+*   **Strategy:** Explore all neighbor nodes at the present depth prior to moving to the nodes at the next depth level.
+*   **Data Structure:** Queue.
+*   **Memory:** Less efficient (requires storing all nodes at current level).
+*   **Backtracking:** No.
+*   **Optimality:** Finds the shortest path (minimum number of edges) in unweighted graphs.
+
+#### Comparison: BFS vs DFS
+
+| Feature | BFS (Breadth-First) | DFS (Depth-First) |
+| :--- | :--- | :--- |
+| **Data Structure** | Queue | Stack |
+| **Backtracking** | No | Yes |
+| **Optimal Path** | Yes (Shortest Path) | No |
+| **Speed** | Slower | Faster |
+| **Memory Efficiency** | Low | High |
 
 ---
 
