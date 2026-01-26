@@ -502,6 +502,115 @@ A loop inside another loop.
 
 ---
 
+# File Processing
+
+### Key Concepts
+*   **Data Persistence:** Files allow data to be retained between program runs.
+*   **Text File:** Contains data encoded as text (readable by humans).
+*   **Binary File:** Contains data not encoded as text (efficient, but not readable).
+*   **File Stream Objects:** Special variables used to access files.
+    *   `ifstream`: For input from a file.
+    *   `ofstream`: For output to a file.
+    *   `fstream`: For both input and output.
+*   **Header:** Requires `#include <fstream>`.
+
+### Steps to Use a File
+1.  **Open** the file: Link the stream object to a physical file.
+2.  **Process** the file: Read from or write to the file.
+3.  **Close** the file: Disconnect the stream object.
+
+### Syntax & Basic Operations
+
+**Opening a File:**
+```cpp
+ifstream inputFile;
+inputFile.open("data.txt"); // Open for reading
+
+ofstream outputFile;
+outputFile.open("results.txt"); // Open for writing (erases existing content!)
+```
+
+**Checking for Success:**
+Always check if a file opened successfully before using it.
+```cpp
+if (inputFile.fail()) { // or just: if (!inputFile)
+    cout << "Error opening file.";
+}
+```
+
+**Writing to a File:**
+Use the stream insertion operator `<<`, just like with `cout`.
+```cpp
+outputFile << "Hello World" << endl;
+outputFile << 100;
+```
+
+**Reading from a File:**
+Use the stream extraction operator `>>`, just like with `cin`.
+```cpp
+int number;
+inputFile >> number; // Reads a value from the file into 'number'
+```
+
+**Closing a File:**
+```cpp
+inputFile.close();
+outputFile.close();
+```
+
+### Processing Files with Loops
+
+**Reading Until End of File (EOF):**
+The extraction operator returns `true` if a value was successfully read and `false` if the end of the file was reached (or an error occurred).
+```cpp
+while (inputFile >> number) {
+    cout << number << endl;
+}
+```
+
+### Advanced File Operations
+
+**File Open Modes:**
+Flags used to control how a file is opened. Can be combined with `|`.
+*   `ios::in`: Input mode (default for `ifstream`).
+*   `ios::out`: Output mode (default for `ofstream`).
+*   `ios::app`: Append mode. Writes are added to the end.
+*   `ios::binary`: Binary mode.
+
+**User-Specified Filenames:**
+```cpp
+string filename;
+cout << "Enter filename: ";
+cin >> filename;
+inputFile.open(filename); // In C++11 and later, strings work directly
+```
+
+**Reading Lines with `getline`:**
+To read a whole line (including spaces) from a file.
+```cpp
+string line;
+getline(inputFile, line);
+```
+
+**Member Functions:**
+*   `get(char)`: Reads a single character.
+*   `put(char)`: Writes a single character.
+
+**Binary Files:**
+*   **Write:** `file.write(address, size)`
+*   **Read:** `file.read(address, size)`
+    *   *Address* must be cast to `char *`.
+    *   *Example:* `file.write(reinterpret_cast<char*>(&number), sizeof(number));`
+
+**Random Access:**
+Moving the read/write position (cursor) within a file.
+*   `seekg(offset, mode)`: Seek Get (Input).
+*   `seekp(offset, mode)`: Seek Put (Output).
+*   **Modes:** `ios::beg` (beginning), `ios::cur` (current), `ios::end` (end).
+*   **Example:** `file.seekg(25L, ios::beg);` // Move to the 25th byte from start.
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
