@@ -49,6 +49,105 @@
 
 ---
 
+# Introduction to C++
+
+### Parts of a C++ Program
+* **Comments (`//`):** Ignored by the compiler. Used to document code.
+* **Preprocessor Directive (`#include <iostream>`):** Inserts the contents of another file into the program. `iostream` is required for input/output operations.
+* **Namespace (`using namespace std;`):** Declares that the program will use entities (like `cout`, `cin`) from the standard namespace.
+* **Main Function (`int main()`):** The starting point of every C++ program.
+* **Braces (`{ }`):** Enclose a block of code (e.g., the body of `main`).
+* **Output Statement (`cout << ...`):** Displays information on the screen.
+* **Return Statement (`return 0;`):** Ends the main function and sends a signal (usually 0 for success) back to the operating system.
+
+### Special Characters
+| Character | Name | Meaning |
+| :--- | :--- | :--- |
+| `//` | Double Slash | Beginning of a comment |
+| `#` | Pound Sign | Beginning of a preprocessor directive |
+| `< >` | Open/Close Brackets | Enclose filename in `#include` |
+| `( )` | Open/Close Parentheses | Used when naming a function |
+| `{ }` | Open/Close Braces | Encloses a group of statements |
+| `" "` | Quotation Marks | Encloses string of characters |
+| `;` | Semicolon | End of a programming statement |
+
+### The `cout` Object
+* **Console Output:** Used to display output on the computer screen.
+* **Stream Insertion Operator (`<<`):** Sends data to `cout`.
+    * Example: `cout << "Hello there!";`
+* **Multiple Items:** Can send multiple items in one statement.
+    * Example: `cout << "Hello " << "there!";`
+* **`endl` Manipulator:** Starts a new line of output.
+    * Example: `cout << "Hello" << endl;`
+* **`\n` Escape Sequence:** Also starts a new line. Must be inside quotes.
+    * Example: `cout << "Hello\n";`
+
+### Variables and Data Types
+* **Variable Definition:** Must be defined before use. Specifies type and name.
+    * Syntax: `Type VariableName;` (e.g., `int item;`)
+* **Literals:** Constant values written into the code.
+    * **Integer Literal:** `20`
+    * **String Literal:** `"Hello"`
+    * **Character Literal:** `'A'` (Single quotes)
+* **Identifiers:** Programmer-defined names for variables/functions.
+    * **Rules:**
+        * Must begin with a letter or underscore (`_`).
+        * Following characters can be letters, digits, or underscores.
+        * **Case Sensitive:** `Total` and `total` are different.
+        * Cannot use Key Words.
+* **Integer Data Types:**
+    * `short`: Usually 2 bytes.
+    * `int`: Usually 4 bytes.
+    * `long`: Usually 4 bytes.
+    * `long long`: Usually 8 bytes.
+    * Can be `unsigned` (no negative numbers) or `signed` (default).
+* **`char` Data Type:**
+    * Used to hold a single character.
+    * Actually stored as a small integer (ASCII code).
+    * Size: 1 byte.
+    * Example: `char letter = 'A';`
+* **`string` Class:**
+    * **Not** a built-in primitive type (requires `#include <string>`)
+    * Used to store a sequence of characters.
+    * Example: `string name = "George";`
+* **Floating-Point Data Types:**
+    * `float`: Single precision (4 bytes).
+    * `double`: Double precision (8 bytes).
+    * `long double`: Extended precision (8 or 16 bytes).
+    * Can represent real numbers (e.g., `12.45`, `-3.8`).
+    * Scientific notation: `3.14159E1` represents $3.14159 	imes 10^1$.
+* **`bool` Data Type:**
+    * Represents boolean values: `true` or `false`.
+    * Stored as integers: `true` is `1` (or non-zero), `false` is `0`.
+* **`auto` Key Word (C++11):**
+    * Infers the data type from the initialization value.
+    * Example: `auto amount = 100;` (int)
+
+### Operations & Initialization
+* **Assignment (`=`):** Copies the value on the right to the variable on the left.
+    * Example: `item = 12;`
+* **Initialization:** Assigning a value at the time of definition.
+    * Example: `int length = 12;`
+* **Arithmetic Operators:**
+    * `+` Addition
+    * `-` Subtraction
+    * `*` Multiplication
+    * `/` Division (Integer division truncates decimals! `13 / 5` is `2`)
+    * `%` Modulus (Remainder of division, integers only).
+* **`sizeof` Operator:** Returns the size of a data type or variable in bytes.
+    * Example: `sizeof(int)` or `sizeof(myVar)`.
+
+### Comments & Style
+* **Single-Line Comment:** `// ...`
+* **Multi-Line Comment:** `/* ... */`
+* **Named Constants:** Variables whose content cannot be changed.
+    * Use `const` keyword.
+    * Convention: Uppercase names.
+    * Example: `const double TAX_RATE = 0.0675;`
+* **Programming Style:** Visual organization of source code (spaces, tabs, blank lines) to improve readability. Does not affect compilation.
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
