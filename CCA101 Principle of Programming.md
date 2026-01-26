@@ -243,6 +243,129 @@ Requires `#include <cmath>`.
 
 ---
 
+# Making Decisions (Selection Structures)
+
+### Relational Operators
+Used to compare two values (operands). The result is a **Boolean** value: `true` (1) or `false` (0).
+*   `>` Greater than
+*   `<` Less than
+*   `>=` Greater than or equal to
+*   `<=` Less than or equal to
+*   `==` Equal to
+*   `!=` Not equal to
+
+> [!WARNING] Common Pitfall
+> Do not confuse the equality operator `==` with the assignment operator `=`. 
+> *   `if (x = 2)` assigns 2 to x (which is true/non-zero), so the block ALWAYS executes.
+> *   `if (x == 2)` correctly tests if x equals 2.
+
+### The `if` Statement
+Allows statements to be conditionally executed or skipped.
+*   **Syntax:**
+    ```cpp
+    if (expression)
+        statement;
+    ```
+*   **True/False:** If the `expression` is true (non-zero), the `statement` is executed. If false (zero), it is skipped.
+*   **Block:** To execute multiple statements, enclose them in braces `{}`.
+    ```cpp
+    if (score > 90) {
+        grade = 'A';
+        cout << "Excellent!";
+    }
+    ```
+*   **Note:** Do not put a semicolon `;` after the `if (expression)` line, or the if statement will do nothing (it treats the semicolon as a null statement).
+
+### The `if/else` Statement
+Executes one block of code if the condition is true, and a different block if it is false.
+*   **Syntax:**
+    ```cpp
+    if (expression) {
+        // Executed if true
+    } else {
+        // Executed if false
+    }
+    ```
+
+### Nested `if` Statements
+An `if` statement inside another `if` statement.
+*   Used to test multiple conditions in sequence.
+*   **`if/else if` Chain:** Tests a series of conditions until one is found to be true.
+    ```cpp
+    if (score >= 90)
+        grade = 'A';
+    else if (score >= 80)
+        grade = 'B';
+    else
+        grade = 'C'; // Default if none of the above match
+    ```
+
+### Flags
+A variable (usually `bool` or `int`) that signals a condition.
+*   Example:
+    ```cpp
+    bool salesQuotaMet = false; // Flag initialized to false
+    if (sales > QUOTA)
+        salesQuotaMet = true; // Set flag to true
+    if (salesQuotaMet) ...
+    ```
+
+### Logical Operators
+Used to combine multiple boolean expressions into a single compound expression.
+*   **`&&` (AND):** True only if **both** operands are true.
+*   **`||` (OR):** True if **either** operand (or both) is true.
+*   **`!` (NOT):** Reverses the truth of the operand (`!true` is `false`).
+
+**Precedence (Order of Operations):**
+1.  `!` (NOT)
+2.  `&&` (AND)
+3.  `||` (OR)
+
+**Short-Circuit Evaluation:**
+*   `&&`: If the left operand is false, the right operand is **skipped** (result is already known to be false).
+*   `||`: If the left operand is true, the right operand is **skipped** (result is already known to be true).
+
+### Checking Ranges
+*   **Correct:** `if (x >= 20 && x <= 40)` checks if x is within [20, 40].
+*   **Incorrect:** `if (20 <= x <= 40)` is mathematically correct but syntactically wrong logic in C++. It evaluates `(20 <= x)` to 0 or 1, then compares that result to 40 (which is always true).
+
+### The Conditional Operator (`?:`)
+A shorthand for a simple `if/else` statement. It is a **ternary** operator (3 operands).
+*   **Syntax:** `expression ? value_if_true : value_if_false`
+*   **Example:**
+    ```cpp
+    x = (y > 10) ? 100 : 0;
+    // Equivalent to:
+    // if (y > 10) x = 100; else x = 0;
+    ```
+
+### The `switch` Statement
+An alternative to `if/else if` for testing an integer expression against multiple constant values.
+*   **Syntax:**
+    ```cpp
+    switch (IntegerExpression) {
+        case Constant1:
+            // code
+            break; // Exits the switch
+        case Constant2:
+            // code
+            break;
+        default:
+            // code executes if no case matches
+    }
+    ```
+*   **Requirements:**
+    *   The expression must evaluate to an **integer** or **char** (not float or string).
+    *   `case` values must be **constant literals**.
+*   **Fall-through:** Without a `break` statement, the program continues executing the next case's statements. This is sometimes useful but often a bug.
+
+### Scope (Blocks)
+*   **Local Scope:** Variables defined inside a block `{}` are only visible within that block.
+*   **Lifetime:** They are created when execution enters the block and destroyed when it leaves.
+*   **Shadowing:** An inner block variable can have the same name as an outer block variable, "hiding" the outer one within the inner block.
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
