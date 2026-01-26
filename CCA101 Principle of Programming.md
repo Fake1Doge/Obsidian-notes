@@ -769,18 +769,14 @@ Text-based description of the algorithm.
 # Arrays
 
 ### Key Concepts & Definitions
-* **Array:** A variable that can store multiple values of the **same data type** in adjacent memory locations.
-* **Size Declarator:** The number inside the brackets in the definition (e.g., `int tests[5]`). It indicates the total number of elements.
-* **Subscript/Index:** The number used to access a specific element. Indices start at **0**.
-* **Memory Usage:** The total memory consumed by an array is calculated as:
-  $$(\text{Number of elements}) \times (\text{Size of each element})$$
-* **Initialization List:** A series of values inside braces `{}` used to initialize the array upon creation.
-* **Implicit Sizing:** If you provide an initialization list but leave the size declarator empty (e.g., `int arr[] = {1, 2}`), C++ counts the items to determine the size.
-* **Range-Based For Loop:** A simplified loop introduced in C++11 that automatically iterates through every element in an array.
-* **Parallel Arrays:** Two or more arrays where elements at the same index relate to each other (e.g., `studentID[0]` belongs to the same person as `grade[0]`).
-* **2D Arrays:** Arrays with rows and columns, essentially an "array of arrays."
+*   **Array:** A variable that can store multiple values of the **same data type** in adjacent memory locations.
+*   **Size Declarator:** The number inside the brackets in the definition (e.g., `int tests[5]`). It must be a **constant integer** greater than zero.
+*   **Subscript/Index:** The number used to access a specific element. Indices start at **0** and end at `size - 1`.
+*   **Memory Layout:** The total memory consumed by an array is calculated as:
+    $$(\text{Number of elements}) \times (\text{Size of each element})$$
+    *   *Example:* `int tests[5]` (assuming 4 bytes per int) uses $5 \times 4 = 20$ bytes.
 
-### Syntax
+### Initialization
 **Definition & Assignment:**
 ```cpp
 const int SIZE = 5;
@@ -788,48 +784,82 @@ int numbers[SIZE]; // Definition
 numbers[0] = 20;   // Assigning 20 to the first element
 ```
 
-**Partial Initialization:**
-```cpp
-// First two elements are 1, 2. The rest are initialized to 0.
-int numbers[5] = {1, 2}; 
-```
+**Initialization List:**
+*   **Full Initialization:** `int days[12] = {31, 28, 31, 30, ...};`
+*   **Partial Initialization:** If you provide fewer values than the size, the remaining elements are set to **0**.
+    ```cpp
+    int numbers[5] = {1, 2}; // {1, 2, 0, 0, 0}
+    ```
+*   **Implicit Sizing:** If you leave the size declarator empty, C++ counts the items.
+    ```cpp
+    int arr[] = {1, 2, 3}; // Size is implicitly 3
+    ```
 
-**2D Array Definition:**
-```cpp
-// Type Name [Rows] [Cols]
-double scores[3][4]; 
-```
-
-### Code Examples
-
-**1. Range-Based For Loop**
-```cpp
-int values[] = {10, 20, 30};
-
-// 'val' holds a copy of each element in turn
-for (int val : values) 
-{
-    cout << val << endl;
-}
-
-// Use reference (&) to modify the array
-for (int &val : values) 
-{
-    val++; // Increments actual array elements
-}
-```
-
-**2. Processing a 2D Array (Nested Loops)**
-```cpp
-int table[3][2];
-for (int row = 0; row < 3; row++) 
-{
-    for (int col = 0; col < 2; col++) 
-    {
-        cin >> table[row][col]; // Input for each cell
+### Accessing and Processing Arrays
+*   **Access:** Elements are accessed using `arrayName[index]`.
+    *   `cout << tests[0];` prints the first element.
+*   **Processing:** Usually done with `for` loops.
+    ```cpp
+    for (int i = 0; i < SIZE; i++) {
+        tests[i] = 99; // Set all elements to 99
     }
-}
-```
+    ```
+*   **Copying:** You **cannot** assign one array to another directly (`arr1 = arr2` is illegal). You must copy element-by-element using a loop.
+
+### Range-Based For Loop (C++11)
+A simplified loop that iterates through every element in an array.
+*   **Syntax:**
+    ```cpp
+    for (dataType rangeVariable : array) {
+        statement;
+    }
+    ```
+*   **Example (Reading):**
+    ```cpp
+    for (int val : numbers) {
+        cout << val << endl;
+    }
+    ```
+*   **Example (Modifying):** Use a reference variable (`&`).
+    ```cpp
+    for (int &val : numbers) {
+        val++; // Increments actual array elements
+    }
+    ```
+
+### Arrays as Function Arguments
+*   **Passing:** Arrays are passed by **reference** (address) by default, though no `&` is used in the parameter.
+*   **Prototype/Header:** `void showValues(int nums[], int size)`
+*   **Call:** `showValues(numbers, 5);` (Just the array name, no brackets).
+*   **Protection:** Use `const` to prevent the function from modifying the array.
+    ```cpp
+    void showValues(const int nums[], int size);
+    ```
+
+### Two-Dimensional Arrays
+Arrays with rows and columns, essentially an "array of arrays."
+*   **Definition:** `double scores[3][4];` (3 rows, 4 columns).
+*   **Access:** `scores[2][1]` (Row 2, Column 1).
+*   **Processing:** Requires nested loops.
+    ```cpp
+    for (int row = 0; row < 3; row++) {
+        for (int col = 0; col < 4; col++) {
+            cin >> scores[row][col];
+        }
+    }
+    ```
+*   **Passing to Functions:** Must specify the number of columns.
+    ```cpp
+    void showTable(int array[][4], int rows);
+    ```
+
+### Introduction to STL Vectors
+A `vector` is a dynamic array that can grow and shrink in size.
+*   **Header:** `#include <vector>`
+*   **Definition:** `vector<int> numbers;`
+*   **Adding Elements:** `numbers.push_back(10);`
+*   **Size:** `numbers.size()`
+*   **Access:** Same as arrays (`numbers[0]`).
 
 ### Critical Details & Warnings
 > [!DANGER] Bounds Checking
@@ -837,7 +867,6 @@ for (int row = 0; row < 3; row++)
 
 > [!WARNING] Common Errors
 > * **Off-By-One Errors:** A common mistake is iterating from `1` to `SIZE` instead of `0` to `SIZE - 1`.
-> * **Copying Arrays:** You **cannot** use the assignment operator to copy arrays (`arr1 = arr2` is illegal). You must use a loop to copy element-by-element.
 
 ---
 
