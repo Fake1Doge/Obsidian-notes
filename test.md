@@ -988,151 +988,172 @@ Arranging $n$ objects where some are identical/indistinguishable.
 
 ## 1. Applications of Recurrence Relations
 
-### Definition
-A **recurrence relation** for a sequence $\{a_{n}\}$ is an equation that expresses $a_{n}$ in terms of one or more of the previous terms of the sequence ($a_{0}, a_{1}, ..., a_{n-1}$) for all integers $n$ with $n \ge n_{0}$.
+### 1.1 Definition
+A **recurrence relation** for a sequence $\{a_n\}$ is an equation that expresses $a_n$ in terms of one or more of the previous terms of the sequence (e.g., $a_0, a_1, \dots, a_{n-1}$) for all integers $n \ge n_0$.
 
-* **Solution:** A sequence is called a solution if its terms satisfy the recurrence relation.
-* **Initial Conditions:** Specify the terms that precede the first term where the recurrence relation takes effect.
+* **Solution:** A sequence is a solution if its terms satisfy the recurrence relation.
+* **Initial Conditions:** Specify the terms that precede the first term where the relation takes effect (required to find a unique solution).
 
-### Example 1: Basic Arithmetic Sequence
-* **Relation:** $a_{n} = a_{n-1} + 3$ for $n=1, 2, 3...$
-* **Initial Condition:** $a_{0} = 2$
-* **Sequence Calculation:**
-    * $a_{1} = a_{0} + 3 = 2 + 3 = 5$
-    * $a_{2} = 5 + 3 = 8$
-    * $a_{3} = 8 + 3 = 11$
+> [!EXAMPLE] Basic Sequence
+> **Relation:** $a_n = a_{n-1} + 3$ for $n=1, 2, 3 \dots$
+> **Initial Condition:** $a_0 = 2$
+>
+> * $a_1 = a_0 + 3 = 2 + 3 = 5$
+> * $a_2 = 5 + 3 = 8$
+> * $a_3 = 8 + 3 = 11$
 
-### Example 2: Rabbits and Fibonacci Numbers
-**The Problem:** A pair of rabbits does not breed until they are 2 months old. After 2 months, each pair produces another pair every month. Assume rabbits never die.
+### 1.2 Modeling: Rabbits and Fibonacci
+This classic problem models population growth (pairs of rabbits) where:
+1.  Rabbits do not breed until 2 months old.
+2.  Once fertile, every pair produces one new pair per month.
+3.  Rabbits never die.
 
-* **Logic:**
-    * $f_n$: Pairs of rabbits after $n$ months.
-    * $f_{n-1}$: Pairs from the previous month (survivors).
-    * $f_{n-2}$: Number of newborn pairs (equal to the number of pairs at least 2 months old).
-* **Recurrence Relation:**
-    $$f_{n} = f_{n-1} + f_{n-2}$$
+**The Logic:**
+$$Total = (\text{Pairs from previous month}) + (\text{Newborn pairs})$$
+$$f_n = f_{n-1} + f_{n-2}$$
+
+* **Recurrence:** $f_n = f_{n-1} + f_{n-2}$ for $n \ge 3$.
 * **Initial Conditions:** $f_1 = 1$, $f_2 = 1$.
 
-### Example 3: Counting Bit Strings (No Consecutive 0s)
-**The Problem:** Find the number of bit strings of length $n$ ($a_n$) containing no two consecutive 0s.
+### 1.3 Modeling: Counting Bit Strings
+**Problem:** Find the number of bit strings of length $n$ without two consecutive 0s. Let $a_n$ be this number.
 
-**Derivation:**
-1.  **Ending in 1:** If the string ends in 1, the preceding $n-1$ bits can be any valid string. Count = $a_{n-1}$.
-2.  **Ending in 0:** If the string ends in 0, the bit before it *must* be 1. The preceding $n-2$ bits can be any valid string. Count = $a_{n-2}$.
-3.  **Total:** $a_{n} = a_{n-1} + a_{n-2}$
+**Breakdown:**
+Bit strings must end in either a `1` or a `0`.
+1.  **Ending in 1:** The previous $n-1$ bits can be any valid string. ($a_{n-1}$ ways).
+2.  **Ending in 0:** To avoid consecutive 0s, the bit before the last 0 *must* be a 1. So the string ends in `10`. The remaining $n-2$ bits can be any valid string. ($a_{n-2}$ ways).
 
-**Initial Conditions:**
-* $a_1 = 2$ (Strings: 0, 1)
-* $a_2 = 3$ (Strings: 01, 10, 11)
-* *Note:* This sequence satisfies $a_n = f_{n+2}$ (Fibonacci).
+**Relation:**
+$$a_n = a_{n-1} + a_{n-2}$$
+* **Initial Conditions:**
+    * $a_1 = 2$ (Strings: 0, 1)
+    * $a_2 = 3$ (Strings: 01, 10, 11) note: 00 is invalid.
+* *Note:* This satisfies the same relation as Fibonacci, but with different starting values ($a_n = f_{n+2}$).
 
 ---
 
 ## 2. Solving Linear Recurrence Relations
 
-### Linear Homogeneous Recurrence Relations
-**Definition:** A linear homogeneous recurrence relation of degree $k$ with constant coefficients is of the form:
-$$a_{n} = c_{1}a_{n-1} + c_{2}a_{n-2} + ... + c_{k}a_{n-k}$$
-where $c_k \ne 0$.
+### 2.1 Linear Homogeneous Recurrence Relations
+A relation of degree $k$ with constant coefficients takes the form:
+$$a_n = c_1 a_{n-1} + c_2 a_{n-2} + \dots + c_k a_{n-k}$$
+* **Linear:** RHS is a sum of previous terms multiplied by constants.
+* **Homogeneous:** No terms occur that are not multiples of the $a_j$'s (i.e., no standalone $F(n)$).
+* **Constant Coefficients:** $c_1, c_2 \dots$ are fixed real numbers.
 
-* **Linear:** RHS is a sum of previous terms.
-* **Homogeneous:** No terms occur that are not multiples of $a_j$ (no separate function of $n$).
-* **Constant Coefficients:** $c_1, c_2...$ are constants.
+#### Solving Method (Degree 2)
+To solve $a_n = c_1 a_{n-1} + c_2 a_{n-2}$:
 
-#### Solving Degree Two Relations
-**Theorem:** Suppose the characteristic equation $r^2 - c_1r - c_2 = 0$ has two distinct roots $r_1$ and $r_2$.
-The general solution is:
-$$a_{n}^{(h)} = c_{1} \cdot r_{1}^{n} + c_{2} \cdot r_{2}^{n}$$
+1.  **Form the Characteristic Equation:** Replace $a_n$ with $r^n$.
+    $$r^2 - c_1 r - c_2 = 0$$
+2.  **Find the Roots ($r_1, r_2$):** Factor the quadratic.
+3.  **General Solution:**
+    If roots are distinct ($r_1 \ne r_2$):
+    $$a_n^{(h)} = c_1 r_1^n + c_2 r_2^n$$
+4.  **Find Constants:** Use initial conditions (e.g., $a_0, a_1$) to solve for $c_1$ and $c_2$.
 
-**Worked Example:**
-Solve $a_{n} = a_{n-1} + 2a_{n-2}$ with $a_{0}=2$ and $a_{1}=7$.
+> [!EXAMPLE] Solving Homogeneous
+> **Relation:** $a_n = a_{n-1} + 2a_{n-2}$ with $a_0=2, a_1=7$.
+> 1.  **Characteristic Eq:** $r^2 - r - 2 = 0 \Rightarrow (r-2)(r+1) = 0$.
+> 2.  **Roots:** $r_1 = 2, r_2 = -1$.
+> 3.  **General Form:** $a_n = c_1(2)^n + c_2(-1)^n$.
+> 4.  **Solve Constants:**
+>     * $n=0: c_1 + c_2 = 2$
+>     * $n=1: 2c_1 - c_2 = 7$
+>     * Result: $c_1 = 3, c_2 = -1$.
+> 5.  **Final Solution:** $a_n = 3(2^n) - (-1)^n$.
 
-1.  **Characteristic Equation:** $r^2 - r - 2 = 0$
-2.  **Factor:** $(r-2)(r+1) = 0 \implies r_1 = 2, r_2 = -1$.
-3.  **General Solution:** $a_n = c_1(2)^n + c_2(-1)^n$.
-4.  **Apply Initial Conditions:**
-    * $n=0$: $c_1 + c_2 = 2$
-    * $n=1$: $2c_1 - c_2 = 7$
-5.  **Solve System:** $c_1 = 3, c_2 = -1$.
-6.  **Final Solution:** $a_n = 3 \cdot 2^n - (-1)^n$.
+### 2.2 Linear Non-homogeneous Recurrence Relations
+Form:
+$$a_n = c_1 a_{n-1} + \dots + c_k a_{n-k} + F(n)$$
+where $F(n)$ is a function not identically zero.
 
-### Linear Nonhomogeneous Recurrence Relations
-**Definition:** Relations of the form:
-$$a_{n} = c_{1}a_{n-1} + ... + c_{k}a_{n-k} + F(n)$$
-where $F(n)$ is not identically zero.
+#### Solving Method
+The solution is the sum of the homogeneous solution and a particular solution:
+$$a_n = a_n^{(h)} + a_n^{(p)}$$
 
-**Solution Method:**
-$$a_{n} = a_{n}^{(h)} + a_{n}^{(p)}$$
-1.  **$a_{n}^{(h)}$:** The solution to the associated homogeneous relation.
-2.  **$a_{n}^{(p)}$:** A particular solution similar in form to $F(n)$.
+**Steps:**
+1.  **Find $a_n^{(h)}$:** Ignore $F(n)$ and solve as a homogeneous relation (see 2.1).
+2.  **Find $a_n^{(p)}$:** Guess the form based on $F(n)$ and solve for coefficients.
+    * If $F(n)$ is a polynomial of degree $t$, guess a polynomial of degree $t$ (e.g., $Cn + D$).
+    * If $F(n) = s^n$, guess $C \cdot s^n$.
+3.  **Combine:** Add them together.
 
-**Worked Example:**
-Solve $a_{n} = 3a_{n-1} + 2n$. (Given $a_1=3$).
-
-1.  **Homogeneous Part ($a_n - 3a_{n-1} = 0$):**
-    * Root: $r=3$.
-    * $a_{n}^{(h)} = \alpha \cdot 3^n$.
-2.  **Particular Solution:**
-    * Since $F(n) = 2n$ (linear), guess $p_n = cn + d$.
-    * Substitute into relation: $(cn+d) = 3(c(n-1)+d) + 2n$.
-    * Simplify and compare coefficients:
-        * $-2cn + (3c - 2d) = 2n$
-        * $-2c = 2 \implies c = -1$
-        * $3c - 2d = 0 \implies -3 - 2d = 0 \implies d = -3/2$
-    * $a_{n}^{(p)} = -n - 3/2$.
-3.  **Total Solution:** $a_n = \alpha \cdot 3^n - n - 3/2$.
-4.  **Find $\alpha$ using $a_1=3$:**
-    * $3 = 3\alpha - 1 - 1.5$
-    * $5.5 = 3\alpha \implies \alpha = 11/6$.
-    * Final: $a_n = (11/6)3^n - n - 3/2$.
+> [!EXAMPLE] Solving Non-homogeneous
+> **Relation:** $a_n = 3a_{n-1} + 2n$ with $a_1=3$.
+>
+> 1.  **Homogeneous Part ($a_n - 3a_{n-1} = 0$):**
+>     * Root $r=3$.
+>     * $a_n^{(h)} = \alpha \cdot 3^n$.
+> 2.  **Particular Part ($F(n) = 2n$):**
+>     * Since $F(n)$ is linear, guess $a_n^{(p)} = cn + d$.
+>     * Substitute into original relation: $cn+d = 3(c(n-1)+d) + 2n$.
+>     * Simplify and compare coefficients to find $c = -1, d = -3/2$.
+>     * $a_n^{(p)} = -n - \frac{3}{2}$.
+> 3.  **General Solution:** $a_n = \alpha \cdot 3^n - n - \frac{3}{2}$.
+> 4.  **Find $\alpha$:** Using $a_1 = 3$, we find $\alpha = 11/6$.
+> 5.  **Final:** $a_n = \frac{11}{6}3^n - n - \frac{3}{2}$.
 
 ---
 
 ## 3. Generating Functions
 
-### Definition
-The generating function for the sequence $a_0, a_1, \dots, a_k, \dots$ is the infinite series:
-$$G(x) = \sum_{k=0}^{\infty} a_{k}x^{k} = a_0 + a_1x + a_2x^2 + \dots$$
+### 3.1 Definition
+The generating function for a sequence $a_0, a_1, \dots, a_k, \dots$ is the infinite series:
+$$G(x) = \sum_{k=0}^{\infty} a_k x^k = a_0 + a_1x + a_2x^2 + \dots$$
 
-### Examples
-1.  **Finite Sequence:** Sequence $\{1, 1, 1, 1, 1, 1\}$.
-    $$G(x) = 1 + x + x^2 + x^3 + x^4 + x^5$$
-2.  **Constant Sequence:** $a_k = 3$.
-    $$G(x) = \sum_{k=0}^{\infty} 3x^k$$
-3.  **Combinatorial Application (Shirts):**
-    * Picking $n$ shirts from 4 distinct shirts.
-    * Sequence counts: $1, 4, 6, 4, 1, 0$ (Binomial coefficients).
-    * $G(x) = 1 + 4x + 6x^2 + 4x^3 + x^4$.
+### 3.2 Applications
+Useful for solving counting problems (like choosing items). The exponent of $x$ represents the "size" or "number of items," and the coefficient represents the number of ways to select them.
+
+**Example: Finite Sequence**
+Sequence: $1, 4, 6, 4, 1, 0 \dots$ (Pascal's/Binomial coefficients for $n=4$)
+Generating Function:
+$$G(x) = 1 + 4x + 6x^2 + 4x^3 + x^4$$
+
+**Standard Examples:**
+* Sequence $a_k = 1$ (all ones): $G(x) = \sum x^k = 1 + x + x^2 + \dots = \frac{1}{1-x}$
+* Sequence $a_k = 2^k$: $G(x) = \sum (2x)^k = \frac{1}{1-2x}$
 
 ---
 
-## 4. Inclusion-Exclusion
+## 4. Inclusion-Exclusion Principle
 
-### Principle
-Used to calculate the size of the union of finite sets.
+This principle generalizes the method of finding the size of the union of finite sets.
 
-**Two Sets:**
+### 4.1 Two Finite Sets
 $$|A \cup B| = |A| + |B| - |A \cap B|$$
+*You subtract the intersection because it was counted twice (once in A, once in B).*
 
-**Three Sets:**
+### 4.2 Three Finite Sets
+To find the union of three sets, we include single sets, exclude pairs, and include the triple intersection.
+
 $$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$
 
-### Application Example (Students & Languages)
-**Data:**
-* Spanish ($S$): 1232
-* French ($F$): 879
-* Russian ($R$): 114
-* $S \cap F$: 103
-* $S \cap R$: 23
-* $F \cap R$: 14
-* Total Union ($S \cup F \cup R$): 2092
+**Pattern:**
+1.  Sum sizes of individual sets ($+$).
+2.  Subtract sizes of all pairwise intersections ($-$).
+3.  Add size of the intersection of all three ($+$).
 
-**Goal:** Find students taking all three ($S \cap F \cap R$).
+> [!EXAMPLE] Class Enrollment
+> * $|S|$ (Spanish) = 1232
+> * $|F|$ (French) = 879
+> * $|R|$ (Russian) = 114
+> * Intersections: $|S \cap F|=103$, $|S \cap R|=23$, $|F \cap R|=14$
+> * Total Union $|S \cup F \cup R| = 2092$
+>
+> **Find $|S \cap F \cap R|$:**
+> $2092 = 1232 + 879 + 114 - 103 - 23 - 14 + |S \cap F \cap R|$
+> $2092 = 2085 + |S \cap F \cap R|$
+> $|S \cap F \cap R| = 7$
 
-**Calculation:**
-$$2092 = 1232 + 879 + 114 - 103 - 23 - 14 + |S \cap F \cap R|$$
-$$2092 = 2085 + |S \cap F \cap R|$$
-$$|S \cap F \cap R| = 7$$
+---
+
+## 5. Summary
+* **Recurrence Relations** allow us to define sequences based on previous terms (e.g., Fibonacci).
+* **Homogeneous** linear relations are solved using roots of a polynomial characteristic equation.
+* **Non-homogeneous** relations require finding a particular solution based on the "extra" term $F(n)$.
+* **Generating Functions** transform sequences into power series to solve complex counting problems.
+* **Inclusion-Exclusion** provides an accurate count for unions of overlapping sets by alternating addition and subtraction of intersections.
 ---
 
 ## 🎲 Chapter 10: Discrete Probability
