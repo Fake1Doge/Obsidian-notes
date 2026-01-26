@@ -984,26 +984,155 @@ Arranging $n$ objects where some are identical/indistinguishable.
     * **Calculation:** $\frac{7!}{3!2!1!1!} = 420$.
 ---
 
-## 📈 Chapter 9: Advanced Counting
+## 📈Chapter 9: Advanced Counting Techniques
 
-### 9.1 Recurrence Relations
-A recurrence relation for a sequence {a_n} is an equation that expresses $a_n$ in terms of one or more of the previous terms of the sequence.
-* **Example:** The Fibonacci sequence is defined by $f_n = f_{n-1} + f_{n-2}$ with initial conditions $f_0=0, f_1=1$.
+## 1. Applications of Recurrence Relations
 
-### 9.2 Solving Linear Homogeneous Relations
-For a relation of the form $a_n = c_1 a_{n-1} + c_2 a_{n-2}$:
-1.  Form the **Characteristic Equation:** $r^2 - c_1 r - c_2 = 0$.
-2.  Find the roots $r_1$ and $r_2$.
-3.  **General Solution:**
-    * If roots are distinct: $a_n = \alpha r_1^n + \beta r_2^n$.
-    * If there is one repeated root $r_0$: $a_n = \alpha r_0^n + \beta n r_0^n$.
-    * The constants $\alpha$ and $\beta$ are determined by the initial conditions.
+### Definition
+A **recurrence relation** for a sequence $\{a_{n}\}$ is an equation that expresses $a_{n}$ in terms of one or more of the previous terms of the sequence ($a_{0}, a_{1}, ..., a_{n-1}$) for all integers $n$ with $n \ge n_{0}$.
 
-### 9.3 Inclusion-Exclusion Principle
-A technique to count the size of the union of multiple sets by accounting for overcounting.
-* **For 2 sets:** $|A \cup B| = |A| + |B| - |A \cap B|$.
-* **For 3 sets:** $|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$.
+* **Solution:** A sequence is called a solution if its terms satisfy the recurrence relation.
+* **Initial Conditions:** Specify the terms that precede the first term where the recurrence relation takes effect.
 
+### Example 1: Basic Arithmetic Sequence
+* **Relation:** $a_{n} = a_{n-1} + 3$ for $n=1, 2, 3...$
+* **Initial Condition:** $a_{0} = 2$
+* **Sequence Calculation:**
+    * $a_{1} = a_{0} + 3 = 2 + 3 = 5$
+    * $a_{2} = 5 + 3 = 8$
+    * $a_{3} = 8 + 3 = 11$
+
+### Example 2: Rabbits and Fibonacci Numbers
+**The Problem:** A pair of rabbits does not breed until they are 2 months old. After 2 months, each pair produces another pair every month. Assume rabbits never die.
+
+* **Logic:**
+    * $f_n$: Pairs of rabbits after $n$ months.
+    * $f_{n-1}$: Pairs from the previous month (survivors).
+    * $f_{n-2}$: Number of newborn pairs (equal to the number of pairs at least 2 months old).
+* **Recurrence Relation:**
+    $$f_{n} = f_{n-1} + f_{n-2}$$
+* **Initial Conditions:** $f_1 = 1$, $f_2 = 1$.
+
+### Example 3: Counting Bit Strings (No Consecutive 0s)
+**The Problem:** Find the number of bit strings of length $n$ ($a_n$) containing no two consecutive 0s.
+
+**Derivation:**
+1.  **Ending in 1:** If the string ends in 1, the preceding $n-1$ bits can be any valid string. Count = $a_{n-1}$.
+2.  **Ending in 0:** If the string ends in 0, the bit before it *must* be 1. The preceding $n-2$ bits can be any valid string. Count = $a_{n-2}$.
+3.  **Total:** $a_{n} = a_{n-1} + a_{n-2}$
+
+**Initial Conditions:**
+* $a_1 = 2$ (Strings: 0, 1)
+* $a_2 = 3$ (Strings: 01, 10, 11)
+* *Note:* This sequence satisfies $a_n = f_{n+2}$ (Fibonacci).
+
+---
+
+## 2. Solving Linear Recurrence Relations
+
+### Linear Homogeneous Recurrence Relations
+**Definition:** A linear homogeneous recurrence relation of degree $k$ with constant coefficients is of the form:
+$$a_{n} = c_{1}a_{n-1} + c_{2}a_{n-2} + ... + c_{k}a_{n-k}$$
+where $c_k \ne 0$.
+
+* **Linear:** RHS is a sum of previous terms.
+* **Homogeneous:** No terms occur that are not multiples of $a_j$ (no separate function of $n$).
+* **Constant Coefficients:** $c_1, c_2...$ are constants.
+
+#### Solving Degree Two Relations
+**Theorem:** Suppose the characteristic equation $r^2 - c_1r - c_2 = 0$ has two distinct roots $r_1$ and $r_2$.
+The general solution is:
+$$a_{n}^{(h)} = c_{1} \cdot r_{1}^{n} + c_{2} \cdot r_{2}^{n}$$
+
+**Worked Example:**
+Solve $a_{n} = a_{n-1} + 2a_{n-2}$ with $a_{0}=2$ and $a_{1}=7$.
+
+1.  **Characteristic Equation:** $r^2 - r - 2 = 0$
+2.  **Factor:** $(r-2)(r+1) = 0 \implies r_1 = 2, r_2 = -1$.
+3.  **General Solution:** $a_n = c_1(2)^n + c_2(-1)^n$.
+4.  **Apply Initial Conditions:**
+    * $n=0$: $c_1 + c_2 = 2$
+    * $n=1$: $2c_1 - c_2 = 7$
+5.  **Solve System:** $c_1 = 3, c_2 = -1$.
+6.  **Final Solution:** $a_n = 3 \cdot 2^n - (-1)^n$.
+
+### Linear Nonhomogeneous Recurrence Relations
+**Definition:** Relations of the form:
+$$a_{n} = c_{1}a_{n-1} + ... + c_{k}a_{n-k} + F(n)$$
+where $F(n)$ is not identically zero.
+
+**Solution Method:**
+$$a_{n} = a_{n}^{(h)} + a_{n}^{(p)}$$
+1.  **$a_{n}^{(h)}$:** The solution to the associated homogeneous relation.
+2.  **$a_{n}^{(p)}$:** A particular solution similar in form to $F(n)$.
+
+**Worked Example:**
+Solve $a_{n} = 3a_{n-1} + 2n$. (Given $a_1=3$).
+
+1.  **Homogeneous Part ($a_n - 3a_{n-1} = 0$):**
+    * Root: $r=3$.
+    * $a_{n}^{(h)} = \alpha \cdot 3^n$.
+2.  **Particular Solution:**
+    * Since $F(n) = 2n$ (linear), guess $p_n = cn + d$.
+    * Substitute into relation: $(cn+d) = 3(c(n-1)+d) + 2n$.
+    * Simplify and compare coefficients:
+        * $-2cn + (3c - 2d) = 2n$
+        * $-2c = 2 \implies c = -1$
+        * $3c - 2d = 0 \implies -3 - 2d = 0 \implies d = -3/2$
+    * $a_{n}^{(p)} = -n - 3/2$.
+3.  **Total Solution:** $a_n = \alpha \cdot 3^n - n - 3/2$.
+4.  **Find $\alpha$ using $a_1=3$:**
+    * $3 = 3\alpha - 1 - 1.5$
+    * $5.5 = 3\alpha \implies \alpha = 11/6$.
+    * Final: $a_n = (11/6)3^n - n - 3/2$.
+
+---
+
+## 3. Generating Functions
+
+### Definition
+The generating function for the sequence $a_0, a_1, \dots, a_k, \dots$ is the infinite series:
+$$G(x) = \sum_{k=0}^{\infty} a_{k}x^{k} = a_0 + a_1x + a_2x^2 + \dots$$
+
+### Examples
+1.  **Finite Sequence:** Sequence $\{1, 1, 1, 1, 1, 1\}$.
+    $$G(x) = 1 + x + x^2 + x^3 + x^4 + x^5$$
+2.  **Constant Sequence:** $a_k = 3$.
+    $$G(x) = \sum_{k=0}^{\infty} 3x^k$$
+3.  **Combinatorial Application (Shirts):**
+    * Picking $n$ shirts from 4 distinct shirts.
+    * Sequence counts: $1, 4, 6, 4, 1, 0$ (Binomial coefficients).
+    * $G(x) = 1 + 4x + 6x^2 + 4x^3 + x^4$.
+
+---
+
+## 4. Inclusion-Exclusion
+
+### Principle
+Used to calculate the size of the union of finite sets.
+
+**Two Sets:**
+$$|A \cup B| = |A| + |B| - |A \cap B|$$
+
+**Three Sets:**
+$$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$
+
+### Application Example (Students & Languages)
+**Data:**
+* Spanish ($S$): 1232
+* French ($F$): 879
+* Russian ($R$): 114
+* $S \cap F$: 103
+* $S \cap R$: 23
+* $F \cap R$: 14
+* Total Union ($S \cup F \cup R$): 2092
+
+**Goal:** Find students taking all three ($S \cap F \cap R$).
+
+**Calculation:**
+$$2092 = 1232 + 879 + 114 - 103 - 23 - 14 + |S \cap F \cap R|$$
+$$2092 = 2085 + |S \cap F \cap R|$$
+$$|S \cap F \cap R| = 7$$
 ---
 
 ## 🎲 Chapter 10: Discrete Probability
