@@ -873,70 +873,84 @@ A `vector` is a dynamic array that can grow and shrink in size.
 # Pointers
 
 ### Key Concepts & Definitions
-* **Pointer:** A special variable that holds a **memory address** rather than a data value.
-* **Address Operator (`&`):** A unary operator that returns the memory address of a variable (e.g., `&number`).
-* **Indirection (Dereference) Operator (`*`):** Used to access or modify the value stored at the address a pointer is holding.
-* **Pointer Variable:** Declared with an asterisk (e.g., `int *ptr`). It "points" to a specific data type.
-* **Nullptr:** A keyword (C++11) representing the address `0`. It is best practice to initialize pointers to `nullptr` if they don't point to a valid address yet.
-* **Array Name as Pointer:** The name of an array (without brackets) acts as a pointer to the **first element** of the array.
-* **Dynamic Memory Allocation:**
-    * **`new`:** Allocates memory from the heap (free store) while the program is running.
-    *   **`delete`:** Frees the memory back to the heap.
+*   **Pointer:** A special variable that holds a **memory address** rather than a data value.
+*   **Address Operator (`&`):** A unary operator that returns the memory address of a variable.
+*   **Indirection (Dereference) Operator (`*`):** Used to access or modify the value stored at the address a pointer is holding.
+*   **Pointer Variable:** Declared with an asterisk (e.g., `int *ptr`). It "points" to a specific data type.
+*   **Nullptr:** A keyword (C++11) representing the address `0`. It is best practice to initialize pointers to `nullptr` to prevent them from pointing to random memory ("wild pointers").
 
-### Syntax
-**Basic Pointer Operations:**
+### Getting the Address of a Variable
+Every variable is stored in a unique memory location.
+*   The `&` operator retrieves this address (often displayed in hexadecimal, e.g., `0x7e00`).
+*   **Example:** `cout << &num;` prints the address of `num`.
+
+### Pointer Variables
+*   **Definition:** `int *ptr;` (Read as: "ptr is a pointer to an int").
+*   **Assignment:** `ptr = &num;` (ptr now holds the address of num).
+*   **Initialization:** Can be initialized at definition time: `int *ptr = nullptr;` or `int *ptr = &num;`.
+
+### The Indirection Operator (`*`)
+Once a pointer holds an address, you can access the value at that address using `*`.
 ```cpp
 int x = 25;
-int *ptr = nullptr; // Define pointer
-ptr = &x;           // Assign address of x to ptr
-cout << *ptr;       // Dereference: Prints 25
-*ptr = 100;         // Modify: Changes x to 100
+int *ptr = &x;
+cout << *ptr; // Prints 25 (Dereferencing)
+*ptr = 100;   // Assigns 100 to the location pointed to (x becomes 100)
 ```
 
-**Dynamic Memory:**
-```cpp
-// Allocate a single integer
-int *num = new int;
+### Relationship Between Arrays and Pointers
+*   **Array Name:** The name of an array (without brackets) acts as a constant pointer to the **first element** of the array.
+*   **Equivalence:**
+    *   `vals[i]` is equivalent to `*(vals + i)`.
+    *   You can use pointers to iterate through an array.
 
-// Allocate an array
-double *sales = new double[days]; 
-```
+### Pointer Arithmetic
+Pointers can be incremented (`++`), decremented (`--`), or added/subtracted (`+`, `-`) with integers.
+*   **Scaling:** When you add 1 to a pointer, it increases the address by `sizeof(DataType)`.
+    *   If `ptr` points to an `int` (4 bytes) at address 1000, `ptr + 1` is 1004.
+*   **Operations:**
+    *   `ptr++`: Point to the next element.
+    *   `ptr += 5`: Skip 5 elements forward.
+    *   `ptr1 - ptr2`: Returns the number of elements between two pointers (if they point to the same array).
 
-### Code Examples
-
-**1. Pointer Arithmetic**
-```cpp
-int arr[] = {10, 20, 30};
-int *ptr = arr; // Points to arr[0]
-
-ptr++;          // ptr now points to arr[1] (address + sizeof(int))
-cout << *ptr;   // Prints 20
-```
-
-**2. Dynamic Array Management**
-```cpp
-void processSales(int numDays) 
-{
-    // Dynamically allocate array based on variable size
-    double *sales = new double[numDays]; 
-
-    // Use the array
-    for (int i = 0; i < numDays; i++) {
-        sales[i] = 0.0;
+### Pointers as Function Parameters
+*   **Pass by Reference:** Pointers can be used as parameters to allow a function to modify the original variable.
+*   **Mechanism:** Pass the address of the variable (`&var`) into a pointer parameter (`type *ptr`).
+    ```cpp
+    void doubleValue(int *val) {
+        *val *= 2;
     }
+    // Call: doubleValue(&number);
+    ```
+*   **Constant Pointers:**
+    *   `const int * ptr`: Pointer to a constant int (cannot change the value).
+    *   `int * const ptr`: Constant pointer to an int (cannot change the address).
 
-    // CRITICAL: Free the memory
-    delete [] sales; 
-    sales = nullptr; 
-}
-```
+### Dynamic Memory Allocation
+Allows creating variables and arrays at **runtime** (on the heap) rather than compile time (on the stack).
+*   **`new` Operator:** Allocates memory and returns the address.
+    ```cpp
+    int *iptr = new int;       // Single int
+    double *dptr = new double[25]; // Array of 25 doubles
+    ```
+*   **`delete` Operator:** Frees the memory to prevent leaks.
+    ```cpp
+    delete iptr;      // Free single variable
+    delete [] dptr;   // Free array
+    iptr = nullptr;   // Good practice to reset pointer
+    ```
+
+### Returning Pointers from Functions
+Functions can return a pointer type (e.g., `int*`).
+*   **Use Case:** Returning an address of a dynamically allocated array or object.
+*   **WARNING:** **Never** return a pointer to a **local variable**. Local variables are destroyed when the function ends, leaving the pointer "dangling" (pointing to invalid memory).
 
 ### Critical Details & Warnings
 > [!WARNING] Memory Safety
-> * **Memory Leaks:** If you allocate memory with `new` but fail to use `delete`, that memory remains occupied (leaked) until the program terminates.
-> * **Dangling Pointers:** After you `delete` a pointer, it still holds the old address. Accessing it causes undefined behavior. Always set `ptr = nullptr` after deleting.
-> * **Type Mismatch:** Pointers are strictly typed. You cannot assign the address of a `double` to an `int *` pointer.
+> *   **Memory Leaks:** Failing to use `delete` keeps memory occupied until the program ends.
+> *   **Dangling Pointers:** Accessing a pointer after it has been deleted causes undefined behavior.
+> *   **Wild Pointers:** Uninitialized pointers point to random memory. Always initialize to `nullptr` or a valid address.
 
 > [!NOTE] Pointer Comparison
-> * `ptr1 == ptr2`: Compares **addresses** (do they point to the same place?).
-> * `*ptr1 == *ptr2`: Compares **values** (is the data at those places equal?).
+> *   `ptr1 == ptr2`: Compares **addresses** (do they point to the same place?).
+> *   `*ptr1 == *ptr2`: Compares **values** (is the data at those places equal?).
