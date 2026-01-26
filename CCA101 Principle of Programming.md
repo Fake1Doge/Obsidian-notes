@@ -611,6 +611,86 @@ Moving the read/write position (cursor) within a file.
 
 ---
 
+# Computational Thinking
+
+### Introduction
+**Computational Thinking (CT)** is a thought process involved in formulating problems and their solutions so that the solutions are represented in a form that can be effectively carried out by an information-processing agent (like a computer or human). It is a fundamental skill for the 21st century, enabling us to solve complex problems, understand systems, and understand human behavior.
+
+### The Six Concepts of Computational Thinking
+1.  **Decomposition:**
+    *   Breaking down a large, complex problem into smaller, more manageable parts (sub-problems).
+    *   *Example:* Creating an app involves breaking it down into: Design, Coding (Input/Output, Processing), Testing, etc.
+2.  **Pattern Recognition:**
+    *   Looking for similarities or trends (patterns) within problems.
+    *   *Benefit:* If a solution exists for a similar problem, we can reuse or adapt it.
+    *   *Example:* Recognizing that calculating the area of a rectangle is similar for all rectangles, regardless of size.
+3.  **Abstraction:**
+    *   Focusing on the important information only, ignoring irrelevant details.
+    *   *Goal:* To create a general model or representation of the problem.
+    *   *Example:* A map of a subway system shows lines and stations but ignores street names and building heights.
+4.  **Algorithms:**
+    *   Developing a step-by-step solution to the problem, or the rules to follow to solve the problem.
+    *   *Definition:* A finite set of unambiguous instructions that, given some set of initial conditions, enables a person or machine to perform a sequence of events.
+5.  **Logical Reasoning:**
+    *   Using logic to analyze and deduce whether a solution makes sense or to predict behavior.
+    *   *Application:* Debugging code, predicting the output of a loop.
+6.  **Evaluation:**
+    *   Making sure the solution is efficient and effective.
+    *   *Questions:* Does it work? Is it fast enough? Does it use too many resources?
+
+### Problem Solving Method in Programming
+The process of developing a program generally follows these 5 steps:
+
+1.  **Problem Analysis:**
+    *   Understand the problem statement.
+    *   Identify **Input**, **Process**, and **Output** (IPO).
+    *   Identify constraints and formulas.
+2.  **Design the Solution (Algorithm):**
+    *   Plan the logic without worrying about syntax.
+    *   **Tools:**
+        *   **Pseudocode:** Informal language that resembles a programming language but has no strict syntax.
+        *   **Flowcharts:** Graphical representation of the algorithm using standard symbols (terminals, process blocks, decision diamonds, I/O parallelograms).
+3.  **Implementation:**
+    *   Translate the algorithm into a specific programming language (e.g., C++).
+    *   *Note:* Never simply copy pseudocode; adapt it to the language's syntax.
+4.  **Testing & Verification:**
+    *   Check for errors (bugs).
+        *   **Syntax Errors:** Violation of language rules (detected by compiler).
+        *   **Logic Errors:** Program runs but produces incorrect results (harder to detect).
+        *   **Runtime Errors:** Errors that occur during execution (e.g., divide by zero).
+5.  **Documentation:**
+    *   **Internal:** Comments within the code for other programmers.
+    *   **External:** User manuals, requirements specifications.
+
+### Algorithm Design Tools
+
+#### Flowcharts
+Visual diagrams used to represent algorithms.
+*   **Oval (Terminal):** Start/End.
+*   **Parallelogram (I/O):** Input/Output operations (e.g., `Read x`, `Print y`).
+*   **Rectangle (Process):** Calculations or assignments (e.g., `sum = a + b`).
+*   **Diamond (Decision):** Questions with Yes/No branches (e.g., `is x > 10?`).
+*   **Arrows:** Flow of control.
+
+#### Pseudocode
+Text-based description of the algorithm.
+*   *Example:*
+    ```text
+    Start
+    Get price
+    Get quantity
+    total = price * quantity
+    Display total
+    End
+    ```
+
+### Code Documentation
+*   **Header:** Includes programmer name, date, and program description.
+*   **In-line Comments:** Explain complex logic or variable purposes.
+*   **Function Comments:** Describe what a function does, its inputs (parameters), and its output (return value).
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
