@@ -832,24 +832,161 @@ procedure mergesort(L = a_1, ..., a_n)
 * Total complexity: $O(n \log n)$.
 ---
 
-## 🎲 Chapter 8: Counting Principles
+## 🎲Chapter 8: Counting
 
-### 8.1 Basic Rules
-* **Product Rule:** If a procedure can be broken down into a sequence of two tasks, where there are $n_1$ ways to do the first task and $n_2$ ways to do the second task, then there are $n_1 \cdot n_2$ ways to do the procedure.
-* **Sum Rule:** If a task can be done either in one of $n_1$ ways or in one of $n_2$ ways, where none of the set of $n_1$ ways is the same as any of the set of $n_2$ ways, then there are $n_1 + n_2$ ways to do the task.
+**Course:** Discrete Structures (CKC111)
+**Topic:** Counting Principles, Pigeonhole Principle, Permutations, and Combinations
 
-### 8.2 The Pigeonhole Principle
-> [!INFO] Theorem
-> If $k+1$ or more objects are placed into $k$ boxes, then there is at least one box containing two or more objects.
-> * **Generalized Pigeonhole Principle:** If $N$ objects are placed into $k$ boxes, then there is at least one box containing at least $\lceil N/k \rceil$ objects.
+---
 
-### 8.3 Permutations and Combinations
-* **Permutation:** An ordered arrangement of objects.
-    * Formula: $P(n,r) = \frac{n!}{(n-r)!}$
-* **Combination:** An unordered selection of objects (subset).
-    * Formula: $C(n,r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}$
-    * Identity: $C(n,r) = C(n, n-r)$.
+## 1. Basic Principles of Counting
 
+### 1.1 The Product Rule
+Used when a procedure can be broken down into a sequence of tasks.
+
+* **Definition:** If a procedure consists of a sequence of two tasks, and there are $n_1$ ways to do the first task and $n_2$ ways to do the second task, then there are $n_1 \cdot n_2$ ways to do the procedure.
+* **General Formula (Cartesian Product):**
+    If $A_1, A_2, \dots, A_m$ are finite sets, the number of elements in their Cartesian product is:
+    $$|A_1 \times A_2 \times \dots \times A_m| = |A_1| \cdot |A_2| \cdot \dots \cdot |A_m|$$
+* **Key Applications:**
+    * **Bit Strings:** Since each bit is either 0 or 1, the number of bit strings of length $n$ is $2^n$.
+    * **Functions:** The number of functions from a set with $m$ elements to a set with $n$ elements is $n^m$.
+    * **One-to-One Functions:** The number of one-to-one functions from a set with $m$ elements to one with $n$ elements is $P(n,m) = n(n-1)(n-2)\dots(n-m+1)$.
+    * **Subsets:** The number of different subsets of a finite set $S$ is $2^{|S|}$.
+
+### 1.2 The Sum Rule
+Used when a task can be done in one of several **disjoint** ways (mutually exclusive).
+
+* **Definition:** If a task can be done either in one of $n_1$ ways or in one of $n_2$ ways, where none of the $n_1$ ways is the same as any of the $n_2$ ways, then there are $n_1 + n_2$ ways to do the task.
+* **Set Theory Equivalent:**
+    $$|A \cup B| = |A| + |B| \quad \text{if } A \cap B = \emptyset$$
+* **Example:** Choosing a representative who is either a faculty member (37 people) or a student (83 people), with no overlap: $37 + 83 = 120$ ways.
+
+### 1.3 The Subtraction Rule (Inclusion-Exclusion)
+Used when the ways to perform a task are **not disjoint** (they overlap).
+
+* **Definition:** If a task can be done in $n_1$ or $n_2$ ways, the total is the sum of the ways minus the number of ways common to both.
+* **Formula:**
+    $$|A \cup B| = |A| + |B| - |A \cap B|$$
+* **Example:** Counting bit strings of length 8 that start with `1` OR end with `00`.
+    * Start with `1`: $2^7 = 128$
+    * End with `00`: $2^6 = 64$
+    * Start with `1` AND end with `00`: $2^5 = 32$
+    * **Result:** $128 + 64 - 32 = 160$
+
+### 1.4 The Division Rule
+Used when counting items where multiple outcomes are considered "the same" (equivalence).
+
+* **Definition:** There are $n/d$ ways to do a task if it can be done in $n$ ways, but for every way $w$, exactly $d$ of the $n$ ways correspond to way $w$.
+* **Application (Circular Seating):**
+    * Seating $n$ people around a circular table where rotation doesn't change the arrangement.
+    * For 4 people: Linear arrangements are $4! = 24$. Since 4 rotations result in the same seating, the total is $24/4 = 6$.
+    * **General Formula:** $(n-1)!$
+
+---
+
+## 2. Tree Diagrams
+
+Tree diagrams are visual tools used to solve counting problems by representing choices as branches and outcomes as leaves.
+
+* **Structure:**
+    * **Branches:** Represent possible choices at each step.
+    * **Leaves:** Represent final outcomes.
+* **Usage:** Useful when the number of choices available at a step depends on previous selections (e.g., specific T-shirt sizes only coming in certain colors).
+* **Calculation:** The total number of leaves is the solution.
+
+---
+
+## 3. The Pigeonhole Principle
+
+### 3.1 Basic Pigeonhole Principle
+> If $k+1$ objects (pigeons) are placed into $k$ boxes (pigeonholes), then at least one box contains two or more objects.
+
+* **Proof:** Proof by contraposition.
+* **Corollary (Functions):** A function from a set with $k+1$ or more elements to a set with $k$ elements cannot be one-to-one.
+* **Example 1 (Birthdays):** In a crowd of 367 people, at least two must have the same birthday (since there are only 366 possible birthdates).
+* **Example 2 (Exam Scores):** If scores range from 0 to 100 (101 possibilities), a class of 102 students guarantees at least two students have the same score.
+
+### 3.2 Generalized Pigeonhole Principle
+> If $N$ objects are placed into $k$ pigeonholes, then there is at least one pigeonhole with at least $\lceil N/k \rceil$ objects.
+
+* **Formula:** $\lceil N/k \rceil$ (Ceiling function: round up to the nearest integer).
+* **Example (Grades):**
+    * Class size ($N$) = 52.
+    * Possible grades ($k$) = 5 (A, B, C, D, F).
+    * **Guarantee:** At least $\lceil 52/5 \rceil = 11$ students have the same grade.
+* **Example (Months):**
+    * Saturdays in a year ($N$) = 52.
+    * Months ($k$) = 12.
+    * **Guarantee:** At least one month has $\lceil 52/12 \rceil = 5$ Saturdays.
+
+---
+
+## 4. Permutations and Combinations
+
+### 4.1 Permutations (Order Matters)
+A permutation is an ordered arrangement of distinct objects.
+
+* **Notation:** $P(n,r)$ = Number of $r$-permutations of a set with $n$ distinct elements.
+* **Formula:**
+    $$P(n,r) = n(n-1)(n-2)\dots(n-r+1) = \frac{n!}{(n-r)!}$$
+* **Key Concept:** Order matters (e.g., selecting winners for 1st, 2nd, and 3rd place).
+* **Factorial Definition:** $P(n,n) = n!$.
+
+### 4.2 Combinations (Order Does Not Matter)
+An $r$-combination is an unordered selection of $r$ elements from a set.
+
+* **Notation:** $C(n,r)$ or $\binom{n}{r}$.
+* **Formula:**
+    $$C(n,r) = \frac{n!}{r!(n-r)!}$$
+* **Relation to Permutations:** $C(n,r) = \frac{P(n,r)}{P(r,r)}$.
+* **Symmetry Corollary:** $C(n,r) = C(n, n-r)$.
+* **Example:** Selecting a hand of 5 cards from 52. Order drawn doesn't matter.
+
+---
+
+## 5. Generalized Permutations and Combinations
+
+### 5.1 Summary Table
+
+| Type | Repetition Allowed? | Formula |
+| :--- | :---: | :--- |
+| **r-permutations** | No | $\frac{n!}{(n-r)!}$ |
+| **r-combinations** | No | $\frac{n!}{r!(n-r)!}$ |
+| **r-permutations** | **Yes** | $n^r$ |
+| **r-combinations** | **Yes** | $C(n+r-1, r)$ |
+
+### 5.2 Permutations with Repetition
+* **Rule:** The number of $r$-permutations of a set of $n$ objects with repetition allowed is $n^r$.
+* **Example:** Strings of length $r$ from the English alphabet (26 letters) $\rightarrow 26^r$.
+
+### 5.3 Combinations with Repetition
+Choosing $r$ items from a set of $n$ elements where items can be selected multiple times.
+
+* **Formula:**
+    $$C(n+r-1, r) = \frac{(n+r-1)!}{r!(n-1)!}$$
+* **Analogy:** Often solved using **Stars and Bars** (separators).
+* **Example (Cookie Shop):**
+    * 4 kinds of cookies ($n=4$).
+    * Choose 6 cookies ($r=6$).
+    * **Calculation:** $C(4+6-1, 6) = C(9,6) = 84$ ways.
+* **Example (Integer Solutions):**
+    * Find non-negative integer solutions for $x_1 + x_2 + x_3 = 11$.
+    * $n=3$ (variables/bins), $r=11$ (items/sum).
+    * **Calculation:** $C(3+11-1, 11) = C(13, 11) = 78$ solutions.
+
+### 5.4 Permutations with Indistinguishable Objects
+Arranging $n$ objects where some are identical/indistinguishable.
+
+* **Theorem:** The number of different permutations of $n$ objects, where there are $n_1$ indistinguishable objects of type 1, $n_2$ of type 2, ..., $n_k$ of type k is:
+    $$\frac{n!}{n_1! n_2! \dots n_k!}$$
+* **Example:** Reordering letters of "SUCCESS".
+    * Total ($n$) = 7.
+    * $S$ appears 3 times ($n_1=3$).
+    * $C$ appears 2 times ($n_2=2$).
+    * $U$ appears 1 time ($n_3=1$).
+    * $E$ appears 1 time ($n_4=1$).
+    * **Calculation:** $\frac{7!}{3!2!1!1!} = 420$.
 ---
 
 ## 📈 Chapter 9: Advanced Counting
