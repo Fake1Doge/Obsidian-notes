@@ -78,73 +78,94 @@
 * **Multiple Items:** Can send multiple items in one statement.
     * Example: `cout << "Hello " << "there!";`
 * **`endl` Manipulator:** Starts a new line of output.
-    * Example: `cout << "Hello" << endl;`
+    * Example: `cout << "Hello" << endl;
+`
 * **`\n` Escape Sequence:** Also starts a new line. Must be inside quotes.
     * Example: `cout << "Hello\n";`
 
+### Identifiers
+* **Identifiers:** Programmer-defined names for variables, functions, etc.
+* **Rules:**
+    1.  Must begin with a letter or underscore (`_`).
+    2.  Following characters can be letters, digits, or underscores.
+    3.  **Case Sensitive:** `Total`, `total`, and `TOTAL` are different identifiers.
+    4.  Cannot use C++ Key Words (e.g., `int`, `class`, `return`).
+
 ### Variables and Data Types
-* **Variable Definition:** Must be defined before use. Specifies type and name.
-    * Syntax: `Type VariableName;` (e.g., `int item;`)
-* **Literals:** Constant values written into the code.
-    * **Integer Literal:** `20`
-    * **String Literal:** `"Hello"`
-    * **Character Literal:** `'A'` (Single quotes)
-* **Identifiers:** Programmer-defined names for variables/functions.
-    * **Rules:**
-        * Must begin with a letter or underscore (`_`).
-        * Following characters can be letters, digits, or underscores.
-        * **Case Sensitive:** `Total` and `total` are different.
-        * Cannot use Key Words.
-* **Integer Data Types:**
-    * `short`: Usually 2 bytes.
-    * `int`: Usually 4 bytes.
-    * `long`: Usually 4 bytes.
-    * `long long`: Usually 8 bytes.
-    * Can be `unsigned` (no negative numbers) or `signed` (default).
-* **`char` Data Type:**
-    * Used to hold a single character.
-    * Actually stored as a small integer (ASCII code).
-    * Size: 1 byte.
-    * Example: `char letter = 'A';`
-* **`string` Class:**
-    * **Not** a built-in primitive type (requires `#include <string>`)
-    * Used to store a sequence of characters.
-    * Example: `string name = "George";`
-* **Floating-Point Data Types:**
-    * `float`: Single precision (4 bytes).
-    * `double`: Double precision (8 bytes).
-    * `long double`: Extended precision (8 or 16 bytes).
-    * Can represent real numbers (e.g., `12.45`, `-3.8`).
-    * Scientific notation: `3.14159E1` represents $3.14159 	imes 10^1$.
-* **`bool` Data Type:**
-    * Represents boolean values: `true` or `false`.
-    * Stored as integers: `true` is `1` (or non-zero), `false` is `0`.
-* **`auto` Key Word (C++11):**
-    * Infers the data type from the initialization value.
-    * Example: `auto amount = 100;` (int)
+A **variable** is a storage location in memory. It must be defined before use.
+
+#### Integer Data Types
+Used to hold whole numbers.
+*   **Types:** `short` (2 bytes), `int` (4 bytes), `long` (4 bytes), `long long` (8 bytes).
+*   **Signed vs. Unsigned:** `unsigned` types can only hold non-negative values but have a larger positive range.
+*   **Literals:**
+    *   `20` (int)
+    *   `1234L` (long)
+    *   `324LL` (long long)
+    *   `075` (Octal, starts with 0)
+    *   `0x75A` (Hexadecimal, starts with 0x)
+
+#### Character Data Type (`char`)
+Used to hold a single character.
+*   Stored as a 1-byte integer (ASCII code).
+*   **Literal:** Enclosed in single quotes `' '`.
+    *   Example: `char letter = 'A';` (Stored as 65).
+
+#### Floating-Point Data Types
+Used to hold real numbers (with decimals).
+*   **Types:**
+    *   `float`: Single precision (4 bytes).
+    *   `double`: Double precision (8 bytes, default for literals).
+    *   `long double`: Extended precision.
+*   **Literals:**
+    *   Standard: `12.45`, `-3.8`
+    *   Scientific Notation: `3.14159E1` ($3.14159 \times 10^1$)
+    *   Suffixes: `1.2F` (float), `1.2L` (long double).
+
+#### The `bool` Data Type
+*   Represents boolean values: `true` or `false`.
+*   Stored internally as integers: `true` becomes `1` (or any non-zero), `false` becomes `0`.
+
+#### The `string` Class
+*   **Not** a built-in primitive type. Requires `#include <string>`.
+*   Used to hold a sequence of characters.
+*   **Character String vs `string` Class:**
+    *   **C-String:** A series of characters stored in adjacent memory, terminated by the **null terminator** `\0`.
+        *   Example: `"Hello"` is stored as `H`, `e`, `l`, `l`, `o`, `\0`.
+    *   **`string` object:** Easier to use, dynamic sizing.
+        *   Example: `string name = "George";`
 
 ### Operations & Initialization
-* **Assignment (`=`):** Copies the value on the right to the variable on the left.
-    * Example: `item = 12;`
-* **Initialization:** Assigning a value at the time of definition.
-    * Example: `int length = 12;`
-* **Arithmetic Operators:**
-    * `+` Addition
-    * `-` Subtraction
-    * `*` Multiplication
-    * `/` Division (Integer division truncates decimals! `13 / 5` is `2`)
-    * `%` Modulus (Remainder of division, integers only).
-* **`sizeof` Operator:** Returns the size of a data type or variable in bytes.
-    * Example: `sizeof(int)` or `sizeof(myVar)`.
+*   **Assignment (`=`):** Copies the value on the right to the variable on the left.
+    *   **L-value:** The item on the left must be a variable (storage location), not a literal or expression. `12 = item;` is an **ERROR**.
+*   **Initialization:** Assigning a value at the time of definition.
+    *   `int length = 12;`
+    *   `auto` (C++11): The compiler infers the type from the value. `auto amount = 100;` (int).
+*   **Arithmetic Operators:**
+    *   **Unary:** 1 operand (e.g., `-5`).
+    *   **Binary:** 2 operands (e.g., `13 - 7`).
+        *   `+` Addition
+        *   `-` Subtraction
+        *   `*` Multiplication
+        *   `/` Division
+            *   **Integer Division:** If both operands are integers, the result is an integer (decimals truncated). `13 / 5` is `2`.
+        *   `%` Modulus (Remainder): Only works with integers. `13 % 5` is `3`.
+    *   **Ternary:** 3 operands (e.g., `exp1 ? exp2 : exp3`).
+*   **`sizeof` Operator:** Returns the size of a data type or variable in bytes.
+    *   Example: `sizeof(double)` usually returns 8.
+
+### Scope
+*   **Scope:** The part of the program where a variable can be accessed.
+*   A variable cannot be used **before** it is defined.
+*   Variables defined inside a function (local variables) are not accessible outside it.
 
 ### Comments & Style
-* **Single-Line Comment:** `// ...`
-* **Multi-Line Comment:** `/* ... */`
-* **Named Constants:** Variables whose content cannot be changed.
-    * Use `const` keyword.
-    * Convention: Uppercase names.
-    * Example: `const double TAX_RATE = 0.0675;`
-* **Programming Style:** Visual organization of source code (spaces, tabs, blank lines) to improve readability. Does not affect compilation.
+*   **Single-Line Comment:** `// ...` (To end of line).
+*   **Multi-Line Comment:** `/* ... */` (Can span multiple lines).
+*   **Named Constants:** Use `const` to create "read-only" variables.
+    *   Convention: ALL_CAPS names.
+    *   Example: `const double TAX_RATE = 0.0675;`
+*   **Programming Style:** Using spaces, tabs, and blank lines to make code readable. This is ignored by the compiler but critical for humans.
 
 ---
 
