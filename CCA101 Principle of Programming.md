@@ -402,6 +402,106 @@ An alternative to `if/else if` for testing an integer expression against multipl
 
 ---
 
+# Loops
+
+### The Increment and Decrement Operators
+*   **Increment (`++`):** Adds 1 to a variable. `val++;` is the same as `val = val + 1;`
+*   **Decrement (`--`):** Subtracts 1 from a variable. `val--;` is the same as `val = val - 1;`
+*   **Prefix vs. Postfix:**
+    *   **Prefix (`++val`):** Increments the variable, *then* uses the new value in the expression.
+    *   **Postfix (`val++`):** Uses the current value in the expression, *then* increments the variable.
+
+### The `while` Loop
+A **pretest loop** that repeats a statement or block as long as a condition is true.
+*   **Syntax:**
+    ```cpp
+    while (expression) {
+        statement;
+    }
+    ```
+*   **How it works:**
+    1.  Evaluate `expression`.
+    2.  If true, execute `statement`.
+    3.  Repeat.
+    4.  If false, exit the loop.
+*   **Infinite Loops:** If the `expression` never becomes false, the loop repeats forever. The loop body must contain code that eventually makes the expression false.
+*   **Input Validation:** The `while` loop is ideal for validating input.
+    ```cpp
+    cout << "Enter a number (1-10): ";
+    cin >> number;
+    while (number < 1 || number > 10) {
+        cout << "Invalid. Enter a number (1-10): ";
+        cin >> number;
+    }
+    ```
+
+### Counters
+A variable used to control the number of times a loop iterates.
+*   Must be initialized *before* the loop.
+*   Must be incremented/decremented *inside* the loop.
+
+### The `do-while` Loop
+A **posttest loop** that executes the loop body *at least once*, then tests the condition.
+*   **Syntax:**
+    ```cpp
+    do {
+        statement;
+    } while (expression); // Note the semicolon!
+    ```
+*   **Usage:** Useful for menus where the menu must be shown at least once.
+
+### The `for` Loop
+A **pretest loop** ideal for situations where the exact number of iterations is known (count-controlled loop).
+*   **Syntax:**
+    ```cpp
+    for (initialization; test; update) {
+        statement;
+    }
+    ```
+*   **Components:**
+    1.  **Initialization:** Runs once at the start (e.g., `int count = 0;`).
+    2.  **Test:** Checked before each iteration. If true, continue; if false, quit.
+    3.  **Update:** Executed at the end of each iteration (e.g., `count++`).
+*   **Example:**
+    ```cpp
+    for (int i = 0; i < 5; i++) {
+        cout << "Hello!" << endl;
+    }
+    ```
+
+### Running Totals & Accumulators
+*   **Accumulator:** A variable used to keep a running total.
+*   **Requirement:** Must be initialized to `0` before the loop.
+    ```cpp
+    int sum = 0;
+    while (num <= 10) {
+        sum += num;
+        num++;
+    }
+    ```
+
+### Sentinels
+A special value that marks the end of a list of values.
+*   Used when the user doesn't know how many items they will enter.
+*   **Example:** "Enter test scores (enter -1 to finish):"
+    *   Here, `-1` is the sentinel. It must be a value that cannot be a valid data item.
+
+### Nested Loops
+A loop inside another loop.
+*   **Logic:** The inner loop completes all its iterations for *each* single iteration of the outer loop.
+*   **Total Iterations:** (Inner Iterations) $\times$ (Outer Iterations).
+
+### Breaking and Continuing
+*   **`break`:** Immediately terminates the loop. Use sparingly.
+*   **`continue`:** Stops the current iteration and jumps to the test expression (or update expression in a `for` loop) to start the next iteration.
+
+### Deciding Which Loop to Use
+*   **`while`:** Loop runs as long as a condition is true. Good for input validation.
+*   **`do-while`:** Loop must run at least once. Good for menus.
+*   **`for`:** Exact number of iterations is known (or easily calculable).
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
