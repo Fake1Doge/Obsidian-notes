@@ -254,6 +254,11 @@ Used to compare two values (operands). The result is a **Boolean** value: `true`
 *   `==` Equal to
 *   `!=` Not equal to
 
+> [!NOTE] Relational Expressions
+> *   Can be assigned to a variable: `bool result = x <= y;`
+> *   Assigns `0` for false, `1` for true.
+> *   `if (x)`: Executed if x is any non-zero value.
+
 > [!WARNING] Common Pitfall
 > Do not confuse the equality operator `==` with the assignment operator `=`. 
 > *   `if (x = 2)` assigns 2 to x (which is true/non-zero), so the block ALWAYS executes.
@@ -299,6 +304,7 @@ An `if` statement inside another `if` statement.
     else
         grade = 'C'; // Default if none of the above match
     ```
+*   **Trailing `else`:** Optional, but useful for catching errors or handling invalid inputs (default case).
 
 ### Flags
 A variable (usually `bool` or `int`) that signals a condition.
@@ -329,6 +335,32 @@ Used to combine multiple boolean expressions into a single compound expression.
 *   **Correct:** `if (x >= 20 && x <= 40)` checks if x is within [20, 40].
 *   **Incorrect:** `if (20 <= x <= 40)` is mathematically correct but syntactically wrong logic in C++. It evaluates `(20 <= x)` to 0 or 1, then compares that result to 40 (which is always true).
 
+### Menus
+Menu-driven programs allow users to select actions from a list.
+*   **Organization:**
+    1.  Display list of numbered or lettered choices.
+    2.  Prompt user to make a selection.
+    3.  Test the user's selection using `if/else if` or `switch` statements.
+    4.  Execute the corresponding code.
+
+### Validating User Input
+Input validation is the process of inspecting data given to the program by the user and determining if it is valid.
+*   **Concept:** "Garbage in, garbage out". Bad input produces bad output.
+*   **Tests:**
+    *   **Range:** Is the number within a valid range? (e.g., age 0-120).
+    *   **Reasonableness:** Does the data make sense?
+    *   **Valid Menu Choice:** Did the user pick a number from the menu?
+    *   **Divide by Zero:** Check if a divisor is 0 before dividing.
+
+### Comparing Characters and Strings
+*   **Characters:** Compared using their **ASCII values**.
+    *   `'A'` (65) < `'B'` (66) is true.
+    *   `'1'` (49) < `'2'` (50) is true.
+    *   Lowercase letters have higher ASCII values than uppercase letters (`'a' > 'Z'`).
+*   **Strings (C++ `string` objects):** Compared lexicographically (like a dictionary).
+    *   "Mary" < "Mary Jane" (Shorter string comes first if it's a prefix).
+    *   "ABC" < "XYZ".
+
 ### The Conditional Operator (`?:`)
 A shorthand for a simple `if/else` statement. It is a **ternary** operator (3 operands).
 *   **Syntax:** `expression ? value_if_true : value_if_false`
@@ -357,12 +389,16 @@ An alternative to `if/else if` for testing an integer expression against multipl
 *   **Requirements:**
     *   The expression must evaluate to an **integer** or **char** (not float or string).
     *   `case` values must be **constant literals**.
-*   **Fall-through:** Without a `break` statement, the program continues executing the next case's statements. This is sometimes useful but often a bug.
+*   **`break`:** Used to exit the switch structure.
+*   **Fall-through:** Without a `break` statement, the program continues executing the next case's statements.
 
-### Scope (Blocks)
+### More About Blocks and Scope
 *   **Local Scope:** Variables defined inside a block `{}` are only visible within that block.
 *   **Lifetime:** They are created when execution enters the block and destroyed when it leaves.
-*   **Shadowing:** An inner block variable can have the same name as an outer block variable, "hiding" the outer one within the inner block.
+*   **Variables with Same Name:**
+    *   You can define a variable inside an inner block with the same name as a variable in an outer block.
+    *   The inner definition **shadows** (hides) the outer definition while in the inner block.
+    *   Generally considered **bad practice** as it confuses readability.
 
 ---
 
