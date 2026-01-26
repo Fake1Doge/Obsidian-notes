@@ -598,28 +598,238 @@ Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that 
 
 ## 🔄 Chapter 7: Induction and Recursion
 
-### 7.1 Mathematical Induction
-A powerful technique used to prove a statement $P(n)$ for all positive integers $n$.
+## 1. Mathematical Induction
 
-> [!TIP] The Ladder Analogy
-> 1.  **Basis Step:** Verify that $P(1)$ is true (You can step onto the first rung).
-> 2.  **Inductive Step:** Show that the conditional statement $P(k) \to P(k+1)$ is true for all positive integers $k$ (If you are on rung $k$, you can move to rung $k+1$).
-> 3.  **Conclusion:** Therefore, $P(n)$ is true for all positive integers $n$ (You can climb the ladder forever).
+Mathematical Induction is a powerful proof technique used to prove that a propositional function $P(n)$ is true for all positive integers $n$.
 
-### 7.2 Strong Induction
-A variant of induction where the inductive step assumes stronger information.
+### The Principle of Mathematical Induction
+To prove that $P(n)$ is true for all positive integers $n$, we must complete two steps:
+
+1.  **Basis Step:** Verify that $P(1)$ is true.
+2.  **Inductive Step:** Show that the conditional statement $P(k) \rightarrow P(k+1)$ is true for all positive integers $k$.
+
+**The Logic:**
+* **Intuition:** This is often compared to climbing an infinite ladder or the domino effect.
+    * If you can get on the first rung (Basis Step)...
+    * And if standing on rung $k$ implies you can reach rung $k+1$ (Inductive Step)...
+    * Then you can reach *every* rung on the ladder.
+
+**Formal Logic Rule:**
+$$[P(1) \wedge \forall k (P(k) \rightarrow P(k+1))] \rightarrow \forall n P(n)$$
+
+---
+
+### Guidelines for Writing Induction Proofs
+1.  **Define:** Clearly state the proposition $P(n)$.
+2.  **Basis Step:** Show $P(1)$ (or the starting integer $b$) is valid. Write "LHS = ...", "RHS = ...", "Therefore LHS = RHS".
+3.  **Inductive Step:**
+    * State the **Inductive Hypothesis (IH)**: "Assume $P(k)$ is true for an arbitrary positive integer $k$."
+    * State the **Goal**: "We must show that $P(k+1)$ is true."
+    * **Derivation**: Use algebra and the IH to transform the expression for $k$ into the expression for $k+1$.
+4.  **Conclusion:** State that by the principle of mathematical induction, $P(n)$ is true for all $n$.
+
+---
+
+### Examples of Proofs
+
+#### A. Summation Formulas
+**Proposition:** Show that $1 + 2 + \dots + n = \frac{n(n+1)}{2}$.
+
+1.  **Basis Step ($P(1)$):**
+    * LHS: $1$
+    * RHS: $\frac{1(1+1)}{2} = 1$
+    * $P(1)$ is true.
+2.  **Inductive Step:**
+    * **Assume $P(k)$:** $1 + 2 + \dots + k = \frac{k(k+1)}{2}$
+    * **Show $P(k+1)$:** We need to show $1 + \dots + k + (k+1) = \frac{(k+1)(k+2)}{2}$
+    * **Proof:**
+        $$\begin{aligned} [1 + \dots + k] + (k+1) &= \frac{k(k+1)}{2} + (k+1) \quad \text{(Substitute IH)} \\ &= \frac{k(k+1) + 2(k+1)}{2} \\ &= \frac{(k+1)(k+2)}{2} \end{aligned}$$
+    * This matches the formula for $P(k+1)$.
+
+#### B. Inequalities
+**Proposition:** Prove $n < 2^n$ for all positive integers $n$.
+
+1.  **Basis Step:** $1 < 2^1 \Rightarrow 1 < 2$ (True).
+2.  **Inductive Step:**
+    * **Assume $P(k)$:** $k < 2^k$
+    * **Show $P(k+1)$:** $k+1 < 2^{k+1}$
+    * **Proof:**
+        $$\begin{aligned} k &< 2^k \\ k + 1 &< 2^k + 1 \quad \text{(Add 1 to both sides)} \\ &< 2^k + 2^k \quad \text{(Since } 1 < 2^k \text{ for } k \ge 1) \\ &= 2 \cdot 2^k \\ &= 2^{k+1} \end{aligned}$$
+
+#### C. Divisibility
+**Proposition:** $n^3 - n$ is divisible by 3.
+
+1.  **Basis Step:** $1^3 - 1 = 0$. 0 is divisible by 3.
+2.  **Inductive Step:**
+    * **Assume $P(k)$:** $k^3 - k$ is divisible by 3.
+    * **Consider $(k+1)$:**
+        $$\begin{aligned} (k+1)^3 - (k+1) &= (k^3 + 3k^2 + 3k + 1) - k - 1 \\ &= (k^3 - k) + 3(k^2 + k) \end{aligned}$$
+    * $(k^3 - k)$ is divisible by 3 (by IH).
+    * $3(k^2 + k)$ is clearly divisible by 3.
+    * The sum of two multiples of 3 is divisible by 3.
+
+---
+
+## 2. Strong Induction
+
+Strong induction is useful when proving $P(k+1)$ requires assuming the truth of $P(j)$ for values smaller than $k$, not just $k$ itself.
+
+### Principle of Strong Induction
 * **Basis Step:** Verify $P(1)$ is true.
-* **Inductive Step:** Show that $[P(1) \land P(2) \land \dots \land P(k)] \to P(k+1)$ is true.
-* **Usage:** Necessary when proving a result for $k+1$ requires assuming the truth of the statement for integers smaller than $k$ (not just $k$).
-* **Example:** Proving the Fundamental Theorem of Arithmetic (every integer $>1$ is a prime or a product of primes).
+* **Inductive Step:** Show that $[P(1) \wedge P(2) \wedge \dots \wedge P(k)] \rightarrow P(k+1)$.
+* **Inductive Hypothesis:** Assume $P(j)$ is true for all $1 \le j \le k$.
 
-### 7.3 Recursive Algorithms: Merge Sort
-A recursive sorting algorithm based on the divide-and-conquer paradigm.
-1.  **Divide:** If the list has more than one element, split it into two halves.
-2.  **Conquer:** Recursively sort each half.
-3.  **Merge:** Combine (merge) the two sorted halves back into a single sorted list.
-* **Complexity:** $O(n \log n)$.
+### Example: The Postage Stamp Problem
+**Proposition:** Every amount of postage of 12 cents or more can be formed using just 4-cent and 5-cent stamps.
 
+* **Basis Steps:**
+    * $P(12): 4 + 4 + 4$
+    * $P(13): 4 + 4 + 5$
+    * $P(14): 4 + 5 + 5$
+    * $P(15): 5 + 5 + 5$
+* **Inductive Step:**
+    * Assume $P(j)$ holds for $12 \le j \le k$, where $k \ge 15$.
+    * We want to form postage for $k+1$.
+    * Since $k \ge 15$, we know $k-3 \ge 12$.
+    * By the hypothesis, $P(k-3)$ is true (we can form postage for $k-3$).
+    * Add one **4-cent stamp** to the solution for $k-3$.
+    * $(k-3) + 4 = k+1$.
+    * Thus, $P(k+1)$ is true.
+
+---
+
+## 3. Recursive Definitions
+
+Recursion defines an object in terms of itself.
+
+### A. Recursively Defined Functions
+To define a function with the set of non-negative integers as its domain:
+1.  **Basis Step:** Specify the value of the function at zero ($f(0)$).
+2.  **Recursive Step:** Give a rule for finding $f(n+1)$ based on values at smaller integers.
+
+**Common Examples:**
+* **Factorial ($n!$):**
+    * Basis: $f(0) = 1$
+    * Recursive: $f(n+1) = (n+1)f(n)$
+* **Fibonacci Numbers ($f_n$):**
+    * Basis: $f_0 = 0, f_1 = 1$
+    * Recursive: $f_n = f_{n-1} + f_{n-2}$ for $n \ge 2$.
+
+### B. Recursively Defined Sets
+1.  **Basis Step:** Specify an initial collection of elements.
+2.  **Recursive Step:** Rules for forming new elements from existing ones.
+
+**Example: Multiples of 3 (Set $S$)**
+* Basis: $3 \in S$
+* Recursive: If $x \in S$ and $y \in S$, then $x + y \in S$.
+
+**Example: Rooted Trees**
+* Basis: A single vertex $r$ is a rooted tree.
+* Recursive: If $T_1, \dots, T_n$ are disjoint rooted trees, connecting a new root $r$ to the roots of $T_1, \dots, T_n$ creates a new rooted tree.
+
+**Example: Binary Trees**
+* Basis: An empty set $\emptyset$ is an extended binary tree.
+* Recursive: If $T_1$ and $T_2$ are extended binary trees, connecting a root $r$ to $T_1$ (left) and $T_2$ (right) creates a new tree.
+
+---
+
+## 4. Structural Induction
+
+Structural induction is used to prove results about recursively defined sets.
+
+**Method:**
+1.  **Basis Step:** Show the result holds for the elements specified in the basis step of the recursive definition.
+2.  **Recursive Step:** Show that if the statement is true for the existing elements used to construct a new element, the result holds for the new element.
+
+**Example: Multiples of 3**
+* **Definition of Set S:** $3 \in S$; if $x, y \in S \rightarrow x+y \in S$.
+* **Claim:** Every element in $S$ is divisible by 3 ($3|x$).
+* **Basis:** $3 \in S$, and $3|3$. (True).
+* **Recursive Step:**
+    * Assume $a \in S$ and $b \in S$ are divisible by 3.
+    * Let $a = 3m$ and $b = 3n$.
+    * The new element is $a+b$.
+    * $a+b = 3m + 3n = 3(m+n)$.
+    * Therefore, $3 | (a+b)$.
+
+---
+
+## 5. Recursive Algorithms
+
+An algorithm is **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input.
+
+### Key Algorithms
+
+#### 1. Recursive Factorial
+```pseudo
+procedure factorial(n: nonnegative integer)
+    if n = 0 then return 1
+    else return n * factorial(n-1)
+```
+
+#### 2. Recursive Power ($a^n$)
+```pseudo
+procedure power(a: nonzero real, n: nonnegative integer)
+    if n = 0 then return 1
+    else return a * power(a, n-1)
+```
+
+#### 3. Greatest Common Divisor (GCD)
+Based on $gcd(a, b) = gcd(b \mod a, a)$.
+```pseudo
+procedure gcd(a, b: nonnegative integers with a < b)
+    if a = 0 then return b
+    else return gcd(b mod a, a)
+```
+
+#### 4. Recursive Binary Search
+* Compare target $x$ with the middle term $a_m$.
+* If $x < a_m$, search the left subarray.
+* If $x > a_m$, search the right subarray.
+```pseudo
+procedure binary_search(i, j, x)
+    m := floor((i + j)/2)
+    if x = a_m then return m
+    else if (x < a_m and i < m) then return binary_search(i, m-1, x)
+    else if (x > a_m and j > m) then return binary_search(m+1, j, x)
+    else return 0
+```
+
+### Proving Correctness
+We use induction to prove recursive algorithms work.
+* **Basis:** Prove it works for the simplest input (e.g., $n=0$ or $n=1$).
+* **Inductive Step:** Assume the algorithm works for input $k$ (or smaller inputs), then prove it works for input $k+1$.
+
+---
+
+## 6. Merge Sort
+
+Merge Sort is a classic recursive sorting algorithm using the "Divide and Conquer" strategy.
+
+**Logic:**
+1.  Split a list into two halves.
+2.  Recursively sort each half.
+3.  **Merge** the two sorted halves into one sorted list.
+
+**The Algorithm:**
+```pseudo
+procedure mergesort(L = a_1, ..., a_n)
+    if n > 1 then
+        m := floor(n/2)
+        L1 := a_1, ..., a_m
+        L2 := a_{m+1}, ..., a_n
+        L := merge(mergesort(L1), mergesort(L2))
+```
+
+**The Merge Procedure:**
+* Compare the first elements of the two lists.
+* Remove the smaller element and append it to the result list.
+* Repeat until one list is empty, then append the remainder of the other list.
+
+**Complexity:**
+* It splits the list $\log n$ times (height of the tree).
+* At each level, it performs $O(n)$ work to merge.
+* Total complexity: $O(n \log n)$.
 ---
 
 ## 🎲 Chapter 8: Counting Principles
