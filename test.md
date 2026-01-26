@@ -834,11 +834,6 @@ procedure mergesort(L = a_1, ..., a_n)
 
 ## 🎲Chapter 8: Counting
 
-**Course:** Discrete Structures (CKC111)
-**Topic:** Counting Principles, Pigeonhole Principle, Permutations, and Combinations
-
----
-
 ## 1. Basic Principles of Counting
 
 ### 1.1 The Product Rule
