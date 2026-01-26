@@ -694,79 +694,75 @@ Text-based description of the algorithm.
 # Functions
 
 ### Key Concepts & Definitions
-* **Modular Programming:** The strategy of breaking a program up into smaller, manageable functions or modules. This improves maintainability and simplifies the writing process.
-* **Function Definition:** The actual code that implements the function. It consists of two main parts:
-    * **Header:** Contains the return type, function name, and parameter list.
-    * **Body:** The block of statements enclosed in braces `{}` that performs the task.
-* **Function Prototype:** A declaration statement (function header + semicolon) placed *before* the `main` function. It notifies the compiler of the function's name, return type, and parameters, allowing the function definition to be placed anywhere in the code.
-* **Arguments vs. Parameters:**
-    * **Argument:** The actual value or variable sent to the function during a function call (e.g., in `pow(2, 3)`, `2` and `3` are arguments).
-    * **Parameter:** The variable defined in the function header that receives the argument's value (e.g., in `void func(int x)`, `x` is the parameter).
-* **Return Statement:** Causes a function to end immediately and optionally sends a value back to the calling part of the program.
-* **Scope (Lifetime):**
-    * **Local Variables:** Defined *inside* a function. They are "hidden" from other functions and are destroyed when the function ends.
-    * **Global Variables:** Defined *outside* all functions. They are accessible by any function defined after them.
-* **Static Local Variables:** Variables declared with the `static` keyword inside a function. Unlike normal local variables, they **retain their value** between function calls and are initialized only once.
-* **Pass by Value:** The default mechanism where a *copy* of the argument is passed. Changes to the parameter do not affect the original argument.
-* **Pass by Reference:** Uses an ampersand (`&`) in the parameter list. The function receives a reference (alias) to the original argument, allowing it to modify the original variable.
-* **Function Overloading:** Creating multiple functions with the *same name* but different **parameter lists** (different data types or number of parameters).
+*   **Modular Programming:** The strategy of breaking a program up into smaller, manageable functions or modules. This improves maintainability and simplifies the writing process.
+*   **Function Definition:** The actual code that implements the function. It consists of two main parts:
+    *   **Header:** Contains the return type, function name, and parameter list.
+    *   **Body:** The block of statements enclosed in braces `{}` that performs the task.
+*   **Function Call:** A statement that causes a function to execute.
+*   **Function Prototype:** A declaration statement (function header + semicolon) placed *before* the `main` function. It notifies the compiler of the function's name, return type, and parameters, allowing the function definition to be placed anywhere in the code (usually after `main`).
 
-### Syntax
-**Function Prototype:**
-```cpp
-// Syntax: ReturnType FunctionName(ParameterType, ParameterType);
-void displayData(int, double); // Semicolon is required
-```
+### Defining and Calling Functions
+*   **Void Functions:** Functions that perform a task but do not return a value.
+    *   **Header:** `void functionName()`
+    *   **Call:** `functionName();`
+*   **Value-Returning Functions:** Functions that return a value to the part of the program that called them.
+    *   **Header:** `int functionName()` (or `double`, `string`, etc.)
+    *   **Call:** `x = functionName();` or `cout << functionName();`
 
-**Function Definition:**
-```cpp
-// Syntax: ReturnType FunctionName(ParameterList) { Body }
-int sum(int num1, int num2) 
-{
-    return num1 + num2;
-}
-```
+### Sending Data into a Function (Pass by Value)
+*   **Arguments:** Values passed *into* the function during a call.
+    *   `result = pow(2.0, 3.0);` (2.0 and 3.0 are arguments).
+*   **Parameters:** Variables defined in the function header to receive the arguments.
+*   **Pass by Value:** The default mechanism in C++. A **copy** of the argument's value is passed to the parameter. Changes to the parameter *do not* affect the original argument.
 
-**Pass by Reference:**
-```cpp
-void func(int &num); // 'num' is an alias for the original argument
-```
+### The `return` Statement
+*   Used to end the execution of a function.
+*   For `void` functions, `return;` is optional (usually at the end).
+*   For value-returning functions, `return expression;` is **required**. The value of the expression is sent back to the calling statement.
 
-### Code Examples
+### Local and Global Variables
+*   **Local Variables:** Defined *inside* a function.
+    *   **Scope:** Only accessible within the function they are defined.
+    *   **Lifetime:** Created when the function starts, destroyed when it ends.
+    *   **Initialization:** Must be initialized manually; otherwise, they contain garbage.
+*   **Global Variables:** Defined *outside* all functions.
+    *   **Scope:** Accessible by any function defined after them.
+    *   **Lifetime:** Exist for the entire duration of the program.
+    *   **Initialization:** Automatically initialized to 0 (numeric) or NULL (char).
+    *   *Note:* Use sparingly; they make debugging difficult. **Global Constants** are preferred.
 
-**1. Static Local Variable (Retaining Value)**
-```cpp
-void showStatic()
-{
-    static int count = 0; // Initialized only once
-    count++;
-    cout << "I have been called " << count << " times.\n";
-}
-```
+### Static Local Variables
+*   Declared with the `static` keyword inside a function.
+    *   `static int count = 0;`
+*   **Behavior:** They are NOT destroyed when the function ends. They **retain their value** between function calls.
+*   **Initialization:** Happens only once, the first time the function is called.
 
-**2. Pass by Reference (Modifying Original)**
-```cpp
-void doubleValue(int &val)
-{
-    val *= 2; // Modifies the variable passed from main
-}
+### Default Arguments
+*   Values assigned to parameters in the function prototype (or header if no prototype exists).
+*   If an argument is omitted in the function call, the default value is used.
+*   **Rule:** Default arguments must be assigned starting from the **rightmost** parameter.
+    *   Valid: `void func(int x, int y = 0);`
+    *   Invalid: `void func(int x = 0, int y);`
 
-int main() {
-    int x = 10;
-    doubleValue(x);
-    cout << x; // Prints 20
-}
-```
+### Using Reference Variables as Parameters
+*   **Reference Variable:** An alias for another variable. Defined with an ampersand (`&`).
+*   **Pass by Reference:** Allows a function to access and **modify** the original argument variable.
+*   **Syntax:**
+    ```cpp
+    void doubleValue(int &val) {
+        val *= 2;
+    }
+    ```
+*   **Constraint:** The argument passed to a reference parameter must be a **variable**, not a literal or expression.
 
-### Critical Details & Warnings
-> [!WARNING] Initialization
-> * **Global variables** are automatically initialized to `0` (numeric) or `NULL` (char).
-> * **Local variables** are **NOT** automatically initialized. They contain "garbage" data until you assign them a value.
-
-> [!TIP] Best Practices
-> * **Global Variable Usage:** Avoid using global variables for general data because they make debugging difficult. Use **Global Constants** instead.
-> * **Pass by Reference Restriction:** When using reference parameters (`int &x`), the argument passed **must be a variable**. You cannot pass a literal (like `5`) or an expression.
-> * **Default Arguments:** If used, they must be assigned starting from the **rightmost** parameter.
+### Function Overloading
+*   Defining multiple functions with the **same name** but different **parameter lists**.
+*   **Parameter List:** Differentiates based on the number of parameters or their data types.
+*   The compiler determines which function to call based on the arguments used.
+    ```cpp
+    int square(int number);
+    double square(double number);
+    ```
 
 ---
 
