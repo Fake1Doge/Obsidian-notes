@@ -169,6 +169,200 @@ Used to hold real numbers (with decimals).
 
 ---
 
+# Introduction to C++
+
+### Parts of a C++ Program
+* **Comments (`//`):** Ignored by the compiler. Used to document code.
+* **Preprocessor Directive (`#include <iostream>`):** Inserts the contents of another file into the program. `iostream` is required for input/output operations.
+* **Namespace (`using namespace std;`):** Declares that the program will use entities (like `cout`, `cin`) from the standard namespace.
+* **Main Function (`int main()`):** The starting point of every C++ program.
+* **Braces (`{ }`):** Enclose a block of code (e.g., the body of `main`).
+* **Output Statement (`cout << ...`):** Displays information on the screen.
+* **Return Statement (`return 0;`):** Ends the main function and sends a signal (usually 0 for success) back to the operating system.
+
+### Special Characters
+| Character | Name | Meaning |
+| :--- | :--- | :--- |
+| `//` | Double Slash | Beginning of a comment |
+| `#` | Pound Sign | Beginning of a preprocessor directive |
+| `< >` | Open/Close Brackets | Enclose filename in `#include` |
+| `( )` | Open/Close Parentheses | Used when naming a function |
+| `{ }` | Open/Close Braces | Encloses a group of statements |
+| `" "` | Quotation Marks | Encloses string of characters |
+| `;` | Semicolon | End of a programming statement |
+
+### The `cout` Object
+* **Console Output:** Used to display output on the computer screen.
+* **Stream Insertion Operator (`<<`):** Sends data to `cout`.
+    * Example: `cout << "Hello there!";`
+* **Multiple Items:** Can send multiple items in one statement.
+    * Example: `cout << "Hello " << "there!";`
+* **`endl` Manipulator:** Starts a new line of output.
+    * Example: `cout << "Hello" << endl;
+`
+* **`\n` Escape Sequence:** Also starts a new line. Must be inside quotes.
+    * Example: `cout << "Hello\n";`
+
+### Identifiers
+* **Identifiers:** Programmer-defined names for variables, functions, etc.
+* **Rules:**
+    1.  Must begin with a letter or underscore (`_`).
+    2.  Following characters can be letters, digits, or underscores.
+    3.  **Case Sensitive:** `Total`, `total`, and `TOTAL` are different identifiers.
+    4.  Cannot use C++ Key Words (e.g., `int`, `class`, `return`).
+
+### Variables and Data Types
+A **variable** is a storage location in memory. It must be defined before use.
+
+#### Integer Data Types
+Used to hold whole numbers.
+*   **Types:** `short` (2 bytes), `int` (4 bytes), `long` (4 bytes), `long long` (8 bytes).
+*   **Signed vs. Unsigned:** `unsigned` types can only hold non-negative values but have a larger positive range.
+*   **Literals:**
+    *   `20` (int)
+    *   `1234L` (long)
+    *   `324LL` (long long)
+    *   `075` (Octal, starts with 0)
+    *   `0x75A` (Hexadecimal, starts with 0x)
+
+#### Character Data Type (`char`)
+Used to hold a single character.
+*   Stored as a 1-byte integer (ASCII code).
+*   **Literal:** Enclosed in single quotes `' '`.
+    *   Example: `char letter = 'A';` (Stored as 65).
+
+#### Floating-Point Data Types
+Used to hold real numbers (with decimals).
+*   **Types:**
+    *   `float`: Single precision (4 bytes).
+    *   `double`: Double precision (8 bytes, default for literals).
+    *   `long double`: Extended precision.
+*   **Literals:**
+    *   Standard: `12.45`, `-3.8`
+    *   Scientific Notation: `3.14159E1` ($3.14159 \times 10^1$)
+    *   Suffixes: `1.2F` (float), `1.2L` (long double).
+
+#### The `bool` Data Type
+*   Represents boolean values: `true` or `false`.
+*   Stored internally as integers: `true` becomes `1` (or any non-zero), `false` becomes `0`.
+
+#### The `string` Class
+*   **Not** a built-in primitive type. Requires `#include <string>`.
+*   Used to hold a sequence of characters.
+*   **Character String vs `string` Class:**
+    *   **C-String:** A series of characters stored in adjacent memory, terminated by the **null terminator** `\0`.
+        *   Example: `"Hello"` is stored as `H`, `e`, `l`, `l`, `o`, `\0`.
+    *   **`string` object:** Easier to use, dynamic sizing.
+        *   Example: `string name = "George";`
+
+### Operations & Initialization
+*   **Assignment (`=`):** Copies the value on the right to the variable on the left.
+    *   **L-value:** The item on the left must be a variable (storage location), not a literal or expression. `12 = item;` is an **ERROR**.
+*   **Initialization:** Assigning a value at the time of definition.
+    *   `int length = 12;`
+    *   `auto` (C++11): The compiler infers the type from the value. `auto amount = 100;` (int).
+*   **Arithmetic Operators:**
+    *   **Unary:** 1 operand (e.g., `-5`).
+    *   **Binary:** 2 operands (e.g., `13 - 7`).
+        *   `+` Addition
+        *   `-` Subtraction
+        *   `*` Multiplication
+        *   `/` Division
+            *   **Integer Division:** If both operands are integers, the result is an integer (decimals truncated). `13 / 5` is `2`.
+        *   `%` Modulus (Remainder): Only works with integers. `13 % 5` is `3`.
+    *   **Ternary:** 3 operands (e.g., `exp1 ? exp2 : exp3`).
+*   **`sizeof` Operator:** Returns the size of a data type or variable in bytes.
+    *   Example: `sizeof(double)` usually returns 8.
+
+### Scope
+*   **Scope:** The part of the program where a variable can be accessed.
+*   A variable cannot be used **before** it is defined.
+*   Variables defined inside a function (local variables) are not accessible outside it.
+
+### Comments & Style
+*   **Single-Line Comment:** `// ...` (To end of line).
+*   **Multi-Line Comment:** `/* ... */` (Can span multiple lines).
+*   **Named Constants:** Use `const` to create "read-only" variables.
+    *   Convention: ALL_CAPS names.
+    *   Example: `const double TAX_RATE = 0.0675;`
+*   **Programming Style:** Using spaces, tabs, and blank lines to make code readable. This is ignored by the compiler but critical for humans.
+
+---
+
+# Expressions and Interactivity
+
+### The `cin` Object
+* **Standard Input:** Used to read input from the keyboard.
+* **Stream Extraction Operator (`>>`):** Retrieves data from the input stream and stores it in a variable.
+    * Example: `cin >> height;`
+* **Input Requirements:**
+    * Requires `iostream`.
+    * The user must press [Enter] to send data to the program.
+* **Multiple Inputs:** Can read multiple values in one statement. Values must be separated by spaces.
+    * Example: `cin >> length >> width;`
+* **Prompting:** Always display a prompt (via `cout`) *before* `cin` to tell the user what to enter.
+
+### Mathematical Expressions
+* **Order of Operations:**
+    1.  **Parentheses `()`:** Highest precedence.
+    2.  **Unary `+`, `-`, `!`:** (Right to left).
+    3.  **Multiplication `*`, Division `/`, Modulus `%`:** (Left to right).
+    4.  **Addition `+`, Subtraction `-`:** (Left to right).
+* **Algebraic vs. C++:**
+    *   Algebra: $Area = lw$ $\rightarrow$ C++: `Area = l * w;`
+    *   Algebra: $m = \frac{y_2 - y_1}{x_2 - x_1}$ $\rightarrow$ C++: `m = (y2 - y1) / (x2 - x1);`
+* **Type Conversion (Coercion):**
+    *   **Promotion:** Converting to a higher type (e.g., `int` to `double`).
+    *   **Demotion:** Converting to a lower type (e.g., `double` to `int` - causes truncation).
+    *   **Rules:**
+        *   `char`, `short`, `unsigned short` automatically promote to `int`.
+        *   In `5 + 2.5`, `5` is promoted to `double`, result is `double`.
+    *   **Type Casting:** Manual conversion.
+        *   C++ Style: `static_cast<DataType>(Value)` **(Preferred)**
+        *   C Style: `(DataType)Value` or `DataType(Value)`
+        *   Example: `average = static_cast<double>(sum) / count;` ensures floating-point division.
+* **Overflow/Underflow:** Assigning a value too large or too small for a variable type. It "wraps around" and produces incorrect results without warning.
+
+### Special Assignment Operators
+*   **Combined Assignment:** Shorthand for standard operations.
+    *   `x += 5;` is equivalent to `x = x + 5;`
+    *   `y -= 2;` is equivalent to `y = y - 2;`
+    *   `z *= 10;` is equivalent to `z = z * 10;`
+    *   `a /= b;` is equivalent to `a = a / b;`
+    *   `c %= 3;` is equivalent to `c = c % 3;
+
+### Formatting Output
+Requires `#include <iomanip>`.
+*   **`setw(n)`:** Sets the minimum print field width to `n` spaces. Right-justified by default. Affects **only the next** value.
+*   **`fixed`:** Displays floating-point numbers in fixed-point notation (decimal).
+*   **`setprecision(n)`:**
+    *   Without `fixed`: Sets total number of significant digits.
+    *   With `fixed`: Sets number of digits *after* the decimal point.
+*   **`showpoint`:** Forces decimal point and trailing zeros to display.
+*   **`left` / `right`:** Controls alignment.
+
+### Working with Characters and Strings
+*   **`cin >> stringVar`:** Reads a string but **stops at whitespace** (space, tab, newline). Cannot read "John Doe".
+*   **`getline(cin, stringVar)`:** Reads an entire line of text, including spaces, until [Enter] is pressed.
+*   **`cin.get()`:** Reads a single character, including whitespace.
+*   **`cin.ignore()`:** Skips characters in the keyboard buffer. Often used to skip the newline character left by `cin >>` before calling `getline`.
+*   **String Operators:**
+    *   `+` Concatenation (joining strings).
+    *   `+=` Append.
+    *   `.length()` Function returns the number of characters.
+
+### Mathematical Library Functions
+Requires `#include <cmath>`.
+*   `pow(base, exp)`: Returns base raised to the power of exp.
+*   `sqrt(x)`: Returns the square root of x.
+*   `sin(x)`, `cos(x)`, `tan(x)`: Trigonometric functions (input in radians).
+*   `abs(x)`: Absolute value (for integers).
+*   **Random Numbers (`cstdlib`):**
+    *   `rand()`: Returns a random integer.
+    *   `srand(seed)`: Seeds the random number generator (usually with `time(0)` from `ctime`) to ensure unique sequences.
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
@@ -214,7 +408,7 @@ void func(int &num); // 'num' is an alias for the original argument
 
 **1. Static Local Variable (Retaining Value)**
 ```cpp
-void showStatic() 
+void showStatic()
 {
     static int count = 0; // Initialized only once
     count++;
@@ -224,7 +418,7 @@ void showStatic()
 
 **2. Pass by Reference (Modifying Original)**
 ```cpp
-void doubleValue(int &val) 
+void doubleValue(int &val)
 {
     val *= 2; // Modifies the variable passed from main
 }
@@ -334,7 +528,7 @@ for (int row = 0; row < 3; row++)
 * **Array Name as Pointer:** The name of an array (without brackets) acts as a pointer to the **first element** of the array.
 * **Dynamic Memory Allocation:**
     * **`new`:** Allocates memory from the heap (free store) while the program is running.
-    * **`delete`:** Frees the memory back to the heap.
+    *   **`delete`:** Frees the memory back to the heap.
 
 ### Syntax
 **Basic Pointer Operations:**
