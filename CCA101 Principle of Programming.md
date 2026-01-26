@@ -1,3 +1,54 @@
+# Introduction to Computers and Programming
+
+### Key Concepts & Definitions
+* **Computer:** A programmable machine designed to follow instructions.
+* **Program:** A set of instructions in computer memory to make the computer do something.
+* **Programmer:** A person who writes instructions (programs) to make the computer perform a task.
+* **Main Hardware Components:**
+    * **CPU (Central Processing Unit):** The "brain" of the computer.
+        * **Control Unit:** Retrieves and decodes program instructions and coordinates computer activities.
+        * **Arithmetic & Logic Unit (ALU):** Hardware optimized for high-speed numeric calculations and true/false decisions.
+    * **Main Memory (RAM):** Volatile memory (erased when power is off) used for temporary storage. Organized into **bits** (0 or 1) and **bytes** (8 consecutive bits). Each byte has a unique **address**.
+    * **Secondary Storage:** Non-volatile storage (retains data without power) such as hard drives, SSDs, and flash drives.
+    * **Input Devices:** Send information to the computer from the outside (keyboard, mouse, scanner).
+    * **Output Devices:** Display information from the computer (monitor, printer, speakers).
+* **Software Categories:**
+    * **System Software:** Manages computer hardware (e.g., Operating Systems like Windows/Linux, utility programs, software development tools).
+    * **Application Software:** Programs that provide services to the user (e.g., Word processing, games, web browsers).
+* **Programming Languages:**
+    * **Low-Level (Machine Language):** Binary numbers (1s and 0s) directly understood by the CPU. Specific to the hardware.
+    * **High-Level:** Closer to human language (e.g., C++, Java, Python). Must be translated into machine language to run.
+* **From Source to Executable:**
+    1.  **Source Code:** The program written in a high-level language.
+    2.  **Preprocessor:** Converts source file directives.
+    3.  **Compiler:** Converts source program into machine instructions (Object Code).
+    4.  **Linker:** Connects hardware-specific code and libraries to produce the final **Executable File**.
+* **Integrated Development Environment (IDE):** Combines tools (text editor, compiler, debugger) into a single application (e.g., Visual Studio, Code::Blocks).
+
+### Elements of a Program
+* **Key Words (Reserved Words):** Words with special meaning in the language (e.g., `int`, `double`, `return`, `using`, `namespace`). Cannot be used for other purposes.
+* **Programmer-Defined Identifiers:** Names defined by the programmer for variables, functions, etc. (e.g., `hours`, `rate`, `pay`).
+* **Operators:** Perform operations on data (e.g., Arithmetic `+`, `-`, `*`; Assignment `=`).
+* **Punctuation:** Characters that mark the end of a statement (`;`) or separate items.
+* **Syntax:** The grammar rules that must be followed.
+* **Variable:** A named storage location in the computer's memory for holding a piece of data.
+    * **Variable Definition:** Specifies the type of data and the variable name (e.g., `double hours;`).
+
+### The Programming Process
+1.  **Define** what the program is to do.
+2.  **Visualize** the program running.
+3.  **Design** using tools like hierarchy charts, flowcharts, or pseudocode.
+4.  **Check** the model for logical errors.
+5.  **Type** the code, compile it, and correct syntax errors.
+6.  **Run** the program with test data.
+7.  **Correct** runtime/logic errors and validate results.
+
+### Programming Paradigms
+* **Procedural Programming:** Focuses on the **process**. Procedures (functions) are written to process data.
+* **Object-Oriented Programming (OOP):** Focuses on **objects**, which contain both data and the means to manipulate the data. Messages are sent to objects to perform operations.
+
+---
+
 # Functions
 
 ### Key Concepts & Definitions
