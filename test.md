@@ -454,20 +454,145 @@ Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that 
 
 ---
 
-## 🔢 Chapter 6: Matrices
+## 🔢Chapter 6: Basic Structures
 
-### 6.1 Matrix Arithmetic
-* **Matrix:** A rectangular array of numbers ($m$ rows $\times$ n columns).
-* **Addition:** Sum of corresponding elements ($C_{ij} = A_{ij} + B_{ij}$). Matrices must have the same dimensions.
-* **Transposition ($A^T$):** The matrix obtained by interchanging the rows and columns of $A$.
-* **Multiplication ($AB$):** The product of an $m \times k$ matrix $A$ and a $k \times n$ matrix $B$ is an $m \times n$ matrix. The element at row $i$, column $j$ is the **dot product** of row $i$ of $A$ and column $j$ of $B$.
-    * *Condition:* The number of columns in $A$ must equal the number of rows in $B$.
+## 1. Introduction to Discrete Mathematics
+**Discrete Mathematics** deals with objects that can assume only distinct, separated values (e.g., integers, graphs, logic statements). This is in contrast to **Continuous Mathematics**, which deals with objects that vary smoothly (e.g., real numbers, calculus).
 
-### 6.2 Zero-One Matrices
-Matrices with entries 0 or 1, used to represent discrete structures.
-* **Join ($A \lor B$):** The bitwise OR of corresponding elements.
-* **Meet ($A \land B$):** The bitwise AND of corresponding elements.
-* **Boolean Product ($A \odot B$):** Similar to matrix multiplication but uses $\lor$ (OR) in place of addition and $\land$ (AND) in place of multiplication.
+### Applications
+* **Google Maps**: Models roads as a **Graph**.
+    * **Nodes (Vertices)**: Intersections or Points of Interest (POIs).
+    * **Edges**: Roads connecting nodes (can be directed or undirected).
+    * **Weights**: Distance, time, or cost (fuel/tolls).
+    * **Goal**: Find the **shortest path** using logic and algorithms.
+
+---
+
+## 2. Sets
+### Definitions
+* **Set**: An unordered collection of objects.
+* **Element ($a \in A$)**: An object belonging to set $A$.
+* **Empty Set ($\emptyset$ or $\{\})$**: A set with no elements.
+* **Universal Set ($U$)**: The set containing everything currently under consideration.
+
+### Describing Sets
+1.  **Roster Method**: Lists elements explicitly.
+    * Example: $V = \{a, e, i, o, u\}$
+    * *Note*: Order does not matter, and duplicates are ignored ($\{1, 2, 2\} = \{1, 2\}$).
+2.  **Set-Builder Notation**: Specifies properties satisfied by members.
+    * Notation: $S = \{ x \mid P(x) \}$
+    * Example: $O = \{ x \in \mathbb{Z}^+ \mid x \text{ is odd and } x < 10 \}$
+3.  **Venn Diagram**: Graphical representation using geometric shapes.
+
+### Important Sets
+* $\mathbb{N}$: Natural numbers $\{0, 1, 2, \dots\}$
+* $\mathbb{Z}$: Integers $\{\dots, -2, -1, 0, 1, 2, \dots\}$
+* $\mathbb{Z}^+$: Positive integers $\{1, 2, 3, \dots\}$
+* $\mathbb{R}$: Real numbers
+* $\mathbb{Q}$: Rational numbers ($p/q$ where $p, q$ are integers, $q \neq 0$)
+
+### Subsets and Equality
+* **Subset ($A \subseteq B$)**: Every element of $A$ is also in $B$.
+    * $\forall x (x \in A \rightarrow x \in B)$
+    * **Theorem**: For any set $S$, $\emptyset \subseteq S$ and $S \subseteq S$.
+* **Proper Subset ($A \subset B$)**: $A \subseteq B$ but $A \neq B$.
+* **Set Equality ($A = B$)**: $A$ and $B$ have exactly the same elements.
+    * $A = B \iff (A \subseteq B \land B \subseteq A)$.
+
+### Power Sets
+* **Power Set ($P(A)$)**: The set of all subsets of $A$.
+* **Cardinality**: If $|A| = n$, then $|P(A)| = 2^n$.
+    * Example: If $A = \{a, b\}$, then $P(A) = \{\emptyset, \{a\}, \{b\}, \{a, b\}\}$.
+
+### Tuples and Cartesian Products
+* **Ordered n-tuple**: $(a_1, a_2, \dots, a_n)$. Order matters.
+* **Cartesian Product ($A \times B$)**: The set of all ordered pairs $(a, b)$ where $a \in A$ and $b \in B$.
+    * $A \times B = \{ (a, b) \mid a \in A \land b \in B \}$
+    * **Cardinality**: $|A \times B| = |A| \cdot |B|$.
+
+---
+
+## 3. Set Operations
+### Basic Operations
+1.  **Union ($A \cup B$)**: Elements in $A$ OR $B$.
+    * $\{ x \mid x \in A \lor x \in B \}$
+2.  **Intersection ($A \cap B$)**: Elements in BOTH $A$ and $B$.
+    * $\{ x \mid x \in A \land x \in B \}$
+    * *Disjoint*: If $A \cap B = \emptyset$.
+3.  **Difference ($A - B$)**: Elements in $A$ but NOT in $B$.
+    * $\{ x \mid x \in A \land x \notin B \}$
+4.  **Complement ($\overline{A}$)**: Elements in $U$ but NOT in $A$.
+    * $\{ x \mid x \in U \land x \notin A \}$
+
+### Set Identities (Key Laws)
+* **De Morgan's Laws**:
+    * $\overline{A \cup B} = \overline{A} \cap \overline{B}$
+    * $\overline{A \cap B} = \overline{A} \cup \overline{B}$
+* **Distributive Laws**:
+    * $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+    * $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+* **Inclusion-Exclusion Principle**:
+    * $|A \cup B| = |A| + |B| - |A \cap B|$
+
+---
+
+## 4. Functions
+### Definitions
+* **Function ($f: A \rightarrow B$)**: Assigns each element of $A$ (Domain) to exactly one element of $B$ (Codomain).
+    * **Image**: If $f(a) = b$, $b$ is the image of $a$.
+    * **Preimage**: $a$ is the preimage of $b$.
+    * **Range**: The set of all images ($f(A) \subseteq B$).
+
+### Types of Functions
+1.  **Injective (One-to-One)**: Distinct elements in $A$ map to distinct elements in $B$.
+    * $\forall a, b \in A, f(a) = f(b) \rightarrow a = b$.
+2.  **Surjective (Onto)**: Every element in $B$ is the image of some element in $A$.
+    * Range = Codomain.
+3.  **Bijective (One-to-One Correspondence)**: Both injective and surjective.
+
+### Inverse and Composition
+* **Inverse Function ($f^{-1}$)**: Exists only if $f$ is a bijection.
+    * $f^{-1}(b) = a \iff f(a) = b$.
+* **Composition ($f \circ g$)**: $(f \circ g)(x) = f(g(x))$.
+
+### Special Functions
+* **Floor ($\lfloor x \rfloor$)**: Largest integer $\le x$.
+    * $\lfloor 3.5 \rfloor = 3, \lfloor -1.5 \rfloor = -2$.
+* **Ceiling ($\lceil x \rceil$)**: Smallest integer $\ge x$.
+    * $\lceil 3.5 \rceil = 4, \lceil -1.5 \rceil = -1$.
+* **Factorial ($n!$)**: Product of first $n$ positive integers. $0! = 1$.
+
+---
+
+## 5. Sequences and Summations
+* **Sequence**: An ordered list of elements, often defined as a function from integers to a set.
+    * Notation: $\{a_n\}$ where $a_n$ is the $n$-th term.
+* **Recurrence Relation**: Expresses $a_n$ in terms of previous terms (e.g., $a_n = a_{n-1} + 3$).
+    * **Fibonacci Sequence**: $f_n = f_{n-1} + f_{n-2}$, with $f_0 = 0, f_1 = 1$.
+* **Summations**:
+    * Notation: $\sum_{j=m}^{n} a_j$ represents the sum $a_m + a_{m+1} + \dots + a_n$.
+
+---
+
+## 6. Matrices
+### Basics
+* **Matrix**: A rectangular array of numbers.
+* **Order (Size)**: $m \times n$ matrix has $m$ rows and $n$ columns.
+* **Equality**: Two matrices are equal if they have the same size and corresponding entries are equal.
+* **Types**:
+    * **Square Matrix**: Rows = Columns ($n \times n$).
+    * **Row Matrix**: $1 \times n$.
+    * **Column Matrix**: $m \times 1$.
+    * **Identity Matrix ($I_n$)**: Square matrix with 1s on the diagonal and 0s elsewhere.
+
+### Arithmetic
+* **Addition**: Add corresponding elements ($C = A + B \iff c_{ij} = a_{ij} + b_{ij}$). Requires same size.
+* **Multiplication**:
+    * Matrix multiplication is valid if columns of 1st matrix = rows of 2nd matrix.
+    * $(AB)_{ij} = \sum_{k} a_{ik} b_{kj}$.
+
+---
+*Based on uploaded file: Chapter 6.pdf (CKC111 Discrete Structures)*
 
 ---
 
