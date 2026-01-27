@@ -218,34 +218,75 @@ A **binary relation** $R$ from a set $A$ to a set $B$ is a subset of the Cartesi
 *   **Notation:** If $(a,b) \in R$, we write $a R b$ (a is related to b).
 *   **Relation on a Set:** A relation from set $A$ to itself ($A \times A$).
 
-> [!EXAMPLE] Divisibility Relation
-> Let $A = \{1, 2, 3, 4\}$.
-> Let $R = \{(a,b) \mid a \text{ divides } b\}$.
-> $R = \{(1,1), (1,2), (1,3), (1,4), (2,2), (2,4), (3,3), (4,4)\}$.
+> [!EXAMPLE] Relation from A to B
+> Let $A = \{0, 1, 2\}$ and $B = \{a, b\}$.
+> One possible relation is $R = \{(0, a), (0, b), (1, a), (2, b)\}$.
+> *   $0$ is related to $a$ and $b$.
+> *   $1$ is related to $a$.
+> *   $2$ is related to $b$.
 
 ### 3.2 Properties of Relations
-Let $R$ be a relation on set $A$.
+Let $R$ be a relation on set $A$. We can characterize $R$ by the following properties:
 
-1.  **Reflexive:** $\forall a \in A, (a,a) \in R$.
-    *   *Visually:* Every element relates to itself.
-    *   *Example:* $R = \{(1,1), (2,2), (3,3)\}$ on $\{1,2,3\}$.
-2.  **Symmetric:** $\forall a,b \in A, (a,b) \in R \to (b,a) \in R$.
-    *   *Visually:* If $a$ goes to $b$, $b$ goes back to $a$.
-3.  **Antisymmetric:** $\forall a,b \in A, [(a,b) \in R \land (b,a) \in R] \to a=b$.
-    *   *Meaning:* Mutual relationship is impossible unless elements are identical.
-    *   *Example:* "Less than or equal to" ($\leq$). If $x \leq y$ and $y \leq x$, then $x = y$.
-4.  **Transitive:** $\forall a,b,c \in A, [(a,b) \in R \land (b,c) \in R] \to (a,c) \in R$.
-    *   *Visually:* The "shortcut" path must exist.
+#### 1. Reflexive
+A relation $R$ on set $A$ is **reflexive** if every element relates to itself.
+*   **Definition:** $\forall a \in A, (a,a) \in R$.
+*   **Symbolic:** $\forall x [x \in U \rightarrow (x, x) \in R]$
+*   **Example:** On set $A=\{1, 2, 3\}$, the relation $R = \{(1,1), (2,2), (3,3), (1,2)\}$ is reflexive because $(1,1), (2,2), (3,3)$ are all present.
+
+#### 2. Symmetric
+A relation $R$ is **symmetric** if for every pair where $a$ relates to $b$, $b$ also relates to $a$.
+*   **Definition:** $\forall a,b \in A, (a,b) \in R \to (b,a) \in R$.
+*   **Symbolic:** $\forall x \forall y [(x, y) \in R \rightarrow (y, x) \in R]$
+*   **Example:** $R = \{(1,2), (2,1), (3,2), (2,3)\}$ is symmetric.
+
+#### 3. Antisymmetric
+A relation $R$ is **antisymmetric** if mutual relationships only exist when elements are identical.
+*   **Definition:** $\forall a,b \in A, [(a,b) \in R \land (b,a) \in R] \to a=b$.
+*   **Key Concept:** If distinct elements $a$ and $b$ are related as $(a, b)$, then $(b, a)$ cannot be in $R$.
+*   **Example:** "Less than or equal to" ($\leq$). If $x \leq y$ and $y \leq x$, then $x = y$.
+*   **Counter-Example:** $R = \{(1,2), (2,1)\}$ is **not** antisymmetric because $1 \neq 2$.
+
+#### 4. Transitive
+A relation $R$ is **transitive** if relationships "chain" together.
+*   **Definition:** $\forall a,b,c \in A, [(a,b) \in R \land (b,c) \in R] \to (a,c) \in R$.
+*   **Example:** If $1$ is related to $2$, and $2$ is related to $3$, then $1$ must be related to $3$.
 
 ### 3.3 Combining Relations
-Since relations are sets, we can use set operations.
-*   **Union ($R_1 \cup R_2$):** Elements in $R_1$ OR $R_2$.
-*   **Intersection ($R_1 \cap R_2$):** Elements in BOTH $R_1$ AND $R_2$.
-*   **Difference ($R_1 - R_2$):** Elements in $R_1$ but NOT in $R_2$.
+Since relations are just sets of ordered pairs, standard set operations apply.
+
+**Given:**
+Let $A = \{1, 2, 3\}$ and $B = \{1, 2, 3, 4\}$.
+*   $R_1 = \{(1,1), (2,2), (3,3)\}$
+*   $R_2 = \{(1,1), (1,2), (1,3), (1,4)\}$
+
+**Operations:**
+*   **Union ($R_1 \cup R_2$):** $\{(1,1), (1,2), (1,3), (1,4), (2,2), (3,3)\}$
+*   **Intersection ($R_1 \cap R_2$):** $\{(1,1)\}$
+*   **Difference ($R_1 - R_2$):** $\{(2,2), (3,3)\}$
+*   **Difference ($R_2 - R_1$):** $\{(1,2), (1,3), (1,4)\}$
 
 #### Composition of Relations
-Let $R$ be a relation from $A$ to $B$, and $S$ be a relation from $B$ to $C$. The **composition** $S \circ R$ is a relation from $A$ to $C$:
-*   If $(a,b) \in R$ and $(b,c) \in S$, then $(a,c) \in S \circ R$.
+The **composition** of two relations allows us to connect two steps.
+*   Let $R_1$ be a relation from $A$ to $B$.
+*   Let $R_2$ be a relation from $B$ to $C$.
+*   The composition **$R_2 \circ R_1$** is a relation from $A$ to $C$.
+
+**Definition:**
+$(x, z) \in R_2 \circ R_1$ if and only if there exists an element $y \in B$ such that $(x, y) \in R_1$ and $(y, z) \in R_2$.
+
+> [!TIP] Order Matters
+> $R_2 \circ R_1$ means we apply $R_1$ first, then $R_2$.
+
+**Example:**
+*   $R = \{(1,1), (1,4), (2,3), (3,1), (3,4)\}$
+*   $S = \{(1,0), (2,0), (3,1), (3,2), (4,1)\}$
+*   **Calculating $S \circ R$:**
+    *   From $(1,1) \in R$ and $(1,0) \in S \to (1,0)$
+    *   From $(1,4) \in R$ and $(4,1) \in S \to (1,1)$
+    *   From $(2,3) \in R$ and $(3,1) \in S \to (2,1)$
+    *   From $(2,3) \in R$ and $(3,2) \in S \to (2,2)$
+    *   ...and so on.
 
 ### 3.4 Representing Relations
 
@@ -254,33 +295,54 @@ Relation $R$ can be represented by a matrix $M_R = [m_{ij}]$:
 *   $m_{ij} = 1$ if $(a_i, b_j) \in R$.
 *   $m_{ij} = 0$ if $(a_i, b_j) \notin R$.
 
+**Example:**
+For $A = \{1, 2, 3\}, B = \{1, 2\}$, and $R = \{(2,1), (3,1), (3,2)\}$:
+$$
+M_R = \begin{bmatrix}
+0 & 0 \\
+1 & 0 \\
+1 & 1
+\end{bmatrix}
+$$
+
 **Properties in Matrix Form:**
-*   **Reflexive:** Main diagonal is all 1s ($m_{ii} = 1$).
+*   **Reflexive:** Main diagonal is all 1s ($m_{ii} = 1$ for all $i$).
 *   **Symmetric:** Matrix is symmetric ($M = M^T$). $m_{ij} = m_{ji}$.
-*   **Antisymmetric:** If $i \neq j$, then $m_{ij} = 0$ or $m_{ji} = 0$.
+*   **Antisymmetric:** If $i \neq j$, then $m_{ij} = 0$ or $m_{ji} = 0$ (elements symmetric across the diagonal cannot both be 1).
 
 #### Using Digraphs (Directed Graphs)
 *   **Vertices:** Elements of set $A$.
 *   **Edges:** An arrow from $a$ to $b$ exists if $(a,b) \in R$.
-*   **Reflexive:** Every vertex has a loop.
-*   **Symmetric:** Edges are bidirectional (or represented as single undirected lines).
+
+**Visualizing Properties:**
+*   **Reflexive:** Every vertex has a **self-loop**.
+*   **Symmetric:** If an arrow goes $a \to b$, an arrow must come back $b \to a$ (often drawn as a double-headed arrow or two separate arrows).
+*   **Transitive:** If arrows go $x \to y$ and $y \to z$, there must be a direct arrow $x \to z$ (completing the triangle).
 
 ### 3.5 Equivalence Relations
-A relation on a set $A$ is an **Equivalence Relation** if it is:
-1.  **Reflexive**
-2.  **Symmetric**
-3.  **Transitive**
+A relation on a set $A$ is an **Equivalence Relation** if it satisfies three specific properties:
+1.  **Reflexive:** $a \sim a$
+2.  **Symmetric:** If $a \sim b$, then $b \sim a$
+3.  **Transitive:** If $a \sim b$ and $b \sim c$, then $a \sim c$
 
 *   *Notation:* $a \sim b$ (a is equivalent to b).
 
 #### Equivalence Classes
-Let $R$ be an equivalence relation on $A$. The **equivalence class** of an element $a$, denoted by $[a]$, is the set of all elements related to $a$:
+Let $R$ be an equivalence relation on $A$. The **equivalence class** of an element $a$, denoted by $[a]$, consists of all elements in $A$ that are related to $a$:
 $$[a] = \{s \in A \mid (a,s) \in R\}$$
 
+*   **Representative:** If $b \in [a]$, then $b$ is called a representative of this equivalence class.
+*   **Property:** Any element of a class can be used as its representative ($[a] = [b]$ iff $(a,b) \in R$).
+
 #### Partitions
-The set of equivalence classes forms a **partition** of $A$:
-1.  **Disjoint:** Classes are either identical or share no elements ($[a] \cap [b] = \emptyset$ if $[a] \neq [b]$).
-2.  **Union:** The union of all classes covers the entire set $A$ ($\bigcup [a]_i = A$).
+The set of equivalence classes forms a **partition** of $A$. A partition of a set $S$ is a collection of disjoint nonempty subsets $A_i$ such that:
+1.  $A_i \neq \emptyset$ for all $i$.
+2.  $A_i \cap A_j = \emptyset$ when $i \neq j$ (Disjoint).
+3.  $\bigcup A_i = S$ (The union covers the entire set).
+
+**Theorem:**
+*   Every equivalence relation partitions a set into disjoint equivalence classes.
+*   Conversely, every partition of a set defines an equivalence relation.
 
 ---
 
