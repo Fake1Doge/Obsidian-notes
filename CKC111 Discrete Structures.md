@@ -654,9 +654,6 @@ Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that 
     * $(AB)_{ij} = \sum_{k} a_{ik} b_{kj}$.
 
 ---
-*Based on uploaded file: Chapter 6.pdf (CKC111 Discrete Structures)*
-
----
 
 ## 🔄 Chapter 7: Induction and Recursion
 
