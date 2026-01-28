@@ -1,0 +1,209 @@
+{
+  "main": {
+    "id": "c8a36ab8a15714ca",
+    "type": "split",
+    "children": [
+      {
+        "id": "676584c23cf56728",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "50a0fcc66fbb05f8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "test.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "test"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "16abe4f63d392517",
+    "type": "split",
+    "children": [
+      {
+        "id": "d7357e44d53b019c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9bf092cb1fa1ecfc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "ee3f3d5e8217cb42",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "5aaa0c63fe3f43c2",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 301.5
+  },
+  "right": {
+    "id": "3c225be67bd79d66",
+    "type": "split",
+    "children": [
+      {
+        "id": "df1fc65a0aef044e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b9db8ca6fb74f77e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Test.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Test"
+            }
+          },
+          {
+            "id": "2588d9d839753c8e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Test.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Test"
+            }
+          },
+          {
+            "id": "62a5b216f14d95f0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "2be22474ad6b8727",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "792de72e0b201bbb",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Test.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Test"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-git:Open Git source control": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "50a0fcc66fbb05f8",
+  "lastOpenFiles": [
+    "Note Title.md",
+    "test.md",
+    "CKC111 Discrete Structures.md",
+    "CCA101 Principle of Programming.md",
+    "CCA102 Computer Organisation.md",
+    "CKC111/Chapter3 new.pdf",
+    "CKC111/Chapter 9.pdf",
+    "CKC111/Chapter 8.pdf",
+    "CKC111/Chapter 7.pdf",
+    "CKC111/Chapter 5.pdf",
+    "CKC111/Chapter 6.pdf",
+    "CKC111/Chapter 4.pdf",
+    "CKC111/Chapter 2 AlgorithmExamples.pdf",
+    "CKC111/Chapter 10.pdf",
+    "CKC111/Chapter 1.pdf",
+    "CCA101 Short Note.md",
+    "CKC111 Short Note.md",
+    "Markdown features.md",
+    "Test.md"
+  ]
+}
