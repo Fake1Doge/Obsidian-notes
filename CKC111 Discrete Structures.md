@@ -439,16 +439,16 @@ Given nodes $0$ to $8$ with weights.
 
 ### 5.1 Introduction to Trees
 *   **Tree:** A connected undirected graph with no simple circuits.
-*   **Forest:** A graph that contains no simple circuits but is not necessarily connected. Each connected component of a forest is a tree.
+*   **Forest:** A graph that has no simple circuit but is not necessarily connected. Each of the connected components in a forest is a tree.
 
 ### 5.2 Rooted Trees
 A **rooted tree** is a tree in which one vertex has been designated as the **root** and every edge is directed away from the root.
 
 #### Terminology
-*   **Parent:** If $u \to v$, $u$ is the parent of $v$.
-*   **Child:** If $u \to v$, $v$ is the child of $u$.
+*   **Parent:** If $(u, v)$ is a directed edge, $u$ is the parent of $v$.
+*   **Child:** If $(u, v)$ is a directed edge, $v$ is the child of $u$.
 *   **Siblings:** Vertices with the same parent.
-*   **Ancestors:** Vertices on the path from the root to a vertex (excluding the vertex itself, usually).
+*   **Ancestors:** Vertices on the path from the root to a vertex (excluding the vertex itself, typically).
 *   **Descendants:** Vertices that have a specific vertex as an ancestor.
 *   **Leaf:** A vertex with no children.
 *   **Internal Vertex:** A vertex that has children.
@@ -457,10 +457,11 @@ A **rooted tree** is a tree in which one vertex has been designated as the **roo
 *   **m-ary Tree:** A rooted tree where every internal vertex has no more than $m$ children.
 *   **Full m-ary Tree:** Every internal vertex has **exactly** $m$ children.
 *   **Binary Tree:** An m-ary tree with $m=2$.
-*   **Ordered Rooted Tree:** A rooted tree where the children of each internal vertex are ordered (e.g., first child, second child).
+*   **Ordered Rooted Tree:** A rooted tree where the children of each internal vertex are ordered (e.g., from left to right).
+    *   *Binary Tree Terminology:* Left child, Right child, Left subtree, Right subtree.
 
 #### Properties
-*   **Level of a vertex:** The length of the unique path from the root to the vertex. (Root is at level 0).
+*   **Level of a vertex:** The length of the unique path from the root to the vertex. (The root is at level 0).
 *   **Height of a tree:** The maximum of the levels of the vertices.
 
 ### 5.3 Tree Traversal
@@ -468,6 +469,9 @@ Procedures for systematically visiting every vertex of an ordered rooted tree.
 
 #### 1. Preorder Traversal
 **Order:** Root $\to$ Left Subtree $\to$ Right Subtree
+1.  Visit the root $r$.
+2.  Traverse the subtrees of $r$ from left to right in preorder.
+
 ```pascal
 procedure preorder(T: ordered rooted tree)
    r := root of T
@@ -480,6 +484,10 @@ procedure preorder(T: ordered rooted tree)
 #### 2. Inorder Traversal
 **Order:** Left Subtree $\to$ Root $\to$ Right Subtree
 *(Typically used for binary trees)*
+1.  Traverse the left subtree in inorder.
+2.  Visit the root $r$.
+3.  Traverse the right subtree in inorder.
+
 ```pascal
 procedure inorder(T: ordered rooted tree)
    r := root of T
@@ -496,6 +504,9 @@ procedure inorder(T: ordered rooted tree)
 
 #### 3. Postorder Traversal
 **Order:** Left Subtree $\to$ Right Subtree $\to$ Root
+1.  Traverse the subtrees of $r$ from left to right in postorder.
+2.  Visit the root $r$.
+
 ```pascal
 procedure postorder(T: ordered rooted tree)
    r := root of T
@@ -507,29 +518,37 @@ procedure postorder(T: ordered rooted tree)
 
 ### 5.4 Spanning Trees
 Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that is a tree containing **every vertex** of $G$.
+*   **Theorem:** A simple graph is connected if and only if it has a spanning tree.
 
 #### Depth-First Search (DFS)
 *   **Strategy:** Explore as far as possible along each branch before backtracking.
-*   **Data Structure:** Stack (or Recursion).
-*   **Memory:** More efficient.
-*   **Backtracking:** Yes.
+*   **Algorithm:**
+    1.  Select a starting vertex (root).
+    2.  Form a path by successively adding vertices and edges, where each new edge is incident with the last vertex in the path and a vertex not already in the path.
+    3.  Continue until no more vertices can be added.
+    4.  Backtrack to the previous vertex and try to find a new path.
+    5.  Repeat until all vertices are included.
+*   **Terminology:** *Tree edges* (used in traversal) and *Back edges* (connect to ancestors/descendants).
 
 #### Breadth-First Search (BFS)
 *   **Strategy:** Explore all neighbor nodes at the present depth prior to moving to the nodes at the next depth level.
-*   **Data Structure:** Queue.
-*   **Memory:** Less efficient (requires storing all nodes at current level).
-*   **Backtracking:** No.
-*   **Optimality:** Finds the shortest path (minimum number of edges) in unweighted graphs.
+*   **Algorithm:**
+    1.  Select a starting vertex (root).
+    2.  Add all edges incident to this vertex and the other endpoints (level 1).
+    3.  For each vertex at level $i$, add incident edges to unvisited vertices to form level $i+1$.
+    4.  Repeat until all vertices are included.
 
 #### Comparison: BFS vs DFS
 
 | Feature | BFS (Breadth-First) | DFS (Depth-First) |
 | :--- | :--- | :--- |
+| **Technique** | Vertex-based (level by level) | Edge-based (path by path) |
 | **Data Structure** | Queue | Stack |
 | **Backtracking** | No | Yes |
-| **Optimal Path** | Yes (Shortest Path) | No |
+| **Number of Edges** | Min edges to traverse from source | Greater number of edges to traverse |
+| **Optimality** | Optimal for shortest path (unweighted) | Optimal for solutions away from source |
 | **Speed** | Slower | Faster |
-| **Memory Efficiency** | Low | High |
+| **Memory Efficiency** | Low (stores whole levels) | High (stores path) |
 
 ---
 
