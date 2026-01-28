@@ -351,9 +351,20 @@ The set of equivalence classes forms a **partition** of $A$. A partition of a se
 ### 4.1 Graph Terminology
 A **Graph** $G = (V, E)$ consists of a nonempty set $V$ of **vertices** (or nodes) and a set $E$ of **edges** that connect the vertices.
 
+#### Basic Terminology
+*   **Adjacency:** Two vertices $u$ and $v$ in an undirected graph are called **adjacent** (or neighbors) if there is an edge $e$ between them. Edge $e$ is **incident** with vertices $u$ and $v$.
+*   **Neighborhood ($N(v)$):** The set of all neighbors of a vertex $v$.
+    *   $N(v) = \{x \mid \{v, x\} \in E\}$.
+    *   If $A$ is a subset of $V$, $N(A)$ is the set of all vertices adjacent to at least one vertex in $A$.
+*   **Degree ($deg(v)$):** The number of edges incident with vertex $v$.
+    *   **Loop:** A loop contributes **2** to the degree.
+    *   **Isolated Vertex:** A vertex with degree 0.
+    *   **Pendant Vertex:** A vertex with degree 1.
+
 #### Types of Graphs
 1.  **Simple Graph:** Undirected, no loops, and no multiple edges between the same pair of vertices.
 2.  **Multigraph:** Undirected, allows **multiple edges** between the same vertices.
+    *   *Multiplicity:* The number of edges connecting the same pair of vertices.
 3.  **Pseudograph:** Undirected, allows **loops** and multiple edges.
 4.  **Directed Graph (Digraph):** Edges have a direction (ordered pairs $(u, v)$).
     *   *Simple Directed Graph:* No loops, no multiple directed edges.
@@ -363,17 +374,20 @@ A **Graph** $G = (V, E)$ consists of a nonempty set $V$ of **vertices** (or node
 *   **Complete Graph ($K_n$):** A simple graph with exactly one edge between each pair of distinct vertices.
 *   **Cycle ($C_n$):** $n$ vertices $v_1, \dots, v_n$ and edges $\{v_1, v_2\}, \{v_2, v_3\}, \dots, \{v_n, v_1\}$.
 *   **Wheel ($W_n$):** Obtained by adding an additional vertex to $C_n$ and connecting it to all $n$ vertices.
-*   **Bipartite Graph:** Vertex set $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ to one in $V_2$. (No edges connect vertices within the same subset).
+*   **Bipartite Graph:** Vertex set $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ to one in $V_2$.
+    *   *Coloring:* A graph is bipartite if and only if it is 2-colorable (vertices can be colored with 2 colors such that no adjacent vertices share the same color).
+*   **Complete Bipartite Graph ($K_{m,n}$):** A bipartite graph where every vertex in $V_1$ (size $m$) is connected to every vertex in $V_2$ (size $n$).
 
-#### Degrees of Vertices
-*   **Undirected Graph:**
-    *   **Degree ($deg(v)$):** Number of edges incident with vertex $v$.
-    *   *Crucial Rule:* A **loop** contributes **2** to the degree.
-    *   **Handshaking Theorem:** $2|E| = \sum_{v \in V} deg(v)$. (Total degree count is always even).
-*   **Directed Graph:**
-    *   **In-degree ($deg^-(v)$):** Number of edges coming **into** $v$.
-    *   **Out-degree ($deg^+(v)$):** Number of edges going **out of** $v$.
-    *   **Theorem:** $|E| = \sum_{v \in V} deg^-(v) = \sum_{v \in V} deg^+(v)$.
+#### New Graphs from Old
+*   **Subgraph:** A graph $H = (W, F)$ is a subgraph of $G = (V, E)$ if $W \subseteq V$ and $F \subseteq E$.
+*   **Union ($G_1 \cup G_2$):** The simple graph with vertex set $V_1 \cup V_2$ and edge set $E_1 \cup E_2$.
+
+#### Theorems on Degrees
+*   **Handshaking Theorem (Undirected):** $2|E| = \sum_{v \in V} deg(v)$.
+    *   *Corollary:* An undirected graph has an even number of vertices of odd degree.
+*   **Directed Degree Theorem:** $|E| = \sum_{v \in V} deg^-(v) = \sum_{v \in V} deg^+(v)$.
+    *   $deg^-(v)$: In-degree (edges coming into $v$).
+    *   $deg^+(v)$: Out-degree (edges going out of $v$).
 
 ### 4.2 Graph Representation
 Choosing the right representation depends on the graph's density and operations needed.
@@ -385,29 +399,32 @@ Choosing the right representation depends on the graph's density and operations 
         *   $a \to b, c, e$
         *   $b \to a$
 2.  **Adjacency Matrix:**
-    *   An $n \times n$ matrix $A_G$ where $a_{ij} = 1$ if there is an edge from $v_i$ to $v_j$, and $0$ otherwise.
+    *   An $n \times n$ matrix $A_G$ where $a_{ij} = 1$ if there is an edge from $v_i$ to $v_j$, and $0$ otherwise (or equals the number of edges for multigraphs).
     *   **Pros:** Fast edge lookups ($O(1)$). Good for **dense graphs**.
-    *   *Note:* For undirected graphs, the matrix is symmetric ($a_{ij} = a_{ji}$). Loops result in $1$s on the main diagonal.
+    *   *Properties:* Symmetric for undirected graphs. $a_{ii} \neq 0$ implies loops.
 3.  **Incidence Matrix:**
     *   An $n \times m$ matrix (vertices $\times$ edges) where $m_{ij} = 1$ if edge $e_j$ is incident with vertex $v_i$.
 
 ### 4.3 Connectivity
 *   **Path:** A sequence of edges that begins at a vertex and travels along edges to other vertices.
+    *   *Circuit/Cycle:* A path that begins and ends at the same vertex.
+    *   *Simple Path:* Does not contain the same edge more than once.
 *   **Connected Graph (Undirected):** There is a path between every pair of distinct vertices.
 *   **Connected Components:** Disjoint connected subgraphs that make up a non-connected graph.
 *   **Directed Connectivity:**
     *   **Strongly Connected:** There is a directed path from $a$ to $b$ **AND** from $b$ to $a$ for every pair of vertices.
     *   **Weakly Connected:** The underlying undirected graph is connected (ignoring edge directions).
+    *   **Strongly Connected Components:** The maximal strongly connected subgraphs of a directed graph.
 
 ### 4.4 Shortest Path: Dijkstra’s Algorithm
 An algorithm to find the shortest path from a specific **source node** to all other nodes in a **weighted graph** (where edges have non-negative weights).
 
 > [!EXAMPLE] Algorithm Logic
-> 1.  Assign a tentative distance value to every node: set it to zero for the initial node and to infinity for all other nodes.
-> 2.  Set the initial node as current. Mark all other nodes as unvisited.
-> 3.  For the current node, consider all of its unvisited neighbors and calculate their tentative distances through the current node. Compare the newly calculated tentative distance to the current assigned value and assign the smaller one.
-> 4.  After considering all of the unvisited neighbors of the current node, mark the current node as visited. A visited node will never be checked again.
-> 5.  Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node," and go back to step 3.
+> 1.  **Init:** Assign distance $0$ to source, $\infty$ to others. Mark all as unvisited. Set source as current.
+> 2.  **Update Neighbors:** For current node, calculate tentative distance to unvisited neighbors (Current Dist + Edge Weight). If new path is shorter, update neighbor's distance.
+> 3.  **Mark Visited:** Mark current node as visited (permanent).
+> 4.  **Select Next:** Choose unvisited node with smallest tentative distance. Loop to step 2.
+> 5.  **Stop:** When destination visited or all reachable nodes visited.
 
 **Example Trace:**
 Given nodes $0$ to $8$ with weights.
