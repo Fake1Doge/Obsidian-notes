@@ -1,3 +1,184 @@
+## Topic 1: Introduction to Computer Organisation and Architecture
+
+### 1.1 Architecture vs. Organisation
+* **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what").
+    * *Examples*: Instruction set, number of bits for data representation, I/O mechanisms, addressing techniques.
+* **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how").
+    * *Examples*: Control signals, interfaces between computer and peripherals, memory technology.
+    * *Analogy*: Architecture is the design (e.g., "Is there a multiply instruction?"), while Organisation is the implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
+
+### 1.2 Structure and Function
+A computer is a complex system described hierarchically:
+1.  **Structure**: How components relate to each other.
+    * **CPU (Central Processing Unit)**: Controls operation and performs data processing.
+    * **Main Memory**: Stores data.
+    * **I/O (Input/Output)**: Moves data between the computer and the external environment.
+    * **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
+2.  **Function**: The operation of individual components.
+    * Data processing.
+    * Data storage.
+    * Data movement.
+    * Control.
+
+### 1.3 History of Computers
+* **1st Generation (Vacuum Tubes)**: ENIAC (decimal, hardwired), IAS (Von Neumann architecture, stored-program concept).
+* **2nd Generation (Transistors)**: Smaller, cheaper, less heat, solid-state (silicon). Introduction of high-level languages.
+* **3rd Generation (Integrated Circuits)**: Microelectronics. Gates and memory cells on a chip. Moore's Law begins.
+* **4th Generation (Microprocessors)**: All CPU components on a single chip (e.g., Intel 4004).
+
+### 1.4 Performance
+* **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
+* **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
+* **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
+    $$\text{MIPS rate} = \frac{f}{\text{CPI} \times 10^6}$$
+* **Amdahl's Law**: Potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
+
+---
+
+## Topic 2: Number Systems
+
+### 2.1 Positional Number Systems
+The value of a digit depends on its position.
+* **Decimal (Base 10)**: Digits 0-9.
+* **Binary (Base 2)**: Digits 0, 1. Fundamental for digital systems.
+* **Hexadecimal (Base 16)**: Digits 0-9, A-F. Compact representation of binary.
+
+### 2.2 Conversions
+#### Binary to Decimal
+Multiply each bit by $2^n$ (where $n$ is the position) and sum.
+* *Example*: $1101_2 = (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0) = 8 + 4 + 0 + 1 = 13_{10}$.
+
+#### Decimal to Binary (Integer)
+Repeatedly divide by 2 and record the remainder (Read from bottom (MSB) to top (LSB)).
+* *Example*: Convert $13_{10}$
+    * $13 / 2 = 6$ rem $1$ (LSB)
+    * $6 / 2 = 3$ rem $0$
+    * $3 / 2 = 1$ rem $1$
+    * $1 / 2 = 0$ rem $1$ (MSB)
+    * Result: $1101_2$
+
+#### Decimal to Binary (Fraction)
+Repeatedly multiply the fractional part by 2. The integer part becomes the bit.
+* *Example*: $0.625_{10}$
+    * $0.625 \times 2 = 1.25$ $\rightarrow$ 1
+    * $0.25 \times 2 = 0.50$ $\rightarrow$ 0
+    * $0.50 \times 2 = 1.00$ $\rightarrow$ 1
+    * Result: $0.101_2$
+
+#### Hexadecimal
+Group binary digits into 4s (starting from the radix point).
+* $0000 \rightarrow 0$ ... $1111 \rightarrow F$.
+* *Example*: $1101 1010_2 \rightarrow \text{D} \text{A}_{16}$.
+
+---
+
+## Topic 3: Computer Arithmetic
+
+### 3.1 Arithmetic Logic Unit (ALU)
+* Performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
+* Inputs: Data from registers, Control signals.
+* Outputs: Result to registers/memory, Status flags (Overflow, Zero, etc.).
+
+### 3.2 Integer Representation
+* **Unsigned Magnitude**: Represents only positive integers.
+* **Signed Magnitude**: MSB is sign (0=+, 1=-). Remaining bits are magnitude. Two zeros exist (+0, -0).
+* **Two's Complement**: Most common method.
+    * **To negate a number**: Invert all bits (1s complement) and add 1.
+    * *Example*: $+6 = 0110$.
+        * Invert: $1001$
+        * Add 1: $1010$ (Represents -6).
+    * **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
+    * *Benefit*: Subtraction is performed as addition of the complement.
+
+### 3.3 Integer Arithmetic
+* **Addition**: Add bits, carry over. Discard carry out of MSB in 2's complement (but check for overflow).
+* **Multiplication**:
+    * **Unsigned**: Uses **Add-Shift** method. If multiplier bit is 1, add multiplicand; always shift.
+    * **Signed (Booth's Algorithm)**: Handles negative multipliers without requiring conversion.
+        * Checks pair of bits $(Q_0, Q_{-1})$.
+        * **10**: Subtract multiplicand ($A \leftarrow A - M$).
+        * **01**: Add multiplicand ($A \leftarrow A + M$).
+        * **00 or 11**: Arithmetic shift right only.
+
+---
+
+## Topic 4: Digital Logic
+
+### 4.1 Boolean Algebra & Gates
+* **Basic Operations**: AND ($\cdot$), OR ($+$), NOT ($\bar{A}$).
+* **Universal Gates**: NAND, NOR (can implement any Boolean function).
+* **XOR**: Output 1 if inputs differ.
+* **DeMorgan’s Laws**:
+    1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$
+    2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$
+
+### 4.2 Implementation
+* **Sum of Products (SOP)**: OR of AND terms (look for 1s in Truth Table).
+* **Product of Sums (POS)**: AND of OR terms (look for 0s in Truth Table).
+* **Karnaugh Maps (K-Map)**: Graphic method to simplify Boolean expressions by grouping 1s in powers of 2 ($1, 2, 4, 8, \dots$).
+    * *Rules*: Overlapping allowed, wrap-around allowed.
+
+### 4.3 Combinational Circuits
+Output depends only on current input.
+* **Multiplexer (MUX)**: Selects one of several inputs to pass to output ($2^n$ inputs, $n$ select lines).
+* **Decoder**: Activates one output line based on input pattern ($n$ inputs, $2^n$ outputs).
+* **Adder**:
+    * *Half Adder*: Adds 2 bits (Sum, Carry).
+    * *Full Adder*: Adds 3 bits (A, B, Carry-in).
+
+### 4.4 Sequential Circuits
+Output depends on current input *and* previous state (memory).
+* **Flip-Flops**:
+    * **S-R Latch**: Set/Reset. State undefined if $S=1, R=1$.
+    * **D Flip-Flop**: Data. Output follows input at clock edge.
+    * **J-K Flip-Flop**: Toggles when $J=1, K=1$.
+* **Registers**: Group of flip-flops to store multi-bit data.
+* **Counters**: Cycle through states (e.g., Ripple counter, Synchronous counter).
+
+---
+
+## Topic 5: Instruction Set Characteristics
+
+### 5.1 Memory Organisation
+* **Byte Addressability**: Each address identifies a single byte.
+* **Endianness**:
+    * **Big-Endian**: Most significant byte at lowest address.
+    * **Little-Endian**: Least significant byte at lowest address.
+
+### 5.2 Instructions
+* **Types**: Data processing (arithmetic/logic), Data storage (memory), Data movement (I/O), Control (branch/jump).
+* **Number of Addresses**:
+    * **3-Address**: `Op Dest, Src1, Src2` (e.g., $A = B + C$). Long instruction format.
+    * **2-Address**: `Op Dest, Src` (e.g., $A = A + B$). Dest is also a source.
+    * **1-Address**: `Op Src` (e.g., `Add B`). Uses an implicit **Accumulator** ($AC = AC + B$).
+    * **0-Address**: Implicit operands (uses a **Stack**). `Push A`, `Push B`, `Add` (pops two, adds, pushes result).
+
+---
+
+## Topic 6: Addressing Modes
+
+How the operand's address is specified in the instruction. Let $EA$ = Effective Address.
+
+1.  **Immediate**: Operand is in the instruction.
+    * *Example*: `ADD 5`
+    * *Pros*: Fast (no memory fetch). *Cons*: Limited magnitude.
+2.  **Direct**: Address field contains the EA.
+    * *Example*: `ADD A` ($EA = A$).
+    * *Pros*: Simple. *Cons*: Limited address space.
+3.  **Indirect**: Address field points to memory containing the pointer to operand.
+    * *Example*: `ADD (A)` ($EA = \text{Memory}[A]$).
+    * *Pros*: Large address space. *Cons*: Multiple memory accesses (slower).
+4.  **Register**: Operand is in a register.
+    * *Example*: `ADD R1` ($EA = R1$).
+    * *Pros*: Very fast, short instruction. *Cons*: Limited registers.
+5.  **Register Indirect**: Register holds the address of the operand.
+    * *Example*: `ADD (R1)` ($EA = [R1]$).
+    * *Pros*: Large address space, fewer memory accesses than Indirect.
+6.  **Displacement**: Combination of direct and register indirect.
+    * $EA = A + (R)$
+    * Used for: Relative addressing ($R=PC$), Base-register ($R=$ Base), Indexing ($R=$ Index).
+7.  **Stack**: Implicit addressing using a Stack Pointer (SP).
+
 # Topic 7: Central Processing Unit
 
 ## 1. CPU Structure

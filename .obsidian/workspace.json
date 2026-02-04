@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "test.md",
+                "file": "CCA102 Computer Organisation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "test"
+              "title": "CCA102 Computer Organisation"
             }
           }
         ]
@@ -186,8 +186,8 @@
   },
   "active": "50a0fcc66fbb05f8",
   "lastOpenFiles": [
-    "Note Title.md",
     "test.md",
+    "Note Title.md",
     "CKC111 Discrete Structures.md",
     "CCA101 Principle of Programming.md",
     "CCA102 Computer Organisation.md",
