@@ -1238,9 +1238,7 @@ When memory is full, the OS must choose a "victim" page to evict.
 * **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
 
 ---
-# CCA102 Computer Organisation: Topic 13
-
-## Multiprocessor Organisation
+# Topic 13: Multiprocessor Organisation
 
 ### 13.1 Flynn's Classification
 A standard taxonomy for computer architectures based on the number of instruction streams and data streams simultaneously being processed.
