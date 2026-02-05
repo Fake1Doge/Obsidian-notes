@@ -1238,3 +1238,59 @@ When memory is full, the OS must choose a "victim" page to evict.
 * **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
 
 ---
+# CCA102 Computer Organisation: Topic 13
+
+## Multiprocessor Organisation
+
+### 13.1 Flynn's Classification
+A standard taxonomy for computer architectures based on the number of instruction streams and data streams simultaneously being processed.
+
+* **SISD (Single Instruction, Single Data Stream)**
+    * **Structure**: A single processor executes a single instruction stream to operate on data stored in a single memory.
+    * **Example**: Standard uniprocessor systems.
+* **SIMD (Single Instruction, Multiple Data Stream)**
+    * **Structure**: A single machine instruction controls the simultaneous execution of a number of processing elements. Each processing element has an associated data memory.
+    * **Operation**: Instructions are executed on a lockstep basis; each processor executes the same instruction on a different set of data.
+    * **Examples**: Vector processors and array processors.
+* **MISD (Multiple Instruction, Single Data Stream)**
+    * **Structure**: A sequence of data is transmitted to a set of processors, each of which executes a different instruction sequence.
+    * **Status**: This structure has never been commercially implemented.
+* **MIMD (Multiple Instruction, Multiple Data Stream)**
+    * **Structure**: A set of processors simultaneously execute different instruction sequences on different sets of data.
+    * **Examples**: Symmetric Multiprocessors (SMPs), clusters, and Nonuniform Memory Access (NUMA) systems.
+
+### 13.2 Taxonomy of Parallel Processor Architectures
+The hierarchy of processor organizations is categorized as follows:
+
+1.  **SISD** $\rightarrow$ Uniprocessor
+2.  **SIMD** $\rightarrow$ Vector Processor, Array Processor
+3.  **MISD** (Theoretical)
+4.  **MIMD**
+    * **Shared Memory (Tightly Coupled)**
+        * Symmetric Multiprocessor (SMP)
+        * Nonuniform Memory Access (NUMA)
+    * **Distributed Memory (Loosely Coupled)**
+        * Clusters
+
+### 13.3 Symmetric Multiprocessors (SMP)
+An SMP is a standalone computer system defined by the following characteristics:
+
+* **Multiple Processors**: Contains two or more similar processors of comparable capability.
+* **Shared Resources**: Processors share the same main memory and I/O facilities.
+* **Interconnection**: Processors are connected by a bus or other internal connection scheme.
+* **Uniform Access**: Memory access time is approximately the same for each processor.
+* **Shared I/O**: All processors share access to I/O devices, either through the same channels or different channels providing paths to the same device.
+* **Symmetry**: All processors can perform the same functions.
+* **Integrated OS**: The system is controlled by an integrated operating system that manages interaction between processors at the job, task, file, and data element levels.
+
+### 13.4 Multicore Computers
+* **Core**: The "brain" of the CPU (also called a processing unit). It consists of an ALU, control unit, and registers.
+* **Multicore**: A CPU chip that contains multiple cores (e.g., Dual-core = 2 cores, Quad-core = 4 cores).
+
+#### Chip Organization Alternatives
+* **Superscalar / SMT (Simultaneous Multithreading)**: Techniques used within cores to increase performance.
+* **Cache Organization**:
+    * **L1 Cache**: Typically split into Instruction (L1-I) and Data (L1-D) caches, dedicated to each core.
+    * **L2 Cache**: Can be organized in different ways:
+        * *Dedicated*: Each core has its own L2 cache.
+        * *Shared*: All cores share a common L2 cache.
