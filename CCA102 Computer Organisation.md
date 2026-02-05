@@ -1,56 +1,105 @@
 ## Topic 1: Introduction to Computer Organisation and Architecture
 
 ### 1.1 Architecture vs. Organisation
-* **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what").
-    * *Examples*: Instruction set, number of bits for data representation, I/O mechanisms, addressing techniques.
-* **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how").
-    * *Examples*: Control signals, interfaces between computer and peripherals, memory technology.
-    * *Analogy*: Architecture is the design (e.g., "Is there a multiply instruction?"), while Organisation is the implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
+*   **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what"). It deals with the functional behavior of the system and the logical execution of a program.
+    *   *Examples*: Instruction set, data representation (number of bits), I/O mechanisms, addressing techniques.
+    *   *Analogy*: The design specifications (e.g., "Is there a multiply instruction?").
+*   **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how"). It deals with structural relationships and hardware details transparent to the programmer.
+    *   *Examples*: Control signals, interfaces between computer and peripherals, memory technology, clock frequency.
+    *   *Analogy*: The implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
+*   **The "Family" Concept**: Manufacturers (like IBM or Intel) often produce a family of computer models that share the **same architecture** but have **different organisations**. This allows for code compatibility (upward compatibility) across models with different prices and performance levels.
 
 ### 1.2 Structure and Function
 A computer is a complex system described hierarchically:
 1.  **Structure**: How components relate to each other.
-    * **CPU (Central Processing Unit)**: Controls operation and performs data processing.
-    * **Main Memory**: Stores data.
-    * **I/O (Input/Output)**: Moves data between the computer and the external environment.
-    * **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
+    *   **CPU (Central Processing Unit)**: Controls operation and performs data processing.
+        *   *Internal Components*: ALU (Arithmetic Logic Unit), Registers, Control Unit, Internal Interconnection.
+    *   **Main Memory**: Stores data.
+    *   **I/O (Input/Output)**: Moves data between the computer and the external environment (peripherals).
+    *   **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
 2.  **Function**: The operation of individual components.
-    * Data processing.
-    * Data storage.
-    * Data movement.
-    * Control.
+    *   **Data Processing**: Performing arithmetic or logical operations on data.
+    *   **Data Storage**: Storing data temporarily (short-term) or permanently (long-term).
+    *   **Data Movement**: Transferring data between the computer and the outside world (I/O) or within internal components.
+    *   **Control**: Managing the resources and coordinating the performance of the functional parts.
 
 ### 1.3 History of Computers
-* **1st Generation (Vacuum Tubes)**: ENIAC (decimal, hardwired), IAS (Von Neumann architecture, stored-program concept).
-* **2nd Generation (Transistors)**: Smaller, cheaper, less heat, solid-state (silicon). Introduction of high-level languages.
-* **3rd Generation (Integrated Circuits)**: Microelectronics. Gates and memory cells on a chip. Moore's Law begins.
-* **4th Generation (Microprocessors)**: All CPU components on a single chip (e.g., Intel 4004).
+*   **1st Generation (Vacuum Tubes)**: 1946-1957.
+    *   **ENIAC (1946)**: First general-purpose electronic digital computer. Designed for artillery range tables. Decimal (not binary), hardwired (manual switches), 18,000 vacuum tubes, 30 tons.
+    *   **Von Neumann / IAS (1952)**: Stored-program concept (instructions and data in the same memory). Binary. Prototype for modern computers.
+*   **2nd Generation (Transistors)**: 1958-1964.
+    *   Replaced vacuum tubes. Smaller, cheaper, less heat, solid-state (silicon).
+    *   Introduction of **High-Level Languages** and system software.
+    *   *Notable Machines*: IBM 7000 series, DEC PDP-1.
+*   **3rd Generation (Integrated Circuits)**: 1965-1971.
+    *   **Microelectronics**: Gates, memory cells, and interconnections on a single chip.
+    *   **Moore's Law**: The number of transistors on a chip doubles approximately every 18 months (originally stated as every year).
+    *   **IBM 360 (1964)**: First planned "family" of computers (common instruction set).
+    *   **DEC PDP-8**: First minicomputer (smaller, cheaper, bus structure).
+*   **Later Generations (LSI, VLSI, ULSI)**:
+    *   **Semiconductor Memory**: 1970 Fairchild (256 bits). Memory capacity doubles approximately every year.
+    *   **Microprocessors**:
+        *   **Intel 4004 (1971)**: First microprocessor (all CPU components on a single chip). 4-bit.
+        *   **Intel 8080 (1974)**: First general-purpose 8-bit microprocessor.
+        *   **Intel 8086 (1978)**: 16-bit, instruction cache.
+*   **Evolution of Architectures**:
+    *   **x86 (CISC)**: Dominant in PCs/Servers. Evolved from 16-bit (8086) $\rightarrow$ 32-bit (80386, Multitasking) $\rightarrow$ Pipelining/FPU (486) $\rightarrow$ Superscalar (Pentium) $\rightarrow$ 64-bit (Core 2).
+    *   **ARM (RISC)**: Dominant in Embedded Systems/Mobile. High speed, small die size, low power. Used in Cortex-A (Application), Cortex-R (Real-time), Cortex-M (Microcontroller).
 
-### 1.4 Performance
-* **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
-* **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
-* **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
+### 1.4 Cloud Computing
+A model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (NIST definition).
+*   **Service Models**:
+    *   **SaaS (Software as a Service)**: Application software (e.g., Gmail, Dropbox).
+    *   **PaaS (Platform as a Service)**: Building blocks, tools, and OS for developers (e.g., Google App Engine).
+    *   **IaaS (Infrastructure as a Service)**: Raw processing, storage, and networks (e.g., AWS EC2).
+
+### 1.5 Performance Assessment
+*   **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
+*   **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
+*   **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
     $$\text{MIPS rate} = \frac{f}{\text{CPI} \times 10^6}$$
-* **Amdahl's Law**: Potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
+*   **Amdahl's Law**: The potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
+    *   *Implication*: Diminishing returns as you add more processors if the code isn't perfectly parallel.
+*   **Benchmarks**: Standard programs used to compare performance.
+    *   **SPEC (System Performance Evaluation Corporation)**: Industry standard. SPEC CPU2017 uses a suite of real-world programs (integer and floating-point) to test CPU, memory, and compiler performance.
 
 ---
 
 ## Topic 2: Number Systems
 
 ### 2.1 Positional Number Systems
-The value of a digit depends on its position.
-* **Decimal (Base 10)**: Digits 0-9.
-* **Binary (Base 2)**: Digits 0, 1. Fundamental for digital systems.
-* **Hexadecimal (Base 16)**: Digits 0-9, A-F. Compact representation of binary.
+In a positional number system, each number is represented by a string of digits in which each digit position $i$ has an associated weight $r^i$, where $r$ is the **radix** or **base** of the number system.
 
-### 2.2 Conversions
-#### Binary to Decimal
-Multiply each bit by $2^n$ (where $n$ is the position) and sum.
-* *Example*: $1101_2 = (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0) = 8 + 4 + 0 + 1 = 13_{10}$.
+$$ \text{Value} = \sum (d_i \times r^i) $$
 
-#### Decimal to Binary (Integer)
-Repeatedly divide by 2 and record the remainder (Read from bottom (MSB) to top (LSB)).
-* *Example*: Convert $13_{10}$
+* **Decimal (Base 10)**: Digits 0-9. $r=10$.
+* **Binary (Base 2)**: Digits 0, 1. $r=2$. Fundamental for digital systems.
+    * *Terminology*:
+        * **Bit**: A single binary digit (0 or 1).
+        * **Nibble**: A group of 4 bits.
+        * **Byte**: A group of 8 bits.
+        * **Word**: A group of bits (typically 16, 32, or 64) processed as a unit.
+* **Octal (Base 8)**: Digits 0-7. $r=8$. Commonly used in computer programming contexts (Unix permissions, etc.).
+* **Hexadecimal (Base 16)**: Digits 0-9, A-F. $r=16$. Compact representation of binary.
+* **Other Systems**: Base-12 (Duodecimal), Base-60 (Sexagesimal), Base-64 (Encoding).
+
+### 2.2 Data Representation Principles
+* **Digital Systems**: Discrete elements are represented by signals.
+    * **Binary**: Only two states (0 and 1). Reliable and easy to implement with switches (transistors).
+* **Data Cells**: Bits are grouped into cells (e.g., an 8-bit memory cell).
+* **MSB (Most Significant Bit)**: The leftmost bit (highest weight).
+* **LSB (Least Significant Bit)**: The rightmost bit (lowest weight).
+
+### 2.3 Conversions
+
+#### Binary/Octal/Hex to Decimal
+Multiply each digit by $r^n$ (where $r$ is the base and $n$ is the position) and sum the results.
+* *Binary Example*: $1101_2 = (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0) = 8 + 4 + 0 + 1 = 13_{10}$.
+* *Hex Example*: $2\text{C}_{16} = (2 \times 16^1) + (12 \times 16^0) = 32 + 12 = 44_{10}$.
+
+#### Decimal to Binary/Octal/Hex (Integer)
+Repeatedly divide the decimal number by the target base $r$ and record the remainder. Read remainders from bottom (MSB) to top (LSB).
+* *Example*: Convert $13_{10}$ to Binary ($r=2$)
     * $13 / 2 = 6$ rem $1$ (LSB)
     * $6 / 2 = 3$ rem $0$
     * $3 / 2 = 1$ rem $1$
@@ -58,134 +107,408 @@ Repeatedly divide by 2 and record the remainder (Read from bottom (MSB) to top (
     * Result: $1101_2$
 
 #### Decimal to Binary (Fraction)
-Repeatedly multiply the fractional part by 2. The integer part becomes the bit.
-* *Example*: $0.625_{10}$
+Repeatedly multiply the fractional part by the target base $r$. The integer part of the result becomes the bit/digit.
+* *Example*: $0.625_{10}$ to Binary
     * $0.625 \times 2 = 1.25$ $\rightarrow$ 1
     * $0.25 \times 2 = 0.50$ $\rightarrow$ 0
     * $0.50 \times 2 = 1.00$ $\rightarrow$ 1
     * Result: $0.101_2$
 
-#### Hexadecimal
-Group binary digits into 4s (starting from the radix point).
-* $0000 \rightarrow 0$ ... $1111 \rightarrow F$.
-* *Example*: $1101 1010_2 \rightarrow \text{D} \text{A}_{16}$.
+#### Binary $\leftrightarrow$ Octal $\leftrightarrow$ Hexadecimal
+These conversions are done by grouping bits because $8 = 2^3$ and $16 = 2^4$.
+* **Binary to Octal**: Group bits into **3s** starting from the radix point.
+    * $110101_2 \rightarrow (110)(101) \rightarrow 65_8$.
+* **Binary to Hexadecimal**: Group bits into **4s** (nibbles) starting from the radix point.
+    * $11011010_2 \rightarrow (1101)(1010) \rightarrow \text{D} \text{A}_{16}$.
+* **Hexadecimal to Binary**: Expand each hex digit into its 4-bit binary equivalent.
+    * $\text{A}_{16} \rightarrow 1010_2$.
+
+### 2.4 Character Codes
+Computers must represent non-numeric data (text) using binary codes.
+
+* **BCD (Binary Coded Decimal)**: Represents each decimal digit (0-9) with a 4-bit binary code.
+    * *Example*: $9_{10} = 1001_{BCD}$. Unused codes: 1010 to 1111.
+* **ASCII (American Standard Code for Information Interchange)**:
+    * 7-bit code (128 characters).
+    * Includes control characters (e.g., NULL, LF, CR) and printable characters (A-Z, a-z, 0-9, punctuation).
+* **EBCDIC (Extended Binary Coded Decimal Interchange Code)**:
+    * 8-bit code (256 characters).
+    * Used mainly on **IBM mainframe** and midrange systems.
+    * Incompatible with ASCII (different bit patterns for characters).
 
 ---
 
 ## Topic 3: Computer Arithmetic
 
 ### 3.1 Arithmetic Logic Unit (ALU)
-* Performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
-* Inputs: Data from registers, Control signals.
-* Outputs: Result to registers/memory, Status flags (Overflow, Zero, etc.).
+*   **Definition**: A combinational circuit that performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
+*   **Inputs**: Data to be operated on (operands) from registers, Control signals from the Control Unit.
+*   **Outputs**: Result of the operation (to registers/memory), Status flags (Zero, Negative, Overflow, Carry).
 
 ### 3.2 Integer Representation
-* **Unsigned Magnitude**: Represents only positive integers.
-* **Signed Magnitude**: MSB is sign (0=+, 1=-). Remaining bits are magnitude. Two zeros exist (+0, -0).
-* **Two's Complement**: Most common method.
-    * **To negate a number**: Invert all bits (1s complement) and add 1.
-    * *Example*: $+6 = 0110$.
-        * Invert: $1001$
-        * Add 1: $1010$ (Represents -6).
-    * **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
-    * *Benefit*: Subtraction is performed as addition of the complement.
+*   **Unsigned Magnitude**: Represents only positive integers. Range: $0$ to $2^n - 1$.
+*   **Signed Magnitude**: MSB is the sign (0=+, 1=-). Remaining bits are magnitude.
+    *   *Drawback*: Two zeros (+0, -0), complex arithmetic.
+*   **Two's Complement**: Most common method for signed integers.
+    *   **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
+    *   **Negation Rule**: Invert all bits (1s complement) and add 1.
+    *   **Extension**: To increase bit width (e.g., 8-bit to 16-bit), perform **Sign Extension** (replicate the MSB to the left).
 
 ### 3.3 Integer Arithmetic
-* **Addition**: Add bits, carry over. Discard carry out of MSB in 2's complement (but check for overflow).
-* **Multiplication**:
-    * **Unsigned**: Uses **Add-Shift** method. If multiplier bit is 1, add multiplicand; always shift.
-    * **Signed (Booth's Algorithm)**: Handles negative multipliers without requiring conversion.
-        * Checks pair of bits $(Q_0, Q_{-1})$.
-        * **10**: Subtract multiplicand ($A \leftarrow A - M$).
-        * **01**: Add multiplicand ($A \leftarrow A + M$).
-        * **00 or 11**: Arithmetic shift right only.
+*   **Addition/Subtraction**:
+    *   Performed using the same hardware (adder). Subtraction is $A + (-B)$ (add 2's complement of B).
+    *   **Overflow**: Occurs when the result of adding two numbers with the same sign yields a result with the opposite sign. (Carry into MSB $\neq$ Carry out of MSB).
+*   **Multiplication**:
+    *   **Unsigned Integers**: Uses the **Add-Shift** method. Iterate through multiplier bits; if 1, add multiplicand (shifted).
+    *   **Signed Integers (Booth's Algorithm)**: Handles negative numbers without prior conversion.
+        *   Examines pairs of bits $(Q_0, Q_{-1})$ where $Q_{-1}$ starts at 0.
+        *   **10**: Subtract multiplicand from accumulator.
+        *   **01**: Add multiplicand to accumulator.
+        *   **00 or 11**: Arithmetic shift right only.
+        *   *Advantage*: Faster than add-shift when there are strings of 1s in the multiplier (reduces additions).
+*   **Division**:
+    *   More complex than multiplication. Involves repetitive shifting and subtraction.
+    *   **Restoring Division**: If subtraction yields a negative remainder, "restore" the value by adding the divisor back.
+
+### 3.4 Floating-Point Representation (IEEE 754)
+Used to represent real numbers (integers + fractions), especially very large or very small ones.
+$$ \text{Value} = (-1)^S \times 1.M \times 2^{E - \text{Bias}} $$
+
+*   **Format Components**:
+    1.  **Sign Bit (S)**: 0 for positive, 1 for negative.
+    2.  **Biased Exponent (E)**: Stored as an unsigned integer. Bias is subtracted to get the true exponent.
+        *   *Why Bias?* To treat exponents as unsigned numbers for easy comparison.
+    3.  **Significand/Mantissa (M)**: The fractional part. The leading '1' is implicit (hidden bit) for normalized numbers.
+
+*   **IEEE 754 Standards**:
+    *   **Single Precision (32-bit)**:
+        *   Sign: 1 bit
+        *   Exponent: 8 bits (Bias = 127)
+        *   Significand: 23 bits
+        *   Range: $\approx 10^{-38}$ to $10^{+38}$.
+    *   **Double Precision (64-bit)**:
+        *   Sign: 1 bit
+        *   Exponent: 11 bits (Bias = 1023)
+        *   Significand: 52 bits
+        *   Range: $\approx 10^{-308}$ to $10^{+308}$.
+
+### 3.5 Floating-Point Arithmetic
+*   **Addition/Subtraction**:
+    1.  **Check for zeros**.
+    2.  **Align Significance**: Shift the significand of the number with the *smaller* exponent to the right until exponents match.
+    3.  **Add/Subtract Significands**.
+    4.  **Normalize**: Shift result and adjust exponent until leading bit is 1.
+*   **Multiplication/Division**:
+    1.  **Add/Subtract Exponents** (and handle bias).
+    2.  **Multiply/Divide Significands**.
+    3.  **Normalize** result.
+    4.  **Round** result.
+*   **Issues**:
+    *   **Exponent Overflow**: Positive exponent exceeds maximum.
+    *   **Exponent Underflow**: Negative exponent is too small (number too close to zero).
+    *   **Significand Overflow**: Addition of same-sign numbers carries out.
+    *   **Precision Loss**: Shifting during alignment drops bits.
 
 ---
 
 ## Topic 4: Digital Logic
 
-### 4.1 Boolean Algebra & Gates
-* **Basic Operations**: AND ($\cdot$), OR ($+$), NOT ($\bar{A}$).
-* **Universal Gates**: NAND, NOR (can implement any Boolean function).
-* **XOR**: Output 1 if inputs differ.
-* **DeMorgan’s Laws**:
-    1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$
-    2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$
+### Part 1: Boolean Algebra & Combinational Circuits
 
-### 4.2 Implementation
-* **Sum of Products (SOP)**: OR of AND terms (look for 1s in Truth Table).
-* **Product of Sums (POS)**: AND of OR terms (look for 0s in Truth Table).
-* **Karnaugh Maps (K-Map)**: Graphic method to simplify Boolean expressions by grouping 1s in powers of 2 ($1, 2, 4, 8, \dots$).
-    * *Rules*: Overlapping allowed, wrap-around allowed.
+#### 4.1 Boolean Algebra
+*   **Fundamental Concepts**:
+    *   **Variables**: Take values 0 (False/Low) or 1 (True/High).
+    *   **Basic Operations**:
+        *   **AND** ($A \cdot B$): True only if both inputs are True.
+        *   **OR** ($A + B$): True if at least one input is True.
+        *   **NOT** ($\bar{A}$ or $A'$): Inverts the input.
+    *   **Other Operations**:
+        *   **NAND**: NOT AND. True unless both inputs are True.
+        *   **NOR**: NOT OR. True only if both inputs are False.
+        *   **XOR** ($A \oplus B$): True if inputs differ (odd number of 1s).
+*   **Basic Identities**:
+    *   **DeMorgan’s Laws**:
+        1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$ (NAND equivalent to Bubbled OR)
+        2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$ (NOR equivalent to Bubbled AND)
+    *   **Distributive Laws**: $A(B+C) = AB + AC$ and $A + BC = (A+B)(A+C)$.
+    *   **Involution**: $\bar{\bar{A}} = A$.
 
-### 4.3 Combinational Circuits
-Output depends only on current input.
-* **Multiplexer (MUX)**: Selects one of several inputs to pass to output ($2^n$ inputs, $n$ select lines).
-* **Decoder**: Activates one output line based on input pattern ($n$ inputs, $2^n$ outputs).
-* **Adder**:
-    * *Half Adder*: Adds 2 bits (Sum, Carry).
-    * *Full Adder*: Adds 3 bits (A, B, Carry-in).
+#### 4.2 Simplification Techniques
+*   **Algebraic Simplification**: Using identities to reduce terms.
+*   **Canonical Forms**:
+    *   **Sum of Products (SOP)**: Focuses on input combinations producing a **1**. Implemented with AND-OR logic.
+    *   **Product of Sums (POS)**: Focuses on input combinations producing a **0**. Implemented with OR-AND logic.
+*   **Karnaugh Maps (K-Maps)**:
+    *   A graphical method for simplifying Boolean expressions (up to 4 variables).
+    *   **Structure**: Grid cells arranged in **Gray Code** order (00, 01, 11, 10) so adjacent cells differ by only 1 bit.
+    *   **Grouping Rules**:
+        *   Group adjacent 1s in powers of 2 (1, 2, 4, 8, 16).
+        *   Groups can wrap around edges.
+        *   **Goal**: Largest possible groups, fewest number of groups.
+    *   **Don't Care Conditions (X)**: Input combinations that never occur. Can be treated as 0 or 1 to optimize grouping.
+*   **Quine-McCluskey Method**:
+    *   Tabular method suitable for algorithms and >4 variables.
+    *   Groups terms based on number of 1s, finds prime implicants, and selects the essential ones.
 
-### 4.4 Sequential Circuits
-Output depends on current input *and* previous state (memory).
-* **Flip-Flops**:
-    * **S-R Latch**: Set/Reset. State undefined if $S=1, R=1$.
-    * **D Flip-Flop**: Data. Output follows input at clock edge.
-    * **J-K Flip-Flop**: Toggles when $J=1, K=1$.
-* **Registers**: Group of flip-flops to store multi-bit data.
-* **Counters**: Cycle through states (e.g., Ripple counter, Synchronous counter).
+#### 4.3 Logic Gates Implementation
+*   **Universal Gates**: **NAND** and **NOR** are functionally complete; any Boolean function can be implemented using only NAND or only NOR gates.
+*   **Block Diagrams**: Visualizing functions using interconnected gates.
+
+#### 4.4 Combinational Circuits
+Circuits where the output depends **only** on the current input (Memoryless).
+
+*   **Multiplexer (MUX)**:
+    *   **Function**: Selects one of many data inputs and forwards it to a single output ("Data Selector").
+    *   **Structure**: $2^n$ data inputs, $n$ select lines, 1 output.
+    *   **Applications**: Data routing, parallel-to-serial conversion, implementing Boolean functions.
+*   **Decoder**:
+    *   **Function**: Converts binary information from $n$ input lines to a maximum of $2^n$ unique output lines.
+    *   **Logic**: Only one output is asserted (active) at a time based on the input pattern.
+    *   **Applications**: Memory address decoding (selecting specific RAM chips), instruction decoding.
+*   **Read-Only Memory (ROM)**:
+    *   Can be viewed as a combinational circuit where inputs (address) produce a fixed output (data).
+    *   Structure: Decoder (AND array) followed by OR gates.
+*   **Adders**:
+    *   **Half Adder**: Adds 2 bits. Outputs **Sum** (XOR) and **Carry** (AND).
+    *   **Full Adder**: Adds 3 bits (Bit A, Bit B, Carry-in). Outputs Sum and Carry-out.
+    *   **Ripple Carry Adder**: $n$ full adders cascaded. Carry propagates through stages (Slow).
+    *   **Carry Lookahead Adder**: Logic calculates carry signals independently of the sum bits to reduce propagation delay.
 
 ---
 
-## Topic 5: Instruction Set Characteristics
+### Part 2: Sequential Circuits & PLDs
 
-### 5.1 Memory Organisation
-* **Byte Addressability**: Each address identifies a single byte.
-* **Endianness**:
-    * **Big-Endian**: Most significant byte at lowest address.
-    * **Little-Endian**: Least significant byte at lowest address.
+#### 4.5 Sequential Circuits
+Circuits where the output depends on the current input **AND** the history of past inputs (Current State). Contains a **Feedback Path**.
 
-### 5.2 Instructions
-* **Types**: Data processing (arithmetic/logic), Data storage (memory), Data movement (I/O), Control (branch/jump).
-* **Number of Addresses**:
-    * **3-Address**: `Op Dest, Src1, Src2` (e.g., $A = B + C$). Long instruction format.
-    * **2-Address**: `Op Dest, Src` (e.g., $A = A + B$). Dest is also a source.
-    * **1-Address**: `Op Src` (e.g., `Add B`). Uses an implicit **Accumulator** ($AC = AC + B$).
-    * **0-Address**: Implicit operands (uses a **Stack**). `Push A`, `Push B`, `Add` (pops two, adds, pushes result).
+*   **Flip-Flops (Bit Storage)**:
+    *   **S-R Latch**: Simplest storage. Inputs Set (S) and Reset (R). undefined state if S=1, R=1.
+    *   **Clocked S-R Flip-Flop**: Updates state only on clock pulse (Synchronous).
+    *   **D Flip-Flop (Data)**: Single input $D$. Output $Q$ follows $D$ at clock edge. Ensures $S$ and $R$ are never equal. Used for building registers.
+    *   **J-K Flip-Flop**: Improves S-R. If $J=1, K=1$, the output **Toggles** (inverts).
+*   **Registers**:
+    *   Group of flip-flops used to store binary data (e.g., 8-bit register).
+    *   **Parallel Registers**: All bits written/read simultaneously.
+    *   **Shift Registers**: Data is shifted serially (left or right) through the FFs. Used for serial-parallel interface.
+*   **Counters**:
+    *   Registers that cycle through a specific sequence of states (e.g., 0 to 15).
+    *   **Ripple Counter (Asynchronous)**: The output of one flip-flop drives the clock of the next. Accumulates delay.
+    *   **Synchronous Counter**: All flip-flops are triggered by a common clock. Faster and more stable.
+
+#### 4.6 Programmable Logic Devices (PLDs)
+General-purpose chips that can be configured to implement specific logic functions.
+
+*   **PLA (Programmable Logic Array)**: Programmable **AND** plane feeding a Programmable **OR** plane. Flexible but expensive/complex.
+*   **PAL (Programmable Array Logic)**: Programmable **AND** plane feeding a **Fixed OR** plane. Simpler, cheaper, but less flexible.
+*   **CPLD (Complex PLD)**: Multiple SPLD-like blocks integrated on a single chip with interconnects.
+*   **FPGA (Field-Programmable Gate Array)**:
+    *   **Structure**: Massive array of **Logic Blocks** (Look-Up Tables/LUTs), **I/O Blocks**, and programmable **Interconnects**.
+    *   **Programming**: Volatile (SRAM-based) usually. Defines truth tables in LUTs and routing switches.
+    *   **Advantages**: High density, re-programmable, fast prototyping, parallel execution.
 
 ---
 
-## Topic 6: Addressing Modes
+## Topic 5: Addressing and Instruction Set Characteristics & Functions
 
-How the operand's address is specified in the instruction. Let $EA$ = Effective Address.
+### 5.1 Memory Locations and Addresses
+*   **Memory Structure**: Consists of millions of storage cells.
+    *   **Bit**: Each cell stores a value of 0 or 1.
+    *   **Word**: A group of $n$ bits (where $n$ is the word length, typically 16, 32, or 64 bits).
+*   **Addressing**: Accessing memory requires a unique address for each location.
+    *   $k$ address bits can address $2^k$ locations (Address Space).
+*   **Byte Addressability**:
+    *   Most modern computers assign an address to each **8-bit byte**.
+    *   Successive addresses ($0, 1, 2, \dots$) refer to successive byte locations.
+    *   If word length is 32 bits (4 bytes), words are located at addresses $0, 4, 8, \dots$.
+*   **Word Alignment**:
+    *   Words are "aligned" if they begin at a byte address that is a multiple of the number of bytes in a word.
+    *   Example (16-bit word): Aligned at 0, 2, 4...
+    *   Example (32-bit word): Aligned at 0, 4, 8...
 
-1.  **Immediate**: Operand is in the instruction.
-    * *Example*: `ADD 5`
-    * *Pros*: Fast (no memory fetch). *Cons*: Limited magnitude.
-2.  **Direct**: Address field contains the EA.
-    * *Example*: `ADD A` ($EA = A$).
-    * *Pros*: Simple. *Cons*: Limited address space.
-3.  **Indirect**: Address field points to memory containing the pointer to operand.
-    * *Example*: `ADD (A)` ($EA = \text{Memory}[A]$).
-    * *Pros*: Large address space. *Cons*: Multiple memory accesses (slower).
-4.  **Register**: Operand is in a register.
-    * *Example*: `ADD R1` ($EA = R1$).
-    * *Pros*: Very fast, short instruction. *Cons*: Limited registers.
-5.  **Register Indirect**: Register holds the address of the operand.
-    * *Example*: `ADD (R1)` ($EA = [R1]$).
-    * *Pros*: Large address space, fewer memory accesses than Indirect.
-6.  **Displacement**: Combination of direct and register indirect.
-    * $EA = A + (R)$
-    * Used for: Relative addressing ($R=PC$), Base-register ($R=$ Base), Indexing ($R=$ Index).
-7.  **Stack**: Implicit addressing using a Stack Pointer (SP).
+#### Endianness
+Two ways to assign byte addresses within a larger word (e.g., a 32-bit integer).
+1.  **Big-Endian**:
+    *   The **Most Significant Byte (MSB)** is stored at the **lowest** (first) address.
+    *   "Big end first". Used by IBM 370, Motorola 68000, Internet protocols (Network Byte Order).
+2.  **Little-Endian**:
+    *   The **Least Significant Byte (LSB)** is stored at the **lowest** (first) address.
+    *   "Little end first". Used by Intel x86.
+
+### 5.2 Memory Operations
+*   **Load (Read/Fetch)**:
+    1.  Processor sends the **address** to memory.
+    2.  Processor issues a **Read** control signal.
+    3.  Memory reads data at that address and sends it to the processor.
+*   **Store (Write)**:
+    1.  Processor sends the **address** and the **data** to be written.
+    2.  Processor issues a **Write** control signal.
+    3.  Memory writes the data into the specified location (overwriting previous content).
+
+### 5.3 Instructions and Sequencing
+
+#### Notation
+*   **Register Transfer Notation (RTN)**: Describes data transfer and operations.
+    *   `R1 <- [LOC]`: Transfer content of memory location LOC to register R1.
+    *   `R3 <- [R1] + [R2]`: Add contents of registers R1 and R2, store result in R3.
+*   **Assembly Language Notation**: Represents machine instructions mnemonically.
+    *   `Move LOC, R1`
+    *   `Add R1, R2, R3`
+
+#### Sequencing
+*   **Program Counter (PC)**: Register holding the address of the *next* instruction to be executed.
+*   **Straight-Line Sequencing**: The processor fetches an instruction, increments the PC (e.g., by 4 for 32-bit words) to point to the next sequential instruction, and then executes.
+*   **Branching**: Altering the sequential flow (loops, if-statements).
+    *   **Conditional Branch**: Branch only if a condition is met (e.g., `Branch>0 LOOP`).
+    *   **Condition Codes (Flags)**: Bits (N, Z, V, C) recorded by the processor to track results of the last operation (Negative, Zero, Overflow, Carry).
+
+### 5.4 Types of Instructions
+1.  **Data Transfer**: Move data between memory and processor registers (e.g., `Move`, `Load`, `Store`, `Push`, `Pop`).
+2.  **Arithmetic**: Math operations on numerical data (e.g., `Add`, `Sub`, `Multiply`, `Divide`, `Increment`).
+3.  **Logical**: Bitwise operations (e.g., `AND`, `OR`, `NOT`, `XOR`, `Shift`, `Rotate`).
+4.  **Conversion**: Changing data formats (e.g., Binary to Decimal).
+5.  **Input/Output (I/O)**: Transfer programs/data between memory and external devices (may be memory-mapped or isolated).
+6.  **System Control**: Privileged instructions for the OS (e.g., accessing control registers, Halt).
+7.  **Transfer of Control**:
+    *   **Branch/Jump**: `GoTo` logic.
+    *   **Skip**: Implied address (e.g., "Skip next instruction if zero").
+    *   **Subroutine Call**: `Call` (saves return address) and `Return`.
+
+### 5.5 Types of Operands
+Instructions operate on:
+*   **Addresses**: Can be treated as unsigned integers.
+*   **Numbers**: Integer (signed/unsigned), Floating-point, Packed Decimal.
+*   **Characters**: ASCII (7-bit), EBCDIC (8-bit).
+*   **Logical Data**: Bits or flags.
+
+### 5.6 Number of Addresses
+The number of address fields in an instruction impacts program length and complexity.
+
+| Type | Format | Example ($A = B + C$) | Pros/Cons |
+| :--- | :--- | :--- | :--- |
+| **3-Address** | `Op Dest, Src1, Src2` | `ADD A, B, C` | **Pro**: Short programs. <br> **Con**: Instructions are very long (many bits). |
+| **2-Address** | `Op Dest, Src` | `MOVE A, B`<br>`ADD A, C` | **Pro**: Shorter instructions than 3-addr. <br> **Con**: One operand is overwritten (Dest). Requires extra move. |
+| **1-Address** | `Op Src` | `LOAD B`<br>`ADD C`<br>`STORE A` | **Implicit**: Uses **Accumulator (AC)**. <br> **Pro**: Short instructions. <br> **Con**: Longer programs (more instructions). |
+| **0-Address** | `Op` (Implicit) | `PUSH B`<br>`PUSH C`<br>`ADD`<br>`POP A` | **Implicit**: Uses a **Stack**. <br> **Pro**: Very short instructions. <br> **Con**: Complex logic/stack management. |
+
+### 5.7 Design Decisions
+When designing an Instruction Set Architecture (ISA), architects must decide:
+*   **Operation Repertoire**: How many and which operations to provide? How complex?
+*   **Data Types**: Which types (integer, float, character) are supported directly?
+*   **Instruction Formats**: Length of op-code, number of addresses, fixed vs. variable length.
+*   **Registers**: Number of available CPU registers (more registers = faster access but expensive).
+*   **Addressing Modes**: Methods to specify operand locations (e.g., direct, indirect, register).
+
+---
+
+## Topic 6: Addressing Modes and Instruction Formats
+
+### 6.1 Addressing Modes
+Addressing modes specify how the **Effective Address (EA)** of an operand is calculated. They offer a trade-off between address range, addressing flexibility, and the number of memory references/complexity.
+
+*   **Notation**:
+    *   $A$: Contents of the address field in the instruction.
+    *   $R$: Contents of an address field that refers to a register.
+    *   $EA$: Effective Address (actual location of the operand).
+    *   $(X)$: Contents of memory location $X$ or register $X$.
+
+#### 1. Immediate Addressing
+*   **Mechanism**: The operand is part of the instruction itself.
+    *   **Operand = A**
+*   **Usage**: Defining constants or setting initial values.
+*   **Pros**: No memory reference to fetch data (fast).
+*   **Cons**: Limited range (operand size limited by address field size).
+
+#### 2. Direct Addressing
+*   **Mechanism**: The address field contains the address of the operand.
+    *   **EA = A**
+*   **Pros**: Simple, single memory reference.
+*   **Cons**: Limited address space (address field is usually smaller than full memory space).
+
+#### 3. Indirect Addressing
+*   **Mechanism**: The address field points to a memory cell that contains the *address* of the operand (a pointer).
+    *   **EA = (A)**
+*   **Pros**: Large address space (word length determines address size). Can be nested/cascaded.
+*   **Cons**: Multiple memory accesses to find operand (slower).
+
+#### 4. Register Addressing
+*   **Mechanism**: The operand is held in a register named in the address field.
+    *   **EA = R**
+*   **Pros**: Very fast (no memory access), very small address field needed (few registers).
+*   **Cons**: Extremely limited address space (number of registers).
+
+#### 5. Register Indirect Addressing
+*   **Mechanism**: The register contains the address of the operand in memory.
+    *   **EA = (R)**
+*   **Pros**: Large address space ($2^n$), one fewer memory access than standard indirect addressing.
+*   **Cons**: Requires one extra memory reference compared to register addressing.
+
+#### 6. Displacement Addressing
+*   **Mechanism**: Combines direct and register indirect addressing. Two values are used: a base value (usually in a register) and a displacement (in instruction).
+    *   **EA = A + (R)**
+*   **Variations**:
+    *   **Relative Addressing**: $R = PC$. EA = A + (PC). Used for branch instructions (locality of reference).
+    *   **Base-Register Addressing**: $R$ holds a base address; $A$ holds displacement. Good for relocating programs (segments).
+    *   **Indexing**: $A$ = Base, $R$ = Displacement. Good for accessing arrays ($EA = A + Index$). Auto-indexing ($R++$) handles iteration.
+
+#### 7. Stack Addressing
+*   **Mechanism**: Operand is implicitly on top of the stack.
+*   **Pros**: No memory reference required in the instruction (implicit).
+*   **Cons**: Limited applicability (only works for stack-based logic).
+
+### 6.2 Comparison of Addressing Modes
+
+| Mode | Algorithm | Principal Advantage | Principal Disadvantage |
+| :--- | :--- | :--- | :--- |
+| **Immediate** | Operand = A | No memory reference | Limited operand magnitude |
+| **Direct** | EA = A | Simple | Limited address space |
+| **Indirect** | EA = (A) | Large address space | Multiple memory references |
+| **Register** | EA = R | No memory reference | Limited address space |
+| **Register Indirect** | EA = (R) | Large address space | Extra memory reference |
+| **Displacement** | EA = A + (R) | Flexibility | Complexity |
+| **Stack** | Implicit | No memory reference | Limited applicability |
+
+### 6.3 Instruction Formats
+The layout of bits in an instruction defined by its opcode, operands, and addressing modes.
+
+#### Key Design Issues
+*   **Instruction Length**: Affected by memory size, bus structure, and speed. Trade-off between powerful instructions (long) and saving space (short).
+*   **Allocation of Bits**:
+    *   Number of addressing modes (Implicit vs. Explicit).
+    *   Number of operands (Typical is 2 or 3).
+    *   Register vs. Memory support.
+    *   Granularity of addresses.
+
+#### Example Architectures
+*   **PDP-11**:
+    *   Variable instruction lengths (16, 32, 48 bits).
+    *   Orthogonal set of addressing modes (independent of opcode).
+    *   Highly flexible but complex hardware.
+*   **VAX**:
+    *   Focus on orthogonality.
+    *   Highly variable format (0 to 6 operands).
+    *   Opcode can be 1 or 2 bytes.
+*   **x86**:
+    *   Complex format with prefixes (e.g., LOCK, REP).
+    *   Fields: Instruction Prefix, Segment Override, Opcode (1-3 bytes), ModR/M (Addressing), SIB (Scale Index Byte), Displacement, Immediate.
+    *   Designed for backward compatibility.
+*   **PowerPC**:
+    *   Fixed instruction length (32 bits).
+    *   Regular formats (Load/Store, Branch, Arithmetic).
+    *   Simplifies decoding (RISC philosophy).
 
 # Topic 7: Central Processing Unit
 
 ## 1. CPU Structure
-The CPU is responsible for fetching instructions, interpreting them, fetching data, processing data, and writing data. It consists of three major internal components connected by an **Internal CPU Bus**:
+The CPU is the "brain" of the computer, responsible for the following core functions:
+*   **Fetch instructions**: Read instructions from memory.
+*   **Interpret instructions**: Decode the instruction to determine the required action.
+*   **Fetch data**: Read data from memory or I/O modules if needed for execution.
+*   **Process data**: Perform arithmetic or logical operations on data.
+*   **Write data**: Write the results of an operation to memory or an I/O module.
 
+It consists of three major internal components connected by an **Internal CPU Bus**:
 * **Arithmetic and Logic Unit (ALU)**: Performs the actual computation (arithmetic and boolean logic operations), status flagging, and shifting.
-* **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and controls the operation of the ALU.
+* **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and manages the operation of the ALU.
 * **Registers**: Internal CPU memory used for temporary storage and high-speed access.
 
 > [!INFO] System Bus Connection
@@ -197,127 +520,114 @@ The CPU is responsible for fetching instructions, interpreting them, fetching da
 ---
 
 ## 2. Register Organization
-Registers are at the top of the memory hierarchy (fastest). They function as working space for the CPU.
+Registers provide high-speed temporary storage (working space) for the CPU.
 
 ### User-Visible Registers
-These can be referenced by assembly-level instructions to minimize main memory references.
-* **General Purpose**: Can be used for data or addressing (pointers, counters).
-* **Data Registers**: Used only to hold data (e.g., Accumulator). Cannot be used for operand address calculation.
+Can be referenced by assembly-level instructions to minimize main memory references.
+* **General Purpose**: May be true general purpose or restricted (specialized). 
+    * *Design Issues*: Number of registers (typically 8-32), register size (large enough for full addresses/data types), and whether to allow combining two registers for double-length values.
+    * *Trade-off*: More registers can reduce memory references but increase instruction size (more bits to specify the register).
+* **Data Registers**: Often used for data manipulation (e.g., Accumulator); sometimes cannot be used for operand address calculation.
 * **Address Registers**:
-    * *Segment Pointer*: Base address of the segment.
-    * *Index Register*: Used for indexed addressing.
-    * *Stack Pointer*: Points to the top of the stack (implicit addressing).
-* **Condition Codes (Flags)**: Bits set by the CPU hardware as the result of operations (e.g., Positive, Zero, Overflow).
+    * *Segment Pointer*: Holds the base address of a memory segment.
+    * *Index Register*: Used for indexed addressing (often supports auto-indexing).
+    * *Stack Pointer*: Points to the top of the system stack, allowing implicit addressing.
+* **Condition Codes (Flags)**: Individual bits set by hardware (e.g., Sign, Zero, Carry, Overflow). Usually read implicitly by programs (e.g., for conditional jumps) but cannot always be set directly.
 
 ### Control & Status Registers
-Used by the Control Unit and OS to control CPU operation. usually not visible to user programs.
+Used by the Control Unit and OS to manage execution.
 
 | Register | Full Name | Function |
 | :--- | :--- | :--- |
-| **PC** | Program Counter | Contains the address of the *next* instruction to be fetched. |
-| **IR** | Instruction Register | Contains the instruction currently being executed (opcode). |
-| **MAR** | Memory Address Register | Contains the address of a memory location to read/write. |
-| **MBR** | Memory Buffer Register | Contains the data to be written to memory or the data read from memory. |
-| **PSW** | Program Status Word | A set of flags (Sign, Zero, Carry, Equal, Overflow, Interrupt Enable, Supervisor Mode). |
+| **PC** | Program Counter | Contains the address of the *next* instruction to be fetched; updated after fetch. |
+| **IR** | Instruction Register | Contains the fetched instruction; opcode and operand specifiers are analyzed here. |
+| **MAR** | Memory Address Register | Connected to the address bus; specifies the location for the next read/write. |
+| **MBR** | Memory Buffer Register | Connected to the data bus; holds data to be written or recently read. |
+| **PSW** | Program Status Word | A set of flags indicating CPU status (e.g., Sign, Zero, Carry, Interrupt Enable, Supervisor/User Mode). |
 
 > [!SUMMARY] Supervisor Mode (Kernel Mode)
-> A privileged mode used by the Operating System. It allows execution of privileged instructions (e.g., I/O control, memory management) that are not available to user programs.
+> A privileged mode used by the OS (Intel "Ring 0"). It allows execution of privileged instructions and access to protected areas of memory/status registers not available to user programs.
 
 ### Case Study: Motorola MC68000 vs. Intel 8086
 
 | Feature | Motorola MC68000 | Intel 8086 |
 | :--- | :--- | :--- |
-| **Architecture** | 32-bit | 16-bit |
-| **Philosophy** | Regular instruction set; General Purpose focus. | Special Purpose focus; specialized registers. |
-| **Data Registers** | 8 (D0-D7) for data manipulation. | 4 (AX, BX, CX, DX) - AX is Accumulator, BX Base, etc. |
+| **Architecture** | 32-bit (Regular instruction set) | 16-bit (Special-purpose focus) |
+| **Data Registers** | 8 (D0-D7) for data manipulation. | 4 (AX, BX, CX, DX) - AX is Accumulator. |
 | **Address Registers** | 9 (A0-A7 + Stack Pointers). | 4 Pointers/Index (SP, BP, SI, DI) + 4 Segment Registers (CS, DS, SS, ES). |
-| **Flexibility** | High (fewer constraints on register usage). | Lower (implicit references to specific registers). |
+| **Flexibility** | High; very regular usage. | Lower; many registers have implicit uses. |
 
 ---
 
 ## 3. The Instruction Cycle
-The processing of an instruction is divided into sub-cycles.
+The execution of a single instruction involves several sub-cycles.
 
-### The Sub-Cycles
-1.  **Fetch**: Read the next instruction from memory into the CPU.
-    * PC address moved to MAR -> Memory Read -> Result to MBR -> Move to IR -> Increment PC.
-2.  **Execute**: Interpret opcode and perform the operation (ALU, I/O, Data Transfer).
-3.  **Interrupt**: Check for enabled interrupts. If pending, save current state and switch to interrupt handler.
-4.  **Indirect**: If the instruction uses indirect addressing, this cycle accesses memory to fetch the effective address of the operand.
+### Data Flow in Sub-Cycles
+1.  **Fetch Cycle**: 
+    *   `PC` contains address of next instruction.
+    *   Address moved to `MAR`.
+    *   Control Unit requests memory read.
+    *   Result placed on Data Bus, copied to `MBR`, then to `IR`.
+    *   `PC` is incremented by 1 (or instruction length).
+2.  **Indirect Cycle**:
+    *   `IR` is examined; if indirect addressing is used, `MBR` (address part) moved to `MAR`.
+    *   Control Unit requests memory read to fetch the effective address.
+3.  **Execute Cycle**: 
+    *   Depends on the instruction in `IR`. May involve memory R/W, I/O, or register transfers.
+4.  **Interrupt Cycle**:
+    *   Current `PC` is saved to allow resumption (often pushed to stack or saved to `MBR` then memory).
+    *   `PC` is loaded with the start address of the interrupt handler routine.
 
 ### Interrupts
-Mechanisms for other modules to interrupt normal processing.
-* **Types**: Program (overflow/error), Timer (multitasking), I/O (controller signal), Hardware Failure (parity error).
-* **Handling Process**:
-    1.  Suspend execution of current program.
-    2.  **Save Context**: Save PC and PSW (often to the stack).
-    3.  Load PC with the address of the Interrupt Handler.
-    4.  Process interrupt.
-    5.  Restore context and resume execution.
-
-### Instruction Cycle Flow (State Diagram Summary)
-1.  **Instruction Fetch**
-2.  **Instruction Operation Decoding**
-3.  **Operand Address Calculation** (If indirect, perform **Indirect Cycle**)
-4.  **Operand Fetch**
-5.  **Data Operation** (Execute)
-6.  **Operand Store**
-7.  **Interrupt Check** (If interrupt, perform **Interrupt Cycle**)
-8.  Return to Step 1.
+* **Types**: Program (error), Timer (multitasking), I/O (device ready), Hardware Failure.
+* **Handling**: Suspend program $\rightarrow$ Save Context (PC, PSW) $\rightarrow$ Set PC to Handler $\rightarrow$ Process $\rightarrow$ Restore Context.
 
 ---
 
 ## 4. Instruction Pipelining
-Pipelining is analogous to an assembly line. It increases throughput by overlapping the execution of consecutive instructions.
+Pipelining overlaps the execution of multiple instructions to increase throughput.
 
 ### The 6-Stage Pipeline
-1.  **FI**: Fetch Instruction
-2.  **DI**: Decode Instruction
-3.  **CO**: Calculate Operands (Effective Address)
-4.  **FO**: Fetch Operands
-5.  **EI**: Execute Instruction
-6.  **WO**: Write Operand
+1.  **FI (Fetch Instruction)**: Read instruction from memory.
+2.  **DI (Decode Instruction)**: Determine opcode and operand specifiers.
+3.  **CO (Calculate Operands)**: Calculate effective addresses.
+4.  **FO (Fetch Operands)**: Fetch operands from memory.
+5.  **EI (Execute Instruction)**: Perform the operation.
+6.  **WO (Write Operand)**: Store result in destination.
 
-### Performance Formulas
-Let $n$ be the number of instructions and $k$ be the number of stages.
-
-**Time to execute without pipeline:**
-$$T_1 = n \times k$$
-
-**Time to execute with pipeline:**
-$$T_k = k + (n - 1)$$
-*(The first instruction takes $k$ cycles to fill the pipe; subsequent instructions finish every 1 cycle).*
-
-**Speedup Factor ($S$):**
-$$S = \frac{T_1}{T_k} = \frac{n \times k}{k + (n - 1)}$$
-
-### Pipeline Hazards & Limitations
-Pipelining does not perfectly multiply speed by $k$ due to:
-1.  **Stage Duration**: Not all stages take equal time (pipeline moves at the speed of the slowest stage).
-2.  **Overhead**: Data movement between buffers and control logic.
-3.  **Resource Conflicts**: Multiple stages trying to access memory simultaneously (e.g., FI and FO).
-4.  **Data Dependencies**: An instruction depends on the result of the previous one.
-5.  **Branch Penalty**: Conditional branches disrupt the flow. If the pipeline fetches the wrong instructions, they must be flushed.
+### Performance & Limits
+* **Ideal Speedup**: Approaches $k$ (number of stages) for a large number of instructions $n$.
+* **Limitations**: 
+    * *Unequal Stage Duration*: Pipeline must wait for the slowest stage.
+    * *Hazards*: 
+        * **Resource Conflict**: Two stages needing memory at once.
+        * **Data Dependency**: Instruction $B$ needs result of instruction $A$.
+        * **Branch Penalty**: Conditional branches can invalidate prefetched instructions.
 
 ### Branching Solutions
-Strategies to minimize the performance penalty of conditional branches:
-
-* **Multiple Streams**: Replicate the initial pipeline stages to fetch *both* possible paths. (Expensive, leads to bus contention).
-* **Prefetch Branch Target**: When a branch is recognized, prefetch the target instruction in addition to the next sequential one. Keep it until the branch decision is made.
-* **Loop Buffer**: A small, very fast memory containing the most recently fetched instructions. Great for small loops; functions like a mini-cache.
+* **Multiple Streams**: Fetching both possible paths (leads to bus contention).
+* **Prefetch Branch Target**: Fetch target in addition to sequential next.
+* **Loop Buffer**: Small, fast memory for recently fetched instructions; excellent for loops.
 * **Branch Prediction**:
-    * *Static*: Predict "Never Taken" (assume standard flow) or "Always Taken" (>50% of branches are taken).
-    * *Dynamic*: Uses a **Branch History Table** or state bits (Taken/Not Taken switch) to predict based on recent execution history.
-* **Delayed Branching**: The CPU automatically rearranges instructions (with compiler support). Useful instructions that do not affect the branch are moved into the "delay slot" immediately following the branch, so the CPU stays busy while the branch resolves.
+    * *Static*: Predict Never Taken, Always Taken, or predict based on Opcode.
+    * *Dynamic*: Use a **Branch History Table** or Taken/Not Taken switches to track history.
+* **Delayed Branching**: Rearranging instructions so the "delay slot" after a branch is filled with useful work.
+
+### Example: Intel 80486 Pipelining
+The 80486 uses a 5-stage pipeline:
+1. **Fetch**: From cache or memory into prefetch buffers.
+2. **Decode 1**: Opcode and addressing mode decoded.
+3. **Decode 2**: Expands opcode into control signals and handles complex addressing.
+4. **Execute**: ALU operations, cache access, and register updates.
+5. **Write Back**: Updates registers and status flags.
 
 ---
 
 ## 5. Summary / Key Takeaways
-* **Registers** are the fastest storage; User-Visible registers (General, Data, Address) are for code, while Control registers (PC, IR, PSW) manage the CPU state.
-* The **Instruction Cycle** is dynamic; it adapts to interrupts and indirect addressing needs.
-* **Pipelining** improves performance by parallelizing instruction stages, but it is limited by **Hazards** (Structural, Data, Control).
-* **Branch Prediction** and **Loop Buffers** are critical architectural optimizations to maintain pipeline efficiency in the face of non-sequential code execution.
-* **Speedup Calculation**: Remember that ideal speedup approaches $k$ (number of stages) as $n$ (instructions) becomes very large.
+* **Registers** are the fastest storage; design involves a trade-off between flexibility and instruction size.
+* The **Instruction Cycle** data flow involves coordinated movement between PC, MAR, MBR, and IR.
+* **Pipelining** significantly improves performance but requires complex logic to handle **Hazards** and **Branch Penalties**.
+* **Modern CPUs** use advanced branch prediction and multilevel pipelining (e.g., Intel 80486's 5-stage design) to maintain efficiency.
 
 
 # Topic 8: Control Unit
@@ -327,9 +637,12 @@ Strategies to minimize the performance penalty of conditional branches:
 The **Control Unit (CU)** is the nerve center of the processor, responsible for managing the execution of instructions by generating control signals.
 
 > [!INFO] Functional Requirements
-> The Control Unit must perform two basic tasks:
-> 1.  **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence based on the program logic.
-> 2.  **Execution:** Causing the performance of each individual micro-operation by generating specific control signals.
+> To characterize the control unit, we must:
+> 1.  **Define basic elements** of the processor.
+> 2.  **Describe micro-operations** the processor performs.
+> 3.  **Determine functions** the control unit must perform:
+>     *   **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence based on the program logic.
+>     *   **Execution:** Causing the performance of each individual micro-operation by generating specific control signals.
 
 ### Inputs & Outputs
 To perform its function, the CU relies on specific inputs to determine the state of the system and produces outputs to control behavior.
@@ -337,7 +650,7 @@ To perform its function, the CU relies on specific inputs to determine the state
 **Inputs:**
 * **Clock:** A repetitive sequence of pulses used to measure the duration of micro-operations.
 * **Instruction Register (IR):** Contains the Op-code of the current instruction, which determines which micro-instructions are performed.
-* **Flags:** Indicate the status of the CPU and results of previous ALU operations.
+* **Flags:** Indicate the status of the CPU and results of previous ALU operations (e.g., Zero, Overflow).
 * **Control Bus Signals:** Signals from the control bus, such as interrupt signals and acknowledgments.
 
 **Outputs:**
@@ -419,6 +732,10 @@ The CU is a combinatorial circuit. The logic is implemented via gates, flip-flop
 The CU logic is stored as a "program" (firmware) in a special memory called **Control Memory**.
 * **Concept:** Instructions are broken down into **micro-instructions**. A sequence of micro-instructions is a **micro-program**.
 * **Mechanism:** The opcode from the IR is mapped to a starting address in the Control Memory. The CU reads micro-instructions to generate control signals.
+* **Structure:**
+    * **Control Address Register (CAR):** Specifies the address of the next micro-instruction.
+    * **Control Buffer Register (CBR):** Holds the micro-instruction currently being executed.
+    * **Sequencing Logic:** Determines the next address to load into the CAR.
 * **Pros/Cons:** Simplifies the design and allows for flexibility (can update instruction sets by changing firmware). However, it is generally slower than hardwired because of the memory access time. Preferred for **CISC** architectures.
 
 ### Comparison: Hardwired vs. Micro-programmed
@@ -439,16 +756,21 @@ The CU logic is stored as a "program" (firmware) in a special memory called **Co
 
 | Feature | Horizontal Micro-programming | Vertical Micro-programming |
 | :--- | :--- | :--- |
-| **Word Width** | Wide (Long control words, e.g., 40-100 bits) | Narrow (Short control words, e.g., 16-40 bits) |
-| **Encoding** | Little to no encoding (Unpacked). | Highly encoded (Packed). |
-| **Parallelism** | High degree of parallel operations possible. | Limited ability to express parallelism. |
+| **Word Width** | **Wide** (Long control words, e.g., 40-100 bits) | **Narrow** (Short control words, e.g., 16-40 bits) |
+| **Encoding** | **Unpacked** (Little to no encoding). | **Packed** (Highly encoded). |
+| **Parallelism** | High degree of parallel operations possible (1 bit per control line). | Limited ability to express parallelism. |
 | **Logic** | Simple control logic (Direct mapping to signals). | Complex control logic (Requires decoders). |
+| **Speed** | Faster execution. | Slower execution. |
 
 ### Sequencing Techniques
 Determining the address of the next micro-instruction to execute.
 1.  **Two Address Fields:** The micro-instruction contains two explicit address fields. A multiplexer selects one based on status flags. Simple but requires a wider word.
 2.  **Single Address Field:** Contains one address field. The "next" address is chosen from: the Address Field, the IR code (mapping), or the Next Sequential Address.
 3.  **Variable Format:** Uses a bit to designate the format. One format is for control signals; the other is for branching/sequencing.
+
+### Address Generation
+* **Explicit:** The address is explicitly available in the micro-instruction (e.g., Two-field).
+* **Implicit:** Additional logic is required to generate the address (e.g., Mapping Opcode $\to$ Address, Adding/Combining address portions, Residual control).
 
 ### Encoding
 * **Functional vs. Resource Encoding:**
@@ -473,164 +795,128 @@ Determining the address of the next micro-instruction to execute.
 # Topic 9: Interfacing and Communication
 
 ## 1. I/O Module Fundamentals
-The I/O module acts as the critical bridge between the high-speed CPU/Memory (via the System Bus) and the slower, diverse peripheral devices.
 
-> [!INFO] Definition
-> An **I/O Module** is not just a connector; it is a logical interface that manages the flow of data, control signals, and status information between the processor and external devices.
+The **I/O Module** acts as the critical bridge between the high-speed CPU/Memory (via the System Bus) and the slower, diverse peripheral devices.
 
-### Generic Model
-* **System Bus Side:** Connects via Address Lines, Data Lines, and Control Lines.
-* **Device Side:** Connects via tailored data links to specific peripherals.
+### Why not connect peripherals directly?
+1.  **Variety**: Peripherals vary widely in operation methods; it's impractical to incorporate logic for all of them into the CPU.
+2.  **Data Transfer Rate**: Peripherals are often much slower than the CPU/RAM. Direct connection would bottle-neck the system.
+3.  **Data Formats**: Peripherals use different data formats and word lengths than the computer's internal architecture.
 
-### Key Functions
-1.  **Control & Timing:** Coordinates the flow of traffic between internal resources and external devices.
-    * *Example Sequence:* CPU checks status $\to$ I/O module returns status $\to$ If ready, CPU requests transfer $\to$ Module gets data from device $\to$ Module transfers to CPU.
-2.  **CPU Communication:**
-    * **Command Decoding:** Translates signals (e.g., `READ SECTOR`) into device actions.
-    * **Data:** Exchanges data via the data bus.
-    * **Status Reporting:** Reports states like `BUSY` or `READY`.
-    * **Address Recognition:** Identifies the unique address of the peripheral.
-3.  **Device Communication:** Sends commands, status info, and data to the peripheral.
-4.  **Data Buffering:** Essential for speed matching.
-    * CPU/Memory transfer rates are high; Peripheral rates are low.
-    * Data is buffered in the module to prevent the CPU from slowing down to the device's speed.
-5.  **Error Detection:** Detects mechanical errors (paper jam) or transmission errors (parity bits).
+### Key Functions of an I/O Module
+1.  **Control & Timing**: Coordinates traffic between internal resources and external devices.
+    *   *Steps:* CPU checks status $\to$ Module returns status $\to$ If ready, CPU requests transfer $\to$ Module gets data from device $\to$ Module transfers to CPU.
+2.  **Processor Communication**:
+    *   **Command Decoding**: Accepts commands (e.g., `READ SECTOR`, `SEEK`) from the address bus.
+    *   **Data**: Exchanges data via the data bus.
+    *   **Status Reporting**: Reports device state (BUSY, READY) to the CPU (common because peripherals are slow).
+    *   **Address Recognition**: Recognizes the unique address of each managed peripheral.
+3.  **Device Communication**: Performs commands, sends status info, and transmits data to the peripheral.
+4.  **Data Buffering**: Essential for speed matching. Data is buffered in the module to prevent the CPU from slowing down to the device's transfer rate.
+5.  **Error Detection**: Detects mechanical errors (paper jam) or transmission errors (parity bits).
 
 ---
 
 ## 2. I/O Techniques: The Core Triad
-There are three main techniques for handling I/O operations, evolving from simple to complex to efficient.
+
+There are three main techniques for handling I/O operations, evolving from simple to efficient.
 
 ### A. Programmed I/O
-The CPU has direct control over the I/O operation including sensing status, sending read/write commands, and transferring data.
+The CPU has direct control over the I/O operation, including sensing status, sending read/write commands, and transferring data.
 
-* **Mechanism:**
+*   **Mechanism**:
     1.  CPU issues an I/O command.
     2.  I/O module performs the action and sets bits in its status register.
-    3.  **Busy Waiting:** The CPU must repeatedly poll (check) the status register to see if the operation is complete.
-* **Addressing Modes:**
-    * **Memory-Mapped I/O:** Devices and memory share a single address space. No special commands; standard `Load/Store` works. Uses up memory address space.
-        * *Example:* 10 address lines support $2^{10} = 1024$ total locations for *both* memory and I/O.
-    * **Isolated I/O:** Separate address spaces. Requires special commands (e.g., `IN`, `OUT`).
-        * *Example:* 10 address lines support $1024$ memory locations **AND** $1024$ I/O addresses.
-
-> [!WARNING] Bottleneck
-> **Wastes CPU Time.** The processor spends nearly all its time in a wait loop checking the device status (polling), severely degrading system performance.
+    3.  **Busy Waiting**: The CPU waits and repeatedly checks the status register until the operation is complete.
+*   **Drawback**: Wastes enormous amounts of CPU time in tight wait loops.
+*   **Addressing**:
+    *   **Memory-Mapped**: I/O devices share the same address space as memory. Single read/write lines.
+    *   **Isolated I/O**: Separate address spaces. Specialized commands (`IN`, `OUT`) and control lines.
 
 ### B. Interrupt-Driven I/O
 Overcomes the CPU waiting problem. The CPU issues a command and continues executing other useful work. The I/O module interrupts the CPU when ready.
 
 #### The Process
-1.  **CPU Viewpoint:** Issue read command $\to$ Do other work $\to$ Receive Interrupt $\to$ Save Context (PC, Registers) $\to$ Process Interrupt (Fetch data) $\to$ Restore Context.
-2.  **I/O Module Viewpoint:** Receive read command $\to$ Get data from peripheral $\to$ Signal Interrupt $\to$ Wait for CPU request $\to$ Transfer data.
+1.  **CPU**: Issues read command $\to$ Switches to other work.
+2.  **I/O Module**: Gets data from peripheral $\to$ Signals **Interrupt**.
+3.  **CPU Response**:
+    *   Finishes current instruction.
+    *   Acknowledges interrupt.
+    *   **Saves Context**: Pushes PSW and PC to the control stack.
+    *   Loads new PC from the Interrupt Vector.
+    *   Executes **Interrupt Service Routine (ISR)** to process data.
+    *   Restores context and resumes original program.
 
-#### Design Issues & Solutions
-* **Identification (Who interrupted?):**
-    * *Multiple Lines:* Impractical for many devices.
-    * *Software Poll:* CPU asks each module "Did you interrupt?" (Slow).
-    * *Daisy Chain (Hardware Poll):* Interrupt Acknowledge sent down a chain of modules. The requesting module places its vector ID on the bus.
-    * *Bus Arbitration (Vectored Interrupt):* Module must claim the bus (Master) before raising an interrupt.
-* **Priority:** Higher priority lines/modules can interrupt lower priority service routines.
-
-#### Intel 82C59A Interrupt Controller
-A dedicated chip to manage interrupts for the CPU.
-* **Capacity:** Handles 8 interrupt lines.
-* **Cascadable:** Can be cascaded (Master/Slave) to handle up to 64 lines (e.g., 1 Master + 8 Slaves).
-* **Operation:** Accepts external interrupts $\to$ Determines priority $\to$ Signals CPU (`INTR`) $\to$ CPU Acknowledges $\to$ Controller puts vector on data bus.
+#### Design Issues
+*   **Identification**: How does the CPU know *who* interrupted?
+    *   *Software Poll*: Slow polling of each module.
+    *   *Daisy Chain*: Hardware poll; acknowledgment signal propagates down a chain.
+    *   *Bus Arbitration*: Module must claim the bus (Master) before raising an interrupt (Vectored Interrupt).
+*   **Priority**: Higher priority modules can interrupt lower priority handlers.
+*   **Example (Intel 82C59A)**: An external interrupt controller chip that manages 8 interrupt lines (cascadable to 64) and passes the vector to the CPU.
 
 ### C. Direct Memory Access (DMA)
-Even with interrupts, the CPU is still involved in moving *every* word of data between I/O and memory. DMA removes the CPU from the data transfer path entirely.
+Even with interrupts, the CPU is involved in moving *every word* of data between I/O and memory. DMA removes the CPU from the data transfer path entirely.
 
-* **Function:** A dedicated DMA module takes over the system bus to transfer data directly to/from memory.
-* **Operation:**
-    1.  CPU sends the DMA controller: Read/Write command, Device Address, **Starting Memory Address**, and **Amount of Data**.
+*   **Function**: A dedicated DMA controller takes over the system bus to transfer blocks of data.
+*   **Operation**:
+    1.  CPU tells DMA: Read/Write, Device Address, Starting Memory Address, Amount of Data.
     2.  CPU continues other work.
-    3.  DMA manages the transfer.
-    4.  DMA interrupts CPU only when the *entire block* is transferred.
-
-> [!INFO] Cycle Stealing
-> The DMA controller forces the CPU to suspend operation for one bus cycle to transfer one word. This is **not** an interrupt (no context switch). It merely pauses the CPU for a moment, slightly slowing execution but vastly increasing I/O throughput.
-
-#### DMA Configurations
-1.  **Single Bus, Detached:** DMA acts as a surrogate CPU. Inefficient because every word transfer requires two bus cycles (I/O $\to$ DMA, then DMA $\to$ Memory).
-2.  **Single Bus, Integrated:** DMA and I/O are in one module. Uses bus only once per word.
-3.  **Separate I/O Bus:** A separate bus connects I/O modules to the DMA. The DMA is attached to the system bus. Best efficiency.
+    3.  DMA manages the transfer directly to memory.
+    4.  **Cycle Stealing**: The DMA controller forces the CPU to pause for one bus cycle to transfer a word. This is *not* an interrupt; it just slows instruction execution slightly.
+    5.  DMA interrupts the CPU only when the **entire block** is finished.
+*   **Configurations**:
+    *   *Single Bus, Detached*: Inefficient (bus used twice per word).
+    *   *Single Bus, Integrated*: DMA and I/O combined.
+    *   *Separate I/O Bus*: Best efficiency; DMA acts as a bridge.
 
 ---
 
-## 3. I/O Channels
-As I/O devices became more complex (e.g., 3D graphics), standard DMA wasn't enough. I/O Channels are essentially primitive processors dedicated to I/O.
+## 3. I/O Channels and Processors
+As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channels—specialized processors with their own instruction sets.
 
-* **Architecture:** The CPU instructs the I/O Channel to execute an **I/O Program** located in memory.
-* **Types:**
-    * **Selector Channel:** Controls multiple high-speed devices but selects only **one** at a time for transfer.
-    * **Multiplexor Channel:** Handles multiple low-speed devices simultaneously (byte-interleaved).
+*   **I/O Channel**: Executes I/O instructions stored in main memory.
+*   **Selector Channel**: Controls multiple high-speed devices but selects only **one** at a time for transfer.
+*   **Multiplexor Channel**: Handles multiple low-speed devices simultaneously by interleaving bytes/blocks.
 
 ---
 
 ## 4. External Interfaces
 
 ### FireWire (IEEE 1394)
-High-performance serial bus for digital cameras, VCRs, etc.
-* **Topology:** Daisy chain (up to 63 devices per port). Automatic configuration (no terminators).
-* **Protocol Stack:**
-    1.  **Physical Layer:** Electrical signaling, arbitration.
-    2.  **Link Layer:** Packet transmission (Asynchronous or Isochronous).
-    3.  **Transaction Layer:** Request-response protocol.
-* **Arbitration:** Based on a tree structure. Root is arbiter. First-come-first-served with natural priority (nearest to root wins).
-* **Transmission Types:**
-    * *Asynchronous:* Variable data, explicit address, acknowledged (good for data integrity).
-    * *Isochronous:* Fixed intervals, simplified addressing, no ACK (good for streaming video).
+A high-performance serial bus for digital cameras, drives, and consumer electronics.
+*   **Configuration**: Daisy chain (up to 63 devices). Automatic configuration (no IDs/terminators needed).
+*   **Arbitration**: Tree-structured. The "Root" acts as arbiter. "First come, first served" with preference for devices closest to the root.
+*   **Transmission Types**:
+    *   **Asynchronous**: Variable data amount, acknowledged, uses explicit addresses. Good for data integrity.
+    *   **Isochronous**: Fixed-rate data streams, multicast (simplified addressing), no acknowledgment. Essential for real-time video.
 
 ### Universal Serial Bus (USB)
 Standard for low-cost, plug-and-play connection.
-* **Topology:** Tree structure controlled by a **Root Hub**.
-* **Addressing:** 7-bit address (up to 127 devices). Address 0 is used for a newly connected device until assigned a unique address.
-* **Frames:** Data flows in 1ms frames.
-* **Packet Types:**
-    * **Control (Token):** Addressing, initiating transfer (IN, OUT, SOF).
-    * **Data:** Carries the payload (up to 8192 bits).
-    * **Handshake:** ACK/NAK for error handling.
+*   **Topology**: Tree structure managed by a **Root Hub** (Host).
+*   **Polling**: The host polls hubs to detect new devices.
+*   **Addressing**: Host assigns a unique 7-bit address to each device.
+*   **Frames**: Communication occurs in 1ms frames.
+*   **Packet Types**:
+    *   **Control**: For configuration and command.
+    *   **Data**: Carries the payload (up to 8192 bits).
+    *   **Token**: Specifies the action (IN, OUT, SOF).
+    *   **Handshake**: ACK/NAK for error handling.
 
 ---
 
-## 5. Networking Hardware
-Hardware required to bridge a computer to a network.
+## 5. RAID (Redundant Array of Independent Disks)
+Combines multiple physical disk drives into a single logical unit to improve performance and/or redundancy.
 
-* **Network Interface Card (NIC):**
-    * OSI Layers: Physical and Data Link.
-    * Functions: Signal encoding, parallel-to-serial conversion, buffering, Media Access Control (MAC).
-* **Hub (Physical Layer Device):**
-    * Functions as a multi-port repeater.
-    * Amplifies and repeats signals to all ports.
-    * **Constraint:** Extends the *Collision Domain*. All devices connected to a hub compete for bandwidth.
-* **Router (Network Layer Device):**
-    * Connects different LANs/Data Links.
-    * Uses logical addressing (IP).
-    * **Separates Broadcast Domains.**
-    * Strips data link headers/footers and re-encapsulates frames.
-
----
-
-## 6. RAID (Redundant Array of Independent Disks)
-A storage technology that combines multiple disk drive components into a logical unit to improve performance and/or redundancy.
-
-### Key Characteristics
-1.  Viewed by OS as a single logical drive.
-2.  Data is distributed via **Striping**.
-3.  Redundancy (parity/mirroring) is used for recoverability (except Level 0).
-
-### RAID Levels
-
-| Level      | Name               | Description                                                 | Redundancy                                             |
-| :--------- | :----------------- | :---------------------------------------------------------- | :----------------------------------------------------- |
-| **RAID 0** | Striping           | Data is stripped across disks. High performance (R/W).      | **None** (1 failure = total data loss).                |
-| **RAID 1** | Mirroring          | Data is duplicated on two disks.                            | High (100% redundancy). Expensive ($2N$ disks).        |
-| **RAID 2** | Hamming Code       | Bit-level striping. Uses Hamming code for error correction. | High overhead (requires many check disks).             |
-| **RAID 3** | Bit Parity         | Bit-level striping. Single parity disk.                     | Good for large transfers.                              |
-| **RAID 4** | Block Parity       | Block-level striping. Dedicated parity disk.                | Parity disk is a bottleneck for writes.                |
-| **RAID 5** | Distributed Parity | Block-level striping. Parity distributed across all disks.  | Balanced performance/redundancy. No single bottleneck. |
-| **RAID 6** | Dual Parity        | Two distinct parity blocks for each data block.             | Can withstand **two** simultaneous drive failures.     |
+| Level | Name | Description | Redundancy |
+| :--- | :--- | :--- | :--- |
+| **RAID 0** | Striping | Data is stripped across disks. High R/W speed. | **None**. 1 disk failure = total data loss. |
+| **RAID 1** | Mirroring | Data is duplicated on two disks. | **High**. 100% redundancy. Expensive. |
+| **RAID 2** | Hamming Code | Bit-level striping. Uses Hamming code for error correction. | High overhead (many check disks). Rare. |
+| **RAID 3** | Bit Parity | Bit-level striping with a single dedicated parity disk. | Good for large transfers. |
+| **RAID 4** | Block Parity | Block-level striping with a dedicated parity disk. | Parity disk becomes a write bottleneck. |
+| **RAID 5** | Distributed Parity | Block-level striping. Parity is distributed across *all* disks. | **Balanced**. No single bottleneck. Most common. |
+| **RAID 6** | Dual Parity | Like RAID 5 but with two independent parity blocks. | **Very High**. Survives two simultaneous disk failures. |
 
 
 # Topic 10: Memory Systems
