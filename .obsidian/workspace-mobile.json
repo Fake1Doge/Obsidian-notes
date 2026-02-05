@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CCA101 Principle of Programming.md",
+                "file": "CCA102 Computer Organisation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CCA101 Principle of Programming"
+              "title": "CCA102 Computer Organisation"
             }
           }
         ]
@@ -178,10 +178,20 @@
   },
   "active": "dfa54779312f2fb5",
   "lastOpenFiles": [
+    "CCA101 Principle of Programming.md",
+    "CCA102/Topic 11 - CacheMemory_68.pdf",
+    "CCA102/Topic 12 - VirtualMemory_41.pdf",
+    "CCA102/Topic 9 - Interfacing and Communication.pdf",
+    "CCA102/Topic 4 - Digital Logic Part 2.pdf",
+    "CCA102/Topic 6 - Addressing Modes and Formats_Lecture.pdf",
+    "CCA102/Topic 8 - Control Unit.pdf",
+    "CCA102/Topic 3 - Computer Arithmetic_Pt2_lecture.pdf",
+    "CCA102/Topic 7 - Central Processing Unit.pdf",
+    "CCA102/Topic 3 - Computer Arithmetic_Pt1.pdf",
+    "CCA102/Topic 10 - Memory.pdf",
+    "/CCA102 Computer Organisation.md",
     "CCA101 Short Note.md",
     "CKC111 Short Note.md",
-    "CCA101 Principle of Programming.md",
-    "test.md",
-    "Untitled.base"
+    "test.md"
   ]
 }
