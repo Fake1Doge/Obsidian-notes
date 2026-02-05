@@ -1236,3 +1236,5 @@ When memory is full, the OS must choose a "victim" page to evict.
 * **Virtual Memory**: Allows execution of programs $>$ Physical RAM.
 * **TLB**: Critical for performance to minimize memory access latency during address translation.
 * **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
+
+---
