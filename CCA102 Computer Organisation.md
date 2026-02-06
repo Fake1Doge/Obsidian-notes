@@ -693,7 +693,9 @@ The instruction format defines the layout of bits in an instruction, including t
 
 # Topic 7: Central Processing Unit
 
-## 1. CPU Structure
+## 1. Processor & Register Organisation
+
+### 1.1 CPU Structure
 The CPU is the "brain" of the computer, responsible for the following core functions:
 *   **Fetch instructions**: Read instructions from memory.
 *   **Interpret instructions**: Decode the instruction to determine the required action.
@@ -702,9 +704,9 @@ The CPU is the "brain" of the computer, responsible for the following core funct
 *   **Write data**: Write the results of an operation to memory or an I/O module.
 
 It consists of three major internal components connected by an **Internal CPU Bus**:
-* **Arithmetic and Logic Unit (ALU)**: Performs the actual computation (arithmetic and boolean logic operations), status flagging, and shifting.
-* **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and manages the operation of the ALU.
-* **Registers**: Internal CPU memory used for temporary storage and high-speed access.
+*   **Arithmetic and Logic Unit (ALU)**: Performs computation (arithmetic and boolean logic operations), status flagging, and shifting.
+*   **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and manages the operation of the ALU.
+*   **Registers**: Internal CPU memory used for temporary storage and high-speed access.
 
 > [!INFO] System Bus Connection
 > The CPU connects to the rest of the computer (Memory and I/O) via the **System Bus**, which is divided into:
@@ -712,24 +714,29 @@ It consists of three major internal components connected by an **Internal CPU Bu
 > * **Address Bus**: Identifies the location of data/instructions.
 > * **Control Bus**: Transmits command signals (read, write, interrupt).
 
----
-
-## 2. Register Organization
+### 1.2 Register Organization
 Registers provide high-speed temporary storage (working space) for the CPU.
 
-### User-Visible Registers
+#### User-Visible Registers
 Can be referenced by assembly-level instructions to minimize main memory references.
-* **General Purpose**: May be true general purpose or restricted (specialized). 
-    * *Design Issues*: Number of registers (typically 8-32), register size (large enough for full addresses/data types), and whether to allow combining two registers for double-length values.
-    * *Trade-off*: More registers can reduce memory references but increase instruction size (more bits to specify the register).
-* **Data Registers**: Often used for data manipulation (e.g., Accumulator); sometimes cannot be used for operand address calculation.
-* **Address Registers**:
-    * *Segment Pointer*: Holds the base address of a memory segment.
-    * *Index Register*: Used for indexed addressing (often supports auto-indexing).
-    * *Stack Pointer*: Points to the top of the system stack, allowing implicit addressing.
-* **Condition Codes (Flags)**: Individual bits set by hardware (e.g., Sign, Zero, Carry, Overflow). Usually read implicitly by programs (e.g., for conditional jumps) but cannot always be set directly.
+*   **General Purpose**: May be true general purpose or restricted.
+    *   *Design Issues*:
+        *   **Specialized vs. General**: Specialized registers allow smaller instructions (implicit addressing) but reduce flexibility. General purpose increases flexibility but may increase instruction size.
+        *   **Number**: Typically 8-32. Fewer registers result in more memory references; more registers increase context switch overhead.
+        *   **Size**: Must be large enough to hold the largest address or data type. Some architectures allow combining two registers for double-length values.
+*   **Data Registers**: Often used for data manipulation (e.g., Accumulator); sometimes cannot be used for operand address calculation.
+*   **Address Registers**:
+    *   *Segment Pointer*: Holds the base address of a memory segment.
+    *   *Index Register*: Used for indexed addressing (often supports auto-indexing).
+    *   *Stack Pointer*: Points to the top of the system stack, allowing implicit addressing.
+*   **Condition Codes (Flags)**: Individual bits set by hardware to report operation results.
+    *   **Sign (S)**: Sign bit of result.
+    *   **Zero (Z)**: Result is zero.
+    *   **Carry (C)**: Carry out or borrow.
+    *   **Equal (E)**: Logical compare result.
+    *   **Overflow (O)**: Arithmetic overflow.
 
-### Control & Status Registers
+#### Control & Status Registers
 Used by the Control Unit and OS to manage execution.
 
 | Register | Full Name | Function |
@@ -743,7 +750,7 @@ Used by the Control Unit and OS to manage execution.
 > [!SUMMARY] Supervisor Mode (Kernel Mode)
 > A privileged mode used by the OS (Intel "Ring 0"). It allows execution of privileged instructions and access to protected areas of memory/status registers not available to user programs.
 
-### Case Study: Motorola MC68000 vs. Intel 8086
+### 1.3 Case Study: Motorola MC68000 vs. Intel 8086
 
 | Feature | Motorola MC68000 | Intel 8086 |
 | :--- | :--- | :--- |
@@ -754,35 +761,35 @@ Used by the Control Unit and OS to manage execution.
 
 ---
 
-## 3. The Instruction Cycle
+## 2. The Instruction Cycle
 The execution of a single instruction involves several sub-cycles.
 
-### Data Flow in Sub-Cycles
-1.  **Fetch Cycle**: 
+### 2.1 The Sub-Cycles
+1.  **Fetch Cycle**:
     *   `PC` contains address of next instruction.
     *   Address moved to `MAR`.
     *   Control Unit requests memory read.
     *   Result placed on Data Bus, copied to `MBR`, then to `IR`.
     *   `PC` is incremented by 1 (or instruction length).
-2.  **Indirect Cycle**:
+2.  **Indirect Cycle** (if required):
     *   `IR` is examined; if indirect addressing is used, `MBR` (address part) moved to `MAR`.
     *   Control Unit requests memory read to fetch the effective address.
-3.  **Execute Cycle**: 
+3.  **Execute Cycle**:
     *   Depends on the instruction in `IR`. May involve memory R/W, I/O, or register transfers.
 4.  **Interrupt Cycle**:
     *   Current `PC` is saved to allow resumption (often pushed to stack or saved to `MBR` then memory).
     *   `PC` is loaded with the start address of the interrupt handler routine.
 
-### Interrupts
-* **Types**: Program (error), Timer (multitasking), I/O (device ready), Hardware Failure.
-* **Handling**: Suspend program $\rightarrow$ Save Context (PC, PSW) $\rightarrow$ Set PC to Handler $\rightarrow$ Process $\rightarrow$ Restore Context.
+### 2.2 Interrupts
+*   **Types**: Program (error), Timer (multitasking), I/O (device ready), Hardware Failure.
+*   **Handling**: Suspend program $\rightarrow$ Save Context (PC, PSW) $\rightarrow$ Set PC to Handler $\rightarrow$ Process $\rightarrow$ Restore Context.
 
 ---
 
-## 4. Instruction Pipelining
-Pipelining overlaps the execution of multiple instructions to increase throughput.
+## 3. Instruction Pipelining
+Pipelining overlaps the execution of multiple instructions to increase throughput, similar to an assembly line.
 
-### The 6-Stage Pipeline
+### 3.1 The 6-Stage Pipeline
 1.  **FI (Fetch Instruction)**: Read instruction from memory.
 2.  **DI (Decode Instruction)**: Determine opcode and operand specifiers.
 3.  **CO (Calculate Operands)**: Calculate effective addresses.
@@ -790,31 +797,37 @@ Pipelining overlaps the execution of multiple instructions to increase throughpu
 5.  **EI (Execute Instruction)**: Perform the operation.
 6.  **WO (Write Operand)**: Store result in destination.
 
-### Performance & Limits
-* **Ideal Speedup**: Approaches $k$ (number of stages) for a large number of instructions $n$.
-* **Limitations**: 
-    * *Unequal Stage Duration*: Pipeline must wait for the slowest stage.
-    * *Hazards*: 
-        * **Resource Conflict**: Two stages needing memory at once.
-        * **Data Dependency**: Instruction $B$ needs result of instruction $A$.
-        * **Branch Penalty**: Conditional branches can invalidate prefetched instructions.
+### 3.2 Performance & Limits
+*   **Ideal Speedup**: Approaches $k$ (number of stages) for a large number of instructions $n$.
+*   **Performance Formula**:
+    *   Cycle Time $\tau = \max(\tau_i) + d$
+    *   Total Time $T_k = [k + (n-1)]\tau$
+    *   Speedup $S = \frac{T_1}{T_k} = \frac{nk}{k+(n-1)}$
+*   **Limitations**:
+    *   *Unequal Stage Duration*: Pipeline must wait for the slowest stage.
+    *   *Hazards*:
+        *   **Resource Conflict**: Two stages needing memory at once (e.g., FI and FO).
+        *   **Data Dependency**: Instruction $B$ needs result of instruction $A$.
+        *   **Branch Penalty**: Conditional branches can invalidate prefetched instructions.
 
-### Branching Solutions
-* **Multiple Streams**: Fetching both possible paths (leads to bus contention).
-* **Prefetch Branch Target**: Fetch target in addition to sequential next.
-* **Loop Buffer**: Small, fast memory for recently fetched instructions; excellent for loops.
-* **Branch Prediction**:
-    * *Static*: Predict Never Taken, Always Taken, or predict based on Opcode.
-    * *Dynamic*: Use a **Branch History Table** or Taken/Not Taken switches to track history.
-* **Delayed Branching**: Rearranging instructions so the "delay slot" after a branch is filled with useful work.
+### 3.3 Dealing with Branches
+*   **Multiple Streams**: Replicate pipeline stages to fetch both possible paths. (Leads to bus contention).
+*   **Prefetch Branch Target**: Fetch target in addition to sequential next.
+*   **Loop Buffer**: Small, fast memory for recently fetched instructions. Excellent for loops (branch target is likely in buffer).
+*   **Branch Prediction**:
+    *   *Static*: Predict based on opcode or assume "Never Taken" / "Always Taken".
+    *   *Dynamic*: Use run-time history.
+        *   **Taken/Not Taken Switch**: 1 or 2 bits recording recent history.
+        *   **Branch History Table**: Cache of recent branch addresses and history to predict future behavior.
+*   **Delayed Branch**: Rearrange instructions so that useful work is done in the "delay slot" while the branch outcome is determined.
 
-### Example: Intel 80486 Pipelining
+### 3.4 Example: Intel 80486 Pipelining
 The 80486 uses a 5-stage pipeline:
-1. **Fetch**: From cache or memory into prefetch buffers.
-2. **Decode 1**: Opcode and addressing mode decoded.
-3. **Decode 2**: Expands opcode into control signals and handles complex addressing.
-4. **Execute**: ALU operations, cache access, and register updates.
-5. **Write Back**: Updates registers and status flags.
+1.  **Fetch**: From cache or memory into 16-byte prefetch buffers.
+2.  **Decode 1**: Opcode and addressing mode decoded.
+3.  **Decode 2**: Expands opcode into control signals and handles complex addressing.
+4.  **Execute**: ALU operations, cache access, and register updates.
+5.  **Write Back**: Updates registers and status flags.
 
 ---
 # Topic 8: Control Unit
