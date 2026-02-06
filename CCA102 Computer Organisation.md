@@ -438,7 +438,7 @@ Architects must balance several factors when designing an ISA:
 ## Topic 6: Addressing Modes and Instruction Formats
 
 ### 6.1 Addressing Modes
-Addressing modes specify how the **Effective Address (EA)** of an operand is calculated. They offer a trade-off between address range, addressing flexibility, and the number of memory references/complexity.
+Addressing modes are techniques used to specify the location of operands. They represent a design trade-off between **address range**, **addressing flexibility**, and the **number of memory references** (complexity).
 
 *   **Notation**:
     *   $A$: Contents of the address field in the instruction.
@@ -449,48 +449,83 @@ Addressing modes specify how the **Effective Address (EA)** of an operand is cal
 #### 1. Immediate Addressing
 *   **Mechanism**: The operand is part of the instruction itself.
     *   **Operand = A**
-*   **Usage**: Defining constants or setting initial values.
-*   **Pros**: No memory reference to fetch data (fast).
-*   **Cons**: Limited range (operand size limited by address field size).
+    *   *Example*: `ADD 5` (Add 5 to accumulator).
+*   **Pros**:
+    *   No memory reference to fetch data (saves time).
+    *   Fast execution.
+*   **Cons**:
+    *   Limited range (operand size is limited by the width of the address field).
+    *   Data is constant at run time.
 
 #### 2. Direct Addressing
-*   **Mechanism**: The address field contains the address of the operand.
+*   **Mechanism**: The address field contains the effective address of the operand.
     *   **EA = A**
-*   **Pros**: Simple, single memory reference.
-*   **Cons**: Limited address space (address field is usually smaller than full memory space).
+    *   *Example*: `ADD A` (Add contents of cell A to accumulator).
+*   **Pros**:
+    *   Simple; requires only a single memory reference to access data.
+    *   No additional calculations for EA.
+*   **Cons**:
+    *   Limited address space (address field is usually smaller than the full memory space).
+    *   Address is constant, though data at that address may change.
 
 #### 3. Indirect Addressing
 *   **Mechanism**: The address field points to a memory cell that contains the *address* of the operand (a pointer).
     *   **EA = (A)**
-*   **Pros**: Large address space (word length determines address size). Can be nested/cascaded.
-*   **Cons**: Multiple memory accesses to find operand (slower).
+    *   *Example*: `ADD (A)` (Look in A, find address B, look in B for operand).
+*   **Pros**:
+    *   **Large address space**: $2^n$ where $n$ is memory word length.
+    *   Can be nested, multilevel, or cascaded (e.g., `EA = (...(A)...)`).
+*   **Cons**:
+    *   **Multiple memory accesses** required to find the operand (slower).
 
 #### 4. Register Addressing
 *   **Mechanism**: The operand is held in a register named in the address field.
     *   **EA = R**
-*   **Pros**: Very fast (no memory access), very small address field needed (few registers).
-*   **Cons**: Extremely limited address space (number of registers).
+*   **Pros**:
+    *   **No memory access** (internal CPU bus access is very fast).
+    *   Very small address field needed (fewer bits to address 32 registers than 4GB of memory).
+    *   Shorter instruction length.
+*   **Cons**:
+    *   Extremely limited address space (restricted to the number of available registers).
 
 #### 5. Register Indirect Addressing
 *   **Mechanism**: The register contains the address of the operand in memory.
     *   **EA = (R)**
-*   **Pros**: Large address space ($2^n$), one fewer memory access than standard indirect addressing.
-*   **Cons**: Requires one extra memory reference compared to register addressing.
+*   **Pros**:
+    *   **Large address space** ($2^n$).
+    *   One fewer memory access than standard indirect addressing (Register access + 1 Memory access).
+*   **Cons**:
+    *   Still requires one extra memory reference compared to direct register addressing.
 
 #### 6. Displacement Addressing
-*   **Mechanism**: Combines direct and register indirect addressing. Two values are used: a base value (usually in a register) and a displacement (in instruction).
+*   **Mechanism**: Combines direct and register indirect addressing. The effective address is the sum of a register value and a displacement value.
     *   **EA = A + (R)**
+    *   The address field holds two values:
+        *   $A$: Base value (explicit displacement).
+        *   $R$: Register holding a displacement (or vice versa).
 *   **Variations**:
-    *   **Relative Addressing**: $R = PC$. EA = A + (PC). Used for branch instructions (locality of reference).
-    *   **Base-Register Addressing**: $R$ holds a base address; $A$ holds displacement. Good for relocating programs (segments).
-    *   **Indexing**: $A$ = Base, $R$ = Displacement. Good for accessing arrays ($EA = A + Index$). Auto-indexing ($R++$) handles iteration.
+    *   **Relative Addressing ($R = PC$)**: `EA = A + (PC)`.
+        *   Used for branch instructions.
+        *   Exploits locality of reference.
+    *   **Base-Register Addressing**: `EA = A + (R)`.
+        *   $R$ holds the **Base Address** (start of a segment).
+        *   $A$ holds the displacement.
+        *   Good for program relocation (only the base register needs updating).
+    *   **Indexing**: `EA = A + (R)`.
+        *   $A$ = Base address.
+        *   $R$ = Displacement (Index).
+        *   Good for iterating through arrays (`Auto-indexing`: $R++$).
 
 #### 7. Stack Addressing
 *   **Mechanism**: Operand is implicitly on top of the stack.
-*   **Pros**: No memory reference required in the instruction (implicit).
-*   **Cons**: Limited applicability (only works for stack-based logic).
+    *   **Stack Pointer (SP)**: Register that tracks the address of the top of the stack.
+*   **Pros**:
+    *   No memory reference in the instruction (implicit).
+    *   Very short instructions (0-address).
+*   **Cons**:
+    *   Limited applicability (only works for stack-based logic).
 
-### 6.2 Comparison of Addressing Modes
+### 6.2 Comparison Summary
 
 | Mode | Algorithm | Principal Advantage | Principal Disadvantage |
 | :--- | :--- | :--- | :--- |
@@ -503,33 +538,58 @@ Addressing modes specify how the **Effective Address (EA)** of an operand is cal
 | **Stack** | Implicit | No memory reference | Limited applicability |
 
 ### 6.3 Instruction Formats
-The layout of bits in an instruction defined by its opcode, operands, and addressing modes.
+The instruction format defines the layout of bits in an instruction, including the Opcode, Operands, and Addressing Mode.
 
 #### Key Design Issues
-*   **Instruction Length**: Affected by memory size, bus structure, and speed. Trade-off between powerful instructions (long) and saving space (short).
-*   **Allocation of Bits**:
-    *   Number of addressing modes (Implicit vs. Explicit).
-    *   Number of operands (Typical is 2 or 3).
-    *   Register vs. Memory support.
-    *   Granularity of addresses.
+1.  **Instruction Length**:
+    *   Affected by memory size, memory organization, bus structure, and processor speed.
+    *   **Trade-off**: Powerful instructions (longer) vs. Saving space (shorter).
+2.  **Allocation of Bits**:
+    *   **Addressing Modes**: Implicit vs. Explicit.
+    *   **Number of Operands**: Typical is 2 or 3.
+    *   **Register vs. Memory**: How many registers?
+    *   **Address Range**: Direct addressing range vs. Displacement size.
+3.  **Variable vs. Fixed Length**:
+    *   Variable length saves space but increases decoding complexity.
+    *   Fixed length simplifies pipelining and decoding.
 
 #### Example Architectures
-*   **PDP-11**:
-    *   Variable instruction lengths (16, 32, 48 bits).
-    *   Orthogonal set of addressing modes (independent of opcode).
-    *   Highly flexible but complex hardware.
-*   **VAX**:
-    *   Focus on orthogonality.
-    *   Highly variable format (0 to 6 operands).
-    *   Opcode can be 1 or 2 bytes.
-*   **x86**:
-    *   Complex format with prefixes (e.g., LOCK, REP).
-    *   Fields: Instruction Prefix, Segment Override, Opcode (1-3 bytes), ModR/M (Addressing), SIB (Scale Index Byte), Displacement, Immediate.
-    *   Designed for backward compatibility.
-*   **PowerPC**:
-    *   Fixed instruction length (32 bits).
-    *   Regular formats (Load/Store, Branch, Arithmetic).
-    *   Simplifies decoding (RISC philosophy).
+
+**1. PDP-11 (Variable Length)**
+*   **Lengths**: 16, 32, and 48-bit instructions.
+*   **Formats**: 13 different formats.
+*   **Design**: Orthogonal addressing modes (independent of opcode).
+*   **Pros**: Develops efficient and compact programs.
+*   **Cons**: Increases hardware cost and complexity.
+
+**2. VAX (Highly Variable)**
+*   **Philosophy**: All instructions should have a "natural" number of operands.
+*   **Formats**: Highly variable.
+    *   Opcode: 1 or 2 bytes.
+    *   Operands: 0 to 6.
+    *   Length: 1 byte (min) to 37 bytes (max).
+*   **Feature**: Uses extended opcode with hexadecimal codes.
+
+**3. x86 (Complex)**
+*   **Characteristics**: Variety of formats; only the Opcode is always present.
+*   **Structure**:
+    *   **Instruction Prefixes** (0-4 bytes): e.g., `LOCK` (bus lock), `REP` (repeat string).
+    *   **Segment Override**: Specific segment register.
+    *   **Opcode**: 1 or 2 bytes.
+    *   **ModR/M**: Addressing mode specifier (Mod, Reg/Opcode, R/M fields).
+    *   **SIB**: Scale Index Byte (Scale, Index, Base) for complex addressing.
+    *   **Displacement**: Optional (8, 16, or 32-bit).
+    *   **Immediate**: Optional (8, 16, or 32-bit).
+*   **Backward Compatibility**: Maintains support for 16-bit 8086 code.
+
+**4. PowerPC (RISC / Fixed)**
+*   **Characteristics**:
+    *   **Fixed Length**: All instructions are 32 bits.
+    *   **Regular Formats**: Similar bit allocation across instruction types.
+*   **Examples**:
+    *   **Load/Store**: 6-bit Opcode, 5-bit Dest, 5-bit Base, 16-bit Displacement.
+    *   **Branch**: 6-bit Opcode, 24-bit addressing info.
+    *   **Arithmetic**: 6-bit Opcode, 5-bit Dest, 5-bit Src, 16-bit Immediate.
 
 # Topic 7: Central Processing Unit
 
