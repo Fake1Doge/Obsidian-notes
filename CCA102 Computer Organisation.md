@@ -1,56 +1,105 @@
 ## Topic 1: Introduction to Computer Organisation and Architecture
 
 ### 1.1 Architecture vs. Organisation
-* **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what").
-    * *Examples*: Instruction set, number of bits for data representation, I/O mechanisms, addressing techniques.
-* **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how").
-    * *Examples*: Control signals, interfaces between computer and peripherals, memory technology.
-    * *Analogy*: Architecture is the design (e.g., "Is there a multiply instruction?"), while Organisation is the implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
+*   **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what"). It deals with the functional behavior of the system and the logical execution of a program.
+    *   *Examples*: Instruction set, data representation (number of bits), I/O mechanisms, addressing techniques.
+    *   *Analogy*: The design specifications (e.g., "Is there a multiply instruction?").
+*   **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how"). It deals with structural relationships and hardware details transparent to the programmer.
+    *   *Examples*: Control signals, interfaces between computer and peripherals, memory technology, clock frequency.
+    *   *Analogy*: The implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
+*   **The "Family" Concept**: Manufacturers (like IBM or Intel) often produce a family of computer models that share the **same architecture** but have **different organisations**. This allows for code compatibility (upward compatibility) across models with different prices and performance levels.
 
 ### 1.2 Structure and Function
 A computer is a complex system described hierarchically:
 1.  **Structure**: How components relate to each other.
-    * **CPU (Central Processing Unit)**: Controls operation and performs data processing.
-    * **Main Memory**: Stores data.
-    * **I/O (Input/Output)**: Moves data between the computer and the external environment.
-    * **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
+    *   **CPU (Central Processing Unit)**: Controls operation and performs data processing.
+        *   *Internal Components*: ALU (Arithmetic Logic Unit), Registers, Control Unit, Internal Interconnection.
+    *   **Main Memory**: Stores data.
+    *   **I/O (Input/Output)**: Moves data between the computer and the external environment (peripherals).
+    *   **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
 2.  **Function**: The operation of individual components.
-    * Data processing.
-    * Data storage.
-    * Data movement.
-    * Control.
+    *   **Data Processing**: Performing arithmetic or logical operations on data.
+    *   **Data Storage**: Storing data temporarily (short-term) or permanently (long-term).
+    *   **Data Movement**: Transferring data between the computer and the outside world (I/O) or within internal components.
+    *   **Control**: Managing the resources and coordinating the performance of the functional parts.
 
 ### 1.3 History of Computers
-* **1st Generation (Vacuum Tubes)**: ENIAC (decimal, hardwired), IAS (Von Neumann architecture, stored-program concept).
-* **2nd Generation (Transistors)**: Smaller, cheaper, less heat, solid-state (silicon). Introduction of high-level languages.
-* **3rd Generation (Integrated Circuits)**: Microelectronics. Gates and memory cells on a chip. Moore's Law begins.
-* **4th Generation (Microprocessors)**: All CPU components on a single chip (e.g., Intel 4004).
+*   **1st Generation (Vacuum Tubes)**: 1946-1957.
+    *   **ENIAC (1946)**: First general-purpose electronic digital computer. Designed for artillery range tables. Decimal (not binary), hardwired (manual switches), 18,000 vacuum tubes, 30 tons.
+    *   **Von Neumann / IAS (1952)**: Stored-program concept (instructions and data in the same memory). Binary. Prototype for modern computers.
+*   **2nd Generation (Transistors)**: 1958-1964.
+    *   Replaced vacuum tubes. Smaller, cheaper, less heat, solid-state (silicon).
+    *   Introduction of **High-Level Languages** and system software.
+    *   *Notable Machines*: IBM 7000 series, DEC PDP-1.
+*   **3rd Generation (Integrated Circuits)**: 1965-1971.
+    *   **Microelectronics**: Gates, memory cells, and interconnections on a single chip.
+    *   **Moore's Law**: The number of transistors on a chip doubles approximately every 18 months (originally stated as every year).
+    *   **IBM 360 (1964)**: First planned "family" of computers (common instruction set).
+    *   **DEC PDP-8**: First minicomputer (smaller, cheaper, bus structure).
+*   **Later Generations (LSI, VLSI, ULSI)**:
+    *   **Semiconductor Memory**: 1970 Fairchild (256 bits). Memory capacity doubles approximately every year.
+    *   **Microprocessors**:
+        *   **Intel 4004 (1971)**: First microprocessor (all CPU components on a single chip). 4-bit.
+        *   **Intel 8080 (1974)**: First general-purpose 8-bit microprocessor.
+        *   **Intel 8086 (1978)**: 16-bit, instruction cache.
+*   **Evolution of Architectures**:
+    *   **x86 (CISC)**: Dominant in PCs/Servers. Evolved from 16-bit (8086) $\rightarrow$ 32-bit (80386, Multitasking) $\rightarrow$ Pipelining/FPU (486) $\rightarrow$ Superscalar (Pentium) $\rightarrow$ 64-bit (Core 2).
+    *   **ARM (RISC)**: Dominant in Embedded Systems/Mobile. High speed, small die size, low power. Used in Cortex-A (Application), Cortex-R (Real-time), Cortex-M (Microcontroller).
 
-### 1.4 Performance
-* **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
-* **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
-* **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
+### 1.4 Cloud Computing
+A model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (NIST definition).
+*   **Service Models**:
+    *   **SaaS (Software as a Service)**: Application software (e.g., Gmail, Dropbox).
+    *   **PaaS (Platform as a Service)**: Building blocks, tools, and OS for developers (e.g., Google App Engine).
+    *   **IaaS (Infrastructure as a Service)**: Raw processing, storage, and networks (e.g., AWS EC2).
+
+### 1.5 Performance Assessment
+*   **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
+*   **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
+*   **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
     $$\text{MIPS rate} = \frac{f}{\text{CPI} \times 10^6}$$
-* **Amdahl's Law**: Potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
+*   **Amdahl's Law**: The potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
+    *   *Implication*: Diminishing returns as you add more processors if the code isn't perfectly parallel.
+*   **Benchmarks**: Standard programs used to compare performance.
+    *   **SPEC (System Performance Evaluation Corporation)**: Industry standard. SPEC CPU2017 uses a suite of real-world programs (integer and floating-point) to test CPU, memory, and compiler performance.
 
 ---
 
 ## Topic 2: Number Systems
 
 ### 2.1 Positional Number Systems
-The value of a digit depends on its position.
-* **Decimal (Base 10)**: Digits 0-9.
-* **Binary (Base 2)**: Digits 0, 1. Fundamental for digital systems.
-* **Hexadecimal (Base 16)**: Digits 0-9, A-F. Compact representation of binary.
+In a positional number system, each number is represented by a string of digits in which each digit position $i$ has an associated weight $r^i$, where $r$ is the **radix** or **base** of the number system.
 
-### 2.2 Conversions
-#### Binary to Decimal
-Multiply each bit by $2^n$ (where $n$ is the position) and sum.
-* *Example*: $1101_2 = (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0) = 8 + 4 + 0 + 1 = 13_{10}$.
+$$ \text{Value} = \sum (d_i \times r^i) $$
 
-#### Decimal to Binary (Integer)
-Repeatedly divide by 2 and record the remainder (Read from bottom (MSB) to top (LSB)).
-* *Example*: Convert $13_{10}$
+* **Decimal (Base 10)**: Digits 0-9. $r=10$.
+* **Binary (Base 2)**: Digits 0, 1. $r=2$. Fundamental for digital systems.
+    * *Terminology*:
+        * **Bit**: A single binary digit (0 or 1).
+        * **Nibble**: A group of 4 bits.
+        * **Byte**: A group of 8 bits.
+        * **Word**: A group of bits (typically 16, 32, or 64) processed as a unit.
+* **Octal (Base 8)**: Digits 0-7. $r=8$. Commonly used in computer programming contexts (Unix permissions, etc.).
+* **Hexadecimal (Base 16)**: Digits 0-9, A-F. $r=16$. Compact representation of binary.
+* **Other Systems**: Base-12 (Duodecimal), Base-60 (Sexagesimal), Base-64 (Encoding).
+
+### 2.2 Data Representation Principles
+* **Digital Systems**: Discrete elements are represented by signals.
+    * **Binary**: Only two states (0 and 1). Reliable and easy to implement with switches (transistors).
+* **Data Cells**: Bits are grouped into cells (e.g., an 8-bit memory cell).
+* **MSB (Most Significant Bit)**: The leftmost bit (highest weight).
+* **LSB (Least Significant Bit)**: The rightmost bit (lowest weight).
+
+### 2.3 Conversions
+
+#### Binary/Octal/Hex to Decimal
+Multiply each digit by $r^n$ (where $r$ is the base and $n$ is the position) and sum the results.
+* *Binary Example*: $1101_2 = (1 \times 2^3) + (1 \times 2^2) + (0 \times 2^1) + (1 \times 2^0) = 8 + 4 + 0 + 1 = 13_{10}$.
+* *Hex Example*: $2\text{C}_{16} = (2 \times 16^1) + (12 \times 16^0) = 32 + 12 = 44_{10}$.
+
+#### Decimal to Binary/Octal/Hex (Integer)
+Repeatedly divide the decimal number by the target base $r$ and record the remainder. Read remainders from bottom (MSB) to top (LSB).
+* *Example*: Convert $13_{10}$ to Binary ($r=2$)
     * $13 / 2 = 6$ rem $1$ (LSB)
     * $6 / 2 = 3$ rem $0$
     * $3 / 2 = 1$ rem $1$
@@ -58,134 +107,408 @@ Repeatedly divide by 2 and record the remainder (Read from bottom (MSB) to top (
     * Result: $1101_2$
 
 #### Decimal to Binary (Fraction)
-Repeatedly multiply the fractional part by 2. The integer part becomes the bit.
-* *Example*: $0.625_{10}$
+Repeatedly multiply the fractional part by the target base $r$. The integer part of the result becomes the bit/digit.
+* *Example*: $0.625_{10}$ to Binary
     * $0.625 \times 2 = 1.25$ $\rightarrow$ 1
     * $0.25 \times 2 = 0.50$ $\rightarrow$ 0
     * $0.50 \times 2 = 1.00$ $\rightarrow$ 1
     * Result: $0.101_2$
 
-#### Hexadecimal
-Group binary digits into 4s (starting from the radix point).
-* $0000 \rightarrow 0$ ... $1111 \rightarrow F$.
-* *Example*: $1101 1010_2 \rightarrow \text{D} \text{A}_{16}$.
+#### Binary $\leftrightarrow$ Octal $\leftrightarrow$ Hexadecimal
+These conversions are done by grouping bits because $8 = 2^3$ and $16 = 2^4$.
+* **Binary to Octal**: Group bits into **3s** starting from the radix point.
+    * $110101_2 \rightarrow (110)(101) \rightarrow 65_8$.
+* **Binary to Hexadecimal**: Group bits into **4s** (nibbles) starting from the radix point.
+    * $11011010_2 \rightarrow (1101)(1010) \rightarrow \text{D} \text{A}_{16}$.
+* **Hexadecimal to Binary**: Expand each hex digit into its 4-bit binary equivalent.
+    * $\text{A}_{16} \rightarrow 1010_2$.
+
+### 2.4 Character Codes
+Computers must represent non-numeric data (text) using binary codes.
+
+* **BCD (Binary Coded Decimal)**: Represents each decimal digit (0-9) with a 4-bit binary code.
+    * *Example*: $9_{10} = 1001_{BCD}$. Unused codes: 1010 to 1111.
+* **ASCII (American Standard Code for Information Interchange)**:
+    * 7-bit code (128 characters).
+    * Includes control characters (e.g., NULL, LF, CR) and printable characters (A-Z, a-z, 0-9, punctuation).
+* **EBCDIC (Extended Binary Coded Decimal Interchange Code)**:
+    * 8-bit code (256 characters).
+    * Used mainly on **IBM mainframe** and midrange systems.
+    * Incompatible with ASCII (different bit patterns for characters).
 
 ---
 
 ## Topic 3: Computer Arithmetic
 
 ### 3.1 Arithmetic Logic Unit (ALU)
-* Performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
-* Inputs: Data from registers, Control signals.
-* Outputs: Result to registers/memory, Status flags (Overflow, Zero, etc.).
+*   **Definition**: A combinational circuit that performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
+*   **Inputs**: Data to be operated on (operands) from registers, Control signals from the Control Unit.
+*   **Outputs**: Result of the operation (to registers/memory), Status flags (Zero, Negative, Overflow, Carry).
 
 ### 3.2 Integer Representation
-* **Unsigned Magnitude**: Represents only positive integers.
-* **Signed Magnitude**: MSB is sign (0=+, 1=-). Remaining bits are magnitude. Two zeros exist (+0, -0).
-* **Two's Complement**: Most common method.
-    * **To negate a number**: Invert all bits (1s complement) and add 1.
-    * *Example*: $+6 = 0110$.
-        * Invert: $1001$
-        * Add 1: $1010$ (Represents -6).
-    * **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
-    * *Benefit*: Subtraction is performed as addition of the complement.
+*   **Unsigned Magnitude**: Represents only positive integers. Range: $0$ to $2^n - 1$.
+*   **Signed Magnitude**: MSB is the sign (0=+, 1=-). Remaining bits are magnitude.
+    *   *Drawback*: Two zeros (+0, -0), complex arithmetic.
+*   **Two's Complement**: Most common method for signed integers.
+    *   **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
+    *   **Negation Rule**: Invert all bits (1s complement) and add 1.
+    *   **Extension**: To increase bit width (e.g., 8-bit to 16-bit), perform **Sign Extension** (replicate the MSB to the left).
 
 ### 3.3 Integer Arithmetic
-* **Addition**: Add bits, carry over. Discard carry out of MSB in 2's complement (but check for overflow).
-* **Multiplication**:
-    * **Unsigned**: Uses **Add-Shift** method. If multiplier bit is 1, add multiplicand; always shift.
-    * **Signed (Booth's Algorithm)**: Handles negative multipliers without requiring conversion.
-        * Checks pair of bits $(Q_0, Q_{-1})$.
-        * **10**: Subtract multiplicand ($A \leftarrow A - M$).
-        * **01**: Add multiplicand ($A \leftarrow A + M$).
-        * **00 or 11**: Arithmetic shift right only.
+*   **Addition/Subtraction**:
+    *   Performed using the same hardware (adder). Subtraction is $A + (-B)$ (add 2's complement of B).
+    *   **Overflow**: Occurs when the result of adding two numbers with the same sign yields a result with the opposite sign. (Carry into MSB $\neq$ Carry out of MSB).
+*   **Multiplication**:
+    *   **Unsigned Integers**: Uses the **Add-Shift** method. Iterate through multiplier bits; if 1, add multiplicand (shifted).
+    *   **Signed Integers (Booth's Algorithm)**: Handles negative numbers without prior conversion.
+        *   Examines pairs of bits $(Q_0, Q_{-1})$ where $Q_{-1}$ starts at 0.
+        *   **10**: Subtract multiplicand from accumulator.
+        *   **01**: Add multiplicand to accumulator.
+        *   **00 or 11**: Arithmetic shift right only.
+        *   *Advantage*: Faster than add-shift when there are strings of 1s in the multiplier (reduces additions).
+*   **Division**:
+    *   More complex than multiplication. Involves repetitive shifting and subtraction.
+    *   **Restoring Division**: If subtraction yields a negative remainder, "restore" the value by adding the divisor back.
+
+### 3.4 Floating-Point Representation (IEEE 754)
+Used to represent real numbers (integers + fractions), especially very large or very small ones.
+$$ \text{Value} = (-1)^S \times 1.M \times 2^{E - \text{Bias}} $$
+
+*   **Format Components**:
+    1.  **Sign Bit (S)**: 0 for positive, 1 for negative.
+    2.  **Biased Exponent (E)**: Stored as an unsigned integer. Bias is subtracted to get the true exponent.
+        *   *Why Bias?* To treat exponents as unsigned numbers for easy comparison.
+    3.  **Significand/Mantissa (M)**: The fractional part. The leading '1' is implicit (hidden bit) for normalized numbers.
+
+*   **IEEE 754 Standards**:
+    *   **Single Precision (32-bit)**:
+        *   Sign: 1 bit
+        *   Exponent: 8 bits (Bias = 127)
+        *   Significand: 23 bits
+        *   Range: $\approx 10^{-38}$ to $10^{+38}$.
+    *   **Double Precision (64-bit)**:
+        *   Sign: 1 bit
+        *   Exponent: 11 bits (Bias = 1023)
+        *   Significand: 52 bits
+        *   Range: $\approx 10^{-308}$ to $10^{+308}$.
+
+### 3.5 Floating-Point Arithmetic
+*   **Addition/Subtraction**:
+    1.  **Check for zeros**.
+    2.  **Align Significance**: Shift the significand of the number with the *smaller* exponent to the right until exponents match.
+    3.  **Add/Subtract Significands**.
+    4.  **Normalize**: Shift result and adjust exponent until leading bit is 1.
+*   **Multiplication/Division**:
+    1.  **Add/Subtract Exponents** (and handle bias).
+    2.  **Multiply/Divide Significands**.
+    3.  **Normalize** result.
+    4.  **Round** result.
+*   **Issues**:
+    *   **Exponent Overflow**: Positive exponent exceeds maximum.
+    *   **Exponent Underflow**: Negative exponent is too small (number too close to zero).
+    *   **Significand Overflow**: Addition of same-sign numbers carries out.
+    *   **Precision Loss**: Shifting during alignment drops bits.
 
 ---
 
 ## Topic 4: Digital Logic
 
-### 4.1 Boolean Algebra & Gates
-* **Basic Operations**: AND ($\cdot$), OR ($+$), NOT ($\bar{A}$).
-* **Universal Gates**: NAND, NOR (can implement any Boolean function).
-* **XOR**: Output 1 if inputs differ.
-* **DeMorgan’s Laws**:
-    1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$
-    2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$
+### Part 1: Boolean Algebra & Combinational Circuits
 
-### 4.2 Implementation
-* **Sum of Products (SOP)**: OR of AND terms (look for 1s in Truth Table).
-* **Product of Sums (POS)**: AND of OR terms (look for 0s in Truth Table).
-* **Karnaugh Maps (K-Map)**: Graphic method to simplify Boolean expressions by grouping 1s in powers of 2 ($1, 2, 4, 8, \dots$).
-    * *Rules*: Overlapping allowed, wrap-around allowed.
+#### 4.1 Boolean Algebra
+*   **Fundamental Concepts**:
+    *   **Variables**: Take values 0 (False/Low) or 1 (True/High).
+    *   **Basic Operations**:
+        *   **AND** ($A \cdot B$): True only if both inputs are True.
+        *   **OR** ($A + B$): True if at least one input is True.
+        *   **NOT** ($\bar{A}$ or $A'$): Inverts the input.
+    *   **Other Operations**:
+        *   **NAND**: NOT AND. True unless both inputs are True.
+        *   **NOR**: NOT OR. True only if both inputs are False.
+        *   **XOR** ($A \oplus B$): True if inputs differ (odd number of 1s).
+*   **Basic Identities**:
+    *   **DeMorganâ€™s Laws**:
+        1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$ (NAND equivalent to Bubbled OR)
+        2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$ (NOR equivalent to Bubbled AND)
+    *   **Distributive Laws**: $A(B+C) = AB + AC$ and $A + BC = (A+B)(A+C)$.
+    *   **Involution**: $\bar{\bar{A}} = A$.
 
-### 4.3 Combinational Circuits
-Output depends only on current input.
-* **Multiplexer (MUX)**: Selects one of several inputs to pass to output ($2^n$ inputs, $n$ select lines).
-* **Decoder**: Activates one output line based on input pattern ($n$ inputs, $2^n$ outputs).
-* **Adder**:
-    * *Half Adder*: Adds 2 bits (Sum, Carry).
-    * *Full Adder*: Adds 3 bits (A, B, Carry-in).
+#### 4.2 Simplification Techniques
+*   **Algebraic Simplification**: Using identities to reduce terms.
+*   **Canonical Forms**:
+    *   **Sum of Products (SOP)**: Focuses on input combinations producing a **1**. Implemented with AND-OR logic.
+    *   **Product of Sums (POS)**: Focuses on input combinations producing a **0**. Implemented with OR-AND logic.
+*   **Karnaugh Maps (K-Maps)**:
+    *   A graphical method for simplifying Boolean expressions (up to 4 variables).
+    *   **Structure**: Grid cells arranged in **Gray Code** order (00, 01, 11, 10) so adjacent cells differ by only 1 bit.
+    *   **Grouping Rules**:
+        *   Group adjacent 1s in powers of 2 (1, 2, 4, 8, 16).
+        *   Groups can wrap around edges.
+        *   **Goal**: Largest possible groups, fewest number of groups.
+    *   **Don't Care Conditions (X)**: Input combinations that never occur. Can be treated as 0 or 1 to optimize grouping.
+*   **Quine-McCluskey Method**:
+    *   Tabular method suitable for algorithms and >4 variables.
+    *   Groups terms based on number of 1s, finds prime implicants, and selects the essential ones.
 
-### 4.4 Sequential Circuits
-Output depends on current input *and* previous state (memory).
-* **Flip-Flops**:
-    * **S-R Latch**: Set/Reset. State undefined if $S=1, R=1$.
-    * **D Flip-Flop**: Data. Output follows input at clock edge.
-    * **J-K Flip-Flop**: Toggles when $J=1, K=1$.
-* **Registers**: Group of flip-flops to store multi-bit data.
-* **Counters**: Cycle through states (e.g., Ripple counter, Synchronous counter).
+#### 4.3 Logic Gates Implementation
+*   **Universal Gates**: **NAND** and **NOR** are functionally complete; any Boolean function can be implemented using only NAND or only NOR gates.
+*   **Block Diagrams**: Visualizing functions using interconnected gates.
+
+#### 4.4 Combinational Circuits
+Circuits where the output depends **only** on the current input (Memoryless).
+
+*   **Multiplexer (MUX)**:
+    *   **Function**: Selects one of many data inputs and forwards it to a single output ("Data Selector").
+    *   **Structure**: $2^n$ data inputs, $n$ select lines, 1 output.
+    *   **Applications**: Data routing, parallel-to-serial conversion, implementing Boolean functions.
+*   **Decoder**:
+    *   **Function**: Converts binary information from $n$ input lines to a maximum of $2^n$ unique output lines.
+    *   **Logic**: Only one output is asserted (active) at a time based on the input pattern.
+    *   **Applications**: Memory address decoding (selecting specific RAM chips), instruction decoding.
+*   **Read-Only Memory (ROM)**:
+    *   Can be viewed as a combinational circuit where inputs (address) produce a fixed output (data).
+    *   Structure: Decoder (AND array) followed by OR gates.
+*   **Adders**:
+    *   **Half Adder**: Adds 2 bits. Outputs **Sum** (XOR) and **Carry** (AND).
+    *   **Full Adder**: Adds 3 bits (Bit A, Bit B, Carry-in). Outputs Sum and Carry-out.
+    *   **Ripple Carry Adder**: $n$ full adders cascaded. Carry propagates through stages (Slow).
+    *   **Carry Lookahead Adder**: Logic calculates carry signals independently of the sum bits to reduce propagation delay.
 
 ---
 
-## Topic 5: Instruction Set Characteristics
+### Part 2: Sequential Circuits & PLDs
 
-### 5.1 Memory Organisation
-* **Byte Addressability**: Each address identifies a single byte.
-* **Endianness**:
-    * **Big-Endian**: Most significant byte at lowest address.
-    * **Little-Endian**: Least significant byte at lowest address.
+#### 4.5 Sequential Circuits
+Circuits where the output depends on the current input **AND** the history of past inputs (Current State). Contains a **Feedback Path**.
 
-### 5.2 Instructions
-* **Types**: Data processing (arithmetic/logic), Data storage (memory), Data movement (I/O), Control (branch/jump).
-* **Number of Addresses**:
-    * **3-Address**: `Op Dest, Src1, Src2` (e.g., $A = B + C$). Long instruction format.
-    * **2-Address**: `Op Dest, Src` (e.g., $A = A + B$). Dest is also a source.
-    * **1-Address**: `Op Src` (e.g., `Add B`). Uses an implicit **Accumulator** ($AC = AC + B$).
-    * **0-Address**: Implicit operands (uses a **Stack**). `Push A`, `Push B`, `Add` (pops two, adds, pushes result).
+*   **Flip-Flops (Bit Storage)**:
+    *   **S-R Latch**: Simplest storage. Inputs Set (S) and Reset (R). undefined state if S=1, R=1.
+    *   **Clocked S-R Flip-Flop**: Updates state only on clock pulse (Synchronous).
+    *   **D Flip-Flop (Data)**: Single input $D$. Output $Q$ follows $D$ at clock edge. Ensures $S$ and $R$ are never equal. Used for building registers.
+    *   **J-K Flip-Flop**: Improves S-R. If $J=1, K=1$, the output **Toggles** (inverts).
+*   **Registers**:
+    *   Group of flip-flops used to store binary data (e.g., 8-bit register).
+    *   **Parallel Registers**: All bits written/read simultaneously.
+    *   **Shift Registers**: Data is shifted serially (left or right) through the FFs. Used for serial-parallel interface.
+*   **Counters**:
+    *   Registers that cycle through a specific sequence of states (e.g., 0 to 15).
+    *   **Ripple Counter (Asynchronous)**: The output of one flip-flop drives the clock of the next. Accumulates delay.
+    *   **Synchronous Counter**: All flip-flops are triggered by a common clock. Faster and more stable.
+
+#### 4.6 Programmable Logic Devices (PLDs)
+General-purpose chips that can be configured to implement specific logic functions.
+
+*   **PLA (Programmable Logic Array)**: Programmable **AND** plane feeding a Programmable **OR** plane. Flexible but expensive/complex.
+*   **PAL (Programmable Array Logic)**: Programmable **AND** plane feeding a **Fixed OR** plane. Simpler, cheaper, but less flexible.
+*   **CPLD (Complex PLD)**: Multiple SPLD-like blocks integrated on a single chip with interconnects.
+*   **FPGA (Field-Programmable Gate Array)**:
+    *   **Structure**: Massive array of **Logic Blocks** (Look-Up Tables/LUTs), **I/O Blocks**, and programmable **Interconnects**.
+    *   **Programming**: Volatile (SRAM-based) usually. Defines truth tables in LUTs and routing switches.
+    *   **Advantages**: High density, re-programmable, fast prototyping, parallel execution.
 
 ---
 
-## Topic 6: Addressing Modes
+## Topic 5: Addressing and Instruction Set Characteristics & Functions
 
-How the operand's address is specified in the instruction. Let $EA$ = Effective Address.
+### 5.1 Memory Locations and Addresses
+*   **Memory Structure**: Consists of millions of storage cells.
+    *   **Bit**: Each cell stores a value of 0 or 1.
+    *   **Word**: A group of $n$ bits (where $n$ is the word length, typically 16, 32, or 64 bits).
+*   **Addressing**: Accessing memory requires a unique address for each location.
+    *   $k$ address bits can address $2^k$ locations (Address Space).
+*   **Byte Addressability**:
+    *   Most modern computers assign an address to each **8-bit byte**.
+    *   Successive addresses ($0, 1, 2, \dots$) refer to successive byte locations.
+    *   If word length is 32 bits (4 bytes), words are located at addresses $0, 4, 8, \dots$.
+*   **Word Alignment**:
+    *   Words are "aligned" if they begin at a byte address that is a multiple of the number of bytes in a word.
+    *   Example (16-bit word): Aligned at 0, 2, 4...
+    *   Example (32-bit word): Aligned at 0, 4, 8...
 
-1.  **Immediate**: Operand is in the instruction.
-    * *Example*: `ADD 5`
-    * *Pros*: Fast (no memory fetch). *Cons*: Limited magnitude.
-2.  **Direct**: Address field contains the EA.
-    * *Example*: `ADD A` ($EA = A$).
-    * *Pros*: Simple. *Cons*: Limited address space.
-3.  **Indirect**: Address field points to memory containing the pointer to operand.
-    * *Example*: `ADD (A)` ($EA = \text{Memory}[A]$).
-    * *Pros*: Large address space. *Cons*: Multiple memory accesses (slower).
-4.  **Register**: Operand is in a register.
-    * *Example*: `ADD R1` ($EA = R1$).
-    * *Pros*: Very fast, short instruction. *Cons*: Limited registers.
-5.  **Register Indirect**: Register holds the address of the operand.
-    * *Example*: `ADD (R1)` ($EA = [R1]$).
-    * *Pros*: Large address space, fewer memory accesses than Indirect.
-6.  **Displacement**: Combination of direct and register indirect.
-    * $EA = A + (R)$
-    * Used for: Relative addressing ($R=PC$), Base-register ($R=$ Base), Indexing ($R=$ Index).
-7.  **Stack**: Implicit addressing using a Stack Pointer (SP).
+#### Endianness
+Two ways to assign byte addresses within a larger word (e.g., a 32-bit integer).
+1.  **Big-Endian**:
+    *   The **Most Significant Byte (MSB)** is stored at the **lowest** (first) address.
+    *   "Big end first". Used by IBM 370, Motorola 68000, Internet protocols (Network Byte Order).
+2.  **Little-Endian**:
+    *   The **Least Significant Byte (LSB)** is stored at the **lowest** (first) address.
+    *   "Little end first". Used by Intel x86.
+
+### 5.2 Memory Operations
+*   **Load (Read/Fetch)**:
+    1.  Processor sends the **address** to memory.
+    2.  Processor issues a **Read** control signal.
+    3.  Memory reads data at that address and sends it to the processor.
+*   **Store (Write)**:
+    1.  Processor sends the **address** and the **data** to be written.
+    2.  Processor issues a **Write** control signal.
+    3.  Memory writes the data into the specified location (overwriting previous content).
+
+### 5.3 Instructions and Sequencing
+
+#### Notation
+*   **Register Transfer Notation (RTN)**: Describes data transfer and operations.
+    *   `R1 <- [LOC]`: Transfer content of memory location LOC to register R1.
+    *   `R3 <- [R1] + [R2]`: Add contents of registers R1 and R2, store result in R3.
+*   **Assembly Language Notation**: Represents machine instructions mnemonically.
+    *   `Move LOC, R1`
+    *   `Add R1, R2, R3`
+
+#### Sequencing
+*   **Program Counter (PC)**: Register holding the address of the *next* instruction to be executed.
+*   **Straight-Line Sequencing**: The processor fetches an instruction, increments the PC (e.g., by 4 for 32-bit words) to point to the next sequential instruction, and then executes.
+*   **Branching**: Altering the sequential flow (loops, if-statements).
+    *   **Conditional Branch**: Branch only if a condition is met (e.g., `Branch>0 LOOP`).
+    *   **Condition Codes (Flags)**: Bits (N, Z, V, C) recorded by the processor to track results of the last operation (Negative, Zero, Overflow, Carry).
+
+### 5.4 Types of Instructions
+1.  **Data Transfer**: Move data between memory and processor registers (e.g., `Move`, `Load`, `Store`, `Push`, `Pop`).
+2.  **Arithmetic**: Math operations on numerical data (e.g., `Add`, `Sub`, `Multiply`, `Divide`, `Increment`).
+3.  **Logical**: Bitwise operations (e.g., `AND`, `OR`, `NOT`, `XOR`, `Shift`, `Rotate`).
+4.  **Conversion**: Changing data formats (e.g., Binary to Decimal).
+5.  **Input/Output (I/O)**: Transfer programs/data between memory and external devices (may be memory-mapped or isolated).
+6.  **System Control**: Privileged instructions for the OS (e.g., accessing control registers, Halt).
+7.  **Transfer of Control**:
+    *   **Branch/Jump**: `GoTo` logic.
+    *   **Skip**: Implied address (e.g., "Skip next instruction if zero").
+    *   **Subroutine Call**: `Call` (saves return address) and `Return`.
+
+### 5.5 Types of Operands
+Instructions operate on:
+*   **Addresses**: Can be treated as unsigned integers.
+*   **Numbers**: Integer (signed/unsigned), Floating-point, Packed Decimal.
+*   **Characters**: ASCII (7-bit), EBCDIC (8-bit).
+*   **Logical Data**: Bits or flags.
+
+### 5.6 Number of Addresses
+The number of address fields in an instruction impacts program length and complexity.
+
+| Type | Format | Example ($A = B + C$) | Pros/Cons |
+| :--- | :--- | :--- | :--- |
+| **3-Address** | `Op Dest, Src1, Src2` | `ADD A, B, C` | **Pro**: Short programs. <br> **Con**: Instructions are very long (many bits). |
+| **2-Address** | `Op Dest, Src` | `MOVE A, B`<br>`ADD A, C` | **Pro**: Shorter instructions than 3-addr. <br> **Con**: One operand is overwritten (Dest). Requires extra move. |
+| **1-Address** | `Op Src` | `LOAD B`<br>`ADD C`<br>`STORE A` | **Implicit**: Uses **Accumulator (AC)**. <br> **Pro**: Short instructions. <br> **Con**: Longer programs (more instructions). |
+| **0-Address** | `Op` (Implicit) | `PUSH B`<br>`PUSH C`<br>`ADD`<br>`POP A` | **Implicit**: Uses a **Stack**. <br> **Pro**: Very short instructions. <br> **Con**: Complex logic/stack management. |
+
+### 5.7 Design Decisions
+When designing an Instruction Set Architecture (ISA), architects must decide:
+*   **Operation Repertoire**: How many and which operations to provide? How complex?
+*   **Data Types**: Which types (integer, float, character) are supported directly?
+*   **Instruction Formats**: Length of op-code, number of addresses, fixed vs. variable length.
+*   **Registers**: Number of available CPU registers (more registers = faster access but expensive).
+*   **Addressing Modes**: Methods to specify operand locations (e.g., direct, indirect, register).
+
+---
+
+## Topic 6: Addressing Modes and Instruction Formats
+
+### 6.1 Addressing Modes
+Addressing modes specify how the **Effective Address (EA)** of an operand is calculated. They offer a trade-off between address range, addressing flexibility, and the number of memory references/complexity.
+
+*   **Notation**:
+    *   $A$: Contents of the address field in the instruction.
+    *   $R$: Contents of an address field that refers to a register.
+    *   $EA$: Effective Address (actual location of the operand).
+    *   $(X)$: Contents of memory location $X$ or register $X$.
+
+#### 1. Immediate Addressing
+*   **Mechanism**: The operand is part of the instruction itself.
+    *   **Operand = A**
+*   **Usage**: Defining constants or setting initial values.
+*   **Pros**: No memory reference to fetch data (fast).
+*   **Cons**: Limited range (operand size limited by address field size).
+
+#### 2. Direct Addressing
+*   **Mechanism**: The address field contains the address of the operand.
+    *   **EA = A**
+*   **Pros**: Simple, single memory reference.
+*   **Cons**: Limited address space (address field is usually smaller than full memory space).
+
+#### 3. Indirect Addressing
+*   **Mechanism**: The address field points to a memory cell that contains the *address* of the operand (a pointer).
+    *   **EA = (A)**
+*   **Pros**: Large address space (word length determines address size). Can be nested/cascaded.
+*   **Cons**: Multiple memory accesses to find operand (slower).
+
+#### 4. Register Addressing
+*   **Mechanism**: The operand is held in a register named in the address field.
+    *   **EA = R**
+*   **Pros**: Very fast (no memory access), very small address field needed (few registers).
+*   **Cons**: Extremely limited address space (number of registers).
+
+#### 5. Register Indirect Addressing
+*   **Mechanism**: The register contains the address of the operand in memory.
+    *   **EA = (R)**
+*   **Pros**: Large address space ($2^n$), one fewer memory access than standard indirect addressing.
+*   **Cons**: Requires one extra memory reference compared to register addressing.
+
+#### 6. Displacement Addressing
+*   **Mechanism**: Combines direct and register indirect addressing. Two values are used: a base value (usually in a register) and a displacement (in instruction).
+    *   **EA = A + (R)**
+*   **Variations**:
+    *   **Relative Addressing**: $R = PC$. EA = A + (PC). Used for branch instructions (locality of reference).
+    *   **Base-Register Addressing**: $R$ holds a base address; $A$ holds displacement. Good for relocating programs (segments).
+    *   **Indexing**: $A$ = Base, $R$ = Displacement. Good for accessing arrays ($EA = A + Index$). Auto-indexing ($R++$) handles iteration.
+
+#### 7. Stack Addressing
+*   **Mechanism**: Operand is implicitly on top of the stack.
+*   **Pros**: No memory reference required in the instruction (implicit).
+*   **Cons**: Limited applicability (only works for stack-based logic).
+
+### 6.2 Comparison of Addressing Modes
+
+| Mode | Algorithm | Principal Advantage | Principal Disadvantage |
+| :--- | :--- | :--- | :--- |
+| **Immediate** | Operand = A | No memory reference | Limited operand magnitude |
+| **Direct** | EA = A | Simple | Limited address space |
+| **Indirect** | EA = (A) | Large address space | Multiple memory references |
+| **Register** | EA = R | No memory reference | Limited address space |
+| **Register Indirect** | EA = (R) | Large address space | Extra memory reference |
+| **Displacement** | EA = A + (R) | Flexibility | Complexity |
+| **Stack** | Implicit | No memory reference | Limited applicability |
+
+### 6.3 Instruction Formats
+The layout of bits in an instruction defined by its opcode, operands, and addressing modes.
+
+#### Key Design Issues
+*   **Instruction Length**: Affected by memory size, bus structure, and speed. Trade-off between powerful instructions (long) and saving space (short).
+*   **Allocation of Bits**:
+    *   Number of addressing modes (Implicit vs. Explicit).
+    *   Number of operands (Typical is 2 or 3).
+    *   Register vs. Memory support.
+    *   Granularity of addresses.
+
+#### Example Architectures
+*   **PDP-11**:
+    *   Variable instruction lengths (16, 32, 48 bits).
+    *   Orthogonal set of addressing modes (independent of opcode).
+    *   Highly flexible but complex hardware.
+*   **VAX**:
+    *   Focus on orthogonality.
+    *   Highly variable format (0 to 6 operands).
+    *   Opcode can be 1 or 2 bytes.
+*   **x86**:
+    *   Complex format with prefixes (e.g., LOCK, REP).
+    *   Fields: Instruction Prefix, Segment Override, Opcode (1-3 bytes), ModR/M (Addressing), SIB (Scale Index Byte), Displacement, Immediate.
+    *   Designed for backward compatibility.
+*   **PowerPC**:
+    *   Fixed instruction length (32 bits).
+    *   Regular formats (Load/Store, Branch, Arithmetic).
+    *   Simplifies decoding (RISC philosophy).
 
 # Topic 7: Central Processing Unit
 
 ## 1. CPU Structure
-The CPU is responsible for fetching instructions, interpreting them, fetching data, processing data, and writing data. It consists of three major internal components connected by an **Internal CPU Bus**:
+The CPU is the "brain" of the computer, responsible for the following core functions:
+*   **Fetch instructions**: Read instructions from memory.
+*   **Interpret instructions**: Decode the instruction to determine the required action.
+*   **Fetch data**: Read data from memory or I/O modules if needed for execution.
+*   **Process data**: Perform arithmetic or logical operations on data.
+*   **Write data**: Write the results of an operation to memory or an I/O module.
 
+It consists of three major internal components connected by an **Internal CPU Bus**:
 * **Arithmetic and Logic Unit (ALU)**: Performs the actual computation (arithmetic and boolean logic operations), status flagging, and shifting.
-* **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and controls the operation of the ALU.
+* **Control Unit (CU)**: Controls the movement of data and instructions into and out of the CPU and manages the operation of the ALU.
 * **Registers**: Internal CPU memory used for temporary storage and high-speed access.
 
 > [!INFO] System Bus Connection
@@ -197,127 +520,114 @@ The CPU is responsible for fetching instructions, interpreting them, fetching da
 ---
 
 ## 2. Register Organization
-Registers are at the top of the memory hierarchy (fastest). They function as working space for the CPU.
+Registers provide high-speed temporary storage (working space) for the CPU.
 
 ### User-Visible Registers
-These can be referenced by assembly-level instructions to minimize main memory references.
-* **General Purpose**: Can be used for data or addressing (pointers, counters).
-* **Data Registers**: Used only to hold data (e.g., Accumulator). Cannot be used for operand address calculation.
+Can be referenced by assembly-level instructions to minimize main memory references.
+* **General Purpose**: May be true general purpose or restricted (specialized). 
+    * *Design Issues*: Number of registers (typically 8-32), register size (large enough for full addresses/data types), and whether to allow combining two registers for double-length values.
+    * *Trade-off*: More registers can reduce memory references but increase instruction size (more bits to specify the register).
+* **Data Registers**: Often used for data manipulation (e.g., Accumulator); sometimes cannot be used for operand address calculation.
 * **Address Registers**:
-    * *Segment Pointer*: Base address of the segment.
-    * *Index Register*: Used for indexed addressing.
-    * *Stack Pointer*: Points to the top of the stack (implicit addressing).
-* **Condition Codes (Flags)**: Bits set by the CPU hardware as the result of operations (e.g., Positive, Zero, Overflow).
+    * *Segment Pointer*: Holds the base address of a memory segment.
+    * *Index Register*: Used for indexed addressing (often supports auto-indexing).
+    * *Stack Pointer*: Points to the top of the system stack, allowing implicit addressing.
+* **Condition Codes (Flags)**: Individual bits set by hardware (e.g., Sign, Zero, Carry, Overflow). Usually read implicitly by programs (e.g., for conditional jumps) but cannot always be set directly.
 
 ### Control & Status Registers
-Used by the Control Unit and OS to control CPU operation. usually not visible to user programs.
+Used by the Control Unit and OS to manage execution.
 
 | Register | Full Name | Function |
 | :--- | :--- | :--- |
-| **PC** | Program Counter | Contains the address of the *next* instruction to be fetched. |
-| **IR** | Instruction Register | Contains the instruction currently being executed (opcode). |
-| **MAR** | Memory Address Register | Contains the address of a memory location to read/write. |
-| **MBR** | Memory Buffer Register | Contains the data to be written to memory or the data read from memory. |
-| **PSW** | Program Status Word | A set of flags (Sign, Zero, Carry, Equal, Overflow, Interrupt Enable, Supervisor Mode). |
+| **PC** | Program Counter | Contains the address of the *next* instruction to be fetched; updated after fetch. |
+| **IR** | Instruction Register | Contains the fetched instruction; opcode and operand specifiers are analyzed here. |
+| **MAR** | Memory Address Register | Connected to the address bus; specifies the location for the next read/write. |
+| **MBR** | Memory Buffer Register | Connected to the data bus; holds data to be written or recently read. |
+| **PSW** | Program Status Word | A set of flags indicating CPU status (e.g., Sign, Zero, Carry, Interrupt Enable, Supervisor/User Mode). |
 
 > [!SUMMARY] Supervisor Mode (Kernel Mode)
-> A privileged mode used by the Operating System. It allows execution of privileged instructions (e.g., I/O control, memory management) that are not available to user programs.
+> A privileged mode used by the OS (Intel "Ring 0"). It allows execution of privileged instructions and access to protected areas of memory/status registers not available to user programs.
 
 ### Case Study: Motorola MC68000 vs. Intel 8086
 
 | Feature | Motorola MC68000 | Intel 8086 |
 | :--- | :--- | :--- |
-| **Architecture** | 32-bit | 16-bit |
-| **Philosophy** | Regular instruction set; General Purpose focus. | Special Purpose focus; specialized registers. |
-| **Data Registers** | 8 (D0-D7) for data manipulation. | 4 (AX, BX, CX, DX) - AX is Accumulator, BX Base, etc. |
+| **Architecture** | 32-bit (Regular instruction set) | 16-bit (Special-purpose focus) |
+| **Data Registers** | 8 (D0-D7) for data manipulation. | 4 (AX, BX, CX, DX) - AX is Accumulator. |
 | **Address Registers** | 9 (A0-A7 + Stack Pointers). | 4 Pointers/Index (SP, BP, SI, DI) + 4 Segment Registers (CS, DS, SS, ES). |
-| **Flexibility** | High (fewer constraints on register usage). | Lower (implicit references to specific registers). |
+| **Flexibility** | High; very regular usage. | Lower; many registers have implicit uses. |
 
 ---
 
 ## 3. The Instruction Cycle
-The processing of an instruction is divided into sub-cycles.
+The execution of a single instruction involves several sub-cycles.
 
-### The Sub-Cycles
-1.  **Fetch**: Read the next instruction from memory into the CPU.
-    * PC address moved to MAR -> Memory Read -> Result to MBR -> Move to IR -> Increment PC.
-2.  **Execute**: Interpret opcode and perform the operation (ALU, I/O, Data Transfer).
-3.  **Interrupt**: Check for enabled interrupts. If pending, save current state and switch to interrupt handler.
-4.  **Indirect**: If the instruction uses indirect addressing, this cycle accesses memory to fetch the effective address of the operand.
+### Data Flow in Sub-Cycles
+1.  **Fetch Cycle**: 
+    *   `PC` contains address of next instruction.
+    *   Address moved to `MAR`.
+    *   Control Unit requests memory read.
+    *   Result placed on Data Bus, copied to `MBR`, then to `IR`.
+    *   `PC` is incremented by 1 (or instruction length).
+2.  **Indirect Cycle**:
+    *   `IR` is examined; if indirect addressing is used, `MBR` (address part) moved to `MAR`.
+    *   Control Unit requests memory read to fetch the effective address.
+3.  **Execute Cycle**: 
+    *   Depends on the instruction in `IR`. May involve memory R/W, I/O, or register transfers.
+4.  **Interrupt Cycle**:
+    *   Current `PC` is saved to allow resumption (often pushed to stack or saved to `MBR` then memory).
+    *   `PC` is loaded with the start address of the interrupt handler routine.
 
 ### Interrupts
-Mechanisms for other modules to interrupt normal processing.
-* **Types**: Program (overflow/error), Timer (multitasking), I/O (controller signal), Hardware Failure (parity error).
-* **Handling Process**:
-    1.  Suspend execution of current program.
-    2.  **Save Context**: Save PC and PSW (often to the stack).
-    3.  Load PC with the address of the Interrupt Handler.
-    4.  Process interrupt.
-    5.  Restore context and resume execution.
-
-### Instruction Cycle Flow (State Diagram Summary)
-1.  **Instruction Fetch**
-2.  **Instruction Operation Decoding**
-3.  **Operand Address Calculation** (If indirect, perform **Indirect Cycle**)
-4.  **Operand Fetch**
-5.  **Data Operation** (Execute)
-6.  **Operand Store**
-7.  **Interrupt Check** (If interrupt, perform **Interrupt Cycle**)
-8.  Return to Step 1.
+* **Types**: Program (error), Timer (multitasking), I/O (device ready), Hardware Failure.
+* **Handling**: Suspend program $\rightarrow$ Save Context (PC, PSW) $\rightarrow$ Set PC to Handler $\rightarrow$ Process $\rightarrow$ Restore Context.
 
 ---
 
 ## 4. Instruction Pipelining
-Pipelining is analogous to an assembly line. It increases throughput by overlapping the execution of consecutive instructions.
+Pipelining overlaps the execution of multiple instructions to increase throughput.
 
 ### The 6-Stage Pipeline
-1.  **FI**: Fetch Instruction
-2.  **DI**: Decode Instruction
-3.  **CO**: Calculate Operands (Effective Address)
-4.  **FO**: Fetch Operands
-5.  **EI**: Execute Instruction
-6.  **WO**: Write Operand
+1.  **FI (Fetch Instruction)**: Read instruction from memory.
+2.  **DI (Decode Instruction)**: Determine opcode and operand specifiers.
+3.  **CO (Calculate Operands)**: Calculate effective addresses.
+4.  **FO (Fetch Operands)**: Fetch operands from memory.
+5.  **EI (Execute Instruction)**: Perform the operation.
+6.  **WO (Write Operand)**: Store result in destination.
 
-### Performance Formulas
-Let $n$ be the number of instructions and $k$ be the number of stages.
-
-**Time to execute without pipeline:**
-$$T_1 = n \times k$$
-
-**Time to execute with pipeline:**
-$$T_k = k + (n - 1)$$
-*(The first instruction takes $k$ cycles to fill the pipe; subsequent instructions finish every 1 cycle).*
-
-**Speedup Factor ($S$):**
-$$S = \frac{T_1}{T_k} = \frac{n \times k}{k + (n - 1)}$$
-
-### Pipeline Hazards & Limitations
-Pipelining does not perfectly multiply speed by $k$ due to:
-1.  **Stage Duration**: Not all stages take equal time (pipeline moves at the speed of the slowest stage).
-2.  **Overhead**: Data movement between buffers and control logic.
-3.  **Resource Conflicts**: Multiple stages trying to access memory simultaneously (e.g., FI and FO).
-4.  **Data Dependencies**: An instruction depends on the result of the previous one.
-5.  **Branch Penalty**: Conditional branches disrupt the flow. If the pipeline fetches the wrong instructions, they must be flushed.
+### Performance & Limits
+* **Ideal Speedup**: Approaches $k$ (number of stages) for a large number of instructions $n$.
+* **Limitations**: 
+    * *Unequal Stage Duration*: Pipeline must wait for the slowest stage.
+    * *Hazards*: 
+        * **Resource Conflict**: Two stages needing memory at once.
+        * **Data Dependency**: Instruction $B$ needs result of instruction $A$.
+        * **Branch Penalty**: Conditional branches can invalidate prefetched instructions.
 
 ### Branching Solutions
-Strategies to minimize the performance penalty of conditional branches:
-
-* **Multiple Streams**: Replicate the initial pipeline stages to fetch *both* possible paths. (Expensive, leads to bus contention).
-* **Prefetch Branch Target**: When a branch is recognized, prefetch the target instruction in addition to the next sequential one. Keep it until the branch decision is made.
-* **Loop Buffer**: A small, very fast memory containing the most recently fetched instructions. Great for small loops; functions like a mini-cache.
+* **Multiple Streams**: Fetching both possible paths (leads to bus contention).
+* **Prefetch Branch Target**: Fetch target in addition to sequential next.
+* **Loop Buffer**: Small, fast memory for recently fetched instructions; excellent for loops.
 * **Branch Prediction**:
-    * *Static*: Predict "Never Taken" (assume standard flow) or "Always Taken" (>50% of branches are taken).
-    * *Dynamic*: Uses a **Branch History Table** or state bits (Taken/Not Taken switch) to predict based on recent execution history.
-* **Delayed Branching**: The CPU automatically rearranges instructions (with compiler support). Useful instructions that do not affect the branch are moved into the "delay slot" immediately following the branch, so the CPU stays busy while the branch resolves.
+    * *Static*: Predict Never Taken, Always Taken, or predict based on Opcode.
+    * *Dynamic*: Use a **Branch History Table** or Taken/Not Taken switches to track history.
+* **Delayed Branching**: Rearranging instructions so the "delay slot" after a branch is filled with useful work.
+
+### Example: Intel 80486 Pipelining
+The 80486 uses a 5-stage pipeline:
+1. **Fetch**: From cache or memory into prefetch buffers.
+2. **Decode 1**: Opcode and addressing mode decoded.
+3. **Decode 2**: Expands opcode into control signals and handles complex addressing.
+4. **Execute**: ALU operations, cache access, and register updates.
+5. **Write Back**: Updates registers and status flags.
 
 ---
 
 ## 5. Summary / Key Takeaways
-* **Registers** are the fastest storage; User-Visible registers (General, Data, Address) are for code, while Control registers (PC, IR, PSW) manage the CPU state.
-* The **Instruction Cycle** is dynamic; it adapts to interrupts and indirect addressing needs.
-* **Pipelining** improves performance by parallelizing instruction stages, but it is limited by **Hazards** (Structural, Data, Control).
-* **Branch Prediction** and **Loop Buffers** are critical architectural optimizations to maintain pipeline efficiency in the face of non-sequential code execution.
-* **Speedup Calculation**: Remember that ideal speedup approaches $k$ (number of stages) as $n$ (instructions) becomes very large.
+* **Registers** are the fastest storage; design involves a trade-off between flexibility and instruction size.
+* The **Instruction Cycle** data flow involves coordinated movement between PC, MAR, MBR, and IR.
+* **Pipelining** significantly improves performance but requires complex logic to handle **Hazards** and **Branch Penalties**.
+* **Modern CPUs** use advanced branch prediction and multilevel pipelining (e.g., Intel 80486's 5-stage design) to maintain efficiency.
 
 
 # Topic 8: Control Unit
@@ -327,9 +637,12 @@ Strategies to minimize the performance penalty of conditional branches:
 The **Control Unit (CU)** is the nerve center of the processor, responsible for managing the execution of instructions by generating control signals.
 
 > [!INFO] Functional Requirements
-> The Control Unit must perform two basic tasks:
-> 1.  **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence based on the program logic.
-> 2.  **Execution:** Causing the performance of each individual micro-operation by generating specific control signals.
+> To characterize the control unit, we must:
+> 1.  **Define basic elements** of the processor.
+> 2.  **Describe micro-operations** the processor performs.
+> 3.  **Determine functions** the control unit must perform:
+>     *   **Sequencing:** Causing the CPU to step through a series of micro-operations in the correct sequence based on the program logic.
+>     *   **Execution:** Causing the performance of each individual micro-operation by generating specific control signals.
 
 ### Inputs & Outputs
 To perform its function, the CU relies on specific inputs to determine the state of the system and produces outputs to control behavior.
@@ -337,7 +650,7 @@ To perform its function, the CU relies on specific inputs to determine the state
 **Inputs:**
 * **Clock:** A repetitive sequence of pulses used to measure the duration of micro-operations.
 * **Instruction Register (IR):** Contains the Op-code of the current instruction, which determines which micro-instructions are performed.
-* **Flags:** Indicate the status of the CPU and results of previous ALU operations.
+* **Flags:** Indicate the status of the CPU and results of previous ALU operations (e.g., Zero, Overflow).
 * **Control Bus Signals:** Signals from the control bus, such as interrupt signals and acknowledgments.
 
 **Outputs:**
@@ -419,6 +732,10 @@ The CU is a combinatorial circuit. The logic is implemented via gates, flip-flop
 The CU logic is stored as a "program" (firmware) in a special memory called **Control Memory**.
 * **Concept:** Instructions are broken down into **micro-instructions**. A sequence of micro-instructions is a **micro-program**.
 * **Mechanism:** The opcode from the IR is mapped to a starting address in the Control Memory. The CU reads micro-instructions to generate control signals.
+* **Structure:**
+    * **Control Address Register (CAR):** Specifies the address of the next micro-instruction.
+    * **Control Buffer Register (CBR):** Holds the micro-instruction currently being executed.
+    * **Sequencing Logic:** Determines the next address to load into the CAR.
 * **Pros/Cons:** Simplifies the design and allows for flexibility (can update instruction sets by changing firmware). However, it is generally slower than hardwired because of the memory access time. Preferred for **CISC** architectures.
 
 ### Comparison: Hardwired vs. Micro-programmed
@@ -439,16 +756,21 @@ The CU logic is stored as a "program" (firmware) in a special memory called **Co
 
 | Feature | Horizontal Micro-programming | Vertical Micro-programming |
 | :--- | :--- | :--- |
-| **Word Width** | Wide (Long control words, e.g., 40-100 bits) | Narrow (Short control words, e.g., 16-40 bits) |
-| **Encoding** | Little to no encoding (Unpacked). | Highly encoded (Packed). |
-| **Parallelism** | High degree of parallel operations possible. | Limited ability to express parallelism. |
+| **Word Width** | **Wide** (Long control words, e.g., 40-100 bits) | **Narrow** (Short control words, e.g., 16-40 bits) |
+| **Encoding** | **Unpacked** (Little to no encoding). | **Packed** (Highly encoded). |
+| **Parallelism** | High degree of parallel operations possible (1 bit per control line). | Limited ability to express parallelism. |
 | **Logic** | Simple control logic (Direct mapping to signals). | Complex control logic (Requires decoders). |
+| **Speed** | Faster execution. | Slower execution. |
 
 ### Sequencing Techniques
 Determining the address of the next micro-instruction to execute.
 1.  **Two Address Fields:** The micro-instruction contains two explicit address fields. A multiplexer selects one based on status flags. Simple but requires a wider word.
 2.  **Single Address Field:** Contains one address field. The "next" address is chosen from: the Address Field, the IR code (mapping), or the Next Sequential Address.
 3.  **Variable Format:** Uses a bit to designate the format. One format is for control signals; the other is for branching/sequencing.
+
+### Address Generation
+* **Explicit:** The address is explicitly available in the micro-instruction (e.g., Two-field).
+* **Implicit:** Additional logic is required to generate the address (e.g., Mapping Opcode $\to$ Address, Adding/Combining address portions, Residual control).
 
 ### Encoding
 * **Functional vs. Resource Encoding:**
@@ -473,657 +795,487 @@ Determining the address of the next micro-instruction to execute.
 # Topic 9: Interfacing and Communication
 
 ## 1. I/O Module Fundamentals
-The I/O module acts as the critical bridge between the high-speed CPU/Memory (via the System Bus) and the slower, diverse peripheral devices.
 
-> [!INFO] Definition
-> An **I/O Module** is not just a connector; it is a logical interface that manages the flow of data, control signals, and status information between the processor and external devices.
+The **I/O Module** acts as the critical bridge between the high-speed CPU/Memory (via the System Bus) and the slower, diverse peripheral devices.
 
-### Generic Model
-* **System Bus Side:** Connects via Address Lines, Data Lines, and Control Lines.
-* **Device Side:** Connects via tailored data links to specific peripherals.
+### Why not connect peripherals directly?
+1.  **Variety**: Peripherals vary widely in operation methods; it's impractical to incorporate logic for all of them into the CPU.
+2.  **Data Transfer Rate**: Peripherals are often much slower than the CPU/RAM. Direct connection would bottle-neck the system.
+3.  **Data Formats**: Peripherals use different data formats and word lengths than the computer's internal architecture.
 
-### Key Functions
-1.  **Control & Timing:** Coordinates the flow of traffic between internal resources and external devices.
-    * *Example Sequence:* CPU checks status $\to$ I/O module returns status $\to$ If ready, CPU requests transfer $\to$ Module gets data from device $\to$ Module transfers to CPU.
-2.  **CPU Communication:**
-    * **Command Decoding:** Translates signals (e.g., `READ SECTOR`) into device actions.
-    * **Data:** Exchanges data via the data bus.
-    * **Status Reporting:** Reports states like `BUSY` or `READY`.
-    * **Address Recognition:** Identifies the unique address of the peripheral.
-3.  **Device Communication:** Sends commands, status info, and data to the peripheral.
-4.  **Data Buffering:** Essential for speed matching.
-    * CPU/Memory transfer rates are high; Peripheral rates are low.
-    * Data is buffered in the module to prevent the CPU from slowing down to the device's speed.
-5.  **Error Detection:** Detects mechanical errors (paper jam) or transmission errors (parity bits).
+### Key Functions of an I/O Module
+1.  **Control & Timing**: Coordinates traffic between internal resources and external devices.
+    *   *Steps:* CPU checks status $\to$ Module returns status $\to$ If ready, CPU requests transfer $\to$ Module gets data from device $\to$ Module transfers to CPU.
+2.  **Processor Communication**:
+    *   **Command Decoding**: Accepts commands (e.g., `READ SECTOR`, `SEEK`) from the address bus.
+    *   **Data**: Exchanges data via the data bus.
+    *   **Status Reporting**: Reports device state (BUSY, READY) to the CPU (common because peripherals are slow).
+    *   **Address Recognition**: Recognizes the unique address of each managed peripheral.
+3.  **Device Communication**: Performs commands, sends status info, and transmits data to the peripheral.
+4.  **Data Buffering**: Essential for speed matching. Data is buffered in the module to prevent the CPU from slowing down to the device's transfer rate.
+5.  **Error Detection**: Detects mechanical errors (paper jam) or transmission errors (parity bits).
 
 ---
 
 ## 2. I/O Techniques: The Core Triad
-There are three main techniques for handling I/O operations, evolving from simple to complex to efficient.
+
+There are three main techniques for handling I/O operations, evolving from simple to efficient.
 
 ### A. Programmed I/O
-The CPU has direct control over the I/O operation including sensing status, sending read/write commands, and transferring data.
+The CPU has direct control over the I/O operation, including sensing status, sending read/write commands, and transferring data.
 
-* **Mechanism:**
+*   **Mechanism**:
     1.  CPU issues an I/O command.
     2.  I/O module performs the action and sets bits in its status register.
-    3.  **Busy Waiting:** The CPU must repeatedly poll (check) the status register to see if the operation is complete.
-* **Addressing Modes:**
-    * **Memory-Mapped I/O:** Devices and memory share a single address space. No special commands; standard `Load/Store` works. Uses up memory address space.
-        * *Example:* 10 address lines support $2^{10} = 1024$ total locations for *both* memory and I/O.
-    * **Isolated I/O:** Separate address spaces. Requires special commands (e.g., `IN`, `OUT`).
-        * *Example:* 10 address lines support $1024$ memory locations **AND** $1024$ I/O addresses.
-
-> [!WARNING] Bottleneck
-> **Wastes CPU Time.** The processor spends nearly all its time in a wait loop checking the device status (polling), severely degrading system performance.
+    3.  **Busy Waiting**: The CPU waits and repeatedly checks the status register until the operation is complete.
+*   **Drawback**: Wastes enormous amounts of CPU time in tight wait loops.
+*   **Addressing**:
+    *   **Memory-Mapped**: I/O devices share the same address space as memory. Single read/write lines.
+    *   **Isolated I/O**: Separate address spaces. Specialized commands (`IN`, `OUT`) and control lines.
 
 ### B. Interrupt-Driven I/O
 Overcomes the CPU waiting problem. The CPU issues a command and continues executing other useful work. The I/O module interrupts the CPU when ready.
 
 #### The Process
-1.  **CPU Viewpoint:** Issue read command $\to$ Do other work $\to$ Receive Interrupt $\to$ Save Context (PC, Registers) $\to$ Process Interrupt (Fetch data) $\to$ Restore Context.
-2.  **I/O Module Viewpoint:** Receive read command $\to$ Get data from peripheral $\to$ Signal Interrupt $\to$ Wait for CPU request $\to$ Transfer data.
+1.  **CPU**: Issues read command $\to$ Switches to other work.
+2.  **I/O Module**: Gets data from peripheral $\to$ Signals **Interrupt**.
+3.  **CPU Response**:
+    *   Finishes current instruction.
+    *   Acknowledges interrupt.
+    *   **Saves Context**: Pushes PSW and PC to the control stack.
+    *   Loads new PC from the Interrupt Vector.
+    *   Executes **Interrupt Service Routine (ISR)** to process data.
+    *   Restores context and resumes original program.
 
-#### Design Issues & Solutions
-* **Identification (Who interrupted?):**
-    * *Multiple Lines:* Impractical for many devices.
-    * *Software Poll:* CPU asks each module "Did you interrupt?" (Slow).
-    * *Daisy Chain (Hardware Poll):* Interrupt Acknowledge sent down a chain of modules. The requesting module places its vector ID on the bus.
-    * *Bus Arbitration (Vectored Interrupt):* Module must claim the bus (Master) before raising an interrupt.
-* **Priority:** Higher priority lines/modules can interrupt lower priority service routines.
-
-#### Intel 82C59A Interrupt Controller
-A dedicated chip to manage interrupts for the CPU.
-* **Capacity:** Handles 8 interrupt lines.
-* **Cascadable:** Can be cascaded (Master/Slave) to handle up to 64 lines (e.g., 1 Master + 8 Slaves).
-* **Operation:** Accepts external interrupts $\to$ Determines priority $\to$ Signals CPU (`INTR`) $\to$ CPU Acknowledges $\to$ Controller puts vector on data bus.
+#### Design Issues
+*   **Identification**: How does the CPU know *who* interrupted?
+    *   *Software Poll*: Slow polling of each module.
+    *   *Daisy Chain*: Hardware poll; acknowledgment signal propagates down a chain.
+    *   *Bus Arbitration*: Module must claim the bus (Master) before raising an interrupt (Vectored Interrupt).
+*   **Priority**: Higher priority modules can interrupt lower priority handlers.
+*   **Example (Intel 82C59A)**: An external interrupt controller chip that manages 8 interrupt lines (cascadable to 64) and passes the vector to the CPU.
 
 ### C. Direct Memory Access (DMA)
-Even with interrupts, the CPU is still involved in moving *every* word of data between I/O and memory. DMA removes the CPU from the data transfer path entirely.
+Even with interrupts, the CPU is involved in moving *every word* of data between I/O and memory. DMA removes the CPU from the data transfer path entirely.
 
-* **Function:** A dedicated DMA module takes over the system bus to transfer data directly to/from memory.
-* **Operation:**
-    1.  CPU sends the DMA controller: Read/Write command, Device Address, **Starting Memory Address**, and **Amount of Data**.
+*   **Function**: A dedicated DMA controller takes over the system bus to transfer blocks of data.
+*   **Operation**:
+    1.  CPU tells DMA: Read/Write, Device Address, Starting Memory Address, Amount of Data.
     2.  CPU continues other work.
-    3.  DMA manages the transfer.
-    4.  DMA interrupts CPU only when the *entire block* is transferred.
-
-> [!INFO] Cycle Stealing
-> The DMA controller forces the CPU to suspend operation for one bus cycle to transfer one word. This is **not** an interrupt (no context switch). It merely pauses the CPU for a moment, slightly slowing execution but vastly increasing I/O throughput.
-
-#### DMA Configurations
-1.  **Single Bus, Detached:** DMA acts as a surrogate CPU. Inefficient because every word transfer requires two bus cycles (I/O $\to$ DMA, then DMA $\to$ Memory).
-2.  **Single Bus, Integrated:** DMA and I/O are in one module. Uses bus only once per word.
-3.  **Separate I/O Bus:** A separate bus connects I/O modules to the DMA. The DMA is attached to the system bus. Best efficiency.
+    3.  DMA manages the transfer directly to memory.
+    4.  **Cycle Stealing**: The DMA controller forces the CPU to pause for one bus cycle to transfer a word. This is *not* an interrupt; it just slows instruction execution slightly.
+    5.  DMA interrupts the CPU only when the **entire block** is finished.
+*   **Configurations**:
+    *   *Single Bus, Detached*: Inefficient (bus used twice per word).
+    *   *Single Bus, Integrated*: DMA and I/O combined.
+    *   *Separate I/O Bus*: Best efficiency; DMA acts as a bridge.
 
 ---
 
-## 3. I/O Channels
-As I/O devices became more complex (e.g., 3D graphics), standard DMA wasn't enough. I/O Channels are essentially primitive processors dedicated to I/O.
+## 3. I/O Channels and Processors
+As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channelsâ€”specialized processors with their own instruction sets.
 
-* **Architecture:** The CPU instructs the I/O Channel to execute an **I/O Program** located in memory.
-* **Types:**
-    * **Selector Channel:** Controls multiple high-speed devices but selects only **one** at a time for transfer.
-    * **Multiplexor Channel:** Handles multiple low-speed devices simultaneously (byte-interleaved).
+*   **I/O Channel**: Executes I/O instructions stored in main memory.
+*   **Selector Channel**: Controls multiple high-speed devices but selects only **one** at a time for transfer.
+*   **Multiplexor Channel**: Handles multiple low-speed devices simultaneously by interleaving bytes/blocks.
 
 ---
 
 ## 4. External Interfaces
 
 ### FireWire (IEEE 1394)
-High-performance serial bus for digital cameras, VCRs, etc.
-* **Topology:** Daisy chain (up to 63 devices per port). Automatic configuration (no terminators).
-* **Protocol Stack:**
-    1.  **Physical Layer:** Electrical signaling, arbitration.
-    2.  **Link Layer:** Packet transmission (Asynchronous or Isochronous).
-    3.  **Transaction Layer:** Request-response protocol.
-* **Arbitration:** Based on a tree structure. Root is arbiter. First-come-first-served with natural priority (nearest to root wins).
-* **Transmission Types:**
-    * *Asynchronous:* Variable data, explicit address, acknowledged (good for data integrity).
-    * *Isochronous:* Fixed intervals, simplified addressing, no ACK (good for streaming video).
+A high-performance serial bus for digital cameras, drives, and consumer electronics.
+*   **Configuration**: Daisy chain (up to 63 devices). Automatic configuration (no IDs/terminators needed).
+*   **Arbitration**: Tree-structured. The "Root" acts as arbiter. "First come, first served" with preference for devices closest to the root.
+*   **Transmission Types**:
+    *   **Asynchronous**: Variable data amount, acknowledged, uses explicit addresses. Good for data integrity.
+    *   **Isochronous**: Fixed-rate data streams, multicast (simplified addressing), no acknowledgment. Essential for real-time video.
 
 ### Universal Serial Bus (USB)
 Standard for low-cost, plug-and-play connection.
-* **Topology:** Tree structure controlled by a **Root Hub**.
-* **Addressing:** 7-bit address (up to 127 devices). Address 0 is used for a newly connected device until assigned a unique address.
-* **Frames:** Data flows in 1ms frames.
-* **Packet Types:**
-    * **Control (Token):** Addressing, initiating transfer (IN, OUT, SOF).
-    * **Data:** Carries the payload (up to 8192 bits).
-    * **Handshake:** ACK/NAK for error handling.
+*   **Topology**: Tree structure managed by a **Root Hub** (Host).
+*   **Polling**: The host polls hubs to detect new devices.
+*   **Addressing**: Host assigns a unique 7-bit address to each device.
+*   **Frames**: Communication occurs in 1ms frames.
+*   **Packet Types**:
+    *   **Control**: For configuration and command.
+    *   **Data**: Carries the payload (up to 8192 bits).
+    *   **Token**: Specifies the action (IN, OUT, SOF).
+    *   **Handshake**: ACK/NAK for error handling.
 
 ---
 
-## 5. Networking Hardware
-Hardware required to bridge a computer to a network.
+## 5. RAID (Redundant Array of Independent Disks)
+Combines multiple physical disk drives into a single logical unit to improve performance and/or redundancy.
 
-* **Network Interface Card (NIC):**
-    * OSI Layers: Physical and Data Link.
-    * Functions: Signal encoding, parallel-to-serial conversion, buffering, Media Access Control (MAC).
-* **Hub (Physical Layer Device):**
-    * Functions as a multi-port repeater.
-    * Amplifies and repeats signals to all ports.
-    * **Constraint:** Extends the *Collision Domain*. All devices connected to a hub compete for bandwidth.
-* **Router (Network Layer Device):**
-    * Connects different LANs/Data Links.
-    * Uses logical addressing (IP).
-    * **Separates Broadcast Domains.**
-    * Strips data link headers/footers and re-encapsulates frames.
-
----
-
-## 6. RAID (Redundant Array of Independent Disks)
-A storage technology that combines multiple disk drive components into a logical unit to improve performance and/or redundancy.
-
-### Key Characteristics
-1.  Viewed by OS as a single logical drive.
-2.  Data is distributed via **Striping**.
-3.  Redundancy (parity/mirroring) is used for recoverability (except Level 0).
-
-### RAID Levels
-
-| Level      | Name               | Description                                                 | Redundancy                                             |
-| :--------- | :----------------- | :---------------------------------------------------------- | :----------------------------------------------------- |
-| **RAID 0** | Striping           | Data is stripped across disks. High performance (R/W).      | **None** (1 failure = total data loss).                |
-| **RAID 1** | Mirroring          | Data is duplicated on two disks.                            | High (100% redundancy). Expensive ($2N$ disks).        |
-| **RAID 2** | Hamming Code       | Bit-level striping. Uses Hamming code for error correction. | High overhead (requires many check disks).             |
-| **RAID 3** | Bit Parity         | Bit-level striping. Single parity disk.                     | Good for large transfers.                              |
-| **RAID 4** | Block Parity       | Block-level striping. Dedicated parity disk.                | Parity disk is a bottleneck for writes.                |
-| **RAID 5** | Distributed Parity | Block-level striping. Parity distributed across all disks.  | Balanced performance/redundancy. No single bottleneck. |
-| **RAID 6** | Dual Parity        | Two distinct parity blocks for each data block.             | Can withstand **two** simultaneous drive failures.     |
-
-
-# Topic 10: Memory Systems
-
-## 1. Memory Characteristics & Performance
-
-### Key Characteristics
-
-> [!INFO] Location
-> - **CPU:** Registers (internal).
-> - **Internal:** Main Memory (RAM), Cache.
-> - **External:** Peripheral storage (Disk, Tape), accessible via I/O processors.
-
-> [!INFO] Capacity
-> - **Word Size:** The natural unit of organization (typically 8, 16, 32 bits).
-> - **Addressable Units:** The smallest location that can be uniquely addressed.
->   - Formula: $2^A = N$, where $A$ is the length of the address in bits and $N$ is the number of addressable units.
-
-> [!INFO] Unit of Transfer
-> - **Internal:** Usually governed by the data bus width (equal to word length or larger).
-> - **External:** Usually a block (much larger than a word).
-
-### Access Methods
-
-| Method | Description | Example |
-| :--- | :--- | :--- |
-| **Sequential** | Data is organized in records; read in specific linear sequence. Access time depends on location. | Tape |
-| **Direct** | Individual blocks have unique addresses. Access involves jumping to a vicinity + sequential search. | Disk |
-| **Random** | Individual addresses identify locations exactly. Access time is independent of location or previous access. | RAM |
-| **Associative** | Data is located by comparing contents (addressing by content, not location). Access time is independent of location. | Cache |
-
-### Performance Metrics
-
-> [!INFO] Definitions
-> - **Access Time:** >   - *RAM:* Time between presenting the address and getting valid data.
->   - *Non-RAM:* Time to position the read-write mechanism.
-> - **Memory Cycle Time:** Access time + "recovery" time (time required for transients to die out on signal lines before next access).
-> - **Transfer Rate:** Rate at which data moves in/out of memory.
->   - *RAM:* $1 / (\text{Cycle Time})$
->   - *Non-RAM Formula:* $T_N = T_A + \frac{N}{R}$
->     - $T_N$: Average time to read/write N bits
->     - $T_A$: Average access time
->     - $N$: Number of bits
->     - $R$: Transfer rate (bps)
-
----
-
-## 2. The Memory Hierarchy
-
-### The Hierarchy Pyramid
-The memory system is designed as a hierarchy to balance trade-offs.
-
-1.  **Registers** (In CPU)
-2.  **L1 Cache**
-3.  **L2 Cache**
-4.  **Main Memory** (RAM)
-5.  **Disk Cache**
-6.  **Magnetic Disk**
-7.  **Optical / Tape** (Offline Storage)
-
-### Key Relationships & Trade-offs
-As you move **down** the hierarchy (from Registers to Tape):
-* **Cost per bit:** Decreases
-* **Capacity:** Increases
-* **Access Time:** Increases (Slower)
-* **Frequency of Access:** Decreases (CPU accesses lower levels less often)
-
-> [!NOTE] Design Goal
-> The goal is to achieve the performance of the fastest memory at the cost of the cheapest memory by using a mix of technologies.
-
----
-
-## 3. Semiconductor Memory (RAM & ROM)
-
-### RAM Types: SRAM vs. DRAM
-
-| Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
-| :--- | :--- | :--- |
-| **Storage Mechanism** | Digital flip-flop logic gates. | Capacitors (stores charge). |
-| **Refresh Required?** | **No** (stable as long as power is on). | **Yes** (charge leaks; needs periodic refresh). |
-| **Structure** | Complex, larger cells (multiple transistors). | Simple, smaller cells (1 transistor + 1 capacitor). |
-| **Density** | Lower density. | High density (more bits per chip). |
-| **Cost** | More expensive. | Less expensive. |
-| **Speed** | Faster. | Slower. |
-| **Usage** | **Cache Memory**. | **Main Memory**. |
-
-### ROM Types (Read-Only Memory)
-ROM is non-volatile; data remains when power is lost.
-
-* **Mask ROM:** Data wired into the chip during fabrication. High fixed cost; no error recovery.
-* **PROM (Programmable ROM):** Can be written once electronically. Needs special equipment.
-* **EPROM (Erasable PROM):** Erased by UV light. Entire chip must be erased before rewriting.
-* **EEPROM (Electrically Erasable PROM):** Can erase specific bytes electronically. Slower to write than read.
-* **Flash Memory:** Intermediate between EPROM and EEPROM. High density. Erases in blocks (faster than EPROM) but not byte-level.
-
-### Error Correction
-Memory requires logic to detect and correct errors.
-* **Hard Failure:** Permanent physical defect (wear, environmental abuse).
-* **Soft Error:** Random, non-destructive (power issues, alpha particles).
-
-> [!example] Hamming Error Correcting Code
-> Uses parity bits to detect and correct single-bit errors.
-> - **Syndrome Word:** Result of XORing stored check bits with recalculated check bits.
->   - If **0**: No error.
->   - If **1 bit set**: Error in check bit (ignore).
->   - If **>1 bit set**: Indicates position of data bit error (invert to correct).
-> - **Formula:** $2^K - 1 \ge M + K$ (Where $M$ is data bits, $K$ is check bits).
-
----
-
-## 4. Advanced DRAM & Internal Organization
-
-*> **Note:** While standard Cache Mapping (Direct/Associative) is not detailed in the source text, the file covers "Cache DRAM" and internal memory structure extensively.*
-
-### Internal Organization of Memory Chips
-* **Cell Array:** Cells are organized in a matrix ($W$ words $\times$ $B$ bits).
-* **Operation:**
-    * **Row Decoder:** Selects the row (Word line).
-    * **Sense/Write Circuit:** Reads or writes data via Bit lines.
-    * **Multiplexing:** To reduce pin count, row and column addresses are often multiplexed (sent sequentially) to the address buffer.
-
-### Advanced DRAM Architectures
-Basic DRAM has remained similar for decades; newer types improve speed and access logic.
-
-1.  **SDRAM (Synchronous DRAM):**
-    * Access is synchronized with the external system clock.
-    * CPU doesn't have to wait (idle); it knows exactly when data will be ready.
-    * **Burst Mode:** Allows a stream of data blocks to be fired out rapidly.
-
-2.  **DDR-SDRAM:**
-    * Sends data **twice** per clock cycle (on both the leading and trailing edges).
-
-3.  **RDRAM (Rambus DRAM):**
-    * Competitor to SDRAM (adopted by Intel for Pentium).
-    * Uses a high-speed vertical package bus (up to 1.6 Gbps).
-    * Impedances and clocking are very precisely defined.
-
-4.  **Cache DRAM (CDRAM):**
-    * Integrates a small **SRAM cache** (e.g., 16KB) directly onto the generic DRAM chip.
-    * The SRAM can act as a true cache or a serial buffer for block access.
-
----
-
-## 5. Summary / Key Takeaways
-
-* **Hierarchy Principle:** Faster memory is more expensive and smaller. The CPU relies on a hierarchy (Registers $\to$ Cache $\to$ RAM $\to$ Disk) to optimize performance.
-* **SRAM vs. DRAM:** SRAM is fast/expensive (Flip-flops) used for **Cache**. DRAM is dense/cheap (Capacitors) used for **Main Memory**.
-* **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
-* **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
-* **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
-
-
-# Topic 10: Memory Systems
-
-## 1. Memory Characteristics & Performance
-
-### Key Characteristics
-
-> [!INFO] Location
-> - **CPU:** Registers (internal).
-> - **Internal:** Main Memory (RAM), Cache.
-> - **External:** Peripheral storage (Disk, Tape), accessible via I/O processors.
-
-> [!INFO] Capacity
-> - **Word Size:** The natural unit of organization (typically 8, 16, 32 bits).
-> - **Addressable Units:** The smallest location that can be uniquely addressed.
->   - Formula: $2^A = N$, where $A$ is the length of the address in bits and $N$ is the number of addressable units.
-
-> [!INFO] Unit of Transfer
-> - **Internal:** Usually governed by the data bus width (equal to word length or larger).
-> - **External:** Usually a block (much larger than a word).
-
-### Access Methods
-
-| Method | Description | Example |
-| :--- | :--- | :--- |
-| **Sequential** | Data is organized in records; read in specific linear sequence. Access time depends on location. | Tape |
-| **Direct** | Individual blocks have unique addresses. Access involves jumping to a vicinity + sequential search. | Disk |
-| **Random** | Individual addresses identify locations exactly. Access time is independent of location or previous access. | RAM |
-| **Associative** | Data is located by comparing contents (addressing by content, not location). Access time is independent of location. | Cache |
-
-### Performance Metrics
-
-> [!INFO] Definitions
-> - **Access Time:** >   - *RAM:* Time between presenting the address and getting valid data.
->   - *Non-RAM:* Time to position the read-write mechanism.
-> - **Memory Cycle Time:** Access time + "recovery" time (time required for transients to die out on signal lines before next access).
-> - **Transfer Rate:** Rate at which data moves in/out of memory.
->   - *RAM:* $1 / (\text{Cycle Time})$
->   - *Non-RAM Formula:* $T_N = T_A + \frac{N}{R}$
->     - $T_N$: Average time to read/write N bits
->     - $T_A$: Average access time
->     - $N$: Number of bits
->     - $R$: Transfer rate (bps)
-
----
-
-## 2. The Memory Hierarchy
-
-### The Hierarchy Pyramid
-The memory system is designed as a hierarchy to balance trade-offs.
-
-1.  **Registers** (In CPU)
-2.  **L1 Cache**
-3.  **L2 Cache**
-4.  **Main Memory** (RAM)
-5.  **Disk Cache**
-6.  **Magnetic Disk**
-7.  **Optical / Tape** (Offline Storage)
-
-### Key Relationships & Trade-offs
-As you move **down** the hierarchy (from Registers to Tape):
-* **Cost per bit:** Decreases
-* **Capacity:** Increases
-* **Access Time:** Increases (Slower)
-* **Frequency of Access:** Decreases (CPU accesses lower levels less often)
-
-> [!NOTE] Design Goal
-> The goal is to achieve the performance of the fastest memory at the cost of the cheapest memory by using a mix of technologies.
-
----
-
-## 3. Semiconductor Memory (RAM & ROM)
-
-### RAM Types: SRAM vs. DRAM
-
-| Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
-| :--- | :--- | :--- |
-| **Storage Mechanism** | Digital flip-flop logic gates. | Capacitors (stores charge). |
-| **Refresh Required?** | **No** (stable as long as power is on). | **Yes** (charge leaks; needs periodic refresh). |
-| **Structure** | Complex, larger cells (multiple transistors). | Simple, smaller cells (1 transistor + 1 capacitor). |
-| **Density** | Lower density. | High density (more bits per chip). |
-| **Cost** | More expensive. | Less expensive. |
-| **Speed** | Faster. | Slower. |
-| **Usage** | **Cache Memory**. | **Main Memory**. |
-
-### ROM Types (Read-Only Memory)
-ROM is non-volatile; data remains when power is lost.
-
-* **Mask ROM:** Data wired into the chip during fabrication. High fixed cost; no error recovery.
-* **PROM (Programmable ROM):** Can be written once electronically. Needs special equipment.
-* **EPROM (Erasable PROM):** Erased by UV light. Entire chip must be erased before rewriting.
-* **EEPROM (Electrically Erasable PROM):** Can erase specific bytes electronically. Slower to write than read.
-* **Flash Memory:** Intermediate between EPROM and EEPROM. High density. Erases in blocks (faster than EPROM) but not byte-level.
-
-### Error Correction
-Memory requires logic to detect and correct errors.
-* **Hard Failure:** Permanent physical defect (wear, environmental abuse).
-* **Soft Error:** Random, non-destructive (power issues, alpha particles).
-
-> [!example] Hamming Error Correcting Code
-> Uses parity bits to detect and correct single-bit errors.
-> - **Syndrome Word:** Result of XORing stored check bits with recalculated check bits.
->   - If **0**: No error.
->   - If **1 bit set**: Error in check bit (ignore).
->   - If **>1 bit set**: Indicates position of data bit error (invert to correct).
-> - **Formula:** $2^K - 1 \ge M + K$ (Where $M$ is data bits, $K$ is check bits).
-
----
-
-## 4. Advanced DRAM & Internal Organization
-
-*> **Note:** While standard Cache Mapping (Direct/Associative) is not detailed in the source text, the file covers "Cache DRAM" and internal memory structure extensively.*
-
-### Internal Organization of Memory Chips
-* **Cell Array:** Cells are organized in a matrix ($W$ words $\times$ $B$ bits).
-* **Operation:**
-    * **Row Decoder:** Selects the row (Word line).
-    * **Sense/Write Circuit:** Reads or writes data via Bit lines.
-    * **Multiplexing:** To reduce pin count, row and column addresses are often multiplexed (sent sequentially) to the address buffer.
-
-### Advanced DRAM Architectures
-Basic DRAM has remained similar for decades; newer types improve speed and access logic.
-
-1.  **SDRAM (Synchronous DRAM):**
-    * Access is synchronized with the external system clock.
-    * CPU doesn't have to wait (idle); it knows exactly when data will be ready.
-    * **Burst Mode:** Allows a stream of data blocks to be fired out rapidly.
-
-2.  **DDR-SDRAM:**
-    * Sends data **twice** per clock cycle (on both the leading and trailing edges).
-
-3.  **RDRAM (Rambus DRAM):**
-    * Competitor to SDRAM (adopted by Intel for Pentium).
-    * Uses a high-speed vertical package bus (up to 1.6 Gbps).
-    * Impedances and clocking are very precisely defined.
-
-4.  **Cache DRAM (CDRAM):**
-    * Integrates a small **SRAM cache** (e.g., 16KB) directly onto the generic DRAM chip.
-    * The SRAM can act as a true cache or a serial buffer for block access.
-
----
-
-## 5. Summary / Key Takeaways
-
-* **Hierarchy Principle:** Faster memory is more expensive and smaller. The CPU relies on a hierarchy (Registers $\to$ Cache $\to$ RAM $\to$ Disk) to optimize performance.
-* **SRAM vs. DRAM:** SRAM is fast/expensive (Flip-flops) used for **Cache**. DRAM is dense/cheap (Capacitors) used for **Main Memory**.
-* **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
-* **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
-* **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
-
-
-# Topic 11: Cache Memory Architecture
-
-## 1. Principles & Motivation
-
-### The Problem
-There is a significant speed mismatch between the fast CPU and the slower Main Memory. As processor speed increases, the external bus becomes a bottleneck, causing the CPU to waste cycles waiting for data.
-
-### The Solution: Cache Memory
-Cache is a small, fast memory sitting between the CPU and Main Memory. It acts as a buffer to provide the CPU with the data it needs as quickly as possible.
-
-> [!INFO] Locality of Reference
-> Cache relies on the **Principle of Locality**: When a block of data is fetched for a single memory reference, it is highly likely that future references will be to that same location or adjacent locations.
-> * **Temporal Locality:** reused data.
-> * **Spatial Locality:** nearby data.
-
-### Cache Operation
-The CPU requests contents of a memory location. The system checks the cache:
-1.  **Hit:** If present, data is delivered immediately (Fast).
-2.  **Miss:** If not present, the required block is read from Main Memory into the Cache.
-    * Then, the specific word is delivered to the CPU.
-
----
-
-## 2. Cache Mapping Functions
-
-Since there are fewer cache lines than main memory blocks, we need algorithms to map main memory blocks into cache lines.
-
-### A. Direct Mapping
-Each block of main memory maps to only **one specific** cache line.
-
-* **Logic:**
-    $$i = j \pmod m$$
-    Where:
-    * $i$ = cache line number
-    * $j$ = main memory block number
-    * $m$ = number of lines in cache
-
-* **Address Structure:**
-    The address is split into three fields:
-    $$[ \text{Tag } (s-r) \mid \text{Line } (r) \mid \text{Word } (w) ]$$
-    * **Word:** Identifies the unique word/byte within a block.
-    * **Line (Slot):** Selects one specific line in the cache.
-    * **Tag:** Compared against the tag stored in the cache line to verify if it's the correct block.
-
-* **Pros:** Simple, inexpensive hardware.
-* **Cons:** Fixed location. If a program repeatedly accesses two different blocks that map to the same line, they will constantly evict each other. This is called **Thrashing**.
-
-### B. Associative Mapping
-A main memory block can load into **any** line of the cache.
-
-* **Logic:** No fixed mapping rule; flexibility is maximized.
-* **Address Structure:**
-    The address is interpreted as:
-    $$[ \text{Tag } (s) \mid \text{Word } (w) ]$$
-    * **Tag:** Uniquely identifies the block of memory.
-    * **Word:** Identifies the specific data within the block.
-
-* **Pros:** High hit ratio; prevents thrashing caused by fixed mappings.
-* **Cons:** Complex circuitry. Every line's tag must be examined simultaneously (parallel search) to check for a match, which is expensive.
-
-### C. Set Associative Mapping
-A compromise between Direct and Associative. The cache is divided into $v$ sets, and each set contains $k$ lines ($k$-way associative).
-
-* **Logic:**
-    A block maps to a specific **set**, but can occupy **any line** within that set.
-    $$i = j \pmod v$$
-    Where:
-    * $i$ = cache set number
-    * $j$ = main memory block number
-    * $v$ = number of sets
-
-* **Address Structure:**
-    $$[ \text{Tag } (s-d) \mid \text{Set } (d) \mid \text{Word } (w) ]$$
-    * **Set:** Determines which set to look in.
-    * **Tag:** Compared against all lines within that specific set.
-
-* **Benefit:** Reduces the comparison hardware needed (only compare tags within one set) while maintaining better flexibility than Direct Mapping.
-
-### Mapping Function Summary
-
-| Feature | Direct Mapping | Associative Mapping | Set Associative Mapping |
+| Level | Name | Description | Redundancy |
 | :--- | :--- | :--- | :--- |
-| **Placement** | Fixed (1 location) | Flexible (Anywhere) | Semi-Flexible (Any line in fixed set) |
-| **Hardware Cost** | Low (Simple) | High (Parallel Search) | Moderate |
-| **Thrashing Risk** | High | Low | Low |
-| **Search Speed** | Fastest | Slowest (due to complexity) | Fast |
-| **Best Used For** | Large Caches | Small, High-Performance Caches | General Purpose (Modern Standard) |
+| **RAID 0** | Striping | Data is stripped across disks. High R/W speed. | **None**. 1 disk failure = total data loss. |
+| **RAID 1** | Mirroring | Data is duplicated on two disks. | **High**. 100% redundancy. Expensive. |
+| **RAID 2** | Hamming Code | Bit-level striping. Uses Hamming code for error correction. | High overhead (many check disks). Rare. |
+| **RAID 3** | Bit Parity | Bit-level striping with a single dedicated parity disk. | Good for large transfers. |
+| **RAID 4** | Block Parity | Block-level striping with a dedicated parity disk. | Parity disk becomes a write bottleneck. |
+| **RAID 5** | Distributed Parity | Block-level striping. Parity is distributed across *all* disks. | **Balanced**. No single bottleneck. Most common. |
+| **RAID 6** | Dual Parity | Like RAID 5 but with two independent parity blocks. | **Very High**. Survives two simultaneous disk failures. |
 
----
 
-## 3. Replacement Algorithms
+# Topic 10: Memory Systems
 
-When the cache (or a set) is full, a block must be replaced to make room for new data.
+## 1. Memory Characteristics & Performance
 
-1.  **Least Recently Used (LRU):**
-    * **Concept:** Replace the block that has gone unused for the longest time.
-    * **Effectiveness:** Most effective/popular.
-    * **Implementation:** Hardware maintains "USE" bits. e.g., in 2-way associative, if one line is referenced, the bit is set to 1, and the other is set to 0.
-2.  **First In First Out (FIFO):**
-    * **Concept:** Replace the block that has been in the cache the longest.
-    * **Implementation:** Round-robin or circular buffer.
-3.  **Least Frequently Used (LFU):**
-    * **Concept:** Replace the block with the fewest hits.
-    * **Implementation:** Associates a counter with each line.
-4.  **Random:**
-    * **Concept:** Pick a line at random.
-    * **Performance:** Slightly inferior to algorithms based on usage history.
+### 1.1 Key Characteristics
+*   **Location**:
+    *   **CPU**: Registers (internal).
+    *   **Internal**: Main Memory (RAM), Cache.
+    *   **External**: Peripheral storage (Disk, Tape), accessible via I/O processors.
+*   **Capacity**:
+    *   **Expressed in**: Bytes (1 byte = 8 bits) or words.
+    *   **Word Size**: The natural unit of organization (typically 8, 16, 32 bits).
+    *   **Number of Words**: Or bytes.
+*   **Unit of Transfer**:
+    *   **Internal**: Governed by the data bus width (usually equal to word length, but can be larger e.g., 64, 128, 256 bits).
+    *   **External**: Usually a block, which is much larger than a word.
+*   **Physical Type**:
+    *   **Semiconductor**: RAM, ROM.
+    *   **Magnetic**: Disk, Tape.
+    *   **Optical**: CD, DVD.
+    *   **Others**: e.g., Hologram.
+*   **Physical Characteristics**:
+    *   **Volatile**: Information lost when power is off (e.g., RAM).
+    *   **Non-volatile**: Information remains until deliberately changed (e.g., magnetic surface memories).
+    *   **Non-erasable**: Cannot be changed after creation (e.g., ROM).
+*   **Organisation**: Physical arrangement of bits into words (e.g., interleaved).
 
-> [!Note]
-> Direct Mapping does not need a replacement algorithm because each block has only **one** possible location. If a new block maps there, the old one is automatically evicted.
+### 1.2 Access Methods
 
----
-
-## 4. Write Policies
-
-When data in the cache is altered, main memory must eventually be updated to maintain consistency.
-
-### Write Through
-* **Mechanism:** All writes go to **both** the Cache and Main Memory simultaneously.
-* **Consistency:** Main memory is always valid (up to date).
-* **Drawback:** Generates substantial memory traffic, which can slow down writes.
-
-### Write Back
-* **Mechanism:** Updates are made **only** in the cache initially. An "Update Bit" (or Dirty Bit) is set for that cache line.
-* **Sync:** The block is written to main memory **only when it is replaced/evicted**.
-* **Drawback:** Portions of main memory are invalid (out of sync) until the write-back occurs. I/O modules must access memory through the cache to ensure they get the correct data.
-
-### Comparison Table
-
-| Feature | Write Through | Write Back |
+| Method | Description | Example |
 | :--- | :--- | :--- |
-| **Update Timing** | Immediate (Simultaneous) | Deferred (On replacement) |
-| **Data Consistency** | Main Memory always valid | Main Memory temporarily invalid |
-| **Bus Traffic** | High (Every write accesses bus) | Low (Only accesses bus on eviction) |
-| **Complexity** | Simple | Complex (Needs Dirty Bit & Logic) |
-| **Speed** | Slower writes | Faster writes |
+| **Sequential** | Memory is organized into units of data (records). Access must start at the beginning and read in order. Access time depends on location of data and previous location. | Magnetic Tape |
+| **Direct** | Individual blocks have a unique address. Access involves jumping to a vicinity plus a limited sequential search. Access time depends on location and previous location. | Magnetic Disk |
+| **Random** | Individual addresses identify locations exactly. Access time is independent of the location or previous access. | RAM |
+| **Associative** | Data is located by a comparison with contents of a portion of the store. Access time is independent of location or previous access. | Cache Memory |
+
+### 1.3 Performance Metrics
+*   **Access Time**:
+    *   *For RAM*: Time between presenting the address and getting valid data.
+    *   *For non-RAM*: Time taken to position the read-write mechanism at the desired location.
+*   **Memory Cycle Time**: Primarily applied to RAM. It is the Access Time + the time required for transients to die out on signal lines before the next access.
+*   **Transfer Rate**: Rate at which data can be moved in and out of the memory unit.
+    *   *For RAM*: $1 / (\text{cycle time})$
+    *   *For Non-RAM*: $T_N = T_A + \frac{N}{R}$ (where $T_N$ = average time to R/W N bits, $T_A$ = average access time, $N$ = number of bits, $R$ = transfer rate in bps).
+
+### 1.4 Design Constraints
+Computer memory design is a trade-off between three key factors:
+1.  **Capacity**: How much data can be stored?
+2.  **Access Time**: How fast is the memory? (Must be able to keep up with the processor).
+3.  **Cost**: Must be reasonable in relationship to other components.
+*   **Relationships**: 
+    *   Faster access time $
+ightarrow$ greater cost per bit.
+    *   Greater capacity $
+ightarrow$ smaller cost per bit.
+    *   Greater capacity $
+ightarrow$ slower access time.
 
 ---
 
-## 5. Cache Organization
+## 2. The Memory Hierarchy
 
-### Multilevel Caches
-Modern processors use multiple layers to balance size and speed.
-* **L1 (Level 1):** On-chip (internal). Fastest, smallest. Eliminates external bus access for internal operations.
-* **L2 (Level 2):** Originally external, now often on-chip. Accessed if data is not in L1.
-* **L3 (Level 3):** Usually external (or shared on-die for multi-core).
-* **Goal:** If SRAM (L2) is fast enough to match bus speed, data can be accessed with zero-wait states.
+### 2.1 The Hierarchy Pyramid
+The design solution to memory constraints is not to rely on a single technology, but to employ a memory hierarchy.
 
-### Unified vs. Split Caches
-* **Unified Cache:** Stores both Data and Instructions in the same cache.
-    * *Advantage:* Higher hit rate generally; load balances automatically (e.g., if a program has many instructions and little data, the cache fills with instructions).
-* **Split Cache:** Separate caches for **Instructions** and **Data**.
-    * *Advantage:* Essential for pipelining. It eliminates contention between the **Instruction Fetch Unit** (trying to read code) and the **Execution Unit** (trying to load/store data).
-    * *Usage:* Common in superscalar machines like Pentium and PowerPC.
+1.  **Registers** (In CPU)
+2.  **L1 Cache**
+3.  **L2 Cache**
+4.  **Main Memory** (RAM)
+5.  **Disk Cache**
+6.  **Magnetic Disk**
+7.  **Optical / Tape** (Offline Storage)
+
+### 2.2 Key Relationships
+As you move **down** the hierarchy:
+*   Decreasing cost per bit.
+*   Increasing capacity.
+*   Increasing access time.
+*   Decreasing frequency of memory access by the processor.
+
+---
+
+## 3. Semiconductor Main Memory
+
+### 3.1 The Memory Cell
+The basic element of semiconductor memory is the memory cell.
+*   **Properties**:
+    1.  Two stable states (representing binary 1 and 0).
+    2.  Capable of being written into (to set the state).
+    3.  Capable of being read to sense the state.
+*   **Operation**:
+    *   **Write**: Select line is activated, Control signal (R/W) is set to Write, and Data is fed in.
+    *   **Read**: Select line is activated, Control signal is set to Read, and Sense line outputs the state.
+
+### 3.2 RAM Types: SRAM vs. DRAM
+
+| Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
+| :--- | :--- | :--- |
+| **Storage Mechanism** | Digital device using traditional **flip-flop** logic gates. | Stores data as **charge on capacitors**. |
+| **Refresh Required?** | **No** (stable as long as power is supplied). | **Yes** (charge leaks; needs periodic refresh every few ms). |
+| **Structure** | Complex (multiple transistors per cell). | Simple (1 transistor, 1 capacitor per cell). |
+| **Density/Size** | Lower density, larger physical size. | Higher density, smaller per cell. |
+| **Cost** | More expensive. | Less expensive. |
+| **Speed** | Faster. | Slower (due to refresh and capacitor charging). |
+| **Typical Usage** | **Cache Memory**. | **Main Memory**. |
+
+> [!INFO] DRAM Refresh
+> All DRAMs require a **Refresh Circuit** on the chip. It disables the chip while cells are refreshed, stepping through all rows to read and write back the data. This slows down apparent performance.
+
+### 3.3 ROM (Read-Only Memory)
+ROM provides permanent, non-volatile storage.
+*   **Applications**: Microprogramming, library subroutines, system programs (BIOS), function tables.
+*   **Advantage**: Data/programs are permanent in main memory; no need to load from secondary storage.
+*   **Disadvantage**: Data is wired into the chip during fabrication. High fixed cost and no room for error.
+
+**Types of ROM**:
+*   **PROM (Programmable ROM)**: Written once electronically after fabrication. Burning fuses at specific points achieves the '1' state.
+*   **EPROM (Erasable PROM)**: Read and written electronically. Erased by exposure to **UV light** (entire chip is erased).
+*   **EEPROM (Electrically Erasable PROM)**: Can be erased and written electronically at the byte level. Takes longer to write than read.
+*   **Flash Memory**: Intermediate between EPROM and EEPROM. Erases in blocks rather than bytes. High density.
+
+---
+
+## 4. Chip Organisation and Advanced DRAM
+
+### 4.1 Internal Organisation
+Memory cells are organized in the form of a string or array.
+*   **Address Decoder**: Converts the address bits to a signal that selects a specific word line ($W_0, W_1, \dots$).
+*   **Sense/Write Circuit**: Reads or stores data in the selected word cell.
+*   **Pin Calculation**: To address $1	ext{K}$ ($1024$ bit) memory cells:
+    *   **$128 	imes 8$ organisation**: $7$ for word, $8$ for bit, $2$ for R/W+CS = $17+2$ pins.
+    *   **$1024 	imes 1$ organisation**: $10$ for word, $1$ for bit, $2$ for R/W+CS = $13+2$ pins.
+*   **Multiplexing**: To reduce pins, address is split into Row and Column addresses (e.g., $16	ext{Mbit}$ DRAM as $2048 	imes 2048 	imes 4$ array reduces address pins from $22$ to $11$).
+
+### 4.2 Advanced DRAM Architectures
+1.  **SDRAM (Synchronous DRAM)**: Access is synchronized with an external clock. CPU knows exactly when data will be ready. Supports **Burst Mode** (firing a stream of data in blocks).
+2.  **DDR-SDRAM**: Sends data twice per clock cycle (leading and trailing edge).
+3.  **RDRAM (Rambus DRAM)**: Uses a high-speed vertical bus (up to $1.6	ext{Gbps}$). Adopted by Intel for Pentium/Itanium.
+4.  **Cache DRAM (CDRAM)**: Integrates a small SRAM cache ($16	ext{KB}$) onto a generic DRAM chip.
+
+---
+
+## 5. Error Correction
+
+Memory is susceptible to failures:
+*   **Hard Failure**: Permanent physical defect (wear, environment).
+*   **Soft Error**: Random, non-destructive (power spikes, alpha particles).
+
+### 5.1 Error Correcting Code (ECC) Function
+When data is written, a calculation function $f$ produces a code $K$. Both are stored. When read, a new code $K'$ is generated. If $K 
+eq K'$, an error is detected.
+
+### 5.2 Hamming Error Correcting Code
+*   **Syndrome Word**: XORed check bits. If $0$, no error.
+*   **Capability**: Can correct single-bit errors.
+*   **Formula**: $2^K - 1 \ge M + K$ (e.g., for $8$ data bits, $4$ check bits are needed because $2^4 - 1 = 15 \ge 8 + 4 = 12$).
+*   **Characteristics**:
+    *   If syndrome word is all $0$s $
+ightarrow$ no error.
+    *   If only one bit is $1$ $
+ightarrow$ error in a check bit.
+    *   If more than one bit is $1$ $
+ightarrow$ value indicates position of the data bit in error.
 
 ---
 
 ## 6. Summary / Key Takeaways
-* **Goal:** Cache acts as a buffer to match CPU speed with slower memory using the **Principle of Locality**.
-* **Mapping:**
-    * **Direct:** Simple, fixed mapping ($i=j\%m$), prone to thrashing.
-    * **Associative:** Flexible, complex search, expensive.
-    * **Set Associative:** Best of both worlds; maps to a set ($i=j\%v$), associative within the set.
-* **Replacement:** **LRU** is the standard for associative caches. Direct mapping has no choice but to replace the resident block.
-* **Write Policy:** **Write Back** reduces bus traffic but requires "Dirty Bits"; **Write Through** is safer but slower.
-* **Structure:** Modern CPUs use **Split L1 Caches** (Instruction/Data) to support pipelining and **Multilevel (L1/L2/L3)** hierarchies to optimize access times.
 
+*   **Memory Hierarchy**: Balances cost, capacity, and speed.
+*   **SRAM vs DRAM**: SRAM (fast/cache) uses flip-flops; DRAM (dense/main) uses capacitors and requires refresh.
+*   **ROM**: Non-volatile storage; varieties include PROM, EPROM, and Flash.
+*   **Advanced DRAM**: Technologies like SDRAM and DDR improve throughput by syncing with clocks or doubling data rates.
+*   **Error Correction**: Essential for reliability; Hamming codes allow for automatic correction of single-bit flips.
 
-# Topic 12: Virtual Memory
+---
+# Topic 11: Cache Memory Architecture
+
+## 1. Principles & Motivation
+
+### 1.1 The Speed Mismatch
+There is a significant speed mismatch between the fast CPU and the slower Main Memory. As processor speed increases, the external bus becomes a bottleneck, causing the CPU to waste cycles waiting for data.
+
+### 1.2 The Solution: Cache Memory
+Cache is a small, fast memory sitting between the CPU and Main Memory. It acts as a buffer to provide the CPU with the data it needs as quickly as possible at the price of cheaper semiconductor memories.
+
+> [!INFO] Locality of Reference
+> Cache relies on the **Principle of Locality**: When a block of data is fetched for a single memory reference, it is highly likely that future references will be to that same location or adjacent locations.
+> * **Temporal Locality**: Recently accessed data is likely to be accessed again soon.
+> * **Spatial Locality**: Data near recently accessed data is likely to be accessed soon.
+
+### 1.3 Cache Read Operation Sequence
+1.  Receive address **RA** from CPU.
+2.  Check if the block containing **RA** is in the cache.
+3.  **If Yes (Hit)**: Fetch the word from cache and deliver to CPU.
+4.  **If No (Miss)**:
+    *   Access Main Memory for the block containing **RA**.
+    *   Allocate a cache line for the block.
+    *   Load the Main Memory block into the cache line.
+    *   Deliver the word to the CPU.
+
+---
+
+## 2. Cache/Main Memory Structure
+
+The relationship between cache and main memory is defined by the following parameters:
+
+*   **Main Memory**: Consists of $2^n$ addressable words.
+    *   Considered to consist of $M$ blocks of $K$ words each.
+    *   $M = 2^n / K$.
+*   **Cache**: Consists of $C$ lines (slots) of $K$ words each.
+    *   The number of lines is much less than the number of blocks ($C \ll M$).
+    *   Each line includes a **Tag** to identify which block of main memory is currently occupying it.
+
+---
+
+## 3. Elements of Cache Design
+
+### 3.1 Mapping Functions
+Since there are fewer cache lines than main memory blocks, algorithms are needed to determine where a block goes.
+
+#### A. Direct Mapping
+Each block of main memory maps to only **one specific** cache line.
+*   **Logic**: $i = j \pmod m$ (where $i$ = line, $j$ = block, $m$ = lines in cache).
+*   **Address Structure**: $[ \text{Tag } (s-r) \mid \text{Line } (r) \mid \text{Word } (w) ]$
+    *   *Word*: Identifies unique word within a block.
+    *   *Line*: Selects specific line in cache.
+    *   *Tag*: Used to verify if the block in the line is the requested one.
+*   **Pros**: Simple, inexpensive hardware.
+*   **Cons**: Fixed location leads to **Thrashing** if a program repeatedly accesses two blocks that map to the same line.
+
+#### B. Associative Mapping
+A main memory block can load into **any** line of the cache.
+*   **Logic**: No fixed mapping rule; every line's tag is examined for a match.
+*   **Address Structure**: $[ \text{Tag } (s) \mid \text{Word } (w) ]$
+*   **Pros**: High hit ratio; prevents thrashing.
+*   **Cons**: Complex and expensive circuitry (requires parallel search/comparison logic).
+
+#### C. Set Associative Mapping
+A compromise between Direct and Associative. Cache is divided into $v$ sets, each containing $k$ lines ($k$-way associative).
+*   **Logic**: $i = j \pmod v$ (where $i$ = set number).
+*   **Address Structure**: $[ \text{Tag } (s-d) \mid \text{Set } (d) \mid \text{Word } (w) ]$
+*   **Popularity**: 2-way ($v = m/2, k = 2$) is very common as it significantly improves hit rate over direct mapping at moderate cost.
+
+---
+
+### 3.2 Replacement Algorithms
+Used when a new block must be loaded into a full cache (only applies to Associative and Set Associative).
+
+1.  **Least Recently Used (LRU)**: Replace the block that has gone unused for the longest time. Most effective and popular.
+2.  **First In First Out (FIFO)**: Replace the block that has been in the cache the longest (implemented as a circular buffer).
+3.  **Least Frequently Used (LFU)**: Replace the block with the fewest hits using a counter.
+4.  **Random**: Pick a line at random; performance is only slightly inferior to usage-based algorithms.
+
+---
+
+### 3.3 Write Policies
+Determines when Main Memory is updated after a cache write.
+
+*   **Write Through**:
+    *   All writes go to **both** cache and main memory.
+    *   *Pro*: Main memory is always valid.
+    *   *Con*: High memory traffic slows down writes.
+*   **Write Back**:
+    *   Updates are made **only in cache**. An **Update Bit** (Dirty Bit) is set.
+    *   Written to main memory only when the block is replaced.
+    *   *Pro*: Faster writes, 15% of memory references are typically writes.
+    *   *Con*: Portions of main memory are invalid until write-back; I/O must be careful.
+
+> [!WARNING] Cache Coherency
+> When multiple devices (e.g., I/O, other CPUs) have access to memory, cache data can become stale. Solutions include **Bus watching** (monitoring writes to main memory), **Hardware transparency**, and designating **Noncacheable memory**.
+
+---
+
+### 3.4 Block/Line Size
+*   As block size increases, the hit ratio initially increases (Principle of Locality).
+*   However, if block size becomes too large, the hit ratio decreases because:
+    1.  Fewer blocks fit in the cache.
+    2.  Additional words in the block are farther from the requested word and less likely to be needed soon.
+
+---
+
+## 4. Cache Organization & Case Studies
+
+### 4.1 Number of Caches
+*   **Multilevel Caches**:
+    *   **L1**: On-chip, fastest. Eliminates external bus access.
+    *   **L2**: Often on-chip now. Uses fast SRAM to match bus speed (zero-wait states).
+    *   **L3**: Added for massive databases/server workloads.
+*   **Unified vs. Split Caches**:
+    *   **Unified**: One cache for data and instructions. Higher hit rate (automatic load balance).
+    *   **Split**: Separate instruction and data caches. Essential for **Pipelining** to eliminate contention between instruction fetch and execution units.
+
+### 4.2 Intel Cache Evolution
+| Processor | Cache Feature |
+| :--- | :--- |
+| **80386** | No on-chip cache; external cache added via faster memory. |
+| **80486** | 8KB on-chip L1 (4-way set associative, 16-byte lines). |
+| **Pentium** | Two on-chip L1 caches (split data/instruction). |
+| **Pentium Pro** | Back-side bus dedicated to L2 cache for higher speed. |
+| **Pentium II** | L2 cache moved onto the processor chip. |
+| **Pentium III**| L3 cache added off-chip. |
+| **Pentium 4** | L1 instruction (12K mops), L1 data (16KB), L2 (512KB), L3 (1MB on-chip). |
+
+### 4.3 Pentium 4 Design Reasoning
+*   Decodes instructions into RISC-like **micro-ops** fixed length before L1 cache to allow superscalar pipelining.
+*   Data cache is typically write-back but can be configured to write-through.
+*   L2 and L3 caches are 8-way set-associative with 128-byte line sizes.
+
+### 4.4 PowerPC Cache Examples
+*   **601**: Single 32KB 8-way set associative.
+*   **603**: 16KB (8KB data / 8KB instruction).
+*   **G3 & G4**: 64KB L1, up to 1MB L2.
+*   **G5**: 32KB instruction cache, 64KB data cache.
+
+---
+
+## 5. Summary / Key Takeaways
+*   **Goal**: Bridge the CPU-Memory gap using the **Principle of Locality**.
+*   **Trade-off**: Direct mapping is simple but prone to thrashing; associative mapping is flexible but expensive.
+*   **Hierarchy**: Modern systems use multilevel split caches to support high-speed pipelined execution.
+*   **Policies**: Write-back is more efficient for performance, while write-through ensures data consistency.
+
+---
+# Topic 12: Memory Management and Virtual Memory
 
 ## 1. Memory Management Fundamentals
 
-Memory management is the task of subdividing memory to accommodate multiple processes. The OS must manage the trade-offs between swapping, overhead, and efficient usage.
+Memory management is the task of subdividing memory to accommodate multiple processes while managing the trade-offs between swapping, overhead, and efficient usage.
 
-### Partitioning
+*   **Uni-programming**: Memory is split into two parts: one for the Operating System (monitor) and one for the currently executing program.
+*   **Multi-programming**: The "User" part of memory is sub-divided and shared among active processes.
+*   **The Need for Swapping**: 
+    *   **Problem**: I/O is extremely slow compared to the CPU. Even in multi-programming systems, the CPU can be idle most of the time waiting for I/O.
+    *   **Solutions**: Increase main memory (expensive and leads to larger programs) or use **Swapping**.
+*   **What is Swapping?**
+    *   A long-term queue of processes is stored on disk.
+    *   Processes are "swapped in" to main memory as space becomes available.
+    *   When a process completes, it is moved out.
+    *   If all processes in memory are blocked (e.g., waiting for I/O), the OS swaps a blocked process to an **intermediate queue** on disk and swaps in a ready process.
 
-Partitioning involves splitting the main memory into sections to allocate to processes (including the Operating System).
+## 2. Partitioning Techniques
 
-#### Fixed Partitioning
-* **Concept**: Memory is divided into static partitions. These can be **Equal-size** or **Unequal-size**.
-* **Allocation**: A process is loaded into a partition large enough to hold it.
-* **Issues**:
-    * **Internal Fragmentation**: If a process is smaller than the partition, the remaining space *inside* that partition is wasted.
-    * Limits the number of active processes to the number of partitions.
+Partitioning involves splitting main memory into sections to allocate to processes.
 
-#### Dynamic Partitioning
-* **Concept**: Partitions are created dynamically. The OS allocates exactly the required memory to a process.
-* **Allocation**: No pre-defined boundaries.
-* **Issues**:
-    * **External Fragmentation**: As processes are swapped in and out, memory becomes a checkerboard of used blocks and small "holes" too small to be useful.
-    * **Solution**: **Compaction** (De-fragmentation) — The OS shifts processes to coalesce holes into one large free block (resource-intensive).
+### 2.1 Fixed Partitioning
+*   **Concept**: Memory is divided into static partitions at boot time.
+*   **Types**: 
+    *   **Equal-size**: All partitions are the same size.
+    *   **Unequal-size**: Partitions of varying sizes to better fit different process requirements.
+*   **Issues**: **Internal Fragmentation**. If a process is smaller than the partition, the remaining space *inside* that partition is wasted.
+
+### 2.2 Dynamic Partitioning
+*   **Concept**: Partitions are created dynamically; the OS allocates exactly the required amount of memory to a process.
+*   **Issues**: **External Fragmentation**. As processes are swapped in and out, memory becomes a checkerboard of used blocks and small "holes" too small to be useful.
+*   **Solutions**:
+    *   **Coalesce**: Join adjacent free holes into one larger hole.
+    *   **Compaction**: The OS shifts processes in memory to collect all free blocks into one large block (De-fragmentation). This is a time-consuming I/O process.
 
 | Feature | Fixed Partitioning | Dynamic Partitioning |
 | :--- | :--- | :--- |
@@ -1131,164 +1283,209 @@ Partitioning involves splitting the main memory into sections to allocate to pro
 | **Fragmentation** | **Internal** (waste inside block) | **External** (waste between blocks) |
 | **Complexity** | Low | Higher (requires compaction) |
 
-### Simple Paging
-Paging divides memory into fixed chunks to avoid external fragmentation.
+### 2.3 Relocation
+*   **The Problem**: There is no guarantee that a process will load into the same place in memory after being swapped back in.
+*   **Addresses**:
+    *   **Logical Address**: A reference relative to the beginning of the program.
+    *   **Physical Address**: The actual location in main memory.
+*   **Mechanism**: The hardware performs an automatic conversion from logical to physical addresses using a **base address** (the start of the process in memory).
 
-* **Frames**: Fixed-size, small chunks of **physical memory**.
-* **Pages**: Fixed-size, small chunks of the **process (logical memory)**.
-* **Mapping**: The Operating System maintains a **Page Table** for each process to map active Pages to physical Frames.
-    * A process does *not* require contiguous physical frames.
+## 3. Paging and Segmentation
 
-### Simple Segmentation
-Segmentation allows the programmer to view memory as multiple address spaces (segments) rather than a linear sequence.
+### 3.1 Simple Paging
+*   Memory is split into equal-sized, small chunks called **page frames**.
+*   Processes are split into equal-sized chunks called **pages**.
+*   The OS maintains a list of free frames and allocates the required number to a process.
+*   **Key Advantage**: A process does **not** require contiguous physical frames.
+*   **Page Table**: Used by the OS to keep track of which process page is in which physical frame.
 
-* **Segments**: Variable-sized blocks usually allocated to logical units (e.g., Program segment, Data segment, Stack).
-* **Visibility**: Unlike paging, segmentation is **visible** to the programmer.
-* **Protection**: Useful for assigning access rights (read/write/execute) to specific logic blocks.
+### 3.2 Segmentation
+*   Unlike paging, segmentation is **visible to the programmer**.
+*   Programs are divided into multiple address spaces (segments) of variable size (e.g., subroutine segment, stack segment, data segment).
+*   **Advantages**:
+    *   Simplifies handling growing data structures (expanding/shrinking segments).
+    *   Lends itself to **sharing** (a segment can be addressed by multiple processes).
+    *   Lends itself to **protection** (assigning different privileges/rights to specific logic blocks).
 
----
+## 4. Virtual Memory Principles
 
-## 2. Virtual Memory Principles
-
-### Concept
+### 4.1 Concept and Demand Paging
 Virtual memory allows the execution of processes that are not completely in main memory.
-* **Real Memory**: The actual main memory (RAM) available.
-* **Virtual Memory**: The programmer sees a much larger memory space than physically exists.
-* **Mechanism**: The OS keeps only the currently active parts of a process in RAM and keeps the rest on the disk (Long-term queue).
+*   **Real Memory**: The actual physical RAM available.
+*   **Virtual Memory**: The programmer sees a much larger memory space than physically exists.
+*   **Demand Paging**:
+    *   Pages are brought into memory only when they are actually required.
+    *   **Page Fault**: Triggered when the CPU tries to access a page not currently in memory. The OS must swap in the required page from disk.
+*   **Principle of Locality**: Virtual memory works because references to data and instructions tend to cluster (Temporal and Spatial locality), preventing constant swapping.
 
-### Demand Paging
-* **Definition**: Pages are not loaded until they are actually required.
-* **Process**:
-    1.  CPU tries to access a page.
-    2.  If valid bit is not set (page not in RAM), a **Page Fault** is triggered.
-    3.  OS swaps the required page from disk into a free frame.
-    4.  If memory is full, a page replacement algorithm selects a victim page to swap out.
+### 4.2 Thrashing
+*   **Definition**: Occurs when the system spends almost all its time swapping pages in and out rather than executing instructions.
+*   **Symptoms**: Disk light is on constantly; little or no real work is being done.
+*   **Solutions**:
+    *   Use good page replacement algorithms (e.g., LRU).
+    *   Reduce the degree of multi-programming (fewer active processes).
+    *   Add more physical RAM.
 
-> [!WARNING] Thrashing
-> **Thrashing** occurs when the system spends more time swapping pages in and out than actually executing instructions.
-> * **Cause**: Too many processes running with too little memory (over-committed).
-> * **Symptoms**: Disk light is on constantly; CPU utilization drops.
-> * **Solution**: Reduce degree of multiprogramming or add more RAM.
+## 5. Hardware and Control Structures
 
-### Principle of Locality
-Virtual memory relies on the observation that references to data and instructions tend to cluster.
-* **Temporal Locality**: Recently accessed items are likely to be accessed again soon.
-* **Spatial Locality**: Items near those recently accessed are likely to be accessed soon.
-* *Note: This principle prevents constant thrashing under normal loads.*
+### 5.1 Page Table Structure
+*   **Basic Mechanism**: Translates a virtual/logical address (page number + offset) into a physical address (frame number + offset).
+*   **Size Problem**: In modern systems, page tables can occupy huge amounts of memory.
+*   **Solutions**:
+    *   **Multi-level Paging**: Uses a **Page Directory** to point to secondary page tables (e.g., Pentium II).
+    *   **Inverted Page Table**: Maps physical frame numbers to virtual pages using a Hash algorithm, saving space regardless of the number of processes.
 
----
+### 5.2 Translation Lookaside Buffer (TLB)
+*   **The Problem**: Every virtual memory reference requires two physical memory accesses (one for the page table, one for the actual data), which increases latency.
+*   **The Solution**: A **TLB** is a specialized high-speed cache for recently used page table entries.
+*   **Operation**:
+    *   CPU checks the TLB first.
+    *   **TLB Hit**: The frame number is retrieved immediately.
+    *   **TLB Miss**: The entry is retrieved from the page table in main memory and loaded into the TLB for future use.
 
-## 3. Hardware Support
+## 6. Case Studies
 
-### Paging Address Translation
-The CPU uses a **Logical Address** which the MMU (Memory Management Unit) translates into a **Physical Address**.
+### 6.1 Pentium II Memory Management
+*   Provides hardware support for both segmentation and paging.
+*   **Address Translation**: Uses a two-level lookup (Page Directory $\rightarrow$ Page Table $\rightarrow$ Offset).
+*   **Protection**: 4 levels of privilege (0 = most protected/Kernel, 3 = least protected/User applications).
+*   **Segmentation**: Each virtual address consists of a 16-bit segment ID and a 32-bit offset.
 
-**Address Structure:**
-$$\text{Logical Address} = [ \text{Page Number} \mid \text{Offset} ]$$
-
-**The Translation Flow:**
-1.  **Page Number**: Used as an index into the Process Page Table.
-2.  **Frame Number**: Extracted from the Page Table entry.
-3.  **Physical Address**: Combined with the original offset.
-    $$\text{Physical Address} = [ \text{Frame Number} \mid \text{Offset} ]$$
-
-### TLB (Translation Lookaside Buffer)
-> [!INFO] What is the TLB?
-> The **TLB** is a specialized, high-speed hardware cache that stores recent Page Table entries. It avoids the "double memory access" penalty (one access to read the Page Table, one to read data).
-
-* **Operation**:
-    1.  CPU extracts the Page Number.
-    2.  **TLB Hit**: Frame number retrieved immediately (Fast).
-    3.  **TLB Miss**: CPU must access the Page Table in main memory to get the frame number, then update the TLB.
-
-### Page Table Structure
-As processes grow, Page Tables themselves become large.
-* **Multi-level Paging**: Using a Page Directory to point to secondary Page Tables (e.g., Pentium II uses a 2-level scheme).
-* **Inverted Page Table**:
-    * Instead of one entry per virtual page, there is one entry per **physical frame**.
-    * Uses a **Hash Algorithm** to map the Virtual Page Number to the Frame.
-    * Reduces memory required for tables but requires handling hash collisions (chaining).
-
----
-
-## 4. OS Software Policies
-
-### Fetch Policy
-* **Demand Paging**: Bring pages in only when a Page Fault occurs. (Most common).
-* **Pre-paging**: Bring in pages likely to be needed soon (exploits locality).
-
-### Replacement Algorithms
-When memory is full, the OS must choose a "victim" page to evict.
-* **Locking**: Some frames (e.g., OS kernel, I/O buffers) are "locked" and cannot be swapped out.
-
-**Basic Algorithms:**
-1.  **Optimal**: Select the page that will not be used for the longest time. (Theoretical benchmark, impossible to implement perfectly).
-2.  **LRU (Least Recently Used)**: Replace the page that has not been used for the longest time. (Approximates locality well, but high overhead).
-3.  **FIFO (First-In-First-Out)**: Replace the oldest page in memory. (Simple, but can perform poorly).
-4.  **Clock**: A variation of FIFO using a "use bit." It gives pages a "second chance" if they have been referenced recently, approximating LRU with less overhead.
-
----
-
-## 5. Summary/Key Takeaways
-
-* **Partitioning**: Fixed leads to internal fragmentation; Dynamic leads to external fragmentation.
-* **Paging vs. Segmentation**: Paging is physical (fixed size, invisible to user); Segmentation is logical (variable size, visible to user).
-* **Virtual Memory**: Allows execution of programs $>$ Physical RAM.
-* **TLB**: Critical for performance to minimize memory access latency during address translation.
-* **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
+### 6.2 PowerPC Memory Management
+*   **32-bit Architecture**: Uses paging with simple segmentation.
+*   **64-bit Architecture**: Uses paging with more powerful segmentation.
+*   **Block Address Translation**: Allows mapping large blocks of memory (e.g., graphics frame buffers) to bypass the standard paging mechanism for higher performance.
 
 ---
 # Topic 13: Multiprocessor Organisation
 
-### 13.1 Flynn's Classification
+## 1. Multiple Processor Organizations
+
+### 1.1 Flynn's Classification
 A standard taxonomy for computer architectures based on the number of instruction streams and data streams simultaneously being processed.
 
-* **SISD (Single Instruction, Single Data Stream)**
-    * **Structure**: A single processor executes a single instruction stream to operate on data stored in a single memory.
-    * **Example**: Standard uniprocessor systems.
-* **SIMD (Single Instruction, Multiple Data Stream)**
-    * **Structure**: A single machine instruction controls the simultaneous execution of a number of processing elements. Each processing element has an associated data memory.
-    * **Operation**: Instructions are executed on a lockstep basis; each processor executes the same instruction on a different set of data.
-    * **Examples**: Vector processors and array processors.
-* **MISD (Multiple Instruction, Single Data Stream)**
-    * **Structure**: A sequence of data is transmitted to a set of processors, each of which executes a different instruction sequence.
-    * **Status**: This structure has never been commercially implemented.
-* **MIMD (Multiple Instruction, Multiple Data Stream)**
-    * **Structure**: A set of processors simultaneously execute different instruction sequences on different sets of data.
-    * **Examples**: Symmetric Multiprocessors (SMPs), clusters, and Nonuniform Memory Access (NUMA) systems.
+*   **SISD (Single Instruction, Single Data Stream)**:
+    *   Single processor executes a single instruction stream to operate on data stored in a single memory.
+    *   *Example*: Standard uniprocessor.
+*   **SIMD (Single Instruction, Multiple Data Stream)**:
+    *   Single machine instruction controls the simultaneous execution of a number of processing elements on a lockstep basis.
+    *   Each processing element has an associated data memory.
+    *   *Examples*: Vector processors, Array processors.
+*   **MISD (Multiple Instruction, Single Data Stream)**:
+    *   Sequence of data is transmitted to a set of processors, each executing a different instruction sequence.
+    *   *Status*: Never commercially implemented.
+*   **MIMD (Multiple Instruction, Multiple Data Stream)**:
+    *   Set of processors simultaneously execute different instruction sequences on different sets of data.
+    *   *Examples*: SMPs, Clusters, NUMA systems.
 
-### 13.2 Taxonomy of Parallel Processor Architectures
-The hierarchy of processor organizations is categorized as follows:
-
+### 1.2 Taxonomy of Parallel Architectures
 1.  **SISD** $\rightarrow$ Uniprocessor
 2.  **SIMD** $\rightarrow$ Vector Processor, Array Processor
-3.  **MISD** (Theoretical)
-4.  **MIMD**
-    * **Shared Memory (Tightly Coupled)**
-        * Symmetric Multiprocessor (SMP)
-        * Nonuniform Memory Access (NUMA)
-    * **Distributed Memory (Loosely Coupled)**
-        * Clusters
+3.  **MIMD**:
+    *   **Shared Memory (Tightly Coupled)**: Processors share memory and communicate via that shared memory.
+        *   **Symmetric Multiprocessor (SMP)**
+        *   **Nonuniform Memory Access (NUMA)**
+    *   **Distributed Memory (Loosely Coupled)**: Collection of independent computers.
+        *   **Clusters**
 
-### 13.3 Symmetric Multiprocessors (SMP)
-An SMP is a standalone computer system defined by the following characteristics:
+---
 
-* **Multiple Processors**: Contains two or more similar processors of comparable capability.
-* **Shared Resources**: Processors share the same main memory and I/O facilities.
-* **Interconnection**: Processors are connected by a bus or other internal connection scheme.
-* **Uniform Access**: Memory access time is approximately the same for each processor.
-* **Shared I/O**: All processors share access to I/O devices, either through the same channels or different channels providing paths to the same device.
-* **Symmetry**: All processors can perform the same functions.
-* **Integrated OS**: The system is controlled by an integrated operating system that manages interaction between processors at the job, task, file, and data element levels.
+## 2. Symmetric Multiprocessors (SMP)
 
-### 13.4 Multicore Computers
-* **Core**: The "brain" of the CPU (also called a processing unit). It consists of an ALU, control unit, and registers.
-* **Multicore**: A CPU chip that contains multiple cores (e.g., Dual-core = 2 cores, Quad-core = 4 cores).
+### 2.1 Characteristics
+An SMP is a standalone computer system with the following characteristics:
+*   **Multiple Processors**: Two or more similar processors of comparable capability.
+*   **Shared Resources**: Processors share the same main memory and I/O facilities, interconnected by a bus or other internal connection scheme.
+*   **Uniform Access**: Memory access time to any given area of memory is approximately the same for each processor.
+*   **Shared I/O**: All processors share access to I/O devices.
+*   **Symmetry**: All processors can perform the same functions.
+*   **Integrated OS**: The system is controlled by an integrated OS that manages interaction between processors (scheduling, synchronization, memory management).
 
-#### Chip Organization Alternatives
-* **Superscalar / SMT (Simultaneous Multithreading)**: Techniques used within cores to increase performance.
-* **Cache Organization**:
-    * **L1 Cache**: Typically split into Instruction (L1-I) and Data (L1-D) caches, dedicated to each core.
-    * **L2 Cache**: Can be organized in different ways:
-        * *Dedicated*: Each core has its own L2 cache.
-        * *Shared*: All cores share a common L2 cache.
+### 2.2 Advantages
+*   **Performance**: Tasks can be executed in parallel.
+*   **Availability**: Failure of a single processor does not halt the system.
+*   **Incremental Growth**: User can enhance performance by adding additional processors.
+*   **Scaling**: Vendors can offer a range of products based on the number of processors.
+
+### 2.3 Organization
+*   **Time Shared Bus**: Simplest form. Structure is similar to single processor system.
+    *   *Pros*: Simplicity, Flexibility, Reliability.
+    *   *Cons*: Performance limited by bus cycle time. Each processor needs local cache to reduce bus traffic.
+*   **Multiport Memory**: Direct independent access of memory modules by each processor. Logic required to resolve conflicts.
+*   **Central Control Unit**: Funnels separate data streams between independent modules. Buffers requests and performs arbitration.
+
+---
+
+## 3. Cache Coherence and MESI Protocol
+
+### 3.1 The Problem
+In SMPs with local caches, multiple copies of the same data can exist. If one processor updates its local cache, other copies become invalid/stale.
+*   **Write Back** policy leads to inconsistency.
+*   **Write Through** can also give problems unless caches monitor memory traffic.
+
+### 3.2 Solutions
+*   **Software**: Compiler and OS deal with the problem (overhead transferred to compile time). Conservative decisions may lead to inefficient cache use.
+*   **Hardware**:
+    *   **Directory Protocols**: Directory stored in main memory maintains information about copies. Effective for large scale systems but creates a central bottleneck.
+    *   **Snoopy Protocols**: Distribute cache coherence responsibility among cache controllers. Each cache "snoops" on the bus. Suited for bus-based SMPs.
+
+### 3.3 Snoopy Protocols
+*   **Write Invalidate**: When a write is required, all other caches of the line are invalidated. The writing processor then has exclusive access. Used in Pentium II and PowerPC.
+*   **Write Update**: Updated word is distributed to all other processors.
+
+### 3.4 MESI Protocol (Write Invalidate)
+Each line in the cache is marked with one of four states:
+1.  **Modified (M)**: The line in the cache has been modified (different from main memory) and is available only in this cache.
+2.  **Exclusive (E)**: The line in the cache is the same as main memory and is not present in any other cache.
+3.  **Shared (S)**: The line in the cache is the same as main memory and may be present in other caches.
+4.  **Invalid (I)**: The line in the cache does not contain valid data.
+
+---
+
+## 4. Clusters
+
+### 4.1 Definition
+A group of interconnected whole computers (nodes) working together as a unified resource. Creates the illusion of a single machine.
+*   **Alternative to SMP**: High performance, High availability, Server applications.
+
+### 4.2 Benefits
+*   **Absolute Scalability**: Can grow far larger than SMPs.
+*   **Incremental Scalability**: Can add new nodes easily.
+*   **High Availability**: Failure of one node doesn't stop the cluster.
+*   **Price/Performance**: Uses commodity hardware.
+
+### 4.3 Configurations
+*   **Standby Server, No Shared Disk**: One active, one passive (backup). Link for mirroring.
+*   **Shared Disk**: Multiple active nodes share a RAID array.
+
+---
+
+## 5. Nonuniform Memory Access (NUMA)
+
+In NUMA systems, all processors have access to all parts of memory, but:
+*   **Access time differs** depending on which region of memory is accessed (local vs remote).
+*   Different processors access different regions of memory at different speeds.
+
+---
+
+## 6. Multicore Organizations
+
+### 6.1 Concept
+*   **Core**: The "brain" (ALU, Control Unit, Registers).
+*   **Multicore**: A single CPU chip containing multiple cores (e.g., Dual-core, Quad-core).
+
+### 6.2 Chip Organization Alternatives
+*   **Superscalar**: Multiple pipelines within a core.
+*   **Simultaneous Multithreading (SMT)**: Hardware support for multiple threads per core.
+*   **Cache Levels**:
+    *   **Dedicated L1**: Separate L1-Instruction and L1-Data per core.
+    *   **Dedicated L2**: Each core has its own L2 cache.
+    *   **Shared L2**: All cores share a common L2 cache (allows data sharing without bus traffic).
+    *   **Shared L3**: Common in modern high-performance chips.
+
+### 6.3 Applications
+*   Database servers
+*   Web servers
+*   Compilers
+*   Multimedia applications
+*   Scientific applications (CAD/CAM)
