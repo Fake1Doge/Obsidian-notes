@@ -1,67 +1,121 @@
 ## Topic 1: Introduction to Computer Organisation and Architecture
 
 ### 1.1 Architecture vs. Organisation
-*   **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what"). It deals with the functional behavior of the system and the logical execution of a program.
+*   **Computer Architecture**: Attributes visible to the programmer (the "what").
+    *   *Definition*: The architectural attributes that have a direct impact on the logical execution of a program.
     *   *Examples*: Instruction set, data representation (number of bits), I/O mechanisms, addressing techniques.
-    *   *Analogy*: The design specifications (e.g., "Is there a multiply instruction?").
-*   **Computer Organisation**: Refers to the operational units and their interconnections that realize the architectural specifications (the "how"). It deals with structural relationships and hardware details transparent to the programmer.
+    *   *Analogy*: Architectural design specifications (e.g., "Is there a multiply instruction?").
+*   **Computer Organisation**: Operational units and interconnections (the "how").
+    *   *Definition*: The hardware details transparent to the programmer that realize the architectural specifications.
     *   *Examples*: Control signals, interfaces between computer and peripherals, memory technology, clock frequency.
-    *   *Analogy*: The implementation (e.g., "Is there a hardware multiply unit or is it done by repeated addition?").
-*   **The "Family" Concept**: Manufacturers (like IBM or Intel) often produce a family of computer models that share the **same architecture** but have **different organisations**. This allows for code compatibility (upward compatibility) across models with different prices and performance levels.
+    *   *Analogy*: Implementation details (e.g., "Is multiplication implemented by a hardware unit or repeated addition?").
+*   **The "Family" Concept**:
+    *   Manufacturers (e.g., IBM, Intel) produce a family of computers with the **same architecture** but **different organisations**.
+    *   *Benefit*: Code compatibility (software runs on all models) while offering different price/performance points.
 
 ### 1.2 Structure and Function
-A computer is a complex system described hierarchically:
-1.  **Structure**: How components relate to each other.
-    *   **CPU (Central Processing Unit)**: Controls operation and performs data processing.
-        *   *Internal Components*: ALU (Arithmetic Logic Unit), Registers, Control Unit, Internal Interconnection.
-    *   **Main Memory**: Stores data.
-    *   **I/O (Input/Output)**: Moves data between the computer and the external environment (peripherals).
-    *   **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
-2.  **Function**: The operation of individual components.
-    *   **Data Processing**: Performing arithmetic or logical operations on data.
-    *   **Data Storage**: Storing data temporarily (short-term) or permanently (long-term).
-    *   **Data Movement**: Transferring data between the computer and the outside world (I/O) or within internal components.
-    *   **Control**: Managing the resources and coordinating the performance of the functional parts.
+A computer is a complex system best described using a **Top-Down** approach (decomposing the system into subparts).
+
+#### 1. Structure (The Components)
+How components relate to each other:
+*   **CPU (Central Processing Unit)**: The "brain" that controls operation and performs data processing.
+    *   *Registers*: Internal storage.
+    *   *ALU (Arithmetic Logic Unit)*: Performs data processing.
+    *   *Control Unit*: Interprets instructions and controls CPU flow.
+    *   *Internal Interconnection*: Communication within the CPU.
+*   **Main Memory**: Stores data and instructions.
+*   **I/O (Input/Output)**: Moves data between the computer and the external environment.
+*   **System Interconnection**: Mechanism for communication (e.g., System Bus) among CPU, memory, and I/O.
+
+#### 2. Function (The Operations)
+The operation of individual components can be categorized into four basic functions:
+*   **Data Processing**: Performing arithmetic or logical operations.
+*   **Data Storage**: Storing data short-term (RAM) or long-term (Disk).
+*   **Data Movement**: Transferring data (I/O, internal paths).
+*   **Control**: Managing resources and synchronizing functions (e.g., Control Unit).
 
 ### 1.3 History of Computers
-*   **1st Generation (Vacuum Tubes)**: 1946-1957.
-    *   **ENIAC (1946)**: First general-purpose electronic digital computer. Designed for artillery range tables. Decimal (not binary), hardwired (manual switches), 18,000 vacuum tubes, 30 tons.
-    *   **Von Neumann / IAS (1952)**: Stored-program concept (instructions and data in the same memory). Binary. Prototype for modern computers.
-*   **2nd Generation (Transistors)**: 1958-1964.
-    *   Replaced vacuum tubes. Smaller, cheaper, less heat, solid-state (silicon).
-    *   Introduction of **High-Level Languages** and system software.
-    *   *Notable Machines*: IBM 7000 series, DEC PDP-1.
-*   **3rd Generation (Integrated Circuits)**: 1965-1971.
-    *   **Microelectronics**: Gates, memory cells, and interconnections on a single chip.
-    *   **Moore's Law**: The number of transistors on a chip doubles approximately every 18 months (originally stated as every year).
-    *   **IBM 360 (1964)**: First planned "family" of computers (common instruction set).
-    *   **DEC PDP-8**: First minicomputer (smaller, cheaper, bus structure).
-*   **Later Generations (LSI, VLSI, ULSI)**:
-    *   **Semiconductor Memory**: 1970 Fairchild (256 bits). Memory capacity doubles approximately every year.
-    *   **Microprocessors**:
-        *   **Intel 4004 (1971)**: First microprocessor (all CPU components on a single chip). 4-bit.
-        *   **Intel 8080 (1974)**: First general-purpose 8-bit microprocessor.
-        *   **Intel 8086 (1978)**: 16-bit, instruction cache.
-*   **Evolution of Architectures**:
-    *   **x86 (CISC)**: Dominant in PCs/Servers. Evolved from 16-bit (8086) $\rightarrow$ 32-bit (80386, Multitasking) $\rightarrow$ Pipelining/FPU (486) $\rightarrow$ Superscalar (Pentium) $\rightarrow$ 64-bit (Core 2).
-    *   **ARM (RISC)**: Dominant in Embedded Systems/Mobile. High speed, small die size, low power. Used in Cortex-A (Application), Cortex-R (Real-time), Cortex-M (Microcontroller).
 
-### 1.4 Cloud Computing
-A model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (NIST definition).
-*   **Service Models**:
-    *   **SaaS (Software as a Service)**: Application software (e.g., Gmail, Dropbox).
-    *   **PaaS (Platform as a Service)**: Building blocks, tools, and OS for developers (e.g., Google App Engine).
-    *   **IaaS (Infrastructure as a Service)**: Raw processing, storage, and networks (e.g., AWS EC2).
+#### 1st Generation: Vacuum Tubes (1946-1957)
+*   **ENIAC (Electronic Numerical Integrator And Computer)**:
+    *   *Purpose*: Designed for calculating artillery range tables (World War II).
+    *   *Specs*: 18,000 vacuum tubes, 30 tons, 1,500 sq ft, 140 kW power.
+    *   *Performance*: 5,000 additions per second.
+    *   *Architecture*: **Decimal** machine (not binary), programmed manually via switches (tedious).
+*   **von Neumann / IAS (Institute for Advanced Study)**:
+    *   *Concept*: **Stored-Program Concept** (instructions and data stored in the same readable/writable memory).
+    *   *Structure*:
+        *   Main Memory: 4096 words of 40 bits each.
+        *   ALU, Control Unit, and I/O equipment.
+    *   *Significance*: The prototype for modern general-purpose computers.
 
-### 1.5 Performance Assessment
-*   **Clock Speed**: The speed at which a processor executes instructions, governed by the clock cycle time ($t = 1/f$).
-*   **CPI (Cycles Per Instruction)**: The average number of clock cycles required to execute an instruction.
-*   **MIPS (Millions of Instructions Per Second)**: A common measure of performance.
-    $$\text{MIPS rate} = \frac{f}{\text{CPI} \times 10^6}$$
-*   **Amdahl's Law**: The potential speedup of a program using multiple processors is limited by the sequential (non-parallelizable) portion of the code.
-    *   *Implication*: Diminishing returns as you add more processors if the code isn't perfectly parallel.
-*   **Benchmarks**: Standard programs used to compare performance.
-    *   **SPEC (System Performance Evaluation Corporation)**: Industry standard. SPEC CPU2017 uses a suite of real-world programs (integer and floating-point) to test CPU, memory, and compiler performance.
+#### 2nd Generation: Transistors (1958-1964)
+*   **Transistors**: Invented at Bell Labs (1947). Made of solid-state silicon.
+    *   *Advantages*: Smaller, cheaper, less heat dissipation, and more reliable than vacuum tubes.
+*   **Technology Shift**:
+    *   Introduction of **High-Level Languages** (FORTRAN, COBOL) and System Software.
+    *   **IBM 7000 Series**: Faster, more memory.
+    *   **DEC PDP-1**: First minicomputer.
+
+#### 3rd Generation: Integrated Circuits (1965-1971)
+*   **Microelectronics**: Placing gates, memory cells, and interconnections on a single silicon chip.
+*   **Moore's Law**:
+    *   Observation by Gordon Moore (Intel founder).
+    *   *The Law*: The number of transistors on a chip doubles approximately every **18 months** (originally stated as every year).
+    *   *Implication*: Exponential growth in power, decrease in cost/size.
+*   **Notable Machines**:
+    *   **IBM 360 (1964)**: First planned "family" of computers with a common instruction set.
+    *   **DEC PDP-8**: First true minicomputer (cheap enough for lab benches).
+
+#### Later Generations (LSI, VLSI, ULSI)
+*   **Semiconductor Memory (1970)**: Fairchild introduced memory chips (size of a single core but held 256 bits). Non-destructive read, faster than magnetic core.
+*   **Microprocessors (The CPU on a Chip)**:
+    *   **Intel 4004 (1971)**: First microprocessor. 4-bit, designed for calculators.
+    *   **Intel 8080 (1974)**: First general-purpose 8-bit microprocessor.
+    *   **Intel 8086 (1978)**: 16-bit, introduced instruction cache and pipelining.
+
+### 1.4 Evolution of Architectures
+
+#### Intel x86 (CISC)
+Dominant in PCs, Servers, and Cloud.
+*   **8086 (1978)**: 16-bit.
+*   **80386 (1985)**: 32-bit architecture, multitasking support.
+*   **80486 (1989)**: Integrated Math Co-processor, L1 Cache.
+*   **Pentium (1993)**: **Superscalar** (parallel instruction execution).
+*   **Core 2 (2006)**: 64-bit architecture, multicore designs.
+
+#### ARM (RISC)
+Dominant in Mobile and Embedded Systems.
+*   **Characteristics**: High speed, small die size, low power consumption.
+*   **Product Families**:
+    *   **Cortex-A (Application)**: Performance-intensive (Smartphones, Tablets, Linux/Android).
+    *   **Cortex-R (Real-time)**: Time-critical/Safety-critical (Automotive braking, Hard drive controllers).
+    *   **Cortex-M (Microcontroller)**: Low cost/power (IoT, Microcontrollers).
+
+### 1.5 Cloud Computing
+A model enabling ubiquitous, convenient, on-demand access to a shared pool of computing resources.
+*   **SaaS (Software as a Service)**: Application software running on the cloud (e.g., Gmail, Dropbox, Office 365).
+*   **PaaS (Platform as a Service)**: Building blocks, tools, and OS for developers to deploy apps (e.g., Google App Engine).
+*   **IaaS (Infrastructure as a Service)**: Raw processing, storage, and networking (e.g., AWS EC2, Azure).
+
+### 1.6 Performance Assessment
+
+#### Processor Speed
+*   **System Clock**: Synchronizes operations.
+*   **Clock Rate ($f$)**: Pulses per second (Hz).
+*   **Cycle Time ($t$)**: Time between pulses ($t = 1/f$).
+
+#### Key Metrics
+*   **CPI (Cycles Per Instruction)**: The average number of clock cycles a processor requires to execute an instruction.
+    *   Different instructions (Add vs. Divide) take different amounts of time.
+*   **MIPS (Millions of Instructions Per Second)**:
+    $$ \text{MIPS rate} = \frac{\text{Clock Rate}}{CPI \times 10^6} $$
+*   **Benchmarks**: Standard programs used to compare performance (e.g., **SPEC CPU2017** suite).
+
+#### Amdahl's Law
+Deals with the potential speedup of a program using multiple processors.
+*   **Concept**: Speedup is limited by the sequential (non-parallelizable) portion of the code.
+*   **Conclusion**: Adding more processors yields diminishing returns if the program isn't perfectly parallelizable.
 
 ---
 
