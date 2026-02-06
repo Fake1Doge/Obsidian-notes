@@ -1010,12 +1010,12 @@ How does the CU move from one micro-instruction to the next?
 
 The **I/O Module** acts as the critical bridge between the high-speed CPU/Memory (via the System Bus) and the slower, diverse peripheral devices.
 
-### Why not connect peripherals directly?
+### 1.1 Why not connect peripherals directly?
 1.  **Variety**: Peripherals vary widely in operation methods; it's impractical to incorporate logic for all of them into the CPU.
 2.  **Data Transfer Rate**: Peripherals are often much slower than the CPU/RAM. Direct connection would bottle-neck the system.
 3.  **Data Formats**: Peripherals use different data formats and word lengths than the computer's internal architecture.
 
-### Key Functions of an I/O Module
+### 1.2 Key Functions of an I/O Module
 1.  **Control & Timing**: Coordinates traffic between internal resources and external devices.
     *   *Steps:* CPU checks status $\to$ Module returns status $\to$ If ready, CPU requests transfer $\to$ Module gets data from device $\to$ Module transfers to CPU.
 2.  **Processor Communication**:
@@ -1029,11 +1029,28 @@ The **I/O Module** acts as the critical bridge between the high-speed CPU/Memory
 
 ---
 
-## 2. I/O Techniques: The Core Triad
+## 2. External Devices
+
+External devices (peripherals) attach to the computer via an I/O module.
+
+### 2.1 Categories
+*   **Human Readable**: Suitable for communicating with the computer user (e.g., Video Display Terminal, Printer, Keyboard).
+*   **Machine Readable**: Suitable for communicating with equipment (e.g., Magnetic Disk, Tape System, Sensors).
+*   **Communication**: Suitable for communicating with remote devices (e.g., Modem, Network Interface Card).
+
+### 2.2 External Device Interface
+The interface to the I/O module involves three types of signals:
+*   **Control Signals**: Determine the function (e.g., INPUT, READ, WRITE).
+*   **Data Signals**: The actual bits to be sent/received.
+*   **Status Signals**: Indicate the state of the device (READY, BUSY, ERROR).
+
+---
+
+## 3. I/O Techniques: The Core Triad
 
 There are three main techniques for handling I/O operations, evolving from simple to efficient.
 
-### A. Programmed I/O
+### 3.1 Programmed I/O
 The CPU has direct control over the I/O operation, including sensing status, sending read/write commands, and transferring data.
 
 *   **Mechanism**:
@@ -1045,7 +1062,7 @@ The CPU has direct control over the I/O operation, including sensing status, sen
     *   **Memory-Mapped**: I/O devices share the same address space as memory. Single read/write lines.
     *   **Isolated I/O**: Separate address spaces. Specialized commands (`IN`, `OUT`) and control lines.
 
-### B. Interrupt-Driven I/O
+### 3.2 Interrupt-Driven I/O
 Overcomes the CPU waiting problem. The CPU issues a command and continues executing other useful work. The I/O module interrupts the CPU when ready.
 
 #### The Process
@@ -1067,7 +1084,7 @@ Overcomes the CPU waiting problem. The CPU issues a command and continues execut
 *   **Priority**: Higher priority modules can interrupt lower priority handlers.
 *   **Example (Intel 82C59A)**: An external interrupt controller chip that manages 8 interrupt lines (cascadable to 64) and passes the vector to the CPU.
 
-### C. Direct Memory Access (DMA)
+### 3.3 Direct Memory Access (DMA)
 Even with interrupts, the CPU is involved in moving *every word* of data between I/O and memory. DMA removes the CPU from the data transfer path entirely.
 
 *   **Function**: A dedicated DMA controller takes over the system bus to transfer blocks of data.
@@ -1084,8 +1101,8 @@ Even with interrupts, the CPU is involved in moving *every word* of data between
 
 ---
 
-## 3. I/O Channels and Processors
-As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channelsâ€”specialized processors with their own instruction sets.
+## 4. I/O Channels and Processors
+As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channels—specialized processors with their own instruction sets.
 
 *   **I/O Channel**: Executes I/O instructions stored in main memory.
 *   **Selector Channel**: Controls multiple high-speed devices but selects only **one** at a time for transfer.
@@ -1093,9 +1110,9 @@ As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channelsâ€”sp
 
 ---
 
-## 4. External Interfaces
+## 5. External Interfaces
 
-### FireWire (IEEE 1394)
+### 5.1 FireWire (IEEE 1394)
 A high-performance serial bus for digital cameras, drives, and consumer electronics.
 *   **Configuration**: Daisy chain (up to 63 devices). Automatic configuration (no IDs/terminators needed).
 *   **Arbitration**: Tree-structured. The "Root" acts as arbiter. "First come, first served" with preference for devices closest to the root.
@@ -1103,7 +1120,7 @@ A high-performance serial bus for digital cameras, drives, and consumer electron
     *   **Asynchronous**: Variable data amount, acknowledged, uses explicit addresses. Good for data integrity.
     *   **Isochronous**: Fixed-rate data streams, multicast (simplified addressing), no acknowledgment. Essential for real-time video.
 
-### Universal Serial Bus (USB)
+### 5.2 Universal Serial Bus (USB)
 Standard for low-cost, plug-and-play connection.
 *   **Topology**: Tree structure managed by a **Root Hub** (Host).
 *   **Polling**: The host polls hubs to detect new devices.
@@ -1117,7 +1134,7 @@ Standard for low-cost, plug-and-play connection.
 
 ---
 
-## 5. RAID (Redundant Array of Independent Disks)
+## 6. RAID (Redundant Array of Independent Disks)
 Combines multiple physical disk drives into a single logical unit to improve performance and/or redundancy.
 
 | Level | Name | Description | Redundancy |
