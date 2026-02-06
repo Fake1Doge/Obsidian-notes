@@ -311,92 +311,127 @@ General-purpose chips that can be configured to implement specific logic functio
 ## Topic 5: Addressing and Instruction Set Characteristics & Functions
 
 ### 5.1 Memory Locations and Addresses
-*   **Memory Structure**: Consists of millions of storage cells.
-    *   **Bit**: Each cell stores a value of 0 or 1.
-    *   **Word**: A group of $n$ bits (where $n$ is the word length, typically 16, 32, or 64 bits).
-*   **Addressing**: Accessing memory requires a unique address for each location.
-    *   $k$ address bits can address $2^k$ locations (Address Space).
-*   **Byte Addressability**:
-    *   Most modern computers assign an address to each **8-bit byte**.
-    *   Successive addresses ($0, 1, 2, \dots$) refer to successive byte locations.
-    *   If word length is 32 bits (4 bytes), words are located at addresses $0, 4, 8, \dots$.
-*   **Word Alignment**:
-    *   Words are "aligned" if they begin at a byte address that is a multiple of the number of bytes in a word.
-    *   Example (16-bit word): Aligned at 0, 2, 4...
-    *   Example (32-bit word): Aligned at 0, 4, 8...
+
+#### Memory Structure
+Memory consists of millions of storage cells, each capable of storing a **bit** (binary digit) with a value of 0 or 1.
+*   **Terminology**:
+    *   **Bit**: Each digit in the binary system.
+    *   **Nibble**: A group of 4 bits.
+    *   **Byte**: A group of 8 bits.
+    *   **Word**: A group of $n$ bits (word length), typically 16, 32, or 64 bits.
+
+#### Addressing
+To store or retrieve information, the processor needs a unique **address** for each location.
+*   **Address Space**: $k$ address bits constitute an address space of $2^k$ addressable locations (0 through $2^k - 1$).
+*   **Byte Addressability**: It is more practical to assign successive addresses to successive 8-bit byte locations.
+    *   If word length = 32 bits (4 bytes), successive words are located at addresses 0, 4, 8, ...
+*   **Word Alignment**: Words are aligned if they begin at a byte address that is a multiple of the number of bytes in a word.
+    *   16-bit word ($2^1$ bytes): Aligned at 0, 2, 4...
+    *   32-bit word ($2^2$ bytes): Aligned at 0, 4, 8...
 
 #### Endianness
-Two ways to assign byte addresses within a larger word (e.g., a 32-bit integer).
-1.  **Big-Endian**:
-    *   The **Most Significant Byte (MSB)** is stored at the **lowest** (first) address.
-    *   "Big end first". Used by IBM 370, Motorola 68000, Internet protocols (Network Byte Order).
-2.  **Little-Endian**:
-    *   The **Least Significant Byte (LSB)** is stored at the **lowest** (first) address.
-    *   "Little end first". Used by Intel x86.
+Endianness refers to how byte addresses are assigned within a multi-byte word.
+1.  **Big-Endian**: Lower byte addresses are used for the **more significant** (leftmost) bytes. (Used by IBM 370, Motorola 68000).
+2.  **Little-Endian**: Lower byte addresses are used for the **less significant** (rightmost) bytes. (Used by Intel x86).
+
+#### Accessing Memory
+*   **Numbers/Characters**: Usually occupy 1 word.
+*   **Character Strings**:
+    *   Beginning of string is indicated by the **byte address of the first character**.
+    *   Successive byte locations contain successive characters.
+    *   **End of string** is indicated by:
+        *   A special control character (e.g., NULL).
+        *   A separate memory location/register storing the string length.
 
 ### 5.2 Memory Operations
-*   **Load (Read/Fetch)**:
-    1.  Processor sends the **address** to memory.
-    2.  Processor issues a **Read** control signal.
-    3.  Memory reads data at that address and sends it to the processor.
-*   **Store (Write)**:
-    1.  Processor sends the **address** and the **data** to be written.
-    2.  Processor issues a **Write** control signal.
-    3.  Memory writes the data into the specified location (overwriting previous content).
+There are two basic operations between the processor and memory:
+1.  **Load (Read/Fetch)**:
+    *   Processor sends the address and a Read request.
+    *   Memory reads the data at that address and sends it to the processor.
+2.  **Store (Write)**:
+    *   Processor sends the address along with the data to be written.
+    *   Memory writes the data into the location, destroying the original content.
 
-### 5.3 Instructions and Sequencing
+### 5.3 Instructions and Instruction Sequencing
 
 #### Notation
 *   **Register Transfer Notation (RTN)**: Describes data transfer and operations.
-    *   `R1 <- [LOC]`: Transfer content of memory location LOC to register R1.
-    *   `R3 <- [R1] + [R2]`: Add contents of registers R1 and R2, store result in R3.
-*   **Assembly Language Notation**: Represents machine instructions mnemonically.
+    *   `R1 <- [LOC]`: Content of memory location LOC is transferred to register R1.
+    *   `R3 <- [R1] + [R2]`: Sum of contents of R1 and R2 is stored in R3.
+*   **Assembly Language Notation**: Mnemonics for machine instructions.
     *   `Move LOC, R1`
     *   `Add R1, R2, R3`
 
-#### Sequencing
-*   **Program Counter (PC)**: Register holding the address of the *next* instruction to be executed.
-*   **Straight-Line Sequencing**: The processor fetches an instruction, increments the PC (e.g., by 4 for 32-bit words) to point to the next sequential instruction, and then executes.
-*   **Branching**: Altering the sequential flow (loops, if-statements).
-    *   **Conditional Branch**: Branch only if a condition is met (e.g., `Branch>0 LOOP`).
-    *   **Condition Codes (Flags)**: Bits (N, Z, V, C) recorded by the processor to track results of the last operation (Negative, Zero, Overflow, Carry).
+#### Instruction Execution Phases
+Programs are executed in two main phases:
+1.  **Fetch Phase**: The processor fetches an instruction from memory based on the content of the **Program Counter (PC)**. The fetched instruction is placed in the **Instruction Register (IR)**.
+2.  **Execution Phase**: The IR content is examined to determine the operation. The processor then fetches operands, performs the arithmetic/logic operation, and stores the results.
 
-### 5.4 Types of Instructions
-1.  **Data Transfer**: Move data between memory and processor registers (e.g., `Move`, `Load`, `Store`, `Push`, `Pop`).
-2.  **Arithmetic**: Math operations on numerical data (e.g., `Add`, `Sub`, `Multiply`, `Divide`, `Increment`).
-3.  **Logical**: Bitwise operations (e.g., `AND`, `OR`, `NOT`, `XOR`, `Shift`, `Rotate`).
-4.  **Conversion**: Changing data formats (e.g., Binary to Decimal).
-5.  **Input/Output (I/O)**: Transfer programs/data between memory and external devices (may be memory-mapped or isolated).
-6.  **System Control**: Privileged instructions for the OS (e.g., accessing control registers, Halt).
-7.  **Transfer of Control**:
-    *   **Branch/Jump**: `GoTo` logic.
-    *   **Skip**: Implied address (e.g., "Skip next instruction if zero").
-    *   **Subroutine Call**: `Call` (saves return address) and `Return`.
+#### Sequencing and Branching
+*   **Straight-Line Sequencing**: The PC is automatically incremented (e.g., +4 for 32-bit instructions) after each fetch to point to the next instruction.
+*   **Branching**: Instead of the sequential address, a **new value** is loaded into the PC.
+    *   **Conditional Branch**: Branch occurs only if a specific condition is met (checked via condition codes).
+*   **Condition Codes (Flags)**: Stored in a status register to track results of operations:
+    *   **N (Negative)**: 1 if result is negative.
+    *   **Z (Zero)**: 1 if result is zero.
+    *   **V (Overflow)**: 1 if arithmetic overflow occurs.
+    *   **C (Carry)**: 1 if carry-out results from the operation.
+
+### 5.4 Types of Operations
+
+1.  **Data Transfer**: Perhaps the simplest for the CPU.
+    *   Includes: Move, Store, Load, Exchange, Clear, Set, Push, Pop.
+    *   CPU must specify source, destination, amount of data, and addressing mode.
+    *   Requires calculating memory addresses, translating virtual to physical, and checking cache.
+2.  **Arithmetic**:
+    *   Operations: Add, Subtract, Multiply, Divide, Absolute, Increment, Decrement, Negate.
+    *   Involves the ALU.
+3.  **Logical**:
+    *   **Bitwise**: AND, OR, NOT, XOR, EQUAL.
+    *   **Shifts**:
+        *   *Logical Shift*: Bits shifted out are lost; 0s are shifted in.
+        *   *Arithmetic Shift*: Does not shift the sign bit; the sign bit is replicated.
+    *   **Rotate (Cyclic Shift)**: Bits shifted out of one end are shifted into the other.
+4.  **Conversion**: Changing formats (e.g., Binary to Decimal).
+5.  **Input/Output (I/O)**: Specific instructions or memory-mapped I/O.
+6.  **System Control**: Privileged instructions for OS use (e.g., Kernel mode, Ring 0).
+7.  **Transfer of Control**: Branch, Skip, Procedure Call (uses stack for return addresses).
 
 ### 5.5 Types of Operands
-Instructions operate on:
-*   **Addresses**: Can be treated as unsigned integers.
-*   **Numbers**: Integer (signed/unsigned), Floating-point, Packed Decimal.
-*   **Characters**: ASCII (7-bit), EBCDIC (8-bit).
+*   **Addresses**: Unsigned integers used as locations.
+*   **Numbers**: Integers (fixed-point), Floating-point, or Packed Decimal (0-9 represented by 4 bits).
+*   **Characters**: ASCII (7-bit) or EBCDIC (8-bit).
 *   **Logical Data**: Bits or flags.
 
-### 5.6 Number of Addresses
-The number of address fields in an instruction impacts program length and complexity.
+### 5.6 Instruction Formats and Address Counts
+The number of addresses in an instruction impacts program complexity and length.
 
-| Type          | Format                | Example ($A = B + C$)                    | Pros/Cons                                                                                                                     |
-| :------------ | :-------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
-| **3-Address** | `Op Dest, Src1, Src2` | `ADD A, B, C`                            | **Pro**: Short programs. <br> **Con**: Instructions are very long (many bits).                                                |
-| **2-Address** | `Op Dest, Src`        | `MOVE A, B`<br>`ADD A, C`                | **Pro**: Shorter instructions than 3-addr. <br> **Con**: One operand is overwritten (Dest). Requires extra move.              |
-| **1-Address** | `Op Src`              | `LOAD B`<br>`ADD C`<br>`STORE A`         | **Implicit**: Uses **Accumulator (AC)**. <br> **Pro**: Short instructions. <br> **Con**: Longer programs (more instructions). |
-| **0-Address** | `Op` (Implicit)       | `PUSH B`<br>`PUSH C`<br>`ADD`<br>`POP A` | **Implicit**: Uses a **Stack**. <br> **Pro**: Very short instructions. <br> **Con**: Complex logic/stack management.          |
+| Format | Example ($Y = (A-B)/(C+D*E)$) | Characteristic |
+| :--- | :--- | :--- |
+| **3-Address** | `SUB Y, A, B` | More complex instructions, shorter programs. |
+| **2-Address** | `MOVE Y, A`<br>`SUB Y, B` | One operand is overwritten; requires extra moves. |
+| **1-Address** | `LOAD D`<br>`MPY E`<br>`ADD C` | Uses an implicit **Accumulator (AC)**. |
+| **0-Address** | `PUSH A`<br>`PUSH B`<br>`SUB` | Uses an implicit **Stack** (LIFO). |
 
-### 5.7 Design Decisions
-When designing an Instruction Set Architecture (ISA), architects must decide:
-*   **Operation Repertoire**: How many and which operations to provide? How complex?
-*   **Data Types**: Which types (integer, float, character) are supported directly?
-*   **Instruction Formats**: Length of op-code, number of addresses, fixed vs. variable length.
-*   **Registers**: Number of available CPU registers (more registers = faster access but expensive).
-*   **Addressing Modes**: Methods to specify operand locations (e.g., direct, indirect, register).
+### 5.7 Data Structures: Stacks and Queues
+
+*   **Stack**:
+    *   LIFO (Last-In-First-Out).
+    *   Elements added/removed at one end (**top**).
+    *   **Stack Pointer (SP)**: Stores the address of the element at the top.
+    *   Used for subroutines and nested procedure calls.
+*   **Queue**:
+    *   FIFO (First-In-First-Out).
+    *   Grows in direction of increasing memory addresses.
+    *   Two pointers required (Front and Back).
+
+### 5.8 Design Decisions
+Architects must balance several factors when designing an ISA:
+*   **Operation Repertoire**: How many and how complex should operations be?
+*   **Data Types**: Which types to support directly in hardware.
+*   **Instruction Formats**: Length of opcode, number of addresses, fixed vs. variable length.
+*   **Registers**: Number of CPU registers available and their specific uses.
+*   **Addressing Modes**: Methods for specifying operand locations.
 
 ---
 
