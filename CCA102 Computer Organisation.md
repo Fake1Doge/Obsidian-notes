@@ -817,14 +817,6 @@ The 80486 uses a 5-stage pipeline:
 5. **Write Back**: Updates registers and status flags.
 
 ---
-
-## 5. Summary / Key Takeaways
-* **Registers** are the fastest storage; design involves a trade-off between flexibility and instruction size.
-* The **Instruction Cycle** data flow involves coordinated movement between PC, MAR, MBR, and IR.
-* **Pipelining** significantly improves performance but requires complex logic to handle **Hazards** and **Branch Penalties**.
-* **Modern CPUs** use advanced branch prediction and multilevel pipelining (e.g., Intel 80486's 5-stage design) to maintain efficiency.
-
-
 # Topic 8: Control Unit
 
 ## 1. Control Unit Overview
