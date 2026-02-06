@@ -1,4 +1,4 @@
-## Topic 1: Introduction to Computer Organisation and Architecture
+﻿## Topic 1: Introduction to Computer Organisation and Architecture
 
 ### 1.1 Architecture vs. Organisation
 *   **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what"). It deals with the functional behavior of the system and the logical execution of a program.
@@ -227,7 +227,7 @@ $$ \text{Value} = (-1)^S \times 1.M \times 2^{E - \text{Bias}} $$
         *   **NOR**: NOT OR. True only if both inputs are False.
         *   **XOR** ($A \oplus B$): True if inputs differ (odd number of 1s).
 *   **Basic Identities**:
-    *   **DeMorgan’s Laws**:
+    *   **DeMorganâ€™s Laws**:
         1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$ (NAND equivalent to Bubbled OR)
         2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$ (NOR equivalent to Bubbled AND)
     *   **Distributive Laws**: $A(B+C) = AB + AC$ and $A + BC = (A+B)(A+C)$.
@@ -873,7 +873,7 @@ Even with interrupts, the CPU is involved in moving *every word* of data between
 ---
 
 ## 3. I/O Channels and Processors
-As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channels—specialized processors with their own instruction sets.
+As I/O demands grew (e.g., 3D graphics), DMA evolved into I/O Channelsâ€”specialized processors with their own instruction sets.
 
 *   **I/O Channel**: Executes I/O instructions stored in main memory.
 *   **Selector Channel**: Controls multiple high-speed devices but selects only **one** at a time for transfer.
@@ -923,51 +923,66 @@ Combines multiple physical disk drives into a single logical unit to improve per
 
 ## 1. Memory Characteristics & Performance
 
-### Key Characteristics
+### 1.1 Key Characteristics
+*   **Location**:
+    *   **CPU**: Registers (internal).
+    *   **Internal**: Main Memory (RAM), Cache.
+    *   **External**: Peripheral storage (Disk, Tape), accessible via I/O processors.
+*   **Capacity**:
+    *   **Expressed in**: Bytes (1 byte = 8 bits) or words.
+    *   **Word Size**: The natural unit of organization (typically 8, 16, 32 bits).
+    *   **Number of Words**: Or bytes.
+*   **Unit of Transfer**:
+    *   **Internal**: Governed by the data bus width (usually equal to word length, but can be larger e.g., 64, 128, 256 bits).
+    *   **External**: Usually a block, which is much larger than a word.
+*   **Physical Type**:
+    *   **Semiconductor**: RAM, ROM.
+    *   **Magnetic**: Disk, Tape.
+    *   **Optical**: CD, DVD.
+    *   **Others**: e.g., Hologram.
+*   **Physical Characteristics**:
+    *   **Volatile**: Information lost when power is off (e.g., RAM).
+    *   **Non-volatile**: Information remains until deliberately changed (e.g., magnetic surface memories).
+    *   **Non-erasable**: Cannot be changed after creation (e.g., ROM).
+*   **Organisation**: Physical arrangement of bits into words (e.g., interleaved).
 
-> [!INFO] Location
-> - **CPU:** Registers (internal).
-> - **Internal:** Main Memory (RAM), Cache.
-> - **External:** Peripheral storage (Disk, Tape), accessible via I/O processors.
-
-> [!INFO] Capacity
-> - **Word Size:** The natural unit of organization (typically 8, 16, 32 bits).
-> - **Addressable Units:** The smallest location that can be uniquely addressed.
->   - Formula: $2^A = N$, where $A$ is the length of the address in bits and $N$ is the number of addressable units.
-
-> [!INFO] Unit of Transfer
-> - **Internal:** Usually governed by the data bus width (equal to word length or larger).
-> - **External:** Usually a block (much larger than a word).
-
-### Access Methods
+### 1.2 Access Methods
 
 | Method | Description | Example |
 | :--- | :--- | :--- |
-| **Sequential** | Data is organized in records; read in specific linear sequence. Access time depends on location. | Tape |
-| **Direct** | Individual blocks have unique addresses. Access involves jumping to a vicinity + sequential search. | Disk |
-| **Random** | Individual addresses identify locations exactly. Access time is independent of location or previous access. | RAM |
-| **Associative** | Data is located by comparing contents (addressing by content, not location). Access time is independent of location. | Cache |
+| **Sequential** | Memory is organized into units of data (records). Access must start at the beginning and read in order. Access time depends on location of data and previous location. | Magnetic Tape |
+| **Direct** | Individual blocks have a unique address. Access involves jumping to a vicinity plus a limited sequential search. Access time depends on location and previous location. | Magnetic Disk |
+| **Random** | Individual addresses identify locations exactly. Access time is independent of the location or previous access. | RAM |
+| **Associative** | Data is located by a comparison with contents of a portion of the store. Access time is independent of location or previous access. | Cache Memory |
 
-### Performance Metrics
+### 1.3 Performance Metrics
+*   **Access Time**:
+    *   *For RAM*: Time between presenting the address and getting valid data.
+    *   *For non-RAM*: Time taken to position the read-write mechanism at the desired location.
+*   **Memory Cycle Time**: Primarily applied to RAM. It is the Access Time + the time required for transients to die out on signal lines before the next access.
+*   **Transfer Rate**: Rate at which data can be moved in and out of the memory unit.
+    *   *For RAM*: $1 / (\text{cycle time})$
+    *   *For Non-RAM*: $T_N = T_A + \frac{N}{R}$ (where $T_N$ = average time to R/W N bits, $T_A$ = average access time, $N$ = number of bits, $R$ = transfer rate in bps).
 
-> [!INFO] Definitions
-> - **Access Time:** >   - *RAM:* Time between presenting the address and getting valid data.
->   - *Non-RAM:* Time to position the read-write mechanism.
-> - **Memory Cycle Time:** Access time + "recovery" time (time required for transients to die out on signal lines before next access).
-> - **Transfer Rate:** Rate at which data moves in/out of memory.
->   - *RAM:* $1 / (\text{Cycle Time})$
->   - *Non-RAM Formula:* $T_N = T_A + \frac{N}{R}$
->     - $T_N$: Average time to read/write N bits
->     - $T_A$: Average access time
->     - $N$: Number of bits
->     - $R$: Transfer rate (bps)
+### 1.4 Design Constraints
+Computer memory design is a trade-off between three key factors:
+1.  **Capacity**: How much data can be stored?
+2.  **Access Time**: How fast is the memory? (Must be able to keep up with the processor).
+3.  **Cost**: Must be reasonable in relationship to other components.
+*   **Relationships**: 
+    *   Faster access time $
+ightarrow$ greater cost per bit.
+    *   Greater capacity $
+ightarrow$ smaller cost per bit.
+    *   Greater capacity $
+ightarrow$ slower access time.
 
 ---
 
 ## 2. The Memory Hierarchy
 
-### The Hierarchy Pyramid
-The memory system is designed as a hierarchy to balance trade-offs.
+### 2.1 The Hierarchy Pyramid
+The design solution to memory constraints is not to rely on a single technology, but to employ a memory hierarchy.
 
 1.  **Registers** (In CPU)
 2.  **L1 Cache**
@@ -977,439 +992,290 @@ The memory system is designed as a hierarchy to balance trade-offs.
 6.  **Magnetic Disk**
 7.  **Optical / Tape** (Offline Storage)
 
-### Key Relationships & Trade-offs
-As you move **down** the hierarchy (from Registers to Tape):
-* **Cost per bit:** Decreases
-* **Capacity:** Increases
-* **Access Time:** Increases (Slower)
-* **Frequency of Access:** Decreases (CPU accesses lower levels less often)
-
-> [!NOTE] Design Goal
-> The goal is to achieve the performance of the fastest memory at the cost of the cheapest memory by using a mix of technologies.
+### 2.2 Key Relationships
+As you move **down** the hierarchy:
+*   Decreasing cost per bit.
+*   Increasing capacity.
+*   Increasing access time.
+*   Decreasing frequency of memory access by the processor.
 
 ---
 
-## 3. Semiconductor Memory (RAM & ROM)
+## 3. Semiconductor Main Memory
 
-### RAM Types: SRAM vs. DRAM
+### 3.1 The Memory Cell
+The basic element of semiconductor memory is the memory cell.
+*   **Properties**:
+    1.  Two stable states (representing binary 1 and 0).
+    2.  Capable of being written into (to set the state).
+    3.  Capable of being read to sense the state.
+*   **Operation**:
+    *   **Write**: Select line is activated, Control signal (R/W) is set to Write, and Data is fed in.
+    *   **Read**: Select line is activated, Control signal is set to Read, and Sense line outputs the state.
+
+### 3.2 RAM Types: SRAM vs. DRAM
 
 | Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
 | :--- | :--- | :--- |
-| **Storage Mechanism** | Digital flip-flop logic gates. | Capacitors (stores charge). |
-| **Refresh Required?** | **No** (stable as long as power is on). | **Yes** (charge leaks; needs periodic refresh). |
-| **Structure** | Complex, larger cells (multiple transistors). | Simple, smaller cells (1 transistor + 1 capacitor). |
-| **Density** | Lower density. | High density (more bits per chip). |
+| **Storage Mechanism** | Digital device using traditional **flip-flop** logic gates. | Stores data as **charge on capacitors**. |
+| **Refresh Required?** | **No** (stable as long as power is supplied). | **Yes** (charge leaks; needs periodic refresh every few ms). |
+| **Structure** | Complex (multiple transistors per cell). | Simple (1 transistor, 1 capacitor per cell). |
+| **Density/Size** | Lower density, larger physical size. | Higher density, smaller per cell. |
 | **Cost** | More expensive. | Less expensive. |
-| **Speed** | Faster. | Slower. |
-| **Usage** | **Cache Memory**. | **Main Memory**. |
+| **Speed** | Faster. | Slower (due to refresh and capacitor charging). |
+| **Typical Usage** | **Cache Memory**. | **Main Memory**. |
 
-### ROM Types (Read-Only Memory)
-ROM is non-volatile; data remains when power is lost.
+> [!INFO] DRAM Refresh
+> All DRAMs require a **Refresh Circuit** on the chip. It disables the chip while cells are refreshed, stepping through all rows to read and write back the data. This slows down apparent performance.
 
-* **Mask ROM:** Data wired into the chip during fabrication. High fixed cost; no error recovery.
-* **PROM (Programmable ROM):** Can be written once electronically. Needs special equipment.
-* **EPROM (Erasable PROM):** Erased by UV light. Entire chip must be erased before rewriting.
-* **EEPROM (Electrically Erasable PROM):** Can erase specific bytes electronically. Slower to write than read.
-* **Flash Memory:** Intermediate between EPROM and EEPROM. High density. Erases in blocks (faster than EPROM) but not byte-level.
+### 3.3 ROM (Read-Only Memory)
+ROM provides permanent, non-volatile storage.
+*   **Applications**: Microprogramming, library subroutines, system programs (BIOS), function tables.
+*   **Advantage**: Data/programs are permanent in main memory; no need to load from secondary storage.
+*   **Disadvantage**: Data is wired into the chip during fabrication. High fixed cost and no room for error.
 
-### Error Correction
-Memory requires logic to detect and correct errors.
-* **Hard Failure:** Permanent physical defect (wear, environmental abuse).
-* **Soft Error:** Random, non-destructive (power issues, alpha particles).
-
-> [!example] Hamming Error Correcting Code
-> Uses parity bits to detect and correct single-bit errors.
-> - **Syndrome Word:** Result of XORing stored check bits with recalculated check bits.
->   - If **0**: No error.
->   - If **1 bit set**: Error in check bit (ignore).
->   - If **>1 bit set**: Indicates position of data bit error (invert to correct).
-> - **Formula:** $2^K - 1 \ge M + K$ (Where $M$ is data bits, $K$ is check bits).
+**Types of ROM**:
+*   **PROM (Programmable ROM)**: Written once electronically after fabrication. Burning fuses at specific points achieves the '1' state.
+*   **EPROM (Erasable PROM)**: Read and written electronically. Erased by exposure to **UV light** (entire chip is erased).
+*   **EEPROM (Electrically Erasable PROM)**: Can be erased and written electronically at the byte level. Takes longer to write than read.
+*   **Flash Memory**: Intermediate between EPROM and EEPROM. Erases in blocks rather than bytes. High density.
 
 ---
 
-## 4. Advanced DRAM & Internal Organization
+## 4. Chip Organisation and Advanced DRAM
 
-*> **Note:** While standard Cache Mapping (Direct/Associative) is not detailed in the source text, the file covers "Cache DRAM" and internal memory structure extensively.*
+### 4.1 Internal Organisation
+Memory cells are organized in the form of a string or array.
+*   **Address Decoder**: Converts the address bits to a signal that selects a specific word line ($W_0, W_1, \dots$).
+*   **Sense/Write Circuit**: Reads or stores data in the selected word cell.
+*   **Pin Calculation**: To address $1	ext{K}$ ($1024$ bit) memory cells:
+    *   **$128 	imes 8$ organisation**: $7$ for word, $8$ for bit, $2$ for R/W+CS = $17+2$ pins.
+    *   **$1024 	imes 1$ organisation**: $10$ for word, $1$ for bit, $2$ for R/W+CS = $13+2$ pins.
+*   **Multiplexing**: To reduce pins, address is split into Row and Column addresses (e.g., $16	ext{Mbit}$ DRAM as $2048 	imes 2048 	imes 4$ array reduces address pins from $22$ to $11$).
 
-### Internal Organization of Memory Chips
-* **Cell Array:** Cells are organized in a matrix ($W$ words $\times$ $B$ bits).
-* **Operation:**
-    * **Row Decoder:** Selects the row (Word line).
-    * **Sense/Write Circuit:** Reads or writes data via Bit lines.
-    * **Multiplexing:** To reduce pin count, row and column addresses are often multiplexed (sent sequentially) to the address buffer.
-
-### Advanced DRAM Architectures
-Basic DRAM has remained similar for decades; newer types improve speed and access logic.
-
-1.  **SDRAM (Synchronous DRAM):**
-    * Access is synchronized with the external system clock.
-    * CPU doesn't have to wait (idle); it knows exactly when data will be ready.
-    * **Burst Mode:** Allows a stream of data blocks to be fired out rapidly.
-
-2.  **DDR-SDRAM:**
-    * Sends data **twice** per clock cycle (on both the leading and trailing edges).
-
-3.  **RDRAM (Rambus DRAM):**
-    * Competitor to SDRAM (adopted by Intel for Pentium).
-    * Uses a high-speed vertical package bus (up to 1.6 Gbps).
-    * Impedances and clocking are very precisely defined.
-
-4.  **Cache DRAM (CDRAM):**
-    * Integrates a small **SRAM cache** (e.g., 16KB) directly onto the generic DRAM chip.
-    * The SRAM can act as a true cache or a serial buffer for block access.
+### 4.2 Advanced DRAM Architectures
+1.  **SDRAM (Synchronous DRAM)**: Access is synchronized with an external clock. CPU knows exactly when data will be ready. Supports **Burst Mode** (firing a stream of data in blocks).
+2.  **DDR-SDRAM**: Sends data twice per clock cycle (leading and trailing edge).
+3.  **RDRAM (Rambus DRAM)**: Uses a high-speed vertical bus (up to $1.6	ext{Gbps}$). Adopted by Intel for Pentium/Itanium.
+4.  **Cache DRAM (CDRAM)**: Integrates a small SRAM cache ($16	ext{KB}$) onto a generic DRAM chip.
 
 ---
 
-## 5. Summary / Key Takeaways
-
-* **Hierarchy Principle:** Faster memory is more expensive and smaller. The CPU relies on a hierarchy (Registers $\to$ Cache $\to$ RAM $\to$ Disk) to optimize performance.
-* **SRAM vs. DRAM:** SRAM is fast/expensive (Flip-flops) used for **Cache**. DRAM is dense/cheap (Capacitors) used for **Main Memory**.
-* **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
-* **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
-* **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
-
-
-# Topic 10: Memory Systems
-
-## 1. Memory Characteristics & Performance
-
-### Key Characteristics
-
-> [!INFO] Location
-> - **CPU:** Registers (internal).
-> - **Internal:** Main Memory (RAM), Cache.
-> - **External:** Peripheral storage (Disk, Tape), accessible via I/O processors.
-
-> [!INFO] Capacity
-> - **Word Size:** The natural unit of organization (typically 8, 16, 32 bits).
-> - **Addressable Units:** The smallest location that can be uniquely addressed.
->   - Formula: $2^A = N$, where $A$ is the length of the address in bits and $N$ is the number of addressable units.
-
-> [!INFO] Unit of Transfer
-> - **Internal:** Usually governed by the data bus width (equal to word length or larger).
-> - **External:** Usually a block (much larger than a word).
-
-### Access Methods
-
-| Method | Description | Example |
-| :--- | :--- | :--- |
-| **Sequential** | Data is organized in records; read in specific linear sequence. Access time depends on location. | Tape |
-| **Direct** | Individual blocks have unique addresses. Access involves jumping to a vicinity + sequential search. | Disk |
-| **Random** | Individual addresses identify locations exactly. Access time is independent of location or previous access. | RAM |
-| **Associative** | Data is located by comparing contents (addressing by content, not location). Access time is independent of location. | Cache |
-
-### Performance Metrics
-
-> [!INFO] Definitions
-> - **Access Time:** >   - *RAM:* Time between presenting the address and getting valid data.
->   - *Non-RAM:* Time to position the read-write mechanism.
-> - **Memory Cycle Time:** Access time + "recovery" time (time required for transients to die out on signal lines before next access).
-> - **Transfer Rate:** Rate at which data moves in/out of memory.
->   - *RAM:* $1 / (\text{Cycle Time})$
->   - *Non-RAM Formula:* $T_N = T_A + \frac{N}{R}$
->     - $T_N$: Average time to read/write N bits
->     - $T_A$: Average access time
->     - $N$: Number of bits
->     - $R$: Transfer rate (bps)
-
----
-
-## 2. The Memory Hierarchy
-
-### The Hierarchy Pyramid
-The memory system is designed as a hierarchy to balance trade-offs.
-
-1.  **Registers** (In CPU)
-2.  **L1 Cache**
-3.  **L2 Cache**
-4.  **Main Memory** (RAM)
-5.  **Disk Cache**
-6.  **Magnetic Disk**
-7.  **Optical / Tape** (Offline Storage)
-
-### Key Relationships & Trade-offs
-As you move **down** the hierarchy (from Registers to Tape):
-* **Cost per bit:** Decreases
-* **Capacity:** Increases
-* **Access Time:** Increases (Slower)
-* **Frequency of Access:** Decreases (CPU accesses lower levels less often)
-
-> [!NOTE] Design Goal
-> The goal is to achieve the performance of the fastest memory at the cost of the cheapest memory by using a mix of technologies.
-
----
-
-## 3. Semiconductor Memory (RAM & ROM)
-
-### RAM Types: SRAM vs. DRAM
-
-| Feature | SRAM (Static RAM) | DRAM (Dynamic RAM) |
-| :--- | :--- | :--- |
-| **Storage Mechanism** | Digital flip-flop logic gates. | Capacitors (stores charge). |
-| **Refresh Required?** | **No** (stable as long as power is on). | **Yes** (charge leaks; needs periodic refresh). |
-| **Structure** | Complex, larger cells (multiple transistors). | Simple, smaller cells (1 transistor + 1 capacitor). |
-| **Density** | Lower density. | High density (more bits per chip). |
-| **Cost** | More expensive. | Less expensive. |
-| **Speed** | Faster. | Slower. |
-| **Usage** | **Cache Memory**. | **Main Memory**. |
-
-### ROM Types (Read-Only Memory)
-ROM is non-volatile; data remains when power is lost.
-
-* **Mask ROM:** Data wired into the chip during fabrication. High fixed cost; no error recovery.
-* **PROM (Programmable ROM):** Can be written once electronically. Needs special equipment.
-* **EPROM (Erasable PROM):** Erased by UV light. Entire chip must be erased before rewriting.
-* **EEPROM (Electrically Erasable PROM):** Can erase specific bytes electronically. Slower to write than read.
-* **Flash Memory:** Intermediate between EPROM and EEPROM. High density. Erases in blocks (faster than EPROM) but not byte-level.
-
-### Error Correction
-Memory requires logic to detect and correct errors.
-* **Hard Failure:** Permanent physical defect (wear, environmental abuse).
-* **Soft Error:** Random, non-destructive (power issues, alpha particles).
-
-> [!example] Hamming Error Correcting Code
-> Uses parity bits to detect and correct single-bit errors.
-> - **Syndrome Word:** Result of XORing stored check bits with recalculated check bits.
->   - If **0**: No error.
->   - If **1 bit set**: Error in check bit (ignore).
->   - If **>1 bit set**: Indicates position of data bit error (invert to correct).
-> - **Formula:** $2^K - 1 \ge M + K$ (Where $M$ is data bits, $K$ is check bits).
-
----
-
-## 4. Advanced DRAM & Internal Organization
-
-*> **Note:** While standard Cache Mapping (Direct/Associative) is not detailed in the source text, the file covers "Cache DRAM" and internal memory structure extensively.*
-
-### Internal Organization of Memory Chips
-* **Cell Array:** Cells are organized in a matrix ($W$ words $\times$ $B$ bits).
-* **Operation:**
-    * **Row Decoder:** Selects the row (Word line).
-    * **Sense/Write Circuit:** Reads or writes data via Bit lines.
-    * **Multiplexing:** To reduce pin count, row and column addresses are often multiplexed (sent sequentially) to the address buffer.
-
-### Advanced DRAM Architectures
-Basic DRAM has remained similar for decades; newer types improve speed and access logic.
-
-1.  **SDRAM (Synchronous DRAM):**
-    * Access is synchronized with the external system clock.
-    * CPU doesn't have to wait (idle); it knows exactly when data will be ready.
-    * **Burst Mode:** Allows a stream of data blocks to be fired out rapidly.
-
-2.  **DDR-SDRAM:**
-    * Sends data **twice** per clock cycle (on both the leading and trailing edges).
-
-3.  **RDRAM (Rambus DRAM):**
-    * Competitor to SDRAM (adopted by Intel for Pentium).
-    * Uses a high-speed vertical package bus (up to 1.6 Gbps).
-    * Impedances and clocking are very precisely defined.
-
-4.  **Cache DRAM (CDRAM):**
-    * Integrates a small **SRAM cache** (e.g., 16KB) directly onto the generic DRAM chip.
-    * The SRAM can act as a true cache or a serial buffer for block access.
-
----
-
-## 5. Summary / Key Takeaways
-
-* **Hierarchy Principle:** Faster memory is more expensive and smaller. The CPU relies on a hierarchy (Registers $\to$ Cache $\to$ RAM $\to$ Disk) to optimize performance.
-* **SRAM vs. DRAM:** SRAM is fast/expensive (Flip-flops) used for **Cache**. DRAM is dense/cheap (Capacitors) used for **Main Memory**.
-* **Volatility:** RAM is volatile (loses data without power); ROM is non-volatile.
-* **Hamming Code:** A method to detect and correct errors by storing extra "check bits" alongside data.
-* **Interfacing:** Bandwidth is maximized using techniques like **SDRAM** (syncing with clock) and **Multiplexing addresses** (to save pins on the chip).
-
-
-# Topic 11: Cache Memory Architecture
-
-## 1. Principles & Motivation
-
-### The Problem
-There is a significant speed mismatch between the fast CPU and the slower Main Memory. As processor speed increases, the external bus becomes a bottleneck, causing the CPU to waste cycles waiting for data.
-
-### The Solution: Cache Memory
-Cache is a small, fast memory sitting between the CPU and Main Memory. It acts as a buffer to provide the CPU with the data it needs as quickly as possible.
-
-> [!INFO] Locality of Reference
-> Cache relies on the **Principle of Locality**: When a block of data is fetched for a single memory reference, it is highly likely that future references will be to that same location or adjacent locations.
-> * **Temporal Locality:** reused data.
-> * **Spatial Locality:** nearby data.
-
-### Cache Operation
-The CPU requests contents of a memory location. The system checks the cache:
-1.  **Hit:** If present, data is delivered immediately (Fast).
-2.  **Miss:** If not present, the required block is read from Main Memory into the Cache.
-    * Then, the specific word is delivered to the CPU.
-
----
-
-## 2. Cache Mapping Functions
-
-Since there are fewer cache lines than main memory blocks, we need algorithms to map main memory blocks into cache lines.
-
-### A. Direct Mapping
-Each block of main memory maps to only **one specific** cache line.
-
-* **Logic:**
-    $$i = j \pmod m$$
-    Where:
-    * $i$ = cache line number
-    * $j$ = main memory block number
-    * $m$ = number of lines in cache
-
-* **Address Structure:**
-    The address is split into three fields:
-    $$[ \text{Tag } (s-r) \mid \text{Line } (r) \mid \text{Word } (w) ]$$
-    * **Word:** Identifies the unique word/byte within a block.
-    * **Line (Slot):** Selects one specific line in the cache.
-    * **Tag:** Compared against the tag stored in the cache line to verify if it's the correct block.
-
-* **Pros:** Simple, inexpensive hardware.
-* **Cons:** Fixed location. If a program repeatedly accesses two different blocks that map to the same line, they will constantly evict each other. This is called **Thrashing**.
-
-### B. Associative Mapping
-A main memory block can load into **any** line of the cache.
-
-* **Logic:** No fixed mapping rule; flexibility is maximized.
-* **Address Structure:**
-    The address is interpreted as:
-    $$[ \text{Tag } (s) \mid \text{Word } (w) ]$$
-    * **Tag:** Uniquely identifies the block of memory.
-    * **Word:** Identifies the specific data within the block.
-
-* **Pros:** High hit ratio; prevents thrashing caused by fixed mappings.
-* **Cons:** Complex circuitry. Every line's tag must be examined simultaneously (parallel search) to check for a match, which is expensive.
-
-### C. Set Associative Mapping
-A compromise between Direct and Associative. The cache is divided into $v$ sets, and each set contains $k$ lines ($k$-way associative).
-
-* **Logic:**
-    A block maps to a specific **set**, but can occupy **any line** within that set.
-    $$i = j \pmod v$$
-    Where:
-    * $i$ = cache set number
-    * $j$ = main memory block number
-    * $v$ = number of sets
-
-* **Address Structure:**
-    $$[ \text{Tag } (s-d) \mid \text{Set } (d) \mid \text{Word } (w) ]$$
-    * **Set:** Determines which set to look in.
-    * **Tag:** Compared against all lines within that specific set.
-
-* **Benefit:** Reduces the comparison hardware needed (only compare tags within one set) while maintaining better flexibility than Direct Mapping.
-
-### Mapping Function Summary
-
-| Feature | Direct Mapping | Associative Mapping | Set Associative Mapping |
-| :--- | :--- | :--- | :--- |
-| **Placement** | Fixed (1 location) | Flexible (Anywhere) | Semi-Flexible (Any line in fixed set) |
-| **Hardware Cost** | Low (Simple) | High (Parallel Search) | Moderate |
-| **Thrashing Risk** | High | Low | Low |
-| **Search Speed** | Fastest | Slowest (due to complexity) | Fast |
-| **Best Used For** | Large Caches | Small, High-Performance Caches | General Purpose (Modern Standard) |
-
----
-
-## 3. Replacement Algorithms
-
-When the cache (or a set) is full, a block must be replaced to make room for new data.
-
-1.  **Least Recently Used (LRU):**
-    * **Concept:** Replace the block that has gone unused for the longest time.
-    * **Effectiveness:** Most effective/popular.
-    * **Implementation:** Hardware maintains "USE" bits. e.g., in 2-way associative, if one line is referenced, the bit is set to 1, and the other is set to 0.
-2.  **First In First Out (FIFO):**
-    * **Concept:** Replace the block that has been in the cache the longest.
-    * **Implementation:** Round-robin or circular buffer.
-3.  **Least Frequently Used (LFU):**
-    * **Concept:** Replace the block with the fewest hits.
-    * **Implementation:** Associates a counter with each line.
-4.  **Random:**
-    * **Concept:** Pick a line at random.
-    * **Performance:** Slightly inferior to algorithms based on usage history.
-
-> [!Note]
-> Direct Mapping does not need a replacement algorithm because each block has only **one** possible location. If a new block maps there, the old one is automatically evicted.
-
----
-
-## 4. Write Policies
-
-When data in the cache is altered, main memory must eventually be updated to maintain consistency.
-
-### Write Through
-* **Mechanism:** All writes go to **both** the Cache and Main Memory simultaneously.
-* **Consistency:** Main memory is always valid (up to date).
-* **Drawback:** Generates substantial memory traffic, which can slow down writes.
-
-### Write Back
-* **Mechanism:** Updates are made **only** in the cache initially. An "Update Bit" (or Dirty Bit) is set for that cache line.
-* **Sync:** The block is written to main memory **only when it is replaced/evicted**.
-* **Drawback:** Portions of main memory are invalid (out of sync) until the write-back occurs. I/O modules must access memory through the cache to ensure they get the correct data.
-
-### Comparison Table
-
-| Feature | Write Through | Write Back |
-| :--- | :--- | :--- |
-| **Update Timing** | Immediate (Simultaneous) | Deferred (On replacement) |
-| **Data Consistency** | Main Memory always valid | Main Memory temporarily invalid |
-| **Bus Traffic** | High (Every write accesses bus) | Low (Only accesses bus on eviction) |
-| **Complexity** | Simple | Complex (Needs Dirty Bit & Logic) |
-| **Speed** | Slower writes | Faster writes |
-
----
-
-## 5. Cache Organization
-
-### Multilevel Caches
-Modern processors use multiple layers to balance size and speed.
-* **L1 (Level 1):** On-chip (internal). Fastest, smallest. Eliminates external bus access for internal operations.
-* **L2 (Level 2):** Originally external, now often on-chip. Accessed if data is not in L1.
-* **L3 (Level 3):** Usually external (or shared on-die for multi-core).
-* **Goal:** If SRAM (L2) is fast enough to match bus speed, data can be accessed with zero-wait states.
-
-### Unified vs. Split Caches
-* **Unified Cache:** Stores both Data and Instructions in the same cache.
-    * *Advantage:* Higher hit rate generally; load balances automatically (e.g., if a program has many instructions and little data, the cache fills with instructions).
-* **Split Cache:** Separate caches for **Instructions** and **Data**.
-    * *Advantage:* Essential for pipelining. It eliminates contention between the **Instruction Fetch Unit** (trying to read code) and the **Execution Unit** (trying to load/store data).
-    * *Usage:* Common in superscalar machines like Pentium and PowerPC.
+## 5. Error Correction
+
+Memory is susceptible to failures:
+*   **Hard Failure**: Permanent physical defect (wear, environment).
+*   **Soft Error**: Random, non-destructive (power spikes, alpha particles).
+
+### 5.1 Error Correcting Code (ECC) Function
+When data is written, a calculation function $f$ produces a code $K$. Both are stored. When read, a new code $K'$ is generated. If $K 
+eq K'$, an error is detected.
+
+### 5.2 Hamming Error Correcting Code
+*   **Syndrome Word**: XORed check bits. If $0$, no error.
+*   **Capability**: Can correct single-bit errors.
+*   **Formula**: $2^K - 1 \ge M + K$ (e.g., for $8$ data bits, $4$ check bits are needed because $2^4 - 1 = 15 \ge 8 + 4 = 12$).
+*   **Characteristics**:
+    *   If syndrome word is all $0$s $
+ightarrow$ no error.
+    *   If only one bit is $1$ $
+ightarrow$ error in a check bit.
+    *   If more than one bit is $1$ $
+ightarrow$ value indicates position of the data bit in error.
 
 ---
 
 ## 6. Summary / Key Takeaways
-* **Goal:** Cache acts as a buffer to match CPU speed with slower memory using the **Principle of Locality**.
-* **Mapping:**
-    * **Direct:** Simple, fixed mapping ($i=j\%m$), prone to thrashing.
-    * **Associative:** Flexible, complex search, expensive.
-    * **Set Associative:** Best of both worlds; maps to a set ($i=j\%v$), associative within the set.
-* **Replacement:** **LRU** is the standard for associative caches. Direct mapping has no choice but to replace the resident block.
-* **Write Policy:** **Write Back** reduces bus traffic but requires "Dirty Bits"; **Write Through** is safer but slower.
-* **Structure:** Modern CPUs use **Split L1 Caches** (Instruction/Data) to support pipelining and **Multilevel (L1/L2/L3)** hierarchies to optimize access times.
 
+*   **Memory Hierarchy**: Balances cost, capacity, and speed.
+*   **SRAM vs DRAM**: SRAM (fast/cache) uses flip-flops; DRAM (dense/main) uses capacitors and requires refresh.
+*   **ROM**: Non-volatile storage; varieties include PROM, EPROM, and Flash.
+*   **Advanced DRAM**: Technologies like SDRAM and DDR improve throughput by syncing with clocks or doubling data rates.
+*   **Error Correction**: Essential for reliability; Hamming codes allow for automatic correction of single-bit flips.
 
-# Topic 12: Virtual Memory
+---
+# Topic 11: Cache Memory Architecture
+
+## 1. Principles & Motivation
+
+### 1.1 The Speed Mismatch
+There is a significant speed mismatch between the fast CPU and the slower Main Memory. As processor speed increases, the external bus becomes a bottleneck, causing the CPU to waste cycles waiting for data.
+
+### 1.2 The Solution: Cache Memory
+Cache is a small, fast memory sitting between the CPU and Main Memory. It acts as a buffer to provide the CPU with the data it needs as quickly as possible at the price of cheaper semiconductor memories.
+
+> [!INFO] Locality of Reference
+> Cache relies on the **Principle of Locality**: When a block of data is fetched for a single memory reference, it is highly likely that future references will be to that same location or adjacent locations.
+> * **Temporal Locality**: Recently accessed data is likely to be accessed again soon.
+> * **Spatial Locality**: Data near recently accessed data is likely to be accessed soon.
+
+### 1.3 Cache Read Operation Sequence
+1.  Receive address **RA** from CPU.
+2.  Check if the block containing **RA** is in the cache.
+3.  **If Yes (Hit)**: Fetch the word from cache and deliver to CPU.
+4.  **If No (Miss)**:
+    *   Access Main Memory for the block containing **RA**.
+    *   Allocate a cache line for the block.
+    *   Load the Main Memory block into the cache line.
+    *   Deliver the word to the CPU.
+
+---
+
+## 2. Cache/Main Memory Structure
+
+The relationship between cache and main memory is defined by the following parameters:
+
+*   **Main Memory**: Consists of $2^n$ addressable words.
+    *   Considered to consist of $M$ blocks of $K$ words each.
+    *   $M = 2^n / K$.
+*   **Cache**: Consists of $C$ lines (slots) of $K$ words each.
+    *   The number of lines is much less than the number of blocks ($C \ll M$).
+    *   Each line includes a **Tag** to identify which block of main memory is currently occupying it.
+
+---
+
+## 3. Elements of Cache Design
+
+### 3.1 Mapping Functions
+Since there are fewer cache lines than main memory blocks, algorithms are needed to determine where a block goes.
+
+#### A. Direct Mapping
+Each block of main memory maps to only **one specific** cache line.
+*   **Logic**: $i = j \pmod m$ (where $i$ = line, $j$ = block, $m$ = lines in cache).
+*   **Address Structure**: $[ \text{Tag } (s-r) \mid \text{Line } (r) \mid \text{Word } (w) ]$
+    *   *Word*: Identifies unique word within a block.
+    *   *Line*: Selects specific line in cache.
+    *   *Tag*: Used to verify if the block in the line is the requested one.
+*   **Pros**: Simple, inexpensive hardware.
+*   **Cons**: Fixed location leads to **Thrashing** if a program repeatedly accesses two blocks that map to the same line.
+
+#### B. Associative Mapping
+A main memory block can load into **any** line of the cache.
+*   **Logic**: No fixed mapping rule; every line's tag is examined for a match.
+*   **Address Structure**: $[ \text{Tag } (s) \mid \text{Word } (w) ]$
+*   **Pros**: High hit ratio; prevents thrashing.
+*   **Cons**: Complex and expensive circuitry (requires parallel search/comparison logic).
+
+#### C. Set Associative Mapping
+A compromise between Direct and Associative. Cache is divided into $v$ sets, each containing $k$ lines ($k$-way associative).
+*   **Logic**: $i = j \pmod v$ (where $i$ = set number).
+*   **Address Structure**: $[ \text{Tag } (s-d) \mid \text{Set } (d) \mid \text{Word } (w) ]$
+*   **Popularity**: 2-way ($v = m/2, k = 2$) is very common as it significantly improves hit rate over direct mapping at moderate cost.
+
+---
+
+### 3.2 Replacement Algorithms
+Used when a new block must be loaded into a full cache (only applies to Associative and Set Associative).
+
+1.  **Least Recently Used (LRU)**: Replace the block that has gone unused for the longest time. Most effective and popular.
+2.  **First In First Out (FIFO)**: Replace the block that has been in the cache the longest (implemented as a circular buffer).
+3.  **Least Frequently Used (LFU)**: Replace the block with the fewest hits using a counter.
+4.  **Random**: Pick a line at random; performance is only slightly inferior to usage-based algorithms.
+
+---
+
+### 3.3 Write Policies
+Determines when Main Memory is updated after a cache write.
+
+*   **Write Through**:
+    *   All writes go to **both** cache and main memory.
+    *   *Pro*: Main memory is always valid.
+    *   *Con*: High memory traffic slows down writes.
+*   **Write Back**:
+    *   Updates are made **only in cache**. An **Update Bit** (Dirty Bit) is set.
+    *   Written to main memory only when the block is replaced.
+    *   *Pro*: Faster writes, 15% of memory references are typically writes.
+    *   *Con*: Portions of main memory are invalid until write-back; I/O must be careful.
+
+> [!WARNING] Cache Coherency
+> When multiple devices (e.g., I/O, other CPUs) have access to memory, cache data can become stale. Solutions include **Bus watching** (monitoring writes to main memory), **Hardware transparency**, and designating **Noncacheable memory**.
+
+---
+
+### 3.4 Block/Line Size
+*   As block size increases, the hit ratio initially increases (Principle of Locality).
+*   However, if block size becomes too large, the hit ratio decreases because:
+    1.  Fewer blocks fit in the cache.
+    2.  Additional words in the block are farther from the requested word and less likely to be needed soon.
+
+---
+
+## 4. Cache Organization & Case Studies
+
+### 4.1 Number of Caches
+*   **Multilevel Caches**:
+    *   **L1**: On-chip, fastest. Eliminates external bus access.
+    *   **L2**: Often on-chip now. Uses fast SRAM to match bus speed (zero-wait states).
+    *   **L3**: Added for massive databases/server workloads.
+*   **Unified vs. Split Caches**:
+    *   **Unified**: One cache for data and instructions. Higher hit rate (automatic load balance).
+    *   **Split**: Separate instruction and data caches. Essential for **Pipelining** to eliminate contention between instruction fetch and execution units.
+
+### 4.2 Intel Cache Evolution
+| Processor | Cache Feature |
+| :--- | :--- |
+| **80386** | No on-chip cache; external cache added via faster memory. |
+| **80486** | 8KB on-chip L1 (4-way set associative, 16-byte lines). |
+| **Pentium** | Two on-chip L1 caches (split data/instruction). |
+| **Pentium Pro** | Back-side bus dedicated to L2 cache for higher speed. |
+| **Pentium II** | L2 cache moved onto the processor chip. |
+| **Pentium III**| L3 cache added off-chip. |
+| **Pentium 4** | L1 instruction (12K mops), L1 data (16KB), L2 (512KB), L3 (1MB on-chip). |
+
+### 4.3 Pentium 4 Design Reasoning
+*   Decodes instructions into RISC-like **micro-ops** fixed length before L1 cache to allow superscalar pipelining.
+*   Data cache is typically write-back but can be configured to write-through.
+*   L2 and L3 caches are 8-way set-associative with 128-byte line sizes.
+
+### 4.4 PowerPC Cache Examples
+*   **601**: Single 32KB 8-way set associative.
+*   **603**: 16KB (8KB data / 8KB instruction).
+*   **G3 & G4**: 64KB L1, up to 1MB L2.
+*   **G5**: 32KB instruction cache, 64KB data cache.
+
+---
+
+## 5. Summary / Key Takeaways
+*   **Goal**: Bridge the CPU-Memory gap using the **Principle of Locality**.
+*   **Trade-off**: Direct mapping is simple but prone to thrashing; associative mapping is flexible but expensive.
+*   **Hierarchy**: Modern systems use multilevel split caches to support high-speed pipelined execution.
+*   **Policies**: Write-back is more efficient for performance, while write-through ensures data consistency.
+
+---
+# Topic 12: Memory Management and Virtual Memory
 
 ## 1. Memory Management Fundamentals
 
-Memory management is the task of subdividing memory to accommodate multiple processes. The OS must manage the trade-offs between swapping, overhead, and efficient usage.
+Memory management is the task of subdividing memory to accommodate multiple processes while managing the trade-offs between swapping, overhead, and efficient usage.
 
-### Partitioning
+*   **Uni-programming**: Memory is split into two parts: one for the Operating System (monitor) and one for the currently executing program.
+*   **Multi-programming**: The "User" part of memory is sub-divided and shared among active processes.
+*   **The Need for Swapping**: 
+    *   **Problem**: I/O is extremely slow compared to the CPU. Even in multi-programming systems, the CPU can be idle most of the time waiting for I/O.
+    *   **Solutions**: Increase main memory (expensive and leads to larger programs) or use **Swapping**.
+*   **What is Swapping?**
+    *   A long-term queue of processes is stored on disk.
+    *   Processes are "swapped in" to main memory as space becomes available.
+    *   When a process completes, it is moved out.
+    *   If all processes in memory are blocked (e.g., waiting for I/O), the OS swaps a blocked process to an **intermediate queue** on disk and swaps in a ready process.
 
-Partitioning involves splitting the main memory into sections to allocate to processes (including the Operating System).
+## 2. Partitioning Techniques
 
-#### Fixed Partitioning
-* **Concept**: Memory is divided into static partitions. These can be **Equal-size** or **Unequal-size**.
-* **Allocation**: A process is loaded into a partition large enough to hold it.
-* **Issues**:
-    * **Internal Fragmentation**: If a process is smaller than the partition, the remaining space *inside* that partition is wasted.
-    * Limits the number of active processes to the number of partitions.
+Partitioning involves splitting main memory into sections to allocate to processes.
 
-#### Dynamic Partitioning
-* **Concept**: Partitions are created dynamically. The OS allocates exactly the required memory to a process.
-* **Allocation**: No pre-defined boundaries.
-* **Issues**:
-    * **External Fragmentation**: As processes are swapped in and out, memory becomes a checkerboard of used blocks and small "holes" too small to be useful.
-    * **Solution**: **Compaction** (De-fragmentation) — The OS shifts processes to coalesce holes into one large free block (resource-intensive).
+### 2.1 Fixed Partitioning
+*   **Concept**: Memory is divided into static partitions at boot time.
+*   **Types**: 
+    *   **Equal-size**: All partitions are the same size.
+    *   **Unequal-size**: Partitions of varying sizes to better fit different process requirements.
+*   **Issues**: **Internal Fragmentation**. If a process is smaller than the partition, the remaining space *inside* that partition is wasted.
+
+### 2.2 Dynamic Partitioning
+*   **Concept**: Partitions are created dynamically; the OS allocates exactly the required amount of memory to a process.
+*   **Issues**: **External Fragmentation**. As processes are swapped in and out, memory becomes a checkerboard of used blocks and small "holes" too small to be useful.
+*   **Solutions**:
+    *   **Coalesce**: Join adjacent free holes into one larger hole.
+    *   **Compaction**: The OS shifts processes in memory to collect all free blocks into one large block (De-fragmentation). This is a time-consuming I/O process.
 
 | Feature | Fixed Partitioning | Dynamic Partitioning |
 | :--- | :--- | :--- |
@@ -1417,164 +1283,209 @@ Partitioning involves splitting the main memory into sections to allocate to pro
 | **Fragmentation** | **Internal** (waste inside block) | **External** (waste between blocks) |
 | **Complexity** | Low | Higher (requires compaction) |
 
-### Simple Paging
-Paging divides memory into fixed chunks to avoid external fragmentation.
+### 2.3 Relocation
+*   **The Problem**: There is no guarantee that a process will load into the same place in memory after being swapped back in.
+*   **Addresses**:
+    *   **Logical Address**: A reference relative to the beginning of the program.
+    *   **Physical Address**: The actual location in main memory.
+*   **Mechanism**: The hardware performs an automatic conversion from logical to physical addresses using a **base address** (the start of the process in memory).
 
-* **Frames**: Fixed-size, small chunks of **physical memory**.
-* **Pages**: Fixed-size, small chunks of the **process (logical memory)**.
-* **Mapping**: The Operating System maintains a **Page Table** for each process to map active Pages to physical Frames.
-    * A process does *not* require contiguous physical frames.
+## 3. Paging and Segmentation
 
-### Simple Segmentation
-Segmentation allows the programmer to view memory as multiple address spaces (segments) rather than a linear sequence.
+### 3.1 Simple Paging
+*   Memory is split into equal-sized, small chunks called **page frames**.
+*   Processes are split into equal-sized chunks called **pages**.
+*   The OS maintains a list of free frames and allocates the required number to a process.
+*   **Key Advantage**: A process does **not** require contiguous physical frames.
+*   **Page Table**: Used by the OS to keep track of which process page is in which physical frame.
 
-* **Segments**: Variable-sized blocks usually allocated to logical units (e.g., Program segment, Data segment, Stack).
-* **Visibility**: Unlike paging, segmentation is **visible** to the programmer.
-* **Protection**: Useful for assigning access rights (read/write/execute) to specific logic blocks.
+### 3.2 Segmentation
+*   Unlike paging, segmentation is **visible to the programmer**.
+*   Programs are divided into multiple address spaces (segments) of variable size (e.g., subroutine segment, stack segment, data segment).
+*   **Advantages**:
+    *   Simplifies handling growing data structures (expanding/shrinking segments).
+    *   Lends itself to **sharing** (a segment can be addressed by multiple processes).
+    *   Lends itself to **protection** (assigning different privileges/rights to specific logic blocks).
 
----
+## 4. Virtual Memory Principles
 
-## 2. Virtual Memory Principles
-
-### Concept
+### 4.1 Concept and Demand Paging
 Virtual memory allows the execution of processes that are not completely in main memory.
-* **Real Memory**: The actual main memory (RAM) available.
-* **Virtual Memory**: The programmer sees a much larger memory space than physically exists.
-* **Mechanism**: The OS keeps only the currently active parts of a process in RAM and keeps the rest on the disk (Long-term queue).
+*   **Real Memory**: The actual physical RAM available.
+*   **Virtual Memory**: The programmer sees a much larger memory space than physically exists.
+*   **Demand Paging**:
+    *   Pages are brought into memory only when they are actually required.
+    *   **Page Fault**: Triggered when the CPU tries to access a page not currently in memory. The OS must swap in the required page from disk.
+*   **Principle of Locality**: Virtual memory works because references to data and instructions tend to cluster (Temporal and Spatial locality), preventing constant swapping.
 
-### Demand Paging
-* **Definition**: Pages are not loaded until they are actually required.
-* **Process**:
-    1.  CPU tries to access a page.
-    2.  If valid bit is not set (page not in RAM), a **Page Fault** is triggered.
-    3.  OS swaps the required page from disk into a free frame.
-    4.  If memory is full, a page replacement algorithm selects a victim page to swap out.
+### 4.2 Thrashing
+*   **Definition**: Occurs when the system spends almost all its time swapping pages in and out rather than executing instructions.
+*   **Symptoms**: Disk light is on constantly; little or no real work is being done.
+*   **Solutions**:
+    *   Use good page replacement algorithms (e.g., LRU).
+    *   Reduce the degree of multi-programming (fewer active processes).
+    *   Add more physical RAM.
 
-> [!WARNING] Thrashing
-> **Thrashing** occurs when the system spends more time swapping pages in and out than actually executing instructions.
-> * **Cause**: Too many processes running with too little memory (over-committed).
-> * **Symptoms**: Disk light is on constantly; CPU utilization drops.
-> * **Solution**: Reduce degree of multiprogramming or add more RAM.
+## 5. Hardware and Control Structures
 
-### Principle of Locality
-Virtual memory relies on the observation that references to data and instructions tend to cluster.
-* **Temporal Locality**: Recently accessed items are likely to be accessed again soon.
-* **Spatial Locality**: Items near those recently accessed are likely to be accessed soon.
-* *Note: This principle prevents constant thrashing under normal loads.*
+### 5.1 Page Table Structure
+*   **Basic Mechanism**: Translates a virtual/logical address (page number + offset) into a physical address (frame number + offset).
+*   **Size Problem**: In modern systems, page tables can occupy huge amounts of memory.
+*   **Solutions**:
+    *   **Multi-level Paging**: Uses a **Page Directory** to point to secondary page tables (e.g., Pentium II).
+    *   **Inverted Page Table**: Maps physical frame numbers to virtual pages using a Hash algorithm, saving space regardless of the number of processes.
 
----
+### 5.2 Translation Lookaside Buffer (TLB)
+*   **The Problem**: Every virtual memory reference requires two physical memory accesses (one for the page table, one for the actual data), which increases latency.
+*   **The Solution**: A **TLB** is a specialized high-speed cache for recently used page table entries.
+*   **Operation**:
+    *   CPU checks the TLB first.
+    *   **TLB Hit**: The frame number is retrieved immediately.
+    *   **TLB Miss**: The entry is retrieved from the page table in main memory and loaded into the TLB for future use.
 
-## 3. Hardware Support
+## 6. Case Studies
 
-### Paging Address Translation
-The CPU uses a **Logical Address** which the MMU (Memory Management Unit) translates into a **Physical Address**.
+### 6.1 Pentium II Memory Management
+*   Provides hardware support for both segmentation and paging.
+*   **Address Translation**: Uses a two-level lookup (Page Directory $\rightarrow$ Page Table $\rightarrow$ Offset).
+*   **Protection**: 4 levels of privilege (0 = most protected/Kernel, 3 = least protected/User applications).
+*   **Segmentation**: Each virtual address consists of a 16-bit segment ID and a 32-bit offset.
 
-**Address Structure:**
-$$\text{Logical Address} = [ \text{Page Number} \mid \text{Offset} ]$$
-
-**The Translation Flow:**
-1.  **Page Number**: Used as an index into the Process Page Table.
-2.  **Frame Number**: Extracted from the Page Table entry.
-3.  **Physical Address**: Combined with the original offset.
-    $$\text{Physical Address} = [ \text{Frame Number} \mid \text{Offset} ]$$
-
-### TLB (Translation Lookaside Buffer)
-> [!INFO] What is the TLB?
-> The **TLB** is a specialized, high-speed hardware cache that stores recent Page Table entries. It avoids the "double memory access" penalty (one access to read the Page Table, one to read data).
-
-* **Operation**:
-    1.  CPU extracts the Page Number.
-    2.  **TLB Hit**: Frame number retrieved immediately (Fast).
-    3.  **TLB Miss**: CPU must access the Page Table in main memory to get the frame number, then update the TLB.
-
-### Page Table Structure
-As processes grow, Page Tables themselves become large.
-* **Multi-level Paging**: Using a Page Directory to point to secondary Page Tables (e.g., Pentium II uses a 2-level scheme).
-* **Inverted Page Table**:
-    * Instead of one entry per virtual page, there is one entry per **physical frame**.
-    * Uses a **Hash Algorithm** to map the Virtual Page Number to the Frame.
-    * Reduces memory required for tables but requires handling hash collisions (chaining).
-
----
-
-## 4. OS Software Policies
-
-### Fetch Policy
-* **Demand Paging**: Bring pages in only when a Page Fault occurs. (Most common).
-* **Pre-paging**: Bring in pages likely to be needed soon (exploits locality).
-
-### Replacement Algorithms
-When memory is full, the OS must choose a "victim" page to evict.
-* **Locking**: Some frames (e.g., OS kernel, I/O buffers) are "locked" and cannot be swapped out.
-
-**Basic Algorithms:**
-1.  **Optimal**: Select the page that will not be used for the longest time. (Theoretical benchmark, impossible to implement perfectly).
-2.  **LRU (Least Recently Used)**: Replace the page that has not been used for the longest time. (Approximates locality well, but high overhead).
-3.  **FIFO (First-In-First-Out)**: Replace the oldest page in memory. (Simple, but can perform poorly).
-4.  **Clock**: A variation of FIFO using a "use bit." It gives pages a "second chance" if they have been referenced recently, approximating LRU with less overhead.
-
----
-
-## 5. Summary/Key Takeaways
-
-* **Partitioning**: Fixed leads to internal fragmentation; Dynamic leads to external fragmentation.
-* **Paging vs. Segmentation**: Paging is physical (fixed size, invisible to user); Segmentation is logical (variable size, visible to user).
-* **Virtual Memory**: Allows execution of programs $>$ Physical RAM.
-* **TLB**: Critical for performance to minimize memory access latency during address translation.
-* **Thrashing**: The collapse of performance due to excessive paging; solved by adding RAM or reducing active processes.
+### 6.2 PowerPC Memory Management
+*   **32-bit Architecture**: Uses paging with simple segmentation.
+*   **64-bit Architecture**: Uses paging with more powerful segmentation.
+*   **Block Address Translation**: Allows mapping large blocks of memory (e.g., graphics frame buffers) to bypass the standard paging mechanism for higher performance.
 
 ---
 # Topic 13: Multiprocessor Organisation
 
-### 13.1 Flynn's Classification
+## 1. Multiple Processor Organizations
+
+### 1.1 Flynn's Classification
 A standard taxonomy for computer architectures based on the number of instruction streams and data streams simultaneously being processed.
 
-* **SISD (Single Instruction, Single Data Stream)**
-    * **Structure**: A single processor executes a single instruction stream to operate on data stored in a single memory.
-    * **Example**: Standard uniprocessor systems.
-* **SIMD (Single Instruction, Multiple Data Stream)**
-    * **Structure**: A single machine instruction controls the simultaneous execution of a number of processing elements. Each processing element has an associated data memory.
-    * **Operation**: Instructions are executed on a lockstep basis; each processor executes the same instruction on a different set of data.
-    * **Examples**: Vector processors and array processors.
-* **MISD (Multiple Instruction, Single Data Stream)**
-    * **Structure**: A sequence of data is transmitted to a set of processors, each of which executes a different instruction sequence.
-    * **Status**: This structure has never been commercially implemented.
-* **MIMD (Multiple Instruction, Multiple Data Stream)**
-    * **Structure**: A set of processors simultaneously execute different instruction sequences on different sets of data.
-    * **Examples**: Symmetric Multiprocessors (SMPs), clusters, and Nonuniform Memory Access (NUMA) systems.
+*   **SISD (Single Instruction, Single Data Stream)**:
+    *   Single processor executes a single instruction stream to operate on data stored in a single memory.
+    *   *Example*: Standard uniprocessor.
+*   **SIMD (Single Instruction, Multiple Data Stream)**:
+    *   Single machine instruction controls the simultaneous execution of a number of processing elements on a lockstep basis.
+    *   Each processing element has an associated data memory.
+    *   *Examples*: Vector processors, Array processors.
+*   **MISD (Multiple Instruction, Single Data Stream)**:
+    *   Sequence of data is transmitted to a set of processors, each executing a different instruction sequence.
+    *   *Status*: Never commercially implemented.
+*   **MIMD (Multiple Instruction, Multiple Data Stream)**:
+    *   Set of processors simultaneously execute different instruction sequences on different sets of data.
+    *   *Examples*: SMPs, Clusters, NUMA systems.
 
-### 13.2 Taxonomy of Parallel Processor Architectures
-The hierarchy of processor organizations is categorized as follows:
-
+### 1.2 Taxonomy of Parallel Architectures
 1.  **SISD** $\rightarrow$ Uniprocessor
 2.  **SIMD** $\rightarrow$ Vector Processor, Array Processor
-3.  **MISD** (Theoretical)
-4.  **MIMD**
-    * **Shared Memory (Tightly Coupled)**
-        * Symmetric Multiprocessor (SMP)
-        * Nonuniform Memory Access (NUMA)
-    * **Distributed Memory (Loosely Coupled)**
-        * Clusters
+3.  **MIMD**:
+    *   **Shared Memory (Tightly Coupled)**: Processors share memory and communicate via that shared memory.
+        *   **Symmetric Multiprocessor (SMP)**
+        *   **Nonuniform Memory Access (NUMA)**
+    *   **Distributed Memory (Loosely Coupled)**: Collection of independent computers.
+        *   **Clusters**
 
-### 13.3 Symmetric Multiprocessors (SMP)
-An SMP is a standalone computer system defined by the following characteristics:
+---
 
-* **Multiple Processors**: Contains two or more similar processors of comparable capability.
-* **Shared Resources**: Processors share the same main memory and I/O facilities.
-* **Interconnection**: Processors are connected by a bus or other internal connection scheme.
-* **Uniform Access**: Memory access time is approximately the same for each processor.
-* **Shared I/O**: All processors share access to I/O devices, either through the same channels or different channels providing paths to the same device.
-* **Symmetry**: All processors can perform the same functions.
-* **Integrated OS**: The system is controlled by an integrated operating system that manages interaction between processors at the job, task, file, and data element levels.
+## 2. Symmetric Multiprocessors (SMP)
 
-### 13.4 Multicore Computers
-* **Core**: The "brain" of the CPU (also called a processing unit). It consists of an ALU, control unit, and registers.
-* **Multicore**: A CPU chip that contains multiple cores (e.g., Dual-core = 2 cores, Quad-core = 4 cores).
+### 2.1 Characteristics
+An SMP is a standalone computer system with the following characteristics:
+*   **Multiple Processors**: Two or more similar processors of comparable capability.
+*   **Shared Resources**: Processors share the same main memory and I/O facilities, interconnected by a bus or other internal connection scheme.
+*   **Uniform Access**: Memory access time to any given area of memory is approximately the same for each processor.
+*   **Shared I/O**: All processors share access to I/O devices.
+*   **Symmetry**: All processors can perform the same functions.
+*   **Integrated OS**: The system is controlled by an integrated OS that manages interaction between processors (scheduling, synchronization, memory management).
 
-#### Chip Organization Alternatives
-* **Superscalar / SMT (Simultaneous Multithreading)**: Techniques used within cores to increase performance.
-* **Cache Organization**:
-    * **L1 Cache**: Typically split into Instruction (L1-I) and Data (L1-D) caches, dedicated to each core.
-    * **L2 Cache**: Can be organized in different ways:
-        * *Dedicated*: Each core has its own L2 cache.
-        * *Shared*: All cores share a common L2 cache.
+### 2.2 Advantages
+*   **Performance**: Tasks can be executed in parallel.
+*   **Availability**: Failure of a single processor does not halt the system.
+*   **Incremental Growth**: User can enhance performance by adding additional processors.
+*   **Scaling**: Vendors can offer a range of products based on the number of processors.
+
+### 2.3 Organization
+*   **Time Shared Bus**: Simplest form. Structure is similar to single processor system.
+    *   *Pros*: Simplicity, Flexibility, Reliability.
+    *   *Cons*: Performance limited by bus cycle time. Each processor needs local cache to reduce bus traffic.
+*   **Multiport Memory**: Direct independent access of memory modules by each processor. Logic required to resolve conflicts.
+*   **Central Control Unit**: Funnels separate data streams between independent modules. Buffers requests and performs arbitration.
+
+---
+
+## 3. Cache Coherence and MESI Protocol
+
+### 3.1 The Problem
+In SMPs with local caches, multiple copies of the same data can exist. If one processor updates its local cache, other copies become invalid/stale.
+*   **Write Back** policy leads to inconsistency.
+*   **Write Through** can also give problems unless caches monitor memory traffic.
+
+### 3.2 Solutions
+*   **Software**: Compiler and OS deal with the problem (overhead transferred to compile time). Conservative decisions may lead to inefficient cache use.
+*   **Hardware**:
+    *   **Directory Protocols**: Directory stored in main memory maintains information about copies. Effective for large scale systems but creates a central bottleneck.
+    *   **Snoopy Protocols**: Distribute cache coherence responsibility among cache controllers. Each cache "snoops" on the bus. Suited for bus-based SMPs.
+
+### 3.3 Snoopy Protocols
+*   **Write Invalidate**: When a write is required, all other caches of the line are invalidated. The writing processor then has exclusive access. Used in Pentium II and PowerPC.
+*   **Write Update**: Updated word is distributed to all other processors.
+
+### 3.4 MESI Protocol (Write Invalidate)
+Each line in the cache is marked with one of four states:
+1.  **Modified (M)**: The line in the cache has been modified (different from main memory) and is available only in this cache.
+2.  **Exclusive (E)**: The line in the cache is the same as main memory and is not present in any other cache.
+3.  **Shared (S)**: The line in the cache is the same as main memory and may be present in other caches.
+4.  **Invalid (I)**: The line in the cache does not contain valid data.
+
+---
+
+## 4. Clusters
+
+### 4.1 Definition
+A group of interconnected whole computers (nodes) working together as a unified resource. Creates the illusion of a single machine.
+*   **Alternative to SMP**: High performance, High availability, Server applications.
+
+### 4.2 Benefits
+*   **Absolute Scalability**: Can grow far larger than SMPs.
+*   **Incremental Scalability**: Can add new nodes easily.
+*   **High Availability**: Failure of one node doesn't stop the cluster.
+*   **Price/Performance**: Uses commodity hardware.
+
+### 4.3 Configurations
+*   **Standby Server, No Shared Disk**: One active, one passive (backup). Link for mirroring.
+*   **Shared Disk**: Multiple active nodes share a RAID array.
+
+---
+
+## 5. Nonuniform Memory Access (NUMA)
+
+In NUMA systems, all processors have access to all parts of memory, but:
+*   **Access time differs** depending on which region of memory is accessed (local vs remote).
+*   Different processors access different regions of memory at different speeds.
+
+---
+
+## 6. Multicore Organizations
+
+### 6.1 Concept
+*   **Core**: The "brain" (ALU, Control Unit, Registers).
+*   **Multicore**: A single CPU chip containing multiple cores (e.g., Dual-core, Quad-core).
+
+### 6.2 Chip Organization Alternatives
+*   **Superscalar**: Multiple pipelines within a core.
+*   **Simultaneous Multithreading (SMT)**: Hardware support for multiple threads per core.
+*   **Cache Levels**:
+    *   **Dedicated L1**: Separate L1-Instruction and L1-Data per core.
+    *   **Dedicated L2**: Each core has its own L2 cache.
+    *   **Shared L2**: All cores share a common L2 cache (allows data sharing without bus traffic).
+    *   **Shared L3**: Common in modern high-performance chips.
+
+### 6.3 Applications
+*   Database servers
+*   Web servers
+*   Compilers
+*   Multimedia applications
+*   Scientific applications (CAD/CAM)
