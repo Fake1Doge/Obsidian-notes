@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CCA102 Computer Organisation.md",
+                "file": "test.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CCA102 Computer Organisation"
+              "title": "test"
             }
           }
         ]
@@ -184,14 +184,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "9bf092cb1fa1ecfc",
+  "active": "50a0fcc66fbb05f8",
   "lastOpenFiles": [
+    "CCA102 Computer Organisation.md",
+    "Note Title.md",
+    "Markdown features.md",
     "CCA102/Wrapup 2526 Topics 7-13.pdf",
     "test.md",
-    "Note Title.md",
     "CKC111 Discrete Structures.md",
     "CCA101 Principle of Programming.md",
-    "CCA102 Computer Organisation.md",
     "CKC111/Chapter3 new.pdf",
     "CKC111/Chapter 9.pdf",
     "CKC111/Chapter 8.pdf",
@@ -201,10 +202,8 @@
     "CKC111/Chapter 4.pdf",
     "CKC111/Chapter 2 AlgorithmExamples.pdf",
     "CKC111/Chapter 10.pdf",
-    "CKC111/Chapter 1.pdf",
     "CCA101 Short Note.md",
     "CKC111 Short Note.md",
-    "Markdown features.md",
     "Test.md"
   ]
 }

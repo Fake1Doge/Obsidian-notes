@@ -1,4 +1,4 @@
-﻿## Topic 1: Introduction to Computer Organisation and Architecture
+## Topic 1: Introduction to Computer Organisation and Architecture
 
 ### 1.1 Architecture vs. Organisation
 *   **Computer Architecture**: Refers to the attributes of a system visible to the programmer (the "what"). It deals with the functional behavior of the system and the logical execution of a program.
