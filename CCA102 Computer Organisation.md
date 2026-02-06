@@ -383,12 +383,12 @@ Instructions operate on:
 ### 5.6 Number of Addresses
 The number of address fields in an instruction impacts program length and complexity.
 
-| Type | Format | Example ($A = B + C$) | Pros/Cons |
-| :--- | :--- | :--- | :--- |
-| **3-Address** | `Op Dest, Src1, Src2` | `ADD A, B, C` | **Pro**: Short programs. <br> **Con**: Instructions are very long (many bits). |
-| **2-Address** | `Op Dest, Src` | `MOVE A, B`<br>`ADD A, C` | **Pro**: Shorter instructions than 3-addr. <br> **Con**: One operand is overwritten (Dest). Requires extra move. |
-| **1-Address** | `Op Src` | `LOAD B`<br>`ADD C`<br>`STORE A` | **Implicit**: Uses **Accumulator (AC)**. <br> **Pro**: Short instructions. <br> **Con**: Longer programs (more instructions). |
-| **0-Address** | `Op` (Implicit) | `PUSH B`<br>`PUSH C`<br>`ADD`<br>`POP A` | **Implicit**: Uses a **Stack**. <br> **Pro**: Very short instructions. <br> **Con**: Complex logic/stack management. |
+| Type          | Format                | Example ($A = B + C$)                    | Pros/Cons                                                                                                                     |
+| :------------ | :-------------------- | :--------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+| **3-Address** | `Op Dest, Src1, Src2` | `ADD A, B, C`                            | **Pro**: Short programs. <br> **Con**: Instructions are very long (many bits).                                                |
+| **2-Address** | `Op Dest, Src`        | `MOVE A, B`<br>`ADD A, C`                | **Pro**: Shorter instructions than 3-addr. <br> **Con**: One operand is overwritten (Dest). Requires extra move.              |
+| **1-Address** | `Op Src`              | `LOAD B`<br>`ADD C`<br>`STORE A`         | **Implicit**: Uses **Accumulator (AC)**. <br> **Pro**: Short instructions. <br> **Con**: Longer programs (more instructions). |
+| **0-Address** | `Op` (Implicit)       | `PUSH B`<br>`PUSH C`<br>`ADD`<br>`POP A` | **Implicit**: Uses a **Stack**. <br> **Pro**: Very short instructions. <br> **Con**: Complex logic/stack management.          |
 
 ### 5.7 Design Decisions
 When designing an Instruction Set Architecture (ISA), architects must decide:
