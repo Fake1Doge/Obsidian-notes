@@ -1,211 +1,181 @@
-# CCA102 Computer Organisation: Topics 7-13
+# Computer Organization: Revision Notes (Topics 7-13)
 
-**Tags:** #CCA102 #ComputerArchitecture #StudyNotes #Semester2
-**Source:** Wrapup 2526 Topics 7-13.pdf
+**Tags:** #computer-architecture #CPU #memory #cache #multiprocessing #exam-revision
+**Reference Text:** Stallings, Computer Organization & Architecture
 
 ---
 
-## [[Topic 7: Central Processing Unit]]
+## Topic 7: Central Processing Unit (CPU)
 
-> [!SUMMARY] Core Function
-> The CPU is responsible for fetching instructions, interpreting them, fetching data, processing data (ALU), and writing data back to memory or I/O.
+### Core Components
+The CPU is responsible for fetching, interpreting, processing, and writing data. Its internal structure consists of:
+* **ALU (Arithmetic and Logic Unit):** Performs computation (arithmetic and boolean logic).
+* **Control Unit (CU):** Controls data/instruction movement and decoding.
+* **Registers:** Internal high-speed memory.
+* **Interconnections:** Internal CPU bus connecting ALU, Registers, and CU.
 
-### 1. CPU Structure
-The CPU consists of three main components connected by the **Internal CPU Bus**:
-* **Arithmetic and Logic Unit (ALU):** Performs actual computation (Arithmetic & Boolean logic, Status Flags, Shifter, Complementer).
-* **Control Unit (CU):** Controls the movement of data and instructions.
-* **Registers:** Internal memory for temporary storage.
+### The Instruction Cycle
+The basic cycle involves the following sub-cycles:
+1.  **Fetch:** Read next instruction from memory into CPU.
+2.  **Execute:** Interpret opcode and perform the operation.
+3.  **Interrupt:** Save current process state and service interrupt (if applicable).
+4.  **Indirect:** Additional memory access to fetch operands (if using indirect addressing).
 
-### 2. System Bus Connection
- The CPU connects to the rest of the computer via the **System Bus**:
-* **Control Bus:** Transmits control signals.
-* **Data Bus:** Carries data.
-* **Address Bus:** Identifies locations in memory.
-
-### 3. Registers
-Registers are the top level of the memory hierarchy (fastest).
-* **User-visible registers:** Accessible to the programmer (e.g., General Purpose Registers).
-* **Control and status registers:** Used by the CU and OS (e.g., Program Counter, Instruction Register).
-
-### 4. The Instruction Cycle
-The cycle includes sub-cycles:
-1.  **Fetch:** Read next instruction from memory.
-2.  **Execute:** Interpret opcode and perform operation.
-3.  **Interrupt:** Save state and service interrupt.
-4.  **Indirect:** Additional memory access to fetch operands.
-
-### 5. Instruction Pipelining
-> [!NOTE] Analogy
-> Pipelining is like an **assembly line**. While one instruction is being executed, the next is being fetched.
-
-**Performance:**
+### Instruction Pipelining
+An analogy to an assembly line where various stages of instructions are processed simultaneously.
 * **Prefetch:** Fetching the next instruction during the execution of the current one.
-* **Speedup Formula:**
-    $$S = \frac{T_1}{T_k} = \frac{nk}{k + (n-1)}$$
-    Where:
-    * $n$ = number of instructions
-    * $k$ = number of stages
-    * $T_1$ = Time without pipeline
-    * $T_k$ = Time with pipeline
+* **Performance Limits:**
+    * *Waiting:* Stages might have unequal duration.
+    * *Conditional Branches:* Can invalidate the pipeline content (Branch Penalty).
+    * *Resource Conflicts:* Simultaneous access to memory or registers.
 
-**Performance Limits (Hazards):**
-* **Resource Conflict:** Different stages accessing the same memory/register.
-* **Data Dependencies:** Waiting for an operand.
-* **Conditional Branches:** Can cause "Branch Penalty" (pipeline flush).
-
----
-
-## [[Topic 8: Control Unit]]
-
-### 1. Micro-Operations
-* Program execution is a sequence of **Instruction Cycles**.
-* Instruction cycles are sequences of **Sub-cycles** (Fetch, Execute, etc.).
-* Sub-cycles are sequences of **Micro-operations ($\mu$Ops)**.
-* $\mu$Ops are the atomic operations of the CPU.
-
-### 2. Control Unit Functions
-1.  **Sequencing:** Causing the CPU to step through $\mu$Ops in the correct order.
-2.  **Execution:** Causing the performance of each $\mu$Op by issuing **Control Signals**.
-
-### 3. Inputs and Outputs
-* **Inputs:** Clock, Instruction Register (Op-code), Flags (Status), Control Signals from Bus.
-* **Outputs:** Signals within CPU (data movement, ALU functions) and Signals to Control Bus (to Memory, to I/O).
-
-### 4. Implementation Types
-* **Hardwired:** (Implied comparison).
-* **Micro-programmed:**
-    * Uses **Control Words** stored in **Control Memory**.
-    * Considered "Firmware".
-    * **Vertical Micro-programming:** Uses codes that must be decoded (slower, narrower words).
-    * **Horizontal Micro-programming:** Every bit connects to a control line (faster, wider words, no decoding).
+> [!math] Pipeline Performance Formulas
+> **Without Pipeline:** $T_1 = nk$
+> **With Pipeline:** $T_k = k + (n-1)$
+> **Speedup ($S$):**
+> $$S = \frac{T_1}{T_k} = \frac{nk}{k + (n-1)}$$
+> Where:
+> * $n$ = number of instructions
+> * $k$ = number of stages
 
 ---
 
-## [[Topic 9: Interfacing and Communication]]
+## Topic 8: Control Unit
 
-> [!QUESTION] Why do we need I/O Modules?
-> Peripherals are slower than the CPU, have different data formats, and diverse operating modes. The I/O module acts as a bridge.
+### Micro-Operations
+Program execution is broken down into atomic operations called **micro-operations ($\mu$Ops)**.
+* **Sequencing:** Causing the CPU to step through $\mu$Ops in the correct order.
+* **Execution:** Causing the performance of each $\mu$Op using control signals.
 
-### 1. I/O Module Functions
-* Control and Timing.
-* CPU/Device Communication.
-* Data Buffering.
-* Error Detection.
+### Control Signals
+The Control Unit acts as the brain, receiving inputs and generating outputs.
+* **Inputs:** Clock, Instruction Register (Op-code), Flags (Status), Control Bus signals (Interrupts).
+* **Outputs:**
+    * *Internal:* Move data between registers, activate ALU functions.
+    * *External:* Control bus signals to Memory and I/O modules.
 
-### 2. I/O Techniques
-| Technique | Description | CPU Utilization |
-| :--- | :--- | :--- |
-| **Programmed I/O** | CPU waits for the I/O module (polls status). | High (Wasteful) |
-| **Interrupt-driven I/O** | I/O module interrupts CPU when ready. | Medium (Efficient) |
-| **DMA (Direct Memory Access)** | Dedicated module handles transfer to memory. | Low (CPU only sets up) |
-
-### 3. Interface Types
-* **Parallel:** Multiple lines, multiple bits simultaneously (e.g., old printers).
-* **Serial:** One line, bits transmitted sequentially (e.g., USB, Mouse).
-    * **USB:** Simple, low cost, plug-and-play.
+### Micro-programmed Control
+Instead of hardwired logic, a **micro-program** (firmware) defines the control unit's behavior.
+* **Control Word:** A binary representation where bits represent control lines.
+* **Implementation Types:**
+    * *Vertical:* Encoded bits (requires decoding, slower, narrower words).
+    * *Horizontal:* Unencoded (1 bit per line, faster, wider words).
 
 ---
 
-## [[Topic 10: Memory]]
+## Topic 9: Interfacing and Communication
 
-### 1. Memory Classification
-* **Main Memory:** CPU accessible, volatile (mostly).
-* **Secondary Memory:** Storage (Disk, Tape), non-volatile.
+### I/O Modules
+Peripherals are not connected directly to the system bus because they are slower, have diverse formats, and proprietary operation methods. An **I/O Module** acts as a bridge.
 
-### 2. Access Methods
+**Functions:**
+* Interface to CPU/Memory (via System Bus).
+* Interface to peripherals (via tailored data links).
+* Buffering (to manage speed differences).
+* Error detection.
+
+### I/O Techniques
+1.  **Programmed I/O:** CPU waits for I/O module (busy-wait). Wastes CPU time.
+2.  **Interrupt-driven I/O:** CPU issues command and continues work. I/O module interrupts CPU when ready.
+3.  **Direct Memory Access (DMA):**
+    * Used for large data transfers.
+    * DMA module takes control of the system bus.
+    * Transfers block of data directly to/from memory without CPU intervention (except for start and end).
+
+### Interface Types
+* **Parallel:** Multiple lines, multiple bits transferred simultaneously (faster, e.g., old printers).
+* **Serial:** Single line, bits transmitted one by one (slower but cheaper cabling, e.g., USB).
+
+---
+
+## Topic 10: Memory
+
+### Memory Hierarchy
+Organized by speed, cost, and capacity:
+1.  **CPU Registers** (Fastest, Smallest)
+2.  **Cache Memory**
+3.  **Main Memory**
+4.  **Secondary Memory** (Disk, Tape - Slowest, Largest)
+
+### Access Methods
 * **Sequential:** Start at beginning, read in order (e.g., Tape).
-* **Direct:** Jump to vicinity, then search (e.g., Hard Disk).
-* **Random:** Unique address, independent access time (e.g., RAM).
-* **Associative:** Retrieve based on content comparison, not address (e.g., Cache).
+* **Direct:** Jump to vicinity, then sequential search (e.g., Disk).
+* **Random:** Individual unique addresses, access time independent of location (e.g., RAM).
+* **Associative:** Retrieved by comparing content portions, not address (e.g., Cache).
 
-### 3. RAM Types
-* **SRAM (Static):** Faster, more expensive, used for Cache.
-* **DRAM (Dynamic):** Slower, cheaper, requires refreshing, used for Main Memory.
-
-### 4. Error Correction
+### Error Correction
 * **Hard Failure:** Permanent physical defect.
-* **Soft Error:** Random, non-destructive (e.g., power issue).
-* **Hamming Code:** A simple error-correcting code capable of detecting and correcting single-bit errors.
+* **Soft Error:** Random, non-destructive (e.g., power supply issue).
+* **Hamming Code:** A method to detect and correct errors by storing extra code bits ($K$) alongside data bits ($M$).
 
 ---
 
-## [[Topic 11: Cache Memory]]
+## Topic 11: Cache Memory
 
-> [!INFO] Principle: Locality of Reference
-> If a data block is fetched, it is likely that future references will be to that same location or nearby locations.
+**Purpose:** Exploit **Locality of Reference** (CPU is likely to access the same or nearby memory locations again) to speed up access.
 
-### 1. Structure
-* **Block:** Unit of data in Main Memory.
-* **Line:** Unit of storage in Cache (Tag + Block).
-* Cache size ($C$) is much smaller than Memory size ($M$).
+### Structure
+* **Main Memory:** Divided into $M$ blocks.
+* **Cache:** Divided into $C$ lines (where $C \ll M$).
+* **Tags:** Used to identify which block of main memory is currently stored in a cache line.
 
-### 2. Mapping Functions
-How do we map Main Memory blocks to Cache Lines?
+### Mapping Functions
+Algorithms to determine where a memory block resides in the cache.
 
-**A. Direct Mapping**
-* Each block maps to **one** specific line.
-* Formula: $i = j \pmod m$
-    * $i$: Cache line number
-    * $j$: Memory block number
-    * $m$: Number of lines in cache
-* Address splits into: **Tag | Line | Word**
+1.  **Direct Mapping:**
+    * Each memory block maps to exactly **one** specific cache line.
+    * Formula: $i = j \pmod m$ (where $i$ is cache line, $j$ is memory block).
+    * *Pros:* Simple. *Cons:* Fixed location causes thrashing if two active blocks map to the same line.
 
-**B. Associative Mapping**
-* Block can load into **any** line.
-* Must search all tags simultaneously (complex hardware).
-* Address splits into: **Tag | Word**
+2.  **Associative Mapping:**
+    * A memory block can load into **any** cache line.
+    * Tag uniquely identifies the block.
+    * *Pros:* Flexible. *Cons:* Searching all tags is expensive/slow.
 
-**C. Set Associative Mapping**
-* Cache is divided into sets ($v$). Each set has $k$ lines.
-* Block maps to any line within a specific **set**.
-* Formula: $i = j \pmod v$
-* Address splits into: **Tag | Set | Word**
+3.  **Set Associative Mapping:**
+    * Compromise between Direct and Associative.
+    * Cache is divided into sets. A block maps to a specific set, but can use *any* line within that set.
+    * Formula: $i = j \pmod v$ (where $v$ is number of sets).
 
 ---
 
-## [[Topic 12: Memory Management & Virtual Memory]]
+## Topic 12: Memory Management & Virtual Memory
 
-### 1. Swapping
-* Moving processes between Main Memory and a "Backing Store" (Disk) to allow more processes than physical RAM can hold.
-* **Problem:** I/O is slow.
+### Concepts
+* **Swapping:** Moving processes between main memory and a secondary storage (disk) queue to free up space.
+* **Thrashing:** When the OS spends more time swapping data than executing instructions (occurs when memory is over-committed).
 
-### 2. Paging
+### Paging
 * **Frames:** Fixed-size chunks of physical memory.
-* **Pages:** Fixed-size chunks of a logical process.
-* **Page Table:** Maintained by OS to map Logical Addresses (Page # + Offset) to Physical Addresses (Frame # + Offset).
+* **Pages:** Fixed-size chunks of logical process memory.
+* **Page Table:** Tracks the mapping between a process's logical pages and physical frames.
+* Allows non-contiguous allocation of memory.
 
-### 3. Virtual Memory (Demand Paging)
-* Do not load all pages of a process immediately. Bring them in only when required.
-* **Page Fault:** Occurs when a requested page is not in RAM. OS must swap it in.
-
-> [!DANGER] Thrashing
-> When the OS spends more time swapping pages in and out than executing instructions. Caused by having too many processes in too little memory.
+### Virtual Memory (Demand Paging)
+* Do not load all pages of a process initially.
+* **Page Fault:** Occurs when the CPU requests a page not currently in main memory. The OS must swap it in.
+* Allows programs larger than physical memory to run.
 
 ---
 
-## [[Topic 13: Multiprocessor Organisation]]
+## Topic 13: Multiprocessor Organization
 
-### 1. Flynn’s Classification
-| Type | Instructions | Data Streams | Example |
-| :--- | :--- | :--- | :--- |
-| **SISD** | Single | Single | Uniprocessor |
-| **SIMD** | Single | Multiple | Vector/Array Processor (GPU) |
-| **MISD** | Multiple | Single | (Theoretical/Never implemented) |
-| **MIMD** | Multiple | Multiple | SMP, Clusters |
+### Flynn’s Classification
+A taxonomy of parallel processor architectures:
+1.  **SISD (Single Instruction, Single Data):** Standard uniprocessor.
+2.  **SIMD (Single Instruction, Multiple Data):** Vector/Array processors. One instruction controls multiple processing elements acting on different data (lockstep).
+3.  **MISD (Multiple Instruction, Single Data):** Sequence of data transmitted to a set of processors. (Theoretical/Rare).
+4.  **MIMD (Multiple Instruction, Multiple Data):** Clusters, SMPs. Processors execute different instructions on different data.
 
-### 2. MIMD Architectures
-* **Shared Memory (Tightly Coupled):** Symmetric Multiprocessors (SMP).
-* **Distributed Memory (Loosely Coupled):** Clusters.
-
-### 3. Symmetric Multiprocessors (SMP)
-* Two or more similar processors.
+### Symmetric Multiprocessors (SMP)
+* Two or more comparable processors.
 * Share same memory and I/O.
-* Connected by a bus.
-* Single Integrated OS.
+* Controlled by a single integrated OS.
+* Uniform memory access time for all processors.
 
-### 4. Multicore Computers
-* **Core:** The "Brain" of the CPU.
-* A single CPU chip contains multiple execution cores (Dual-core, Quad-core).
-* **Cache Structure:**
-    * **L1:** Usually dedicated per core (split into Instruction L1-I and Data L1-D).
-    * **L2:** Can be dedicated or shared across cores.
+### Multicore Computers
+* **Core:** The "brain" of the CPU.
+* Combining multiple cores (Dual-core, Quad-core) on a single chip.
+* **Cache Strategy:**
+    * **L1:** Usually dedicated per core (split into Instruction and Data).
+    * **L2:** Can be dedicated per core or shared across cores.
