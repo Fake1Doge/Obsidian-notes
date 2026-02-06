@@ -506,12 +506,12 @@ Programs are executed in two main phases:
 ### 5.6 Instruction Formats and Address Counts
 The number of addresses in an instruction impacts program complexity and length.
 
-| Format | Example ($Y = (A-B)/(C+D*E)$) | Characteristic |
-| :--- | :--- | :--- |
-| **3-Address** | `SUB Y, A, B` | More complex instructions, shorter programs. |
-| **2-Address** | `MOVE Y, A`<br>`SUB Y, B` | One operand is overwritten; requires extra moves. |
-| **1-Address** | `LOAD D`<br>`MPY E`<br>`ADD C` | Uses an implicit **Accumulator (AC)**. |
-| **0-Address** | `PUSH A`<br>`PUSH B`<br>`SUB` | Uses an implicit **Stack** (LIFO). |
+| Format        | Example ($Y = (A-B)/(C+D*E)$)  | Characteristic                                    |
+| :------------ | :----------------------------- | :------------------------------------------------ |
+| **3-Address** | `SUB Y, A, B`                  | More complex instructions, shorter programs.      |
+| **2-Address** | `MOVE Y, A`<br>`SUB Y, B`      | One operand is overwritten; requires extra moves. |
+| **1-Address** | `LOAD D`<br>`MPY E`<br>`ADD C` | Uses an implicit **Accumulator (AC)**.            |
+| **0-Address** | `PUSH A`<br>`PUSH B`<br>`SUB`  | Uses an implicit **Stack** (LIFO).                |
 
 ### 5.7 Data Structures: Stacks and Queues
 
