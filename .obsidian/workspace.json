@@ -164,13 +164,23 @@
               "icon": "lucide-list",
               "title": "Outline of Test"
             }
+          },
+          {
+            "id": "2bd6262276783896",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,11 +196,11 @@
   },
   "active": "50a0fcc66fbb05f8",
   "lastOpenFiles": [
+    "CCA102/Wrapup 2526 Topics 7-13.pdf",
     "test.md",
     "CCA102 Computer Organisation.md",
     "Note Title.md",
     "Markdown features.md",
-    "CCA102/Wrapup 2526 Topics 7-13.pdf",
     "CKC111 Discrete Structures.md",
     "CCA101 Principle of Programming.md",
     "CKC111/Chapter3 new.pdf",
