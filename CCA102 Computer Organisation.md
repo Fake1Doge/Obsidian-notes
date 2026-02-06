@@ -273,7 +273,7 @@ Floating-point math is more complex due to the need to align exponents.
         *   **NOR**: NOT OR. True only if both inputs are False.
         *   **XOR** ($A \oplus B$): True if inputs differ (odd number of 1s).
 *   **Basic Identities**:
-    *   **DeMorganâ€™s Laws**:
+    *   **DeMorgan’s Laws**:
         1.  $\overline{A \cdot B} = \bar{A} + \bar{B}$ (NAND equivalent to Bubbled OR)
         2.  $\overline{A + B} = \bar{A} \cdot \bar{B}$ (NOR equivalent to Bubbled AND)
     *   **Distributive Laws**: $A(B+C) = AB + AC$ and $A + BC = (A+B)(A+C)$.
