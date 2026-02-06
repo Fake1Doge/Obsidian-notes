@@ -141,73 +141,119 @@ Computers must represent non-numeric data (text) using binary codes.
 ## Topic 3: Computer Arithmetic
 
 ### 3.1 Arithmetic Logic Unit (ALU)
-*   **Definition**: A combinational circuit that performs arithmetic (ADD, SUB) and logical (AND, OR) operations.
-*   **Inputs**: Data to be operated on (operands) from registers, Control signals from the Control Unit.
-*   **Outputs**: Result of the operation (to registers/memory), Status flags (Zero, Negative, Overflow, Carry).
+*   **Role**: The "brain" of the computer's processing capability. It executes arithmetic and logical instructions.
+*   **Inputs**:
+    *   Data to be operated on (operands) from registers.
+    *   Control signals from the Control Unit (CU).
+*   **Outputs**:
+    *   Result of the operation (to registers/memory).
+    *   **Status Flags** (Condition Codes):
+        *   **Zero (Z)**: Result is 0.
+        *   **Negative (N)**: Result is negative.
+        *   **Overflow (V)**: Result exceeds the storage capacity.
+        *   **Carry (C)**: Carry out of the most significant bit.
 
 ### 3.2 Integer Representation
-*   **Unsigned Magnitude**: Represents only positive integers. Range: $0$ to $2^n - 1$.
-*   **Signed Magnitude**: MSB is the sign (0=+, 1=-). Remaining bits are magnitude.
-    *   *Drawback*: Two zeros (+0, -0), complex arithmetic.
-*   **Two's Complement**: Most common method for signed integers.
-    *   **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
-    *   **Negation Rule**: Invert all bits (1s complement) and add 1.
-    *   **Extension**: To increase bit width (e.g., 8-bit to 16-bit), perform **Sign Extension** (replicate the MSB to the left).
+Computers store numbers in binary (0 and 1). While unsigned integers are straightforward, representing negative numbers requires specific notations.
+
+#### 1. Unsigned Magnitude
+*   **Representation**: All bits represent the magnitude.
+*   **Range**: $0$ to $2^n - 1$.
+*   **Pros**: Simple addition, one representation of zero.
+*   **Cons**: Cannot represent negative numbers.
+
+#### 2. Signed Magnitude
+*   **Representation**: The Most Significant Bit (MSB) is the **Sign Bit** (0 = Positive, 1 = Negative). The remaining bits represent magnitude.
+*   **Range**: $-(2^{n-1} - 1)$ to $+(2^{n-1} - 1)$.
+*   **Pros**: Intuitive for humans.
+*   **Cons**:
+    *   **Two Zeros**: +0 (0000) and -0 (1000).
+    *   **Complex Arithmetic**: Addition/subtraction logic must check signs and compare magnitudes.
+
+#### 3. One's Complement
+*   **Representation**: Negative numbers are formed by **inverting all bits** of the positive number.
+*   **Example**: If $+5 = 0101$, then $-5 = 1010$.
+*   **Cons**: Still has two zeros (+0 and -0). Arithmetic is slightly complex (end-around carry).
+
+#### 4. Two's Complement (Standard)
+*   **Representation**: The most common method. Negative numbers are formed by taking the 1's complement and **adding 1**.
+    *   Rule: $\text{2's Comp} = \text{1's Comp} + 1$.
+*   **Range**: $-2^{n-1}$ to $+(2^{n-1} - 1)$.
+    *   *Note*: The range is asymmetric (one more negative number than positive).
+*   **Advantages**:
+    *   **One Zero**: Unique representation for zero.
+    *   **Simplified Arithmetic**: Subtraction is treated as addition of a negative number ($A - B = A + (-B)$). No end-around carry is needed.
+*   **Expansion**: To increase bit width (e.g., 8-bit to 16-bit), perform **Sign Extension** (replicate the MSB to the left).
 
 ### 3.3 Integer Arithmetic
-*   **Addition/Subtraction**:
-    *   Performed using the same hardware (adder). Subtraction is $A + (-B)$ (add 2's complement of B).
-    *   **Overflow**: Occurs when the result of adding two numbers with the same sign yields a result with the opposite sign. (Carry into MSB $\neq$ Carry out of MSB).
-*   **Multiplication**:
-    *   **Unsigned Integers**: Uses the **Add-Shift** method. Iterate through multiplier bits; if 1, add multiplicand (shifted).
-    *   **Signed Integers (Booth's Algorithm)**: Handles negative numbers without prior conversion.
-        *   Examines pairs of bits $(Q_0, Q_{-1})$ where $Q_{-1}$ starts at 0.
-        *   **10**: Subtract multiplicand from accumulator.
-        *   **01**: Add multiplicand to accumulator.
-        *   **00 or 11**: Arithmetic shift right only.
-        *   *Advantage*: Faster than add-shift when there are strings of 1s in the multiplier (reduces additions).
-*   **Division**:
-    *   More complex than multiplication. Involves repetitive shifting and subtraction.
-    *   **Restoring Division**: If subtraction yields a negative remainder, "restore" the value by adding the divisor back.
+
+#### Addition and Subtraction
+*   **Addition**: Performed directly on bits.
+*   **Subtraction**: Performed as $A + (\text{2's complement of } B)$.
+*   **Overflow Rule**: Overflow occurs if two numbers with the **same sign** are added and the result has the **opposite sign**.
+    *   $(+A) + (+B) \rightarrow (-C)$
+    *   $(-A) + (-B) \rightarrow (+C)$
+    *   Note: Overflow cannot occur when adding numbers with different signs.
+
+#### Multiplication
+*   **Unsigned Integers**:
+    *   Uses **Add-Shift** method (similar to manual multiplication).
+    *   Partial products are generated and shifted.
+*   **Signed Integers (Booth's Algorithm)**:
+    *   Handles signed multiplication without requiring prior conversion to positive numbers.
+    *   **Logic**: Examines pairs of bits $(Q_0, Q_{-1})$ (current LSB and previous LSB).
+        *   **00 or 11**: Shift only (No operation).
+        *   **01**: Add Multiplicand, then Shift.
+        *   **10**: Subtract Multiplicand, then Shift.
+    *   **Benefit**: Faster than pure add-shift when there are strings of 1s (reduces the number of additions).
+
+#### Division
+*   More complex than multiplication.
+*   **Restoring Division**:
+    *   Shift remainder left.
+    *   Subtract divisor.
+    *   If result is negative, **restore** the remainder by adding the divisor back and set quotient bit to 0.
+    *   Else, set quotient bit to 1.
 
 ### 3.4 Floating-Point Representation (IEEE 754)
-Used to represent real numbers (integers + fractions), especially very large or very small ones.
-$$ \text{Value} = (-1)^S \times 1.M \times 2^{E - \text{Bias}} $$
+Used to represent very large or very small real numbers using scientific notation principles: $\pm S \times B^{\pm E}$.
 
-*   **Format Components**:
-    1.  **Sign Bit (S)**: 0 for positive, 1 for negative.
-    2.  **Biased Exponent (E)**: Stored as an unsigned integer. Bias is subtracted to get the true exponent.
-        *   *Why Bias?* To treat exponents as unsigned numbers for easy comparison.
-    3.  **Significand/Mantissa (M)**: The fractional part. The leading '1' is implicit (hidden bit) for normalized numbers.
+*   **Format**: 32-bit (Single Precision) or 64-bit (Double Precision).
+    1.  **Sign Bit (S)**: 1 bit (0=+, 1=-).
+    2.  **Biased Exponent (E)**:
+        *   Stored as an unsigned value.
+        *   **Bias**: Added to the true exponent to avoid negative numbers in the exponent field.
+        *   *Single Precision Bias*: 127. (True Exponent = Stored Exponent - 127).
+        *   *Double Precision Bias*: 1023.
+    3.  **Significand (Mantissa)**:
+        *   The fractional part of the number.
+        *   **Normalization**: Numbers are normalized to $1.xxxxx...$
+        *   **Hidden Bit**: The leading '1' is implied and not stored, increasing precision.
 
-*   **IEEE 754 Standards**:
-    *   **Single Precision (32-bit)**:
-        *   Sign: 1 bit
-        *   Exponent: 8 bits (Bias = 127)
-        *   Significand: 23 bits
-        *   Range: $\approx 10^{-38}$ to $10^{+38}$.
-    *   **Double Precision (64-bit)**:
-        *   Sign: 1 bit
-        *   Exponent: 11 bits (Bias = 1023)
-        *   Significand: 52 bits
-        *   Range: $\approx 10^{-308}$ to $10^{+308}$.
+#### IEEE 754 Standards
+| Parameter | Single Precision (32-bit) | Double Precision (64-bit) |
+| :--- | :--- | :--- |
+| Sign | 1 bit | 1 bit |
+| Exponent | 8 bits (Bias 127) | 11 bits (Bias 1023) |
+| Significand | 23 bits | 52 bits |
+| Range | $\approx 10^{-38}$ to $10^{+38}$ | $\approx 10^{-308}$ to $10^{+308}$ |
 
 ### 3.5 Floating-Point Arithmetic
-*   **Addition/Subtraction**:
-    1.  **Check for zeros**.
-    2.  **Align Significance**: Shift the significand of the number with the *smaller* exponent to the right until exponents match.
-    3.  **Add/Subtract Significands**.
-    4.  **Normalize**: Shift result and adjust exponent until leading bit is 1.
-*   **Multiplication/Division**:
-    1.  **Add/Subtract Exponents** (and handle bias).
-    2.  **Multiply/Divide Significands**.
-    3.  **Normalize** result.
-    4.  **Round** result.
-*   **Issues**:
-    *   **Exponent Overflow**: Positive exponent exceeds maximum.
-    *   **Exponent Underflow**: Negative exponent is too small (number too close to zero).
-    *   **Significand Overflow**: Addition of same-sign numbers carries out.
-    *   **Precision Loss**: Shifting during alignment drops bits.
+Floating-point math is more complex due to the need to align exponents.
+
+#### Addition/Subtraction Phases
+1.  **Check for Zeros**: If one operand is 0, the result is the other operand.
+2.  **Align Significands**:
+    *   Shift the significand of the number with the *smaller* exponent to the right.
+    *   Increment its exponent until it matches the larger exponent.
+3.  **Add/Subtract**: Perform operation on the aligned significands.
+4.  **Normalize**: Shift the result (left or right) to restore the $1.xxxx$ format and adjust the exponent.
+
+#### Issues
+*   **Exponent Overflow**: Result is too large to be represented (+infinity).
+*   **Exponent Underflow**: Result is too small (too close to zero) to be represented.
+*   **Significand Overflow**: Addition of two significands causes a carry out (fixed by shifting right and incrementing exponent).
+*   **Precision Loss**: Bits "falling off" during alignment shifting.
 
 ---
 
