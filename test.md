@@ -1,74 +1,31 @@
-# How to Host a Minecraft Server and Connect via Steam
+# Course Summaries
 
-This guide explains how to set up a Minecraft server that allows your friends to join directly via **Steam Friend Invites**, avoiding the need for complicated port forwarding or IP sharing.
+## CCA101: Principle of Programming (C++)
+This course covers the foundational concepts of computers and programming, primarily focusing on the C++ language. Key topics include:
+- **Introduction to Computers:** Hardware components, software categories, and the process of compiling and linking code.
+- **C++ Basics:** Syntax, variables, data types, and basic I/O operations (`cin`, `cout`).
+- **Control Structures:** Decision-making using `if/else` and `switch` statements, along with logical and relational operators.
+- **Loops:** Iteration using `while`, `do-while`, and `for` loops.
+- **Functions:** Modular programming, variable scope, pass-by-value vs. pass-by-reference, and function overloading.
+- **Data Structures:** Working with arrays (1D and 2D) and a brief introduction to STL vectors.
+- **Advanced Topics:** Pointers, dynamic memory allocation, file processing, and the fundamentals of computational thinking and algorithm design.
 
-This is achieved using the **Essentials Mod**, which integrates Minecraft with Steam's networking features.
+## CCA102: Computer Organisation
+This course delves into the hardware and architectural aspects of computing systems. Key topics include:
+- **Architecture & History:** Differences between architecture and organization, and the evolution of computer generations.
+- **Data Representation:** Number systems (binary, octal, hex), integer representation (Two's complement), and floating-point representation (IEEE 754).
+- **Digital Logic:** Boolean algebra, combinational circuits (multiplexers, adders), and sequential circuits (flip-flops, registers).
+- **CPU & Instructions:** CPU structure, register organization, instruction cycles (fetch, decode, execute), addressing modes, and pipelining.
+- **Control Unit & I/O:** Hardwired vs. micro-programmed control units, and I/O techniques (Programmed, Interrupt-Driven, DMA).
+- **Memory Systems:** Memory hierarchy, main memory (SRAM/DRAM), cache memory architecture (mapping and replacement algorithms), and virtual memory (paging and segmentation).
+- **Multiprocessors:** Multicore organizations, symmetric multiprocessors (SMP), and cache coherence (MESI protocol).
 
----
-
-## Prerequisites
-*   **Minecraft Java Edition**
-*   **Steam** (Running in the background)
-*   **Mod Loader:** Either **Fabric** (recommended) or **Forge**.
-
----
-
-## Step 1: Install a Mod Loader (Fabric)
-If you already use a mod launcher like **CurseForge**, **Prism Launcher**, or **Modrinth**, skip to [Step 2](#step-2-install-the-essentials-mod).
-
-1.  **Download Fabric Installer:**
-    *   Go to [fabricmc.net](https://fabricmc.net/use/installer/) and download the Universal Jar or Windows Exe.
-2.  **Install Fabric:**
-    *   Run the installer.
-    *   Select the **Minecraft Version** you want to play (e.g., 1.20.4).
-    *   Ensure "Create profile" is checked.
-    *   Click **Install**.
-3.  **Download Fabric API:**
-    *   Most Fabric mods require the [Fabric API](https://modrinth.com/mod/fabric-api).
-    *   Download the `.jar` file matching your game version.
-    *   Place it in your Minecraft mods folder:
-        *   Press `Win + R`, type `%appdata%\.minecraft\mods`, and press Enter.
-
-## Step 2: Install the Essentials Mod
-This is the core component that enables Steam connectivity.
-
-1.  **Download Essentials:**
-    *   Visit the [Essentials Mod Downloads](https://essential.gg/download) page.
-    *   Select **Fabric** (or Forge if you chose that).
-    *   Select your **Minecraft Version**.
-    *   Download the `.jar` file.
-2.  **Install the Mod:**
-    *   Move the downloaded `Essential-fabric-....jar` file into your `mods` folder:
-        *   `%appdata%\.minecraft\mods`
-
-## Step 3: Launch & Verify
-1.  Open the **Minecraft Launcher**.
-2.  Select the **fabric-loader** profile from the dropdown menu (bottom left).
-3.  Click **Play**.
-4.  **Verification:**
-    *   Once the main menu loads, you should see an **Essentials** button or your skin preview on the right side.
-    *   You might get a prompt to "Log in to Essentials" or connect your account. This basically links your Minecraft session to the mod's features.
-
-## Step 4: Host a World via Steam
-1.  **Start a World:**
-    *   Go to **Singleplayer** and load an existing world or create a new one.
-2.  **Open to Friends:**
-    *   Once in-game, press `Esc`.
-    *   Click the **Invite** button (usually on the right side of the pause menu).
-    *   *Note: First time setup may ask you to agree to Terms of Service.*
-3.  **Invite Settings:**
-    *   You can set the world to **Friends Only** or **Invite Only**.
-
-## Step 5: Friends Join via Steam
-Your friends **must also have the Essentials Mod installed** and be running the same Minecraft version.
-
-1.  **Method A: Steam Invite**
-    *   In the "Invite" menu in-game, click your friend's name and send an invite.
-    *   They will receive a message in Steam Chat to "Join Game".
-
-2.  **Method B: Right-Click Join**
-    *   Your friend can open their Steam Friends list.
-    *   Right-click your name.
-    *   Select **Join Game**.
-
-**Done!** You are now hosting a server on your own PC, and Steam is handling the connection routing. No port forwarding needed.
+## CKC111: Discrete Structures
+This course provides the mathematical foundations required for computer science. Key topics include:
+- **Logic & Proofs:** Propositional logic, truth tables, logical equivalences, and basic proof techniques.
+- **Algorithms:** Properties of algorithms, searching (linear, binary), sorting (bubble, insertion), and greedy algorithms.
+- **Relations & Graphs:** Properties of binary relations, equivalence relations, graph terminology, representations, connectivity, and Dijkstra's algorithm.
+- **Trees:** Rooted trees, tree traversals (preorder, inorder, postorder), and spanning trees (BFS, DFS).
+- **Basic Structures:** Sets, functions (injective, surjective, bijective), sequences, and matrices.
+- **Induction & Recursion:** Mathematical induction, strong induction, and structural induction.
+- **Counting & Probability:** Product/sum rules, pigeonhole principle, permutations, combinations, recurrence relations, and discrete probability (Bayes, conditional probability, independence).
