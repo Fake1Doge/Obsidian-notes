@@ -1,6 +1,6 @@
 # Topic 1: Structured Data
 
-## 11.1 Abstract Data Types
+## 1.1 Abstract Data Types
 > [!info] Definition: Abstract Data Type (ADT)
 > A data type that specifies the values that can be stored and the operations that can be done on the values.
 
@@ -14,7 +14,7 @@
 > [!info] Definition: Data Type
 > Defines the values that can be stored in a variable and the operations that can be performed on it.
 
-## 11.2 Combining Data into Structures
+## 1.2 Combining Data into Structures
 
 > [!info] Definition: Structure
 > A C++ construct that allows multiple variables to be grouped together.
@@ -55,7 +55,7 @@ struct Student // structure tag
   Student bill;
   ```
 
-## 11.3 Accessing Structure Members
+## 1.3 Accessing Structure Members
 * Use the dot (`.`) operator to refer to members of `struct` variables:
   ```cpp
   cin >> stu1.studentID;
@@ -91,7 +91,7 @@ struct Student // structure tag
   if (bill.studentID == william.studentID) // ...
   ```
 
-## 11.4 Initializing a Structure
+## 1.4 Initializing a Structure
 * A `struct` variable can be initialized when defined:
   ```cpp
   Student s = {11465, "Joan", 2, 3.75};
@@ -113,7 +113,7 @@ struct Student // structure tag
   ```
 * Cannot initialize in the structure declaration, since this does not allocate memory.
 
-## 11.5 Arrays of Structures
+## 1.5 Arrays of Structures
 * Structures can be defined in arrays.
 * Can be used in place of parallel arrays.
   ```cpp
@@ -126,7 +126,7 @@ struct Student // structure tag
   cout << stuList[5].studentID;
   ```
 
-## 11.6 Nested Structures
+## 1.6 Nested Structures
 A structure can contain another structure as a member:
 ```cpp
 struct PersonInfo
@@ -151,7 +151,7 @@ struct Student
   s.pData.city = "Tulsa";
   ```
 
-## 11.7 Structures as Function Arguments
+## 1.7 Structures as Function Arguments
 * May pass members of `struct` variables to functions:
   ```cpp
   computeGPA(stu.gpa);
@@ -177,7 +177,7 @@ struct Student
 > }
 > ```
 
-## 11.8 Returning a Structure from a Function
+## 1.8 Returning a Structure from a Function
 * A function can return a `struct`:
   ```cpp
   Student getStudentData(); // prototype
@@ -197,7 +197,7 @@ struct Student
 > }
 > ```
 
-## 11.9 Using Structured Binding Declarations with Structures
+## 1.9 Using Structured Binding Declarations with Structures
 > [!info] Structured Binding Declaration
 > Defines a set of variables and initializes them with the values that are stored in a structure. This process is known as *unpacking a structure*. (Introduced in C++ 17). Can also be used to unpack arrays.
 
@@ -223,7 +223,7 @@ cout << second << endl; // 2020
 cout << third << endl; // 12400.0
 ```
 
-## 11.10 Pointers to Structures
+## 1.10 Pointers to Structures
 * A structure variable has an address.
 * Pointers to structures are variables that can hold the address of a structure:
   ```cpp
@@ -245,7 +245,7 @@ cout << third << endl; // 12400.0
   cout << stuPtr->studentID;
   ```
 
-## 11.12 Enumerated Data Types
+## 1.12 Enumerated Data Types
 > [!info] Enumerated Data Type
 > A programmer-defined data type consisting of values known as **enumerators**, which represent integer constants.
 
