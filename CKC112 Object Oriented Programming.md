@@ -1,11 +1,3 @@
----
-title: "Structured Data"
-date: 2026-03-16
-tags:
-  - lecture
-  - CKC112
----
-
 # Topic 1: Structured Data
 
 ## 11.1 Abstract Data Types
