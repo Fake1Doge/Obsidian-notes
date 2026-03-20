@@ -1,15 +1,3 @@
----
-course_code: AKW103
-course_name: Introduction to Management
-chapter: 1
-topic: Managing in Today's World
-date: 2026-03-21
-tags:
-  - management
-  - business
-  - leadership
----
-
 # AKW103 Introduction to Management
 
 ## Chapter 1: Managing in Today's World
