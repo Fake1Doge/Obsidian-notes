@@ -1,11 +1,26 @@
-# Available Skills Summary
+# Neural Processing Unit (NPU)
 
-Here is a brief overview of all the currently available agent skills:
+## What an NPU Does
+A Neural Processing Unit (NPU) is a specialized microprocessor designed specifically to accelerate artificial intelligence (AI) and machine learning (ML) algorithms. Unlike a CPU (which handles general-purpose tasks) or a GPU (which excels at parallel processing for graphics), an NPU is optimized for the complex mathematical computations—particularly matrix operations—that neural networks require. This allows the NPU to process AI workloads much faster and with significantly greater energy efficiency than a CPU or GPU.
 
-- **skill-creator:** A comprehensive guide for creating, building, and packaging new skills to extend the capabilities of the Gemini CLI.
-- **obsidian-markdown:** Specialized instructions for creating and editing Obsidian Flavored Markdown, including wikilinks, embeds, frontmatter, and callouts.
-- **obsidian-cli:** Provides the ability to interact directly with an Obsidian vault via the command line to manage notes, search, or assist in plugin/theme development.
-- **obsidian-bases:** Dedicated to creating and editing Obsidian Bases (`.base` files) to construct database-like views, filters, and formulas.
-- **json-canvas:** Designed to help create and edit JSON Canvas files (`.canvas`) for visual mind maps, flowcharts, and node connections.
-- **defuddle:** A tool for extracting clean markdown content from standard web pages (like documentation or articles) to save tokens and remove clutter.
-- **lecture-to-obsidian:** Converts raw lecture notes, PDFs, or unformatted text into highly detailed and properly formatted Obsidian notes without losing any detail.
+## What Uses the NPU on Your Computer
+Various applications and system features utilize the NPU to enhance performance and save battery life:
+*   **Operating System AI Features:** Tools like Windows Studio Effects (which provides real-time background blur, automatic framing, and eye contact correction during video calls).
+*   **Creative Applications:** Software like Adobe Creative Cloud (Photoshop, Premiere Pro) uses the NPU for AI-driven features such as subject selection, noise reduction, and generative fill.
+*   **Local AI Models:** Running Large Language Models (LLMs) or image generation models (like Stable Diffusion) locally on your machine.
+*   **Productivity Tools:** AI assistants integrated into office suites that summarize text, draft emails, or generate presentations.
+*   **Security and Authentication:** Features like Windows Hello facial recognition, which rely on AI for fast and secure biometric authentication.
+
+---
+
+# Gemini CLI Update Information
+
+### Latest Stable Release: v0.32.1
+*   **Plan Mode Enhancements:** Support for opening and modifying plans in external editors, plus an adapted workflow for complex tasks using multi-select options.
+*   **Agent and Steering Improvements:** The generalist agent is now enabled for better task delegation, and model steering is supported directly within the workspace.
+*   **Interactive Shell:** Introduced autocompletion for a more seamless terminal experience.
+*   **Performance:** Extensions now load in parallel, and robust A2A (Agent-to-Agent) streaming reassembly has been implemented.
+*   **Billing:** Implementation of the G1 AI credits overage flow with billing telemetry and quota error fallbacks.
+
+### Current Runtime Context (v0.34.0)
+As of March 2026, the Gemini CLI is running version **0.34.0**. This version includes features promoted from recent preview cycles, such as advanced Plan Mode with built-in research subagents, the new `github-issue-creator` skill, a redesigned UX/UI with an inverted context window display, and core enhancements like ACP (Agent Control Protocol) slash commands for `/memory`, `/init`, and more.

@@ -14,7 +14,7 @@ Your primary mandate is to **preserve all details, examples, code snippets, and 
 
 1. **Read the Source Material:** Read the provided lecture notes, transcripts, or PDF files entirely. If the file is large, read it in chunks to ensure no details are missed.
 2. **Process and Format:** Transform the content by applying Obsidian Flavored Markdown. You should activate the `obsidian-markdown` skill (`activate_skill`) to ensure you use correct Obsidian-specific syntax (Frontmatter, Wikilinks, Callouts, Embeds, etc.).
-3. **Save the Note:** Write the final formatted text to a `.md` file in the user's workspace using the `write_file` tool. Name the file logically based on the lecture topic if a name is not provided.
+3. **Save the Note:** Generate a structured note and write it into the specified .md file.
 
 ## Final Review
 Before saving, ensure that:
