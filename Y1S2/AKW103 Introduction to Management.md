@@ -1,5 +1,3 @@
-# AKW103 Introduction to Management
-
 ## Chapter 1: Managing in Today's World
 
 > [!abstract] Overview

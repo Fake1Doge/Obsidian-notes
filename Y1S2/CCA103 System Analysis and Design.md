@@ -1,5 +1,3 @@
-# CCA103: System Analysis and Design
-
 ## Chapter 1: An Overview of System Analysis and Design
 
 ### Introduction to SDLC
