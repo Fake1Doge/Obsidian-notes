@@ -1,6 +1,6 @@
 ---
 name: lecture-to-obsidian
-description: Converts raw lecture notes, PDFs, or text into highly detailed Obsidian-flavored Markdown notes. Use when asked to process, format, or convert lecture material into Obsidian notes without losing any detail.
+description: Converts raw lecture notes, PDFs, or text into highly detailed Obsidian-flavored Markdown notes. Integrates with obsidian-cli for vault management and obsidian-markdown for advanced formatting.
 ---
 
 # Lecture to Obsidian Processor
@@ -12,16 +12,18 @@ Your primary mandate is to **preserve all details, examples, code snippets, and 
 
 ## Workflow
 
-1. **Read the Source Material:** Read the provided lecture notes, transcripts, or PDF files entirely. If the file is large, read it in chunks to ensure no details are missed.
-2. **Process and Format:** Transform the content using the Obsidian Formatting Guidelines below.
-3. **Save the Note:** Write the final formatted text to a `.md` file in the user's workspace using the `write_file` tool. Name the file logically based on the lecture topic if a name is not provided.
+1. **Activate Dependencies:** Start by activating the `obsidian-markdown` and `obsidian-cli` skills using `activate_skill`. These provide the necessary formatting rules and vault interaction tools.
+2. **Context Research:** Use the `obsidian-cli` (e.g., `obsidian search` or `obsidian read`) to find related notes in the user's vault. This helps maintain consistent terminology and creates relevant `[[wikilinks]]` to existing knowledge.
+3. **Read the Source Material:** Read the provided lecture notes, transcripts, or PDF files entirely. For large files, read in chunks to ensure no details are missed.
+4. **Process and Format:** Apply Obsidian-specific syntax (Frontmatter, Callouts, Wikilinks, Math, etc.) as defined in the `obsidian-markdown` skill.
+5. **Save the Note:** Write the final formatted text to a `.md` file. You can use the `write_file` tool or the `obsidian create` command from `obsidian-cli` to save it directly into the vault.
 
 ## Obsidian Formatting Guidelines
 
-When structuring the note, apply the following Obsidian-specific formatting:
+When structuring the note, apply the following (as per the `obsidian-markdown` skill):
 
-### 1. Frontmatter
-Always start the note with YAML frontmatter containing relevant metadata:
+### 1. Frontmatter (Properties)
+Always start with YAML frontmatter. Use `obsidian property:set` if you need to update them later.
 ```yaml
 ---
 title: "[Topic Name]"
@@ -33,49 +35,25 @@ tags:
 ```
 
 ### 2. Hierarchical Headings
-Organize the content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture.
+Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture.
 
 ### 3. Callouts for Emphasis
-Use Obsidian callouts to highlight specific types of information.
-- **Definitions / Key Concepts:**
-  ```markdown
-  > [!info] Definition: [Term]
-  > [Detailed explanation...]
-  ```
-- **Important Notes:**
-  ```markdown
-  > [!note] Important
-  > [Crucial details to remember...]
-  ```
-- **Examples / Case Studies:**
-  ```markdown
-  > [!example] Example: [Title]
-  > [Step-by-step example or case study...]
-  ```
-- **Warnings / Pitfalls:**
-  ```markdown
-  > [!warning] Common Mistake
-  > [Details of what to avoid...]
-  ```
+Use Obsidian callouts (`> [!type]`) to highlight key information:
+- **Definitions:** `[!info] Definition: [Term]`
+- **Important Notes:** `[!note] Important`
+- **Examples:** `[!example] Example: [Title]`
+- **Warnings:** `[!warning] Common Mistake`
 
 ### 4. Wikilinks
-Identify key terms, concepts, and related topics, and enclose them in wikilinks `[[Like This]]` so they can be easily referenced across the user's Obsidian vault. 
-- Example: "The CPU connects to the [[Main Memory]] via the [[System Bus]]."
+Identify key terms and related topics, and enclose them in wikilinks `[[Like This]]` for cross-referencing within the vault.
 
 ### 5. Code Blocks and Math
-- Use standard Markdown code blocks for any programming code, ensuring you specify the language (e.g., ` ```cpp `).
-- Use LaTeX formatting for mathematical formulas:
-  - Inline math: `$E = mc^2$`
-  - Block math:
-    $$
-    \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
-    $$
-
-### 6. Lists and Tables
-Use bulleted lists, numbered lists, and Markdown tables to organize structured data, comparisons, or sequences of events effectively.
+- Use fenced code blocks with language identifiers (e.g., ` ```cpp `).
+- Use LaTeX for formulas: `$E = mc^2$` for inline and `$$ ... $$` for blocks.
 
 ## Final Review
 Before saving, ensure that:
 - You have not summarized away important details.
-- The formatting is valid Obsidian Markdown.
+- The formatting is valid Obsidian Markdown (as per `obsidian-markdown`).
 - Frontmatter, callouts, and wikilinks are present.
+- The note is correctly placed and linked within the vault structure.

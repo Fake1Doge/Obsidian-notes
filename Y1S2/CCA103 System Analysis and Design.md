@@ -273,3 +273,120 @@ This example demonstrates one iteration (planned for 6 days) covering all six co
 - [[Class Diagram]]
 - [[Database Schema]]
 - [[Architectural Design]]
+
+# Chapter 2: Investigating System Requirements
+
+## Chapter Outline
+- **Part I:** System Analysis Activities
+- **Part II:** What Are the Requirements?
+- **Part III:** Information Gathering Techniques
+- **Part IV:** Models and Activity Diagrams
+
+> [!info] Learning Objectives
+> By the end of this topic, you should be able to:
+> 1. Describe the activities of systems analysis.
+> 2. Classify requirements correctly as business, user, functional, or nonfunctional requirements.
+> 3. Identify and understand different kinds of stakeholders and their contributions to requirements definition.
+> 4. Employ the requirement elicitation techniques of interviews, JAD sessions, questionnaires, document analysis, and observation.
+> 5. Develop UML activity diagrams to model workflows.
+
+---
+
+## Part I: System Analysis Activities
+
+The analysis phase (Core Process 3: Discover and understand details) involves five key activities:
+
+1. **Gather detailed information**: Meet with users, observe work, and review documents.
+2. **Define requirements**: Categorize and document what the system must do and how it should perform.
+3. **Prioritize requirements**: Determine which requirements are essential and which are desirable but not critical. This helps manage limited resources and prevent **[[Scope Creep]]**.
+4. **Develop user-interface dialogs**: Create abstract models, storyboards, and prototypes to elicit and validate requirements with users.
+5. **Evaluate requirements with users**: An iterative process of refining models and prototypes until they are accurate and validated.
+
+---
+
+## Part II: What Are the Requirements?
+
+> [!info] Definition: System Requirements
+> **[[System Requirements]]** are all the activities the new system must perform or support and the constraints that the new system must meet.
+
+Requirements are broadly categorized into:
+- **[[Functional Requirements]]**: The activities the system must perform (e.g., "Generate electronic fund transfers", "Calculate payroll taxes").
+- **[[Nonfunctional Requirements]]**: Characteristics of the system other than the activities it performs (constraints or conditions it must meet).
+
+### The FURPS+ Framework
+A common acronym for classifying requirements:
+
+| Category | Description | Examples (e.g., Instagram-like app) |
+| :--- | :--- | :--- |
+| **[[Functional]]** | Activities the system must perform. | Users can upload photos, like posts, comment. |
+| **[[Usability]]** | User interface, related work procedures, online help, and documentation. | Simple and attractive interface; easily find home page. |
+| **[[Reliability]]** | Dependability of a system—how often it exhibits outages or incorrect processing. | App should not crash when many users are uploading stories. |
+| **[[Performance]]** | Operational characteristics related to workload, throughput, and response time. | Photos and videos should load within 2 seconds. |
+| **[[Security]]** | How access to the app is controlled and how data will be protected. | Encrypted passwords; only owner can access private messages. |
+
+**The "+" in FURPS+ adds additional categories:**
+1. **Design constraints**: Restrictions on hardware and software (e.g., "Must run on iOS 15+").
+2. **Implementation requirements**: Constraints on programming languages, tools, or protocols.
+3. **Interface requirements**: Descriptions of interactions among different systems.
+4. **Physical requirements**: Characteristics of hardware such as size, weight, and power consumption.
+5. **Supportability requirements**: How the system is installed, configured, monitored, and updated.
+
+---
+
+## Part III: Stakeholders and Information Gathering
+
+### Stakeholders
+**[[Stakeholders]]** are persons who have an interest in the successful implementation of the system. They are the primary source of information for requirements.
+
+- **Internal vs. External**: People inside vs. outside the organization.
+- **Operational vs. Executive**: People who regularly interact with the system vs. those who don't directly interact but use the information or have a financial interest.
+- **[[The Client]]**: The person or group that provides the funding for the project and usually approves stages of development.
+
+### Information Gathering Techniques
+
+| Technique | Description | Pros/Cons |
+| :--- | :--- | :--- |
+| **[[Interview]]** | Meeting with users/stakeholders to understand business functions and rules. | **+** Highly effective for detail. **-** Time-consuming and expensive. |
+| **[[Questionnaire]]** | Written questions used to gather info from many people. | **+** Good for large groups in different locations. **-** Limited depth; lower response rates. |
+| **[[JAD]] (Joint Application Development)** | A structured collaborative technique where users and management work together. | **+** Reduces scope creep; smoother progress. **-** Group challenges (dominant participants). |
+| **[[Document Analysis]]** | Reviewing existing reports, forms, and manuals to understand the "as-is" system. | **+** Provides evidence for system change. **-** May not reflect informal "real" systems. |
+| **[[Observation]]** | Directly watching how work is actually performed. | **+** Reveals clues users might forget to mention. **-** People may act differently when watched. |
+
+---
+
+## Part IV: Models and Activity Diagrams
+
+### Models and Modeling
+A **model** is a representation of some aspect of the system being built.
+- **Types of Models**:
+  1. **Textual**: Written descriptions.
+  2. **Graphical**: Diagrams or schematics (using **[[UML]]** - Unified Modeling Language).
+  3. **Mathematical**: Formulas, statistics, or algorithms.
+
+### Documenting Workflows with Activity Diagrams
+A **[[Workflow]]** is a sequence of work steps that complete a business transaction. 
+
+> [!info] Definition: Activity Diagram
+> A **[[UML]]** diagram that describes user (or system) activities, the person who does each activity, and the sequential flow of these activities.
+
+**Activity Diagram Symbols:**
+- **Swimlane heading**: Identifies the agent/actor performing the activities.
+- **Starting activity (Pseudo)**: A solid circle indicating the beginning.
+- **Transition arrow**: Shows the flow from one activity to the next.
+- **Activity**: A rounded rectangle representing a step in the process.
+- **Decision activity**: A diamond shape representing a branch in the flow.
+- **Synchronization bar (Split/Join)**: Used for concurrent (parallel) paths.
+- **Ending activity (Pseudo)**: A bullseye circle indicating the end.
+
+---
+## Summary of Key Terms
+- [[System Requirements]]
+- [[Functional Requirements]]
+- [[Nonfunctional Requirements]]
+- [[FURPS]] / [[FURPS+]]
+- [[Stakeholders]]
+- [[Joint Application Development]] (JAD)
+- [[Scope Creep]]
+- [[UML]]
+- [[Activity Diagram]]
+- [[Workflow]]
