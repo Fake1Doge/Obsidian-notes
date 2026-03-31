@@ -7,47 +7,37 @@ description: Converts raw lecture notes, PDFs, or text into highly detailed Obsi
 
 This skill guides you in transforming raw lecture materials (text files, PDFs, or raw transcripts) into rich, highly detailed Obsidian-flavored Markdown notes.
 
-## Core Principle: No Loss of Detail
-Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. Do not excessively summarize or omit information. The output must be comprehensive.
+## Core Principles
+
+1. **No Loss of Detail:** Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. Do not excessively summarize or omit information. The output must be comprehensive.
+2. **Sequential Renumbering:** Regardless of the numbering in the source material (e.g., if it skips from Topic 1 to Topic 3), you MUST rearrange and renumber the chapters or topics sequentially starting from 1 (e.g., 1, 2, 3...).
+3. **Clarity Enhancement (Extra Notes):** If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
 
 ## Workflow
 
 1. **Activate Dependencies:** Start by activating the `obsidian-markdown` and `obsidian-cli` skills using `activate_skill`. These provide the necessary formatting rules and vault interaction tools.
-2. **Context Research:** Use the `obsidian-cli` (e.g., `obsidian search` or `obsidian read`) to find related notes in the user's vault. This helps maintain consistent terminology and creates relevant `[[wikilinks]]` to existing knowledge.
+2. **Context Research:** Use the `obsidian-cli` (e.g., `obsidian search` or `obsidian read`) to find related notes in the user's vault. This helps maintain consistent terminology.
 3. **Read the Source Material:** Read the provided lecture notes, transcripts, or PDF files entirely. For large files, read in chunks to ensure no details are missed.
-4. **Process and Format:** Apply Obsidian-specific syntax (Frontmatter, Callouts, Wikilinks, Math, etc.) as defined in the `obsidian-markdown` skill.
-5. **Save the Note:** Write the final formatted text to a `.md` file. You can use the `write_file` tool or the `obsidian create` command from `obsidian-cli` to save it directly into the vault.
+4. **Identify and Renumber Topics:** Identify all chapters or topics in the material and assign them new sequential numbers starting from 1.
+5. **Process and Format:** Apply Obsidian-specific syntax (Callouts, Math, etc.) as defined in the `obsidian-markdown` skill. If a concept is unclear, insert an "Extra Notes" callout.
+6. **Save the Note:** Write the final formatted text to a `.md` file. You can use the `write_file` tool or the `obsidian create` command from `obsidian-cli` to save it directly into the vault.
 
 ## Obsidian Formatting Guidelines
 
 When structuring the note, apply the following (as per the `obsidian-markdown` skill):
 
-### 1. Frontmatter (Properties)
-Always start with YAML frontmatter. Use `obsidian property:set` if you need to update them later.
-```yaml
----
-title: "[Topic Name]"
-date: YYYY-MM-DD
-tags:
-  - lecture
-  - subject
----
-```
+### 1. Hierarchical Headings
+Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture, using the sequential numbering (e.g., `# 1. Introduction`, `## 1.1 First Topic`).
 
-### 2. Hierarchical Headings
-Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture.
-
-### 3. Callouts for Emphasis
+### 2. Callouts for Emphasis
 Use Obsidian callouts (`> [!type]`) to highlight key information:
 - **Definitions:** `[!info] Definition: [Term]`
 - **Important Notes:** `[!note] Important`
 - **Examples:** `[!example] Example: [Title]`
 - **Warnings:** `[!warning] Common Mistake`
+- **Extra Notes:** `[!tip] Extra Notes: [Title]\n[Explanation from external knowledge to clarify unclear parts]`
 
-### 4. Wikilinks
-Identify key terms and related topics, and enclose them in wikilinks `[[Like This]]` for cross-referencing within the vault.
-
-### 5. Code Blocks and Math
+### 3. Code Blocks and Math
 - Use fenced code blocks with language identifiers (e.g., ` ```cpp `).
 - Use LaTeX for formulas: `$E = mc^2$` for inline and `$$ ... $$` for blocks.
 

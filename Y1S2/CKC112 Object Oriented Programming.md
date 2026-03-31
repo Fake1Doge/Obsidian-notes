@@ -376,3 +376,211 @@ enum { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
   enum Car { PORSCHE, FERRARI, JAGUAR } sportsCar;
   ```
 * This code declares the `Car` data type and defines a variable named `sportsCar`.
+# Topic 2: Introduction to Classes
+
+## 2.1 Procedural and Object-Oriented Programming
+* **Procedural Programming:** Focuses on the process/actions that occur in a program.
+* **Object-Oriented Programming (OOP):** Based on the data and the functions that operate on it. Objects are instances of Abstract Data Types (ADTs) that represent the data and its functions.
+
+### Limitations of Procedural Programming
+* If the data structures change, many functions must also be changed.
+* Programs based on complex function hierarchies are:
+    * Difficult to understand and maintain.
+    * Difficult to modify and extend.
+    * Easy to break.
+
+## 2.2 Introduction to Classes
+> [!info] Terminology
+> * **Class:** Similar to a `struct` (allows bundling of related variables), but variables and functions in the class can have different properties than in a `struct`.
+> * **Object:** An instance of a class, in the same way that a variable can be an instance of a `struct`.
+> * **Attributes:** Members of a class (data).
+> * **Methods or Behaviors:** Member functions of a class.
+
+### Key Concepts
+* **Data Hiding:** Restricting access to certain members of an object.
+* **Public Interface:** Members of an object that are available outside of the object. This allows the object to provide access to data and functions without sharing internal details and design, providing protection from data corruption.
+
+### Class Format
+```cpp
+class ClassName
+{
+    declaration;
+    declaration;
+};
+```
+
+### Access Specifiers
+* Used to control access to members of the class.
+* **`public`:** Can be accessed by functions outside of the class.
+* **`private`:** Can only be called by or accessed by functions that are members of the class.
+* **Default:** If not specified, the default access specifier is `private`.
+
+> [!example] Class Example: Rectangle
+> ```cpp
+> class Rectangle
+> {
+>     private:
+>         double width;
+>         double length;
+>     public:
+>         void setWidth(double);
+>         void setLength(double);
+>         double getWidth() const;
+>         double getLength() const;
+>         double getArea() const;
+> };
+> ```
+
+### Using `const` With Member Functions
+* `const` appearing after the parentheses in a member function declaration specifies that the function will **not change any data** in the calling object.
+* These are typically **Accessors** (getters).
+
+### Accessors and Mutators
+* **Mutator:** A member function that stores a value in a private member variable or changes its value (e.g., `setWidth`).
+* **Accessor:** A function that retrieves a value from a private member variable without changing the object's data (e.g., `getWidth`). Accessors should be marked `const`.
+
+## 2.3 Defining an Instance of a Class
+* An object is an instance of a class.
+* Defined like structure variables: `Rectangle r;`
+* Access members using the dot (`.`) operator:
+  ```cpp
+  r.setWidth(5.2);
+  cout << r.getWidth();
+  ```
+> [!warning] Accessing Private Members
+> A compiler error will occur if you attempt to access a `private` member using the dot operator from outside the class.
+
+### Avoiding Stale Data
+* To avoid stale data, it is best to calculate values that depend on other data (like `area` depending on `length` and `width`) within a member function rather than storing them in a variable.
+
+## 2.4 Pointers to Objects
+* You can define a pointer to an object: `Rectangle *rPtr = nullptr;`
+* Access public members via pointer using the structure pointer operator (`->`):
+  ```cpp
+  rPtr = &otherRectangle;
+  rPtr->setLength(12.5);
+  cout << rPtr->getLength();
+  ```
+
+### Dynamically Allocating an Object
+```cpp
+Rectangle *rectPtr = new Rectangle;
+rectPtr->setWidth(10.0);
+delete rectPtr;
+rectPtr = nullptr;
+```
+
+## 2.5 Separating Specification from Implementation
+* **Class Specification File:** A header file (`.h`) containing the class declaration. (e.g., `Rectangle.h`)
+* **Class Implementation File:** A `.cpp` file containing member function definitions. (e.g., `Rectangle.cpp`). This file must `#include` the specification file.
+* **Client Program:** The program using the class must `#include` the specification file.
+
+### Defining a Member Function
+Use the class name and the **scope resolution operator (`::`)**:
+```cpp
+void Rectangle::setWidth(double w)
+{
+    width = w;
+}
+```
+
+## 2.6 Inline Member Functions
+* Member functions can be defined:
+    * **Inline:** Inside the class declaration.
+    * **After the class declaration:** Using the `inline` keyword.
+* Appropriate for short function bodies.
+* **Tradeoffs:**
+    * **Regular functions:** Compiler stores return address, allocates memory for locals, etc. (overhead).
+    * **Inline functions:** Code is copied into the program in place of the call. Results in a larger executable but no function call overhead (faster execution).
+
+## 2.7 Constructors
+> [!info] Definition: Constructor
+> A member function that is automatically called when an object is created.
+
+* **Purpose:** To construct/initialize an object.
+* **Name:** Same as the class name.
+* **Return Type:** Has **no** return type.
+
+### Default Constructors
+* A constructor that takes no arguments.
+* If you write a class with no constructor at all, C++ will automatically write a default constructor that does nothing.
+* `Rectangle r;` calls the default constructor.
+
+### In-Place Initialization (C++11)
+You can initialize a member variable in its declaration statement:
+```cpp
+class Rectangle {
+    private:
+        double width = 0.0;
+        double length = 0.0;
+};
+```
+
+### Passing Arguments to Constructors
+```cpp
+// Prototype
+Rectangle(double, double);
+
+// Definition
+Rectangle::Rectangle(double w, double len) {
+    width = w;
+    length = len;
+}
+
+// Usage
+Rectangle r(10, 5);
+```
+
+### Constructor Delegation (C++11)
+A constructor can call another constructor in the same class to minimize redundant code.
+```cpp
+Contact() : Contact(\"\", \"\", \"\") {}
+```
+
+## 2.8 Destructors
+> [!info] Definition: Destructor
+> A member function automatically called when an object is destroyed.
+
+* **Name:** `~ClassName` (e.g., `~Rectangle`).
+* **Return Type:** Has no return type and takes no arguments.
+* **Limit:** Only one destructor per class (cannot be overloaded).
+* **Usage:** If a constructor allocates dynamic memory, the destructor should release it.
+
+## 2.9 Overloading Constructors
+* A class can have more than one constructor.
+* Overloaded constructors must have **unique parameter lists**.
+> [!warning] Multiple Default Constructors
+> Do not provide more than one default constructor (e.g., one with no args and one where all args have default values). This will cause a compilation error.
+
+## 2.10 Arrays of Objects
+* Objects can be elements of an array: `InventoryItem inventory[40];`
+* The default constructor is used if no initializer list is provided.
+* Using an initializer list to invoke constructors with arguments:
+  ```cpp
+  InventoryItem inventory[3] = { \"Hammer\", \"Wrench\", \"Pliers\" };
+  ```
+* If the constructor requires multiple arguments, use function call syntax:
+  ```cpp
+  InventoryItem inventory[3] = { InventoryItem(\"Hammer\", 6.95, 12), ... };
+  ```
+
+## 2.11 Private Member Functions
+* A **private member function** can only be called by another member function of the same class.
+* It is used for internal processing by the class and is not intended for use outside of the class.
+
+## 2.12 Unified Modeling Language (UML)
+* UML provides a set of standard diagrams for graphically depicting object-oriented systems.
+
+### UML Class Diagram
+A box divided into three sections:
+1. **Top:** Class Name.
+2. **Middle:** Member variables (attributes).
+3. **Bottom:** Member functions (methods).
+
+### UML Notation
+* **Access Specifiers:** `-` for `private`, `+` for `public`.
+* **Member Variables:** `accessSpecifier variableName : dataType` (e.g., `- width : double`).
+* **Member Functions:** `accessSpecifier functionName(parameterName : dataType) : returnType` (e.g., `+ setWidth(w : double) : void`).
+
+> [!tip] Extra Notes: UML Accessors
+> In UML, constructors and destructors are listed in the member functions section but do not have a return type listed.
