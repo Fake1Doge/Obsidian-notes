@@ -1,586 +1,119 @@
-# Topic 1: Structured Data
+# CKC112 Object Oriented Programming
 
-## 1.1 Abstract Data Types
-> [!info] Definition: Abstract Data Type (ADT)
-> A data type that specifies the values that can be stored and the operations that can be done on the values.
+> [!abstract] Course Overview
+> This course introduces the principles of Object-Oriented Programming (OOP) using C++. It covers abstract data types, structured data (structs), enumerated data types, and the transition to classes and objects. Key concepts include data hiding, encapsulation, constructors, destructors, and UML modelling.
 
-* The user of an ADT does not need to know the implementation of the data type (e.g., how the data is stored).
-* ADTs are created by programmers.
+---
 
-> [!info] Definition: Abstraction
-> A definition that captures general characteristics without details.
-> *Example:* An abstract triangle is a 3-sided polygon. A specific triangle may be scalene, isosceles, or equilateral.
+## 1. Abstract Data Types (ADT) and Structures
 
-> [!info] Definition: Data Type
-> Defines the values that can be stored in a variable and the operations that can be performed on it.
+### 1.1 Abstract Data Types
+An ADT is a data type that specifies:
+- The **values** that can be stored.
+- The **operations** that can be done on those values.
+- **Abstraction**: A definition that captures general characteristics without details (e.g., an abstract triangle is a 3-sided polygon).
+- The user of an ADT does not need to know the implementation details (e.g., how data is stored).
 
-## 1.2 Combining Data into Structures
+### 1.2 Structured Data (struct)
+A `struct` is a C++ construct that allows multiple variables of different types to be grouped together.
 
-> [!info] Definition: Structure
-> A C++ construct that allows multiple variables to be grouped together.
-
-### General Format
+**Format:**
 ```cpp
-struct <structName>
-{
+struct StructName {
     type1 field1;
     type2 field2;
-    // ...
-};
+}; // Must have a semicolon after closing brace
 ```
 
-### Example `struct` Declaration
-```cpp
-struct Student // structure tag
-{
-    int studentID;      // structure members
-    string name;        // structure members
-    short yearInSchool; // structure members
-    double gpa;         // structure members
-};
-```
+> [!note] Important Notes on struct
+> - The declaration does not allocate memory; it only defines the template.
+> - Access members using the **dot operator** (`.`): `student1.gpa = 3.75;`.
+> - Cannot compare struct variables directly (`if (bill == william)`); must compare field-by-field.
+> - **Nested Structures**: A structure can contain another structure as a member.
+> - **Function Arguments**: Structs can be passed to functions by value (slow) or by reference (fast). Use `const &` for read-only access.
 
-### `struct` Declaration Notes
-* Must have a semicolon `;` after the closing brace `}`.
-* `struct` names commonly begin with an uppercase letter.
-* Multiple fields of the same type can be in a comma-separated list:
-  ```cpp
-  string name, address;
-  ```
+### 1.3 Enumerated Data Types (enum)
+An `enum` is a programmer-defined data type consisting of named integer constants.
 
-### Defining Variables
-* A `struct` declaration **does not** allocate memory or create variables.
-* To define variables, use the structure tag as the type name:
-  ```cpp
-  Student bill;
-  ```
-
-## 1.3 Accessing Structure Members
-* Use the dot (`.`) operator to refer to members of `struct` variables:
-  ```cpp
-  cin >> stu1.studentID;
-  getline(cin, stu1.name);
-  stu1.gpa = 3.75;
-  ```
-* Member variables can be used in any manner appropriate for their data type.
-
-### Displaying a `struct` Variable
-> [!warning] Common Mistake
-> Cannot output the entire structure at once.
-> ```cpp
-> cout << bill; // won't work
-> ```
-
-* Must display each field separately using the dot operator:
-  ```cpp
-  cout << bill.studentID << endl;
-  cout << bill.name << endl;
-  cout << bill.yearInSchool;
-  cout << " " << bill.gpa;
-  ```
-
-### Comparing `struct` Variables
-> [!warning] Common Mistake
-> Cannot compare `struct` variables directly.
-> ```cpp
-> if (bill == william) // won't work
-> ```
-
-* Must compare on a field basis:
-  ```cpp
-  if (bill.studentID == william.studentID) // ...
-  ```
-
-## 1.4 Initializing a Structure
-* A `struct` variable can be initialized when defined:
-  ```cpp
-  Student s = {11465, "Joan", 2, 3.75};
-  ```
-* Can also be initialized member-by-member after definition:
-  ```cpp
-  s.name = "Joan";
-  s.gpa = 3.75;
-  ```
-
-### More on Initializing a Structure
-* May initialize only some members:
-  ```cpp
-  Student bill = {14579};
-  ```
-* Cannot skip over members:
-  ```cpp
-  Student s = {1234, "John", , 2.83}; // illegal
-  ```
-* Cannot initialize in the structure declaration, since this does not allocate memory.
-
-## 1.5 Arrays of Structures
-* Structures can be defined in arrays.
-* Can be used in place of parallel arrays.
-  ```cpp
-  const int NUM_STUDENTS = 20;
-  Student stuList[NUM_STUDENTS];
-  ```
-* Individual structures are accessible using subscript notation.
-* Fields within structures are accessible using dot notation:
-  ```cpp
-  cout << stuList[5].studentID;
-  ```
-
-## 1.6 Nested Structures
-A structure can contain another structure as a member:
-```cpp
-struct PersonInfo
-{
-    string name, address, city;
-};
-
-struct Student
-{
-    int studentID;
-    PersonInfo pData; // Nested structure
-    short yearInSchool;
-    double gpa;
-};
-```
-
-### Members of Nested Structures
-* Use the dot operator multiple times to refer to fields of nested structures:
-  ```cpp
-  Student s;
-  s.pData.name = "Joanne";
-  s.pData.city = "Tulsa";
-  ```
-
-## 1.7 Structures as Function Arguments
-* May pass members of `struct` variables to functions:
-  ```cpp
-  computeGPA(stu.gpa);
-  ```
-* May pass entire `struct` variables to functions:
-  ```cpp
-  showData(stu);
-  ```
-* Can use a reference parameter if the function needs to modify the contents of the structure variable.
-
-### Structures as Function Arguments - Notes
-* Using a **value parameter** for a structure can slow down a program and waste space.
-* Using a **reference parameter** will speed up the program, but the function may change the data in the structure.
-* Using a **`const` reference parameter** allows read-only access to the reference parameter, does not waste space, and increases speed.
-
-> [!example] Example: Using `const` Reference
-> ```cpp
-> void showItem(const InventoryItem &p)
-> {
->     cout << fixed << showpoint << setprecision(2);
->     cout << "Part Number: " << p.partNum << endl;
->     // ...
-> }
-> ```
-
-## 1.8 Returning a Structure from a Function
-* A function can return a `struct`:
-  ```cpp
-  Student getStudentData(); // prototype
-  stu1 = getStudentData(); // call
-  ```
-* The function must define a local structure for internal use and for use with the `return` statement.
-
-> [!example] Example: Returning a Structure
-> ```cpp
-> Student getStudentData()
-> {
->     Student tempStu;
->     cin >> tempStu.studentID;
->     getline(cin, tempStu.pData.name);
->     // ...
->     return tempStu;
-> }
-> ```
-
-## 1.9 Using Structured Binding Declarations with Structures
-> [!info] Structured Binding Declaration
-> Defines a set of variables and initializes them with the values that are stored in a structure. This process is known as *unpacking a structure*. (Introduced in C++ 17). Can also be used to unpack arrays.
-
-### General Format
-```cpp
-auto [variable1, variable2, etc...] = structureVar;
-```
-
-### Example
-```cpp
-struct Automobile
-{
-    string make;
-    int year;
-    double mileage;
-};
-
-Automobile car = { "Porsche", 2020, 12400.0 };
-auto [first, second, third] = car;
-
-cout << first << endl; // Porsche
-cout << second << endl; // 2020
-cout << third << endl; // 12400.0
-```
-
-## 1.10 Pointers to Structures
-* A structure variable has an address.
-* Pointers to structures are variables that can hold the address of a structure:
-  ```cpp
-  Student *stuPtr;
-  ```
-* Can use the `&` operator to assign an address:
-  ```cpp
-  stuPtr = &stu1;
-  ```
-* A structure pointer can be a function parameter.
-
-### Accessing Structure Members via Pointer Variables
-* Must use `()` to dereference the pointer variable, not the field within the structure:
-  ```cpp
-  cout << (*stuPtr).studentID;
-  ```
-* Can use the **structure pointer operator** (`->`) to eliminate `()` and use clearer notation:
-  ```cpp
-  cout << stuPtr->studentID;
-  ```
-
-## 1.12 Enumerated Data Types
-> [!info] Enumerated Data Type
-> A programmer-defined data type consisting of values known as **enumerators**, which represent integer constants.
-
-### Example
 ```cpp
 enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
 ```
-* The identifiers `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, and `FRIDAY` are enumerators. They represent the values that belong to the `Day` data type.
-* Note that the enumerators are **not strings**, so they aren't enclosed in quotes. They are identifiers.
+- Internally, the compiler assigns integers starting at 0 (MONDAY = 0, TUESDAY = 1, etc.).
+- **Strongly Typed enums** (C++11): Use `enum class` to prevent name conflicts in the same scope.
+- **Casting**: You cannot directly assign an int to an enum; you must use `static_cast\<Day\>(3)`.
 
-### Defining Variables
-Once you have created an enumerated data type, you can define variables of that type:
+---
+
+## 2. Introduction to Classes
+
+### 2.1 Procedural vs. Object-Oriented Programming
+- **Procedural Programming**: Focuses on the process/actions (functions) that occur in a program.
+- **Object-Oriented Programming**: Based on the data and the functions that operate on it. Objects are instances of ADTs.
+
+> [!warning] Limitations of Procedural Programming
+> Programs based on complex function hierarchies are difficult to understand, maintain, and extend. If data structures change, many functions must also be changed.
+
+### 2.2 Classes and Objects
+- **Class**: A "blueprint" that describes an object (like a house plan).
+- **Object**: An "instance" of a class (like a house built from the plan).
+- **Attributes**: The data members of a class.
+- **Methods/Behaviors**: The member functions of a class.
+
+### 2.3 Access Specifiers
+Used to control access to class members:
+- **public**: Can be accessed by functions outside the class. Defines the **public interface**.
+- **private**: Can only be called by/accessed by members of the same class. This facilitates **data hiding**.
+- *Default*: If not specified, the default access for a class is `private`.
+
+---
+
+## 3. Class Implementation Details
+
+### 3.1 Accessors and Mutators
+- **Mutator (Setter)**: A member function that stores or changes a value in a private member variable.
+- **Accessor (Getter)**: A function that retrieves a value from a private member variable. Accessors should be marked `const`.
+
+### 3.2 Member Function Definition
+Functions can be defined:
+1. **Inline**: Defined inside the class declaration.
+2. **Outside**: Declared in the class and defined using the **scope resolution operator** (`::`).
+
 ```cpp
-Day workDay; // Defines workDay as a variable of the Day type.
-```
-
-### Assigning Values
-You may assign any of the enumerators to a variable of the `Day` type:
-```cpp
-workDay = WEDNESDAY;
-```
-
-### What is an Enumerator?
-* Think of it as an integer named constant.
-* Internally, the compiler assigns integer values to the enumerators, **beginning at 0**.
-* *In memory:* MONDAY = 0, TUESDAY = 1, WEDNESDAY = 2, THURSDAY = 3, FRIDAY = 4.
-
-> [!example] Outputting Enumerators
-> ```cpp
-> cout << MONDAY << " " << WEDNESDAY << " " << FRIDAY << endl;
-> ```
-> *Output:* `0 2 4`
-
-### Assigning an Integer to an `enum` Variable
-> [!warning] Common Mistake
-> You cannot directly assign an integer value to an `enum` variable.
-> ```cpp
-> workDay = 3; // Error!
-> ```
-
-* Instead, you must cast the integer:
-  ```cpp
-  workDay = static_cast<Day>(3);
-  ```
-
-### Assigning an Enumerator to an `int` Variable
-* You **CAN** assign an enumerator to an `int` variable.
-  ```cpp
-  int x;
-  x = THURSDAY; // Assigns 3 to x
-  ```
-
-### Comparing Enumerator Values
-* Enumerator values can be compared using the relational operators.
-  ```cpp
-  if (FRIDAY > MONDAY)
-  {
-      cout << "Friday is greater than Monday.\n";
-  }
-  ```
-
-### Anonymous Enumerated Types
-An anonymous enumerated type is simply one that does not have a name:
-```cpp
-enum { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
-```
-
-### Using Math Operators with `enum` Variables
-> [!warning] Common Mistake
-> ```cpp
-> Day day1, day2;
-> day1 = TUESDAY;
-> day2 = day1 + 1; // ERROR! Will not work!
-> ```
-> The expression `day1 + 1` results in the integer value 2, and you cannot store an `int` in an `enum` variable.
-
-* You can fix this by using a cast to explicitly convert the result to `Day`:
-  ```cpp
-  day2 = static_cast<Day>(day1 + 1);
-  ```
-
-### Using an `enum` Variable to Step through an Array's Elements
-* Because enumerators are stored in memory as integers, you can use them as array subscripts:
-  ```cpp
-  double sales[NUM_DAYS];
-  sales[MONDAY] = 1525.0;
-  ```
-> [!warning] Common Mistake
-> You cannot use the `++` operator on an `enum` variable in a loop.
-> ```cpp
-> // ERROR!
-> for (workDay = MONDAY; workDay <= FRIDAY; workDay++)
-> ```
-
-* You must rewrite the loop’s update expression using a cast instead of `++`:
-  ```cpp
-  for (workDay = MONDAY; workDay <= FRIDAY; workDay = static_cast<Day>(workDay + 1))
-  ```
-
-### Enumerators Must Be Unique Within the Same Scope
-* Enumerators must be unique within the same scope (unless strongly typed).
-* Example of an error:
-  ```cpp
-  enum Presidents { MCKINLEY, ROOSEVELT, TAFT };
-  enum VicePresidents { ROOSEVELT, FAIRBANKS, SHERMAN }; // Error: ROOSEVELT is declared twice.
-  ```
-
-### Strongly Typed `enum`s
-* In C++ 11 and later, you can use a new type of `enum`, known as a **strongly typed enum**.
-* Allows you to have multiple enumerators in the same scope with the same name.
-  ```cpp
-  enum class Presidents { MCKINLEY, ROOSEVELT, TAFT };
-  enum class VicePresidents { ROOSEVELT, FAIRBANKS, SHERMAN };
-  ```
-* **Prefix** the enumerator with the name of the `enum`, followed by the `::` operator:
-  ```cpp
-  Presidents prez = Presidents::ROOSEVELT;
-  VicePresidents vp = VicePresidents::ROOSEVELT;
-  ```
-* Use a cast operator to retrieve the integer value:
-  ```cpp
-  int x = static_cast<int>(Presidents::ROOSEVELT);
-  ```
-
-### Declaring the Type and Defining the Variables in One Statement
-* You can declare an enumerated data type and define one or more variables of the type in the same statement:
-  ```cpp
-  enum Car { PORSCHE, FERRARI, JAGUAR } sportsCar;
-  ```
-* This code declares the `Car` data type and defines a variable named `sportsCar`.
-# Topic 2: Introduction to Classes
-
-## 2.1 Procedural and Object-Oriented Programming
-* **Procedural Programming:** Focuses on the process/actions that occur in a program.
-* **Object-Oriented Programming (OOP):** Based on the data and the functions that operate on it. Objects are instances of Abstract Data Types (ADTs) that represent the data and its functions.
-
-### Limitations of Procedural Programming
-* If the data structures change, many functions must also be changed.
-* Programs based on complex function hierarchies are:
-    * Difficult to understand and maintain.
-    * Difficult to modify and extend.
-    * Easy to break.
-
-## 2.2 Introduction to Classes
-> [!info] Terminology
-> * **Class:** Similar to a `struct` (allows bundling of related variables), but variables and functions in the class can have different properties than in a `struct`.
-> * **Object:** An instance of a class, in the same way that a variable can be an instance of a `struct`.
-> * **Attributes:** Members of a class (data).
-> * **Methods or Behaviors:** Member functions of a class.
-
-### Key Concepts
-* **Data Hiding:** Restricting access to certain members of an object.
-* **Public Interface:** Members of an object that are available outside of the object. This allows the object to provide access to data and functions without sharing internal details and design, providing protection from data corruption.
-
-### Class Format
-```cpp
-class ClassName
-{
-    declaration;
-    declaration;
-};
-```
-
-### Access Specifiers
-* Used to control access to members of the class.
-* **`public`:** Can be accessed by functions outside of the class.
-* **`private`:** Can only be called by or accessed by functions that are members of the class.
-* **Default:** If not specified, the default access specifier is `private`.
-
-> [!example] Class Example: Rectangle
-> ```cpp
-> class Rectangle
-> {
->     private:
->         double width;
->         double length;
->     public:
->         void setWidth(double);
->         void setLength(double);
->         double getWidth() const;
->         double getLength() const;
->         double getArea() const;
-> };
-> ```
-
-### Using `const` With Member Functions
-* `const` appearing after the parentheses in a member function declaration specifies that the function will **not change any data** in the calling object.
-* These are typically **Accessors** (getters).
-
-### Accessors and Mutators
-* **Mutator:** A member function that stores a value in a private member variable or changes its value (e.g., `setWidth`).
-* **Accessor:** A function that retrieves a value from a private member variable without changing the object's data (e.g., `getWidth`). Accessors should be marked `const`.
-
-## 2.3 Defining an Instance of a Class
-* An object is an instance of a class.
-* Defined like structure variables: `Rectangle r;`
-* Access members using the dot (`.`) operator:
-  ```cpp
-  r.setWidth(5.2);
-  cout << r.getWidth();
-  ```
-> [!warning] Accessing Private Members
-> A compiler error will occur if you attempt to access a `private` member using the dot operator from outside the class.
-
-### Avoiding Stale Data
-* To avoid stale data, it is best to calculate values that depend on other data (like `area` depending on `length` and `width`) within a member function rather than storing them in a variable.
-
-## 2.4 Pointers to Objects
-* You can define a pointer to an object: `Rectangle *rPtr = nullptr;`
-* Access public members via pointer using the structure pointer operator (`->`):
-  ```cpp
-  rPtr = &otherRectangle;
-  rPtr->setLength(12.5);
-  cout << rPtr->getLength();
-  ```
-
-### Dynamically Allocating an Object
-```cpp
-Rectangle *rectPtr = new Rectangle;
-rectPtr->setWidth(10.0);
-delete rectPtr;
-rectPtr = nullptr;
-```
-
-## 2.5 Separating Specification from Implementation
-* **Class Specification File:** A header file (`.h`) containing the class declaration. (e.g., `Rectangle.h`)
-* **Class Implementation File:** A `.cpp` file containing member function definitions. (e.g., `Rectangle.cpp`). This file must `#include` the specification file.
-* **Client Program:** The program using the class must `#include` the specification file.
-
-### Defining a Member Function
-Use the class name and the **scope resolution operator (`::`)**:
-```cpp
-void Rectangle::setWidth(double w)
-{
+void Rectangle::setWidth(double w) {
     width = w;
 }
 ```
 
-## 2.6 Inline Member Functions
-* Member functions can be defined:
-    * **Inline:** Inside the class declaration.
-    * **After the class declaration:** Using the `inline` keyword.
-* Appropriate for short function bodies.
-* **Tradeoffs:**
-    * **Regular functions:** Compiler stores return address, allocates memory for locals, etc. (overhead).
-    * **Inline functions:** Code is copied into the program in place of the call. Results in a larger executable but no function call overhead (faster execution).
+### 3.3 Constructors and Destructors
+- **Constructor**: Automatically called when an object is created. Has no return type and shares the name of the class. Used to initialize objects.
+    - **Default Constructor**: Takes no arguments.
+    - **Overloading**: A class can have multiple constructors with different parameter lists.
+- **Destructor**: Automatically called when an object is destroyed. Name is `~ClassName`. Only one destructor per class (cannot be overloaded).
 
-## 2.7 Constructors
-> [!info] Definition: Constructor
-> A member function that is automatically called when an object is created.
+### 3.4 Pointers and Dynamic Allocation
+- **Pointers to Objects**: `Rectangle *rPtr = \&rect;`.
+- **Member Access**: Use the arrow operator (`-\>`) for pointers: `rPtr-\>getLength();`.
+- **Dynamic Allocation**: `Rectangle *r = new Rectangle(10, 20);` ... `delete r;`.
 
-* **Purpose:** To construct/initialize an object.
-* **Name:** Same as the class name.
-* **Return Type:** Has **no** return type.
+---
 
-### Default Constructors
-* A constructor that takes no arguments.
-* If you write a class with no constructor at all, C++ will automatically write a default constructor that does nothing.
-* `Rectangle r;` calls the default constructor.
+## 4. Unified Modeling Language (UML)
 
-### In-Place Initialization (C++11)
-You can initialize a member variable in its declaration statement:
-```cpp
-class Rectangle {
-    private:
-        double width = 0.0;
-        double length = 0.0;
-};
-```
+UML provides standard diagrams for depicting object-oriented systems.
 
-### Passing Arguments to Constructors
-```cpp
-// Prototype
-Rectangle(double, double);
+### 4.1 UML Class Diagrams
+Represented as a box with three sections:
+1. **Top**: Class Name.
+2. **Middle**: Attributes (Member variables).
+3. **Bottom**: Methods (Member functions).
 
-// Definition
-Rectangle::Rectangle(double w, double len) {
-    width = w;
-    length = len;
-}
+### 4.2 Notation Standards
+- **Access**: `+` for public, `-` for private.
+- **Data Types**: `variableName : type` (e.g., `- width : double`).
+- **Functions**: `functionName(parameterName : type) : returnType`.
+- **Constructors/Destructors**: No return type listed.
 
-// Usage
-Rectangle r(10, 5);
-```
+---
 
-### Constructor Delegation (C++11)
-A constructor can call another constructor in the same class to minimize redundant code.
-```cpp
-Contact() : Contact(\"\", \"\", \"\") {}
-```
-
-## 2.8 Destructors
-> [!info] Definition: Destructor
-> A member function automatically called when an object is destroyed.
-
-* **Name:** `~ClassName` (e.g., `~Rectangle`).
-* **Return Type:** Has no return type and takes no arguments.
-* **Limit:** Only one destructor per class (cannot be overloaded).
-* **Usage:** If a constructor allocates dynamic memory, the destructor should release it.
-
-## 2.9 Overloading Constructors
-* A class can have more than one constructor.
-* Overloaded constructors must have **unique parameter lists**.
-> [!warning] Multiple Default Constructors
-> Do not provide more than one default constructor (e.g., one with no args and one where all args have default values). This will cause a compilation error.
-
-## 2.10 Arrays of Objects
-* Objects can be elements of an array: `InventoryItem inventory[40];`
-* The default constructor is used if no initializer list is provided.
-* Using an initializer list to invoke constructors with arguments:
-  ```cpp
-  InventoryItem inventory[3] = { \"Hammer\", \"Wrench\", \"Pliers\" };
-  ```
-* If the constructor requires multiple arguments, use function call syntax:
-  ```cpp
-  InventoryItem inventory[3] = { InventoryItem(\"Hammer\", 6.95, 12), ... };
-  ```
-
-## 2.11 Private Member Functions
-* A **private member function** can only be called by another member function of the same class.
-* It is used for internal processing by the class and is not intended for use outside of the class.
-
-## 2.12 Unified Modeling Language (UML)
-* UML provides a set of standard diagrams for graphically depicting object-oriented systems.
-
-### UML Class Diagram
-A box divided into three sections:
-1. **Top:** Class Name.
-2. **Middle:** Member variables (attributes).
-3. **Bottom:** Member functions (methods).
-
-### UML Notation
-* **Access Specifiers:** `-` for `private`, `+` for `public`.
-* **Member Variables:** `accessSpecifier variableName : dataType` (e.g., `- width : double`).
-* **Member Functions:** `accessSpecifier functionName(parameterName : dataType) : returnType` (e.g., `+ setWidth(w : double) : void`).
-
-> [!tip] Extra Notes: UML Accessors
-> In UML, constructors and destructors are listed in the member functions section but do not have a return type listed.
+> [!tip] Extra Notes: Avoiding Stale Data
+> To avoid **stale data**, it is better to calculate values (like the area of a rectangle) within a member function rather than storing them in a variable that might not be updated when its dependencies (width/length) change.
