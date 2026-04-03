@@ -68,7 +68,7 @@ Requirements are classified using the FURPS+ framework:
 ## 3. Modelling with Use Cases and Activity Diagrams
 
 ### 3.1 Use Cases and User Stories
-- **User Story**: A short sentence in everyday language: *"As a \&lt;role\&gt;, I want to \&lt;goal\&gt; so that \&lt;reason\&gt;."* Includes **Acceptance Criteria**.
+- **User Story**: A short sentence in everyday language: *"As a \<role\>, I want to \<goal\> so that \<reason\>."* Includes **Acceptance Criteria**.
 - **Use Case**: An activity that the system performs, usually in response to a request by a user (**Actor**).
 - **Identifying Use Cases**:
     1. **User Goal Technique**: Asking users to describe their goals for using the system.
@@ -79,8 +79,8 @@ A graphical model showing use cases and their relationships to actors.
 - **Automation Boundary**: The boundary between the computerized portion and the users.
 - **Relationships**:
     - **Communicates**: Line between actor and use case.
-    - **Includes (\&lt;\&lt;include\&gt;\&gt;)**: A use case that contains behavior common to more than one other use case.
-    - **Extends (\&lt;\&lt;extend\&gt;\&gt;)**: Handles variations or exceptions from the basic use case.
+    - **Includes (\<\<include\>\>)**: A use case that contains behavior common to more than one other use case.
+    - **Extends (\<\<extend\>\>)**: Handles variations or exceptions from the basic use case.
     - **Generalizes**: One actor/use case is a more typical/general version of another.
 
 ### 3.3 Activity Diagrams (Workflows)
