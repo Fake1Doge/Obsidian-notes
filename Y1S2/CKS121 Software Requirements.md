@@ -46,9 +46,9 @@ Requirements Engineering is a critical success factor for software-intensive sys
 ### 1.3 The Three Dimensions of RE
 The goal of RE is to move from a state of vague understanding, individual views, and informal documentation to a state of complete understanding, consolidated views, and compliant documentation.
 
-1. **Content Dimension**: Deals with the understanding of requirements.
-2. **Documentation Dimension**: Deals with specifying requirements using appropriate formats.
-3. **Agreement Dimension**: Deals with the level of agreement achieved between stakeholders.
+1. **Content Dimension**: Deals with the understanding of requirements (Vague $\to$ Complete).
+2. **Documentation Dimension**: Deals with specifying requirements using appropriate formats (Non-compliant $\to$ Compliant).
+3. **Agreement Dimension**: Deals with the level of agreement achieved between stakeholders (Individual views $\to$ Consolidated views).
 
 > [!note] Orthogonality
 > These dimensions are orthogonal. A complete understanding does not imply agreement, and compliance with documentation guidelines does not imply complete understanding.
@@ -59,8 +59,11 @@ The goal of RE is to move from a state of vague understanding, individual views,
 
 ### 2.1 The Three Types of Requirements
 1. **Functional Requirements**: Statements of services the system should provide, how it should react to inputs, and behave in specific situations.
+    - Example: "The system shall generate monthly statements of allowed and denied accesses."
 2. **Quality Requirements**: Define quality properties for the entire system, a component, service, or function (e.g., Performance, Security, Reliability).
+    - Example: "The release of the locking mechanism shall take 0.8 seconds at most."
 3. **Constraints**: Organizational or technological requirements that **restrict the way** the system shall be developed (e.g., budget, platform support, physical environment).
+    - Example: "The effort for system development shall not exceed 480 person months."
 
 > [!warning] Non-functional Requirements (NFR)
 > The term "Non-functional Requirement" is widely used but often indicates an underspecified requirement.
@@ -88,12 +91,9 @@ The RE Framework structures the process into four building blocks:
 3. **Negotiation**: Identifying, analyzing, and resolving conflicts between stakeholders.
 
 ### 3.2 Requirements Artefacts
-1. **Goals**: High-level objectives about system properties. Prescriptive and solution-free.
-2. **Scenarios**: Concrete examples of satisfying or failing to satisfy a goal. Defines interaction steps.
+1. **Goals**: High-level objectives about system properties. Prescriptive and solution-free. Refines the system vision.
+2. **Scenarios**: Concrete examples of satisfying or failing to satisfy a goal. Defines a sequence of interaction steps. Increases comprehensibility.
 3. **Solution-Oriented Requirements**: Specify requirements at a level sufficient for design and testing.
-    - **Data Perspective**: Static data structures.
-    - **Functional Perspective**: Manipulation of data (inputs to outputs).
-    - **Behavioural Perspective**: Reactions to external stimuli (states and transitions).
 
 ### 3.3 Cross-Sectional Activities
 1. **Validation**: Detecting defects in artefacts, core activities, and context consideration.
@@ -104,65 +104,117 @@ The RE Framework structures the process into four building blocks:
 ## 4. Requirements Elicitation
 
 ### 4.1 Requirements Sources
-- **Stakeholders**: Primary source; identification is crucial.
-- **Documents**: Standards, laws, legacy system documentation.
+- **Stakeholders**: Primary source; identification is crucial. Not considering a stakeholder often results in fragmentally elicited requirements.
+- **Documents**: Standards, laws, legacy system documentation, error reports.
 - **Systems in Operation**: Legacy or competitor systems.
 
 ### 4.2 The Kano Model
 Used to categorize requirements based on stakeholder satisfaction:
-- **Dissatisfiers (Basic Factors)**: Self-evident; if missing, causes extreme discontent.
-- **Satisfiers (Performance Factors)**: Explicitly demanded; satisfaction increases with fulfillment.
-- **Delighters (Excitement Factors)**: Unexpected; high satisfaction if present, but no discontent if missing.
+- **Dissatisfiers (Basic Factors)**: Self-evident; if missing, causes extreme discontent. (Subconscious knowledge).
+- **Satisfiers (Performance Factors)**: Explicitly demanded; satisfaction increases with fulfillment. (Conscious knowledge).
+- **Delighters (Excitement Factors)**: Unexpected; high satisfaction if present, but no discontent if missing. (Unconscious knowledge).
 
 ### 4.3 Elicitation Techniques
-- **Survey**: Interviews, Questionnaires.
-- **Creativity**: Brainstorming, Change of Perspective (Six Thinking Hats), Analogy (Bionics).
-- **Document-centric**: System Archaeology, Perspective-based Reading, Reuse.
-- **Observation**: Field Observation, Apprenticing.
+- **Survey**: Interviews (predetermined questions), Questionnaires (large number of participants).
+- **Creativity**: Brainstorming (6-3-5 method), Change of Perspective (Six Thinking Hats), Analogy (Bionics).
+- **Document-centric**: System Archaeology (extracting info from code/docs), Perspective-based Reading, Reuse.
+- **Observation**: Field Observation (on location), Apprenticing (active learning).
 - **Support**: Mind Mapping, Workshops, CRC Cards, Use Cases, Prototypes.
 
 ---
 
-## 5. Requirements Documentation
+## 5. Requirements Modelling (Perspectives)
 
-### 5.1 Documentation Types
-- **Natural Language**: Universal but ambiguous.
-- **Conceptual Models**: Graphical, precise, but requires training (e.g., UML diagrams).
-- **Hybrid**: Combination of both.
+Requirements can be modelled from three complementary perspectives to ensure completeness and provide support for later development activities.
 
-### 5.2 Pitfalls of Natural Language
-> [!warning] Linguistic Effects to Avoid
-> 1. **Nominalization**: Turning processes into nouns (e.g., "The transmission shall...").
-> 2. **Nouns without reference index**: "The user", "The system" (Which one?).
-> 3. **Universal Quantifiers**: "all", "every", "never" (Are there exceptions?).
-> 4. **Incompletely specified conditions/verbs**: Missing "if...then" logic or details on how a verb is performed.
+### 5.1 Data Perspective
+Focuses on the **static structure** of information.
+- **Goal**: Define data types, attributes, and relationships.
+- **Diagrams**: 
+    - **Entity-Relationship Diagrams (ERD)**: Modeling entity types, relation types, and attributes.
+    - **UML Class Diagrams**: Modeling classes, associations (aggregation, composition), and multiplicities.
 
-### 5.3 Requirements Templates
-A blueprint for the syntactic structure of individual requirements to ensure clarity and consistency.
-- **Type 1**: Autonomous system activity.
-- **Type 2**: User interaction.
-- **Type 3**: Interface requirement.
+### 5.2 Functional Perspective
+Focuses on the **transformation of data** by system functions (manipulation of data).
+- **Goal**: Define inputs, outputs, and the manipulation of data by functions.
+- **Diagrams**: 
+    - **Data Flow Diagrams (DFD)**: Modeling processes, data stores, sources/sinks, and data flows.
+    - **UML Activity Diagrams**: Modeling action sequences, control flows, and object flows (using synchronization bars for concurrency).
+
+### 5.3 Behavioural Perspective
+Focuses on the **system reaction** to external stimuli.
+- **Goal**: Define permitted states, transitions, and outputs in response to events.
+- **Diagrams**: 
+    - **State Charts**: Modeling states and transitions (triggered by events, potentially with conditions). Supports hierarchization (super-states).
+    - **UML State Machine Diagrams**: Modern extension of state charts.
 
 ---
 
-## 6. Requirements Management
+## 6. Requirements Documentation
 
-### 6.1 Requirements Traceability
-The ability to trace a requirement throughout its lifecycle.
-- **Pre-RS Traceability**: Trace back to origin (stakeholder, document).
-- **Post-RS Traceability**: Trace forward to design, implementation, and test cases.
-- **Traceability between requirements**: Mapping dependencies.
+### 6.1 Documentation Types
+- **Natural Language**: Universal but ambiguous. Use **Requirements Templates** to mitigate ambiguity.
+- **Conceptual Models**: Graphical, precise representations (UML). Faster to perceive and better understood when depicted graphically.
+- **Hybrid**: Combining natural language with models for maximum clarity.
 
-### 6.2 Prioritization
-Techniques to determine the order of implementation:
-- **Ranking / Top-Ten**.
-- **Kano Classification**.
-- **Wiegers Prioritization Matrix**: Calculates priority based on Benefit, Penalty, Cost, and Risk.
+### 6.2 Pitfalls of Natural Language (Linguistic Effects)
+> [!warning] Linguistic Effects to Avoid
+> 1. **Nominalization**: Turning processes into nouns (e.g., "The transmission shall..."). Info about the process is lost.
+> 2. **Nouns without reference index**: "The user", "The system" (Which one? Need to specify exactly).
+> 3. **Universal Quantifiers**: "all", "every", "never", "no" (Risk that property doesn't apply to all objects).
+> 4. **Incompletely specified conditions/verbs**: Missing "if...then" logic or details on how a verb is performed (e.g., "transmit" requires what, from where, to where).
 
-### 6.3 Change Management
-Handled by a **Change Control Board (CCB)**.
-- **Process**: Impact Analysis -> Change Evaluation -> Approval/Rejection -> Implementation.
-- **Types of Changes**: Corrective, Adaptive, Exceptional (Hotfix).
+### 6.3 Requirements Templates
+A blueprint for the syntactic structure of individual requirements.
+- **Step 1**: Determine Legal Obligation (shall, should, will, may).
+- **Step 2**: Determine the Requirement Core (process verb).
+- **Step 3**: Characterize Activity (Autonomous, User Interaction, Interface).
+
+---
+
+## 7. Requirements Validation and Negotiation
+
+Validation ensures the documented requirements meet the stakeholders' needs and quality standards.
+
+### 7.1 Validation Goals
+1. **Artefact Validation**: Detect defects in the requirements (Completeness, Correctness, Consistency).
+2. **Activity Validation**: Ensure the required steps were performed and stakeholders involved.
+3. **Context Validation**: Ensure all relevant requirement sources were considered.
+
+### 7.2 Validation Techniques
+- **Commenting**: Author hands requirements to a co-worker for expert opinion.
+- **Inspections**: A formal, step-by-step review by a group of experts (Roles: Organizer, Moderator, Author, Reader, Inspectors, Minute-taker).
+- **Walk-throughs**: A less formal, group-based review where the author "walks" participants through the document.
+- **Perspective-Based Reading**: Checking requirements from different viewpoints (User, Architect, Tester).
+- **Prototypes**: Using low-fidelity (Wireframes) or high-fidelity models to validate requirements.
+
+### 7.3 Negotiation (Conflict Resolution)
+Conflicts (Data, Interest, Value, Relationship, Structural) must be resolved through:
+- **Agreement**: Finding a common solution all parties accept.
+- **Compromise**: Parties give up parts of their demands.
+- **Voting**: Decision based on majority.
+- **Overruling**: Decision made by a person with higher authority.
+- **Decision Matrix (Wiegers)**: Analytical approach to choosing alternatives.
+
+---
+
+## 8. Requirements Management
+
+### 8.1 Traceability
+The ability to establish explicit relationships between requirements and other artifacts.
+- **Pre-RS Traceability**: Relationship between requirements and their origins (stakeholders, documents).
+- **Post-RS Traceability**: Relationship between requirements and subsequent artifacts (design, code, tests).
+- **Traceability between requirements**: Modeling dependencies (refines, generalizes, replaces).
+
+### 8.2 Prioritization
+Determines which requirements should be implemented in which order.
+- **Criteria**: Cost, Risk, Damage, Volatility, Importance, Duration.
+- **Techniques**: Ranking, Top-Ten, Kano Classification, Wiegers Prioritization Matrix.
+
+### 8.3 Versioning and Baselines
+- **Versioning**: Each requirement artifact has a unique version number. Allows tracking history.
+- **Requirements Configuration**: A defined set of requirements where each requirement is present with exactly one version.
+- **Baseline**: A stable, change-controlled configuration of requirements, often used for release planning.
 
 ---
 
