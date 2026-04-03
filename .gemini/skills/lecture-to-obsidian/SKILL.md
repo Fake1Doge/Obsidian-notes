@@ -45,5 +45,5 @@ Use Obsidian callouts (`> [!type]`) to highlight key information:
 Before saving, ensure that:
 - You have not summarized away important details.
 - The formatting is valid Obsidian Markdown (as per `obsidian-markdown`).
-- Frontmatter, callouts, and wikilinks are present.
+- Callouts and wikilinks are present.
 - The note is correctly placed and linked within the vault structure.

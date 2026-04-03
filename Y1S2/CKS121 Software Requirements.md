@@ -1,13 +1,3 @@
----
-title: CKS121 Software Requirements
-course: CKS121/CSE 242 Software Requirements
-date: 2026-04-03
-tags:
-  - university
-  - software-engineering
-  - requirements-engineering
----
-
 # CKS121 Software Requirements
 
 > [!abstract] Course Overview
