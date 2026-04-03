@@ -1,5 +1,3 @@
-# CKS121 Software Requirements
-
 ## Chapter 1: Introduction & Fundamental of Requirements Engineering (RE)
 
 ### 1. Importance of Requirements Engineering
