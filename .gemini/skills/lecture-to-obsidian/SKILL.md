@@ -14,6 +14,7 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 3. **Clarity Enhancement (Extra Notes):** If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
 4. **No Redundant Headers or Overviews:** Do NOT add a "Course Overview" block. Do NOT restate the title of the file or course unnecessarily at the top of the note. Start directly with the content or the first topic header.
 5. **Consolidate by Subject:** Process each lecture file or chapter individually to maintain high detail, then write or append all notes for the same subject into a single Markdown file. Do NOT create separate files for each chapter; use the same master file for the subject.
+6. **No Properties/Frontmatter:** NEVER add a properties block (YAML frontmatter) at the top of the file. Start the file directly with the content.
 
 ## Workflow
 
@@ -34,12 +35,12 @@ When structuring the note, apply the following (as per the `obsidian-markdown` s
 Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture, using the sequential numbering (e.g., `# 1. Introduction`, `## 1.1 First Topic`).
 
 ### 2. Callouts for Emphasis
-Use Obsidian callouts (`> [!type]`) to highlight key information:
-- **Definitions:** `[!info] Definition: [Term]`
-- **Important Notes:** `[!note] Important`
-- **Examples:** `[!example] Example: [Title]`
-- **Warnings:** `[!warning] Common Mistake`
-- **Extra Notes:** `[!tip] Extra Notes: [Title]\n[Explanation from external knowledge to clarify unclear parts]`
+Use Obsidian callouts (`> [!type]`) to highlight key information extensively. Do not use plain text for definitions or examples if a callout can be used.
+- **Definitions:** `> [!info] Definition: [Term]`
+- **Important Notes:** `> [!note] Important`
+- **Examples:** `> [!example] Example: [Title]`
+- **Warnings:** `> [!warning] Common Mistake`
+- **Extra Notes:** `> [!tip] Extra Notes: [Title]\n> [Explanation from external knowledge to clarify unclear parts]`
 
 ### 3. Code Blocks and Math
 - Use fenced code blocks with language identifiers (e.g., ` ```cpp `).
@@ -51,3 +52,4 @@ Before saving, ensure that:
 - The formatting is valid Obsidian Markdown (as per `obsidian-markdown`).
 - Callouts and wikilinks are present.
 - The note is correctly placed and linked within the vault structure.
+- NO frontmatter/properties block was added to the document.
