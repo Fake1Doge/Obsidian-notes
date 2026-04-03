@@ -1,10 +1,3 @@
-# CKS121 Software Requirements
-
-> [!abstract] Course Overview
-> This course covers the fundamental principles, frameworks, and techniques of Requirements Engineering (RE). It explores the importance of RE in project success, the dimensions of RE, various types of requirements, and the comprehensive RE framework including core activities and artefacts.
-
----
-
 ## 1. Introduction to Requirements Engineering (RE)
 
 ### 1.1 The Importance of Requirements Engineering
