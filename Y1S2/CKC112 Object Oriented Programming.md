@@ -1,12 +1,3 @@
----
-title: CKC112 Object Oriented Programming
-tags:
-  - CKC112
-  - OOP
-  - structured-data
-  - classes
----
-
 # 1. Structured Data
 
 ## 1.1 Abstract Data Types
