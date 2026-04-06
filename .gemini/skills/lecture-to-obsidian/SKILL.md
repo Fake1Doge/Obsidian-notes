@@ -20,8 +20,10 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 1. **Activate Dependencies:** Start by activating the `obsidian-markdown` and `obsidian-cli` skills using `activate_skill`. These provide the necessary formatting rules and vault interaction tools.
 2. **Context Research:** Use the `obsidian-cli` (e.g., `obsidian search` or `obsidian read`) to find the master note for the subject in the user's vault. This ensures you append to the correct file and maintain consistent terminology.
-3. **Sequential Chapter-by-Chapter Processing:** For each lecture file or chapter provided for a subject:
-   - **Process Individually:** Read the file completely (in chunks if large) to capture every detail.
+3. **Sequential Chapter-by-Chapter Processing (CRITICAL - NO PARALLEL READING):** For each lecture file or chapter provided for a subject:
+   - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
+   - **Process Individually:** Read ONE file completely, generate its notes, and append them to the master file BEFORE moving to the next file.
+   - **Delegate Batch Tasks:** If there are more than 2 files to process, you SHOULD delegate the task to the `generalist` sub-agent with instructions to process them sequentially.
    - **Generate Notes:** Format the detailed notes for this specific source, following the sequential renumbering (e.g., if it's the 5th chapter, use `# 5. [Title]`).
    - **Write/Append to Master File:** Append the newly generated content to the subject's single Markdown file. Ensure a clear separation between chapters using horizontal rules (`---`) or level 1 headers.
 4. **Process and Format:** Apply Obsidian-specific syntax (Callouts, Math, etc.) as defined in the `obsidian-markdown` skill. If a concept is unclear, insert an "Extra Notes" callout. Ensure you escape characters like `<` and `>` properly with backslashes (`\<`, `\>`) to avoid HTML rendering issues.
