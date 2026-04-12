@@ -10,11 +10,10 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 ## Core Principles
 
 1. **No Loss of Detail:** Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. Do not excessively summarize or omit information. The output must be comprehensive.
-2. **Sequential Renumbering:** Regardless of the numbering in the source material (e.g., if it skips from Topic 1 to Topic 3), you MUST rearrange and renumber the chapters or topics sequentially starting from 1 (e.g., 1, 2, 3...).
-3. **Clarity Enhancement (Extra Notes):** If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
-4. **No Redundant Headers or Overviews:** Do NOT add a "Course Overview" block. Do NOT restate the title of the file or course unnecessarily at the top of the note. Start directly with the content or the first topic header.
-5. **Consolidate by Subject:** Process each lecture file or chapter individually to maintain high detail, then write or append all notes for the same subject into a single Markdown file. Do NOT create separate files for each chapter; use the same master file for the subject.
-6. **No Properties/Frontmatter:** NEVER add a properties block (YAML frontmatter) at the top of the file. Start the file directly with the content.
+2. **Clarity Enhancement (Extra Notes):** If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
+3. **No Redundant Headers or Overviews:** Do NOT add a "Course Overview" block. Do NOT restate the title of the file or course unnecessarily at the top of the note. Start directly with the content or the first topic header.
+4. **Consolidate by Subject:** Process each lecture file or chapter individually to maintain high detail, then write or append all notes for the same subject into a single Markdown file. Do NOT create separate files for each chapter; use the same master file for the subject.
+5. **No Properties/Frontmatter:** NEVER add a properties block (YAML frontmatter) at the top of the file. Start the file directly with the content.
 
 ## Workflow
 
@@ -24,8 +23,8 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
    - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
    - **Process Individually:** Read ONE file completely, generate its notes, and append them to the master file BEFORE moving to the next file.
    - **Delegate Batch Tasks:** If there are more than 2 files to process, you SHOULD delegate the task to the `generalist` sub-agent with instructions to process them sequentially.
-   - **Generate Notes:** Format the detailed notes for this specific source, following the sequential renumbering (e.g., if it's the 5th chapter, use `# 5. [Title]`).
-   - **Write/Append to Master File:** Append the newly generated content to the subject's single Markdown file. Ensure a clear separation between chapters using horizontal rules (`---`) or level 1 headers.
+   - **Generate Notes:** Format the detailed notes for this specific source.
+   - **Update Master File:** If notes for the chapter do not exist, append the newly generated content to the subject's single Markdown file, ensuring clear separation with horizontal rules (`---`) or level 1 headers. If notes for the chapter *already exist*, **improve and integrate** the new details into the existing section rather than creating a duplicate section or file.
 4. **Process and Format:** Apply Obsidian-specific syntax (Callouts, Math, etc.) as defined in the `obsidian-markdown` skill. If a concept is unclear, insert an "Extra Notes" callout. Ensure you escape characters like `<` and `>` properly with backslashes (`\<`, `\>`) to avoid HTML rendering issues.
 5. **Save and Update:** Ensure the master Markdown file is updated with the new chapter.
 
@@ -34,7 +33,9 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 When structuring the note, apply the following (as per the `obsidian-markdown` skill):
 
 ### 1. Hierarchical Headings
-Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture, using the sequential numbering (e.g., `# 1. Introduction`, `## 1.1 First Topic`).
+Organize content logically using Markdown headers (`#`, `##`, `###`). Ensure a clear outline that reflects the structure of the lecture.
+- **Chapter Titles:** For top-level chapters, explicitly write "Chapter" before the number (e.g., `# Chapter 3: [Title]`).
+- **Subtopics:** For subtopics, just use the hierarchical numbers without the word "Chapter" (e.g., `## 3.3 [Subtitle]`).
 
 ### 2. Callouts for Emphasis
 Use Obsidian callouts (`> [!type]`) to highlight key information extensively. Do not use plain text for definitions or examples if a callout can be used.
