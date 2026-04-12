@@ -1,2 +1,19 @@
+# Obsidian workspace files (these change frequently and are device-specific, causing most conflicts)
+.obsidian/workspace
 .obsidian/workspace.json
+.obsidian/workspace-mobile
 .obsidian/workspace-mobile.json
+
+# Obsidian graph view state (changes when you move nodes around)
+.obsidian/graph.json
+
+# Obsidian Trash folder
+.trash/
+
+# System generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules (just in case you run npm install again)
+node_modules/
