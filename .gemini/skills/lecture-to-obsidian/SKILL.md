@@ -1,6 +1,6 @@
 ---
 name: lecture-to-obsidian
-description: Converts raw lecture notes, PDFs, or text into highly detailed Obsidian-flavored Markdown notes. Integrates with obsidian-cli for vault management and obsidian-markdown for advanced formatting.
+description: Converts raw lecture notes, PDFs, or text into highly detailed Obsidian-flavored Markdown notes. Integrates with obsidian-markdown for advanced formatting.
 ---
 
 # Lecture to Obsidian Processor
@@ -17,8 +17,8 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 ## Workflow
 
-1. **Activate Dependencies:** Start by activating the `obsidian-markdown` and `obsidian-cli` skills using `activate_skill`. These provide the necessary formatting rules and vault interaction tools.
-2. **Context Research:** Use the `obsidian-cli` (e.g., `obsidian search` or `obsidian read`) to find the master note for the subject in the user's vault. This ensures you append to the correct file and maintain consistent terminology.
+1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. This provides the necessary formatting rules.
+2. **Context Research:** Search the current workspace to find the master note for the subject. This ensures you append to the correct file and maintain consistent terminology.
 3. **Sequential Chapter-by-Chapter Processing (CRITICAL - NO PARALLEL READING):** For each lecture file or chapter provided for a subject:
    - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
    - **Process Individually:** Read ONE file completely, generate its notes, and append them to the master file BEFORE moving to the next file.
