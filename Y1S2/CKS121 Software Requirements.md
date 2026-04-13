@@ -208,4 +208,161 @@ Each system is embedded in a specific context. The context strongly influences r
 
 > [!tip] Extra Notes: Framework Interrelations
 > Developing goals and scenarios prior to or along with solution-oriented requirements leads to significant improvement in quality. Scenarios provide the context needed to derive detailed requirements, while goals and scenarios support refinement across different layers of abstraction.
-inement across different layers of abstraction.
+
+---
+
+## Chapter 3: Context (Part 1)
+
+### 3.1 Context of a System
+A (software-intensive) system is always embedded in a particular context. The context heavily influences the requirements the system has to fulfill. 
+
+> [!note] Important
+> A requirement is always defined for a particular context.
+
+> [!example] Example: Accounting System Contexts
+> Developing an accounting system requires considering its specific context:
+> - **Germany:** Must consider relevant German laws and the business needs of the German manufacturing industry.
+> - **USA:** Must consider US American laws and the business needs of financial companies.
+> - **China:** Must consider Chinese laws and the business needs of shipping companies.
+
+> [!example] Example: Wind Turbine Contexts
+> If the goal is to develop a power supply based on renewable energies, a wind turbine is a possible solution. However, its appropriateness depends entirely on the context:
+> - **Family home in a countryside:** A good solution (windy place).
+> - **Submarine underwater:** An inappropriate solution.
+> - **Satellite in space:** An inappropriate solution.
+
+### 3.2 System Context and Context Objects
+
+> [!info] Definition: Context Objects
+> Context objects are material or immaterial objects belonging to the context.
+
+Typical examples of context object types:
+- **Material Objects (Can be touched):** People, hardware, documents (manuals, standards, laws), buildings, cars.
+- **Immaterial Objects (Cannot be touched):** Organizations, business processes, software components, data, communication services.
+
+> [!info] Definition: System Context
+> The **system context** is the part of the context in which the system to be developed is operating or embedded. Material or immaterial objects belonging to the system context are called **system context objects**.
+> 
+> System context objects are relevant for the system to be developed and thus **have to be considered during requirements engineering**.
+
+> [!example] Example: System Context Objects of a University Library System
+> - **Material Objects:** Books, bookshelves, a student (e.g., Marc Genaro), an employee (e.g., Jennifer Adrian), workstations, printers.
+> - **Immaterial Objects:** Library database, meta-search engine accessing several library systems, user authorization service.
+
+> [!info] Definition: System Context Boundary
+> The **system context boundary** defines which material and immaterial objects belong to the system context. It thereby separates system context objects from other irrelevant context objects.
+> 
+> *Visualization:* The system boundary separates the system itself from the system context. The context boundary separates the system context from the irrelevant environment.
+
+### 3.3 Change of System Context
+The scope of the system context can change during the elicitation process as more information becomes available.
+
+> [!example] Example: Change of System Context Scope
+> 1. **Initial Goal:** "Establish a fast and safe transportation!" (Potential solutions: airplanes, helicopters, buses, cars, ships, submarines, trains).
+> 2. **New Context Information:** "Transportation should be between the mainland and an island. The island has about 35 inhabitants and is located 5 km from the mainland." (This narrows solutions to ships or small boats).
+> 3. **Conflict & Resolution:** One stakeholder suggests a marine diesel engine. Another suggests avoiding any kind of pollution due to natural reserves. The decision to use an electric engine resolves this conflict, further refining the context and solution.
+
+### 3.4 Consideration of System Context Objects
+
+> [!note] Important
+> Each context object can potentially be involved in **any requirements engineering activities** (Elicitation, Documentation, Negotiation, Validation, and Management).
+
+If a context object is not involved in a specific requirement engineering activity, it might still be relevant for that activity later, or it might be relevant for all other requirements engineering activities.
+
+> [!example] Example: Stakeholder Consideration
+> Assume there are 10 stakeholders in the system context (e.g., office workers) who potentially have relevant information. Due to time restrictions, only 6 out of 10 are interviewed. The remaining 4 stakeholders are still potentially relevant for later interviews or other RE activities.
+
+### 3.5 The Three Facets of System Context
+
+> [!tip] Extra Notes: Generic Principles of any Software-System
+> Information systems and embedded systems typically:
+> 1. **Represent information** about the real world.
+> 2. **Process this information** and provide functionality (e.g., search for car types).
+> 3. **Provide an output** to the context (e.g., display the retrieved cars).
+> 
+> A system is only successful if the user can map the information displayed to the corresponding material or immaterial objects in reality.
+
+The system context can be structured into three facets:
+
+#### 3.5.1 Subject Facet
+> [!info] Definition: Subject Facet
+> The subject facet comprises system context objects about which **information is represented in the system** or which influence or constrain the representation of information represented in the system.
+
+This includes system context objects and events, their properties, and relationships about which information is represented, as well as the **quality of the representation** (e.g., accuracy and actuality).
+
+> [!example] Example: Subject Facet for a University Library System
+> - Students
+> - Books
+> - Magazines
+> - E-books
+> - Bookshelves
+> - Data privacy laws (influences representation)
+
+#### 3.5.2 Usage Facet
+> [!info] Definition: Usage Facet
+> The usage facet comprises all system context objects (people and/or systems) which directly or indirectly **interact with the system** or which **influence or benefit from the usage** of the system.
+
+This includes objects contributing to the definition of the **desired usage** and the **usage quality attributes** (e.g., expected usage load or average response times).
+
+> [!example] Example: Usage Facet for a University Library System
+> - Student user group
+> - Employee user group
+> - Meta-search engine accessing several library systems
+> - Check-out process and return process for library items
+> - Usage laws and standards
+
+#### 3.5.3 IT System Facet
+> [!info] Definition: IT System Facet
+> The IT system facet comprises all system context objects of the **technical and operational environment** in which the system is going to be deployed or which **influence or constrain** the deployment of the system and/or the use of technology by the system (e.g., sensors, actuators).
+
+This includes objects which contribute to the definition of the **operational environment and/or the technology used**, or which influence/constrain relevant quality attributes (e.g., average availability time, security).
+
+> [!example] Example: IT System Facet for a University Library System
+> - Printers
+> - Servers
+> - Library workstations
+> - University cloud-infrastructure
+> - IT policies and strategies
+
+### 3.6 Properties of System Context Objects
+Not only the system context objects within each facet need to be considered, but also their **properties** and **relationships** with other objects (both in the same facet and in other facets).
+
+> [!example] Example: Properties of System Context Objects (Library System)
+> - **Subject Facet Properties:** 
+>   - Student: ID, Matriculation status, Date of birth.
+>   - Book: Title, Authors, ISBN, ISSN.
+>   - Data privacy law: Visibility of data for librarian.
+> - **Usage Facet Properties:**
+>   - Students (user group): Maximum number of users, Average usage load.
+>   - Employees (user group): Required access control and usage rights.
+>   - Meta-search engine: Required information for a particular usage.
+> - **IT System Facet Properties:**
+>   - University cloud-infrastructure: Maximum throughput of communication network.
+>   - Server: Maximum persistent storage available, Maximum downtime in 24h.
+
+### 3.7 Documentation of Context Information
+Because a requirement is always defined for a particular context, understanding requirements requires context information. A change in the context typically requires adaptation of requirements.
+
+> [!note] Important
+> Documenting context information (objects, properties, and relationships) is a **prerequisite for supporting the analysis of the impact of a context change** on requirements!
+
+#### Common Problems
+- Context information is **often not documented at all** and is only implicitly known. This leads to stakeholders having different assumptions about the context.
+- If documented, it is **often intermingled** with requirements (spread across requirements). This leads to:
+  - Redundancies of context information.
+  - Lack of a concise definition.
+  - Contradictions between context information.
+
+#### Guideline for Documenting Context Information
+Define **project-specific guidelines** for documenting context information. These should include:
+- Types of context objects which should be considered and documented.
+- Representation formats and the structure to be used.
+- Relationship types to interrelate context information and requirements.
+- Roles and responsibilities for documenting the context information.
+
+#### Common Approaches
+- **Scenarios:** Define system context interaction and interrelate requirements with context objects.
+- **(Business) process models:** Define the business context in which system functions are used.
+- **Domain models:** Define properties for a set of systems (e.g., systems in a particular application domain).
+- **Standards:** Include context information such as personal data protection, federal ordinance on barrier-free information technology.
+- **Dedicated section:** In textual requirements specification documents.
