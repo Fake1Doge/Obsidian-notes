@@ -68,6 +68,59 @@ struct <structName>
   ```
 - Member variables can be used in any manner appropriate for their data type.
 
+> [!example] Example: Program 11-1
+> ```cpp
+> // This program demonstrates the use of structures.
+> #include <iostream>
+> #include <string>
+> #include <iomanip>
+> using namespace std;
+> 
+> struct PayRoll
+> {
+>     int empNumber;   // Employee number
+>     string name;     // Employee's name
+>     double hours;    // Hours worked
+>     double payRate;  // Hourly payRate
+>     double grossPay; // Gross pay
+> };
+> 
+> int main()
+> {
+>     PayRoll employee; // employee is a PayRoll structure.
+> 
+>     // Get the employee's number.
+>     cout << "Enter the employee's number: ";
+>     cin >> employee.empNumber;
+> 
+>     // Get the employee's name.
+>     cout << "Enter the employee's name: ";
+>     cin.ignore(); // To skip the remaining '\n' character
+>     getline(cin, employee.name);
+> 
+>     // Get the hours worked by the employee.
+>     cout << "How many hours did the employee work? ";
+>     cin >> employee.hours;
+> 
+>     // Get the employee's hourly pay rate.
+>     cout << "What is the employee's hourly payRate? ";
+>     cin >> employee.payRate;
+> 
+>     // Calculate the employee's gross pay.
+>     employee.grossPay = employee.hours * employee.payRate;
+> 
+>     // Display the employee data.
+>     cout << "Here is the employee's payroll data:\n";
+>     cout << "Name: " << employee.name << endl;
+>     cout << "Number: " << employee.empNumber << endl;
+>     cout << "Hours worked: " << employee.hours << endl;
+>     cout << "Hourly payRate: " << employee.payRate << endl;
+>     cout << fixed << showpoint << setprecision(2);
+>     cout << "Gross Pay: $" << employee.grossPay << endl;
+>     return 0;
+> }
+> ```
+
 > [!warning] Common Mistake: Displaying a `struct` Variable
 > To display the contents of a `struct` variable, you must display each field separately using the dot operator.
 > ```cpp
@@ -97,6 +150,21 @@ struct <structName>
   s.gpa = 3.75;
   ```
 
+> [!example] Example: Excerpts from Program 11-3
+> ```cpp
+> struct EmployeePay
+> {
+>     string name;       // Employee name
+>     int empNum;        // Employee number
+>     double payRate;    // Hourly pay rate
+>     double hours;      // Hours worked
+>     double grossPay;   // Gross pay
+> };
+> 
+> EmployeePay employee1 = {"Betty Ross", 141, 18.75};
+> EmployeePay employee2 = {"Jill Sandburg", 142, 17.50};
+> ```
+
 > [!note] More on Initializing a Structure
 > - May initialize only some members: `Student bill = {14579};`
 > - Cannot skip over members: `Student s = {1234, "John", , 2.83}; // illegal`
@@ -114,6 +182,54 @@ struct <structName>
   ```cpp
   cout << stuList[5].studentID;
   ```
+
+> [!example] Example: Program 11-4
+> ```cpp
+> // This program uses an array of structures.
+> #include <iostream>
+> #include <iomanip>
+> using namespace std;
+> 
+> struct PayInfo
+> {
+>     int hours;       // Hours worked
+>     double payRate;  // Hourly pay rate
+> };
+> 
+> int main()
+> {
+>     const int NUM_WORKERS = 3;       // Number of workers
+>     PayInfo workers[NUM_WORKERS];    // Array of structures
+>     int index;                       // Loop counter
+> 
+>     // Get employee pay data.
+>     cout << "Enter the hours worked by " << NUM_WORKERS
+>          << " employees and their hourly rates.\n";
+> 
+>     for (index = 0; index < NUM_WORKERS; index++)
+>     {
+>         // Get the hours worked by an employee.
+>         cout << "Hours worked by employee #" << (index + 1) << ": ";
+>         cin >> workers[index].hours;
+> 
+>         // Get the employee's hourly pay rate.
+>         cout << "Hourly pay rate for employee #" << (index + 1) << ": ";
+>         cin >> workers[index].payRate;
+>         cout << endl;
+>     }
+> 
+>     // Display each employee's gross pay.
+>     cout << "Here is the gross pay for each employee:\n";
+>     cout << fixed << showpoint << setprecision(2);
+>     for (index = 0; index < NUM_WORKERS; index++)
+>     {
+>         double gross;
+>         gross = workers[index].hours * workers[index].payRate;
+>         cout << "Employee #" << (index + 1) << ": $" << gross << endl;
+>     }
+>     return 0;
+> }
+> ```
 
 ## 1.6 Nested Structures
 A structure can contain another structure as a member:
@@ -179,6 +295,60 @@ struct Student
 > }
 > ```
 
+> [!example] Example: Program 11-7
+> ```cpp
+> // This program uses a function to return a structure.
+> #include <iostream>
+> #include <iomanip>
+> #include <cmath> // For the pow function
+> using namespace std;
+> 
+> // Constant for Pi.
+> const double PI = 3.14159;
+> 
+> // Structure declaration
+> struct Circle
+> {
+>     double radius;      // A circle's radius
+>     double diameter;    // A circle's diameter
+>     double area;        // A circle's area
+> };
+> 
+> // Function prototype
+> Circle getCircle();
+> 
+> int main()
+> {
+>     Circle c; // Define a structure variable
+> 
+>     // Get data about the circle.
+>     c = getCircle();
+> 
+>     // Display the circle data.
+>     cout << "The radius and area of the circle are:\n";
+>     cout << fixed << setprecision(2);
+>     cout << "Radius: " << c.radius << endl;
+>     cout << "Area: " << c.area << endl;
+>     return 0;
+> }
+> 
+> Circle getCircle()
+> {
+>     Circle tempCircle; // Temporary structure variable
+> 
+>     // Store circle data in the temporary variable.
+>     cout << "Enter the diameter of a circle: ";
+>     cin >> tempCircle.diameter;
+> 
+>     // Calculate the circle's radius and area.
+>     tempCircle.radius = tempCircle.diameter / 2.0;
+>     tempCircle.area = PI * pow(tempCircle.radius, 2.0);
+> 
+>     // Return the temporary variable.
+>     return tempCircle;
+> }
+> ```
+
 ## 1.9 Using Structured Binding Declarations with Structures
 - A structured binding declaration defines a set of variables and initializes them with the values that are stored in a structure.
 - This process is known as *unpacking a structure*.
@@ -206,6 +376,49 @@ auto [variable1, variable2, etc...] = structureVar;
 > cout << third << endl;  // Displays: 12400.0
 > ```
 
+> [!example] Example: Program 11-8
+> ```cpp
+> // This program uses a structured binding declaration to unpack a structure that is returned from a function.
+> #include <iostream>
+> #include <string>
+> using namespace std;
+> 
+> struct Contact
+> {
+>     string name;
+>     string email;
+> };
+> 
+> // Function prototype
+> Contact getContact();
+> 
+> int main()
+> {
+>     // Get the user's contact info.
+>     auto [userName, userEmail] = getContact();
+> 
+>     // Display the user's contact info.
+>     cout << "You entered:\n";
+>     cout << userName << endl;
+>     cout << userEmail << endl;
+>     return 0;
+> }
+> 
+> Contact getContact()
+> {
+>     // Temporary Contact variable
+>     Contact c;
+> 
+>     // Get the contact info.
+>     cout << "Enter your name: ";
+>     getline(cin, c.name);
+>     cout << "Enter your email address: ";
+>     getline(cin, c.email);
+> 
+>     return c;
+> }
+> ```
+
 ## 1.10 Pointers to Structures
 - A structure variable has an address.
 - Pointers to structures are variables that can hold the address of a structure:
@@ -224,6 +437,28 @@ auto [variable1, variable2, etc...] = structureVar;
   ```cpp
   cout << stuPtr->studentID;
   ```
+
+> [!example] Example: Excerpt from Program 11-9
+> ```cpp
+> void getData(Student *s)
+> {
+>     // Get the student name.
+>     cout << "Student name: ";
+>     getline(cin, s->name);
+> 
+>     // Get the student ID number.
+>     cout << "Student ID Number: ";
+>     cin >> s->idNum;
+> 
+>     // Get the credit hours enrolled.
+>     cout << "Credit Hours Enrolled: ";
+>     cin >> s->creditHours;
+> 
+>     // Get the GPA.
+>     cout << "Current GPA: ";
+>     cin >> s->gpa;
+> }
+> ```
 
 ## 1.11 Enumerated Data Types
 - An enumerated data type is a programmer-defined data type. It consists of values known as *enumerators*, which represent integer constants.
@@ -250,6 +485,42 @@ auto [variable1, variable2, etc...] = structureVar;
   x = THURSDAY; // assigns 3 to x
   ```
 - **Comparing:** Enumerator values can be compared using relational operators (e.g., `if (FRIDAY > MONDAY)`).
+
+> [!example] Example: Program 11-10
+> ```cpp
+> // This program demonstrates an enumerated data type.
+> #include <iostream>
+> #include <iomanip>
+> using namespace std;
+> 
+> enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
+> 
+> int main()
+> {
+>     const int NUM_DAYS = 5;       // The number of days
+>     double sales[NUM_DAYS];       // To hold sales for each day
+>     double total = 0.0;           // Accumulator
+>     int index;                    // Loop counter
+> 
+>     // Get the sales for each day.
+>     for (index = MONDAY; index <= FRIDAY; index++)
+>     {
+>         cout << "Enter the sales for day " << index << ": ";
+>         cin >> sales[index];
+>     }
+> 
+>     // Calculate the total sales.
+>     for (index = MONDAY; index <= FRIDAY; index++)
+>         total += sales[index];
+> 
+>     // Display the total.
+>     cout << "The total sales are $" << setprecision(2)
+>          << fixed << total << endl;
+> 
+>     return 0;
+> }
+> ```
+
 - **Anonymous Enumerated Types:** An anonymous enumerated type does not have a name:
   ```cpp
   enum { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
@@ -257,6 +528,44 @@ auto [variable1, variable2, etc...] = structureVar;
 - **Math Operators:** You cannot perform math operations and assign them directly to an `enum` variable because the result is an integer (e.g., `day2 = day1 + 1; // ERROR!`). Fix this by casting: `day2 = static_cast<Day>(day1 + 1);`
 - **Using `enum` with Arrays:** Because enumerators are stored as integers, you can use them as array subscripts: `sales[MONDAY] = 1525.0;`
 - **Stepping through Arrays:** You cannot use the `++` operator on an `enum` variable. Use casting for the update expression: `workDay = static_cast<Day>(workDay + 1)`
+
+> [!example] Example: Program 11-11
+> ```cpp
+> // This program demonstrates an enumerated data type.
+> #include <iostream>
+> #include <iomanip>
+> using namespace std;
+> 
+> enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
+> 
+> int main()
+> {
+>     const int NUM_DAYS = 5;       // The number of days
+>     double sales[NUM_DAYS];       // To hold sales for each day
+>     double total = 0.0;           // Accumulator
+>     Day workDay;                  // Loop counter
+> 
+>     // Get the sales for each day.
+>     for (workDay = MONDAY; workDay <= FRIDAY;
+>          workDay = static_cast<Day>(workDay + 1))
+>     {
+>         cout << "Enter the sales for day " << workDay << ": ";
+>         cin >> sales[workDay];
+>     }
+> 
+>     // Calculate the total sales.
+>     for (workDay = MONDAY; workDay <= FRIDAY;
+>          workDay = static_cast<Day>(workDay + 1))
+>         total += sales[workDay];
+> 
+>     // Display the total.
+>     cout << "The total sales are $" << setprecision(2)
+>          << fixed << total << endl;
+> 
+>     return 0;
+> }
+> ```
+
 - **Unique Scopes:** Enumerators must be unique within the same scope (unless using strongly typed enums). Error results if the same enumerator name is declared twice.
 
 ### Strongly Typed enums (C++11)

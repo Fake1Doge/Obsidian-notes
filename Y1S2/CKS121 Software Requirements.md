@@ -1,32 +1,58 @@
 ## 1. Introduction to Requirements Engineering (RE)
 
 ### 1.1 The Importance of Requirements Engineering
-Requirements Engineering is a critical success factor for software-intensive systems. The hardest single part of building a software system is **deciding precisely what to build**. No other part of the conceptual work is as difficult as establishing the detailed technical requirements, including all interfaces to people, machines, and other software systems.
+Requirements Engineering is a critical success factor for software-intensive systems. 
+
+> [!quote] Fred Brooks (1987)
+> "The hardest single part of building a software system is deciding precisely what to build. No other part of the conceptual work is as difficult as establishing the detailed technical requirements, including all the interfaces to people, to machines, and to other software systems. No other part of the work so cripples the resulting system if done wrong. No other part is more difficult to rectify later."
 
 #### CHAOS Report Statistics
-Research by The Standish Group (CHAOS Report) highlights the impact of RE on project outcomes:
-- **Project Success Rates:** On average, only 30% of projects are successful, 23% are cancelled, and 47% are challenged (completed with resource overspend and functional restrictions).
-- **Reasons for Failure:** 
-    - **48.1%** of reasons for resource overspend and functional restrictions are related to insufficient and poor RE (e.g., lack of user input, incomplete requirements, changing requirements).
-    - **44.1%** of reasons for project cancellations are related to poor RE.
+Research by The Standish Group (CHAOS Report 2015) highlights the impact of RE on project outcomes:
+- **Project Outcomes:** On average, **29%** of projects are successful, **19%** are failed (cancelled), and **52%** are challenged (completed with resource overspend and functional restrictions).
+- **Reasons for Challenged Projects (Resource overspend & functional restrictions):** 
+    - **48.1%** of reasons are related to poor RE:
+        - Lack of user input (12.8%)
+        - Incomplete requirements & specifications (12.3%)
+        - Changing requirements & specifications (11.8%)
+        - Unrealistic expectations (5.9%)
+        - Unclear objectives (5.3%)
+- **Reasons for Failed Projects (Cancellations):** 
+    - **44.1%** of reasons are related to poor RE:
+        - Incomplete requirements (13.1%)
+        - Lack of user involvement (12.4%)
+        - Unrealistic expectations (9.9%)
+        - Changing requirements & specifications (8.7%)
 
 #### Effort for Correcting Defects
 The cost of fixing requirements defects increases significantly as the project progresses:
-- **Small/Non-critical projects:** Defects found after delivery require **5x** more effort to correct.
-- **Large/Critical projects:** Defects found after delivery require **100x** more effort to correct.
+- **Small/Non-critical projects:** Defects found after delivery require **5x** more effort to correct. (Analysis 1x $\to$ Design 1.5-2.5x $\to$ Coding 2-5x $\to$ Testing 2.5-5x $\to$ Delivery 5x)
+- **Large/Critical projects:** Defects found after delivery require **100x** more effort to correct. (Analysis 1x $\to$ Design 2.5-5x $\to$ Coding 5-10x $\to$ Testing 10-50x $\to$ Delivery 100x)
 
 ### 1.2 Core Definitions
 
-> [!info] Definition: Requirement
+> [!info] Definition: Requirement (IEEE 610.12-1990)
 > A **requirement** is:
 > 1. A **condition or capability** needed by a user to solve a problem or achieve an objective.
-> 2. A **condition or capability** that shall be met or possessed by a system, system component, product, or service to satisfy a contract, standard, specification, or other formally imposed documents.
+> 2. A **condition or capability** that must be met or possessed by a system, system component, product, or service to satisfy a contract, standard, specification, or other formally imposed documents.
 > 3. A **documented representation** of a condition or capability as in (1) or (2).
 > 
-> Requirements include the quantified and documented needs, wants, and expectations of stakeholders.
+> *PMBOK Guide 5th Ed:* Requirements include the quantified and documented needs, wants, and expectations of the sponsor, customer, and other stakeholders.
+
+> [!info] Definition: Requirement (IREB CPRE Glossary)
+> 1. A **need** perceived by a stakeholder.
+> 2. A **capability or property** that a system shall have.
+> 3. A **documented representation** of a need, capability or property.
 
 > [!info] Definition: Stakeholder
-> A **stakeholder** of a system is a person, group of people, or an organisation who has **directly or indirectly influence** on the requirements of the regarded system. A stakeholder can influence not only the result but also the project life cycle.
+> A **stakeholder** of a system is a person, group of people, or an organisation who influences a system's requirements or who is impacted by that system. A stakeholder can influence not only the result but also the project life cycle (direct or indirect influence).
+
+> [!example] Example: Stakeholders in a Public Transport Ticketing System
+> For a web-based system for buying tickets for public transport, stakeholders might include:
+> - **End customer:** The person who buys the ticket.
+> - **Marketing manager:** The person who sells the ticket.
+> - **IT administrator:** The person who runs the system.
+> - **Legal expert:** Ensures data privacy and compliance.
+> - **Financial manager:** Handles payment processing.
 
 ### 1.3 The Goal of Requirements Engineering
 Requirements Engineering (RE) is a **cooperative, iterative, and incremental process** which aims at ensuring that:
@@ -50,12 +76,18 @@ The goals of RE can be characterized by three orthogonal dimensions:
 
 ### 1.5 The Three Types of Requirements
 
-1. **Functional Requirements:** Statements of services the system should provide, how it should react to particular inputs, and how it should behave in particular situations.
+1. **Functional Requirements:** 
+    - *IREB Definition:* A requirement concerning a result or behavior that shall be provided by a function of a system.
+    - *Description:* Statements of services the system should provide, how it should react to particular inputs, and how it should behave in particular situations.
     - *Example (R-6):* If a sensor detects a damage of the window, the system shall inform the security company.
-2. **Quality Requirements:** Define a **quality property** for the entire system, a system component, a service, or a function.
+2. **Quality Requirements:** 
+    - *IREB Definition:* A requirement that pertains to a quality concern that is not covered by functional requirements.
+    - *Description:* Define a **quality property** for the entire system, a system component, a service, or a function (e.g., Performance, Security, Usability, Maintainability).
     - *Example (R-15):* The release of the locking mechanism shall take 0.8 seconds at most.
     - *Standards:* ISO/IEC 25010:2011 defines quality in use (Effectiveness, Efficiency, Satisfaction) and product quality (Reliability, Security, Maintainability, Portability).
-3. **Constraints:** An **organizational or technological requirement** which restricts the way the system shall be developed.
+3. **Constraints:** 
+    - *IREB Definition:* A requirement that limits the solution space beyond what is necessary for meeting the given functional requirements and quality requirements.
+    - *Description:* An **organizational or technological requirement** which restricts the way the system shall be developed (e.g., Technology, Budget, Schedule, Regulations).
     - *Example (C-16):* The effort for system development shall not exceed 480 person months.
     - *Example (C-41):* The system shall process personal data in compliance with the EU's Data Protection Directive.
 
@@ -70,11 +102,16 @@ Constraints restrict the **range of realization alternatives** for requirements.
 - *Consequence:* The solution space is reduced from 5 to 2 (40% remaining).
 
 ### 2.2 Non-functional Requirements (NFRs)
-The term "non-functional requirement" is widely used but often indicates that a requirement is **insufficiently understood**.
-- **The RE Perspective:** There are only functional requirements, quality requirements, and constraints. **Non-functional requirements do not exist** as a separate category in rigorous RE; they are usually underspecified functional or quality requirements.
-- *Example:* "The system shall be secure" (NFR) refined into:
-    - Each user shall log in... (Functional)
-    - Stored passwords shall be protected... (Quality)
+
+> [!warning] "Non-functional Requirements"
+> The term "non-functional requirement" is widely used but often indicates that a requirement is **insufficiently understood**.
+> 
+> **The RE Perspective:** There are only functional requirements, quality requirements, and constraints. **Non-functional requirements do not exist** as a separate category in rigorous RE; they are usually underspecified functional or quality requirements.
+
+> [!example] Example: Refining an NFR
+> "The system shall be secure" (NFR) is refined into:
+> - Each user shall log in... (Functional Requirement)
+> - Stored passwords shall be protected from unauthorized access... (Quality Requirement)
 
 ### 2.3 RE and Organizational Processes
 RE is embedded within various organizational processes:
@@ -119,6 +156,9 @@ RE provides the foundation for other development tasks:
 
 ## 3. The Requirements Engineering Framework
 
+> [!info] Framework Overview
+> The RE framework is driven by a **System Vision** and operates within an **RE Context**. It involves **Core Activities** (Elicitation, Negotiation, Documentation) that produce **Requirements Artefacts** (Goals, Scenarios, Solution-oriented requirements). These are supported continuously by **Cross-Sectional Activities** (Validation, Management).
+
 ### 3.1 System Vision
 A **vision** defines an intended (small or large) change to a current reality.
 - **Characteristics:** Brief and precise, guides definition of requirements, guides system development, states a goal (**What**), not how to achieve it (**How**), basis for decisions, justifies expenses.
@@ -131,6 +171,13 @@ Each system is embedded in a specific context. The context strongly influences r
     - **Subject Facet:** Information represented in the system or constraining the representation.
     - **Usage Facet:** People and systems interacting with the system or benefiting from it.
     - **IT System Facet:** Technical environment (sensors, actuators, other systems).
+    
+    > [!example] Example: System Context Facets
+    > For an automated braking system:
+    > - **Subject facet:** Driver, Weather conditions, existing Brake system.
+    > - **Usage facet:** Driver.
+    > - **IT system facet:** Sensors, Actuators.
+
 2. **Development Context:** The part of the context in which the system is being developed (e.g., the dev team, tools).
 3. **Additional RE Context Objects:** Objects considered during RE but not part of system or development context.
 
@@ -161,3 +208,4 @@ Each system is embedded in a specific context. The context strongly influences r
 
 > [!tip] Extra Notes: Framework Interrelations
 > Developing goals and scenarios prior to or along with solution-oriented requirements leads to significant improvement in quality. Scenarios provide the context needed to derive detailed requirements, while goals and scenarios support refinement across different layers of abstraction.
+inement across different layers of abstraction.
