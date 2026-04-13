@@ -17,11 +17,12 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 ## Workflow
 
-1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. This provides the necessary formatting rules.
+1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. If processing PDFs, also activate the `pdf-extractor` skill. This provides the necessary formatting rules and PDF extraction tools.
 2. **Context Research:** Search the current workspace to find the master note for the subject. This ensures you append to the correct file and maintain consistent terminology.
 3. **Sequential Chapter-by-Chapter Processing (CRITICAL - NO PARALLEL READING):** For each lecture file or chapter provided for a subject:
    - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
-   - **Process Individually:** Read ONE file completely, generate its notes, and append them to the master file BEFORE moving to the next file.
+   - **Extract PDF Content:** If the source file is a PDF, use the `pdf-extractor` skill's scripts to extract the text into a temporary text file first. Read that temporary text file to generate the notes, then clean up the temporary files.
+   - **Process Individually:** Read ONE file completely (or its extracted text), generate its notes, and append them to the master file BEFORE moving to the next file.
    - **Delegate Batch Tasks:** If there are more than 2 files to process, you SHOULD delegate the task to the `generalist` sub-agent with instructions to process them sequentially.
    - **Generate Notes:** Format the detailed notes for this specific source.
    - **Update Master File:** If notes for the chapter do not exist, append the newly generated content to the subject's single Markdown file, ensuring clear separation with horizontal rules (`---`) or level 1 headers. If notes for the chapter *already exist*, **improve and integrate** the new details into the existing section rather than creating a duplicate section or file.

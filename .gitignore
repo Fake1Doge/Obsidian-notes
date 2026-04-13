@@ -32,13 +32,7 @@ env/
 *.swp
 *.bak
 
-# Temporary processing scripts and output files
-extract_*.js
-split_pdf.js
+# Temporary processing output files
 temp_*.txt
 temp_*.pdf
-
-# Node package files (from temporary script installations)
-package.json
-package-lock.json
 
