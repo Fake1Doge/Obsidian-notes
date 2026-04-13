@@ -9,7 +9,7 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 ## Core Principles
 
-1. **No Loss of Detail:** Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. Do not excessively summarize or omit information. The output must be comprehensive.
+1. **No Loss of Detail:** Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. When working with a PDF, you must take the detail of the PDF lecture note and make a detailed note according to that PDF lecture note following the obsidian-markdown skill without losing any detail. Do not excessively summarize or omit information. The output must be comprehensive.
 2. **Clarity Enhancement (Extra Notes):** If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
 3. **No Redundant Headers or Overviews:** Do NOT add a "Course Overview" block. Do NOT restate the title of the file or course unnecessarily at the top of the note. Start directly with the content or the first topic header.
 4. **Consolidate by Subject:** Process each lecture file or chapter individually to maintain high detail, then write or append all notes for the same subject into a single Markdown file. Do NOT create separate files for each chapter; use the same master file for the subject.
@@ -17,11 +17,11 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 ## Workflow
 
-1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. If processing PDFs, also activate the `pdf-extractor` skill. This provides the necessary formatting rules and PDF extraction tools.
+1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. 
 2. **Context Research:** Search the current workspace to find the master note for the subject. This ensures you append to the correct file and maintain consistent terminology.
 3. **Sequential Chapter-by-Chapter Processing (CRITICAL - NO PARALLEL READING):** For each lecture file or chapter provided for a subject:
    - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
-   - **Extract PDF Content:** If the source file is a PDF, use the `pdf-extractor` skill's scripts to extract the text into a temporary text file first. Read that temporary text file to generate the notes, then clean up the temporary files.
+   - **Extract Content:** Use the `read_file` tool directly on the source file. `read_file` natively handles PDFs, extracting the text automatically. No external scripts are needed for basic extraction.
    - **Process Individually:** Read ONE file completely (or its extracted text), generate its notes, and append them to the master file BEFORE moving to the next file.
    - **Delegate Batch Tasks:** If there are more than 2 files to process, you SHOULD delegate the task to the `generalist` sub-agent with instructions to process them sequentially.
    - **Generate Notes:** Format the detailed notes for this specific source.
