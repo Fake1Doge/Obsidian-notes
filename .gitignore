@@ -18,14 +18,6 @@ desktop.ini
 # Node modules (just in case you run npm install again)
 node_modules/
 
-# Python caches and virtual environments
-__pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-env/
-
 # Editor and IDE directories
 .vscode/
 .idea/
