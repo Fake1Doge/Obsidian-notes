@@ -506,3 +506,58 @@ Real-world applications of management and culture:
 
 > [!quote] Effective Management
 > The most effective managers combine traditional management skills with deep cultural awareness and ethical leadership. Effective management requires a holistic approach: environmental awareness + cultural strength = sustainable competitive advantage.
+
+---
+
+# Chapter 4: Managing in the Global Economy
+
+## 4.1 Overview of Globalization
+Globalization refers to the increasing economic integration and interdependence of national economies.
+- **Economic Integration:** Seamless flow of goods, services, and capital across borders.
+- **Multinational Operations:** Firms operating in multiple countries to leverage global resources.
+- **Interconnectedness:** Decisions in one region impact markets worldwide.
+
+## 4.2 Drivers of Global Economy
+Key factors propelling globalization:
+- **Technology:** Advances in ICT (Information and Communication Technology) and transport reduce costs and enable real-time global coordination.
+- **Liberalization:** Reduction of trade barriers and tariffs through international agreements and the WTO (World Trade Organization).
+- **Convergence:** Consumer tastes and market demands are becoming more similar across different nations.
+
+## 4.3 PESTLE Analysis in Global Context
+Analyzing global factors for management focus:
+- **Political:** Government stability, trade regulations, and geopolitical risks.
+- **Economic:** Exchange rates, inflation, and GDP growth across regions.
+- **Social:** Cultural norms, demographics, and consumer behavior shifts.
+- **Legal:** International law, intellectual property, and labor standards.
+
+## 4.4 Hofstede's Cultural Dimensions in Global Economy
+- **Power Distance:** Acceptance of unequal power distribution in society.
+  - *Management Implication:* Managers must adapt leadership styles: High Power Distance requires hierarchy; low Power Distance values equality.
+- **Individualism vs. Collectivism:** Preference for loose vs. tight social frameworks.
+  - *Management Implication:* Individualism values personal initiative, whereas collectivism values group harmony.
+- **Uncertainty Avoidance:** Degree of comfort with ambiguity and risk (Accounts for about 40% in some cultural mixes).
+- **Masculinity vs. Femininity:** Achievement and competition vs. quality of life (Accounts for about 30% in some cultural mixes).
+- **Long-term Orientation:** (Accounts for about 20% in some cultural mixes).
+- **Indulgence:** (Accounts for about 10% in some cultural mixes).
+
+> [!tip] Extra Notes: Adjusting Leadership
+> Managers working globally must adapt their leadership styles significantly. For instance, high Power Distance cultures expect clear directives from authoritative figures, whereas high Individualism cultures reward independent thought and personal achievement.
+
+## 4.5 Global Entry Strategies
+Strategies for entering international markets vary by risk and control:
+- **Exporting:** Low Risk Level, Low Control Level.
+- **Licensing/Franchising:** Medium Risk Level, Moderate Control Level.
+- **Joint Ventures:** High Risk Level, Shared Control Level.
+- **Wholly-owned Subsidiary:** Very High Risk Level, Full Control Level.
+
+## 4.6 Challenges in Global Management
+Key difficulties faced by global managers:
+- **Cultural Clashes:** Misunderstandings in communication and work values.
+- **Political Risks:** Changes in government policy or civil unrest.
+- **Economic Volatility:** Currency fluctuations affecting profitability.
+
+## 4.7 Conclusion: Global Efficiency and Local Responsiveness
+> [!quote] Success in the Global Economy
+> "Success in the global economy requires a balance of global efficiency and local responsiveness." — Principles of Management, 2nd Edition
+
+Effective global managers must be culturally intelligent and strategically flexible.
