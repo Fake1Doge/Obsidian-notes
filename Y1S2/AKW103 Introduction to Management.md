@@ -561,3 +561,116 @@ Key difficulties faced by global managers:
 > "Success in the global economy requires a balance of global efficiency and local responsiveness." — Principles of Management, 2nd Edition
 
 Effective global managers must be culturally intelligent and strategically flexible.
+
+---
+
+# Chapter 5: Ethics and Corporate Social Responsibility
+
+## 5.1 Introduction to Ethics and CSR in Management
+Ethics and CSR are no longer optional add-ons—they are central to modern business strategy.
+- **Strategic Decision-Making:** Ethics guide critical business choices and resource allocation.
+- **Organizational Reputation:** CSR initiatives build trust and brand credibility with stakeholders.
+- **Long-term Success:** Sustainable practices ensure resilience and competitive advantage.
+- **Global Expectations:** Consumers, investors, and regulators demand responsible business conduct.
+
+In today's interconnected world, responsible management is not just ethical—it's essential for survival and growth.
+
+## 5.2 Defining Ethics and Business Ethics
+- **Ethics:** A system of moral principles that guide individuals in distinguishing right from wrong. Involves moral values and beliefs, individual behavior guidance, and foundation for decision-making.
+- **Business Ethics:** Application of ethical principles to corporate actions, policies, and practices. Includes transparency and honesty, stakeholder respect, and trust and accountability.
+
+Business ethics transforms moral principles into practical corporate guidelines that build lasting stakeholder trust.
+
+## 5.3 Foundational Ethical Theories
+Structured frameworks for moral decision-making:
+- **Utilitarianism:** 
+  - *Core Principle:* Greatest good for the greatest number. 
+  - *Key Focus:* Maximizing overall well-being and happiness. 
+  - *Business Application:* Cost-benefit analysis for stakeholder impact.
+- **Deontology:** 
+  - *Core Principle:* Duty-based ethics regardless of consequences. 
+  - *Key Focus:* Following moral rules and obligations. 
+  - *Business Application:* Adhering to codes of conduct and policies.
+- **Virtue Ethics:** 
+  - *Core Principle:* Character-based moral decision-making. 
+  - *Key Focus:* Cultivating virtues like honesty and integrity. 
+  - *Business Application:* Leadership development and role modeling.
+- **Justice Theory:** 
+  - *Core Principle:* Fairness and equity in all decisions. 
+  - *Key Focus:* Equal treatment and impartial distribution. 
+  - *Business Application:* Fair hiring, compensation, and resource allocation.
+
+## 5.4 The Role of Stakeholder Theory
+Organizational success depends on creating value for ALL parties affected by operations (Employees, Customers, Suppliers, Environment, Organization, Investors, Government, Community).
+- **Stakeholder-Centric Approach:** Organizations must balance diverse interests.
+- **Shared Value Creation:** Success measured by impact on all stakeholders.
+- **Long-term Sustainability:** Beyond short-term profit maximization.
+
+> [!tip] Extra Notes: Strategic Advantage
+> Moving beyond purely financial performance metrics to sustainable, multi-stakeholder value creation. Companies that actively engage stakeholders achieve 5x higher growth rates and stronger resilience during market challenges.
+
+## 5.5 Internal vs. External Stakeholders
+Balancing diverse interests in ethical management.
+- **Internal Stakeholders:** Directly involved in daily operations, direct impact on organizational performance. Examples: Employees and workers, Managers and executives, Board of directors, Shareholders and investors.
+- **External Stakeholders:** Affected by but not directly employed, influence organizational license to operate. Examples: Local communities, Government and regulators, Customers and suppliers, Environmental groups.
+
+**Ethical Challenge:** How do managers balance competing interests while maintaining organizational integrity?
+
+## 5.6 Defining Corporate Social Responsibility (CSR)
+CSR is the strategic commitment of businesses to contribute positively to society and the environment while pursuing economic goals.
+- Integrates social, environmental, and ethical concerns into core operations.
+- Goes beyond compliance and philanthropy to strategic value creation.
+- Creates shared value for all stakeholders while maintaining profitability.
+
+## 5.7 CSR: Environmental Responsibility
+Reducing our environmental impact involves companies actively reducing their carbon footprint and ecological impact through sustainable business practices:
+- **Energy-Efficient Buildings:** Green construction and renewable energy.
+- **Local Sourcing:** Reduced transportation emissions and community support.
+- **Waste Reduction Programs:** Recycling, circular economy principles, and resource conservation.
+
+> [!example] Real-World Example
+> The Bingham Hotel sources 90% of food within a 10-mile radius, significantly reducing carbon emissions while supporting local farmers.
+
+## 5.8 CSR: Philanthropy and Labor Practices
+- **Philanthropy (Creating Social Impact):** Charitable donations and community investment, education, healthcare, and social programs. Building goodwill and strengthening community ties. 
+  - *Example:* Nu Skin's Nourish the Children program has delivered over 500 million meals to children since 2002.
+- **Ethical Labor Practices:** Fair wages and safe working conditions, elimination of child and forced labor, supply chain responsibility and transparency. Ethical labor practices enhance productivity while protecting human rights.
+
+## 5.9 The Triple Bottom Line (TBL) Framework
+A holistic approach to measuring success, introduced by John Elkington in 1994. Evaluates organizational performance across three interconnected dimensions:
+- **Profit:** Financial performance and economic sustainability.
+- **People:** Social equity and human capital investment.
+- **Planet:** Environmental stewardship and resource responsibility.
+
+> [!note] Sustainable Success
+> Success requires balance across all three dimensions. This framework challenges the traditional profit-only mindset, demonstrating that sustainable success requires harmony between economic, social, and environmental goals.
+
+## 5.10 Understanding Ethical Dilemmas
+Situations where individuals face conflicting values, principles, or interests, making it difficult to determine the 'right' course of action.
+- Whistleblowing vs. loyalty to organization.
+- Data privacy vs. business efficiency.
+- Employee welfare vs. profit maximization.
+- Personal ethics vs. organizational culture.
+
+*Statistic from Wall Street Journal:* 36% of workers admit to calling in sick while lying, and 35% remain silent when witnessing coworker misconduct.
+
+## 5.11 Ethical Decision-Making Framework
+A Seven-Step Process for Ethical Management to navigate ethical dilemmas with confidence and accountability:
+1. **Recognize the Ethical Dilemma:** Acknowledge conflicts between values, principles, or stakeholder interests.
+2. **Gather All Facts:** Collect relevant information, stakeholder perspectives, and legal implications.
+3. **Identify All Options:** List every possible course of action available.
+4. **Test Each Option:** Ask: Is it Legal? Is it Right? Is it Beneficial?
+5. **Choose the Best Option:** Select the course that balances legal, ethical, and practical considerations.
+6. **Apply the Spotlight Test:** How would you feel if this decision were made public?
+7. **Take Accountable Action:** Implement with integrity and transparency.
+
+> [!info] Remember
+> Ethical decisions require both head and heart - analytical thinking combined with moral intuition.
+
+## 5.12 The Spotlight Test
+A powerful ethical evaluation tool. Purpose: Simulates public scrutiny to guide ethical decisions. Application: Use before making any significant choice. Benefit: Helps identify potential ethical blind spots.
+
+**Ask yourself:**
+- How would I feel if my family found out about this decision?
+- How would I feel if this appeared in tomorrow's newspaper?
+- Would I be comfortable if this decision was shared on social media?
