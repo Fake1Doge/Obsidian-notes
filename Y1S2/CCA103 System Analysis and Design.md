@@ -577,3 +577,170 @@ Active relationships are referred to as behavioral relationships and use action 
 3. For each potential **communication** need, select the use cases and actors to show and **draw** the use case diagram.
 4. Use software packages to draw the diagrams.
 5. Carefully name each diagram and note how and when the diagram should be used to review use cases with stakeholders and users.
+
+---
+
+# Chapter 4: Domain Modeling
+
+## 4.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain how the concept of "things" in the problem domain also defines requirements.
+> 2. Identify and analyze data entities and domain classes needed in the system.
+> 3. Read, interpret, and create an entity-relationship diagram.
+> 4. Read, interpret, and create a domain model class diagram.
+> 5. Understand the domain model class diagram.
+> 6. Read, interpret, and create a state machine diagram that models object behavior.
+
+## 4.2 Part I: "Things" in the Problem Domain
+- **Problem domain** is the specific area (or domain) of the users' business need that is within the scope of the new system.
+- **"Things"** are those items users work with when accomplishing tasks that need to be remembered (e.g., products, sales, shippers, customers, invoices, payments).
+- These "Things" are modeled as **domain classes** or **data entities** (in database terminology).
+
+### 4.2.1 Two Techniques for Identifying Things
+
+#### 1. Brainstorming Technique
+Use a checklist of all the usual types of things typically found and brainstorm to identify domain classes of each type.
+- **Categories of things to ask about:** Tangible things, Roles played, Organizational units, Devices, Sites/locations, Incidents/events/interactions that need to be recorded.
+- **Steps:**
+  1. Identify a user and set of use cases.
+  2. Brainstorm with the user to identify things involved in their use case.
+  3. Use types of things (categories) to ask specific questions.
+  4. Continue to work with all users & stakeholders to expand brainstorming list.
+  5. Merge the results, eliminate duplicates, compile an initial list.
+  6. Continue to work with all users & stakeholders to expand the list.
+
+#### 2. The Noun Technique
+A systematic technique to identify problem domain classes (things) by finding, classifying, and refining a list of nouns that come up in discussions or documents. Good place to start when there are no users available to help brainstorm.
+- *Drawback:* Ends up with long lists and many nouns that are not things needing to be stored. Difficulty identifying synonyms and things that are really attributes.
+- **Steps:**
+  1. Identify all nouns in the system using use cases, actors, and other information (inputs/outputs).
+  2. Use other information from existing systems, procedures, reports, or forms to add items.
+  3. Refine the list using strategic questions:
+     - *Questions to refine it:* Is it a unique thing the system needs to know about? Inside the scope? Does the system need to remember more than one of these items?
+     - *Questions to exclude it:* Is it a synonym? Just an output/input produced from other information?
+     - *Questions to research:* Is it likely a specific piece of information (attribute) about some other thing?
+
+### 4.2.2 Details About Domain Classes
+- **Attribute:** Normally describes one piece of information about each instance of the class (e.g., Customer has first name, last name, phone number).
+- **Identifier or key:** One attribute that uniquely identifies an instance of the class. Required for data entities, optional for domain classes (e.g., Customer ID).
+- **Compound attribute:** Two or more attributes combined into one structure to simplify the model (e.g., an Address consisting of street, city, state, zip).
+- **Class vs. Object:** Class is a *type* of thing. Object is a specific *instance* of the class. Each instance has its own values for an attribute.
+- **Association:** A naturally occurring relationship between classes (UML term).
+
+## 4.3 Part II: The Entity-Relationship Diagram (ERD)
+- ERDs have been used for many years to develop data models for database development. They show the information created, stored, and used by a business system.
+- The term for "things" in ERD models is **data entities**.
+- ERD models are **NOT UML models**. They do not use standard UML notation and are not as expressive (e.g., they do not model generalization/specialization or whole/part relationships well).
+
+### 4.3.1 ERD Notation
+- ERD Models normally use **"crows feet"** notation to show cardinality.
+- **Minimum and Maximum Multiplicity:**
+  - Minimum is zero: the association is **optional**.
+  - Minimum is at least one: the association is **mandatory**.
+- **Types of Associations:**
+  - **Binary Association:** Between exactly two different classes (e.g., Course Section includes Students).
+  - **Unary Association (recursive):** Between two instances of the same class (e.g., Person married to person).
+  - **Ternary (three) / N-ary (between n)**.
+
+### 4.3.2 Relational Databases
+A relational database management system (RDBMS) organizes stored data into 2D data structures of columns and rows called tables or relations.
+- **Row** = tuple, record.
+- **Column** = attribute, field.
+- **Cell** = attribute value, field value, data element.
+
+**Types of Keys:**
+- **Primary Key:** The key chosen by a database designer as the main unique identifier. Each table must have a unique key.
+- **Candidate Key:** Values that *could* serve as a unique identifier (e.g., Email, Phone Number).
+- **Foreign Key:** Duplicates the primary key of a different table to represent an association.
+
+#### Creating Tables from Domain Classes
+1. Create a table for each class on the class diagram. Table and attribute names should match the class diagram (avoid abbreviations).
+2. Choose a **primary key** for it. If no unique field exists, create a new one (e.g., ID, Code, Number).
+3. Represent associations by adding **foreign keys**:
+   - **One-to-Many Associations:** Add the primary key of the "one" class as a foreign key attribute in the "many" class table.
+   - **Many-to-Many Associations:** Create an association class/table. The primary key becomes the combination (concatenation) of the primary keys of the associated tables. The old primary key is discarded.
+4. Represent Classification Hierarchies (Generalization/Specialization):
+   - *Method 1:* Combine all tables into a single table containing the superset of all classes.
+   - *Method 2:* Use separate tables to represent child classes, and use the primary key of the parent class table as the primary key of the child class tables.
+
+#### Database Normalization
+A correct database should be normalized to improve accuracy, consistency, and performance. It allows flexibility, minimizes redundant data, and prevents insertion, deletion, and update anomalies.
+- **First Normal Form (1NF):** Every field contains only one value. All attribute values must be atomic (no multivalued attributes). No repeating columns allowed. To correct, the table must be divided.
+- **Second Normal Form (2NF):** Table is in 1NF, and each non-key attribute is fully dependent on the entire primary key.
+- **Third Normal Form (3NF):** Table is in 2NF, and no non-key attribute is functionally dependent on any other non-key attribute.
+
+## 4.4 Part III: The Domain Model Class Diagram
+- **Class Diagram:** A UML diagram that shows classes with attributes and associations (plus methods if it models software classes).
+- **Domain Model Class Diagram:** A class diagram that only includes classes from the problem domain, not software classes, so it has **no methods**.
+
+### 4.4.1 Notation
+- **Class name** is always capitalized.
+- **Attribute names** use camelback notation (e.g., `billAddress`, `homePhone`).
+- Multiplicity notation is used instead of crows feet (e.g., `0..1`, `1`, `1..*`, `0..*`).
+
+### 4.4.2 Association Class
+An association that is treated as a class in a many-to-many association because it has attributes that need to be remembered (e.g., a student's `grade` in a `CourseEnrollment` class between `CourseSection` and `Student`).
+- The unique identifier (key) for the association class is the concatenation of the keys of the attached classes.
+
+### 4.4.3 Generalization/Specialization Relationships
+A hierarchical relationship where subordinate classes are special types of superior classes (Inheritance Hierarchy).
+- **Superclass:** The superior or more general class.
+- **Subclass:** The subordinate or more specialized class.
+- **Inheritance:** The concept that subclasses inherit characteristics of the more general superclass.
+- **Abstract class:** A class that only exists so subclasses can inherit from it (written in *Italics*). Never an actual object.
+- **Concrete class:** A class that does have actual objects.
+
+### 4.4.4 Whole-Part Relationships
+Used to show an association between one class and other classes that are parts of that class.
+- **Aggregation:** A type of whole-part relationship where the parts can exist separately.
+- **Composition:** A stronger whole-part relationship where the parts, once associated, can no longer exist separately.
+
+> [!important] Relationship Types Summary
+> 1. **Association Relationships** (like ERD relationships).
+> 2. **Whole Part Relationships** (components/parts).
+> 3. **Generalization/Specialization Relationships** (Inheritance).
+> *Try not to confuse a relationship with an association.*
+
+## 4.5 Part IV: The State Machine Diagram (Object Behavior)
+Each class has objects that may have status conditions or "states". Object behavior consists of the various states and the movement between these states.
+
+> [!info] Definition: State
+> A condition that occurs during an object's life when it satisfies some criterion, performs some action, or waits for an event. The name of a state **should not be a noun**; it should describe the condition (e.g., *On*, *In repair*, *Being shipped*).
+
+> [!info] Definition: Transition
+> The movement of an object from one state to another state. Transitions are short in duration and cannot be interrupted.
+
+### 4.5.1 When to use State Machine Diagrams?
+**The Golden Rule:** Does this object behave differently in different conditions? If yes, draw a state machine.
+High-priority candidates:
+1. Transaction Objects (Orders, Invoices)
+2. Physical Objects with Sensors (Smart Bulbs, IoT)
+3. User Accounts (Active, Suspended)
+4. Complex Equipment (Printers: Ready, Jammed)
+
+### 4.5.2 Diagram Anatomy
+- **State Machine Diagram:** Shows the life of an object in states and transitions.
+- **Origin state:** The original state before transitioning.
+- **Destination state:** The state moved to after the transition.
+- **Pseudostate:** The starting point (noted by a solid black circle). Final state is a black circle with an outline (bullseye).
+- **Transition Label Syntax:** `Event [Guard Condition] / Action-expression`
+  - *Event:* What triggers the transition.
+  - *Guard-condition:* A true/false test to see whether a transition can fire (e.g., `[Credit Card Valid]`).
+  - *Action-expression:* Some activity completed as part of the transition.
+
+### 4.5.3 Concurrency in State Machine Diagrams
+- **Concurrent states:** When an object is in one or more states at the same time.
+- **Path:** A sequential set of connected states and transitions.
+- **Concurrent paths:** When multiple paths are being followed concurrently. Often shown by **synchronization bars** (heavy black lines).
+  - Multiple exits from a state is an "OR" condition.
+  - Multiple exits from a synchronization bar is an "AND" condition.
+
+### 4.5.4 Steps to Create a State Machine Diagram
+1. Review the class diagram and select classes that might require it.
+2. For each class, make a list of status conditions (states) you can identify.
+3. Build diagram fragments by identifying transitions that cause an object to leave the identified state.
+4. Sequence these states in the correct order and aggregate combinations into larger fragments. Review paths for concurrent paths.
+5. Add other required transitions (test both directions).
+6. Expand each transition with appropriate message event, guard condition, and action expression.
+7. Review and test (follow the life cycle, cover exception conditions).
