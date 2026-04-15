@@ -430,3 +430,150 @@ After collecting information, we create models to define requirements.
 - **Swimlane heading:** Vertical columns representing different roles or departments (e.g., "Salesperson", "Engineering").
 - **Decision activity:** Diamond shape with condition labels (e.g., [yes], [no]).
 - **Synchronization bar (Split/Join):** Heavy horizontal or vertical line used to show concurrent paths of execution. A split creates concurrent paths, and a join merges them back together.
+
+---
+
+# Chapter 3: Use Cases
+
+## 3.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain the purpose of use cases in the analysis phase of the SDLC.
+> 2. Describe the various parts of a use case and the purpose of each part.
+> 3. Describe how use cases contribute to the functional requirements.
+> 4. Explain why identifying user stories and use cases is the key to defining functional requirements.
+> 5. Describe the two techniques for identifying use cases.
+> 6. Apply the event decomposition technique to identify use cases.
+> 7. Describe the notation and purpose for the use case diagram.
+> 8. Draw use case diagrams by actor and by subsystem.
+
+## 3.2 Part I: Use Cases and User Goals
+
+A key part of defining a new system is understanding **user requirements**, which are the tasks users need to accomplish with the system.
+- **Use cases** are used to express and describe these user requirements clearly. They help analysts understand how users will interact with the system and what the system must do for them (user).
+- **Process models** are used to further clarify requirements by showing processes, activities, and how data move between them.
+- Both use cases and process models are important tools in the analysis phase, especially during interviews and workshops, to identify and illustrate user and functional requirements.
+
+> [!info] Definition: Use Case
+> An activity that the system performs, usually in response to a request by a user. Use cases define **functional requirements**. Analysts decompose the system into a set of use cases (functional decomposition).
+> Name each use case using **Verb-Noun** format (e.g., *Search Student*, *Enter grade*, *Print Classlist*).
+
+### 3.2.1 User Stories
+> [!info] Definition: User Story
+> Usually a short sentence written in the everyday language of the end user. It explains what the user does as part of their work or the goal they want to achieve using the system.
+
+- User stories are an important concept in **Agile development** because they emphasize simplicity and user value.
+- They capture functional requirements quickly and less formally than traditional requirements models by focusing on **who**, **what**, and **why**.
+- Users and stakeholders are responsible for identifying and defining the user stories.
+
+**Writing User Stories:**
+In meetings, analysts encourage participants to write out each user story on an index card or whiteboard app to articulate what they want to do.
+
+> [!example] Standard Template for User Story
+> `"As a <role played>, I want to <goal or desire> so that <reason or benefit>."`
+
+*Example (Bank Teller):* "As a teller, I want to make a deposit to quickly serve more customers."
+*Example (Shipping Clerk):* "As a shipping clerk, I want to ship an order as accurately as possible as soon as the order details are available."
+
+#### Acceptance Criteria
+A final part of a user story is the **acceptance criteria**, which indicate the features that must be present for the user to be satisfied with the resulting implementation. They focus on **functionality**, not on features or UI design.
+*Example criteria for "bank teller making a deposit":*
+1. Customer lookup must be by name or account number.
+2. It would be nice to display the photo and signature of the customer.
+3. Any check hold requirements must be indicated.
+4. Current balance and new balance must be displayed.
+
+## 3.3 Part II: Techniques for Identifying Use Cases
+
+There are two main techniques for identifying use cases:
+1. User goal technique
+2. Event decomposition technique
+
+### 3.3.1 User Goal Technique
+A technique to identify use cases by determining what specific goals or objectives must be completed by the system for the user. It is simple, effective, and the most common in the industry.
+
+**Specific Steps:**
+1. **Identify** all the potential users for the new system.
+2. **Classify** the potential users in terms of their functional **role** (e.g., shipping, marketing, sales).
+3. Further classify potential users by **organizational level** (e.g., operational, management, executive).
+4. For each type of user, **interview** them to find a list of specific **goals** they will have when using the new system.
+5. Create a list of **preliminary use cases** organized by type of user.
+6. Look for **duplicates** with similar use case names and resolve inconsistencies.
+7. **Identify** where different types of users need the **same use cases**.
+8. **Review** the completed list with each type of user and then with interested stakeholders.
+
+### 3.3.2 Event Decomposition Technique
+The most comprehensive way to identify use cases. It starts by identifying all the **business events** that the information system must respond to.
+- Each business event usually leads to one use case.
+- Helps analysts define use cases at the correct level of detail (not too narrow and not too broad).
+
+#### Events and Use Cases
+- Define system requirements by asking what **business events** happen that require the system to respond.
+- Views the system as a **black box**, focusing only on inputs and outputs, not internal workings (overall scope).
+- *Example:* Customers paying a bill, making a charge, changing an address. Time-based events: sending monthly statements or late notices.
+
+> [!important] Finding the Actual Event
+> You must trace a sequence of transactions to find the event that *directly* affects the system. For instance, a customer thinking about a shirt or driving to the mall doesn't affect the system. The event is when the **customer buys the shirt**.
+
+#### Types of Events
+1. **External Event:** An event that occurs outside the system, usually initiated by an external agent or actor.
+   - *Checklist:* External agent wants something (transaction), wants some information, external data changed (update), management wants information.
+2. **Temporal Event:** An event that occurs because of reaching a point in time.
+   - *Checklist:* Internal outputs needed at points in time (management/operational reports, payroll), external outputs needed at points in time (statements, bills, reminders).
+3. **State Event:** An event that occurs when something happens inside the system that triggers some process.
+   - *Example:* Reorder point is reached for an inventory item.
+
+#### Perfect Technology Assumption
+Don't worry about functions built into the system due to technological and human limitations. **Wait until the design phase.**
+- *Example:* Do not include events that involve system controls such as login, logout, changing passwords, backing up/restoring the database, or recovering from a crash. These are deferred until designing system controls.
+
+**Specific Steps for Event Decomposition:**
+1. Consider external events. -> Identify/name use case for each.
+2. Consider temporal events. -> Identify/name use case and establish point in time.
+3. Consider state events. -> Identify/name use case and define state change.
+4. Check requirements using the perfect technology assumption.
+
+## 3.4 Part III: Use Cases and Brief Use Case Descriptions
+A brief use case description is often a **one-sentence description** showing the main steps in a use case.
+
+*Example:*
+- **Use case:** `Create customer account`
+- **Brief description:** User/actor enters new customer account data, and the system assigns an account number, creates a customer record, and creates an account record.
+
+## 3.5 Part IV: Use Case Diagrams
+> [!info] Definition: Use Case Diagram
+> A UML model used to graphically show use cases and their relationships to actors.
+
+- **Actor:** The UML name for an end user. Represented by a stick figure (an actual person using the system).
+- **Automation boundary:** The boundary between the computerized portion of the application and the users who operate the application. Represented by a rectangle box containing the use cases.
+- **Connecting line:** Shows which actors participate in which use cases (line with no arrowheads).
+
+**Drawing Use Case Diagrams:**
+- Draw for **each subsystem** (e.g., Customer Account Subsystem, Sales Subsystem).
+- Draw for a **single actor**, such as a customer (showing only the use cases they invoke).
+- Draw for **internal actors** (e.g., service representative and store representative).
+
+### 3.5.1 Use Case Relationships
+Active relationships are referred to as behavioral relationships and use action verbs.
+
+1. **Communicates:** Connects an actor to a use case (solid line, no arrowheads).
+2. **Includes (or Uses):** One use case contains behavior that is common to more than one use case. The common use case is *included* in the other use cases.
+   - Indicated by a dotted arrow pointing **toward the common use case** with `<< include >>`.
+   - *Example:* `Enroll in Course` and `Arrange Housing` both include `Pay Student Fees`.
+3. **Extends:** One use case possesses the behavior that allows the new use case to handle a variation or exception from the basic use case.
+   - Indicated by a dotted arrow pointing **from the extended to the basic use case** with `<< extend >>`.
+   - *Example:* `Student Health Insurance` extends `Pay Student Fees`.
+4. **Generalizes:** Implies that one thing is more typical/general than another. Exists between two actors or two use cases.
+   - Indicated by a solid line with a hollow arrow pointing **to the general thing**.
+   - *Example:* `Part-time Student` generalizes to `Student`.
+
+> [!tip] Includes vs. Extends
+> - **Include** is used for mandatory, common steps (e.g., customizing a drink *includes* choosing a bean and choosing a temperature).
+> - **Extend** is used for optional or exception steps (e.g., customizing a drink can be *extended* by adding a tumbler option or selecting a topping).
+
+### 3.5.2 Steps for Creating Use Case Diagrams
+1. Identify all the **stakeholders** and **users** who would benefit by seeing a use case diagram.
+2. Determine what each stakeholder or user **needs** to review in a use case diagram (each subsystem, type of user, use cases of interest).
+3. For each potential **communication** need, select the use cases and actors to show and **draw** the use case diagram.
+4. Use software packages to draw the diagrams.
+5. Carefully name each diagram and note how and when the diagram should be used to review use cases with stakeholders and users.
