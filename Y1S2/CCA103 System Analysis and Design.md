@@ -1,369 +1,746 @@
-# 1. An Overview of System Analysis and Design
+# Chapter 1: An Overview of System Analysis and Design
 
-## 1.1 Software Development and System Analysis and Design
-System Development Life Cycle (SDLC) is the process of planning, designing, building, and delivering an information system to support business needs. Developing an effective information system is complex and much harder than creating small software applications. Many IT projects fail because successful system development requires many factors to be handled correctly. The main goal of system development is to create organizational value, not just to build a technically impressive system.
+## 1.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain the role played in Information Systems (IS) development by the systems analyst.
+> 2. Describe the purpose of systems analysis and design when developing information systems.
+> 3. Describe the fundamental systems development life cycle (SDLC) and its four phases.
 
-> [!info] Definition: Systems Analyst
-> The systems analyst plays a key role by understanding business problems, identifying improvements, and designing solutions.
+## 1.2 Part I: Software Development and System Analysis and Design
 
-> [!example] Examples of IT failures
-> - Outdated legacy application
-> - Dispute with the unionized users
-> - CFO does not care about the user perspectives
-> - Poor planning
-> - Organizational issues
-> - Hard-to-use software
-> - Complicated technical infrastructure
-> - Poorly designed
-> - Users did not want the system
-> - Lack of collaboration between system developers and business users
+> [!info] Definition: Systems Development Life Cycle (SDLC)
+> SDLC is the process of **planning**, **designing**, **building**, and **delivering** an information system to support business needs.
 
-## 1.2 The Systems Analyst
-The systems analyst plays an important role in information systems development projects. They work closely with project team members to ensure the right system is developed effectively and must understand how technology can be used to solve business problems. The systems analyst may also act as a change agent by identifying improvements, designing solutions, and encouraging users to adopt the system.
+Developing an **effective information system** is complex and much harder than creating small software applications. Many IT projects fail because successful system development requires many factors to be handled correctly. Common causes of IT failures include:
+- Poor planning
+- Organizational issues
+- Hard-to-use software
+- Poorly designed systems
+- Dispute with unionized users
+- Users did not want the system
+- Outdated legacy application
+- Complicated technical infrastructure
+- Lack of collaboration between system developers and business users
 
-### 1.2.1 Systems Analyst Skills
-New information systems introduce change to the organization and its people. Leading organizational change requires analysts to understand what to change, how to change it, and how to gain support from others. 
+> [!important] Main Goal
+> The main goal of system development is to **create organizational value**, not just to build a technically impressive system.
 
-Systems analysts need six key skill categories: 
-1. Technical
-2. Business
-3. Analytical
-4. Interpersonal
-5. Management
-6. Ethical skills
+### 1.2.1 The Systems Analyst
+The **systems analyst** plays a key role by:
+- Understanding business problems
+- Identifying improvements
+- Designing solutions
+
+The systems analyst works closely with project team members to ensure the right system is developed effectively. They must understand how technology can be used to solve business problems and act as a change agent by encouraging users to adopt the system.
+
+> [!tip] Extra Notes: Change Agent
+> A change agent is an individual who promotes and enables change to happen within any group or organization. In the context of IT, they help bridge the gap between technical teams and end-users, easing resistance to new systems.
+
+#### Systems Analyst Skills
+Leading organizational change requires analysts to understand what to change, how to change it, and how to gain support from others. Six key skill categories are required:
+1. **Technical skills**
+2. **Business skills**
+3. **Analytical skills**
+4. **Interpersonal skills**
+5. **Management skills**
+6. **Ethical skills**
 
 Analysts must communicate and work effectively with multiple stakeholders: end users, managers, programmers, and external vendors. They must also act with fairness, honesty, and ethics, especially when handling confidential information.
 
-### 1.2.2 Systems Analyst Roles
-In large organizations, systems development projects involve several analysts with different but complementary roles. In smaller organizations, one person may perform multiple analyst roles.
-- **Systems analyst:** focuses on information system issues, including system design and IT-supported business improvement.
-- **Business analyst:** focuses on business value, business process improvement, and policy design.
-- **Requirements analyst:** focuses on gathering complete and accurate requirements from stakeholders using strong business understanding, communication skills, and requirements elicitation techniques.
-- **Infrastructure analyst:** focuses on technical infrastructure issues, ensures the new system aligns with organizational standards, and identifies the hardware, software, network, and database support needed for the system.
-- Other roles include Change management analyst, Project manager, Software architect, Entry-level business function specialist, and Entry-level programmer/analyst.
+#### Systems Analyst Roles
+In large organizations, systems development projects involve several analysts with different but complementary roles:
+- **Systems Analyst:** Focuses on information system issues, including system design and IT-supported business improvement.
+- **Business Analyst:** Focuses on business value, business process improvement, and policy design.
+- **Requirements Analyst:** Focuses on gathering complete and accurate requirements from stakeholders using strong business understanding, communication skills, and requirements elicitation techniques.
+- **Infrastructure Analyst:** Focuses on technical infrastructure issues, ensures the new system aligns with organizational standards, and identifies the hardware, software, network, and database support needed.
 
-## 1.3 Software Development
-- **Systems analysis:** Those activities that enable a person to understand and specify what an information system should accomplish (What is required for the new system to solve the problem).
-- **Systems design:** Those activities that enable a person to define and describe in detail the system that solves the need (How the system will operate to solve the problem).
-- **Computer application (app):** A computer software program that executes on a computing device to carry out a specific set of functions.
-- **Information system:** A set of interrelated components that collect, process, store, and provide as output the information needed to complete business tasks.
+### 1.2.2 Software Development Concepts
 
-### 1.3.1 Software Development Phases
-1. **Discover:** Understand the need
-2. **Imagine:** Capture the vision
-3. **Design:** Define the solution
-4. **Align:** Communicate the vision and solution
-5. **Create:** Build the solution
-6. **Validate:** Confirm the solution meets the need
-7. **Launch:** Launch the solution system
+> [!info] Definition: Systems Analysis
+> Those activities that enable a person to **understand** and **specify** *what* an information system should accomplish. (What is required for the new system to solve the problem)
 
-> [!tip] Extra Notes: Analysis and Design
-> Systems analysis gets the tools and techniques needed to understand the business need, capture the vision, define a solution, and communicate the vision and solution. Systems design then builds the solution and directs others to help, confirms the solution meets the need, and launches the solution as an information system application.
+> [!info] Definition: Systems Design
+> Those activities that enable a person to **define** and **describe in detail** the system that solves the need. (*How* the system will operate to solve the problem)
 
-## 1.4 The Systems Development Life Cycle (SDLC)
-Building an information system is like building a house, where ideas are gradually refined before the final product is created. The SDLC is a process of gradual refinement, where each phase builds on and adds detail to the previous one. Although the SDLC may appear linear, projects may follow it consecutively, incrementally, or iteratively.
+> [!info] Definition: Computer Application (App)
+> A computer software program that executes on a computing device to carry out a specific set of functions.
 
-The SDLC consists of four main phases (PADI):
-1. **Planning**
-2. **Analysis**
-3. **Design**
-4. **Implementation**
+> [!info] Definition: Information System
+> A set of interrelated components that collect, process, store, and provide as output the information needed to complete business tasks.
 
-### 1.4.1 Planning Phase
+> [!example] Software Development Stages
+> 1. **Discover** (Understand the need)
+> 2. **Imagine** (Capture the vision)
+> 3. **Design** (Define the solution)
+> 4. **Align** (Communicate the vision and solution)
+> 5. **Create** (Build the solution)
+> 6. **Validate** (Confirm the solution meets the need)
+> 7. **Launch** (Launch the solution system)
+
+## 1.3 Part II: System Development Life Cycle
+
+Building an information system is like building a house, where ideas are gradually refined before the final product is created. The SDLC consists of four main phases: **PADI**
+1. **P**lanning
+2. **A**nalysis
+3. **D**esign
+4. **I**mplementation
+
+Each phase includes a series of steps, techniques, and deliverables that guide system development. The SDLC is a process of gradual refinement, where each phase builds on and adds detail to the previous one. Projects may follow it consecutively, incrementally, or iteratively.
+
+### 1.3.1 Planning
 The planning phase is the fundamental process of understanding why an IS should be built and determining how the project team will go about building it.
-- **Step 1:** During project initiation, the system's business value to the organization is identified (how will it contribute to the organization's future success?). Most ideas for new systems come from outside the IS area and are recorded on a **system request**.
-- **Step 2:** The IS approval committee reviews the system request and feasibility analysis to decide whether the project should proceed. Once approved, the project moves into project management, where the project manager plans, staffs, and controls the project throughout the SDLC. The main deliverable of this stage is a **project plan** that guides how the system will be developed.
+- **Step 1: Project Initiation.** The system's business value to the organization is identified (how it contributes to future success). Most ideas come from outside the IS area and are recorded on a **system request**.
+- **Step 2: IS Approval Committee.** Reviews the system request and feasibility analysis to decide whether the project should proceed. Once approved, it moves into project management (planning, staffing, controlling).
+  - Main deliverable: **Project plan**.
 
-#### System Request
-A system request presents a summary of a business need and explains how a system that addresses the need will create business value. The IS department works with the person or department generating the request (the project sponsor) to conduct a **feasibility analysis**.
-The feasibility analysis examines key aspects of the proposed project:
-1. Technical feasibility (Can we build it?)
-2. Economic feasibility (Will it provide business value?)
-3. Organizational feasibility (If we build it, will it be used?)
+> [!info] System Request
+> A summary of a business need that explains how a system addressing the need will create business value.
+> Elements include: Project Sponsor, Business Need, Business Requirements, Business Value, and Special Issues or Constraints.
 
-> [!example] Elements of the system request form
-> - **Project Sponsor:** The person who initiates the project and serves as the primary point of contact (e.g., CEO, CIO).
-> - **Business Need:** The business-related reason(s) for initiating the system (e.g., Reach a new market segment).
-> - **Business Requirements:** The new or enhanced business capabilities that the system will provide (e.g., Provide online access to information).
-> - **Business Value:** The benefits that the system will create for the organization (e.g., 3% increase in sales, $150,000 savings).
-> - **Special Issues or Constraints:** Issues that pertain to the approval committee's decision (e.g., Government-mandated deadline).
+> [!important] Feasibility Analysis
+> The feasibility analysis examines key aspects:
+> 1. **Technical feasibility:** Can we build it?
+> 2. **Economic feasibility:** Will it provide business value?
+> 3. **Organizational feasibility:** If we build it, will it be used?
 
-### 1.4.2 Analysis Phase
-The analysis phase answers the questions of **who** will use the system, **what** the system will do, and **where and when** it will be used. During this phase, the project team investigates any current system(s), identifies improvement opportunities, and develops a concept for the new system.
-- **Step 1:** An analysis strategy is developed to guide the project team by examining the current system (as-is system) and its problems, while identifying ideas for the new system (to-be system).
-- **Step 2:** The project team gathers and analyzes requirements to develop a system concept, supported by requirement statements and business analysis models.
-- **Step 3:** The analyses, system concept, requirements, and models are compiled into a **system proposal**, which is presented to the project sponsor and key decision makers to determine whether the project should proceed.
+### 1.3.2 Analysis
+The analysis phase answers the questions of **who** will use the system, **what** the system will do, and **where and when** it will be used.
+- **Step 1:** An **analysis strategy** is developed to guide the team by examining the current system (as-is system) and identifying ideas for the new system (to-be system).
+- **Step 2:** The project team **gathers** and analyzes **requirements** to develop a **system concept**, supported by requirement statements and business analysis models.
+- **Step 3:** The analyses, system concept, requirements, and models are compiled into a **system proposal**, presented to the project sponsor and decision makers.
 
-### 1.4.3 Design Phase (System Specification)
-The design phase determines how the system will operate, including the hardware, software, and network infrastructure to be in place; the user interface, forms, and reports to be used; and the specific programs, databases, and files required.
-- **Design Strategy:** Determine the design strategy for developing, outsourcing, or purchasing the system.
-- **Architecture Design:** Develop the architecture design for the required hardware, software, and network infrastructure.
-- **Interface Design:** Design the user interface, including navigation methods, forms, and reports.
-- **DB & File specification:** Specify the database, file structure, and program design for the system.
+### 1.3.3 Design
+The design phase determines how the system will **operate**, including the hardware, software, network infrastructure, user interface, forms, reports, programs, databases, and files required.
+- **Design Strategy:** Determine strategy for developing, outsourcing, or purchasing the system.
+- **Architecture Design:** Develop architecture design for hardware, software, and network.
+- **Interface Design:** Design user interface (navigation, forms, reports).
+- **DB & File Specification:** Specify database, file structure, and program design.
 
-### 1.4.4 Implementation Phase
-The final phase in the SDLC is the implementation phase, during which the system is actually built (or purchased and installed if the design calls for a prewritten software package). This is the phase that usually gets the most attention, because for most systems it is the longest and most expensive single part of the development process.
-- **System construction:** The system is built and tested to make sure it works as intended. Testing is very important because fixing errors later can be costly.
-- **System Installation:** The new system has been installed, replacing the old one, and users have been trained to use it.
+### 1.3.4 Implementation
+The final phase where the **system is actually built** (or purchased and installed). It usually gets the most attention, being the longest and most expensive single part.
+- **System Construction:** The system is built and tested. Testing is crucial because fixing errors later can be costly.
+- **System Installation:** The new system is installed, replacing the old one, and users are trained.
 - **Support Plan:** A support plan is prepared, including review and future system improvements.
 
-## 1.5 Project Identification and Initiation
-- **Project:** A planned undertaking that has a beginning and an end and that produces some definite result. It is used to develop an information system and requires knowledge of systems analysis and systems design tools and techniques.
-- Projects begin with business needs that require system support.
-- These needs may come from new strategies, expansion efforts, or organizational change.
-- Some projects are triggered by business problems such as poor service, defects, or stronger competition.
-- New systems help organizations improve processes and achieve strategic goals.
-- Project ideas may also come from innovative uses of information technology. Early adoption of emerging technologies can gain a competitive advantage.
+### 1.3.5 Project Identification and Initiation
+A **project** is a planned undertaking that has a beginning and an end and produces some definite result.
+- Begins with **business needs** that require system support (new strategies, expansion, organizational change, or business problems like poor service/defects).
+- May also come from innovative uses of IT (emerging technologies).
 
-## 1.6 Iterative Development
-System development process refers to the actual approach used to develop a particular information system (methodology) such as Unified process (UP), Extreme Programming (XP), and Scrum. Most processes/methodologies now use Agile and Iterative development.
+## 1.4 Part III: Iterative Development
 
-- **Agile development:** An information system development process that emphasizes flexibility to anticipate new requirements during development. It is fast on feet and responsive to change.
-- **Iterative development:** An approach to system development in which the system is "grown" piece by piece through multiple iterations. It completes a small part of the system (mini-project), then repeats processes to refine and add more, until done.
+System development process (methodology) is the actual approach used to develop a particular information system:
+- Unified process (UP)
+- Extreme Programming (XP)
+- Scrum
+Most processes/methodologies now use **Agile and Iterative development**.
 
-> [!tip] Extra Notes: Iterative and Agile SDLC
-> Core processes like "Identify the problem and obtain approval", "Plan and monitor the project", "Discover and understand details", "Design system components", "Build, test, and integrate system components", and "Complete system tests and deploy the solution" run across multiple iterations.
+> [!info] Agile Development
+> An information system development process that emphasizes **flexibility** to anticipate new requirements during development. Fast on feet; responsive to change.
 
-## 1.7 Example: Ridgeline Mountain Outfitters (RMO)
-RMO is a large retail company dealing in outdoor and sporting clothing and accessories. They operate in the Rocky Mountain and Western States, having started with mail/phone order and expanding to retail stores and extensive e-business.
+> [!info] Iterative Development
+> An approach to system development in which the system is **"grown" piece by piece** through multiple iterations. It completes a small part of the system (mini-project), refines, and adds more repeatedly until done.
 
-**RMO Tradeshow System:**
-A sample project to develop a small information system (app) added to a larger supply chain management system. It demonstrates one iteration of a small project that goes through all six core processes of SDLC in six days. 
-- **Problem:** Purchasing agents attend trade shows around the world to order new products from suppliers.
-- **Need:** An app to collect and track information about suppliers and new products while at tradeshows.
-- **Subsystems Proposed:** Supplier information subsystem (#1) and Product information subsystem (#2).
+## 1.5 Example: Ridgeline Mountain Outfitters (RMO) Tradeshow System
 
-### 1.7.1 D-0: Initial Activities (pre-project)
-- **Identify the problem** and document the objective of the system (core process 1) via a preliminary investigation and System Vision Document.
-- **Obtain approval** to commence the project by meeting with key stakeholders, including executive management, and reaching a decision to approve the plan and budget.
+> [!example] Case Study: RMO
+> RMO is a large retail company for outdoor/sporting clothing.
+> **Problem:** Purchasing agents attend trade shows around the world to order new products.
+> **Need:** An information system (app) to collect and track information about suppliers and new products while at tradeshows.
+> **Tradeshow Project Subsystems:**
+> 1. Supplier information subsystem
+> 2. Product information subsystem
 
-**System Vision Document:** Contains Problem description, System capabilities, and Business benefits.
-- **System Capabilities:** Collecting/storing info on suppliers and sales reps, collecting product info, taking/uploading pictures, stand-alone functioning, connecting via Wi-Fi/telephone to transmit data.
-- **Business Benefits:** Increase timely communication, maintain current info about suppliers, facilitate catalog/web page development, expedite purchase orders to catch trends.
+### Iteration Example: Supplier Information Subsystem
+The plan for the chapter demonstrates completing one iteration in six days through all six core processes of SDLC.
 
-### 1.7.2 D-1 Activities
-- **Core Process 2: Plan the Project.** 
-  - Determine major components: Supplier information subsystem, Product information subsystem.
-  - Define iterations: Decide to do Supplier subsystem first.
-  - Determine team members and responsibilities.
+#### D-0: Initial Activities (Pre-project) - Core Process 1
+- Identify the problem and document the objective (Preliminary investigation, System Vision Document).
+- Obtain approval to commence the project.
 
-### 1.7.3 D-2: Activities
-- **Core Process 3: Discover and Understand Details.**
-  - Preliminary fact-finding to understand requirements.
-  - Develop preliminary use cases, use case diagram, object classes, and class diagram.
-  - **Use Cases:** Look up supplier, Enter/update supplier info, Look up contact, Enter/update contact info, Look up product info, Enter/update product info, Upload product image.
-  - **Object Classes:** Supplier, Contact, Product, ProductPicture.
+> [!info] System Vision Document
+> Includes:
+> - **Problem Description:** Capturing supplier and merchandise info at trade shows, deploying on portable equipment.
+> - **System Capabilities:** Collecting supplier info, key personnel, product info, taking pictures, functioning standalone, transmitting via Wi-Fi/phone.
+> - **Business Benefits:** Increase timely communication, maintain correct/current info, expedite purchase orders.
 
-### 1.7.4 D-3: Activities
-- **Core Process 3: Discover and Understand Details** (in-depth fact-finding, detailed workflow of each use case).
-- **Core Process 4: Design System Components** (Define user experience with screens and report sketches).
+#### D-1: Activities - Core Process 2
+- **Plan the project:** Determine major components (Supplier & Product subsystems).
+- Define iterations (Decide to do Supplier subsystem first).
+- Determine team members and responsibilities.
+- **Work Breakdown Structure (WBS):** Describes the work and covers Core Processes 3, 4, 5, and 6. Elaborated into a **Work Sequence Draft**.
 
-### 1.7.5 D-4: Activities
-- **Core Process 4: Design System Components**
-  - Design the database (schema).
-  - Design the system's high-level structure (Browser, Windows, smartphone).
-  - Architectural configuration (components).
-  - Design class diagram and subsystem architectural design.
+#### D-2: Activities - Core Process 3 (Discover)
+- **Discover and Understand Details:** Preliminary fact-finding to understand requirements.
+- Develop preliminary use cases and a use case diagram.
+- Develop preliminary list of classes and a class diagram.
 
-### 1.7.6 D-5 & D-6 Activities
-- **Core Process 4 & 5 (D-5):** Continue design details, build, test, and integrate system components.
-- **Core Process 6 (D-6):** Complete System Testing and Deploy the System (functional testing, user acceptance testing).
+> [!example] Use Cases for Supplier Subsystem
+> - Look up the supplier
+> - Enter/update supplier information
+> - Look up contact information
+> - Enter/update contact information
+
+> [!example] Object Classes
+> - **Supplier:** Supplier name, address, description, comments
+> - **Contact:** Name, address, phone, email, position
+> - **Product:** Category, name, description, gender
+> - **ProductPicture:** ID, image
+
+#### D-3: Activities
+- **Core Process 3 (Discover Details):** In-depth fact-finding. Document detailed workflow (e.g., Activity Diagram for 'Look up supplier').
+- **Core Process 4 (Design System Components):** Define user experience with screen and report sketches (e.g., Draft Screen Layout).
+
+#### D-4: Activities - Core Process 4 (Design)
+- Design the database (schema).
+- Design the system's high-level structure (Architectural configuration diagram).
+- Design class diagram and subsystem architectural design.
+
+#### D-5: Activities - Core Process 4 & 5
+- Continue with design details (use case by use case).
+- **Core Process 5 (Build, Test, and Integrate):** Continue programming (build). Build use case by use case. Perform unit and integration tests.
+- *Note:* Programming is done concurrently with design (design some, code some).
+
+#### D-6: Activities - Core Process 6
+- **Complete System Testing and Deploy:** Perform system functional testing, user acceptance testing, and possibly deploy part of the system.
+- **Testing Workflow:** Start -> Create test data -> Conduct tests -> Document errors -> Fix errors.
+
+> [!note] Iteration Recap
+> The example iteration was 6 days, though most iterations are 2-4 weeks. End users need to be involved (e.g., days 1, 2, 3, and 6), and design/programming often occur concurrently.
 
 ---
 
-# 2. Investigating System Requirements
+# Chapter 2: Investigating System Requirements
 
-## 2.1 Systems Analysis Activities
-By completing analysis activities, the analyst defines in detail what the information system needs to accomplish to provide the organization with the desired benefits. This is known as **Discovery and understanding**.
-- Gather detailed information.
-- Define requirements.
-- Prioritize requirements.
-- Develop user-interface dialogs.
-- Evaluate requirements with users.
+## 2.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Describe the activities of systems analysis.
+> 2. Classify requirements correctly as business, user, functional, or nonfunctional requirements.
+> 3. Identify and understand different kinds of stakeholders and their contributions to requirements definition.
+> 4. Employ the requirement elicitation techniques of interviews, JAD sessions, questionnaires, document analysis, and observation.
+> 5. Develop UML activity diagrams to model workflows.
 
-### 2.1.1 Gather Detailed Information
+## 2.2 Part I: Systems Analysis Activities
+By completing these activities, the analyst defines in detail what the information system needs to accomplish to provide the organization with the desired benefits (focused on **discovery and understanding**).
+1. Gather detailed information
+2. Define requirements
+3. Prioritize requirements
+4. Develop user-interface dialogs
+5. Evaluate requirements with users
+
+### 2.2.1 Gather Detailed Information
 - Gather information from users directly through interviews and observation of their daily work.
 - Engage with all relevant stakeholders, including current users, future users, and those familiar with similar systems.
 - Review existing materials such as planning documents, policy statements, and current system documentation.
 - Study similar solutions used by other organizations or vendors facing comparable business needs.
 - Understand the full work environment, including user activities, work locations, and system interfaces inside and outside the organization.
-- Develop strong business knowledge; successful systems analysts must become experts in the business area they support.
+- Develop strong business knowledge, as successful systems analysts must become experts in the business area they support.
 
-### 2.1.2 Define requirements
+### 2.2.2 Define Requirements
 - Define system requirements based on information collected from users and existing documents.
-- Identify **functional requirements** (what the system must do).
-- Identify **nonfunctional requirements** (usability, reliability, performance, security).
-- Use models to represent requirements, rather than only listing facts.
-- Review and refine requirements models continuously with users and stakeholders.
+- Identify **functional requirements**, which describe what the system must do.
+- Identify **nonfunctional requirements**, such as usability, reliability, performance, and security.
+- Use **models** to represent requirements, rather than only listing facts and details.
+- Review and refine requirements models continuously with users and stakeholders as new information emerges.
 
-### 2.1.3 Prioritize requirements
-- Prioritize system requirements once clearly understood.
+### 2.2.3 Prioritize Requirements
+- Prioritize system requirements once they are clearly understood.
 - Differentiate essential functions from those that are desirable but not critical.
 - Use business and user context to judge which requirements matter most.
 - Manage limited resources by focusing on what is absolutely necessary.
 - Prevent scope creep by controlling unnecessary expansion of requirements.
-- Guide project iterations by implementing high-priority requirements earlier.
+- Guide project iterations by implementing high-priority requirements earlier for refinement.
 
-### 2.1.4 Develop user interface dialogs
-- Users may be confident or uncertain about requirements. Abstract requirements models (use cases, activity diagrams) can be difficult to understand.
+### 2.2.4 Develop User-Interface Dialogs
+- Users may be confident or uncertain about requirements, depending on whether the system replaces an existing one or introduces new functions.
+- Abstract requirements models (like use cases and activity diagrams) can be difficult for users to understand and validate.
 - User-interface validation is easier and more effective because users can directly see and experience the system.
 - Analysts use interface designs, storyboards, and prototypes to elicit and document requirements more clearly.
+- Early prototypes can evolve into working system components through later project iterations.
 
-### 2.1.5 Evaluate requirements with users
-- Requirements development is iterative, involving repeated interaction.
-- Analysts gather input, refine models, and return for validation.
-- Prototypes are useful when paper models are insufficient.
-- The cycle continues until requirements models and prototypes are complete, accurate, and validated.
+### 2.2.5 Evaluate Requirements with Users
+- Requirements development is iterative, involving repeated interaction between analysts and users.
+- Analysts gather user input, refine models, and return for validation as requirements become clearer.
+- Users often have limited time, so analysts usually complete much of the refinement work independently.
+- Prototypes are useful when paper models are insufficient or when new technologies need to be tested and visualized.
+- The cycle continues until requirements models and prototypes are complete, accurate, and validated by users.
 
-## 2.2 What Are Requirements?
-System Requirements are all the activities the new system must perform or support and the constraints that the new system must meet (functional & non-functional).
-- **Functional Requirements:** The activities the system must perform to support the users' work. (e.g., Generate electronic fund transfers, calculate commission amounts).
-- **Nonfunctional Requirements:** Required system characteristics other than the activities it must perform or support (Constraints or conditions it must meet).
+## 2.3 Part II: What Are Requirements?
 
-> [!note] Important
-> Identifying system requirements takes time because business functions can be complex and highly interconnected.
+> [!info] Definition: System Requirements
+> All the activities the new system must perform or support and the constraints that the new system must meet (functional & non-functional).
 
-### 2.2.1 The FURPS+ Framework
-An acronym that categorizes requirements:
-- **F**unctional: The activities that the system must perform.
-- **U**sability: Requirements for operational characteristics related to users (e.g., user interface, work procedures, online help).
-- **R**eliability: The dependability of a system (service outages, detecting and recovering from problems).
-- **P**erformance: Operational characteristics related to workload measures (throughput, response time).
-- **S**ecurity: How access is controlled and data protected during storage and transmission.
+- **Functional Requirements:** The activities the system must perform to support the users' work. (e.g., generate electronic fund transfers, calculate payroll taxes, report tax deductions).
+- **Nonfunctional Requirements:** Required system characteristics other than the activities it must perform or support (constraints or conditions it must meet).
 
-**FURPS+** adds additional categories:
-1. **Design constraints:** restrictions to which hardware/software must adhere.
-2. **Implementation:** constraints on programming languages, tools, and documentation.
-3. **Interface:** interactions among systems.
-4. **Physical:** characteristics like size, weight, power, operating conditions.
-5. **Supportability:** how a system is installed, configured, monitored, and updated.
+### 2.3.1 The FURPS+ Framework
+> [!info] FURPS
+> An acronym used for classifying requirements: **F**unctional, **U**sability, **R**eliability, **P**erformance, and **S**ecurity.
 
-> [!example] Example of FURPS (Instagram)
-> - Functional: Users can upload photos, like posts, comment, follow users.
-> - Usability: Simple and attractive interface to easily find reels/messages.
-> - Reliability: App should not crash when many users scroll/upload.
-> - Performance: Photos and videos load within 2 seconds.
-> - Security: Passwords encrypted, private messages restricted to account owner.
+- **F (Functional):** The activities that the system must perform (the business uses to which the system will be applied). 
+  - *Example:* Users can upload photos, like posts, comment, and follow others.
+- **U (Usability):** Requirements for operational characteristics related to users (e.g., user interface, related work procedures, online help, and documentation).
+  - *Example:* The app should have a simple and attractive interface.
+- **R (Reliability):** The dependability of a system (how often it exhibits service outages/incorrect processing, and how it detects and recovers from those problems).
+  - *Example:* The app should not crash when many users are scrolling.
+- **P (Performance):** Operational characteristics related to measures of workload, such as throughput and response time.
+  - *Example:* Photos and videos should load within 2 seconds.
+- **S (Security):** How access to the application will be controlled and how data will be protected during storage and transmission.
+  - *Example:* Only the account owner should access private messages, and passwords must be encrypted.
 
-## 2.3 Stakeholders
-Stakeholders are the primary source of information for system requirements. They are all the people who have an interest in the successful implementation of the system.
-- **Internal/External:** Operational managers, Bookkeepers, Auditors, Customers, Investors.
-- **The Client:** The person or group that provides the funding for the project (often senior management, board of directors). The team provides periodic status reviews to the client.
+> [!info] FURPS+
+> An extension of FURPS that adds additional categories.
 
-## 2.4 Information Gathering Techniques
-Techniques include: Interviewing, Distributing/collecting questionnaires, Joint Application Development (JAD), Document Analysis, and Observation.
+- **+ Categories:**
+  1. **Design constraints:** Restrictions to which the hardware and software must adhere.
+  2. **Implementation:** Constraints such as required programming languages/tools, documentation methods, and specific communication protocols.
+  3. **Interface:** Interactions among systems.
+  4. **Physical:** Characteristics of hardware such as size, weight, power consumption, and operating conditions.
+  5. **Supportability:** How a system is installed, configured, monitored, and updated.
+
+> [!tip] Extra Notes: FURPS+ Gray Areas
+> FURPS+ has some overlaps. For instance, if a battlefield device must survive immersion in water and operate at extreme temperatures, is it a performance or a physical requirement? It is important that all requirements be identified early and precisely stated, resolving inconsistencies or trade-offs, regardless of the strict category they fall into.
+
+### 2.3.2 Stakeholders
+> [!info] Definition: Stakeholders
+> All the people who have an interest in the successful implementation of the system. They are the **primary source of information** for system requirements.
+
+Types of Stakeholders:
+- **Internal Stakeholders:** Persons who regularly interact with the system (e.g., Bookkeepers, Accountants, Internal Auditors).
+- **External Stakeholders:** Persons who don't directly interact, but use the information or have a financial interest (e.g., Customers, Partner organizations).
+- **Operational Stakeholders:** Those who operate the system.
+- **Executive Stakeholders:** Senior managers, Board of directors, Investors.
+
+> [!important] The Client
+> The client is the person or group that **provides the funding** for the project. In many cases, the client is senior management, a board of directors, or an oversight committee. The project team must provide periodic status reviews to the client, as they usually approve stages of the project and release funds.
+
+## 2.4 Part III: Information Gathering Techniques
+There are five main techniques for gathering system requirements:
+1. Interviewing users and other stakeholders
+2. Joint Application Development (JAD)
+3. Distributing and collecting questionnaires
+4. Document Analysis
+5. Observation
 
 ### 2.4.1 Interviewing
-An effective way to understand business functions and rules. It is the most time-consuming and resource-expensive option.
-- **Steps:** Prepare detailed questions -> Meet with users -> Obtain and discuss answers -> Document answers -> Follow up.
-- **Question Types:**
-  1. **Closed-ended:** require a specific answer.
-  2. **Open-ended:** seek a more wide-ranging response.
-  3. **Probing:** follow up on what has just been discussed.
-- **Questioning Strategies:** Top-down (general to specific) and bottom-up (specific to general).
-- **Post Interview:** Create an interview report summarizing notes within 48 hours. Often sent to the interviewee for clarification.
+Interviewing is an effective way to understand business functions and rules. However, it is also the most time-consuming and resource-expensive option.
+- **Process:** Prepare detailed questions -> Meet with individuals or groups -> Obtain and discuss answers -> Document the answers -> Follow up as needed.
+
+#### Designing Interview Questions
+- **Closed-ended questions:** Require a specific answer (e.g., "How many telephone orders are received per day?").
+- **Open-ended questions:** Seek a more wide-ranging response from the interviewee (e.g., "What do you think about the way invoices are currently processed?").
+- **Probing questions:** Follow up on what has just been discussed to learn more (e.g., "Can you give me an example?").
+
+> [!tip] Questioning Strategies
+> - **Top-down:** Start with high-level, very general questions and drill down to low-level, very specific questions.
+> - **Bottom-up:** Start with low-level, specific questions and move up to high-level, general questions.
+
+#### Post-Interview Report
+- The report contains interview notes summarized in a useful format.
+- Should be written **within 48 hours** of the interview (to prevent forgetting details).
+- Often sent to the interviewee to read and inform the analyst of clarifications. Make sure they are convinced you genuinely want corrections.
+- Never distribute someone's information without prior approval.
+
+#### Interpersonal Skills for Interviewing
+- Be succinct (learn, don't impress).
+- Be honest.
+- Watch body language (yours and theirs - e.g., leaning forward means interest, crossed arms indicates defensiveness).
+- Pay attention.
+- Summarize key points.
+- Don't worry, be happy (happiness radiates confidence).
 
 ### 2.4.2 Joint Application Development (JAD)
-A structured technique for gathering system requirements collaboratively. It involves the project team, users, and management working together to identify requirements.
-- Developed by IBM in the late 1970s. Reduces scope creep and prevents vague requirements.
-- Involves 10-20 users, a neutral facilitator, a skilled facilitator, and scribes to record notes.
-- Takes place in a special U-shaped room away from distractions.
-- **Limitations:** Group challenges like dominant participants, limited participation from others, and reluctance to challenge stronger voices.
+> [!info] Definition: JAD
+> A structured technique for gathering system requirements collaboratively, where the project team, users, and management collaborate to identify requirements.
+
+- **Benefits:** Reduces scope creep, prevents vague/too detailed requirements, and supports smoother progress in later SDLC stages.
+- **How it works:**
+  - 10-20 users in a structured discussion.
+  - A neutral, skilled facilitator manages the process without personal opinions.
+  - Scribes record notes and document info.
+  - Sessions may last hours, days, or weeks.
+  - Conducted in a special room away from distractions (U-shaped seating).
+- **Limitations:** Group challenges such as dominant participants, limited participation from others, and reluctance to challenge stronger voices. These can reduce the efficiency of information gathering.
+- **Conducting JAD:**
+  - *Before:* Select participants, design the session (structured agenda, time-boxed), prepare participants.
+  - *During & After:* Follow formal agenda, facilitator stays neutral, ask clarifying questions. Produce post-JAD follow-up report (may take 1-2 weeks).
 
 ### 2.4.3 Questionnaires
-Useful for gathering information from large groups in different locations. Can be closed-ended or open-ended. Response rates are typically 30-50% for paper/e-mail and 5-30% for web-based. Keep questions clear and avoid confusing formatting.
+- Written questions used to gather information from many people, useful for large groups in different locations. Often distributed by e-mail or web forms.
+- **Designing Effective Questions:** Keep them clear, simple, and unambiguous. Closed-ended questions are easier to answer and analyze. Distinguish between opinion questions and factual questions.
+- **Good Practices:** Plan how data will be analyzed, use consistent style, start with relevant questions to increase interest, and review/pretest with a small group before distribution.
 
 ### 2.4.4 Document Analysis
-Helps project teams understand the current (as-is) system by reviewing existing system-related documents (reports, memos, policy manuals, forms).
-- Documents describe the formal system, but may not reflect informal real practices.
-- Differences between the formal and informal system reveal areas needing improvement.
+- Helps project teams understand the current (as-is) system by reviewing existing system-related documents.
+- Includes reports, memos, policy manuals, training manuals, organization charts, forms, and user problem reports.
+- Documents mainly describe the **formal system**, but they may not reflect how work is done in practice.
+- Differences between the formal system and the informal real system can reveal areas that need improvement (e.g., unused forms). Strong evidence for change appears when users create their own custom forms or combine multiple reports to get what they need.
 
 ### 2.4.5 Observation
-A valuable technique for understanding the as-is system by directly watching how work is actually performed. Helps see the real situation and verify information from other sources.
-- Must be done with a low profile to not interrupt work.
-- Limitation: People behave more carefully when watched.
+- A valuable technique for understanding the as-is system by directly watching how work is actually performed (**the real situation**).
+- Useful for verifying information gathered from other sources (interviews, JAD).
+- Analysts should observe with a **low profile** to not interrupt or influence behavior.
+- **Limitation:** People often behave more carefully when being watched (Hawthorne effect), so observations may not fully reflect normal routines.
+- Observation can reveal clues about roles, power, and system use. If what is seen doesn't match what people say, it signals the need for closer analysis.
+- Types include participant observation and non-participant observation.
 
-### 2.4.6 Comparing Techniques
-- **Depth of Information:** Interviews & JAD provide high depth. Questionnaires provide medium depth. Document analysis and observation provide low depth.
-- **Breadth of Information:** Questionnaires & Document analysis provide high breadth. Interviews & Observation provide low breadth.
-- **Cost:** Interviews are medium cost, JAD is low-medium cost, Questionnaires and Document analysis are low cost.
+### 2.4.6 Comparing Information-Gathering Techniques
+- **Interviews and JAD:** Provide high depth of information (rich detail and explain why).
+- **Questionnaires and Document Analysis:** Provide high breadth of information (cover many sources easily).
+- **Integration of Information:** JAD provides high integration (resolves differences directly), whereas combining info from many interview/questionnaire sources is challenging.
+- **User Involvement:** High in JAD, Medium in Interviews, Low in others.
+- **Cost:** Low for questionnaires and document analysis. Low-Medium for JAD and observation. Medium for Interviews.
 
-## 2.5 Models and Modeling
-After collecting information, we create models, which represent some aspect of the system being built.
-Types of Models:
-1. **Textual model:** written down, described.
-2. **Graphical models:** diagram, schematic.
-3. **Mathematical models:** formulas, statistics, algorithms.
+## 2.5 Part IV: Models and Modeling
+After collecting information, we create models to define requirements.
 
-**Unified Modeling Language (UML):** Standard graphical modeling symbols/terminology used for information systems.
-- Reasons for modeling: Learning from the process, reducing complexity, remembering details, communicating with team and users, documenting for maintenance.
+> [!info] Definition: Model
+> A representation of some aspect of the system being built.
 
-## 2.6 Activity Diagrams
-Used for documenting workflows.
-- **Workflow:** sequence of work steps that complete one business transaction or customer request.
-- **Activity Diagram:** describes user (or system) activities, the person who does each activity, and the sequential flow of these activities.
-- Includes symbols like: Starting activity (pseudo), Ending activity, Swimlane heading, Transition arrow, Activity, Decision activity, Synchronization bar (Split/Join).
+- **Types of Models:**
+  1. **Textual model:** Something written down, described.
+  2. **Graphical models:** Diagram, schematic.
+  3. **Mathematical models:** Formulas, statistics, algorithms.
+
+> [!info] Unified Modeling Language (UML)
+> Standard graphical modeling symbols and terminology used for information systems.
+
+- **Reasons for Modeling:**
+  1. Learning from the modeling process.
+  2. Reducing complexity by abstraction.
+  3. Remembering all the details.
+  4. Communicating with other development team members.
+  5. Communicating with a variety of users and stakeholders.
+  6. Documenting what was done for future maintenance/enhancement.
+
+### 2.5.1 Documenting Workflows with Activity Diagrams
+> [!info] Definition: Workflow
+> A sequence of work steps that complete one business transaction or customer request. Workflows may be simple or complex (composed of hundreds of steps and participants from different departments).
+
+> [!info] Activity Diagram
+> A UML diagram that describes user (or system) activities, the person who does each activity, and the sequential flow of these activities. Useful for showing a graphical model of a workflow.
+
+**Activity Diagram Symbols:**
+- **Starting activity (Pseudo):** Solid black circle.
+- **Ending activity (Pseudo):** Solid black circle with an outline (bullseye).
+- **Activity:** Oval rectangle (e.g., "Review financials").
+- **Transition arrow:** Solid arrows indicating the flow from one activity to another.
+- **Swimlane heading:** Vertical columns representing different roles or departments (e.g., "Salesperson", "Engineering").
+- **Decision activity:** Diamond shape with condition labels (e.g., [yes], [no]).
+- **Synchronization bar (Split/Join):** Heavy horizontal or vertical line used to show concurrent paths of execution. A split creates concurrent paths, and a join merges them back together.
 
 ---
 
-# 3. Use Cases
+# Chapter 3: Use Cases
 
-A key part of defining a new system is understanding user requirements, which are the tasks users need to accomplish. **Use cases** are an activity that the system performs, usually in response to a request by a user, defining the functional requirements. Analysts decompose the system into a set of use cases (functional decomposition).
+## 3.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain the purpose of use cases in the analysis phase of the SDLC.
+> 2. Describe the various parts of a use case and the purpose of each part.
+> 3. Describe how use cases contribute to the functional requirements.
+> 4. Explain why identifying user stories and use cases is the key to defining functional requirements.
+> 5. Describe the two techniques for identifying use cases.
+> 6. Apply the event decomposition technique to identify use cases.
+> 7. Describe the notation and purpose for the use case diagram.
+> 8. Draw use case diagrams by actor and by subsystem.
 
-## 3.1 User Stories
-A user story is usually a short sentence written in the everyday language of the end user. It explains what the user does as part of their work or the goal they want to achieve using the system.
-- Important in Agile development for emphasizing simplicity and user value.
-- Standard template: `"As a <role played>, I want to <goal or desire> so that <reason or benefit>."`
-- Example: `"As a teller, I want to make a deposit to quickly serve more customers."`
-- A final part of a user story is the **acceptance criteria**, indicating the features that must be present for the user to be satisfied (focuses on functionality, not UI design).
+## 3.2 Part I: Use Cases and User Goals
 
-## 3.2 Identifying Use Cases
-Two main techniques:
+A key part of defining a new system is understanding **user requirements**, which are the tasks users need to accomplish with the system.
+- **Use cases** are used to express and describe these user requirements clearly. They help analysts understand how users will interact with the system and what the system must do for them (user).
+- **Process models** are used to further clarify requirements by showing processes, activities, and how data move between them.
+- Both use cases and process models are important tools in the analysis phase, especially during interviews and workshops, to identify and illustrate user and functional requirements.
+
+> [!info] Definition: Use Case
+> An activity that the system performs, usually in response to a request by a user. Use cases define **functional requirements**. Analysts decompose the system into a set of use cases (functional decomposition).
+> Name each use case using **Verb-Noun** format (e.g., *Search Student*, *Enter grade*, *Print Classlist*).
+
+### 3.2.1 User Stories
+> [!info] Definition: User Story
+> Usually a short sentence written in the everyday language of the end user. It explains what the user does as part of their work or the goal they want to achieve using the system.
+
+- User stories are an important concept in **Agile development** because they emphasize simplicity and user value.
+- They capture functional requirements quickly and less formally than traditional requirements models by focusing on **who**, **what**, and **why**.
+- Users and stakeholders are responsible for identifying and defining the user stories.
+
+**Writing User Stories:**
+In meetings, analysts encourage participants to write out each user story on an index card or whiteboard app to articulate what they want to do.
+
+> [!example] Standard Template for User Story
+> `"As a <role played>, I want to <goal or desire> so that <reason or benefit>."`
+
+*Example (Bank Teller):* "As a teller, I want to make a deposit to quickly serve more customers."
+*Example (Shipping Clerk):* "As a shipping clerk, I want to ship an order as accurately as possible as soon as the order details are available."
+
+#### Acceptance Criteria
+A final part of a user story is the **acceptance criteria**, which indicate the features that must be present for the user to be satisfied with the resulting implementation. They focus on **functionality**, not on features or UI design.
+*Example criteria for "bank teller making a deposit":*
+1. Customer lookup must be by name or account number.
+2. It would be nice to display the photo and signature of the customer.
+3. Any check hold requirements must be indicated.
+4. Current balance and new balance must be displayed.
+
+## 3.3 Part II: Techniques for Identifying Use Cases
+
+There are two main techniques for identifying use cases:
 1. User goal technique
 2. Event decomposition technique
-Each use case is named using Verb-Noun format (e.g., "Look up supplier").
 
-### 3.2.1 User Goal Technique
-Identify use cases by determining what specific goals or objectives must be completed by the system for the user. Ask users to describe their goals for using the new system.
-- **Specific Steps:**
-  1. Identify all potential users.
-  2. Classify potential users in terms of their functional role (shipping, marketing).
-  3. Further classify by organizational level (operational, management).
-  4. Interview each type of user to find specific goals.
-  5. Create a preliminary list of use cases.
-  6. Look for duplicates and resolve inconsistencies.
-  7. Identify where different users need the same use cases.
-  8. Review the completed list with stakeholders.
+### 3.3.1 User Goal Technique
+A technique to identify use cases by determining what specific goals or objectives must be completed by the system for the user. It is simple, effective, and the most common in the industry.
 
-### 3.2.2 Event Decomposition Technique
-The most comprehensive way to identify use cases. Starts by identifying all the business events that the information system must respond to. Each business event usually leads to one use case.
-- **Types of Events:**
-  1. **External Event:** Occurs outside the system, initiated by an external agent or actor (e.g., Customer buys a product).
-  2. **Temporal Event:** Occurs because of reaching a point in time (e.g., monthly statements, weekly reports).
-  3. **State Event:** Occurs when something happens inside the system that triggers some process (e.g., reorder point is reached for an inventory item).
-- Focus on finding the actual event that affects the system (e.g., The customer buying a shirt, not driving to the mall).
-- **Perfect Technology Assumption:** Don't worry about functions built into the system due to technological and human limitations (like login, password change, backups). Wait until the design phase for these.
+**Specific Steps:**
+1. **Identify** all the potential users for the new system.
+2. **Classify** the potential users in terms of their functional **role** (e.g., shipping, marketing, sales).
+3. Further classify potential users by **organizational level** (e.g., operational, management, executive).
+4. For each type of user, **interview** them to find a list of specific **goals** they will have when using the new system.
+5. Create a list of **preliminary use cases** organized by type of user.
+6. Look for **duplicates** with similar use case names and resolve inconsistencies.
+7. **Identify** where different types of users need the **same use cases**.
+8. **Review** the completed list with each type of user and then with interested stakeholders.
 
-## 3.3 Use Cases and Brief Use Case Descriptions
-A brief use case description is often a one-sentence description showing the main steps in a use case.
-- Example Use Case: *Create customer account* -> Brief description: *User/actor enters new customer account data, and the system assigns account number, creates a customer record, and creates an account record.*
+### 3.3.2 Event Decomposition Technique
+The most comprehensive way to identify use cases. It starts by identifying all the **business events** that the information system must respond to.
+- Each business event usually leads to one use case.
+- Helps analysts define use cases at the correct level of detail (not too narrow and not too broad).
 
-## 3.4 Use Case Diagrams (UML)
-A UML model used to graphically show use cases and their relationships to actors.
-- **Actor:** The UML name for an end user. Represented by a stick figure.
-- **Automation boundary:** The boundary between the computerized portion of the application and the users who operate it.
-- **Connecting line:** Shows which actors participate in use cases.
+#### Events and Use Cases
+- Define system requirements by asking what **business events** happen that require the system to respond.
+- Views the system as a **black box**, focusing only on inputs and outputs, not internal workings (overall scope).
+- *Example:* Customers paying a bill, making a charge, changing an address. Time-based events: sending monthly statements or late notices.
 
-### 3.4.1 Use Case Relationships
+> [!important] Finding the Actual Event
+> You must trace a sequence of transactions to find the event that *directly* affects the system. For instance, a customer thinking about a shirt or driving to the mall doesn't affect the system. The event is when the **customer buys the shirt**.
+
+#### Types of Events
+1. **External Event:** An event that occurs outside the system, usually initiated by an external agent or actor.
+   - *Checklist:* External agent wants something (transaction), wants some information, external data changed (update), management wants information.
+2. **Temporal Event:** An event that occurs because of reaching a point in time.
+   - *Checklist:* Internal outputs needed at points in time (management/operational reports, payroll), external outputs needed at points in time (statements, bills, reminders).
+3. **State Event:** An event that occurs when something happens inside the system that triggers some process.
+   - *Example:* Reorder point is reached for an inventory item.
+
+#### Perfect Technology Assumption
+Don't worry about functions built into the system due to technological and human limitations. **Wait until the design phase.**
+- *Example:* Do not include events that involve system controls such as login, logout, changing passwords, backing up/restoring the database, or recovering from a crash. These are deferred until designing system controls.
+
+**Specific Steps for Event Decomposition:**
+1. Consider external events. -> Identify/name use case for each.
+2. Consider temporal events. -> Identify/name use case and establish point in time.
+3. Consider state events. -> Identify/name use case and define state change.
+4. Check requirements using the perfect technology assumption.
+
+## 3.4 Part III: Use Cases and Brief Use Case Descriptions
+A brief use case description is often a **one-sentence description** showing the main steps in a use case.
+
+*Example:*
+- **Use case:** `Create customer account`
+- **Brief description:** User/actor enters new customer account data, and the system assigns an account number, creates a customer record, and creates an account record.
+
+## 3.5 Part IV: Use Case Diagrams
+> [!info] Definition: Use Case Diagram
+> A UML model used to graphically show use cases and their relationships to actors.
+
+- **Actor:** The UML name for an end user. Represented by a stick figure (an actual person using the system).
+- **Automation boundary:** The boundary between the computerized portion of the application and the users who operate the application. Represented by a rectangle box containing the use cases.
+- **Connecting line:** Shows which actors participate in which use cases (line with no arrowheads).
+
+**Drawing Use Case Diagrams:**
+- Draw for **each subsystem** (e.g., Customer Account Subsystem, Sales Subsystem).
+- Draw for a **single actor**, such as a customer (showing only the use cases they invoke).
+- Draw for **internal actors** (e.g., service representative and store representative).
+
+### 3.5.1 Use Case Relationships
 Active relationships are referred to as behavioral relationships and use action verbs.
-1. **Communicates:** Connects an actor to a use case using a line with no arrowheads.
-2. **Includes (uses):** A use case contains behavior that is common to more than one other use case. A dotted arrow `<< include >>` points TO the common use case.
-3. **Extends:** One use case possesses behavior that allows a new use case to handle a variation or exception from the basic use case. The dotted arrow `<< extend >>` points FROM the extended use case TO the basic use case.
-4. **Generalizes:** One UML "thing" is more general than another "thing". A solid line with a hollow arrow points to the more general thing.
 
-### 3.4.2 Steps to Draw Use Case Diagrams
-1. Identify all stakeholders and users who would benefit by seeing a use case diagram.
-2. Determine what each stakeholder or user needs to review in a use case diagram.
-3. Select the use cases and actors to show and draw the diagram.
+1. **Communicates:** Connects an actor to a use case (solid line, no arrowheads).
+2. **Includes (or Uses):** One use case contains behavior that is common to more than one use case. The common use case is *included* in the other use cases.
+   - Indicated by a dotted arrow pointing **toward the common use case** with `<< include >>`.
+   - *Example:* `Enroll in Course` and `Arrange Housing` both include `Pay Student Fees`.
+3. **Extends:** One use case possesses the behavior that allows the new use case to handle a variation or exception from the basic use case.
+   - Indicated by a dotted arrow pointing **from the extended to the basic use case** with `<< extend >>`.
+   - *Example:* `Student Health Insurance` extends `Pay Student Fees`.
+4. **Generalizes:** Implies that one thing is more typical/general than another. Exists between two actors or two use cases.
+   - Indicated by a solid line with a hollow arrow pointing **to the general thing**.
+   - *Example:* `Part-time Student` generalizes to `Student`.
+
+> [!tip] Includes vs. Extends
+> - **Include** is used for mandatory, common steps (e.g., customizing a drink *includes* choosing a bean and choosing a temperature).
+> - **Extend** is used for optional or exception steps (e.g., customizing a drink can be *extended* by adding a tumbler option or selecting a topping).
+
+### 3.5.2 Steps for Creating Use Case Diagrams
+1. Identify all the **stakeholders** and **users** who would benefit by seeing a use case diagram.
+2. Determine what each stakeholder or user **needs** to review in a use case diagram (each subsystem, type of user, use cases of interest).
+3. For each potential **communication** need, select the use cases and actors to show and **draw** the use case diagram.
 4. Use software packages to draw the diagrams.
-5. Carefully name each diagram and note how and when it should be used for review.
+5. Carefully name each diagram and note how and when the diagram should be used to review use cases with stakeholders and users.
+
+---
+
+# Chapter 4: Domain Modeling
+
+## 4.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain how the concept of "things" in the problem domain also defines requirements.
+> 2. Identify and analyze data entities and domain classes needed in the system.
+> 3. Read, interpret, and create an entity-relationship diagram.
+> 4. Read, interpret, and create a domain model class diagram.
+> 5. Understand the domain model class diagram.
+> 6. Read, interpret, and create a state machine diagram that models object behavior.
+
+## 4.2 Part I: "Things" in the Problem Domain
+- **Problem domain** is the specific area (or domain) of the users' business need that is within the scope of the new system.
+- **"Things"** are those items users work with when accomplishing tasks that need to be remembered (e.g., products, sales, shippers, customers, invoices, payments).
+- These "Things" are modeled as **domain classes** or **data entities** (in database terminology).
+
+### 4.2.1 Two Techniques for Identifying Things
+
+#### 1. Brainstorming Technique
+Use a checklist of all the usual types of things typically found and brainstorm to identify domain classes of each type.
+- **Categories of things to ask about:** Tangible things, Roles played, Organizational units, Devices, Sites/locations, Incidents/events/interactions that need to be recorded.
+- **Steps:**
+  1. Identify a user and set of use cases.
+  2. Brainstorm with the user to identify things involved in their use case.
+  3. Use types of things (categories) to ask specific questions.
+  4. Continue to work with all users & stakeholders to expand brainstorming list.
+  5. Merge the results, eliminate duplicates, compile an initial list.
+  6. Continue to work with all users & stakeholders to expand the list.
+
+#### 2. The Noun Technique
+A systematic technique to identify problem domain classes (things) by finding, classifying, and refining a list of nouns that come up in discussions or documents. Good place to start when there are no users available to help brainstorm.
+- *Drawback:* Ends up with long lists and many nouns that are not things needing to be stored. Difficulty identifying synonyms and things that are really attributes.
+- **Steps:**
+  1. Identify all nouns in the system using use cases, actors, and other information (inputs/outputs).
+  2. Use other information from existing systems, procedures, reports, or forms to add items.
+  3. Refine the list using strategic questions:
+     - *Questions to refine it:* Is it a unique thing the system needs to know about? Inside the scope? Does the system need to remember more than one of these items?
+     - *Questions to exclude it:* Is it a synonym? Just an output/input produced from other information?
+     - *Questions to research:* Is it likely a specific piece of information (attribute) about some other thing?
+
+### 4.2.2 Details About Domain Classes
+- **Attribute:** Normally describes one piece of information about each instance of the class (e.g., Customer has first name, last name, phone number).
+- **Identifier or key:** One attribute that uniquely identifies an instance of the class. Required for data entities, optional for domain classes (e.g., Customer ID).
+- **Compound attribute:** Two or more attributes combined into one structure to simplify the model (e.g., an Address consisting of street, city, state, zip).
+- **Class vs. Object:** Class is a *type* of thing. Object is a specific *instance* of the class. Each instance has its own values for an attribute.
+- **Association:** A naturally occurring relationship between classes (UML term).
+
+## 4.3 Part II: The Entity-Relationship Diagram (ERD)
+- ERDs have been used for many years to develop data models for database development. They show the information created, stored, and used by a business system.
+- The term for "things" in ERD models is **data entities**.
+- ERD models are **NOT UML models**. They do not use standard UML notation and are not as expressive (e.g., they do not model generalization/specialization or whole/part relationships well).
+
+### 4.3.1 ERD Notation
+- ERD Models normally use **"crows feet"** notation to show cardinality.
+- **Minimum and Maximum Multiplicity:**
+  - Minimum is zero: the association is **optional**.
+  - Minimum is at least one: the association is **mandatory**.
+- **Types of Associations:**
+  - **Binary Association:** Between exactly two different classes (e.g., Course Section includes Students).
+  - **Unary Association (recursive):** Between two instances of the same class (e.g., Person married to person).
+  - **Ternary (three) / N-ary (between n)**.
+
+### 4.3.2 Relational Databases
+A relational database management system (RDBMS) organizes stored data into 2D data structures of columns and rows called tables or relations.
+- **Row** = tuple, record.
+- **Column** = attribute, field.
+- **Cell** = attribute value, field value, data element.
+
+**Types of Keys:**
+- **Primary Key:** The key chosen by a database designer as the main unique identifier. Each table must have a unique key.
+- **Candidate Key:** Values that *could* serve as a unique identifier (e.g., Email, Phone Number).
+- **Foreign Key:** Duplicates the primary key of a different table to represent an association.
+
+#### Creating Tables from Domain Classes
+1. Create a table for each class on the class diagram. Table and attribute names should match the class diagram (avoid abbreviations).
+2. Choose a **primary key** for it. If no unique field exists, create a new one (e.g., ID, Code, Number).
+3. Represent associations by adding **foreign keys**:
+   - **One-to-Many Associations:** Add the primary key of the "one" class as a foreign key attribute in the "many" class table.
+   - **Many-to-Many Associations:** Create an association class/table. The primary key becomes the combination (concatenation) of the primary keys of the associated tables. The old primary key is discarded.
+4. Represent Classification Hierarchies (Generalization/Specialization):
+   - *Method 1:* Combine all tables into a single table containing the superset of all classes.
+   - *Method 2:* Use separate tables to represent child classes, and use the primary key of the parent class table as the primary key of the child class tables.
+
+#### Database Normalization
+A correct database should be normalized to improve accuracy, consistency, and performance. It allows flexibility, minimizes redundant data, and prevents insertion, deletion, and update anomalies.
+- **First Normal Form (1NF):** Every field contains only one value. All attribute values must be atomic (no multivalued attributes). No repeating columns allowed. To correct, the table must be divided.
+- **Second Normal Form (2NF):** Table is in 1NF, and each non-key attribute is fully dependent on the entire primary key.
+- **Third Normal Form (3NF):** Table is in 2NF, and no non-key attribute is functionally dependent on any other non-key attribute.
+
+## 4.4 Part III: The Domain Model Class Diagram
+- **Class Diagram:** A UML diagram that shows classes with attributes and associations (plus methods if it models software classes).
+- **Domain Model Class Diagram:** A class diagram that only includes classes from the problem domain, not software classes, so it has **no methods**.
+
+### 4.4.1 Notation
+- **Class name** is always capitalized.
+- **Attribute names** use camelback notation (e.g., `billAddress`, `homePhone`).
+- Multiplicity notation is used instead of crows feet (e.g., `0..1`, `1`, `1..*`, `0..*`).
+
+### 4.4.2 Association Class
+An association that is treated as a class in a many-to-many association because it has attributes that need to be remembered (e.g., a student's `grade` in a `CourseEnrollment` class between `CourseSection` and `Student`).
+- The unique identifier (key) for the association class is the concatenation of the keys of the attached classes.
+
+### 4.4.3 Generalization/Specialization Relationships
+A hierarchical relationship where subordinate classes are special types of superior classes (Inheritance Hierarchy).
+- **Superclass:** The superior or more general class.
+- **Subclass:** The subordinate or more specialized class.
+- **Inheritance:** The concept that subclasses inherit characteristics of the more general superclass.
+- **Abstract class:** A class that only exists so subclasses can inherit from it (written in *Italics*). Never an actual object.
+- **Concrete class:** A class that does have actual objects.
+
+### 4.4.4 Whole-Part Relationships
+Used to show an association between one class and other classes that are parts of that class.
+- **Aggregation:** A type of whole-part relationship where the parts can exist separately.
+- **Composition:** A stronger whole-part relationship where the parts, once associated, can no longer exist separately.
+
+> [!important] Relationship Types Summary
+> 1. **Association Relationships** (like ERD relationships).
+> 2. **Whole Part Relationships** (components/parts).
+> 3. **Generalization/Specialization Relationships** (Inheritance).
+> *Try not to confuse a relationship with an association.*
+
+## 4.5 Part IV: The State Machine Diagram (Object Behavior)
+Each class has objects that may have status conditions or "states". Object behavior consists of the various states and the movement between these states.
+
+> [!info] Definition: State
+> A condition that occurs during an object's life when it satisfies some criterion, performs some action, or waits for an event. The name of a state **should not be a noun**; it should describe the condition (e.g., *On*, *In repair*, *Being shipped*).
+
+> [!info] Definition: Transition
+> The movement of an object from one state to another state. Transitions are short in duration and cannot be interrupted.
+
+### 4.5.1 When to use State Machine Diagrams?
+**The Golden Rule:** Does this object behave differently in different conditions? If yes, draw a state machine.
+High-priority candidates:
+1. Transaction Objects (Orders, Invoices)
+2. Physical Objects with Sensors (Smart Bulbs, IoT)
+3. User Accounts (Active, Suspended)
+4. Complex Equipment (Printers: Ready, Jammed)
+
+### 4.5.2 Diagram Anatomy
+- **State Machine Diagram:** Shows the life of an object in states and transitions.
+- **Origin state:** The original state before transitioning.
+- **Destination state:** The state moved to after the transition.
+- **Pseudostate:** The starting point (noted by a solid black circle). Final state is a black circle with an outline (bullseye).
+- **Transition Label Syntax:** `Event [Guard Condition] / Action-expression`
+  - *Event:* What triggers the transition.
+  - *Guard-condition:* A true/false test to see whether a transition can fire (e.g., `[Credit Card Valid]`).
+  - *Action-expression:* Some activity completed as part of the transition.
+
+### 4.5.3 Concurrency in State Machine Diagrams
+- **Concurrent states:** When an object is in one or more states at the same time.
+- **Path:** A sequential set of connected states and transitions.
+- **Concurrent paths:** When multiple paths are being followed concurrently. Often shown by **synchronization bars** (heavy black lines).
+  - Multiple exits from a state is an "OR" condition.
+  - Multiple exits from a synchronization bar is an "AND" condition.
+
+### 4.5.4 Steps to Create a State Machine Diagram
+1. Review the class diagram and select classes that might require it.
+2. For each class, make a list of status conditions (states) you can identify.
+3. Build diagram fragments by identifying transitions that cause an object to leave the identified state.
+4. Sequence these states in the correct order and aggregate combinations into larger fragments. Review paths for concurrent paths.
+5. Add other required transitions (test both directions).
+6. Expand each transition with appropriate message event, guard condition, and action expression.
+7. Review and test (follow the life cycle, cover exception conditions).
