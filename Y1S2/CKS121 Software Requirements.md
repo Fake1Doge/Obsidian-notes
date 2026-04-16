@@ -366,3 +366,158 @@ Define **project-specific guidelines** for documenting context information. Thes
 - **Domain models:** Define properties for a set of systems (e.g., systems in a particular application domain).
 - **Standards:** Include context information such as personal data protection, federal ordinance on barrier-free information technology.
 - **Dedicated section:** In textual requirements specification documents.
+
+---
+
+## Chapter 4: Elicitation (Part 1)
+
+### 4.1 Introduction in Requirements Elicitation
+
+> [!info] Definition: Goal of Requirements Elicitation
+> Requirements elicitation is a core requirements engineering activity. The goal is threefold:
+> 1. **Identify** relevant requirements sources.
+> 2. **Elicit existing requirements** from the identified sources.
+> 3. Develop **new and innovative requirements**.
+
+### 4.2 Requirements Sources
+
+> [!important] Importance of Identifying Sources
+> - Some sources might be obvious, but **many are typically unknown** at the beginning.
+> - Not identifying or considering relevant sources leads to:
+>   - **Incomplete** requirements (overlooked requirements).
+>   - **Insufficient agreement** or unrecognized conflicts.
+>   - At the latest, overlooked requirements lead to **change requests** during system operation (and higher costs).
+> - **Identifying all relevant requirements sources is thus essential!**
+
+#### Three Types of Requirements Sources
+1. **Stakeholders**
+2. **Documents**
+3. **Existing Systems**
+
+#### 4.2.1 Stakeholders
+> [!info] Definition: Stakeholder
+> A stakeholder is either a person or an organization with **potential interest in the desired system**. Each typically has specific goals and requirements. A person can **represent the interest of different stakeholders**.
+
+- A stakeholder is a **context object**.
+- A stakeholder can belong to:
+  - any facet of the system context (subject, usage, or IT system),
+  - the development context,
+  - the requirements engineering context.
+- A stakeholder typically has **knowledge about several context objects** and their relationships, across different facets of the system context and development context.
+
+#### 4.2.2 Documents
+**Existing documents** contain relevant information to be considered when defining requirements.
+Three types of potentially relevant documents:
+1. **General binding documents:** Defined by standardization bodies, governments, etc. (e.g., laws and standards).
+2. **Organization-specific documents:** Defined within an organization (e.g., development guidelines, product strategies, IT-strategies, business process documentation).
+3. **Product-/System-specific documents:** Any kind of development artefact of a predecessor or similar system (e.g., change requests, error reports, user manuals, requirements specs).
+
+#### 4.2.3 Existing Systems
+Existing systems are an excellent source for detecting and uncovering existing requirements.
+- **Requirements realized** by the existing system might still be relevant for the new system.
+- They should be analyzed to:
+  - Elicit properties of the existing system.
+  - Identify **required enhancements**.
+  - Identify **known deficiencies** to be avoided in the future.
+  - Identify **previous errors** already fixed to avoid repeating them.
+- **Stakeholders using or involved** in the development/operation of existing systems are additional potential valuable sources.
+
+We differentiate between three types of systems:
+1. **Predecessor systems:** Similar purpose, typically replaced by the new system.
+2. **Systems of competitors:** Essential to not oversee important requirements and to ensure differentiating features.
+3. **Systems from other domains:** Might offer properties, innovative technology, or unique features relevant for the desired system.
+
+### 4.3 Identification of Requirements Sources
+#### Two-Step Procedure
+- **Step 1:** Identification of potential relevant requirements sources.
+- **Step 2:** Selection of requirements sources to be considered.
+
+#### Step 1: Potential Relevant Requirements Sources
+**Goal:** Identify a large set of potential relevant sources.
+**Activities:**
+1.1 Use known sources/checklists to **identify additional**, potential sources.
+1.2 **Record newly identified**, potential relevant sources.
+1.3 For each newly identified source, **perform activity 1.1 again**. Iterate until the set becomes (more or less) stable.
+
+> [!tip] Extra Notes: Hints for Step 1
+> - Consider **all parts of the RE context**.
+> - First, **identify relevant context objects**. Then identify sources potentially having **knowledge about those objects**.
+> - Consider **all three types** of requirement sources.
+> - Use **domain and system-specific checklists** to support the identification of requirement sources. (e.g., check list for Usage Facet, Subject Facet, IT System Facet, Development Context, Requirements Engineering Context).
+
+#### Step 2: Selection Requirements Sources
+**Goal:** Select the most relevant sources from the identified sources.
+- Execute a **100 Dollar Test** in a group meeting:
+  - In a 100-dollar test each stakeholder metaphorically **spends 100 dollars** on the items (sources).
+  - Each distributes the money to the sources they think are **relevant**.
+  - The **amount of money** defines the **relative weighting** of this source.
+  - The group **selects the highest weighted** sources to consider first. Remaining sources might be considered later.
+
+> [!tip] Extra Notes: Hints for Selecting Sources
+> - The **cut-off point** depends on the **project setting** (time, budget, availability).
+> - **Check if** selected sources **cover all relevant parts of the RE context**.
+> - You might use the 100-dollar test separately for each **part of the RE context**.
+> - When **selecting stakeholders** for assessment, ensure an **adequate representation of the RE context**.
+
+### 4.4 Eliciting Existing Requirements vs. Creating Innovative Requirements
+Besides identifying requirement sources, the goal of requirements elicitation is twofold:
+1. **Elicit existing requirements** from relevant sources.
+2. **Create** and develop **innovative (new) requirements**.
+> [!note] Important
+> Existing and innovative requirements are equally important for system success!
+
+#### 4.4.1 Eliciting Existing Requirements
+- **From Stakeholders:** e.g., Stakeholders express requirements guided by a **questionnaire** (e.g., "How can safety be improved? -> The car should display a warning...").
+- **From Documents:** e.g., The **law** must be considered (e.g., defining goals based on regulations), or analyzing **error reports** to derive requirements.
+- **From Existing Systems:** 
+  1. The **incarnation of the existing system** is elicited (incarnation model of predecessor system).
+  2. An **essential model** is created by **abstracting from the incarnation**. (e.g., separating physical implementations from the core logical need).
+
+#### 4.4.2 Creation of Innovative Requirements
+- Innovative requirements **cannot** be elicited in the same way as existing ones.
+- They have to be created in **creative processes** using creativity techniques (e.g., brainstorming).
+
+> [!info] Definition: Creativity
+> Creativity is "the ability to produce work that is both **novel** (i.e., original unexpected) and **appropriate** (i.e., useful, adapted to a task constraints)" (Sternber and Lubart 1999).
+
+Three Categories of Creativity:
+1. **Exploratory creativity:** Search space of partial/complete possibilities.
+2. **Combinational creativity:** Make unfamiliar connections between familiar possibilities in the search space.
+3. **Transformational creativity:** Challenge constraints on the search space to enlarge the space of possible ideas to explore.
+
+- **With Stakeholders:** Brainstorming ideas (e.g., slippery road warning, proactive traffic light monitoring).
+- **Using Existing Documentation:** Analyzing specs from different domains (e.g., looking at an ERP system for a smart refrigerator to get the idea of "best before" tracking).
+- **Using Existing Systems:** Participating in demonstrations of other technologies (e.g., looking at smart televisions to identify features useful for a smart refrigerator like recipe suggestions and shopping lists).
+
+### 4.5 Common Elicitation Techniques
+
+> [!info] Elicitation vs Assistance Techniques
+> - **Elicitation techniques** support eliciting existing requirements, creating innovative requirements, and eliciting requirement sources.
+> - **Assistance techniques** support elicitation techniques (e.g., by developing new ideas or experiencing features of the future system).
+
+#### Six Common Requirements Elicitation Techniques
+1. **Interview:** Elicitation of requirements and context information from a stakeholder or group.
+2. **Workshop:** A group of stakeholders develops requirements for a system.
+3. **Focus Groups:** A group of stakeholders focus on a specific item to identify the requirements regarding this item.
+4. **Observation:** An observer elicits requirements by observing stakeholders or existing systems.
+5. **Questionnaire:** A stakeholder writes down his requirements by answering predefined questions.
+6. **Perspective-based Reading:** A stakeholder reads a document from a previously defined perspective (e.g., user, tester).
+
+#### Technique Classification
+- **Interview:** Medium to high effort. Suited for identifying sources, eliciting existing (and partially developing innovative).
+- **Workshop:** High to very high effort. Suited for identifying sources, eliciting existing, and developing innovative.
+- **Focus Groups:** Medium to high effort. Suited for eliciting existing and developing innovative.
+- **Observation:** High to very high effort. Suited for eliciting existing.
+- **Questionnaire:** Low to medium effort. Suited for identifying sources and eliciting existing.
+- **Perspective-based reading:** Medium to high effort. Suited for eliciting existing.
+
+#### Describing Elicitation Techniques
+A template for describing them includes:
+- **Application:** 
+  1. Preparation
+  2. Execution
+  3. Follow-Up
+  4. Critical success factors.
+- **Key characteristics:** 
+  5. Benefits
+  6. Effort (estimation).
