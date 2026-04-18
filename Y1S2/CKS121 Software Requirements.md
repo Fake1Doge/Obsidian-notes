@@ -1,8 +1,8 @@
 # Chapter 1: Introduction & Fundamentals of Requirements Engineering
 
-## 1. Introduction to Requirements Engineering (RE)
+## 1.1 Introduction to Requirements Engineering (RE)
 
-### 1.1 The Importance of Requirements Engineering
+### 1.1.1 The Importance of Requirements Engineering
 Requirements Engineering is a critical success factor for software-intensive systems. 
 
 > [!quote] Fred Brooks (1987)
@@ -30,7 +30,7 @@ The cost of fixing requirements defects increases significantly as the project p
 - **Small/Non-critical projects:** Defects found after delivery require **5x** more effort to correct. (Analysis 1x $\to$ Design 1.5-2.5x $\to$ Coding 2-5x $\to$ Testing 2.5-5x $\to$ Delivery 5x)
 - **Large/Critical projects:** Defects found after delivery require **100x** more effort to correct. (Analysis 1x $\to$ Design 2.5-5x $\to$ Coding 5-10x $\to$ Testing 10-50x $\to$ Delivery 100x)
 
-### 1.2 Core Definitions
+### 1.1.2 Core Definitions
 
 > [!info] Definition: Requirement (IEEE 610.12-1990)
 > A **requirement** is:
@@ -56,13 +56,13 @@ The cost of fixing requirements defects increases significantly as the project p
 > - **Legal expert:** Ensures data privacy and compliance.
 > - **Financial manager:** Handles payment processing.
 
-### 1.3 The Goal of Requirements Engineering
+### 1.1.3 The Goal of Requirements Engineering
 Requirements Engineering (RE) is a **cooperative, iterative, and incremental process** which aims at ensuring that:
 1. All **relevant requirements** are explicitly known and understood at the required level of detail.
 2. A **sufficient agreement** about the system requirements is achieved between the stakeholders involved.
 3. All requirements are **documented and specified** in compliance with the relevant documentation/specification guidelines.
 
-### 1.4 The Three Dimensions of RE
+### 1.1.4 The Three Dimensions of RE
 The goals of RE can be characterized by three orthogonal dimensions:
 
 1. **Content Dimension:** Deals with the understanding of requirements. At the start, requirements are few and vague; at the end, all requirements shall be explicitly known and understood at the required detail.
@@ -76,7 +76,7 @@ The goals of RE can be characterized by three orthogonal dimensions:
 > - **Documentation vs. Agreement:** Compliance with guidelines does not imply agreement.
 > - **Progressive Side-effects:** Progress in the agreement dimension (resolving a conflict) can lead to **new requirements** which are not yet understood (content dimension). Similarly, eliciting new requirements can lead to **new conflicts**.
 
-### 1.5 The Three Types of Requirements
+### 1.1.5 The Three Types of Requirements
 
 1. **Functional Requirements:** 
     - *IREB Definition:* A requirement concerning a result or behavior that shall be provided by a function of a system.
@@ -100,15 +100,15 @@ The goals of RE can be characterized by three orthogonal dimensions:
 
 ---
 
-## 2. Fundamentals of Requirements Engineering
+## 1.2 Fundamentals of Requirements Engineering
 
-### 2.1 Influence of Constraints
+### 1.2.1 Influence of Constraints
 Constraints restrict the **range of realization alternatives** for requirements.
 - *Scenario:* A functional requirement (R-3) states "The output shall be presented on a mobile phone." Without constraints, solutions could include iOS, Android, Windows 10, BlackBerry OS, or Palm.
 - *Constraint (C-4):* "Only iOS and Android shall be supported."
 - *Consequence:* The solution space is reduced from 5 to 2 (40% remaining).
 
-### 2.2 Non-functional Requirements (NFRs)
+### 1.2.2 Non-functional Requirements (NFRs)
 
 > [!warning] "Non-functional Requirements"
 > The term "non-functional requirement" is widely used but often indicates that a requirement is **insufficiently understood**.
@@ -120,25 +120,25 @@ Constraints restrict the **range of realization alternatives** for requirements.
 > - Each user shall log in... (Functional Requirement)
 > - Stored passwords shall be protected from unauthorized access... (Quality Requirement)
 
-### 2.3 RE and Organizational Processes
+### 1.2.3 RE and Organizational Processes
 RE is embedded within various organizational processes:
 - **Marketing:** Provides market needs, trends, and price range; RE provides new features.
 - **Product Management:** Provides product roadmaps and strategy; RE provides new/revised requirements.
 - **Customer Relationship Management (CRM):** Provides customer wishes and reported problems; RE provides realized changes and enhancements.
 
-### 2.4 RE and Development Activities
+### 1.2.4 RE and Development Activities
 RE provides the foundation for other development tasks:
 - **Project Management:** RE provides elicited goals and requirements; PM provides project plans and approved goals.
 - **Design:** RE provides requirements and constraints; Design provides solutions and uses new technologies.
 - **Quality Assurance:** RE provides requirements artefacts; QA provides requests for clarification and improvement.
 - **System Maintenance:** RE provides change requests; Maintenance provides status of change requests.
 
-### 2.5 What vs. How (Problem vs. Solution)
+### 1.2.5 What vs. How (Problem vs. Solution)
 - **What:** Refers to **Software Requirements** (the problem to be solved).
 - **How:** Refers to **Software Design** (the solution to be developed).
 - This differentiation occurs at multiple levels: System Vision $\to$ System Architecture $\to$ Component Requirements $\to$ Component Design $\to$ Component Implementation.
 
-### 2.6 Evolution: Traditional vs. Continuous RE
+### 1.2.6 Evolution: Traditional vs. Continuous RE
 
 #### Traditional System Analysis (80s - early 90s)
 - RE was regarded as the **early (first) phase** of system development.
@@ -163,17 +163,17 @@ RE provides the foundation for other development tasks:
 
 # Chapter 2: The Requirements Engineering Framework
 
-## 3. The Requirements Engineering Framework
+## 2.1 The Requirements Engineering Framework
 
 > [!info] Framework Overview
 > The RE framework is driven by a **System Vision** and operates within an **RE Context**. It involves **Core Activities** (Elicitation, Negotiation, Documentation) that produce **Requirements Artefacts** (Goals, Scenarios, Solution-oriented requirements). These are supported continuously by **Cross-Sectional Activities** (Validation, Management).
 
-### 3.1 System Vision
+### 2.1.1 System Vision
 A **vision** defines an intended (small or large) change to a current reality.
 - **Characteristics:** Brief and precise, guides definition of requirements, guides system development, states a goal (**What**), not how to achieve it (**How**), basis for decisions, justifies expenses.
 - *Example:* "The system shall stop from a speed of 50 km/h within 10 meters." This vision differs largely in context (e.g., car vs. train).
 
-### 3.2 The RE Context
+### 2.1.2 The RE Context
 Each system is embedded in a specific context. The context strongly influences requirements and is often not fully understood.
 
 1. **System Context:** The part of the context in which the system to be developed is operating/embedded.
@@ -190,12 +190,12 @@ Each system is embedded in a specific context. The context strongly influences r
 2. **Development Context:** The part of the context in which the system is being developed (e.g., the dev team, tools).
 3. **Additional RE Context Objects:** Objects considered during RE but not part of system or development context.
 
-### 3.3 Core Activities of RE
+### 2.1.3 Core Activities of RE
 1. **Elicitation:** Goal is to identify relevant requirements sources, elicit existing requirements, and develop new/innovative ones. Sources include stakeholders, existing documents, and systems.
 2. **Negotiation:** Goal is to identify conflicts, analyze their causes, resolve them via appropriate strategies, and document the resolution/rationale.
 3. **Documentation:** Goal is to document info according to guidelines, specify requirements in appropriate formats (fitting stakeholder needs), and ensure consistency.
 
-### 3.4 Requirements Artefacts
+### 2.1.4 Requirements Artefacts
 1. **Goals:** High-level objectives about properties of the system or development project. They are **prescriptive**, express intentions, refine the vision, and should be **solution-free**.
 2. **Scenarios:** Concrete examples of satisfying or failing to satisfy a goal. Typically a **sequence of interaction steps**. They put requirements into context and increase comprehensibility.
 3. **Solution-Oriented Requirements:** Specify requirements at a level of detail sufficient for design and test.
@@ -203,7 +203,7 @@ Each system is embedded in a specific context. The context strongly influences r
     - **Functional Perspective:** Manipulation of data (Data flow diagrams).
     - **Behavioural Perspective:** System behavior/reactions to stimuli (State transition diagrams).
 
-### 3.5 Cross-Sectional Activities
+### 2.1.5 Cross-Sectional Activities
 1. **Validation:**
     - **Validation of artefacts:** Detecting defects.
     - **Validation of activities:** Checking compliance with process specifications.
@@ -222,7 +222,7 @@ Each system is embedded in a specific context. The context strongly influences r
 
 # Chapter 3: Context (Part 1)
 
-### 3.1 Context of a System
+## 3.1 Context of a System
 A (software-intensive) system is always embedded in a particular context. The context heavily influences the requirements the system has to fulfill. 
 
 > [!note] Important
@@ -240,7 +240,7 @@ A (software-intensive) system is always embedded in a particular context. The co
 > - **Submarine underwater:** An inappropriate solution.
 > - **Satellite in space:** An inappropriate solution.
 
-### 3.2 System Context and Context Objects
+## 3.2 System Context and Context Objects
 
 > [!info] Definition: Context Objects
 > Context objects are material or immaterial objects belonging to the context.
@@ -263,7 +263,7 @@ Typical examples of context object types:
 > 
 > *Visualization:* The system boundary separates the system itself from the system context. The context boundary separates the system context from the irrelevant environment.
 
-### 3.3 Change of System Context
+## 3.3 Change of System Context
 The scope of the system context can change during the elicitation process as more information becomes available.
 
 > [!example] Example: Change of System Context Scope
@@ -271,7 +271,7 @@ The scope of the system context can change during the elicitation process as mor
 > 2. **New Context Information:** "Transportation should be between the mainland and an island. The island has about 35 inhabitants and is located 5 km from the mainland." (This narrows solutions to ships or small boats).
 > 3. **Conflict & Resolution:** One stakeholder suggests a marine diesel engine. Another suggests avoiding any kind of pollution due to natural reserves. The decision to use an electric engine resolves this conflict, further refining the context and solution.
 
-### 3.4 Consideration of System Context Objects
+## 3.4 Consideration of System Context Objects
 
 > [!note] Important
 > Each context object can potentially be involved in **any requirements engineering activities** (Elicitation, Documentation, Negotiation, Validation, and Management).
@@ -281,7 +281,7 @@ If a context object is not involved in a specific requirement engineering activi
 > [!example] Example: Stakeholder Consideration
 > Assume there are 10 stakeholders in the system context (e.g., office workers) who potentially have relevant information. Due to time restrictions, only 6 out of 10 are interviewed. The remaining 4 stakeholders are still potentially relevant for later interviews or other RE activities.
 
-### 3.5 The Three Facets of System Context
+## 3.5 The Three Facets of System Context
 
 > [!tip] Extra Notes: Generic Principles of any Software-System
 > Information systems and embedded systems typically:
@@ -293,7 +293,7 @@ If a context object is not involved in a specific requirement engineering activi
 
 The system context can be structured into three facets:
 
-#### 3.5.1 Subject Facet
+### 3.5.1 Subject Facet
 > [!info] Definition: Subject Facet
 > The subject facet comprises system context objects about which **information is represented in the system** or which influence or constrain the representation of information represented in the system.
 
@@ -307,7 +307,7 @@ This includes system context objects and events, their properties, and relations
 > - Bookshelves
 > - Data privacy laws (influences representation)
 
-#### 3.5.2 Usage Facet
+### 3.5.2 Usage Facet
 > [!info] Definition: Usage Facet
 > The usage facet comprises all system context objects (people and/or systems) which directly or indirectly **interact with the system** or which **influence or benefit from the usage** of the system.
 
@@ -320,7 +320,7 @@ This includes objects contributing to the definition of the **desired usage** an
 > - Check-out process and return process for library items
 > - Usage laws and standards
 
-#### 3.5.3 IT System Facet
+### 3.5.3 IT System Facet
 > [!info] Definition: IT System Facet
 > The IT system facet comprises all system context objects of the **technical and operational environment** in which the system is going to be deployed or which **influence or constrain** the deployment of the system and/or the use of technology by the system (e.g., sensors, actuators).
 
@@ -333,7 +333,7 @@ This includes objects which contribute to the definition of the **operational en
 > - University cloud-infrastructure
 > - IT policies and strategies
 
-### 3.6 Properties of System Context Objects
+## 3.6 Properties of System Context Objects
 Not only the system context objects within each facet need to be considered, but also their **properties** and **relationships** with other objects (both in the same facet and in other facets).
 
 > [!example] Example: Properties of System Context Objects (Library System)
@@ -349,7 +349,7 @@ Not only the system context objects within each facet need to be considered, but
 >   - University cloud-infrastructure: Maximum throughput of communication network.
 >   - Server: Maximum persistent storage available, Maximum downtime in 24h.
 
-### 3.7 Documentation of Context Information
+## 3.7 Documentation of Context Information
 Because a requirement is always defined for a particular context, understanding requirements requires context information. A change in the context typically requires adaptation of requirements.
 
 > [!note] Important
@@ -380,7 +380,7 @@ Define **project-specific guidelines** for documenting context information. Thes
 
 # Chapter 4: Elicitation (Part 1)
 
-### 4.1 Introduction in Requirements Elicitation
+## 4.1 Introduction in Requirements Elicitation
 
 > [!info] Definition: Goal of Requirements Elicitation
 > Requirements elicitation is a core requirements engineering activity. The goal is threefold:
@@ -388,7 +388,7 @@ Define **project-specific guidelines** for documenting context information. Thes
 > 2. **Elicit existing requirements** from the identified sources.
 > 3. Develop **new and innovative requirements**.
 
-### 4.2 Requirements Sources
+## 4.2 Requirements Sources
 
 > [!important] Importance of Identifying Sources
 > - Some sources might be obvious, but **many are typically unknown** at the beginning.
@@ -403,7 +403,7 @@ Define **project-specific guidelines** for documenting context information. Thes
 2. **Documents**
 3. **Existing Systems**
 
-#### 4.2.1 Stakeholders
+### 4.2.1 Stakeholders
 > [!info] Definition: Stakeholder
 > A stakeholder is either a person or an organization with **potential interest in the desired system**. Each typically has specific goals and requirements. A person can **represent the interest of different stakeholders**.
 
@@ -414,14 +414,14 @@ Define **project-specific guidelines** for documenting context information. Thes
   - the requirements engineering context.
 - A stakeholder typically has **knowledge about several context objects** and their relationships, across different facets of the system context and development context.
 
-#### 4.2.2 Documents
+### 4.2.2 Documents
 **Existing documents** contain relevant information to be considered when defining requirements.
 Three types of potentially relevant documents:
 1. **General binding documents:** Defined by standardization bodies, governments, etc. (e.g., laws and standards).
 2. **Organization-specific documents:** Defined within an organization (e.g., development guidelines, product strategies, IT-strategies, business process documentation).
 3. **Product-/System-specific documents:** Any kind of development artefact of a predecessor or similar system (e.g., change requests, error reports, user manuals, requirements specs).
 
-#### 4.2.3 Existing Systems
+### 4.2.3 Existing Systems
 Existing systems are an excellent source for detecting and uncovering existing requirements.
 - **Requirements realized** by the existing system might still be relevant for the new system.
 - They should be analyzed to:
@@ -436,7 +436,7 @@ We differentiate between three types of systems:
 2. **Systems of competitors:** Essential to not oversee important requirements and to ensure differentiating features.
 3. **Systems from other domains:** Might offer properties, innovative technology, or unique features relevant for the desired system.
 
-### 4.3 Identification of Requirements Sources
+## 4.3 Identification of Requirements Sources
 #### Two-Step Procedure
 - **Step 1:** Identification of potential relevant requirements sources.
 - **Step 2:** Selection of requirements sources to be considered.
@@ -468,21 +468,21 @@ We differentiate between three types of systems:
 > - You might use the 100-dollar test separately for each **part of the RE context**.
 > - When **selecting stakeholders** for assessment, ensure an **adequate representation of the RE context**.
 
-### 4.4 Eliciting Existing Requirements vs. Creating Innovative Requirements
+## 4.4 Eliciting Existing Requirements vs. Creating Innovative Requirements
 Besides identifying requirement sources, the goal of requirements elicitation is twofold:
 1. **Elicit existing requirements** from relevant sources.
 2. **Create** and develop **innovative (new) requirements**.
 > [!note] Important
 > Existing and innovative requirements are equally important for system success!
 
-#### 4.4.1 Eliciting Existing Requirements
+### 4.4.1 Eliciting Existing Requirements
 - **From Stakeholders:** e.g., Stakeholders express requirements guided by a **questionnaire** (e.g., "How can safety be improved? -> The car should display a warning...").
 - **From Documents:** e.g., The **law** must be considered (e.g., defining goals based on regulations), or analyzing **error reports** to derive requirements.
 - **From Existing Systems:** 
   1. The **incarnation of the existing system** is elicited (incarnation model of predecessor system).
   2. An **essential model** is created by **abstracting from the incarnation**. (e.g., separating physical implementations from the core logical need).
 
-#### 4.4.2 Creation of Innovative Requirements
+### 4.4.2 Creation of Innovative Requirements
 - Innovative requirements **cannot** be elicited in the same way as existing ones.
 - They have to be created in **creative processes** using creativity techniques (e.g., brainstorming).
 
@@ -498,7 +498,7 @@ Three Categories of Creativity:
 - **Using Existing Documentation:** Analyzing specs from different domains (e.g., looking at an ERP system for a smart refrigerator to get the idea of "best before" tracking).
 - **Using Existing Systems:** Participating in demonstrations of other technologies (e.g., looking at smart televisions to identify features useful for a smart refrigerator like recipe suggestions and shopping lists).
 
-### 4.5 Common Elicitation Techniques
+## 4.5 Common Elicitation Techniques
 
 > [!info] Elicitation vs Assistance Techniques
 > - **Elicitation techniques** support eliciting existing requirements, creating innovative requirements, and eliciting requirement sources.
@@ -531,7 +531,7 @@ A template for describing them includes:
   5. Benefits
   6. Effort (estimation).
 
-### 4.6 Case Study: TOXLAND
+## 4.6 Case Study: TOXLAND
 > [!example] Case Study: TOXLAND Game
 > **Background:** Pusat Racun Negara (PRN) [National Poison Centre] promotes awareness and understanding of the dangers of chemical exposure among children and young adults.
 > **System Objectives:**
