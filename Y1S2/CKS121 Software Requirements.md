@@ -526,3 +526,15 @@ A template for describing them includes:
 - **Key characteristics:** 
   5. Benefits
   6. Effort (estimation).
+
+### 4.6 Case Study: TOXLAND
+> [!example] Case Study: TOXLAND Game
+> **Background:** Pusat Racun Negara (PRN) [National Poison Centre] promotes awareness and understanding of the dangers of chemical exposure among children and young adults.
+> **System Objectives:**
+> 1. Make learning about toxicology more engaging via game learning.
+> 2. Design educational and entertaining games that help students learn and retain important information about toxicology and chemical safety in a laboratory setting.
+> 
+> **Analysis Questions to Consider:**
+> - **Requirements Sources:** What documents or existing systems could be analyzed? (e.g., lab safety guidelines, existing educational games).
+> - **Stakeholders:** Who is involved? (e.g., PRN staff, students, teachers, game developers, subject matter experts in toxicology).
+> - **Elicitation Techniques:** How to gather requirements? (e.g., workshops with teachers and PRN staff, observation of students playing existing games, focus groups with target age groups).
