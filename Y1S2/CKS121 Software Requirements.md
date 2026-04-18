@@ -220,7 +220,7 @@ Each system is embedded in a specific context. The context strongly influences r
 
 ---
 
-## Chapter 3: Context (Part 1)
+# Chapter 3: Context (Part 1)
 
 ### 3.1 Context of a System
 A (software-intensive) system is always embedded in a particular context. The context heavily influences the requirements the system has to fulfill. 
