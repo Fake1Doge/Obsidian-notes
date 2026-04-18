@@ -378,7 +378,7 @@ Define **project-specific guidelines** for documenting context information. Thes
 
 ---
 
-## Chapter 4: Elicitation (Part 1)
+# Chapter 4: Elicitation (Part 1)
 
 ### 4.1 Introduction in Requirements Elicitation
 
