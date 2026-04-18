@@ -84,12 +84,17 @@ The goals of RE can be characterized by three orthogonal dimensions:
     - *IREB Definition:* A requirement that pertains to a quality concern that is not covered by functional requirements.
     - *Description:* Define a **quality property** for the entire system, a system component, a service, or a function (e.g., Performance, Security, Usability, Maintainability).
     - *Example (R-15):* The release of the locking mechanism shall take 0.8 seconds at most.
-    - *Standards:* ISO/IEC 25010:2011 defines quality in use (Effectiveness, Efficiency, Satisfaction) and product quality (Reliability, Security, Maintainability, Portability).
+    - *Standards:* ISO/IEC 25010:2011 defines:
+        - **Quality in Use:** Effectiveness, Efficiency, Satisfaction, Freedom from risk, Context coverage.
+        - **System/Software Product Quality:** Functional suitability, Performance efficiency, Compatibility, Reliability, Security, Maintainability, Portability.
 3. **Constraints:** 
     - *IREB Definition:* A requirement that limits the solution space beyond what is necessary for meeting the given functional requirements and quality requirements.
-    - *Description:* An **organizational or technological requirement** which restricts the way the system shall be developed (e.g., Technology, Budget, Schedule, Regulations).
-    - *Example (C-16):* The effort for system development shall not exceed 480 person months.
-    - *Example (C-41):* The system shall process personal data in compliance with the EU's Data Protection Directive.
+    - *Description:* An **organizational or technological requirement** which restricts the way the system shall be developed.
+    - *Types of Constraints:* Organisational/project (Budget, Deadlines, Team), Technical, Physical, Legal (Legislation, Norms, Standards), Cultural.
+    - *Example (C-9 - Culture):* The user interface shall not contain symbols or graphics abusive for any culture.
+    - *Example (C-16 - Organisational):* The effort for system development shall not exceed 480 person months.
+    - *Example (C-36 - Physical):* The electronic control unit in the vehicle interior shall work at temperatures from -10 to +50 degrees Celsius.
+    - *Example (C-41 - Legal):* The system shall process personal data in compliance with the EU's Data Protection Directive.
 
 ---
 
