@@ -161,6 +161,8 @@ RE provides the foundation for other development tasks:
 
 ---
 
+# Chapter 2: The Requirements Engineering Framework
+
 ## 3. The Requirements Engineering Framework
 
 > [!info] Framework Overview
