@@ -181,11 +181,11 @@ Each system is embedded in a specific context. The context strongly influences r
     - **Usage Facet:** People and systems interacting with the system or benefiting from it.
     - **IT System Facet:** Technical environment (sensors, actuators, other systems).
     
-    > [!example] Example: System Context Facets
-    > For an automated braking system:
-    > - **Subject facet:** Driver, Weather conditions, existing Brake system.
-    > - **Usage facet:** Driver.
-    > - **IT system facet:** Sensors, Actuators.
+> [!example] Example: System Context Facets
+> For an automated braking system:
+> - **Subject facet:** Driver, Weather conditions, existing Brake system.
+> - **Usage facet:** Driver.
+> - **IT system facet:** Sensors, Actuators.
 
 2. **Development Context:** The part of the context in which the system is being developed (e.g., the dev team, tools).
 3. **Additional RE Context Objects:** Objects considered during RE but not part of system or development context.
