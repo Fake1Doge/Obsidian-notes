@@ -28,3 +28,11 @@ node_modules/
 temp_*.txt
 temp_*.pdf
 
+# Large binaries
+*.pdf
+
+# Environment and logs
+.env
+.env.*
+*.log
+npm-debug.log*
