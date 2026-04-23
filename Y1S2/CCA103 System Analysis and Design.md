@@ -744,3 +744,146 @@ High-priority candidates:
 5. Add other required transitions (test both directions).
 6. Expand each transition with appropriate message event, guard condition, and action expression.
 7. Review and test (follow the life cycle, cover exception conditions).
+
+---
+
+# Chapter 5: Extending the Requirements Models
+
+## 5.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Write fully developed use case descriptions.
+> 2. Develop activity diagrams to model the flow of activities.
+> 3. Develop system sequence diagrams.
+> 4. Use the CRUD technique to validate use cases.
+> 5. Explain how use case descriptions and UML diagrams work together to define functional requirements.
+
+## 5.2 Part I: Use Case Description
+
+### 5.2.1 Recap: What is a Use Case?
+- A use case depicts a set of activities performed to produce some output result.
+- Each use case describes how an event triggers actions performed by the system and the user.
+- With this type of event-driven modeling, everything in the system can be thought of as a response to some trigger event.
+- When there are no events, the system is at rest, patiently waiting for the next event to trigger it.
+- When a trigger event occurs, the system (and the people using it) responds, performs the actions defined in the use case, and then returns to the waiting state.
+
+### 5.2.2 Brief Use Case Descriptions
+- A brief description gives enough detail for very simple use cases, especially when the system to be developed is a small, well-understood application.
+- Examples of simple use cases are *Add product comment* or *Send message*.
+- A use case, such as *Fill shopping cart* is complex enough that a fully developed description is also written after the initial brief use case description is finalized.
+
+### 5.2.3 Fully Developed Use Case Descriptions
+- The fully developed description is the most **formal method** for documenting a use case.
+- One of the major difficulties for software developers is that they often struggle to obtain a deep understanding of the users' needs.
+- If you create a fully developed use case description, you increase the probability that you thoroughly understand the business processes and the ways the system must support them.
+- To create a comprehensive, robust system that truly meets users' needs, you must understand the detailed steps of each use case.
+
+> [!example] Typical Use Case Description Templates Include:
+> 1. **Use case name:** Verb-noun.
+> 2. **Scenario (if needed):** Also known as a use case instance. It is a unique set of internal activities within a use case. A use case can have more than one scenario (special case or more specific path).
+> 3. **Triggering event:** Identifies the event that triggers the use case (Based on the event decomposition technique).
+> 4. **Brief description:** You may just duplicate the brief description constructed earlier here.
+> 5. **Actors:** Implied in all use cases is a person who uses the system. An actor is always outside the automation boundary of the system but may be part of the manual portion of the system.
+> 6. **Related use cases (`<<includes>>`):** Identifies other use cases and the way they are related to this use case. These cross-references help document all aspects of the users' requirements.
+> 7. **Stakeholders:** Identifies stakeholders who are interested parties other than specific actors.
+> 8. **Preconditions:** Identify what the state of the system must be for the use case to begin, including what objects must already exist, what information must be available, and even the condition of the actor prior to beginning the use case.
+> 9. **Postconditions:** Identify what must be true upon completion of the use case. Most importantly, they indicate what new objects are created or updated by the use case and how objects need to be associated. Use for planning test case expected results.
+> 10. **Flow of activities:** Identifying the steps performed by the actor and the responses required by the system. The item numbers help identify the sequence of the steps.
+> 11. **Exception conditions:** Alternative activities and exception conditions. Where and what can go wrong.
+
+### 5.2.4 Use Case Practical Tips
+1. **Do not expect perfection on the first draft:** Use cases usually improve through repeated review and refinement.
+2. **Be detailed and thorough:** Clear and complete descriptions help avoid misunderstandings and reduce rework later.
+3. **Focus on the user’s goal:** Write the use case based on what the user wants to achieve with the system.
+4. **Write for both users and developers:** The use case should be understandable to business users but still precise enough for system developers.
+5. **Develop use cases as a team:** It is helpful to involve people with technical knowledge, business rule knowledge, and real user experience.
+6. **Create use cases when they add value:** They are especially important when processes are being redesigned or when system changes affect how people work. Also, involve users so that no important or unusual steps are missed.
+
+## 5.3 Part II: Activity Diagram for Use Cases
+
+- Activity diagrams are also used to document the flow of activities for one use case.
+- Sometimes, an activity diagram can take the place of the flow of activities section of a use case description, and sometimes, it is created to supplement the use case description.
+- Activity diagrams are helpful when the flow of activities for a use case is complex.
+
+### 5.3.1 Activity Diagrams Symbols
+- **Starting activity (Pseudo):** Solid black circle.
+- **Ending activity (Pseudo):** Solid black circle with an outline (bullseye).
+- **Activity:** Oval rectangle.
+- **Transition arrow:** Solid arrows indicating the flow from one activity to another.
+- **Swimlane heading:** Vertical columns representing different roles or systems (e.g., "Customer", "System").
+- **Decision activity:** Diamond shape with condition labels (e.g., `[no]`, `[yes]`).
+- **Synchronization bar (Split/Join):** Heavy horizontal or vertical line used to show concurrent paths of execution. A split creates concurrent paths, and a join merges them back together. Can be used for parallel concurrent paths or for beginning and ending loops.
+
+## 5.4 Part III: The System Sequence Diagram (SSD)
+
+- A system sequence diagram (SSD) is used to describe the flow of information into and out of the automated portion of the system.
+- Thus, an SSD documents the **inputs** and the **outputs** and identifies the interaction between actors and the system.
+- It is an effective tool to **help in the initial design of the user interface** by identifying the specific information that flows from the user into the system and the information that flows out of the system back to the user.
+- An SSD is a special type of UML sequence diagram.
+- Note: In a use case diagram, the actor "uses" the system, but the emphasis in an SSD is on **how the actor "interacts" with the system** by entering **input data** and **receiving output data**.
+
+### 5.4.1 The Black Box Concept
+- We do not care how the system works inside (no classes, no databases).
+- We only care about the interactions happening at the system's boundary.
+- The system is treated as a black box (represented by `:System`).
+
+### 5.4.2 SSD Message Examples with Loop Frame
+- The **loop frame** notation on a sequence diagram showing **repeating messages**.
+- For example, when an actor enters items on an order, the message to add an item to an order may be sent multiple times.
+- **Alternate notation:** The asterisk (`*`) preceding the true/false condition indicates that the message repeats as long as the true/false condition evaluates to true. The square brackets `[ ]` and text inside them are called a true/false condition for the messages.
+
+### 5.4.3 Message Notation for SSD
+- Syntax: `*[true/false condition] return-value := message-name (parameter-list)`
+- An **asterisk (`*`)** indicates repeating or **looping of the message**.
+- **Brackets `[ ]`** indicate a **true/false condition**. This is a test for that message only. If it evaluates to true, the message is sent. If it evaluates to false, the message isn't sent.
+- **Message-name** is the description of the requested service written as a verb-noun.
+- **Parameter-list** (with parentheses on initiating messages and without parentheses on return messages) shows the data that is passed with the message.
+- **Return-value** on the same line as the message (requires `:=`) is used to describe data being returned from the destination object to the source object in response to the message.
+
+### 5.4.4 SSD Message Examples: Opt and Alt Frames
+- **Opt Frame:** Notation on a sequence diagram showing optional messages. An opt frame is used when something may happen, but does not always happen. Opt means only do this step if the condition is true.
+- **Alt Frame:** An alt frame is used when the system must choose between **two or more alternatives**. It works like **if–else** in programming. Alt means the system must choose one path only.
+
+### 5.4.5 Steps for Developing SSD
+1. **Identify input message:** See use case flow of activities or activity diagram.
+2. **Describe the message from the external actor to the system** by using the message notation described earlier. Name it verb-noun (what the system is asked to do). Consider the parameters the system will need.
+3. **Identify and add any special conditions on the input messages**, including iteration and true/false condition (Iteration/loop frame, Opt or Alt frame).
+4. **Identify and add the output return messages:** On message itself (`aValue:= getValue(value I D)`) or as an explicit return on a separate dashed line.
+
+## 5.5 Part IV: Use Cases and CRUD
+
+- Another important technique used to validate use cases is the CRUD technique, which involves verifying that all the needed use cases have been identified to maintain the data represented by the domain model class diagram.
+- **CRUD** is an acronym for **C**reate, **R**ead or **R**eport, **U**pdate, and **D**elete, and it is often introduced with respect to database management.
+- The CRUD technique is most useful when used as a cross-check along with the user goal technique.
+- Users will focus on their primary goals, and use cases that update or archive data will often be overlooked.
+- The CRUD technique makes sure all possibilities are identified.
+
+> [!example] Verifying use cases for Customer
+> - `Create customer account` creates customer objects. A separate *Create customer* use case is not needed.
+> - `Update customer account` is defined to archive a customer, so no separate *Archive customer* use case is required.
+
+### 5.5.1 CRUD Technique for Validating and Refining Use Cases
+1. Identify all the domain classes involved in the new system.
+2. For each type of data (domain class), verify that a use case has been identified that creates a new instance, updates existing instances, reads or reports values of instances and deletes (or archives) an instance.
+3. If a needed use case has been overlooked, add a new use case and then identify the stakeholders.
+4. With integrated applications, make sure it is clear which application is responsible for adding and maintaining the data and which system merely uses the data.
+
+## 5.6 Summary: Extending and Integrating Requirements Models
+
+### Use Cases
+- Use case diagram
+- Use case description
+- Activity diagram
+- System sequence diagram (SSD)
+
+### Domain Classes
+- Domain model class diagram
+- State machine diagram
+
+> [!note] Important Integration Concepts
+> - Fully developed use case descriptions provide information about each use case, including actors, stakeholders, preconditions, postconditions, the flow of activities, and exception conditions.
+> - Activity diagrams can also be used to show the flow of activities for a use case.
+> - System sequence diagrams (SSDs) show the inputs and outputs for each use case as messages.
+> - CRUD analysis serves to verify that all domain classes are fully supported by the new system.
+> - Not all use cases and domain classes are modelled at a detailed level. Only model when there is complexity and a need to communicate details.
+> - All the models must be consistent and integrate to provide a complete picture of the requirements and specifications.
