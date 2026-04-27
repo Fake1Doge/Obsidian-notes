@@ -1,0 +1,4 @@
+Alice 250.0 Gold
+Bob 120.0 Silver
+Charlie 400.0 Platinum
+Diana 80.0 Bronze
