@@ -1,4 +1,3 @@
-# Chapter 1: An Overview of System Analysis and Design
 
 ## 1.1 Introduction
 > [!info] Objective
