@@ -1,6 +1,0 @@
---- System Run Completed ---
-Total Travelers: 4
-Alice authored 2 reviews.
-Bob authored 2 reviews.
-Charlie authored 2 reviews.
-Diana authored 1 reviews.
