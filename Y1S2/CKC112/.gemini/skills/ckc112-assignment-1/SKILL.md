@@ -39,3 +39,26 @@ The final submission must be a single `.ipynb` (Google Colab) file including:
 - **Property Deep-Dive**: Find and summarize all reviews for a specific hotel.
 - **Traveler Profile**: Manage a traveler's account, loyalty tier, budget, and authored reviews.
 - **Top-Pick Matcher**: Compare reviews in memory to identify the highest-rated hotel fitting a specific user's budget.
+
+## Course Notes & Theory (CKC112)
+Ensure that all code and UML designs align with the specific theory taught in the course:
+
+### Structures and Classes
+- **Structs**: Combine multiple variables. Accessed via the dot operator `.` or pointer operator `->`. Support nested structures and arrays of structures.
+- **Classes vs Objects**: Class is a blueprint; an Object is an instance. Classes support attributes (data) and methods (behaviors).
+- **Access Specifiers**: `public` (accessible outside the class) and `private` (accessible only within class functions, for data hiding).
+- **Separation of Concerns**: Class specifications generally belong in header files (`.h`), and implementations in source files (`.cpp`).
+- **UML Notation**: Private members (`-`), Public members (`+`). Types are indicated with colons (e.g., `- width : double`).
+
+### Advanced Class Features
+- **Constructors/Destructors**: Automatically called on creation/destruction. Destructors have no return type and no arguments (e.g., `~ClassName()`).
+- **Static Members**: Shared across all instances of a class. `static` methods can only access `static` data.
+- **Friend Functions**: Declared inside a class with the `friend` keyword, allowing a standalone function or another class's method to access `private` and `protected` data without breaking encapsulation.
+- **Operator Overloading**: Allows redefinition of standard operators (`+`, `-`, `=`, `>`, etc.). Uses the `operator` keyword (e.g., `bool operator>(const Review& other) const`).
+- **Aggregation/Composition**: Models a "Has-a" relationship, typically implemented via arrays of objects inside another class.
+
+### Inheritance
+- **"Is-a" Relationship**: Creating a specialized derived class (child) from a base class (parent).
+- **Protected Access**: `protected` acts like `private` to outside code but remains accessible to derived classes.
+- **Constructor Order**: Base class constructor executes first, then the derived class constructor. The Destructor order is reversed.
+- **Redefining**: Derived classes can redefine base class functions (statically bound). Note: *Polymorphism and virtual functions are taught but strictly forbidden by Assignment 1 constraints.*
