@@ -50,6 +50,32 @@ string trim(const string& str) {
     return str.substr(first, (last - first + 1));
 }
 
+// Custom string to integer conversion to avoid using stoi
+int customStoi(const string& str) {
+    int result = 0;
+    int sign = 1;
+    size_t i = 0;
+    
+    // Skip leading whitespaces
+    while (i < str.length() && (str[i] == ' ' || str[i] == '\t' || str[i] == '\r' || str[i] == '\n')) i++;
+
+    if (i < str.length() && str[i] == '-') {
+        sign = -1;
+        i++;
+    } else if (i < str.length() && str[i] == '+') {
+        i++;
+    }
+
+    for (; i < str.length(); i++) {
+        if (str[i] >= '0' && str[i] <= '9') {
+            result = result * 10 + (str[i] - '0');
+        } else {
+            break; // Stop at first non-digit character
+        }
+    }
+    return result * sign;
+}
+
 int main() {
     // Single primary entity object array encapsulating data (Entity-Centric Lifecycle)
     Member members[MAX_MEMBERS];
@@ -83,7 +109,7 @@ int main() {
             
             int points = 0;
             if (!pointsStr.empty()) {
-                points = stoi(pointsStr);
+                points = customStoi(pointsStr);
             }
 
             members[memberCount] = Member(id, name, email, membershipStr, points);
