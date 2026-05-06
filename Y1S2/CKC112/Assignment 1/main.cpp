@@ -1,43 +1,44 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Traveler.h"
+#include "User.h"
 #include "Review.h"
 
 using namespace std;
 
-const int MAX_TRAVELERS = 100;
+const int MAX_MEMBERS = 100;
 
 // Friend function implementation (External Utility)
-// Accesses private data (points, reviewCount) without breaking encapsulation
-void topReviewersAnalytics(Traveler travelers[], int count) {
+// Accesses private data (points) without breaking encapsulation
+void topReviewersAnalytics(Member members[], int count) {
     cout << "\n=== Analytics: Top Reviewers ===" << endl;
     if (count == 0) {
-        cout << "No travelers found." << endl;
+        cout << "No members found." << endl;
         return;
     }
 
-    // Find traveler with most reviews and highest points
-    Traveler* mostReviewsTraveler = &travelers[0];
-    Traveler* highestPointsTraveler = &travelers[0];
+    // Find member with most reviews and highest points
+    Member* mostReviewsMember = &members[0];
+    Member* highestPointsMember = &members[0];
 
     for (int i = 1; i < count; i++) {
-        // Accessing private 'reviewCount' directly due to friend status
-        if (travelers[i].reviewCount > mostReviewsTraveler->reviewCount) { 
-            mostReviewsTraveler = &travelers[i];
+        // Accessing 'reviewCount' (inherited from User) via getter
+        if (members[i].getReviewCount() > mostReviewsMember->getReviewCount()) { 
+            mostReviewsMember = &members[i];
         }
         
         // Using overloaded operator > to compare objects based on points
-        if (travelers[i] > *highestPointsTraveler) { 
-            highestPointsTraveler = &travelers[i];
+        if (members[i] > *highestPointsMember) { 
+            highestPointsMember = &members[i];
         }
     }
 
-    cout << "Traveler with MOST REVIEWS:" << endl;
-    cout << mostReviewsTraveler->getName() << " (" << mostReviewsTraveler->reviewCount << " reviews)" << endl;
+    cout << "Member with MOST REVIEWS:" << endl;
+    cout << mostReviewsMember->getName() << " (" << mostReviewsMember->getReviewCount() << " reviews)" << endl;
 
-    cout << "\nTraveler with HIGHEST LOYALTY POINTS:" << endl;
-    cout << highestPointsTraveler->getName() << " (" << highestPointsTraveler->points << " points)" << endl;
+    cout << "\nMember with HIGHEST LOYALTY POINTS:" << endl;
+    // Using friend access to access private 'points' directly
+    cout << highestPointsMember->getName() << " (" << highestPointsMember->points << " points)" << endl;
     cout << "=================================" << endl;
 }
 
@@ -51,14 +52,14 @@ string trim(const string& str) {
 
 int main() {
     // Single primary entity object array encapsulating data (Entity-Centric Lifecycle)
-    Traveler travelers[MAX_TRAVELERS];
-    int travelerCount = 0;
+    Member members[MAX_MEMBERS];
+    int memberCount = 0;
 
     // --- File Reading: Users.txt ---
     ifstream usersFile("users.txt");
     if (usersFile.is_open()) {
         string line;
-        while (getline(usersFile, line) && travelerCount < MAX_TRAVELERS) {
+        while (getline(usersFile, line) && memberCount < MAX_MEMBERS) {
             if (trim(line).empty()) continue;
             
             // Manual string splitting by tab '\t' without sstream
@@ -85,8 +86,8 @@ int main() {
                 points = stoi(pointsStr);
             }
 
-            travelers[travelerCount] = Traveler(id, name, email, membershipStr, points);
-            travelerCount++;
+            members[memberCount] = Member(id, name, email, membershipStr, points);
+            memberCount++;
         }
         usersFile.close();
     } else {
@@ -123,11 +124,11 @@ int main() {
                 rating = stoi(ratingStr);
             }
 
-            // Find matching traveler and add review
-            Traveler* t = Traveler::findTravelerByID(travelers, travelerCount, userID);
-            if (t != nullptr) {
+            // Find matching member and add review
+            Member* m = Member::findMemberByID(members, memberCount, userID);
+            if (m != nullptr) {
                 Review rev(rating, comment, hotelName);
-                t->addReview(rev);
+                m->addReview(rev);
             }
         }
         reviewsFile.close();
@@ -142,7 +143,7 @@ int main() {
         cout << "       HOTEL REVIEW SYSTEM       " << endl;
         cout << "===================================" << endl;
         cout << "1. Property Deep-Dive (Search Hotel)" << endl;
-        cout << "2. Traveler Profile (Manage Profile)" << endl;
+        cout << "2. Member Profile (Manage Profile)" << endl;
         cout << "3. Top-Pick Matcher (Hotel Rankings)" << endl;
         cout << "4. Top Reviewers Analytics" << endl;
         cout << "5. Exit System" << endl;
@@ -160,27 +161,27 @@ int main() {
             cout << "Enter exact Hotel Name (e.g., Grand Imperial Hotel): ";
             getline(cin, hName);
             // Processing logic happens entirely inside class member functions
-            Traveler::propertyDeepDive(travelers, travelerCount, trim(hName));
+            Member::propertyDeepDive(members, memberCount, trim(hName));
         } 
         else if (choice == 2) {
             cin.ignore();
             string tID;
-            cout << "Enter Traveler UserID (e.g., U001): ";
+            cout << "Enter Member UserID (e.g., U001): ";
             getline(cin, tID);
-            Traveler* t = Traveler::findTravelerByID(travelers, travelerCount, trim(tID));
-            if (t != nullptr) {
-                t->displayProfile();
-                t->displayAuthoredReviews();
+            Member* m = Member::findMemberByID(members, memberCount, trim(tID));
+            if (m != nullptr) {
+                m->displayProfile();
+                m->displayAuthoredReviews();
             } else {
-                cout << "Traveler not found!" << endl;
+                cout << "Member not found!" << endl;
             }
         } 
         else if (choice == 3) {
-            Traveler::topPickMatcher(travelers, travelerCount);
+            Member::topPickMatcher(members, memberCount);
         }
         else if (choice == 4) {
             // Calls the external utility Friend Function
-            topReviewersAnalytics(travelers, travelerCount);
+            topReviewersAnalytics(members, memberCount);
         }
         else if (choice == 5) {
             cout << "Writing to output file and shutting down..." << endl;
@@ -188,10 +189,10 @@ int main() {
             ofstream outFile("SystemReport.txt");
             if (outFile.is_open()) {
                 outFile << "=== System Report ===\n";
-                outFile << "Total Registered Travelers: " << travelerCount << "\n\n";
-                for (int i = 0; i < travelerCount; i++) {
-                    outFile << "Traveler: " << travelers[i].getName() << " (" << travelers[i].getUserID() << ")\n";
-                    outFile << "Total Reviews: " << travelers[i].getReviewCount() << "\n\n";
+                outFile << "Total Registered Members: " << memberCount << "\n\n";
+                for (int i = 0; i < memberCount; i++) {
+                    outFile << "Member: " << members[i].getName() << " (" << members[i].getUserID() << ")\n";
+                    outFile << "Total Reviews: " << members[i].getReviewCount() << "\n\n";
                 }
                 outFile.close();
                 cout << "Report successfully written to SystemReport.txt." << endl;
