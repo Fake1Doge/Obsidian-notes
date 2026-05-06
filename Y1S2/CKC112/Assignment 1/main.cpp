@@ -147,7 +147,7 @@ int main() {
 
             int rating = 0;
             if (!ratingStr.empty()) {
-                rating = stoi(ratingStr);
+                rating = customStoi(ratingStr);
             }
 
             // Find matching member and add review
