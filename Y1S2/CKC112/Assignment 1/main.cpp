@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "User.h"
+#include "Member.h"
 #include "Review.h"
 
 using namespace std;
@@ -14,21 +15,13 @@ void topReviewersAnalytics(Member members[], int count) {
         return;
     }
     
-    int maxReviews = -1;
+    cout << "All Members List:" << endl;
     for (int i = 0; i < count; i++) {
-        // Accessing protected member reviewCount through Member object
-        if (members[i].getReviewCount() > maxReviews) {
-            maxReviews = members[i].getReviewCount();
-        }
+        cout << "- " << members[i].getName() << " (" << members[i].getId() 
+             << ") - Member Type: " << members[i].getMemberType() 
+             << " | Points: " << members[i].userPoint << endl;
     }
-    
-    cout << "Members with the highest number of reviews (" << maxReviews << "):" << endl;
-    for (int i = 0; i < count; i++) {
-        if (members[i].getReviewCount() == maxReviews) {
-            // Demonstrating friend access to private member userPoint
-            cout << "- " << members[i].getName() << " (" << members[i].getId() << ") - Member Type: " << members[i].getMemberType() << " | Points: " << members[i].userPoint << endl;
-        }
-    }
+    cout << "----------------------------------------" << endl;
 
     // Utilize overloaded operator> for Member
     Member mostLoyal = members[0];
@@ -37,10 +30,17 @@ void topReviewersAnalytics(Member members[], int count) {
             mostLoyal = members[i];
         }
     }
-    cout << "\n* Most Loyal Member (Highest Points): " << mostLoyal.getName() 
-         << " with " << mostLoyal.userPoint << " points!" << endl;
+    
+    cout << "Member(s) with the highest points (" << mostLoyal.userPoint << "):" << endl;
+    for (int i = 0; i < count; i++) {
+        if (members[i].userPoint == mostLoyal.userPoint) {
+            cout << "- " << members[i].getName() << " (" << members[i].getId() 
+                 << ") - Member Type: " << members[i].getMemberType() 
+                 << " | Points: " << members[i].userPoint << endl;
+        }
+    }
 
-    cout << "===============================" << endl;
+    cout << "========================================" << endl;
 }
 
 int main() {
