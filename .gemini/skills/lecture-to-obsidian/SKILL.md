@@ -29,6 +29,7 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 4. **Process and Format:** Apply Obsidian-specific syntax (Callouts, Math, etc.) as defined in the `obsidian-markdown` skill. If a concept is unclear, insert an "Extra Notes" callout. Ensure you escape characters like `<` and `>` properly with backslashes (`\<`, `\>`) to avoid HTML rendering issues.
 5. **Save and Update:** Ensure the master Markdown file is updated with the new chapter.
 6. **Ensure Sequential Headings:** Once the master Markdown file has been updated, use the `rearrange-topics` skill to sequentially renumber all topic/chapter headings in the master file, ensuring they are consistent.
+7. **Automated Cleanup:** Once the entire process is complete, you MUST automatically delete any temporary text files, fallback extraction scripts, or directories (e.g., `temp.md`, `temp_pdf_text.txt`, custom `.js` scripts) that you created during the extraction process. Use `run_shell_command` to clean up these files to maintain a tidy workspace.
 
 ## Obsidian Formatting Guidelines
 
