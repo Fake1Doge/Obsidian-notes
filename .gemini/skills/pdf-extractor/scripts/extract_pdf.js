@@ -1,17 +1,18 @@
 const fs = require('fs');
-const pdf = require('pdf-parse');
+const PDFParser = require("pdf2json");
 
 const inputFile = process.argv[2];
 if (!inputFile) {
-    console.error("Usage: node extract_pdf.js <input_pdf_path>");
+    console.error("Usage: node extract_pdf2.js <input_pdf_path>");
     process.exit(1);
 }
 
-let dataBuffer = fs.readFileSync(inputFile);
+const pdfParser = new PDFParser(this, 1);
 
-pdf(dataBuffer).then(function(data) {
-    fs.writeFileSync('temp_pdf_text.txt', data.text);
-    console.log("Extraction complete. Text saved to temp_pdf_text.txt");
-}).catch(function(error){
-    console.error("Error reading pdf:", error);
+pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError));
+pdfParser.on("pdfParser_dataReady", pdfData => {
+    fs.writeFileSync("temp_pdf_text.txt", pdfParser.getRawTextContent());
+    console.log("Done. Text saved to temp_pdf_text.txt");
 });
+
+pdfParser.loadPDF(inputFile);

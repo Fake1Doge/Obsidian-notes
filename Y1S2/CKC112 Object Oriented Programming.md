@@ -1,4 +1,4 @@
-# 1. Structured Data
+# Chapter 1: Structured Data
 
 ## 1.1 Abstract Data Types
 > [!info] Definition: Abstract Data Type (ADT)
@@ -593,7 +593,7 @@ auto [variable1, variable2, etc...] = structureVar;
 
 ---
 
-# 2. Introduction to Classes
+# Chapter 2: Introduction to Classes
 
 ## 2.1 Procedural and Object-Oriented Programming
 - **Procedural programming:** Focuses on the process/actions that occur in a program.
@@ -851,7 +851,7 @@ class ClassName
 
 ---
 
-# 3. More About Classes
+# Chapter 3: More About Classes
 
 ## 3.1 Instance and Static Members
 - **Instance variable:** a member variable in a class. Each object has its own copy.
@@ -1054,3 +1054,608 @@ class ClassName
   MyClass(const MyClass&) = delete; // Specifies no default copy constructor
   ```
   As a result, objects of this class cannot be copied.
+
+---
+
+# Chapter 4: Inheritance, Polymorphism, and Virtual Functions
+
+## 4.1 What Is Inheritance?
+> [!info] Definition: Inheritance
+> Provides a way to create a new class from an existing class. The new class is a specialized version of the existing class.
+
+- Inheritance establishes an **"is a"** relationship between classes.
+  > [!example] Example: "is a" Relationship
+  > - A poodle is a dog
+  > - A car is a vehicle
+  > - A flower is a plant
+  > - A football player is an athlete
+
+### Terminology and Notation
+- **Base class (or parent):** Inherited from.
+- **Derived class (or child):** Inherits from the base class.
+- **Notation:**
+  ```cpp
+  class Student // base class
+  {
+      // ...
+  };
+  
+  class UnderGrad : public Student // derived class
+  {
+      // ...
+  };
+  ```
+
+> [!note] What Does a Child Have?
+> An object of the derived class has all members defined in the child class and all members declared in the parent class.
+> An object of the derived class can use all `public` members defined in the child class and all `public` members defined in the parent class.
+
+## 4.2 Protected Members and Class Access
+- **`protected` member access specification:** Like `private`, but accessible by objects of the derived class.
+- **Class access specification:** Determines how `private`, `protected`, and `public` members of the base class are inherited by the derived class.
+
+### Class Access Specifiers
+1. **`public`:** Object of derived class can be treated as object of base class (not vice-versa).
+2. **`protected`:** More restrictive than `public`, but allows derived classes to know details of parents.
+3. **`private`:** Prevents objects of derived class from being treated as objects of base class.
+
+## 4.3 Constructors and Destructors in Base and Derived Classes
+- Derived classes can have their own constructors and destructors.
+- **Creation Order:** When an object of a derived class is created, the base class's constructor is executed first, followed by the derived class's constructor.
+- **Destruction Order:** When an object of a derived class is destroyed, its destructor is called first, then that of the base class.
+
+### Passing Arguments to Base Class Constructor
+- Allows selection between multiple base class constructors.
+- Specify arguments to the base constructor on the derived constructor heading:
+  ```cpp
+  Square::Square(int side) : Rectangle(side, side)
+  ```
+- Must be done if the base class has no default constructor.
+
+### Constructor Inheritance
+- In a derived class, some constructors can be inherited from the base class.
+- Constructors that **cannot** be inherited are:
+  - Default constructor
+  - Copy constructor
+  - Move constructor
+
+## 4.4 Redefining Base Class Functions
+> [!info] Definition: Redefining
+> A function in a derived class that has the same name and parameter list as a function in the base class. Typically used to replace a function in the base class with different actions in the derived class.
+
+- **Redefining vs. Overloading:** With overloading, parameter lists must be different.
+- Objects of the base class use the base class version of the function; objects of the derived class use the derived class version.
+
+> [!warning] Problem with Redefining
+> If a base class function `x()` calls a redefined function `y()`, and an object of the derived class calls `x()`, static binding causes the base class version of `y()` to be called instead of the derived class version.
+
+## 4.5 Class Hierarchies
+- A base class can be derived from another base class.
+- This creates a hierarchy (e.g., `GradedActivity` -> `FinalExam`, `PassFailActivity` -> `PassFailExam`).
+
+## 4.6 Polymorphism and Virtual Member Functions
+> [!info] Definition: Virtual Member Function
+> A function in a base class that expects to be redefined in a derived class. Defined with the keyword `virtual`.
+> ```cpp
+> virtual void Y() { ... }
+> ```
+
+- **Dynamic Binding:** Functions bound at run time to the function that they call. Virtual functions use dynamic binding.
+- **Static Binding:** Functions bound at compile time. Used when functions are not virtual.
+
+> [!note] Polymorphism
+> Polymorphism means the ability to take many forms. A virtual function is dynamically bound to calls at runtime based on the type of object making the call.
+
+### Polymorphism Requires References or Pointers
+> [!warning] Important
+> Polymorphic behavior is only possible when an object is referenced by a **reference variable or a pointer**.
+
+- **Base Class Pointers:** You can define a pointer to a base class object and assign it the address of a derived class object. Base class pointers and references only know about members of the base class.
+- Redefined functions in the derived class will be ignored unless the base class declares the function `virtual`.
+
+### Redefining vs. Overriding
+- Redefined functions are statically bound.
+- Overridden functions are dynamically bound.
+- So, a virtual function is overridden, and a non-virtual function is redefined.
+
+### Virtual Destructors
+> [!tip] Best Practice
+> It's a good idea to make destructors `virtual` if the class could ever become a base class. Otherwise, the compiler will perform static binding on the destructor if the class is ever derived from.
+
+### C++11's `override` and `final` Keywords
+- **`override`**: Tells the compiler that the function is supposed to override a function in the base class.
+- **`final`**: When a member function is declared with this keyword, it cannot be overridden in a derived class.
+
+## 4.7 Abstract Base Classes and Pure Virtual Functions
+> [!info] Definition: Pure Virtual Function
+> A virtual member function that **must** be overridden in a derived class that has objects.
+> ```cpp
+> virtual void Y() = 0;
+> ```
+> The `= 0` indicates a pure virtual function. It must have no function definition in the base class.
+
+> [!info] Definition: Abstract Base Class
+> A class that can have no objects. Serves as a basis for derived classes that may/will have objects. A class becomes an abstract base class when one or more of its member functions is a pure virtual function.
+
+## 4.8 Multiple Inheritance
+- A derived class can have more than one base class.
+- Each base class can have its own access specification:
+  ```cpp
+  class Cube : public Square, public RectSolid
+  ```
+- Arguments can be passed to both base classes' constructors. Base class constructors are called in the order given in the class declaration.
+- **Problem:** What if base classes have member variables/functions with the same name?
+- **Solution:** 
+  - Derived class redefines the multiply-defined function.
+  - Derived class invokes member function in a particular base class using scope resolution operator `::`.
+
+---
+
+# Chapter 5: Recursion Examples (Quick Sort)
+
+## 5.1 Quick Sort Algorithm
+> [!info] Definition: Quick Sort
+> A highly efficient sorting algorithm that uses a divide-and-conquer strategy. It partitions an array into two sublists based on a pivot element.
+
+### Implementation Example
+```cpp
+void quickSort(int set[], int start, int end)
+{
+   int pivotPoint;
+   if (start < end)
+   {
+      // Get the pivot point.
+      pivotPoint = partition(set, start, end);
+      // Sort the first sublist.
+      quickSort(set, start, pivotPoint - 1);
+      // Sort the second sublist.
+      quickSort(set, pivotPoint + 1, end);
+   }
+}
+
+int partition(int set[], int start, int end)
+{
+   int pivotValue, pivotIndex, mid;
+   mid = (start + end) / 2;
+   swap(set[start], set[mid]);
+   pivotIndex = start;
+   pivotValue = set[start];
+   for (int scan = start + 1; scan <= end; scan++)
+   {
+      if (set[scan] < pivotValue)
+      {
+          pivotIndex++;
+          swap(set[pivotIndex], set[scan]);
+      }
+   }
+   swap(set[start], set[pivotIndex]);
+   return pivotIndex;
+}
+```
+
+> [!example] Trace Example
+> For an array: `7 3 9 2 0 1 8 4 6 5`
+> 1. `mid = (0 + 9) / 2 = 4`. The element at index 4 is `0`.
+> 2. `swap(set[start], set[mid])` swaps `7` and `0`. Array becomes `0 3 9 2 7 1 8 4 6 5`.
+> 3. `pivotIndex = 0`, `pivotValue = 0`.
+> 4. The loop scans from index 1 to 9. Since all elements (3, 9, 2, 7, 1, 8, 4, 6, 5) are greater than `0`, `pivotIndex` does not increment.
+> 5. End of loop, swap `start` and `pivotIndex`. Since both are 0, array doesn't change.
+> 6. Pivot `0` is now at its correct sorted position (index 0).
+> 7. The algorithm recursively calls `quickSort` on the right sublist `(pivotPoint + 1, end)` which is `(1, 9)`.
+> 
+> *Sublist 2: `3 9 2 7 1 8 4 6 5` (Indices 1 to 9)*
+> 1. `mid = (1 + 9) / 2 = 5`. The element at index 5 is `1`.
+> 2. `swap(set[start], set[mid])` swaps `3` and `1`. Array becomes `0 1 9 2 7 3 8 4 6 5`.
+> 3. `pivotIndex = 1`, `pivotValue = 1`.
+> 4. The loop scans from index 2 to 9. No elements are less than `1`.
+> 5. End of loop, swap `start` and `pivotIndex`. Array doesn't change.
+> 6. Pivot `1` is now at its correct sorted position.
+> 7. The algorithm recursively calls `quickSort` on the right sublist `(2, 9)`.
+>
+> *Sublist 3: `9 2 7 3 8 4 6 5` (Indices 2 to 9)*
+> 1. `mid = (2 + 9) / 2 = 5`. The element at index 5 is `3`.
+> 2. `swap(set[start], set[mid])` swaps `9` and `3`. Array becomes `0 1 3 2 7 9 8 4 6 5`.
+> 3. `pivotIndex = 2`, `pivotValue = 3`.
+> 4. The loop scans from index 3 to 9. The only element less than `3` is `2` (at index 3).
+> 5. `pivotIndex` increments to 3. Swap `set[3]` and `set[3]`.
+> 6. End of loop, swap `start` (index 2, value `3`) and `pivotIndex` (index 3, value `2`). Array becomes `0 1 2 3 7 9 8 4 6 5`.
+> 7. Pivot `3` is now at its correct sorted position (index 3).
+> 8. Recursively process left sublist (index 2: `2`) and right sublist (indices 4 to 9).
+
+---
+
+# Chapter 6: Recursion Examples (Towers of Hanoi)
+
+## 6.1 Towers of Hanoi Example
+The repetitive steps involved in solving the Towers of Hanoi (ToH) game can be easily implemented in a recursive algorithm.
+
+### Rules of Towers of Hanoi
+1. Only one disc may be moved at a time.
+2. A disc cannot be placed on top of a smaller disc.
+3. All discs must be stored on a peg except while being moved.
+
+### Base Cases and Recursive Steps
+- **One Disk:** Move the only disk from the first peg to the third peg.
+- **Two Disks:** 
+  - Move disc 1 to peg 2.
+  - Move disc 2 to peg 3.
+  - Move disc 1 to peg 3.
+- **Three Disks:** The process involves moving the top 2 disks to the intermediate peg, moving the largest disk to the destination, and then moving the 2 disks from the intermediate peg to the destination.
+
+### Pseudo Code for n Disks
+```
+If n > 0 Then
+   Move n - 1 discs from peg 1 to peg 2, using peg 3 as a temporary peg.
+   Move the remaining disc from peg 1 to peg 3.
+   Move n - 1 discs from peg 2 to peg 3, using peg 1 as a temporary peg.
+End If
+```
+- **Number of moves:** $2^n - 1$
+
+### Recursive ToH Function
+```cpp
+void moveDiscs(int num, int A, int B, int C)
+{
+   if (num > 0)
+   {
+      moveDiscs(num - 1, A, C, B);
+      cout << "Move a disc from peg " << A << " to peg " << C << endl;
+      moveDiscs(num - 1, B, A, C);
+   }
+}
+```
+
+> [!example] Example: Program Using ToH Recursive Function
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> void moveDiscs(int, int, int, int);
+> 
+> int main()
+> {
+>    const int NUM_DISCS = 3;
+>    const int A = 1;
+>    const int B = 2;
+>    const int C = 3;
+>    
+>    moveDiscs(NUM_DISCS, A, B, C);
+>    cout << "All the pegs are moved!\n";
+>    return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Move a disc from peg 1 to peg 3
+> Move a disc from peg 1 to peg 2
+> Move a disc from peg 3 to peg 2
+> Move a disc from peg 1 to peg 3
+> Move a disc from peg 2 to peg 1
+> Move a disc from peg 2 to peg 3
+> Move a disc from peg 1 to peg 3
+> All the pegs are moved!
+> ```
+
+> [!tip] Extra Notes: Tracing ToH for 3 Disks
+> 1. `moveDiscs(3, A, B, C)` calls `moveDiscs(2, A, C, B)`.
+> 2. `moveDiscs(2, A, C, B)` calls `moveDiscs(1, A, B, C)`.
+> 3. `moveDiscs(1, A, B, C)` calls `moveDiscs(0, A, C, B)`, then moves Peg 1 to 3, then calls `moveDiscs(0, B, A, C)`.
+> 4. It backtracks and moves Peg 1 to 2, then evaluates `moveDiscs(1, C, A, B)`... and so forth until the puzzle is solved.
+
+## 6.2 QuickSort Algorithm
+> [!info] Definition: QuickSort
+> It sorts a list by dividing it into two sub-lists. Between the sub-lists there is a selected value known as the pivot. The algorithm exchanges the other values in the list until all the elements in sub-list 1 are less than the pivot, and all the elements in sub-list 2 are greater than the pivot.
+
+- The algorithm repeats the procedure on sub-list 1, and then on sub-list 2.
+- The recursion stops when there is only one element in a sub-list. At that point, the original list is completely sorted.
+- The algorithm is coded primarily in two functions: `quickSort` and `partition`.
+- `quickSort` is a recursive function.
+
+> [!note] Overlap with Previous Chapter
+> QuickSort was covered in detail in the previous chapter. The code structure for `quickSort` and `partition` remains the same.
+
+## 6.3 Exhaustive Algorithms
+> [!info] Definition: Exhaustive Algorithm
+> An exhaustive algorithm finds a best combination of items by looking at all the possible combinations.
+
+> [!example] Example: Coin Change
+> Finding change for a certain amount of money that uses the fewest coins.
+> - The user enters the amount of money in terms of cents.
+> - The output is a set of coins which has the same amount as the input with the minimum number of coins.
+
+## 6.4 Recursive vs Iteration
+
+### Recursion
+**Pros:**
+- It models certain algorithms most accurately.
+- Results in shorter, simpler functions.
+
+**Cons:**
+- May not execute very efficiently.
+
+### Iteration
+**Pros:**
+- Executes effectively more efficiently than recursion.
+
+**Cons:**
+- Often is harder to code or understand.
+
+---
+
+# Chapter 7: Recursion
+
+## 7.1 Introduction to Recursion
+> [!info] Definition: Recursive Function
+> A function that calls itself is a recursive function.
+
+```cpp
+void message()
+{
+    cout << "This is a recursive function.\n";
+    message();
+}
+```
+
+> [!warning] Problem with Infinite Recursion
+> If a recursive function has no way to stop, it acts like an infinite loop. This leads the program to crash due to a **Stack Overflow**.
+
+### The Stack Mechanism
+- The computer’s memory for recursive functions operates like a vertical stack of dishes.
+- It follows the **Last-In, First-Out (LIFO)** mechanism.
+- The last item pushed onto the stack is the first item to be popped (removed).
+- In recursive functions, each call pushes a new stack frame (containing the return address and local variables) onto the memory.
+- Because computer memory is finite, pushing frames infinitely leads to a **Stack Overflow**, the point where the "pile" hits the ceiling and crashes.
+
+### Solution: Adding a Condition to Stop
+```cpp
+void message(int times)
+{
+   if (times > 0)
+   {
+       cout << "This is a recursive function.\n";
+       message(times - 1);  // recursive call
+   }
+} // Control returns here from the recursive call, causing the function to return.
+```
+
+## 7.2 Solving Problems with Recursion
+> [!info] Principle of Recursive Problem Solving
+> A problem can be solved with recursion if it can be broken down into successive smaller problems that are identical to the overall problem.
+
+- Any problem that can be solved recursively can also be solved iteratively, using a loop.
+- **Overhead:** Recursive algorithms are usually less efficient than iterative algorithms. Function calls impose overhead on the system:
+  - Allocating memory for parameters and local variables.
+  - Storing the address of the program location where control returns after the function terminates.
+- **Why use it?** Some repetitive problems are more easily solved with recursion than with iteration. The programmer might be able to design a recursive algorithm faster.
+
+### Recursion Rules
+- If the problem can be solved now, without recursion, then the function solves it and returns.
+- If the problem cannot be solved now, then the function reduces it to a smaller but similar problem and calls itself to solve the smaller problem.
+
+> [!note] Base Case and Recursive Case
+> - **Base Case:** Identifying at least one case in which the problem can be solved without recursion.
+> - **Recursive Case:** Determining a way to solve the problem in all other circumstances using recursion.
+> 
+> The recursive case will continue until one of the base cases is met.
+
+## 7.3 Recursion Types
+> [!info] Direct Recursion
+> A function calls itself.
+
+> [!info] Indirect Recursion
+> Function A calls function B, and function B calls function A.
+> Or, Function A calls function B, function B calls function C... and finally the last function calls function A.
+
+## 7.4 Recursion Examples
+
+### Factorial
+The factorial of a non-negative number can be defined by the following rules:
+- If n = 0 then `n! = 1`
+- If n > 0 then `n! = 1 * 2 * 3 * ... * n` (or `n * (n - 1)!`)
+
+```cpp
+int factorial(int n)
+{
+   if (n == 0)
+      return 1;
+   else
+      return n * factorial(n - 1);
+}
+```
+
+### Character Finder
+Finds the occurrences of a specific character in a string.
+```cpp
+int numChars(char search, string str, int subscript)
+{
+   if (subscript >= str.length())
+   {
+      return 0;
+   }
+   else if (str[subscript] == search)
+   {
+      return 1 + numChars(search, str, subscript+1);
+   }
+   else
+   {
+      return numChars(search, str, subscript+1);
+   }
+}
+```
+
+### Greatest Common Divisor (GCD)
+- `gcd(x, y) = y`, if `y` divides `x` evenly.
+- `gcd(x, y) = gcd(y, remainder of x / y)`, otherwise.
+
+```cpp
+int gcd(int x, int y)
+{
+   if (x % y == 0)
+      return y;
+   else
+      return gcd(y, x % y);
+}
+```
+
+### Binary Search: Iterative vs Recursive
+**Recursive Algorithm:**
+- If `array[middle]` equals the search value, then the value is found.
+- Else, if `array[middle]` is less than the search value, perform a binary search on the upper half.
+- Else, if `array[middle]` is greater than the search value, perform a binary search on the lower half.
+- **Base cases:** `array[middle] == value` and `first > last`.
+
+```cpp
+// Recursive Binary Search
+int binarySearch(int array[], int first, int last, int value)
+{
+   int middle; 
+   if (first > last)
+      return -1;
+      
+   middle = (first + last) / 2;
+   
+   if (array[middle] == value)
+      return middle;
+   if (array[middle] < value)
+      return binarySearch(array, middle+1, last, value);
+   else
+      return binarySearch(array, first, middle-1, value);
+}
+```
+
+```cpp
+// Iterative Binary Search
+int binarySearch(int array[], int first, int last, int value)
+{
+   while (first <= last)
+   {
+      int middle = (first + last) / 2;
+      if (array[middle] == value)
+         return middle;
+      else if (array[middle] < value)
+         first = middle + 1;
+      else
+         last = middle - 1;
+   }
+   return -1;
+}
+```
+
+---
+
+# Chapter 8: Strings and Vectors
+
+## 8.1 Introduction to Strings
+- In C++, a **C-string** is a sequence of characters stored in consecutive memory locations, terminated by a null character (`\0`).
+- The C++ language stores strings primarily in two ways:
+  1. As `string` objects
+  2. As C-strings
+- **Null Terminator:** `\0` ("backslash zero") is the escape sequence representing the null terminator (ASCII code 0).
+- The C programming language does not provide a string class like C++ does; C relies solely on C-strings.
+
+### C-String Library Functions
+- `strlen()`: Returns length of string.
+- `strcat()`: Concatenates strings.
+- `strcpy()`: Copies strings.
+- `strstr()`: Finds a substring.
+- `strcmp()`: Compares strings.
+
+## 8.2 C++ String Class
+- Standard C++ provides a special data type for storing and working with strings via `#include <string>`.
+- The `string` class is an **Abstract Data Type (ADT)**.
+- It is not a built-in, primitive data type like `int` or `char`. It is a programmer-defined data type accompanying the C++ language.
+- Being an ADT means you interact with what it does, while how it is implemented is hidden.
+
+### Defining and Using String Objects
+```cpp
+string movieTitle;
+movieTitle = "Fast and Furious";
+cout << "My favorite movie is " << movieTitle << endl;
+```
+
+> [!example] Example: Reading a Line
+> ```cpp
+> string name;
+> cout << "What is your name? ";
+> getline(cin, name);
+> cout << "Good morning " << name << endl;
+> ```
+
+### Comparing String Objects
+- You can use relational operators (`<`, `>`, `<=`, `>=`, `==`, `!=`) directly on `string` objects without needing library functions.
+- Comparisons with C-strings are also valid (e.g., `str == "William"`).
+
+> [!note] Ways to Define String Objects
+> - `string address;` (Empty string)
+> - `string name("William Smith");` (Initialized)
+> - `string person1(person2);` (Copy of another string or C-string)
+> - `string set1(set2, 5);` (Initialized with first 5 chars of `set2`)
+> - `string lineFull('z', 10);` (Initialized with 10 'z' characters)
+> - `string firstName(fullName, 0, 7);` (Substring of length 7 starting at index 0)
+
+### String Operators
+- `>>`: Extracts characters from a stream (stops at space).
+- `<<`: Inserts string into a stream.
+- `=`: Assigns content.
+- `+=` or `+`: Concatenates strings.
+- `[]`: Array-subscript notation to access individual characters.
+
+### String Class Member Functions
+- **Appending:** `.append(n, 'z')`, `.append(str2)`, `.append(str2, n)`, `.append(str2, x, n)`
+- **Assigning:** `.assign(n, 'z')`, `.assign(str2)`, `.assign(str2, n)`, `.assign(str2, x, n)`
+- **Accessing:** `.at(x)`, `.back()`, `.front()`, `.begin()`, `.end()`
+- **C-string Conversion:** `.c_str()` returns the address to the first element (e.g. `char* ptr = str1.c_str()`).
+- **Info:** `.capacity()`, `.length()`, `.size()`, `.empty()`
+- **Modifying:** `.clear()`, `.erase(x, n)`, `.insert(x, n, 'z')`, `.insert(x, str)`, `.replace(x, n, str)`, `.resize(n, 'z')`, `.swap(str)`
+- **Searching:** `.find(str, x)`, `.compare(str2)`
+- **Substrings:** `.substr(x, n)`
+
+## 8.3 Vectors
+- C++ offers a **vector** data type, which in many ways is superior to standard arrays.
+- Vectors are not part of the C++ language but were created in addition to built-in types.
+- A vector is a **sequence container**.
+
+### Similarities to Arrays
+- Holds a sequence of values/elements.
+- Stores elements in contiguous memory locations.
+- Array subscript operator `[]` can be used to read individual elements.
+
+### Advantages over Arrays
+- No need to declare the number of elements in advance.
+- If a new value is added to a full vector, the vector automatically increases its size to accommodate it.
+- Vectors can report the number of elements they contain.
+
+### Defining a Vector
+- Requires `#include <vector>`.
+- `vector<int> numbers;`
+- `vector<int> numbers(10);` (Starts with size 10)
+- `vector<int> numbers(10, 2);` (Size 10, initialized with value 2)
+- `vector<int> set2(set1);` (Copy from another vector)
+- `vector<int> numbers { 10, 20, 30, 40 };` (Initialized with values)
+
+### Under the Hood: Dynamic Memory
+- Each time we enter data more than the starting size, the vector is assigned a new memory location to accommodate the new size. It also releases the old memory allocated.
+
+### Range-Based for Loop
+```cpp
+vector<int> numbers { 10, 20, 30, 40, 50 };
+for (int val : numbers)
+    cout << val << endl;
+
+// By reference to modify:
+for (int &val : numbers)
+{
+    cout << "Enter an integer value: ";
+    cin >> val;
+}
+```
+
+### Vector Member Functions
+- `.push_back(val)`: Stores a value as the last element. If the vector is full, it creates a new last element.
+- `.size()`: Returns the number of elements contained. Especially useful when passing vectors to functions.
+- `.pop_back()`: Removes the last element from the vector.
+- `.clear()`: Completely clears the contents of a vector.
+- `.empty()`: Returns true if the vector is empty.
+- `.reverse()`: Reverses the order of the elements in the vector.
+
+> [!warning] Out of Bounds
+> It is not possible to use the `[]` operator to add a new element to a vector that does not exist. Use `push_back` instead.

@@ -38,7 +38,6 @@ When the user asks to split a PDF:
 4. The script will save the output parts in the same directory as the target PDF.
 
 ## Included Scripts
-- `extract_pdf.js`: Basic text extraction from a PDF.
-- `extract_pdf2.js`: Alternative extraction method if the first fails.
+- `extract_pdf.js`: Reliable text extraction from a PDF using pdf2json.
 - `split_pdf.js`: Splits a PDF into multiple parts or extracts specific pages.
-- `package.json`: Contains the necessary Node.js dependencies (`pdf-parse`, `pdf-lib`, `pdf2json`).
+- `package.json`: Contains the necessary Node.js dependencies (`pdf-lib`, `pdf2json`).

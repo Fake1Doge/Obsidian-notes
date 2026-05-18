@@ -17,17 +17,18 @@ This skill guides you in transforming raw lecture materials (text files, PDFs, o
 
 ## Workflow
 
-1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. 
+1. **Activate Dependencies:** Start by activating the `obsidian-markdown` skill using `activate_skill`. If extracting from a PDF or rearranging topics, also activate the `pdf-extractor` and `rearrange-topics` skills.
 2. **Context Research:** Search the current workspace to find the master note for the subject. This ensures you append to the correct file and maintain consistent terminology.
 3. **Sequential Chapter-by-Chapter Processing (CRITICAL - NO PARALLEL READING):** For each lecture file or chapter provided for a subject:
    - **Strictly One by One:** You MUST process files strictly one by one across multiple conversational turns. NEVER call `read_file` on multiple lecture files in a single turn, as the massive output will cause the system to crash or stop mid-task. Use the `wait_for_previous` parameter or separate turns.
-   - **Extract Content:** Use the `read_file` tool directly on the source file. `read_file` natively handles PDFs, extracting the text automatically. No external scripts are needed for basic extraction.
+   - **Extract Content:** Use the `read_file` tool directly on the source file. `read_file` natively handles PDFs, extracting the text automatically. If `read_file` fails (e.g., due to ignore patterns), use the `pdf-extractor` skill as a fallback.
    - **Process Individually:** Read ONE file completely (or its extracted text), generate its notes, and append them to the master file BEFORE moving to the next file.
    - **Delegate Batch Tasks:** If there are more than 2 files to process, you SHOULD delegate the task to the `generalist` sub-agent with instructions to process them sequentially.
    - **Generate Notes:** Format the detailed notes for this specific source.
    - **Update Master File:** If notes for the chapter do not exist, append the newly generated content to the subject's single Markdown file, ensuring clear separation with horizontal rules (`---`) or level 1 headers. If notes for the chapter *already exist*, **improve and integrate** the new details into the existing section rather than creating a duplicate section or file.
 4. **Process and Format:** Apply Obsidian-specific syntax (Callouts, Math, etc.) as defined in the `obsidian-markdown` skill. If a concept is unclear, insert an "Extra Notes" callout. Ensure you escape characters like `<` and `>` properly with backslashes (`\<`, `\>`) to avoid HTML rendering issues.
 5. **Save and Update:** Ensure the master Markdown file is updated with the new chapter.
+6. **Ensure Sequential Headings:** Once the master Markdown file has been updated, use the `rearrange-topics` skill to sequentially renumber all topic/chapter headings in the master file, ensuring they are consistent.
 
 ## Obsidian Formatting Guidelines
 
