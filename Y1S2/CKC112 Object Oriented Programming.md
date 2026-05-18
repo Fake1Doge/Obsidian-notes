@@ -1191,199 +1191,9 @@ class ClassName
 
 ---
 
-# Chapter 5: Recursion Examples (Quick Sort)
+# Chapter 5: Recursion
 
-## 5.1 Quick Sort Algorithm
-> [!info] Definition: Quick Sort
-> A highly efficient sorting algorithm that uses a divide-and-conquer strategy. It partitions an array into two sublists based on a pivot element.
-
-### Implementation Example
-```cpp
-void quickSort(int set[], int start, int end)
-{
-   int pivotPoint;
-   if (start < end)
-   {
-      // Get the pivot point.
-      pivotPoint = partition(set, start, end);
-      // Sort the first sublist.
-      quickSort(set, start, pivotPoint - 1);
-      // Sort the second sublist.
-      quickSort(set, pivotPoint + 1, end);
-   }
-}
-
-int partition(int set[], int start, int end)
-{
-   int pivotValue, pivotIndex, mid;
-   mid = (start + end) / 2;
-   swap(set[start], set[mid]);
-   pivotIndex = start;
-   pivotValue = set[start];
-   for (int scan = start + 1; scan <= end; scan++)
-   {
-      if (set[scan] < pivotValue)
-      {
-          pivotIndex++;
-          swap(set[pivotIndex], set[scan]);
-      }
-   }
-   swap(set[start], set[pivotIndex]);
-   return pivotIndex;
-}
-```
-
-> [!example] Trace Example
-> For an array: `7 3 9 2 0 1 8 4 6 5`
-> 1. `mid = (0 + 9) / 2 = 4`. The element at index 4 is `0`.
-> 2. `swap(set[start], set[mid])` swaps `7` and `0`. Array becomes `0 3 9 2 7 1 8 4 6 5`.
-> 3. `pivotIndex = 0`, `pivotValue = 0`.
-> 4. The loop scans from index 1 to 9. Since all elements (3, 9, 2, 7, 1, 8, 4, 6, 5) are greater than `0`, `pivotIndex` does not increment.
-> 5. End of loop, swap `start` and `pivotIndex`. Since both are 0, array doesn't change.
-> 6. Pivot `0` is now at its correct sorted position (index 0).
-> 7. The algorithm recursively calls `quickSort` on the right sublist `(pivotPoint + 1, end)` which is `(1, 9)`.
-> 
-> *Sublist 2: `3 9 2 7 1 8 4 6 5` (Indices 1 to 9)*
-> 1. `mid = (1 + 9) / 2 = 5`. The element at index 5 is `1`.
-> 2. `swap(set[start], set[mid])` swaps `3` and `1`. Array becomes `0 1 9 2 7 3 8 4 6 5`.
-> 3. `pivotIndex = 1`, `pivotValue = 1`.
-> 4. The loop scans from index 2 to 9. No elements are less than `1`.
-> 5. End of loop, swap `start` and `pivotIndex`. Array doesn't change.
-> 6. Pivot `1` is now at its correct sorted position.
-> 7. The algorithm recursively calls `quickSort` on the right sublist `(2, 9)`.
->
-> *Sublist 3: `9 2 7 3 8 4 6 5` (Indices 2 to 9)*
-> 1. `mid = (2 + 9) / 2 = 5`. The element at index 5 is `3`.
-> 2. `swap(set[start], set[mid])` swaps `9` and `3`. Array becomes `0 1 3 2 7 9 8 4 6 5`.
-> 3. `pivotIndex = 2`, `pivotValue = 3`.
-> 4. The loop scans from index 3 to 9. The only element less than `3` is `2` (at index 3).
-> 5. `pivotIndex` increments to 3. Swap `set[3]` and `set[3]`.
-> 6. End of loop, swap `start` (index 2, value `3`) and `pivotIndex` (index 3, value `2`). Array becomes `0 1 2 3 7 9 8 4 6 5`.
-> 7. Pivot `3` is now at its correct sorted position (index 3).
-> 8. Recursively process left sublist (index 2: `2`) and right sublist (indices 4 to 9).
-
----
-
-# Chapter 6: Recursion Examples (Towers of Hanoi)
-
-## 6.1 Towers of Hanoi Example
-The repetitive steps involved in solving the Towers of Hanoi (ToH) game can be easily implemented in a recursive algorithm.
-
-### Rules of Towers of Hanoi
-1. Only one disc may be moved at a time.
-2. A disc cannot be placed on top of a smaller disc.
-3. All discs must be stored on a peg except while being moved.
-
-### Base Cases and Recursive Steps
-- **One Disk:** Move the only disk from the first peg to the third peg.
-- **Two Disks:** 
-  - Move disc 1 to peg 2.
-  - Move disc 2 to peg 3.
-  - Move disc 1 to peg 3.
-- **Three Disks:** The process involves moving the top 2 disks to the intermediate peg, moving the largest disk to the destination, and then moving the 2 disks from the intermediate peg to the destination.
-
-### Pseudo Code for n Disks
-```
-If n > 0 Then
-   Move n - 1 discs from peg 1 to peg 2, using peg 3 as a temporary peg.
-   Move the remaining disc from peg 1 to peg 3.
-   Move n - 1 discs from peg 2 to peg 3, using peg 1 as a temporary peg.
-End If
-```
-- **Number of moves:** $2^n - 1$
-
-### Recursive ToH Function
-```cpp
-void moveDiscs(int num, int A, int B, int C)
-{
-   if (num > 0)
-   {
-      moveDiscs(num - 1, A, C, B);
-      cout << "Move a disc from peg " << A << " to peg " << C << endl;
-      moveDiscs(num - 1, B, A, C);
-   }
-}
-```
-
-> [!example] Example: Program Using ToH Recursive Function
-> ```cpp
-> #include <iostream>
-> using namespace std;
-> void moveDiscs(int, int, int, int);
-> 
-> int main()
-> {
->    const int NUM_DISCS = 3;
->    const int A = 1;
->    const int B = 2;
->    const int C = 3;
->    
->    moveDiscs(NUM_DISCS, A, B, C);
->    cout << "All the pegs are moved!\n";
->    return 0;
-> }
-> ```
-> **Output:**
-> ```text
-> Move a disc from peg 1 to peg 3
-> Move a disc from peg 1 to peg 2
-> Move a disc from peg 3 to peg 2
-> Move a disc from peg 1 to peg 3
-> Move a disc from peg 2 to peg 1
-> Move a disc from peg 2 to peg 3
-> Move a disc from peg 1 to peg 3
-> All the pegs are moved!
-> ```
-
-> [!tip] Extra Notes: Tracing ToH for 3 Disks
-> 1. `moveDiscs(3, A, B, C)` calls `moveDiscs(2, A, C, B)`.
-> 2. `moveDiscs(2, A, C, B)` calls `moveDiscs(1, A, B, C)`.
-> 3. `moveDiscs(1, A, B, C)` calls `moveDiscs(0, A, C, B)`, then moves Peg 1 to 3, then calls `moveDiscs(0, B, A, C)`.
-> 4. It backtracks and moves Peg 1 to 2, then evaluates `moveDiscs(1, C, A, B)`... and so forth until the puzzle is solved.
-
-## 6.2 QuickSort Algorithm
-> [!info] Definition: QuickSort
-> It sorts a list by dividing it into two sub-lists. Between the sub-lists there is a selected value known as the pivot. The algorithm exchanges the other values in the list until all the elements in sub-list 1 are less than the pivot, and all the elements in sub-list 2 are greater than the pivot.
-
-- The algorithm repeats the procedure on sub-list 1, and then on sub-list 2.
-- The recursion stops when there is only one element in a sub-list. At that point, the original list is completely sorted.
-- The algorithm is coded primarily in two functions: `quickSort` and `partition`.
-- `quickSort` is a recursive function.
-
-> [!note] Overlap with Previous Chapter
-> QuickSort was covered in detail in the previous chapter. The code structure for `quickSort` and `partition` remains the same.
-
-## 6.3 Exhaustive Algorithms
-> [!info] Definition: Exhaustive Algorithm
-> An exhaustive algorithm finds a best combination of items by looking at all the possible combinations.
-
-> [!example] Example: Coin Change
-> Finding change for a certain amount of money that uses the fewest coins.
-> - The user enters the amount of money in terms of cents.
-> - The output is a set of coins which has the same amount as the input with the minimum number of coins.
-
-## 6.4 Recursive vs Iteration
-
-### Recursion
-**Pros:**
-- It models certain algorithms most accurately.
-- Results in shorter, simpler functions.
-
-**Cons:**
-- May not execute very efficiently.
-
-### Iteration
-**Pros:**
-- Executes effectively more efficiently than recursion.
-
-**Cons:**
-- Often is harder to code or understand.
-
----
-
-# Chapter 7: Recursion
-
-## 7.1 Introduction to Recursion
+## 5.1 Introduction to Recursion
 > [!info] Definition: Recursive Function
 > A function that calls itself is a recursive function.
 
@@ -1417,7 +1227,7 @@ void message(int times)
 } // Control returns here from the recursive call, causing the function to return.
 ```
 
-## 7.2 Solving Problems with Recursion
+## 5.2 Solving Problems with Recursion
 > [!info] Principle of Recursive Problem Solving
 > A problem can be solved with recursion if it can be broken down into successive smaller problems that are identical to the overall problem.
 
@@ -1437,7 +1247,7 @@ void message(int times)
 > 
 > The recursive case will continue until one of the base cases is met.
 
-## 7.3 Recursion Types
+## 5.3 Recursion Types
 > [!info] Direct Recursion
 > A function calls itself.
 
@@ -1445,7 +1255,7 @@ void message(int times)
 > Function A calls function B, and function B calls function A.
 > Or, Function A calls function B, function B calls function C... and finally the last function calls function A.
 
-## 7.4 Recursion Examples
+## 5.4 Recursion Examples
 
 ### Factorial
 The factorial of a non-negative number can be defined by the following rules:
@@ -1542,7 +1352,193 @@ int binarySearch(int array[], int first, int last, int value)
 
 ---
 
-# Chapter 8: Strings and Vectors
+## 5.5 Quick Sort Algorithm
+> [!info] Definition: Quick Sort
+> A highly efficient sorting algorithm that uses a divide-and-conquer strategy. It partitions an array into two sublists based on a pivot element.
+
+### Implementation Example
+```cpp
+void quickSort(int set[], int start, int end)
+{
+   int pivotPoint;
+   if (start < end)
+   {
+      // Get the pivot point.
+      pivotPoint = partition(set, start, end);
+      // Sort the first sublist.
+      quickSort(set, start, pivotPoint - 1);
+      // Sort the second sublist.
+      quickSort(set, pivotPoint + 1, end);
+   }
+}
+
+int partition(int set[], int start, int end)
+{
+   int pivotValue, pivotIndex, mid;
+   mid = (start + end) / 2;
+   swap(set[start], set[mid]);
+   pivotIndex = start;
+   pivotValue = set[start];
+   for (int scan = start + 1; scan <= end; scan++)
+   {
+      if (set[scan] < pivotValue)
+      {
+          pivotIndex++;
+          swap(set[pivotIndex], set[scan]);
+      }
+   }
+   swap(set[start], set[pivotIndex]);
+   return pivotIndex;
+}
+```
+
+> [!example] Trace Example
+> For an array: `7 3 9 2 0 1 8 4 6 5`
+> 1. `mid = (0 + 9) / 2 = 4`. The element at index 4 is `0`.
+> 2. `swap(set[start], set[mid])` swaps `7` and `0`. Array becomes `0 3 9 2 7 1 8 4 6 5`.
+> 3. `pivotIndex = 0`, `pivotValue = 0`.
+> 4. The loop scans from index 1 to 9. Since all elements (3, 9, 2, 7, 1, 8, 4, 6, 5) are greater than `0`, `pivotIndex` does not increment.
+> 5. End of loop, swap `start` and `pivotIndex`. Since both are 0, array doesn't change.
+> 6. Pivot `0` is now at its correct sorted position (index 0).
+> 7. The algorithm recursively calls `quickSort` on the right sublist `(pivotPoint + 1, end)` which is `(1, 9)`.
+> 
+> *Sublist 2: `3 9 2 7 1 8 4 6 5` (Indices 1 to 9)*
+> 1. `mid = (1 + 9) / 2 = 5`. The element at index 5 is `1`.
+> 2. `swap(set[start], set[mid])` swaps `3` and `1`. Array becomes `0 1 9 2 7 3 8 4 6 5`.
+> 3. `pivotIndex = 1`, `pivotValue = 1`.
+> 4. The loop scans from index 2 to 9. No elements are less than `1`.
+> 5. End of loop, swap `start` and `pivotIndex`. Array doesn't change.
+> 6. Pivot `1` is now at its correct sorted position.
+> 7. The algorithm recursively calls `quickSort` on the right sublist `(2, 9)`.
+>
+> *Sublist 3: `9 2 7 3 8 4 6 5` (Indices 2 to 9)*
+> 1. `mid = (2 + 9) / 2 = 5`. The element at index 5 is `3`.
+> 2. `swap(set[start], set[mid])` swaps `9` and `3`. Array becomes `0 1 3 2 7 9 8 4 6 5`.
+> 3. `pivotIndex = 2`, `pivotValue = 3`.
+> 4. The loop scans from index 3 to 9. The only element less than `3` is `2` (at index 3).
+> 5. `pivotIndex` increments to 3. Swap `set[3]` and `set[3]`.
+> 6. End of loop, swap `start` (index 2, value `3`) and `pivotIndex` (index 3, value `2`). Array becomes `0 1 2 3 7 9 8 4 6 5`.
+> 7. Pivot `3` is now at its correct sorted position (index 3).
+> 8. Recursively process left sublist (index 2: `2`) and right sublist (indices 4 to 9).
+
+---
+
+## 5.6 Towers of Hanoi Example
+The repetitive steps involved in solving the Towers of Hanoi (ToH) game can be easily implemented in a recursive algorithm.
+
+### Rules of Towers of Hanoi
+1. Only one disc may be moved at a time.
+2. A disc cannot be placed on top of a smaller disc.
+3. All discs must be stored on a peg except while being moved.
+
+### Base Cases and Recursive Steps
+- **One Disk:** Move the only disk from the first peg to the third peg.
+- **Two Disks:** 
+  - Move disc 1 to peg 2.
+  - Move disc 2 to peg 3.
+  - Move disc 1 to peg 3.
+- **Three Disks:** The process involves moving the top 2 disks to the intermediate peg, moving the largest disk to the destination, and then moving the 2 disks from the intermediate peg to the destination.
+
+### Pseudo Code for n Disks
+```
+If n > 0 Then
+   Move n - 1 discs from peg 1 to peg 2, using peg 3 as a temporary peg.
+   Move the remaining disc from peg 1 to peg 3.
+   Move n - 1 discs from peg 2 to peg 3, using peg 1 as a temporary peg.
+End If
+```
+- **Number of moves:** $2^n - 1$
+
+### Recursive ToH Function
+```cpp
+void moveDiscs(int num, int A, int B, int C)
+{
+   if (num > 0)
+   {
+      moveDiscs(num - 1, A, C, B);
+      cout << "Move a disc from peg " << A << " to peg " << C << endl;
+      moveDiscs(num - 1, B, A, C);
+   }
+}
+```
+
+> [!example] Example: Program Using ToH Recursive Function
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> void moveDiscs(int, int, int, int);
+> 
+> int main()
+> {
+>    const int NUM_DISCS = 3;
+>    const int A = 1;
+>    const int B = 2;
+>    const int C = 3;
+>    
+>    moveDiscs(NUM_DISCS, A, B, C);
+>    cout << "All the pegs are moved!\n";
+>    return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Move a disc from peg 1 to peg 3
+> Move a disc from peg 1 to peg 2
+> Move a disc from peg 3 to peg 2
+> Move a disc from peg 1 to peg 3
+> Move a disc from peg 2 to peg 1
+> Move a disc from peg 2 to peg 3
+> Move a disc from peg 1 to peg 3
+> All the pegs are moved!
+> ```
+
+> [!tip] Extra Notes: Tracing ToH for 3 Disks
+> 1. `moveDiscs(3, A, B, C)` calls `moveDiscs(2, A, C, B)`.
+> 2. `moveDiscs(2, A, C, B)` calls `moveDiscs(1, A, B, C)`.
+> 3. `moveDiscs(1, A, B, C)` calls `moveDiscs(0, A, C, B)`, then moves Peg 1 to 3, then calls `moveDiscs(0, B, A, C)`.
+> 4. It backtracks and moves Peg 1 to 2, then evaluates `moveDiscs(1, C, A, B)`... and so forth until the puzzle is solved.
+
+### QuickSort Algorithm (Review)
+> [!info] Definition: QuickSort
+> It sorts a list by dividing it into two sub-lists. Between the sub-lists there is a selected value known as the pivot. The algorithm exchanges the other values in the list until all the elements in sub-list 1 are less than the pivot, and all the elements in sub-list 2 are greater than the pivot.
+
+- The algorithm repeats the procedure on sub-list 1, and then on sub-list 2.
+- The recursion stops when there is only one element in a sub-list. At that point, the original list is completely sorted.
+- The algorithm is coded primarily in two functions: `quickSort` and `partition`.
+- `quickSort` is a recursive function.
+
+> [!note] Overlap with Previous Chapter
+> QuickSort was covered in detail in the previous chapter. The code structure for `quickSort` and `partition` remains the same.
+
+## 5.7 Exhaustive Algorithms
+> [!info] Definition: Exhaustive Algorithm
+> An exhaustive algorithm finds a best combination of items by looking at all the possible combinations.
+
+> [!example] Example: Coin Change
+> Finding change for a certain amount of money that uses the fewest coins.
+> - The user enters the amount of money in terms of cents.
+> - The output is a set of coins which has the same amount as the input with the minimum number of coins.
+
+## 5.8 Recursive vs Iteration
+
+### Recursion
+**Pros:**
+- It models certain algorithms most accurately.
+- Results in shorter, simpler functions.
+
+**Cons:**
+- May not execute very efficiently.
+
+### Iteration
+**Pros:**
+- Executes effectively more efficiently than recursion.
+
+**Cons:**
+- Often is harder to code or understand.
+
+---
+
+# Chapter 6: Strings and Vectors
 
 ## 8.1 Introduction to Strings
 - In C++, a **C-string** is a sequence of characters stored in consecutive memory locations, terminated by a null character (`\0`).
