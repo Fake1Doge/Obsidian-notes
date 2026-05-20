@@ -1,3 +1,4 @@
+# Chapter 1: An Overview of System Analysis and Design
 
 ## 1.1 Introduction
 > [!info] Objective
@@ -193,8 +194,10 @@ The plan for the chapter demonstrates completing one iteration in six days throu
 
 #### D-4: Activities - Core Process 4 (Design)
 - Design the database (schema).
-- Design the system's high-level structure (Architectural configuration diagram).
-- Design class diagram and subsystem architectural design.
+  - **Supplier Table:** SupplierID (key), Name (index), Address1, Address2, City, State-province, Postal-code, Country, SupplierWebURL, Comments.
+  - **Contact Table:** ContactID (key), SupplierID (foreign key), Name (index), Title, WorkAddress1, WorkAddress2, WorkCity, WorkState, WorkPostal-code, WorkCountry, WorkPhone, EmailAddress1, EmailAddress2, Comments.
+- Design the system's high-level structure (Architectural configuration diagram: Browser <-> Internet <-> Internet server <-> Tradeshow System).
+- Design class diagram and subsystem architectural design (e.g., SupplierView, ContactView, Supplier, Contact).
 
 #### D-5: Activities - Core Process 4 & 5
 - Continue with design details (use case by use case).
