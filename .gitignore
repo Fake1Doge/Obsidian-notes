@@ -31,9 +31,12 @@ temp_*.pdf
 # Large binaries
 *.pdf
 *.ipynb
+*.pptx
 
 # Environment and logs
 .env
 .env.*
 *.log
 npm-debug.log*
+
+Antigravity CLI.bat
