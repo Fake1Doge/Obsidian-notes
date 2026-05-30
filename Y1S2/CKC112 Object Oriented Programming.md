@@ -1655,3 +1655,364 @@ for (int &val : numbers)
 
 > [!warning] Out of Bounds
 > It is not possible to use the `[]` operator to add a new element to a vector that does not exist. Use `push_back` instead.
+
+---
+
+# Chapter 7: Pointers and Dynamic Variables
+
+## 7.1 Pointer Data Type
+> [!info] Definition: Pointer Data Type
+> Every variable is allocated a section of memory large enough to hold a value of the variable's data type.
+> - Each byte of memory has a unique address.
+> - A variable's address is the address of the first byte allocated to that variable.
+> - The address operator (`&`), when placed in front of a variable name, returns the address of that variable.
+
+**General Concept:**
+- Pointers store memory addresses of variables in hexadecimal format.
+- Addresses are normally shown in hexadecimal in C++.
+
+> [!example] Example: Accessing Address and Size of a Variable
+> ```cpp
+> int x = 25;
+> cout << "The address of x is " << &x << endl;
+> cout << "The size of x is " << sizeof(x) << " bytes\n";
+> cout << "The value in x is " << x << endl;
+> ```
+> **Output:**
+> ```text
+> The address of x is 0x8f05
+> The size of x is 4 bytes
+> The value in x is 25
+> ```
+
+## 7.2 Pointer Variables
+> [!info] Definition: Pointer Variable
+> A pointer variable is a special variable that holds a memory address. It "points" to some piece of data stored in the computer's memory, allowing you to work with that data indirectly.
+
+> [!warning] Reference vs. Pointer
+> Do not confuse the address operator (`&`) with the `&` symbol used when defining a reference variable.
+> - **Reference Variable:** Acts as an alias or an alternate name for an existing variable. Anything done to the reference variable is directly done to the variable it references.
+> - **Pointer Variable:** Operates at a lower level and does not automatically do as much work for you. You must explicitly dereference it to access/modify the value.
+
+> [!example] Example: Reference Variables
+> ```cpp
+> int main()
+> {
+>     int a = 10;
+>     int &b = a; // b is a reference variable
+>     cout << a << "\t" << b << "\n"; // Output: 10   10
+>     b = 100;
+>     cout << a << "\t" << b << "\n"; // Output: 100  100
+>     a = 200;
+>     cout << a << "\t" << b << "\n"; // Output: 200  200
+>     return 0;
+> }
+> ```
+
+### Why Use Pointer Variables?
+- Dynamic memory allocation.
+- Useful in algorithms that manipulate arrays and work with certain types of strings (C-strings).
+- Creating and working with objects, and sharing access to those objects.
+- Indirectly accessing and modifying the variable being pointed to using the **indirection (dereferencing) operator (`*`)**.
+
+### Declaring and Initializing Pointers
+- Place an asterisk (`*`) in front of the variable name to declare a pointer:
+  ```cpp
+  int *ptr;
+  int* ptr; // Equivalent
+  ```
+- The data type (e.g., `int`) indicates that the pointer holds the address of an integer variable.
+- **`nullptr`:** Introduced in C++11, `nullptr` points to address 0 of the memory and should be used to initialize pointers to avoid dangling pointers.
+  ```cpp
+  int *ptr = nullptr;
+  ```
+
+> [!example] Example: Storing Address and Dereferencing
+> ```cpp
+> int main()
+> {
+>     int x = 25;
+>     int *ptr = nullptr;
+>     ptr = &x; // Store the address of x in ptr
+>     
+>     cout << "The value in x is " << x << endl; // Output: 25
+>     cout << "The address of x is " << ptr << endl; // Output: 0x7e00
+>     
+>     cout << "Dereferenced value: " << *ptr << endl; // Output: 25
+>     *ptr = 100; // Manipulating the content of x via ptr
+>     cout << "New value of x: " << x << endl; // Output: 100
+>     return 0;
+> }
+> ```
+
+> [!note] Three Uses of Asterisk (`*`) in C++
+> 1. **Multiplication Operator:** `distance = speed * time;`
+> 2. **Pointer Variable Definition:** `int *ptr = nullptr;`
+> 3. **Indirection (Dereferencing) Operator:** `*ptr = 100;`
+
+> [!warning] Common Mistake: Uninitialized Pointers
+> When a pointer is declared, it does not point to any variable automatically. You **must** set the pointer to point to a valid address before dereferencing it.
+> ```cpp
+> // ILLEGAL / DANGEROUS
+> int *p;
+> *p = 100; // Error! Points to some random memory address
+> 
+> // CORRECT
+> int *p;
+> int x;
+> p = &x;
+> *p = 100; // Safe
+> ```
+
+## 7.3 Arrays and Pointers Relationship
+- An array name, without brackets and a subscript, represents the starting address of the array. Thus, an array name is really a pointer.
+- `*numbers` retrieves the value of the first element in the `numbers` array.
+
+> [!example] Example: Array Name as a Pointer
+> ```cpp
+> int main()
+> {
+>     short numbers[] = {10, 20, 30, 40, 50};
+>     cout << "The first element of the array is ";
+>     cout << *numbers << endl; // Output: 10
+>     return 0;
+> }
+> ```
+
+### Pointer Arithmetic with Arrays
+- When you add an integer value to a pointer, you are actually adding that `value * sizeof(data_type)` being referenced by the pointer.
+- For a `short` array (each element is 2 bytes):
+  - `*(numbers + 1)` is actually accessing the address `numbers + 1 * 2 bytes`.
+  - `*(numbers + 2)` is actually accessing the address `numbers + 2 * 2 bytes`.
+- **General Rule:** `array[index]` is equivalent to `*(array + index)`.
+
+> [!warning] Array Bounds
+> C++ performs no bounds checking on arrays. When stepping through an array with a pointer, it is possible to access an address outside the array, causing undefined behavior or crashes.
+
+> [!note] Address Assignment
+> The address operator `&` is not needed when assigning an array's address to a pointer, because the name of an array is already an address:
+> ```cpp
+> int *ptr = numbers; // Correct
+> // int *ptr = &numbers; // Incorrect!
+> ```
+> However, use the address operator to get the address of an individual element:
+> ```cpp
+> ptr = &numbers[1]; // Correct
+> ```
+
+> [!example] Example: Accessing Array Elements using Pointer Notation
+> ```cpp
+> int main()
+> {
+>     const int SIZE = 5;
+>     int numbers[SIZE];
+>     
+>     cout << "Enter " << SIZE << " numbers: ";
+>     for (int count = 0; count < SIZE; count++)
+>         cin >> *(numbers + count);
+>         
+>     cout << "Here are the numbers you entered:\n";
+>     for (int count = 0; count < SIZE; count++)
+>         cout << *(numbers + count) << " ";
+>     cout << endl;
+>     return 0;
+> }
+> ```
+
+### Array Subscripting with Pointer Variables
+- You can use the subscript operator `[]` on pointer variables just like array names.
+- The only difference between array names and pointer variables is that **you cannot change the address an array name points to** (it is a constant pointer).
+
+> [!example] Example: Legal and Illegal Pointer Operations
+> ```cpp
+> double readings[20], totals[20];
+> double *dptr = nullptr;
+> 
+> dptr = readings; // LEGAL (dptr points to readings)
+> dptr = totals;   // LEGAL (dptr points to totals)
+> // readings = totals; // ILLEGAL (cannot change readings array address)
+> // totals = dptr;     // ILLEGAL (cannot change totals array address)
+> ```
+
+## 7.4 Pointer Arithmetic Operations
+- **Increment and Decrement:** `numPtr++` and `numPtr--` advance or regress the pointer by the size of one element of the underlying data type.
+- **Integer Addition and Subtraction:** Adding/subtracting an integer to/from a pointer (`ptr + 4`, `ptr - 2`, `ptr += 2`, `ptr -= 1`).
+- **Pointer Subtraction:** A pointer can be subtracted from another pointer of the same type to find the number of elements between them.
+- **Illegal Operations:** You cannot multiply or divide pointers.
+
+## 7.5 Pointers as Function Parameters
+- Pointers can be passed as parameters to functions, allowing the function to modify the variable in the calling function (similar to pass-by-reference).
+
+> [!example] Example: Modifying Value via Pointer Parameter
+> ```cpp
+> void doubleValue(int *val)
+> {
+>     *val *= 2; // Doubles the variable pointed to by val
+> }
+> 
+> int main()
+> {
+>     int x = 5;
+>     doubleValue(&x);
+>     cout << x << endl; // Output: 10
+>     return 0;
+> }
+> ```
+
+> [!warning] Modifying the Pointer Itself
+> In the function above, you cannot manipulate the pointer variable itself (e.g., make it point to another address and have it affect the caller's pointer). If you want to change the pointer address inside the function, you must pass it **by reference**:
+> ```cpp
+> void doubleValue(int *&val)
+> {
+>     val += 2; // Modifies the pointer itself, making it point 2 elements forward
+> }
+> ```
+
+## 7.6 Dynamic Memory Allocation
+- **Dynamic Memory Allocation:** Allocating memory during execution using the `new` operator.
+  ```cpp
+  int *iptr = nullptr;
+  iptr = new int; // Allocates memory for a single int
+  ```
+- **Exceptions:** If the system runs out of memory and cannot allocate the requested space, C++ throws an exception and terminates the program.
+- **Deallocating Memory:** To prevent memory leaks, dynamically allocated memory must be released using `delete` when no longer needed.
+  ```cpp
+  delete iptr; // Frees memory for a single variable
+  iptr = nullptr; // Reset pointer to prevent dangling reference
+  ```
+
+### Dynamic Arrays
+- You can allocate arrays dynamically when the size is not known until runtime.
+- Use the brackets version of `new` and `delete`:
+  ```cpp
+  int *iptr = new int[100]; // Allocate array of 100 ints
+  delete [] iptr; // Free array memory
+  ```
+
+> [!warning] Memory Leak
+> Failure to release dynamically allocated memory using `delete` or `delete []` before the pointer variable goes out of scope results in a **memory leak**, where the memory remains allocated but inaccessible.
+
+> [!example] Example: Dynamic Array of Custom Size
+> ```cpp
+> int main()
+> {
+>     double *sales = nullptr;
+>     int numDays;
+>     
+>     cout << "How many days of sales figures do you wish to process? ";
+>     cin >> numDays;
+>     
+>     sales = new double[numDays]; // Dynamic allocation
+>     
+>     cout << "Enter the sales figures below:\n";
+>     for (int count = 0; count < numDays; count++)
+>     {
+>         cout << "Day " << (count + 1) << ": ";
+>         cin >> sales[count];
+>     }
+>     
+>     // Process data...
+>     
+>     delete [] sales; // Deallocation
+>     sales = nullptr;
+>     return 0;
+> }
+> ```
+
+## 7.7 Shallow vs. Deep Copy
+- **Shallow Copy:** Copying only the pointer address from one pointer to another. Both pointers end up pointing to the same memory location.
+  ```cpp
+  int *first = new int[10];
+  int *second = first; // Shallow copy
+  ```
+  > [!warning] Shallow Copy Hazard
+  > If `delete [] second;` is executed, the array is deleted. However, `first` still points to that address, making `first` an invalid/dangling pointer. Modifying or deleting `first` after this will cause errors.
+
+- **Deep Copy:** Allocating separate memory for the destination pointer and copying the actual data values element-by-element.
+  ```cpp
+  int *first = new int[10];
+  // ... store data in first ...
+  int *second = new int[10]; // Allocate new memory
+  for (int j = 0; j < 10; j++)
+      second[j] = first[j]; // Deep copy
+  ```
+
+## 7.8 Dynamic Multi-Dimensional (2D) Arrays
+There are two primary ways to create 2D arrays dynamically:
+
+### 1. Array of Pointers (Fixed Rows, Dynamic Columns)
+- Declaring an array of pointers:
+  ```cpp
+  int *board[4]; // Array of 4 pointers to int (rows are fixed at 4)
+  ```
+- Each pointer is then dynamically allocated columns:
+  ```cpp
+  for (int row = 0; row < 4; row++)
+      board[row] = new int[6]; // Each row has 6 columns
+  ```
+
+### 2. Pointer to a Pointer (Dynamic Rows and Columns)
+- Declaring a pointer to a pointer:
+  ```cpp
+  int **board = nullptr;
+  ```
+- Dynamically allocating the rows (an array of pointers to `int`):
+  ```cpp
+  board = new int*[10]; // Allocates 10 rows
+  ```
+- Dynamically allocating the columns for each row:
+  ```cpp
+  for (int row = 0; row < 10; row++)
+      board[row] = new int[15]; // 15 columns per row
+  ```
+
+## 7.9 Pointers and Classes
+- You can create pointers to objects of a class.
+- Access public member functions using the member pointer selection operator (`->`).
+
+> [!example] Example: Pointers to Objects
+> ```cpp
+> class classExample {
+> public:
+>     void setX(int a) { x = a; }
+>     void print() { cout << "X = " << x << endl; }
+> private:
+>     int x;
+> };
+> 
+> int main()
+> {
+>     classExample *cExpPtr = nullptr;
+>     classExample cExpObject;
+>     cExpPtr = &cExpObject;
+>     
+>     cExpPtr->setX(5);
+>     cExpPtr->print(); // Output: X = 5
+>     return 0;
+> }
+> ```
+
+### Classes with Pointer Data Members (Memory Leak Prevention)
+- If a class contains a pointer data member, the constructor or other member functions might allocate dynamic memory.
+- When an object goes out of scope, its non-pointer member variables are destroyed, but the dynamically allocated memory pointed to by its pointer data member is **not** automatically freed. This leads to a memory leak.
+- **Solution:** You must define a **destructor** in the class to explicitly delete the dynamic memory.
+
+> [!example] Example: Destructor Deallocating Pointer Member
+> ```cpp
+> class pointerDataClass {
+> public:
+>     pointerDataClass() { p = new int[50]; } // Constructor allocates array
+>     ~pointerDataClass(); // Destructor declaration
+> private:
+>     int x;
+>     int lenP;
+>     int *p;
+> };
+> 
+> // Destructor definition
+> pointerDataClass::~pointerDataClass()
+> {
+>     delete [] p; // Explicitly free dynamic memory
+> }
+> ```
+
