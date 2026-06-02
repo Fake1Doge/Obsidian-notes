@@ -1770,5 +1770,387 @@ graph LR
 > [!example] Exercise: Home-Baker's Ordering System
 > A home-baker's ordering system allows customers to place orders for baked goods online.
 > - **System Boundary:** Home-Baker's Ordering System.
-> - **Actors:** `Customer`, `Baker` (or Supervisor), `Payment Service` <<system>>.
+> - **Actors:** `Customer`, `Baker` (or Supervisor), `Payment Service` \<\<system\>\>.
 > - **Use Cases:** `Browse Menu`, `Fill Order Form` (includes `Browse Menu`), `Choose Delivery/Pickup`, `Make Payment` (includes `Fill Order Form`, associated with `Payment Service`), `Send Order Notification`, `Provide Feedback`..
+
+### 6.4.4 Specifying Use Cases with Use Case Templates
+Use case diagrams provide a visual overview of system functions and actors, but they lack detail. **Use case templates** provide structured, detailed textual descriptions (specifications) explaining the exact behavior of each use case.
+
+> [!info] Purpose of Use Case Templates
+> - Standardizes what information is captured for each use case.
+> - Captures both high-level descriptions and detailed step-by-step interactions.
+> - Clarifies pre-conditions, triggers, post-conditions, and alternative/exception scenarios.
+
+#### Categories of Information in a Template
+Common templates structure information into five main categories:
+1. **Use Case Management Information:** ID, name, authors, version, priority, criticality.
+2. **Use Case Diagram Information:** Activating actors, other participating actors, associated use cases.
+3. **Contextual Information:** Sources, responsible stakeholders, pre-conditions, triggers, post-conditions.
+4. **Scenario Information:** Main scenario (step-by-step normal flow), alternative scenarios, exception scenarios.
+5. **References:** Links to related quality requirements, data models, or other documents.
+
+Use case templates can be defined at two levels of detail:
+- **High-level templates:** Focus on basic summaries, goals, pre-conditions, post-conditions, and actors (useful for early elicitation).
+- **Detailed templates:** Include step-by-step scenario flows, triggers, results, and relationships (essential for design and testing).
+
+#### High-Level Use Case Template
+| Section | Field | Description / Content |
+|---|---|---|
+| **ID** | Identifier | Unique ID of the use case (e.g., `UC-10`). |
+| | Name | Unique name of the use case (verb-noun). |
+| **Management** | Author(s) | Names of the authors specifying the use case. |
+| **Context** | Source | Reference to the stakeholder or document where it originates. |
+| **Use Case Definition** | Short description | Concise summary of the use case's functionality. |
+| | Goal(s) | Goal(s) satisfied by executing the use case. |
+| | Actor(s) | Enumeration of all actors involved. |
+| | Pre-condition(s) | Prerequisites that must hold before use case execution. |
+| | Post-condition(s) | Conditions that must hold after successful execution. |
+| **Relationships** | Relationship to other use cases | Description of include, extend, or generalization relationships. |
+
+#### Detailed Use Case Template
+A fully specified detailed template includes the following sections:
+
+| Section | Field | Description / Explanation |
+|---|---|---|
+| **ID** | Identifier | Unique identifier of the use case. |
+| | Name | Unique name for the use case. |
+| **Management** | Author(s) | Name of the authors who have worked on the use case description. |
+| | Version | Current version number of the documentation of the use case. |
+| | Change history | List of changes (date, version, author, and reason/subject of change). |
+| | Priority | Indication of importance according to prioritization technique. |
+| | Criticality | Criticality of the use case for the overall success of the system. |
+| **Context** | Source(s) | Denomination of the sources (stakeholder, document, system) from which it originates. |
+| | Responsible stakeholder(s) | The stakeholders responsible for the use case. |
+| **Use Case Definition** | Use case level | Characterisation of the current level of detail of the use case. |
+| | Short description | Concise description of the use case (approximately 1/4 page). |
+| | System under Discussion | Concise description of the system under discussion. |
+| | Associated goal(s) | Goals satisfied by executing the use case (including goal IDs). |
+| | Primary actor(s) | Indication of the primary actor. |
+| | Other actor(s) | Determination of all other actors involved in the use case. |
+| | Precondition | Prerequisites that need to be fulfilled before execution can be initiated. |
+| | Trigger | A list of events which initiate the use case. |
+| | Postcondition | A list of conditions that hold after execution of the use case. |
+| | Result(s) | Description of the outputs that are created during execution. |
+| | Main scenario | Description of the main scenario of the use case. |
+| | Alternative scenario(s) | Description of alternative scenarios of the use case. |
+| | Exception scenario(s) | Description of exception scenarios of the use case. |
+| | Quality requirement(s) | Cross references to quality requirements. |
+| **Relationships** | Goal(s) | Relationships of the use case to other goals than in "Associated goals". |
+| | Use case(s) | Relationships to other use cases (include, extend, extensions points). |
+| | Scenario(s) | Relationships of the use case to other scenarios. |
+| | Solution-oriented requirement(s) | Relationships of the use case to solution-oriented requirements. |
+| | Other artefact(s) | Relationships of the use case to other artefacts. |
+| **Miscellaneous** | Supplementary information | Additional information regarding the use case. |
+| | Open issues | A list of notes regarding the documentation of the use case. |
+
+> [!example] Example: Detailed Use Case Template (Navigation System)
+> - **Use Case ID:** `UC-04`
+> - **Use Case Name:** `Navigate to destination`
+> - **Author(s):** Peter Miller, Jane Smith
+> - **Source:** L. White (domain expert for navigation systems)
+> - **Responsible Stakeholder:** J. Smith
+> - **Short Description:** The driver of the car enters the destination. The navigation system guides the driver to the desired destination.
+> - **Associated Goal(s):** Entry of the destination, automatic navigation to destination.
+> - **Primary Actor(s):** Driver
+> - **Other Actor(s):** Driver, Information Server
+> - **Precondition(s):** Driver is authenticated at the system.
+> - **Postcondition:** The driver has reached the destination.
+> - **Result:** The route to the destination.
+> - **Main Scenario:**
+>   1. The driver activates the navigation system.
+>   2. The navigation system determines the current position of the car.
+>   3. The navigation system asks for the desired destination.
+>   4. The driver enters the destination using the control panel of the navigation system.
+>   5. The navigation system displays the map of the target area.
+>   6. The navigation system asks for the routing options.
+>   7. The driver selects the desired routing options.
+>   8. The navigation system calculates the route.
+>   9. The navigation system informs the driver that the route has been calculated.
+>   10. The navigation system creates a list of waypoints.
+>   11. The navigation system directs the driver to the next waypoint.
+> - **Alternative Scenario:**
+>   - **4a:** The driver selects the destination by pointing on a map that the navigation system shows on the display.
+>     - **4a1:** The driver searches the destination in the electronic maps.
+>     - **4a2:** The driver marks the destination in the electronic maps.
+>     - **4a3:** The navigation system identifies the coordinates of the destination.
+>     - **4a4:** The navigation system displays a detailed map of the destination.
+>     - **4a5:** The navigation system asks the driver to mark the destination on the detailed map.
+>     - **4a6:** The driver marks the destination of the navigation.
+>     - **4a7:** The navigation system identifies the street and house number.
+>     - *Proceed with step 6 of the Main Scenario.*
+> - **Exception Scenario:**
+>   - **5a:** The navigation system cannot find the entered destination.
+>     - **5a1:** The navigation system informs the driver that the entered destination is unknown.
+>     - **5a2:** The navigation system asks the driver to choose another destination.
+> - **Quality Requirement(s):**
+>   - `Q-2-04` (Response time to user inputs)
+>   - `Q-2-06` (Ease of use)
+
+> [!example] Example: Use Case Template - Create Appointment Slot
+> | Field | Content |
+> |---|---|
+> | **Use Case Name** | Create Appointment Slot |
+> | **Scenario** | A veterinarian wants to create a new appointment slot for shelter owners to book. |
+> | **Triggering Event** | Actor decides to create their availability schedule. |
+> | **Brief Description** | When actor select a date on the calendar, the system prompts a message for the actor to choose available time slot. After finishing selecting the time slots, the slot is then added to the calendar and made available for booking. |
+> | **Actor** | Veterinarian |
+> | **Related use case** | None |
+> | **Stakeholders** | Veterinarian |
+> | **Preconditions** | Veterinarian must select at least one time slot. |
+> | **Postconditions** | A new appointment slot is created and the calendar is updated so that it is available for booking. |
+> | **Flow of activities** | **Actor:** <br>1. Veterinarian selects a date on the calendar.<br>2. Veterinarian inputs the available time slot.<br>3. Veterinarian clicks on the 'Save' button.<br><br>**System:**<br>1.1 System prompts a dialog box for user to select time slot.<br>3.1 System saves the appointment slot and updates the calendar. |
+> | **Exception conditions** | If the user does not select any time slot, the system displays an error message and prompts the user to choose at least one time slot. |
+
+> [!example] Example: Use Case Template - Edit Profile
+> | Field | Content |
+> |---|---|
+> | **Use Case ID** | US05-MU |
+> | **Use Case Name** | Edit profile |
+> | **Triggering Event** | User wants to edit the profile |
+> | **Brief Description** | User able to edit the profile details |
+> | **Actors** | Tenant |
+> | **Preconditions** | Actors have valid account |
+> | **Postconditions** | Successfully login to the system |
+> | **Flow Of Activities** | **Actor:**<br>1. Tenant and management enter valid email and password.<br>2. Tenant go to the profile page.<br>3. Tenant edit the profile details like change the password, name, house number.<br>4. Tenant click the save button.<br><br>**System:**<br>1. System verifies emails and password is valid.<br>2. System allow user to log in.<br>3. System able to save the data into the database. |
+> | **Exception Conditions** | - User does not have an account.<br>- User enter invalid email or password.<br>- User do click the save button. |
+
+---
+
+## 6.5 Functional Modelling
+
+### 6.5.1 Fundamentals of Functional Modelling
+Functional modelling specifies solution-oriented requirements from the functional perspective. 
+
+> [!info] Definition: Functional Modelling
+> Functional modelling answers the following core questions about a system:
+> 1. **What** are the main functions (processes) of the system?
+> 2. **How** does data move (flow) between these functions and the environment?
+> 3. **Where** is data stored (data stores) in the system?
+
+#### Concepts and Abstractions
+- **Functional Modelling Languages:** Provide syntax and rules to document processes (functions), the manipulation of data by processes, and input-output data flow relationships among processes.
+- **Functional Model:** Defines the types of functions, data flows, and data stores of a system.
+- **Functional Model Instance:** Represents data about a concrete execution of a function, concrete interactions executed, and concrete data produced/consumed during execution.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    FML[Functional Modelling Language] -->|defines constructs for| FM[Functional Model: Types]
+    FM -->|instantiated during runtime as| FMI[Functional Model Instance: Concrete Data/Runs]
+```
+
+#### Four Modelling Layers
+Functional modelling operates on four conceptual layers (from abstract grammar to concrete data):
+1. **Meta-meta-model (M3):** The grammar used to build a modelling language. It defines what concepts we are allowed to model (e.g., UML meta-metamodel).
+2. **Meta-model (M2):** A language that lets us describe system models (e.g., DFD elements like "Function", "Data Store").
+3. **Model (M1):** The actual system model drawn (e.g., a specific DFD for a hotel booking system).
+4. **Data / Instance (M0):** Actual real-world data created when the system runs.
+
+| Layer | Flight Booking Example | Portal Login Example |
+|---|---|---|
+| **M3 (Meta-meta-model)** | Classifier | Classifier |
+| **M2 (Meta-model)** | Function type, Data store type | Function, Data Store |
+| **M1 (Model)** | `book flight`, `flight information` | `Login`, `Login detail` |
+| **M0 (Data/Instance)** | Booking-2015-04-20: 3.15 PM, Flight DS18 | Login via eLearning Portal, CSE242 25.05.26 2PM |
+
+---
+
+### 6.5.2 Data Flow vs. Control Flow
+A critical design decision in conceptual modeling is distinguishing between data-driven and control-driven processes:
+
+| Feature | Data Flow | Control Flow |
+|---|---|---|
+| **Description** | Describes **pipelines** between processes. | Defines **process execution sequences**, events, and conditions. |
+| **Transmission** | Packages of information (material or immaterial objects). | The passing of a **trigger** from one activity to the next. |
+| **Concurrency** | **No explicit sequence.** All processes can, in principle, be active at the same time. | **Strict sequence.** Only one process can be active at one point in time (e.g., process 2 starts only after process 1 completes). |
+
+> [!example] Exercise: Identifying Data Flow vs. Control Flow
+> 1. *The lecturer sends the lecture notes to students via eLearning after class.* $\to$ **Data Flow** (information package is transmitted).
+> 2. *The class starts automatically at exactly 0815 AM according to the system clock.* $\to$ **Control Flow** (temporal event trigger).
+> 3. *A student submits a teaching assessment survey containing their thoughts about the class.* $\to$ **Data Flow** (survey document submission).
+> 4. *Once 70 students have joined the Webex session, the "Start Recording" button becomes active.* $\to$ **Control Flow** (state transition condition).
+> 5. *During the lecture, students type their questions into the Padlet.* $\to$ **Data Flow** (questions are typed into a store).
+> 6. *If a student fails to sign in within the first 15 minutes, the attendance system locks access.* $\to$ **Control Flow** (time-out trigger).
+
+---
+
+### 6.5.3 Structured Analysis (SA) Overview
+Structured Analysis (SA) is a classic software engineering method (DeMarco 1979) to analyze a problem and specify requirements.
+- **Goal:** Support communication about a problem by structuring models of the problem from abstract to detailed.
+- **Structured Specification Document:** The primary outcome of SA. It is highly maintainable, reduces complexity through partitioning, and uses graphical representations instead of narrative text.
+
+#### The Three Core Components of Structured Analysis (SA)
+1. **Data Flow Diagrams (DFDs):** Define processes and data flows between processes and sources/sinks.
+2. **Data Dictionaries:** Define the composition of the data in the stores and flows.
+3. **Mini Specifications (Mini Specs):** Define primitive functions.
+
+---
+
+### 6.5.4 Data Flow Diagrams (DFDs)
+Data Flow Diagrams visually represent how data is processed, moved, and stored.
+
+#### DFD Modelling Constructs
+1. **Process (Function):** Represents a task or activity that transforms input data into output data.
+   - *Notation:* Circle containing the process name (a verb phrase).
+2. **Data Flow:** Describes the transportation of information packages of known composition.
+   - *Notation:* Curved arrow labeled with the data name.
+3. **Data Store:** Represents a physical or technical repository of data containing "data at rest" (e.g., file, folder, database).
+   - *Notation:* Two parallel lines enclosing the store name.
+4. **Source / Sink (Terminator):** External objects outside the system boundary that exchange data with the system.
+   - **Source:** A terminator that provides information/services to the system.
+   - **Sink:** A terminator that takes information/services from the system.
+   - *Notation:* Rectangle containing the entity name.
+
+> [!example] Example DFD 1: Hotel Room Booking System
+> A simple DFD node for hotel booking:
+> - **Process:** `Book Room`
+> - **Source/Sinks:** `Guest` (sends `booking request`, receives `booking confirmation`), `Bank` (receives `payment validation request`, sends `booking payment validation`), `External Reservation System` (sends `booking confirmation`, receives `booking request`), `Time / Schedule` (sends `current time` to trigger booking expiry).
+> - **Data Stores:** `Guests` (reads/writes `guest` info), `Bookings` (writes `booking payment validation`), `Rooms` (reads/writes `room` availability).
+> 
+> ```mermaid
+> graph LR
+>     Guest[Guest] -->|booking request| BR((Book Room))
+>     BR -->|booking confirmation| Guest
+>     BR -->|guest| Guests[(Guests)]
+>     BR -->|booking request| Bookings[(Bookings)]
+>     Rooms[(Rooms)] -->|room| BR
+>     Time[Time / Schedule] -->|current time| BR
+>     BR -->|payment validation request| Bank[Bank]
+>     Bank -->|booking payment validation| BR
+>     BR -->|booking request| ERS[External Reservation System]
+>     ERS -->|booking confirmation| BR
+> ```
+
+> [!example] Quick Activity: E-Commerce DFD Order Processing
+> Consider the order processing system with three processes:
+> 1. **E-Commerce Process Order (Process 1):** Receives `order` from `Customer` (Source), reads/writes `customer and order information` to/from `Customer Database` (D1), and sends an `acknowledgement` back to the Customer.
+> 2. **Verify Credit Card (Process 2):** Takes `credit card number and order amount` from D1, sends it to `Credit Card Company` (Secondary Actor/Sink), receives `approval or rejection`, and writes status back to D1.
+> 3. **Ship Order (Process 3):** Takes `product type and amount` from the `Inventory` (D2), sends `confirmation and delivery date` to Customer.
+> 
+> *Key Analysis Questions:*
+> - **Rejection effect:** If the credit card is rejected in Process 2, the payment flow stops. A rejection status is written to D1, which prevents Process 3 from executing.
+> - **Flow categories:** `order` and `product type and amount` are data flows (containing information/material). The `approval or rejection` and the start-recording activation represent control flows (triggering processes).
+
+---
+
+### 6.5.5 Data Dictionaries
+Because DFDs can be ambiguous, a **data dictionary** is used to formally define the exact structure of each data flow and data store in a DFD. 
+
+> [!info] Definition: Data Dictionary
+> The entries of a data dictionary are typically defined in an **EBNF** (Extended Backus-Naur Form) language to specify composition. It does not aim to define the actual implementation data structures, but rather their conceptual content.
+
+#### EBNF Operators for Data Dictionaries
+| Operator | Meaning | Explanation | Example |
+|---|---|---|---|
+| **`=`** | Equivalence | "Is equivalent to" / defines a data element. | `name = given name + family name` |
+| **`+`** | AND | Composition of data elements (concatenation). | `address = street + city` |
+| **`(...)`** | Optional | Zero or one occurrence of the elements in brackets. | `address = street + city + (+ country)` |
+| **`[...]`** | Selection | Choice of exactly one of several possible alternatives, separated by `\|`. | `address type = ["home" \| "parents" \| "emergency contact"]` |
+| **`{...}`** | Iteration | Selection/repetition of 0 to $N$ elements. | `students = {student}` |
+| **`x{...}y`** | Bounded Iteration | Repetition with a lower boundary $x$ and upper boundary $y$. | `pet = 1{dog \| cat \| bird}2` (at least 1, at most 2) |
+| **`"..."`** | Data Primitive | Primitive data value which is not further decomposed. | `gender = ["M" \| "F"]` |
+| **`*...*`** | Comment | Textual description or explanation. | `*student since registration*` |
+
+> [!example] Example 1: Student Graduation Status
+> ```
+> students        = {student}               *A set of student records*
+> student         = studentID 
+>                   + degree program 
+>                   + degree progress 
+>                   + student profile
+> degree program  = degree name 
+>                   + {course to take + course description}
+> degree progress = {course passed} + {course failed}
+> student profile = name 
+>                   + {address} 
+>                   + date of registration 
+>                   *student since registration date*
+> address         = street + zip + city + country + address type
+> address type    = ["home" | "parents" | "emergency contact"]
+> ```
+
+> [!example] Example 2: Assignment Submission checking
+> ```
+> assignments      = {assignment}
+> assignment       = assignmentID 
+>                    + course 
+>                    + submission 
+>                    + grading
+> course           = courseCode + courseName + lecturer
+> submission       = file + submissionDate + submissionStatus
+> grading          = score + feedback + gradedBy + gradingDate
+> file             = filename + filetype + filesize
+> submissionStatus = ["submitted" | "pending" | "late" | "missing"]
+> score            = mark + maxMark
+> mark             = integer (0–100)
+> maxMark          = integer (e.g., 100)
+> feedback         = comment + feedbackDate
+> comment          = string
+> lecturer         = lecturerID + name + email
+> gradedBy         = lecturerID
+> ```
+
+#### Practical Hints for Data Dictionaries
+- **Avoid redundancies:** Reuse already defined data elements where possible.
+- **Adopt terms:** Use terms known to the stakeholders to improve understanding.
+- **Avoid circular definitions:** Do not define elements in a loop.
+- **Define synonyms:** Explicitly note naming conflicts as synonyms in comments.
+- **Stop defining:** Stop decomposing terms when your user clearly understands their meaning.
+
+---
+
+### 6.5.6 Hierarchization of DFDs (Levelling)
+To manage system complexity, Structured Analysis uses **levelling** to partition a complex system into a hierarchy of DFDs:
+
+1. **Context Diagram (Level Context):** Represents the entire system as a single process node (labeled `0`) interacting with external sources and sinks. It establishes the system context boundary.
+2. **Level 0 Diagram:** Decomposes the Context process `0` into major subsystems or functional areas (labeled `1, 2, 3, ...`).
+3. **Level 1, 2, ... Diagrams:** Successively partition parent process nodes (e.g., process `4` is decomposed into `4.1, 4.2, 4.3`) until reaching **functional primitives** (processes that do not need further decomposition).
+
+---
+
+### 6.5.7 Balancing of DFDs
+To ensure consistency across the DFD hierarchy, strict **balancing rules** are applied:
+
+1. **Visible Balancing:** Every input and output data flow of a parent process node must also be directly visible in the child data flow diagram.
+2. **Data Dictionary Balancing:** A data flow can be split up into multiple flows at the lower level, provided that the breakdown is clearly defined in the data dictionary (e.g., parent has flow `N`, child has flows `K` and `L`, with `N = K + L` in the dictionary).
+3. **Visual Data Store Balancing:** If a data store is used at the parent level, every child diagram must show which subprocesses read from or write to it.
+4. **Data Dictionary Data Store Balancing:** You do not need to show the entire data store everywhere, but you must show all its components in child diagrams (if it is defined in the data dictionary as `store 1 = a + b`, you can show access to component `a` in one child diagram and component `b` in another).
+
+---
+
+### 6.5.8 Mini Specifications (Mini Specs)
+Functional primitives (processes that are not further decomposed in the DFD hierarchy) are defined in detail using **Mini Specifications**.
+
+- **Purpose:** Describes how a primitive process (function) produces its outputs based on its inputs in terms of a coarse strategy.
+- **Format:** Typically written using structured natural language or decision tables.
+- **Length:** Recommended length is $\frac{1}{2}$ to $1\text{ page}$. Longer indicates too complex (needs decomposition); shorter indicates too fine-grained.
+
+> [!example] Example: Mini Spec of "Calculate Price"
+> **DFD Excerpt:**
+> - Process: `calculate price`
+> - Inputs: `book order` (flow), `price list` (data store), `customer file` (data store)
+> - Outputs: `order price` (flow), `discount category` (flow)
+> 
+> **Data Dictionary Excerpt:**
+> ```
+> book order    = customer number + { book number }
+> customer file = customer number + discount category
+> price list    = book number + discount category + price
+> price         = ...
+> ```
+> 
+> **Mini Specification of the process "calculate price":**
+> For each book order, do the following:
+> 1. Look up the discount category in the customer file for the customer number from the book order.
+> 2. For each book number in the book order, do the following:
+>    - Look up the price in the price list for the combination of book number and discount category.
+> 3. Add all prices to determine the sum.
+> 4. If the sum is higher than \$100, subtract 10% to calculate the final order price.
+
+#### Hints for Writing Mini Specs
+- Use an unambiguous style of writing.
+- Reference terms defined in the data dictionary.
+- Keep sentences short.
+- Use positive active/passive formulations.
+- Specify conditions before successive actions.
+
