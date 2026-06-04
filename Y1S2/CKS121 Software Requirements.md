@@ -1916,7 +1916,7 @@ A fully specified detailed template includes the following sections:
 
 ---
 
-# 7 Functional Modelling
+# Chapter 7: Functional Modelling
 
 ## 7.1 Fundamentals of Functional Modelling
 Functional modelling specifies solution-oriented requirements from the functional perspective. 
@@ -2156,7 +2156,7 @@ Functional primitives (processes that are not further decomposed in the DFD hier
 
 ---
 
-# 8 Data Modelling
+# Chapter 8: Data Modelling
 
 Data modelling is the process of defining and specifying solution-oriented requirements from the **data perspective**, capturing the static-structural aspects of a system.
 

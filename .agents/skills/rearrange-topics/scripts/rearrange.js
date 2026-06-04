@@ -45,7 +45,20 @@ function rearrangeHeadings(filePath) {
         } else {
             const subMatch = line.match(subtopicRegex);
             if (subMatch) {
-                matches.push({ index: i, type: 'sub', match: subMatch });
+                const level = subMatch[1].length;
+                if (level === 1) {
+                    // It is a level 1 heading without a prefix (e.g. "# 7 Functional Modelling")
+                    // We treat level 1 headings always as main topics (Chapters/Topics)
+                    let rest = subMatch[3] || '';
+                    if (rest && !rest.trim().startsWith(':') && !rest.trim().startsWith('-')) {
+                        const cleanRest = rest.replace(/^[\:\-\.\s]+/, '');
+                        rest = `: ${cleanRest}`;
+                    }
+                    const simulatedMatch = [subMatch[0], subMatch[1], 'Chapter', subMatch[2], rest];
+                    matches.push({ index: i, type: 'main', match: simulatedMatch });
+                } else {
+                    matches.push({ index: i, type: 'sub', match: subMatch });
+                }
             }
         }
     }
