@@ -2005,14 +2005,536 @@ There are two primary ways to create 2D arrays dynamically:
 >     ~pointerDataClass(); // Destructor declaration
 > private:
 >     int x;
->     int lenP;
->     int *p;
-> };
+>
+> ### Array Subscripting with Pointer Variables
+> - You can use the subscript operator `[]` on pointer variables just like array names.
+> - The only difference between array names and pointer variables is that **you cannot change the address an array name points to** (it is a constant pointer).
+>
+> > [!example] Example: Legal and Illegal Pointer Operations
+> > ```cpp
+> > double readings[20], totals[20];
+> > double *dptr = nullptr;
+> > 
+> > dptr = readings; // LEGAL (dptr points to readings)
+> > dptr = totals;   // LEGAL (dptr points to totals)
+> > // readings = totals; // ILLEGAL (cannot change readings array address)
+> > // totals = dptr;     // ILLEGAL (cannot change totals array address)
+> > ```
+>
+> ## 7.4 Pointer Arithmetic Operations
+> - **Increment and Decrement:** `numPtr++` and `numPtr--` advance or regress the pointer by the size of one element of the underlying data type.
+> - **Integer Addition and Subtraction:** Adding/subtracting an integer to/from a pointer (`ptr + 4`, `ptr - 2`, `ptr += 2`, `ptr -= 1`).
+> - **Pointer Subtraction:** A pointer can be subtracted from another pointer of the same type to find the number of elements between them.
+> - **Illegal Operations:** You cannot multiply or divide pointers.
+>
+> ## 7.5 Pointers as Function Parameters
+> - Pointers can be passed as parameters to functions, allowing the function to modify the variable in the calling function (similar to pass-by-reference).
+>
+> > [!example] Example: Modifying Value via Pointer Parameter
+> > ```cpp
+> > void doubleValue(int *val)
+> > {
+> >     *val *= 2; // Doubles the variable pointed to by val
+> > }
+> > 
+> > int main()
+> > {
+> >     int x = 5;
+> >     doubleValue(&x);
+> >     cout << x << endl; // Output: 10
+> >     return 0;
+> > }
+> > ```
+>
+> > [!warning] Modifying the Pointer Itself
+> > In the function above, you cannot manipulate the pointer variable itself (e.g., make it point to another address and have it affect the caller's pointer). If you want to change the pointer address inside the function, you must pass it **by reference**:
+> > ```cpp
+> > void doubleValue(int *&val)
+> > {
+> >     val += 2; // Modifies the pointer itself, making it point 2 elements forward
+> > }
+> > ```
+>
+> ## 7.6 Dynamic Memory Allocation
+> - **Dynamic Memory Allocation:** Allocating memory during execution using the `new` operator.
+>   ```cpp
+>   int *iptr = nullptr;
+>   iptr = new int; // Allocates memory for a single int
+>   ```
+> - **Exceptions:** If the system runs out of memory and cannot allocate the requested space, C++ throws an exception and terminates the program.
+> - **Deallocating Memory:** To prevent memory leaks, dynamically allocated memory must be released using `delete` when no longer needed.
+>   ```cpp
+>   delete iptr; // Frees memory for a single variable
+>   iptr = nullptr; // Reset pointer to prevent dangling reference
+>   ```
+>
+> ### Dynamic Arrays
+> - You can allocate arrays dynamically when the size is not known until runtime.
+> - Use the brackets version of `new` and `delete`:
+>   ```cpp
+>   int *iptr = new int[100]; // Allocate array of 100 ints
+>   delete [] iptr; // Free array memory
+>   ```
+>
+> > [!warning] Memory Leak
+> > Failure to release dynamically allocated memory using `delete` or `delete []` before the pointer variable goes out of scope results in a **memory leak**, where the memory remains allocated but inaccessible.
+>
+> > [!example] Example: Dynamic Array of Custom Size
+> > ```cpp
+> > int main()
+> > {
+> >     double *sales = nullptr;
+> >     int numDays;
+> >     
+> >     cout << "How many days of sales figures do you wish to process? ";
+> >     cin >> numDays;
+> >     
+> >     sales = new double[numDays]; // Dynamic allocation
+> >     
+> >     cout << "Enter the sales figures below:\n";
+> >     for (int count = 0; count < numDays; count++)
+> >     {
+> >         cout << "Day " << (count + 1) << ": ";
+> >         cin >> sales[count];
+> >     }
+> >     
+> >     // Process data...
+> >     
+> >     delete [] sales; // Deallocation
+> >     sales = nullptr;
+> >     return 0;
+> > }
+> > ```
+>
+> ## 7.7 Shallow vs. Deep Copy
+> - **Shallow Copy:** Copying only the pointer address from one pointer to another. Both pointers end up pointing to the same memory location.
+>   ```cpp
+>   int *first = new int[10];
+>   int *second = first; // Shallow copy
+>   ```
+>   > [!warning] Shallow Copy Hazard
+>   > If `delete [] second;` is executed, the array is deleted. However, `first` still points to that address, making `first` an invalid/dangling pointer. Modifying or deleting `first` after this will cause errors.
+>
+> - **Deep Copy:** Allocating separate memory for the destination pointer and copying the actual data values element-by-element.
+>   ```cpp
+>   int *first = new int[10];
+>   // ... store data in first ...
+>   int *second = new int[10]; // Allocate new memory
+>   for (int j = 0; j < 10; j++)
+>       second[j] = first[j]; // Deep copy
+>   ```
+>
+> ## 7.8 Dynamic Multi-Dimensional (2D) Arrays
+> There are two primary ways to create 2D arrays dynamically:
+>
+> ### 1. Array of Pointers (Fixed Rows, Dynamic Columns)
+> - Declaring an array of pointers:
+>   ```cpp
+>   int *board[4]; // Array of 4 pointers to int (rows are fixed at 4)
+>   ```
+> - Each pointer is then dynamically allocated columns:
+>   ```cpp
+>   for (int row = 0; row < 4; row++)
+>       board[row] = new int[6]; // Each row has 6 columns
+>   ```
+>
+> ### 2. Pointer to a Pointer (Dynamic Rows and Columns)
+> - Declaring a pointer to a pointer:
+>   ```cpp
+>   int **board = nullptr;
+>   ```
+> - Dynamically allocating the rows (an array of pointers to `int`):
+>   ```cpp
+>   board = new int*[10]; // Allocates 10 rows
+>   ```
+> - Dynamically allocating the columns for each row:
+>   ```cpp
+>   for (int row = 0; row < 10; row++)
+>       board[row] = new int[15]; // 15 columns per row
+>   ```
+>
+> ## 7.9 Pointers and Classes
+> - You can create pointers to objects of a class.
+> - Access public member functions using the member pointer selection operator (`->`).
+>
+> > [!example] Example: Pointers to Objects
+> > ```cpp
+> > class classExample {
+> > public:
+> >     void setX(int a) { x = a; }
+> >     void print() { cout << "X = " << x << endl; }
+> > private:
+> >     int x;
+> > };
+> > 
+> > int main()
+> > {
+> >     classExample *cExpPtr = nullptr;
+> >     classExample cExpObject;
+> >     cExpPtr = &cExpObject;
+> >     
+> >     cExpPtr->setX(5);
+> >     cExpPtr->print(); // Output: X = 5
+> >     return 0;
+> > }
+> > ```
+>
+> ### Classes with Pointer Data Members (Memory Leak Prevention)
+> - If a class contains a pointer data member, the constructor or other member functions might allocate dynamic memory.
+> - When an object goes out of scope, its non-pointer member variables are destroyed, but the dynamically allocated memory pointed to by its pointer data member is **not** automatically freed. This leads to a memory leak.
+> - **Solution:** You must define a **destructor** in the class to explicitly delete the dynamic memory.
+>
+> > [!example] Example: Destructor Deallocating Pointer Member
+> > ```cpp
+> > class pointerDataClass {
+> > public:
+> >     pointerDataClass() { p = new int[50]; } // Constructor allocates array
+> >     ~pointerDataClass(); // Destructor declaration
+> > private:
+> >     int x;
+> >     int lenP;
+> >     int *p;
+> > };
+> > 
+> > // Destructor definition
+> > pointerDataClass::~pointerDataClass()
+> > {
+> >     delete [] p; // Explicitly free dynamic memory
+> > }
+>
+> ---
 > 
-> // Destructor definition
-> pointerDataClass::~pointerDataClass()
-> {
->     delete [] p; // Explicitly free dynamic memory
-> }
-> ```
-
+> ## Chapter 8: Exceptions
+> 
+> Exceptions are used to signal errors or unexpected events that occur while a program is running. They provide a structured way to handle complex error conditions that may arise during execution.
+> 
+> ### 8.1 Throwing and Handling Exceptions
+> 
+> In C++, error testing is often done using standard `if` statements or conditional checks (e.g., checking if a denominator is zero before performing division). However, when error checking is placed inside functions that return a value, standard return values may not suffice:
+> - E.g., returning `0` in a division function when the denominator is zero. Since `0` is a valid mathematical quotient, the calling function cannot distinguish between a successful calculation returning `0` and a failure.
+> - Exceptions solve this by bypassing the normal return channel to notify the caller of a runtime error.
+> 
+> #### Throwing an Exception
+> An exception is a value or an object that signals an error.
+> - **Syntax:** The `throw` keyword followed by an argument representing the error value/object.
+> - **Throw Point:** The line of code where the `throw` statement is executed.
+> - The thrown argument can be of any type (e.g., a primitive type like `int` or `double`, a string, or a class object).
+> 
+> > [!example] Example 1: Throwing an Exception on Division by Zero
+> > ```cpp
+> > double divide(int numerator, int denominator) {
+> >     if (denominator == 0) {
+> >         string exceptionString = "ERROR: Cannot divide by zero.\n";
+> >         throw exceptionString; // Throw point
+> >     }
+> >     return static_cast<double>(numerator) / denominator;
+> > }
+> > ```
+> 
+> #### Handling Exceptions
+> When a `throw` statement is executed, the normal program flow is interrupted, and control is transferred to an **exception handler**.
+> - **`try` block:** Encloses the code that calls functions or executes statements that might throw an exception.
+> - **`catch` block:** The exception handler itself. It follows immediately after the `try` block and specifies an **Exception Parameter** matching the type of the exception it can handle.
+> - A single `try` block can be followed by multiple `catch` blocks to handle different types of exceptions.
+> - If no exception is thrown in the `try` block, the `catch` blocks are completely bypassed, and execution resumes after the try/catch structure.
+> 
+> > [!example] Example 2: Catching a String Exception
+> > ```cpp
+> > int main() {
+> >     int num1, num2;
+> >     double quotient;
+> >     
+> >     cout << "Enter two numbers: ";
+> >     cin >> num1 >> num2;
+> >     
+> >     try {
+> >         quotient = divide(num1, num2);
+> >         cout << "The quotient is " << quotient << endl;
+> >     }
+> >     catch (string exceptionString) {
+> >         cout << exceptionString; // Handles the error
+> >     }
+> >     
+> >     cout << "End of the program.\n";
+> >     return 0;
+> > }
+> > ```
+> 
+> ---
+> 
+> ### 8.2 Object-Oriented Exception Handling (Exceptions with Classes)
+> 
+> Instead of throwing primitive data types, you can define custom classes to represent specific exceptions. This is particularly useful for separating interface error declarations.
+> - An exception class is typically defined as a nested class publically within the class whose member functions might throw it.
+> - **Syntax:** Nested exception class declaration.
+>   ```cpp
+>   class Rectangle {
+>   public:
+>       class NegativeSize { }; // Nested exception class
+>       // ...
+>   };
+>   ```
+> - **Throwing:** Throw an instance of the nested exception class using constructor syntax.
+>   ```cpp
+>   throw NegativeSize();
+>   ```
+> - **Catching:** Specify the nested class name using the scope resolution operator (`::`).
+>   ```cpp
+>   catch (Rectangle::NegativeSize) { ... }
+>   ```
+> 
+> > [!example] Example: Class-Based Exception Handling
+> > **`Rectangle.h`**
+> > ```cpp
+> > #ifndef RECTANGLE_H
+> > #define RECTANGLE_H
+> > 
+> > class Rectangle {
+> > private:
+> >     double width;
+> >     double length;
+> > public:
+> >     class NegativeSize { }; // Exception class
+> >     
+> >     Rectangle() { width = 0.0; length = 0.0; }
+> >     void setWidth(double);
+> >     void setLength(double);
+> >     double getArea() const { return width * length; }
+> > };
+> > #endif
+> > ```
+> > 
+> > **`Rectangle.cpp`**
+> > ```cpp
+> > #include "Rectangle.h"
+> > 
+> > void Rectangle::setWidth(double w) {
+> >     if (w >= 0)
+> >         width = w;
+> >     else
+> >         throw NegativeSize(); // Throwing class exception
+> > }
+> > 
+> > void Rectangle::setLength(double len) {
+> >     if (len >= 0)
+> >         length = len;
+> >     else
+> >         throw NegativeSize(); // Throwing class exception
+> > }
+> > ```
+> > 
+> > **`main.cpp`**
+> > ```cpp
+> > #include "Rectangle.h"
+> > 
+> > int main() {
+> >     Rectangle myRectangle;
+> >     try {
+> >         myRectangle.setWidth(5.0);
+> >         myRectangle.setLength(-2.0); // Throws NegativeSize
+> >     }
+> >     catch (Rectangle::NegativeSize) {
+> >         cout << "Error: A negative value was entered.\n";
+> >     }
+> >     return 0;
+> > }
+> > ```
+> 
+> ---
+> 
+> ### 8.3 Multiple Exceptions
+> 
+> A program can test for multiple types of errors and throw different types of exceptions.
+> - C++ allows catching multiple exceptions, but **each exception must be of a different type**.
+> - To handle this, write multiple `catch` blocks in sequence after the `try` block.
+> 
+> > [!example] Example: Distinguishing Between Negative Width and Negative Length
+> > **`Rectangle.h`**
+> > ```cpp
+> > class Rectangle {
+> > public:
+> >     class NegativeWidth { };  // Separate exception class for width
+> >     class NegativeLength { }; // Separate exception class for length
+> >     
+> >     void setWidth(double w) {
+> >         if (w < 0) throw NegativeWidth();
+> >         width = w;
+> >     }
+> >     void setLength(double len) {
+> >         if (len < 0) throw NegativeLength();
+> >         length = len;
+> >     }
+> >     // ...
+> > };
+> > ```
+> > 
+> > **`main.cpp`**
+> > ```cpp
+> > int main() {
+> >     Rectangle myRectangle;
+> >     try {
+> >         myRectangle.setWidth(-1.0);
+> >         myRectangle.setLength(5.0);
+> >     }
+> >     catch (Rectangle::NegativeWidth) {
+> >         cout << "Error: A negative value entered for width.\n";
+> >     }
+> >     catch (Rectangle::NegativeLength) {
+> >         cout << "Error: A negative value entered for length.\n";
+> >     }
+> >     return 0;
+> > }
+> > ```
+> 
+> ---
+> 
+> ### 8.4 Exception Handlers to Recover from Errors
+> 
+> In many interactive applications, you do not want the program to halt when an exception is thrown. Instead, you can use exception handlers to recover and prompt the user for valid data.
+> - **Recovery Pattern:** Place the user input and try/catch block inside a loop (e.g., `while (tryAgain)`).
+> - When a valid input is successfully processed without throwing an exception, set `tryAgain = false` to break the loop.
+> - If an exception is caught, display an error message and prompt the user to input data again.
+> 
+> > [!example] Example: Interactive Input Validation Loop
+> > ```cpp
+> > int main() {
+> >     double width;
+> >     bool tryAgain = true;
+> >     Rectangle myRectangle;
+> >     
+> >     cout << "Enter the rectangle's width: ";
+> >     cin >> width;
+> >     
+> >     while (tryAgain) {
+> >         try {
+> >             myRectangle.setWidth(width);
+> >             tryAgain = false; // Bypasses loop if no exception is thrown
+> >         }
+> >         catch (Rectangle::NegativeWidth) {
+> >             cout << "Please enter a nonnegative value: ";
+> >             cin >> width; // Retry input
+> >         }
+> >     }
+> >     return 0;
+> > }
+> > ```
+> 
+> ---
+> 
+> ### 8.5 Extracting Data from the Exception Class
+> 
+> Exception classes can contain member variables and functions, allowing the throwing function to pass diagnostic data (like the invalid value itself) back to the exception handler.
+> - Pass the invalid value to the constructor of the exception class and store it in a member variable.
+> - Define a member function (a getter) in the exception class to retrieve this data in the `catch` block.
+> 
+> > [!example] Example: Accessing Diagnostic Data from Exception Object
+> > **`Rectangle.h`**
+> > ```cpp
+> > class Rectangle {
+> > public:
+> >     class NegativeWidth {
+> >     private:
+> >         double value;
+> >     public:
+> >         NegativeWidth(double val) { value = val; }
+> >         double getValue() const { return value; }
+> >     };
+> >     
+> >     void setWidth(double w) {
+> >         if (w < 0) 
+> >             throw NegativeWidth(w); // Pass the bad value to constructor
+> >         width = w;
+> >     }
+> >     // ...
+> > };
+> > ```
+> > 
+> > **`main.cpp`**
+> > ```cpp
+> > int main() {
+> >     Rectangle myRectangle;
+> >     try {
+> >         myRectangle.setWidth(-15.5);
+> >     }
+> >     catch (Rectangle::NegativeWidth e) { // Catch exception object
+> >         cout << "Error: " << e.getValue() << " is an invalid value for width.\n";
+> >     }
+> >     return 0;
+> > }
+> > ```
+> 
+> ---
+> 
+> ### 8.6 Unwinding the Stack
+> 
+> Once an exception is thrown, the program cannot return to the throw point.
+> - The function executing the `throw` statement terminates immediately.
+> - If the exception is not caught in the immediate function, the calling function also terminates, propagating the exception up the call stack until a matching handler is found or the program terminates.
+> - **Stack Unwinding:** The process where the call stack is popped to find a handler.
+> - **Resource Management & Destructors:** As the stack unwinds, any local objects created in the `try` block or functions called since then have their **destructors automatically called**. This prevents memory/resource leaks of objects when an exception propagates.
+> 
+> ---
+> 
+> ### 8.7 Rethrowing an Exception
+> 
+> Try blocks can be nested within each other. In complex architectures, an inner catch block might want to handle part of the error locally (e.g., log it to a file or increment a counter) but still let the outer context know that an exception occurred.
+> - A catch block can rethrow the current exception by executing a blank `throw;` statement (with no argument).
+> - The exception is then passed to the next outer `try/catch` construct.
+> 
+> > [!example] Example: Local Logging and Rethrowing
+> > ```cpp
+> > #include <iostream>
+> > using namespace std;
+> > 
+> > void doSomething() {
+> >     try {
+> >         throw 10;
+> >     }
+> >     catch (int x) {
+> >         cout << "Inner Catch: Logged error locally.\n";
+> >         throw; // Rethrows the exception to the caller
+> >     }
+> > }
+> > 
+> > int main() {
+> >     try {
+> >         doSomething();
+> >     }
+> >     catch (int x) {
+> >         cout << "Outer Catch: Handled rethrown exception of value " << x << endl;
+> >     }
+> >     return 0;
+> > }
+> > ```
+> > **Output:**
+> > ```text
+> > Inner Catch: Logged error locally.
+> > Outer Catch: Handled rethrown exception of value 10
+> > ```
+> 
+> ---
+> 
+> ### 8.8 Handling the `bad_alloc` Exception
+> 
+> When the `new` operator fails to allocate requested memory (e.g., if the system runs out of memory), C++ throws a `bad_alloc` exception by default (rather than returning a null pointer).
+> - To catch this exception, include the `<new>` header directive.
+> - The `bad_alloc` exception class resides in the `std` namespace.
+> 
+> > [!example] Example: Catching `bad_alloc`
+> > ```cpp
+> > #include <iostream>
+> > #include <new> // Required for bad_alloc
+> > using namespace std;
+> > 
+> > int main() {
+> >     double *ptr = nullptr;
+> >     try {
+> >         // Attempting to allocate an extremely large array
+> >         ptr = new double[100000000000000]; 
+> >     }
+> >     catch (bad_alloc) {
+> >         cout << "Error: Insufficient memory allocated.\n";
+> >     }
+> >     return 0;
+> > }
+> > ```
