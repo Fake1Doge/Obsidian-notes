@@ -2154,3 +2154,229 @@ Functional primitives (processes that are not further decomposed in the DFD hier
 - Use positive active/passive formulations.
 - Specify conditions before successive actions.
 
+---
+
+## 6.6 Data Modelling
+
+Data modelling is the process of defining and specifying solution-oriented requirements from the **data perspective**, capturing the static-structural aspects of a system.
+
+### 6.6.1 Solution-Oriented Requirements (SOR)
+Solution-oriented requirements (SOR) represent the most detailed level of requirements. They define the system's structure and behavior across three perspectives:
+1. **Data perspective:** Specifies input/output data structures and dependencies (static-structural aspects).
+2. **Functional perspective:** Specifies functions, processes, and data flows.
+3. **Behavioural perspective:** Specifies system reactions to events and state changes.
+
+#### Characteristics of SOR
+- **Arrangement:** Must be agreed upon by all stakeholders.
+- **Completeness:** Should define all details necessary for implementation and testing.
+- **Conflict Resolution:** Stakeholders must resolve conflicts that emerge during requirements engineering and agree on the requirements to be fulfilled.
+- **Level of Detail:** Should facilitate unambiguous realization of the system.
+- **Intended Solution:** Specifies the intended solution, restricting the solution space to facilitate implementation or even automatic generation on specific platforms.
+
+#### Requirements Types: Level of Agreement vs. Level of Detail
+We can categorize requirements based on their level of detail and stakeholder agreement:
+- **Goals (Low detail, low agreement):** High-level intentions or objectives concerning system usage and properties. They are abstract and contain few details.
+- **Scenarios (Medium detail, medium agreement):** Concrete examples of satisfying or failing to satisfy goals, structured as a sequence of interaction steps.
+- **Solution-oriented Requirements (High detail, high agreement):** Highly detailed requirements specifying data, functional, and behavioral perspectives, as well as quality requirements and constraints.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    G["Goals<br/>(Low Detail / High Abstraction)"] --> S["Scenarios<br/>(Medium Detail / Sequence of Steps)"]
+    S --> SOR["Solution-Oriented Requirements<br/>(High Detail / Multi-Perspective)"]
+```
+
+---
+
+### 6.6.2 Entity-Relationship (ER) Modelling Language
+Entity-Relationship (ER) modeling is a widespread, standard language for documenting static aspects of the system context on the conceptual level.
+
+#### 1. Entity Type
+An **entity type** represents a set of physical or conceptual objects (entities) with similar properties.
+- **Concept:** It abstracts from concrete instances. Entities can be material (e.g., `BOOK`) or immaterial (e.g., `LIBRARY USER`).
+- **Notation:** Represented as a rectangle containing the entity type name (usually in uppercase).
+
+#### 2. Relationship Type
+A **relationship type** relates two or more entity types to each other.
+- **Concept:** Represents a set of similar relationship instances relevant to the system.
+- **Notation:** Represented as a diamond connected to the participating entity types, labeled with the relationship name (typically a verb in uppercase). Role names can optionally be written along the connection lines.
+- **Kinds of Relationship Types:**
+  - **Binary Relationship:** Relates exactly two entity types.
+    - *Example:* `STUDENT` -- attends --> `LECTURE`
+  - **Reflexive Relationship:** Relates an entity type to itself.
+    - *Example:* `PERSON` (Wife) -- married to --> `PERSON` (Husband)
+  - **Ternary Relationship:** Relates three entity types.
+    - *Example:* `COMPANY` and `PRODUCT` and `PERSON` related by `PROVIDES`
+
+#### 3. Attribute
+An **attribute** defines a property of an entity type or relationship type.
+- **Concept:** Can be defined for both entities and relationships (representing properties of the association).
+- **Notation:** Represented as an oval/ellipse connected to the corresponding entity or relationship type, containing the attribute name. Alternatively, listed as a line label.
+  - *Example:* `LIBRARY USER` has attributes `ID`, `First name`, `Last name`. The relationship `BORROWS` has the attribute `Period`.
+
+#### 4. Cardinality Constraint
+A **cardinality constraint** restricts the permissible number of entities of a certain type that may participate in a relationship instance.
+- **Concept:** Documented as a pair `(min, max)` where:
+  - `min` is the minimum number of relationships an entity must participate in. A `min = 0` denotes an optional relationship.
+  - `max` is the maximum number of relationships an entity can participate in.
+- **Notation:** Placed near the entity type line.
+  - *Example:* `LIBRARY USER` `(0, 20)` ----- `BORROWS` ----- `(0, 1)` `Book`
+    - *Interpretation:* A library user may borrow 0 to 20 books (layer M1 model). A book may be borrowed by 0 or 1 library users.
+  - **Valid Instantiation (Layer M0):** Cardinality constraints restrict which runtime instances (M0) are valid for a given model (M1).
+
+> [!example] ER Modelling Constructs Summary
+> ```mermaid
+> graph LR
+>     classDef entity fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+>     classDef rel fill:#f1f8e9,stroke:#558b2f,stroke-width:2px;
+>     
+>     U["LIBRARY USER"]:::entity ---|"(0,20)<br/>Borrower"| B{{"BORROWS"}}:::rel
+>     B ---|"(0,1)<br/>Borrowed item"| BK["BOOK"]:::entity
+>     
+>     %% Attributes
+>     U --- U_ID([ID])
+>     U --- U_LN([Last name])
+>     U --- U_FN([First name])
+>     
+>     B --- B_P([Period])
+>     
+>     BK --- BK_ID([ID])
+>     BK --- BK_T([Title])
+> ```
+
+---
+
+### 6.6.3 UML Class Diagrams
+Unified Modeling Language (UML) Class Diagrams are a widespread, object-oriented language for specifying static system structures.
+
+#### 1. Class
+A **class** describes a static structural element of the system.
+- **Notation:** A box divided into three compartments:
+  1. **Top Compartment:** Name of the class (mandatory).
+  2. **Middle Compartment:** Attributes of the class.
+  3. **Bottom Compartment:** Methods/operations of the class.
+- *Example:*
+  | `LibraryUser` |
+  | :--- |
+  | lastName<br/>firstName<br/>dateOfBirth |
+  | |
+
+#### 2. Attributes
+Attributes represent properties of a class.
+- **Basic Elements Syntax:** `[visibility] name: [type] [[multiplicity]] = [default] {[property-string]}`
+- **Basic Properties:**
+  - **Name:** Labels the attribute.
+  - **Type:** Defines the data or object type.
+  - **Multiplicity:** Restricts the number of values (e.g., `[1..1]`, `[1..*]`).
+- **Advanced Elements:**
+  - **Visibility:**
+    - Public (`+`)
+    - Private (`-`)
+    - Protected (`#`)
+    - Derived (`/`)
+  - **Default:** Pre-defined value (e.g., `= "New user"`).
+  - **Property-string:** Additional characteristics (e.g., `{ordered}`).
+- *Example:* `+ lastName: String [1..1] = "New user" {ordered}`
+
+#### 3. Association
+An **association** represents a relationship between classes.
+- **Notation:** A line connecting the classes, with:
+  - **Name:** Labels the association.
+  - **Multiplicities:** Placed at each end to indicate min/max instances.
+  - **RoleName:** Placed at each end to indicate the class's role in the relationship.
+  - **Property String:** E.g., `{ordered}`.
+- *Example:* `LibraryUser` `(0..1 borrower)` ------ borrows ------> `(0..20 borrowedItem)` `Book`
+
+#### 4. Association Class
+An **association class** documents properties and operations that belong to the *existence* of the association itself (rather than to either of the participating classes).
+- **Concept:** Necessary when the information depends on the association and cannot be stored in either class.
+- **Notation:** A dashed line connecting the association line to a class box.
+- *Example:* A library loan has a return date. This return date is stored in an association class `Lending` with the attribute `returnDate: Date` connecting `LibraryUser` and `Book`.
+
+#### 5. Aggregation
+An **aggregation** represents a hierarchical, whole-part relationship between an aggregate class and its part classes.
+- **Concept:** The lifetime of the parts is **independent** of the whole. A part can belong to multiple wholes or change owners.
+- **Notation:** An open/white diamond at the aggregate (whole) end of the connection line.
+- *Example:* `Course` `<>`-------- `Student` (a student's lifetime does not depend on the course, and they can be enrolled in other courses).
+
+#### 6. Composition
+A **composition** is a strong form of aggregation representing a strict whole-part relationship.
+- **Concept:** The lifetime of the parts is **dependent** on the whole. The parts cannot exist without the composite, and a part can belong to only one composite at a time. The multiplicity at the composite end is always `1` or `0..1`.
+- **Notation:** A filled/black diamond at the composite (whole) end of the connection line.
+- *Example:* `Series` `{filled diamond}`-------- `Volume` (a volume of a series cannot exist without the series itself).
+
+#### 7. Generalisation
+A **generalisation** relates a subclass to a superclass, representing inheritance.
+- **Concept:** Subclasses inherit all attributes, operations, and relationships from the superclass. They can also define additional attributes/operations/relationships or override inherited ones.
+- **Notation:** An arrow with an open/white triangular head pointing to the superclass.
+- *Example:* `Book` is a superclass for `Textbook` and `Dictionary`.
+
+#### Generalisation Sets
+A generalisation set classifies how subclasses partition the superclass space based on two dimensions:
+1. **Disjoint vs. Overlapping:**
+   - **Disjoint (D):** An object of the superclass can belong to **only one** subclass.
+   - **Overlapping (O):** An object of the superclass may belong to **two or more** subclasses.
+2. **Complete vs. Incomplete:**
+   - **Complete (C):** Every object of the superclass must belong to **at least one** subclass.
+   - **Incomplete (I):** There can be objects of the superclass that **do not belong to any** subclass.
+
+##### Four Combinations:
+- **Disjoint & Complete (DC):** Subclasses cover the entire superclass, and have no common instances.
+  - *Example:* `LibraryUser` partitioned into `Adult` and `Teenager` with `{complete, disjoint}`.
+- **Disjoint & Incomplete (DI):** Subclasses do not cover the entire superclass, but have no common instances.
+  - *Example:* `Vehicle` partitioned into `Motorcycle` and `Passenger Car` with `{incomplete, disjoint}`.
+- **Overlapping & Complete (OC):** Subclasses cover the entire superclass, and can share common instances.
+  - *Example:* `Bank Customer` partitioned into `Private Customer` and `Business Customer` with `{complete, overlapping}`.
+- **Overlapping & Incomplete (OI):** Subclasses do not cover the entire superclass, and can share common instances.
+  - *Example:* `Vehicle` partitioned into `Landcraft` and `Seacraft` with `{incomplete, overlapping}`.
+
+> [!example] UML Class Diagram Constructs Summary
+> ```mermaid
+> classDiagram
+>     class LibraryUser {
+>         +lastName: String [1..1]
+>         +firstName: String [1..*]
+>         +dateOfBirth: Date
+>     }
+>     class Book {
+>         +shelfmark: String
+>     }
+>     class Textbook
+>     class Dictionary
+>     class Lending {
+>         +returnDate: Date
+>     }
+>     
+>     LibraryUser "0..1" --> "0..20" Book : borrows
+>     (LibraryUser, Book) .. Lending
+>     
+>     Book <|-- Textbook
+>     Book <|-- Dictionary
+>     
+>     LibraryUser <|-- Adult
+>     LibraryUser <|-- Teenager
+>     note for Adult "Generalization Set:\n{complete, disjoint}"
+> ```
+
+---
+
+### 6.6.4 Practical Hints for Data Modelling
+
+#### 1. Class vs. Attribute
+- **Rule:** A class represents an object with its own identity. An attribute represents a property of a class.
+- **Guideline:** If a potential class has only **one attribute** and is related to another class, it is usually better to model it as a simple attribute of that other class.
+- *Example:*
+  - *Initial:* `Student` (name, address) --owns--> `Student ID Card` (studentID)
+  - *Improved:* `Student` (name, address, studentID)
+
+#### 2. Attribute vs. Relationship Type
+- **Rule:** If an attribute of a class $C_1$ is actually a reference to another class $C_2$, model it as an **association/relationship** between $C_1$ and $C_2$.
+- *Example:*
+  - *Initial:* `Invoice` has attribute `customer` (holding customer information).
+  - *Improved:* `Invoice` connected via association `has invoice` to `Customer` class.
+
+#### 3. Entity Type vs. Relationship Type
+- **Rule:** An entity type represents an object with an independent identity. A relationship type represents an association whose identity is derived from the participating entities.
+- *Example:* The relationship `BORROWS` derives its identity from the participating `LIBRARY USER` and `BOOK` instances. If the relationship itself has complex behavior or independent identity, consider using an Association Class (or reifying it as a separate entity).
+
+
