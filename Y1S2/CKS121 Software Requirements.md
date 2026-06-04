@@ -1916,9 +1916,9 @@ A fully specified detailed template includes the following sections:
 
 ---
 
-## 6.5 Functional Modelling
+# 6.5 Functional Modelling
 
-### 6.5.1 Fundamentals of Functional Modelling
+## 6.5.1 Fundamentals of Functional Modelling
 Functional modelling specifies solution-oriented requirements from the functional perspective. 
 
 > [!info] Definition: Functional Modelling
@@ -1927,7 +1927,7 @@ Functional modelling specifies solution-oriented requirements from the functiona
 > 2. **How** does data move (flow) between these functions and the environment?
 > 3. **Where** is data stored (data stores) in the system?
 
-#### Concepts and Abstractions
+### Concepts and Abstractions
 - **Functional Modelling Languages:** Provide syntax and rules to document processes (functions), the manipulation of data by processes, and input-output data flow relationships among processes.
 - **Functional Model:** Defines the types of functions, data flows, and data stores of a system.
 - **Functional Model Instance:** Represents data about a concrete execution of a function, concrete interactions executed, and concrete data produced/consumed during execution.
@@ -1939,7 +1939,7 @@ graph TD
     FM -->|instantiated during runtime as| FMI[Functional Model Instance: Concrete Data/Runs]
 ```
 
-#### Four Modelling Layers
+### Four Modelling Layers
 Functional modelling operates on four conceptual layers (from abstract grammar to concrete data):
 1. **Meta-meta-model (M3):** The grammar used to build a modelling language. It defines what concepts we are allowed to model (e.g., UML meta-metamodel).
 2. **Meta-model (M2):** A language that lets us describe system models (e.g., DFD elements like "Function", "Data Store").
@@ -1955,7 +1955,7 @@ Functional modelling operates on four conceptual layers (from abstract grammar t
 
 ---
 
-### 6.5.2 Data Flow vs. Control Flow
+## 6.5.2 Data Flow vs. Control Flow
 A critical design decision in conceptual modeling is distinguishing between data-driven and control-driven processes:
 
 | Feature | Data Flow | Control Flow |
@@ -1974,22 +1974,22 @@ A critical design decision in conceptual modeling is distinguishing between data
 
 ---
 
-### 6.5.3 Structured Analysis (SA) Overview
+## 6.5.3 Structured Analysis (SA) Overview
 Structured Analysis (SA) is a classic software engineering method (DeMarco 1979) to analyze a problem and specify requirements.
 - **Goal:** Support communication about a problem by structuring models of the problem from abstract to detailed.
 - **Structured Specification Document:** The primary outcome of SA. It is highly maintainable, reduces complexity through partitioning, and uses graphical representations instead of narrative text.
 
-#### The Three Core Components of Structured Analysis (SA)
+### The Three Core Components of Structured Analysis (SA)
 1. **Data Flow Diagrams (DFDs):** Define processes and data flows between processes and sources/sinks.
 2. **Data Dictionaries:** Define the composition of the data in the stores and flows.
 3. **Mini Specifications (Mini Specs):** Define primitive functions.
 
 ---
 
-### 6.5.4 Data Flow Diagrams (DFDs)
+## 6.5.4 Data Flow Diagrams (DFDs)
 Data Flow Diagrams visually represent how data is processed, moved, and stored.
 
-#### DFD Modelling Constructs
+### DFD Modelling Constructs
 1. **Process (Function):** Represents a task or activity that transforms input data into output data.
    - *Notation:* Circle containing the process name (a verb phrase).
 2. **Data Flow:** Describes the transportation of information packages of known composition.
@@ -2033,13 +2033,13 @@ Data Flow Diagrams visually represent how data is processed, moved, and stored.
 
 ---
 
-### 6.5.5 Data Dictionaries
+## 6.5.5 Data Dictionaries
 Because DFDs can be ambiguous, a **data dictionary** is used to formally define the exact structure of each data flow and data store in a DFD. 
 
 > [!info] Definition: Data Dictionary
 > The entries of a data dictionary are typically defined in an **EBNF** (Extended Backus-Naur Form) language to specify composition. It does not aim to define the actual implementation data structures, but rather their conceptual content.
 
-#### EBNF Operators for Data Dictionaries
+### EBNF Operators for Data Dictionaries
 | Operator | Meaning | Explanation | Example |
 |---|---|---|---|
 | **`=`** | Equivalence | "Is equivalent to" / defines a data element. | `name = given name + family name` |
@@ -2090,7 +2090,7 @@ Because DFDs can be ambiguous, a **data dictionary** is used to formally define 
 > gradedBy         = lecturerID
 > ```
 
-#### Practical Hints for Data Dictionaries
+### Practical Hints for Data Dictionaries
 - **Avoid redundancies:** Reuse already defined data elements where possible.
 - **Adopt terms:** Use terms known to the stakeholders to improve understanding.
 - **Avoid circular definitions:** Do not define elements in a loop.
@@ -2099,7 +2099,7 @@ Because DFDs can be ambiguous, a **data dictionary** is used to formally define 
 
 ---
 
-### 6.5.6 Hierarchization of DFDs (Levelling)
+## 6.5.6 Hierarchization of DFDs (Levelling)
 To manage system complexity, Structured Analysis uses **levelling** to partition a complex system into a hierarchy of DFDs:
 
 1. **Context Diagram (Level Context):** Represents the entire system as a single process node (labeled `0`) interacting with external sources and sinks. It establishes the system context boundary.
@@ -2108,7 +2108,7 @@ To manage system complexity, Structured Analysis uses **levelling** to partition
 
 ---
 
-### 6.5.7 Balancing of DFDs
+## 6.5.7 Balancing of DFDs
 To ensure consistency across the DFD hierarchy, strict **balancing rules** are applied:
 
 1. **Visible Balancing:** Every input and output data flow of a parent process node must also be directly visible in the child data flow diagram.
@@ -2118,7 +2118,7 @@ To ensure consistency across the DFD hierarchy, strict **balancing rules** are a
 
 ---
 
-### 6.5.8 Mini Specifications (Mini Specs)
+## 6.5.8 Mini Specifications (Mini Specs)
 Functional primitives (processes that are not further decomposed in the DFD hierarchy) are defined in detail using **Mini Specifications**.
 
 - **Purpose:** Describes how a primitive process (function) produces its outputs based on its inputs in terms of a coarse strategy.
@@ -2147,7 +2147,7 @@ Functional primitives (processes that are not further decomposed in the DFD hier
 > 3. Add all prices to determine the sum.
 > 4. If the sum is higher than \$100, subtract 10% to calculate the final order price.
 
-#### Hints for Writing Mini Specs
+### Hints for Writing Mini Specs
 - Use an unambiguous style of writing.
 - Reference terms defined in the data dictionary.
 - Keep sentences short.
@@ -2156,24 +2156,24 @@ Functional primitives (processes that are not further decomposed in the DFD hier
 
 ---
 
-## 6.6 Data Modelling
+# 6.6 Data Modelling
 
 Data modelling is the process of defining and specifying solution-oriented requirements from the **data perspective**, capturing the static-structural aspects of a system.
 
-### 6.6.1 Solution-Oriented Requirements (SOR)
+## 6.6.1 Solution-Oriented Requirements (SOR)
 Solution-oriented requirements (SOR) represent the most detailed level of requirements. They define the system's structure and behavior across three perspectives:
 1. **Data perspective:** Specifies input/output data structures and dependencies (static-structural aspects).
 2. **Functional perspective:** Specifies functions, processes, and data flows.
 3. **Behavioural perspective:** Specifies system reactions to events and state changes.
 
-#### Characteristics of SOR
+### Characteristics of SOR
 - **Arrangement:** Must be agreed upon by all stakeholders.
 - **Completeness:** Should define all details necessary for implementation and testing.
 - **Conflict Resolution:** Stakeholders must resolve conflicts that emerge during requirements engineering and agree on the requirements to be fulfilled.
 - **Level of Detail:** Should facilitate unambiguous realization of the system.
 - **Intended Solution:** Specifies the intended solution, restricting the solution space to facilitate implementation or even automatic generation on specific platforms.
 
-#### Requirements Types: Level of Agreement vs. Level of Detail
+### Requirements Types: Level of Agreement vs. Level of Detail
 We can categorize requirements based on their level of detail and stakeholder agreement:
 - **Goals (Low detail, low agreement):** High-level intentions or objectives concerning system usage and properties. They are abstract and contain few details.
 - **Scenarios (Medium detail, medium agreement):** Concrete examples of satisfying or failing to satisfy goals, structured as a sequence of interaction steps.
@@ -2188,15 +2188,15 @@ graph TD
 
 ---
 
-### 6.6.2 Entity-Relationship (ER) Modelling Language
+## 6.6.2 Entity-Relationship (ER) Modelling Language
 Entity-Relationship (ER) modeling is a widespread, standard language for documenting static aspects of the system context on the conceptual level.
 
-#### 6.6.2.1. Entity Type
+### 6.6.2.1. Entity Type
 An **entity type** represents a set of physical or conceptual objects (entities) with similar properties.
 - **Concept:** It abstracts from concrete instances. Entities can be material (e.g., `BOOK`) or immaterial (e.g., `LIBRARY USER`).
 - **Notation:** Represented as a rectangle containing the entity type name (usually in uppercase).
 
-#### 6.6.2.2. Relationship Type
+### 6.6.2.2. Relationship Type
 A **relationship type** relates two or more entity types to each other.
 - **Concept:** Represents a set of similar relationship instances relevant to the system.
 - **Notation:** Represented as a diamond connected to the participating entity types, labeled with the relationship name (typically a verb in uppercase). Role names can optionally be written along the connection lines.
@@ -2208,13 +2208,13 @@ A **relationship type** relates two or more entity types to each other.
   - **Ternary Relationship:** Relates three entity types.
     - *Example:* `COMPANY` and `PRODUCT` and `PERSON` related by `PROVIDES`
 
-#### 6.6.2.3. Attribute
+### 6.6.2.3. Attribute
 An **attribute** defines a property of an entity type or relationship type.
 - **Concept:** Can be defined for both entities and relationships (representing properties of the association).
 - **Notation:** Represented as an oval/ellipse connected to the corresponding entity or relationship type, containing the attribute name. Alternatively, listed as a line label.
   - *Example:* `LIBRARY USER` has attributes `ID`, `First name`, `Last name`. The relationship `BORROWS` has the attribute `Period`.
 
-#### 6.6.2.4. Cardinality Constraint
+### 6.6.2.4. Cardinality Constraint
 A **cardinality constraint** restricts the permissible number of entities of a certain type that may participate in a relationship instance.
 - **Concept:** Documented as a pair `(min, max)` where:
   - `min` is the minimum number of relationships an entity must participate in. A `min = 0` denotes an optional relationship.
@@ -2246,10 +2246,10 @@ A **cardinality constraint** restricts the permissible number of entities of a c
 
 ---
 
-### 6.6.3 UML Class Diagrams
+## 6.6.3 UML Class Diagrams
 Unified Modeling Language (UML) Class Diagrams are a widespread, object-oriented language for specifying static system structures.
 
-#### 6.6.3.1. Class
+### 6.6.3.1. Class
 A **class** describes a static structural element of the system.
 - **Notation:** A box divided into three compartments:
   1. **Top Compartment:** Name of the class (mandatory).
@@ -2261,7 +2261,7 @@ A **class** describes a static structural element of the system.
   | lastName<br/>firstName<br/>dateOfBirth |
   | |
 
-#### 6.6.3.2. Attributes
+### 6.6.3.2. Attributes
 Attributes represent properties of a class.
 - **Basic Elements Syntax:** `[visibility] name: [type] [[multiplicity]] = [default] {[property-string]}`
 - **Basic Properties:**
@@ -2278,7 +2278,7 @@ Attributes represent properties of a class.
   - **Property-string:** Additional characteristics (e.g., `{ordered}`).
 - *Example:* `+ lastName: String [1..1] = "New user" {ordered}`
 
-#### 6.6.3.3. Association
+### 6.6.3.3. Association
 An **association** represents a relationship between classes.
 - **Notation:** A line connecting the classes, with:
   - **Name:** Labels the association.
@@ -2287,31 +2287,31 @@ An **association** represents a relationship between classes.
   - **Property String:** E.g., `{ordered}`.
 - *Example:* `LibraryUser` `(0..1 borrower)` ------ borrows ------> `(0..20 borrowedItem)` `Book`
 
-#### 6.6.3.4. Association Class
+### 6.6.3.4. Association Class
 An **association class** documents properties and operations that belong to the *existence* of the association itself (rather than to either of the participating classes).
 - **Concept:** Necessary when the information depends on the association and cannot be stored in either class.
 - **Notation:** A dashed line connecting the association line to a class box.
 - *Example:* A library loan has a return date. This return date is stored in an association class `Lending` with the attribute `returnDate: Date` connecting `LibraryUser` and `Book`.
 
-#### 6.6.3.5. Aggregation
+### 6.6.3.5. Aggregation
 An **aggregation** represents a hierarchical, whole-part relationship between an aggregate class and its part classes.
 - **Concept:** The lifetime of the parts is **independent** of the whole. A part can belong to multiple wholes or change owners.
 - **Notation:** An open/white diamond at the aggregate (whole) end of the connection line.
 - *Example:* `Course` `<>`-------- `Student` (a student's lifetime does not depend on the course, and they can be enrolled in other courses).
 
-#### 6.6.3.6. Composition
+### 6.6.3.6. Composition
 A **composition** is a strong form of aggregation representing a strict whole-part relationship.
 - **Concept:** The lifetime of the parts is **dependent** on the whole. The parts cannot exist without the composite, and a part can belong to only one composite at a time. The multiplicity at the composite end is always `1` or `0..1`.
 - **Notation:** A filled/black diamond at the composite (whole) end of the connection line.
 - *Example:* `Series` `{filled diamond}`-------- `Volume` (a volume of a series cannot exist without the series itself).
 
-#### 6.6.3.7. Generalisation
+### 6.6.3.7. Generalisation
 A **generalisation** relates a subclass to a superclass, representing inheritance.
 - **Concept:** Subclasses inherit all attributes, operations, and relationships from the superclass. They can also define additional attributes/operations/relationships or override inherited ones.
 - **Notation:** An arrow with an open/white triangular head pointing to the superclass.
 - *Example:* `Book` is a superclass for `Textbook` and `Dictionary`.
 
-#### Generalisation Sets
+### Generalisation Sets
 A generalisation set classifies how subclasses partition the superclass space based on two dimensions:
 1. **Disjoint vs. Overlapping:**
    - **Disjoint (D):** An object of the superclass can belong to **only one** subclass.
@@ -2320,7 +2320,7 @@ A generalisation set classifies how subclasses partition the superclass space ba
    - **Complete (C):** Every object of the superclass must belong to **at least one** subclass.
    - **Incomplete (I):** There can be objects of the superclass that **do not belong to any** subclass.
 
-##### Four Combinations:
+#### Four Combinations:
 - **Disjoint & Complete (DC):** Subclasses cover the entire superclass, and have no common instances.
   - *Example:* `LibraryUser` partitioned into `Adult` and `Teenager` with `{complete, disjoint}`.
 - **Disjoint & Incomplete (DI):** Subclasses do not cover the entire superclass, but have no common instances.
@@ -2360,22 +2360,22 @@ A generalisation set classifies how subclasses partition the superclass space ba
 
 ---
 
-### 6.6.4 Practical Hints for Data Modelling
+## 6.6.4 Practical Hints for Data Modelling
 
-#### 6.6.4.1. Class vs. Attribute
+### 6.6.4.1. Class vs. Attribute
 - **Rule:** A class represents an object with its own identity. An attribute represents a property of a class.
 - **Guideline:** If a potential class has only **one attribute** and is related to another class, it is usually better to model it as a simple attribute of that other class.
 - *Example:*
   - *Initial:* `Student` (name, address) --owns--> `Student ID Card` (studentID)
   - *Improved:* `Student` (name, address, studentID)
 
-#### 6.6.4.2. Attribute vs. Relationship Type
+### 6.6.4.2. Attribute vs. Relationship Type
 - **Rule:** If an attribute of a class $C_1$ is actually a reference to another class $C_2$, model it as an **association/relationship** between $C_1$ and $C_2$.
 - *Example:*
   - *Initial:* `Invoice` has attribute `customer` (holding customer information).
   - *Improved:* `Invoice` connected via association `has invoice` to `Customer` class.
 
-#### 6.6.4.3. Entity Type vs. Relationship Type
+### 6.6.4.3. Entity Type vs. Relationship Type
 - **Rule:** An entity type represents an object with an independent identity. A relationship type represents an association whose identity is derived from the participating entities.
 - *Example:* The relationship `BORROWS` derives its identity from the participating `LIBRARY USER` and `BOOK` instances. If the relationship itself has complex behavior or independent identity, consider using an Association Class (or reifying it as a separate entity).
 
