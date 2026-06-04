@@ -805,7 +805,7 @@ The system interacts via interfaces with the system context objects and vice ver
 2. **Documents**
 3. **Existing Systems**
 
-#### 4.2.1 Stakeholders
+#### 4.2.1.1 Stakeholders
 > [!info] Definition: Stakeholder
 > A stakeholder is either a person or an organization with **potential interest in the desired system**. Each typically has specific goals and requirements. A person can **represent the interest of different stakeholders**.
 
@@ -1034,7 +1034,7 @@ Three Categories of Creativity:
 
 ### 4.5.2 Detailed Elicitation Techniques
 
-#### 1. Interview
+#### 4.5.2.1. Interview
 Goal is to elicit requirements and context information for the system to be developed from a stakeholder or a group of stakeholders.
 
 ##### Kinds of Interviews
@@ -1072,7 +1072,7 @@ Goal is to elicit requirements and context information for the system to be deve
    - Common terminology and knowing the interview partners.
    - Avoidance of groupthink.
 
-#### 2. Workshop
+#### 4.5.2.2. Workshop
 A workshop aims to elicit and develop requirements with a group of stakeholders. Requirements are jointly developed, validated, detailed, and prioritized.
 
 ##### Process / Application:
@@ -1094,16 +1094,16 @@ A workshop aims to elicit and develop requirements with a group of stakeholders.
    - Undisturbed, creative workshop location with the right equipment.
    - Inviting the right participants (having expertise, context coverage, motivation, decision-making authority, and soft skills).
 
-#### 3. Focus Groups
+#### 4.5.2.3. Focus Groups
 A group of stakeholders focuses on a specific item to identify requirements regarding that item. High to medium effort. Suited for eliciting existing and developing innovative requirements.
 
-#### 4. Observation
+#### 4.5.2.4. Observation
 An observer elicits requirements by observing stakeholders or existing systems. High to very high effort. Suited for eliciting existing requirements (e.g. capturing implicit processes or workarounds).
 
-#### 5. Questionnaire
+#### 4.5.2.5. Questionnaire
 A stakeholder writes down their requirements by answering predefined questions. Low to medium effort. Suited for identifying sources and eliciting existing requirements from a large user base.
 
-#### 6. Perspective-based Reading
+#### 4.5.2.6. Perspective-based Reading
 A stakeholder reads a document from a previously defined perspective (e.g., user, tester) to identify gaps or requirements. Medium to high effort. Suited for eliciting existing requirements.
 
 ---
@@ -1123,7 +1123,7 @@ Assistance techniques support elicitation techniques by helping stakeholders gen
 
 ### 4.6.2 Key Assistance Techniques
 
-#### 1. Brainstorming
+#### 4.6.2.1. Brainstorming
 A creativity technique performed with a group of stakeholders to generate a large number of potentially new/innovative ideas and requirements.
 
 ##### Process / Application:
@@ -1147,7 +1147,7 @@ A creativity technique performed with a group of stakeholders to generate a larg
 4. **Critical Success Factors:**
    - Adherence to rules, focus on ONE subject, contributions from shy people, small group size ($5\text{ to }8$), and succinct descriptions of ideas.
 
-#### 2. KJ Method (Kawakita Jiro)
+#### 4.6.2.2. KJ Method (Kawakita Jiro)
 A card-based technique to support groups of stakeholders in eliciting, structuring, and prioritizing ideas or requirements. It increases input from shy participants but does not stimulate initial idea generation.
 
 ##### Process / Application:
@@ -1161,15 +1161,15 @@ A card-based technique to support groups of stakeholders in eliciting, structuri
 3. **Follow-Up:**
    - Document results (e.g., take photos), document minutes with card references, define next steps, distribute, and collect feedback.
 
-#### 3. Prototyping
+#### 4.6.2.3. Prototyping
 Allows stakeholders to experience how the future system would look and behave.
 > [!example] Example: TOXLAND Game Prototype
 > Creating interactive storyboards or digital wireframes of the TOXLAND toxicology board game to let school children playtest the game rules and user interface. This elicits immediate feedback on usability and engagement.
 
-#### 4. Mind Mapping
+#### 4.6.2.4. Mind Mapping
 A graphical display of relationships and dependencies between terms, enabling structured presentation of information in graphical and textual form.
 
-#### 5. Checklists
+#### 4.6.2.5. Checklists
 Document relevant items as questions or statements to support stakeholders (e.g., Osborn checklist for creativity).
 
 ---
@@ -1467,7 +1467,7 @@ Syntactic ambiguity occurs when a sentence can be assigned multiple syntax trees
      - *Interpretation 1:* Dave sees a man who is taller than Joe is.
      - *Interpretation 2:* Dave sees a taller man than Joe sees.
 
-### 5.4.5 Semantic Ambiguity
+### 5.4.4 Semantic Ambiguity
 Semantic ambiguity occurs when a sentence has multiple interpretations in a specific context despite having clear grammar and vocabulary.
 1. **Scope Ambiguity:** Caused by quantifiers (all, some, a) or negation operators.
    - *Example:* "All users enter a coupon code."
@@ -2191,12 +2191,12 @@ graph TD
 ### 6.6.2 Entity-Relationship (ER) Modelling Language
 Entity-Relationship (ER) modeling is a widespread, standard language for documenting static aspects of the system context on the conceptual level.
 
-#### 1. Entity Type
+#### 6.6.2.1. Entity Type
 An **entity type** represents a set of physical or conceptual objects (entities) with similar properties.
 - **Concept:** It abstracts from concrete instances. Entities can be material (e.g., `BOOK`) or immaterial (e.g., `LIBRARY USER`).
 - **Notation:** Represented as a rectangle containing the entity type name (usually in uppercase).
 
-#### 2. Relationship Type
+#### 6.6.2.2. Relationship Type
 A **relationship type** relates two or more entity types to each other.
 - **Concept:** Represents a set of similar relationship instances relevant to the system.
 - **Notation:** Represented as a diamond connected to the participating entity types, labeled with the relationship name (typically a verb in uppercase). Role names can optionally be written along the connection lines.
@@ -2208,13 +2208,13 @@ A **relationship type** relates two or more entity types to each other.
   - **Ternary Relationship:** Relates three entity types.
     - *Example:* `COMPANY` and `PRODUCT` and `PERSON` related by `PROVIDES`
 
-#### 3. Attribute
+#### 6.6.2.3. Attribute
 An **attribute** defines a property of an entity type or relationship type.
 - **Concept:** Can be defined for both entities and relationships (representing properties of the association).
 - **Notation:** Represented as an oval/ellipse connected to the corresponding entity or relationship type, containing the attribute name. Alternatively, listed as a line label.
   - *Example:* `LIBRARY USER` has attributes `ID`, `First name`, `Last name`. The relationship `BORROWS` has the attribute `Period`.
 
-#### 4. Cardinality Constraint
+#### 6.6.2.4. Cardinality Constraint
 A **cardinality constraint** restricts the permissible number of entities of a certain type that may participate in a relationship instance.
 - **Concept:** Documented as a pair `(min, max)` where:
   - `min` is the minimum number of relationships an entity must participate in. A `min = 0` denotes an optional relationship.
@@ -2249,7 +2249,7 @@ A **cardinality constraint** restricts the permissible number of entities of a c
 ### 6.6.3 UML Class Diagrams
 Unified Modeling Language (UML) Class Diagrams are a widespread, object-oriented language for specifying static system structures.
 
-#### 1. Class
+#### 6.6.3.1. Class
 A **class** describes a static structural element of the system.
 - **Notation:** A box divided into three compartments:
   1. **Top Compartment:** Name of the class (mandatory).
@@ -2261,7 +2261,7 @@ A **class** describes a static structural element of the system.
   | lastName<br/>firstName<br/>dateOfBirth |
   | |
 
-#### 2. Attributes
+#### 6.6.3.2. Attributes
 Attributes represent properties of a class.
 - **Basic Elements Syntax:** `[visibility] name: [type] [[multiplicity]] = [default] {[property-string]}`
 - **Basic Properties:**
@@ -2278,7 +2278,7 @@ Attributes represent properties of a class.
   - **Property-string:** Additional characteristics (e.g., `{ordered}`).
 - *Example:* `+ lastName: String [1..1] = "New user" {ordered}`
 
-#### 3. Association
+#### 6.6.3.3. Association
 An **association** represents a relationship between classes.
 - **Notation:** A line connecting the classes, with:
   - **Name:** Labels the association.
@@ -2287,25 +2287,25 @@ An **association** represents a relationship between classes.
   - **Property String:** E.g., `{ordered}`.
 - *Example:* `LibraryUser` `(0..1 borrower)` ------ borrows ------> `(0..20 borrowedItem)` `Book`
 
-#### 4. Association Class
+#### 6.6.3.4. Association Class
 An **association class** documents properties and operations that belong to the *existence* of the association itself (rather than to either of the participating classes).
 - **Concept:** Necessary when the information depends on the association and cannot be stored in either class.
 - **Notation:** A dashed line connecting the association line to a class box.
 - *Example:* A library loan has a return date. This return date is stored in an association class `Lending` with the attribute `returnDate: Date` connecting `LibraryUser` and `Book`.
 
-#### 5. Aggregation
+#### 6.6.3.5. Aggregation
 An **aggregation** represents a hierarchical, whole-part relationship between an aggregate class and its part classes.
 - **Concept:** The lifetime of the parts is **independent** of the whole. A part can belong to multiple wholes or change owners.
 - **Notation:** An open/white diamond at the aggregate (whole) end of the connection line.
 - *Example:* `Course` `<>`-------- `Student` (a student's lifetime does not depend on the course, and they can be enrolled in other courses).
 
-#### 6. Composition
+#### 6.6.3.6. Composition
 A **composition** is a strong form of aggregation representing a strict whole-part relationship.
 - **Concept:** The lifetime of the parts is **dependent** on the whole. The parts cannot exist without the composite, and a part can belong to only one composite at a time. The multiplicity at the composite end is always `1` or `0..1`.
 - **Notation:** A filled/black diamond at the composite (whole) end of the connection line.
 - *Example:* `Series` `{filled diamond}`-------- `Volume` (a volume of a series cannot exist without the series itself).
 
-#### 7. Generalisation
+#### 6.6.3.7. Generalisation
 A **generalisation** relates a subclass to a superclass, representing inheritance.
 - **Concept:** Subclasses inherit all attributes, operations, and relationships from the superclass. They can also define additional attributes/operations/relationships or override inherited ones.
 - **Notation:** An arrow with an open/white triangular head pointing to the superclass.
@@ -2362,20 +2362,20 @@ A generalisation set classifies how subclasses partition the superclass space ba
 
 ### 6.6.4 Practical Hints for Data Modelling
 
-#### 1. Class vs. Attribute
+#### 6.6.4.1. Class vs. Attribute
 - **Rule:** A class represents an object with its own identity. An attribute represents a property of a class.
 - **Guideline:** If a potential class has only **one attribute** and is related to another class, it is usually better to model it as a simple attribute of that other class.
 - *Example:*
   - *Initial:* `Student` (name, address) --owns--> `Student ID Card` (studentID)
   - *Improved:* `Student` (name, address, studentID)
 
-#### 2. Attribute vs. Relationship Type
+#### 6.6.4.2. Attribute vs. Relationship Type
 - **Rule:** If an attribute of a class $C_1$ is actually a reference to another class $C_2$, model it as an **association/relationship** between $C_1$ and $C_2$.
 - *Example:*
   - *Initial:* `Invoice` has attribute `customer` (holding customer information).
   - *Improved:* `Invoice` connected via association `has invoice` to `Customer` class.
 
-#### 3. Entity Type vs. Relationship Type
+#### 6.6.4.3. Entity Type vs. Relationship Type
 - **Rule:** An entity type represents an object with an independent identity. A relationship type represents an association whose identity is derived from the participating entities.
 - *Example:* The relationship `BORROWS` derives its identity from the participating `LIBRARY USER` and `BOOK` instances. If the relationship itself has complex behavior or independent identity, consider using an Association Class (or reifying it as a separate entity).
 
