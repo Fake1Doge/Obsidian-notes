@@ -1540,7 +1540,7 @@ void moveDiscs(int num, int A, int B, int C)
 
 # Chapter 6: Strings and Vectors
 
-## 8.1 Introduction to Strings
+## 6.1 Introduction to Strings
 - In C++, a **C-string** is a sequence of characters stored in consecutive memory locations, terminated by a null character (`\0`).
 - The C++ language stores strings primarily in two ways:
   1. As `string` objects
@@ -1555,7 +1555,7 @@ void moveDiscs(int num, int A, int B, int C)
 - `strstr()`: Finds a substring.
 - `strcmp()`: Compares strings.
 
-## 8.2 C++ String Class
+## 6.2 C++ String Class
 - Standard C++ provides a special data type for storing and working with strings via `#include <string>`.
 - The `string` class is an **Abstract Data Type (ADT)**.
 - It is not a built-in, primitive data type like `int` or `char`. It is a programmer-defined data type accompanying the C++ language.
@@ -1605,7 +1605,7 @@ cout << "My favorite movie is " << movieTitle << endl;
 - **Searching:** `.find(str, x)`, `.compare(str2)`
 - **Substrings:** `.substr(x, n)`
 
-## 8.3 Vectors
+## 6.3 Vectors
 - C++ offers a **vector** data type, which in many ways is superior to standard arrays.
 - Vectors are not part of the C++ language but were created in addition to built-in types.
 - A vector is a **sequence container**.
@@ -1940,7 +1940,7 @@ for (int &val : numbers)
 ## 7.8 Dynamic Multi-Dimensional (2D) Arrays
 There are two primary ways to create 2D arrays dynamically:
 
-### 1. Array of Pointers (Fixed Rows, Dynamic Columns)
+### 7.8.1. Array of Pointers (Fixed Rows, Dynamic Columns)
 - Declaring an array of pointers:
   ```cpp
   int *board[4]; // Array of 4 pointers to int (rows are fixed at 4)
@@ -1951,7 +1951,7 @@ There are two primary ways to create 2D arrays dynamically:
       board[row] = new int[6]; // Each row has 6 columns
   ```
 
-### 2. Pointer to a Pointer (Dynamic Rows and Columns)
+### 7.8.2. Pointer to a Pointer (Dynamic Rows and Columns)
 - Declaring a pointer to a pointer:
   ```cpp
   int **board = nullptr;
