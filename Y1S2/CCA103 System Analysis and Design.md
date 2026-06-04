@@ -889,3 +889,632 @@ High-priority candidates:
 > - CRUD analysis serves to verify that all domain classes are fully supported by the new system.
 > - Not all use cases and domain classes are modelled at a detailed level. Only model when there is complexity and a need to communicate details.
 > - All the models must be consistent and integrate to provide a complete picture of the requirements and specifications.
+
+---
+
+# Chapter 6: Essentials of Design and Design Activities
+
+## 6.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Describe the difference between systems analysis and systems design.
+> 2. Explain each major design activity.
+> 3. Describe the major hardware and network environment options.
+> 4. Describe the various hosting services available.
+
+## 6.2 Part I: Systems Analysis vs. Systems Design
+
+Systems design bridges the gap between requirements and actual software construction. It connects the conceptual understanding of a problem with a functional reality.
+
+> [!info] Definition: Systems Analysis
+> Analysis defines **what** the system needs to do. It focuses on gathering requirements and understanding the business domain. It remains largely technology-independent.
+
+> [!info] Definition: Systems Design
+> Design defines **how** the system will be configured and constructed. It focuses on configuring the technology, organizing components, and blueprinting the construction. It is deeply tied to specific hardware, networks, and code.
+
+### 6.2.1 Two Levels of Design
+System design operates at two distinct depths:
+1. **Architectural Design (or General/Conceptual Design):** The broad design of the overall system structure, physical networks, and major software subsystems.
+2. **Detailed Design:** Low-level configuration detailing specific program logic, concrete database schemas, and distinct user interfaces. It serves as the definitive technical guide for the construction phase.
+
+---
+
+## 6.3 Part II: The Six Core Pillars of System Design (Design Activities)
+
+When moving from analysis to design, analysts perform six major design activities, each representing a core pillar of system design:
+
+### 1. Design the Environment (Technology Architecture)
+- Represents the hardware and network linking all components.
+- The environment encompasses all the physical and logical technology (servers, desktop computers, mobile devices, operating systems like Windows/Linux/iOS, communication protocols, LANs, routing) required to support the software application.
+- Dictates exactly how software must be written and deployed.
+
+### 2. Design the Application Architecture and Software
+- Involves defining the programs running the core logic.
+- Includes partitioning the system into subsystems and defining the software architecture (e.g., three-layer or model-view-controller).
+- Includes the detailed design of each use case (designing class diagrams, sequence diagrams, and state machine diagrams).
+
+> [!info] Three-Layer Architecture
+> A common software architecture pattern that partitions logic into:
+> 1. **View Layer:** Contains the user interface and handles human interaction. It accepts user input, formats, and displays processing results.
+> 2. **Business Logic / Domain Layer:** Implements the core business rules, processes, and calculations.
+> 3. **Data Layer:** Interacts directly with backend storage to save and retrieve information.
+
+### 3. Design the User Interfaces
+- Dialog design begins with requirements models (use case flow of activities, system sequence diagrams).
+- Design adds screen layout, look and feel, navigation, and user experience (UX).
+- Modern systems require interface designs optimized for a diversity of client devices, including smartphones, tablets, iPads, and notebooks, handling varying screen sizes, resolutions, and touch vs. click inputs.
+
+### 4. Design the System Interfaces
+- Modern information systems are rarely isolated; they must interact with many other systems, both internal and external.
+- System interfaces connect platforms in different ways: saving data another system uses, reading data another system saved, or handling real-time requests for information and software services.
+- Data is packaged in highly structured, machine-readable formats like XML and JSON/REST APIs to ensure seamless integration.
+
+### 5. Design the Database
+- Begins with the domain model class diagram (or ERD).
+- Designers choose the database structure (usually a relational database, though ODBMS frameworks are possible), design the database schema (tables, columns, and data types), and design referential integrity constraints (foreign key references).
+- Translates a conceptual domain model into a concrete schema (e.g., table definitions in MySQL via phpMyAdmin).
+
+### 6. Design the Security and Controls
+- Protects the organization's assets and data. It is crucial for internet and wireless applications.
+- **Network Controls:** Protecting against global intrusion via the open internet using firewalls and HTTPS/TLS (encrypted tunnels).
+- **User Interface Controls:** Ensuring only authorized users can log in and access specific application screens.
+- **Application Controls:** Ensuring core business logic cannot be exploited, bypassed, or manipulated.
+- **Database Controls:** Encrypting raw data at rest and strictly restricting direct server access.
+
+---
+
+## 6.4 Part III: Designing the Environment
+
+### 6.4.1 Internal Deployment (LAN-Based)
+Internal deployment features a client-server architecture securely confined to a single physical location or private network.
+- **Pros:** High security, tightly controlled environment, highly predictable performance.
+- **Key Terminology:**
+  - **Local Area Network (LAN):** A computer network in which the cabling and hardware are confined to a single location.
+  - **Client-Server Architecture:** A computer network configuration with users' computers and central computers that provide common services.
+  - **Client Computers:** The computers at which the users work to perform their computational tasks.
+  - **Server Computer:** The central computer that provides services (such as database access) to the client computers over a network.
+- Two kinds of systems can be deployed in a client-server architecture:
+  1. **Desktop application systems**
+  2. **Browser-based application systems**
+
+> [!info] Software Distribution in Internal Deployment (Three-Layer)
+> - **View Layer:** Handles screen/report formatting on client or application server.
+> - **Domain Layer:** Implements business rules on the application server.
+> - **Data Layer:** Formulates database queries on the database server.
+
+### 6.4.2 External Deployment (Internet-Based)
+External deployment involves distributed access over the web backbone routing through a protective firewall.
+- **Pros:** Massive accessibility for remote staff and customers, low-cost communication.
+- **Risks:** High security vulnerabilities, unpredictable throughput peaks, rapidly changing standards.
+- **Communication Security:** Improved via **HTTPS** (encrypted transfer combining HTTP and TLS) and **TLS** (Transport Layer Security, an advanced version of SSL).
+
+#### Hosting Alternatives for Internet Deployment
+Hosting refers to running and maintaining a computer system on someone's behalf where the application software and database reside.
+
+1. **Colocation:** A hosting service with a secure location, but the physical computers are usually owned by the client business. The client manages the OS, software, and configuration. Scalability is achieved by buying and installing additional hardware. Client provides maintenance and backups.
+2. **Managed Services:** The client owns the software but purchases additional services, such as installing and managing the operating system, internet servers, database servers, and load balancing software. The host handles updates, monitoring, and ongoing maintenance.
+3. **Virtual Servers:** The client company leases a virtual server configured with a specific amount of CPU capacity, internal memory, hard drive storage, and bandwidth. The host maintains the physical servers and virtualization platform.
+4. **Cloud Computing:** An extension of virtual servers where computing resources appear to have unlimited availability and can be purchased like a utility. The client manages the application and data, while the host manages the underlying infrastructure. It provides maximum flexibility, allowing clients to add small increments of computing power on-demand.
+5. **Service Level Agreement (SLA):** Part of the contract between a business and a hosting company that guarantees a specific level of system availability.
+
+---
+
+## 6.5 Part IV: Designing the Architecture
+
+### 6.5.1 The Tier Escalation Model: Distributing Logic
+- **Two-Tier Architecture:** Splits logic between a client (presentation + application) and a server (data access + storage). Creates "thick" or "thin" clients.
+- **Three-Tier Architecture:** Separates business rules from data management by placing client presentation on one tier, application server business logic on a second tier, and database server data management on a third tier.
+- **N-Tier Architecture:** Highly scalable standard for e-commerce (e.g., Client <-> Web Server <-> Application Server <-> Database Server). It generates more network traffic but scales well.
+
+### 6.5.2 Mobile Development Approaches
+Mobile apps can be built using one of three primary approaches, balancing device-centric versus web-centric priorities:
+1. **Native Applications:** Rich user experience with full access to device hardware (camera, GPS). Built using device-specific languages (e.g., Objective-C/Swift for iOS, Java/Kotlin for Android). High cost and effort, requiring rebuilding per OS update.
+2. **Cross-Platform Frameworks:** Write once, adapt many. Built using HTML/JavaScript wrapped in a framework. Good experience, but requires device-specific tweaking. Medium cost and effort. Best for informational apps.
+3. **Mobile Web Apps:** Built with HTML5. Low cost and effort, running in any mobile browser, but provides a generic UI and cannot access local device hardware. Requires a constant internet connection.
+
+### 6.5.3 Remote and Distributed Access
+- Can use two interfaces to the same Web app for internal versus external access (though external is not as secure).
+- **Virtual Private Network (VPN):** A closed network with security and closed access built on top of a public network (the internet) using an encrypted tunnel. Allows remote devices to interact with the system as if they were physically plugged into the internal LAN.
+
+### 6.5.4 Refining Architectural Choices
+Nonfunctional requirements act as the "building codes" that guide design decisions:
+- **Operational:** The technical environments in which the system must perform and evolve.
+- **Performance:** Response time, throughput, capacity, and system reliability.
+- **Security:** Protection from data loss, disruption, and unauthorized access.
+- **Cultural & Political:** Global norms, language needs, and legal mandates.
+
+---
+
+## 6.6 Part V: Hardware and Software Specification Process
+
+The specification process consists of:
+1. **Define Software:** Detail operating systems, applications (e.g., Oracle), and hidden costs like training and licensing.
+2. **Inventory Hardware:** List all servers, peripherals, and required quantities.
+3. **Set Requirements:** Establish minimum processing and storage needs for each component.
+
+### 6.6.1 The 7 Selection Factors for Hardware & Software
+1. **Functions and Features:** Does it actually do what the system requires (e.g., monitor size)?
+2. **Performance:** Is it fast enough to handle the expected workload (e.g., processor speed)?
+3. **Legacy Integration:** How well does it "talk" to existing systems?
+4. **Migration Strategy (Hardware & OS Strategy):** How difficult is it to move data/plans into this new system?
+5. **Total Cost of Ownership (TCO):** Includes purchase price, plus long-term maintenance and support.
+6. **Political Factors (Political Preferences):** Are there organizational preferences or "standard" vendors we must use (resistance to change)?
+7. **Vendor Reputation (Vendor Performance):** Is the company stable? Do they provide good technical support (reputation/prospects)?
+
+### 6.6.2 Sample Hardware & Software Specification
+
+| Component | Hardware Specification | Software Specification | OS / Middleware |
+| :--- | :--- | :--- | :--- |
+| **Standard Client** | Intel Core i7, 16GB RAM, 512GB SSD, 27-inch 4K Monitor | Productivity Suite (e.g., MS Office), Secure Web Browser, Collaboration Tools | Windows 10 Enterprise |
+| **Web Server** | Dual Xeon Processors, 64GB ECC RAM, 2x 1TB SSD RAID 1, High-Speed NIC | Web Server Software (e.g., Apache/Nginx), SSL Certificate Management, Load Balancer | Linux (e.g., Red Hat/Ubuntu) |
+| **Application Server** | Quad Xeon Processors, 256GB ECC RAM, 4x 2TB SSD RAID 10, High-Performance NIC | Application Server (e.g., JBoss/Tomcat), Java Runtime Environment, Messaging Queue | Linux (e.g., Red Hat/Ubuntu) |
+| **Database Server** | Octal Xeon Processors, 512GB ECC RAM, 8x 4TB SSD RAID 5, High-Throughput NIC | RDBMS (e.g., Oracle/PostgreSQL/MySQL), Backup & Recovery Tools | Linux (e.g., Red Hat/Ubuntu) |
+
+---
+
+# Chapter 7: Designing the User and System Interfaces
+
+## 7.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Describe the difference between user interfaces and system interfaces.
+> 2. Describe the historical development of the field of human-computer interaction (HCI).
+> 3. Discuss how visibility and affordance affect usability.
+> 4. Describe user-interface guidelines that apply to all types of user-interface types and additional guidelines specific to Web pages and mobile applications.
+> 5. Create storyboards to show the sequence of forms used in a dialog.
+> 6. Discuss examples of system interfaces found in information systems.
+> 7. Define system inputs and outputs based on the requirements of the application program.
+> 8. Design printed and on-screen reports appropriate for recipients.
+
+## 7.2 Part I: User Interfaces vs. System Interfaces
+
+Information systems interact with both human users and other computerized systems. Designing the interaction boundary requires distinguishing between these two types of interfaces:
+
+> [!info] Definition: User Interface
+> Inputs and outputs that directly involve a human user/actor. It focuses on the dialog going back and forth between a person and the computer.
+> - **Primary Risk:** Cognitive overload and usability/data-entry errors.
+> - **Formats:** Web forms, mobile/desktop apps, interactive dashboards.
+
+> [!info] Definition: System Interface
+> Inputs and outputs that require minimal or no human intervention. They connect one system/device directly to another system or database.
+> - **Primary Risk:** Data format mismatch, communication protocol incompatibility, and integration inefficiency.
+> - **Formats:** XML/JSON text streams, APIs (REST/SOAP), database replication links, and automated hardware scanner feeds.
+
+---
+
+## 7.3 Part II: Human-Computer Interaction (HCI) and User-Centered Design
+
+### 7.3.1 User-Centered Design (UCD)
+UCD is an engineering philosophy embodying the core view that **to the user, the interface IS the system**. Modern systems analysis and design fully incorporates UCD principles to prevent unusable systems.
+
+UCD relies on three core iterative principles:
+1. **Focus Early:** Observe users in their actual work environments and study their workflows.
+2. **Evaluate Usability:** Conduct usability testing to ensure cognitive friction remains low.
+3. **Iterate Frequently:** Continuously refine user interface designs based on user feedback.
+
+### 7.3.2 The Four HCI Metaphors
+HCI design translates the physical world into digital interfaces using four major metaphors:
+1. **Direct Manipulation:** Dragging or clicking graphical items on a screen that look like or represent physical objects.
+   - *Example:* Dragging a document file icon to the Recycle Bin or Trash Can to delete it.
+2. **Desktop:** Organizing the screen display into distinct regions with a large work area in the center and tool/settings panels around the perimeter.
+   - *Example:* Starting up a computer and seeing a background screen populated with icons for calendar, notepad, clock, folders, and sticky notes.
+3. **Document:** Visually representing data entry and display as if they were paper pages or forms.
+   - *Example:* Filling out a product registration form on a manufacturer's website or reading a manual packaged as a PDF file with a clickable table of contents.
+4. **Dialog:** User and computer accomplish tasks by engaging in a conversational query-response flow using text, voice, or labeled action buttons.
+   - *Example:* Clicking "troubleshoot" on a printer warning, answering a series of yes/no questions, and selecting choices from a list.
+
+### 7.3.3 Core Usability Heuristics
+- **Visibility:** A control or status indicator must be clearly visible against the background so users are instantly aware of it.
+  - *Example:* Loading progress bars showing `50%` or media player volume sliders.
+- **Affordance:** The physical appearance of a control should suggest its functionality.
+  - *Example:* A screen button designed with shading, borders, and depth so it looks like a physical button that can be clicked or pushed.
+
+---
+
+## 7.4 Part III: User Interface Design Guidelines
+
+The following seven guidelines apply to all types of user interfaces to maximize usability:
+1. **Design for Consistency:** Maintain a predictable placement of elements, colors, and behaviors across all screens.
+2. **Provide Shortcuts:** Enable experienced users to perform tasks faster (e.g., keyboard shortcuts like `CTRL+S` for save or `CMD+P` for print).
+3. **Provide Feedback:** Offer immediate visual or auditory confirmation of actions (e.g., showing a "Success! Data Saved" dialog after submission).
+4. **Dialogs Should Yield Closure:** Design a clear beginning, middle, and end for transactions so users know when their task is officially finished.
+5. **Error Handling that Provides Guidance:** Design error messages that explain what went wrong and provide clear steps to correct the problem.
+6. **Easy Reversal of Actions:** Ensure users can easily back out of mistake decisions (e.g., undo options, cancel/back buttons).
+7. **Reduce Short-Term Memory Load:** Never force users to remember information from one screen to the next; display relevant details contextually.
+
+---
+
+## 7.5 Part IV: The Transition from Analysis to UI Design
+
+The transition from abstract analysis models to concrete user interfaces is a structured, step-by-step process:
+
+```mermaid
+graph LR
+    A["1. The Use Case"] --> B["2. Menu Hierarchy"]
+    B --> C["3. Dialog Design"]
+    C --> D["4. Storyboarding"]
+    class A,B,C,D internal-link;
+```
+
+1. **The Use Case:** Examine the natural flow of activities (documented in use case descriptions and System Sequence Diagrams) to see what interactions occur.
+2. **Menu Hierarchy:** Group related use cases together to organize access to functionality. Different types of users will require different menus. Establish the overall hierarchy first, then build subsets for specific roles.
+3. **Dialog Design:** Draft the natural, text-based conversation flow between the user and the system.
+4. **Storyboard:** Create a sequence of screen sketches (wireframes) to visualize the dialog flow and review it with users before writing code.
+
+> [!example] Dialog to Storyboard: RMO Shopping Cart Checkout
+> 1. **Dialog Draft:**
+>    - *System:* "What would you like to do?"
+>    - *User:* "I'd like to check out."
+>    - *System:* "What is your email or account number?"
+>    - *User:* "nwells22@gmail.com"
+>    - *System:* [Validates] "You are Nancy Wells at 1122 Silicon Avenue. Correct?"
+>    - *User:* "Yes."
+>    - *System:* [Displays order summary and ship options] "How would you like items shipped?"
+>    - *User:* "Free UPS ground."
+>    - *System:* [Displays totals and payment prompt] "Shall I charge your card ending in 0899?"
+>    - *User:* "Yes."
+>    - *System:* "Payment approved. Your order number is 6773823."
+> 2. **Storyboard Sketching:**
+>    - *Screen 1:* Main page with drop-down navigation -> Cart -> "Check out".
+>    - *Screen 2:* Account login popup with input field for email address.
+>    - *Screen 3:* Account information verification panel with "That's me" and "That's not me" options.
+>    - *Screen 4:* Order summary table alongside radio button selections for shipping options.
+>    - *Screen 5:* Shipping address confirmation panel with option to "Use another address".
+>    - *Screen 6:* Add new shipping address form fields (Name, Street, City, State, Zip).
+>    - *Screen 7:* Final payment details panel showing subtotal, shipping fee, tax, total, and "OK" payment confirmation button.
+>    - *Screen 8:* Order success page displaying confirmation number, delivery estimates, and thank you message.
+
+---
+
+## 7.6 Part V: Platform-Specific Interface Guidelines
+
+Different deployment environments present distinct layout, navigation, and usability challenges:
+
+### 7.6.1 Windows/Desktop Forms
+- **Focus:** Complex layouts, strict consistency, and high-volume data-entry efficiency.
+- **Interface Layout:** Predictable placement, clear labels/headings, logical spatial distribution, and strategic color contrast to guide the eye.
+- **Controls:**
+  - *Data Entry:* Text boxes, list boxes, combo boxes, check boxes, and radio buttons.
+  - *Navigation & Support:* Minimize/maximize/close title bar icons, scroll bars, and window resize handles.
+
+### 7.6.2 Web Browser Interfaces
+- **Focus:** Adaptation to varying screen widths and hardware configurations.
+- **CSS Enforced Consistency:** Raw HTML structure must adapt via Cascading Style Sheets (CSS) to ensure consistent visual styles regardless of user/task.
+- **Performance:** Highly sensitive to connection speeds; layout and media weight must be optimized for transmission limits.
+- **Media Integration:** Pictures, video, and sound offer rich engagement but must balance against page load performance and browser compatibility issues.
+- **Accessibility (Users with Disabilities):** Web interfaces must integrate with Assistive Technologies (text-to-speech, voice-recognition software).
+
+### 7.6.3 Handheld/Mobile Interfaces
+- **Focus:** Small screen sizes, touch screen affordance (fat-finger errors), limited network capacity, and platform-specific UI toolkits (iOS/Android guidelines).
+
+---
+
+## 7.7 Part VI: Identifying and Designing System Interfaces
+
+System interfaces manage inputs and outputs with minimal human intervention.
+
+### 7.7.1 Automated Inputs and System Interoperability
+1. **Inputs and Outputs with other Systems:** Direct machine-to-machine interfaces formatted as network messages.
+2. **Highly Automated Inputs:** Data captured directly by hardware devices:
+   - *Magnetic Card Readers* (swiping cards)
+   - *Bar Code Scanners* (scanning merchandise)
+   - *RFID Tags* (tracking inventory wirelessly)
+   - *Optical Character Recognition (OCR)* (reading printed text)
+   - *Digitizers* (capturing digital signatures/drawings)
+3. **Inputs/Outputs to External Databases:** Systems supplying input directly to or accepting output from external databases.
+4. **XML for System Interfaces:** Extensible Markup Language (XML) embeds self-defining data structures within textual messages using tags (e.g., `<name>` and `</name>`) that label the meaning of data elements. Useful for sending messages across disparate hardware/software platforms.
+
+### 7.7.2 Designing System Inputs
+The primary objective of system input design is to achieve **Error-Free Input**.
+- **Four Rules of Automation:**
+  1. Use electronic data-capture devices wherever possible.
+  2. Avoid human involvement in data entry as much as possible.
+  3. If information is already electronic, reuse it; do not re-enter it.
+  4. Validate and correct information at the time and location it is entered.
+- **Design Process:** Examine incoming messages crossing the system boundary in System Sequence Diagrams (SSDs) and identify data types in design class diagrams.
+
+### 7.7.3 Designing System Outputs
+System outputs are structured around the requirements of the information recipient.
+
+#### Report Types
+- **Detailed Reports:** Contain specific, row-by-row information on individual business transactions. Primarily for *Clerks and Frontline Staff*.
+- **Summary Reports:** Summarize detail data or recap periodic activities. Primarily for *Mid-level Managers*.
+- **Exception Reports:** Show details or summaries of transactions that fall outside a predefined normal range. Primarily for *Operations Managers*.
+- **Executive Reports:** High-level metrics and dashboards used to assess overall organizational health. Primarily for the *C-Suite and Executive Managers*.
+
+#### Output Classifications by Destination
+- **Internal Outputs:** Reports produced exclusively for use within the organization.
+- **External Outputs:** Reports produced for people outside the organization (e.g., statements, notices, stockholder reports). Require high visual quality, color, and professional styling to reflect the organization's image.
+- **Turnaround Documents:** External outputs printed with a section intended to be torn off and returned with new data or payment (e.g., utility bills, invoice slips).
+
+#### Electronic Output Enhancements
+- **Drill-Down Dynamics:** Interactive electronic reports that allow users to click summary figures to instantly expand and view the underlying transaction details.
+- **Graphical Tools:** Using bar charts, pie charts, and line graphs to make trends and data deviations visually clear for strategic decision-making.
+
+---
+
+# Chapter 8: Object-Oriented Design: Principles (Part 1)
+
+## 10.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Explain the purpose and objectives of object-oriented design.
+> 2. Develop UML component diagrams.
+> 3. Develop design class diagrams.
+> 4. Explain the difference between UML requirements models and design models.
+> 5. Describe design class symbols, stereotypes, and notations in UML.
+
+## 10.2 Part I: The Object-Oriented Paradigm Shift
+
+Object-oriented design (OOD) acts as the translation layer between requirements analysis and code construction. It specifies exactly *how* developers will build the system.
+
+| Paradigm | Data and Code Relationship | Maintenance & Adaptation |
+| :--- | :--- | :--- |
+| **Traditional Procedural** | Separates data from program code. | Cumbersome; changes require rewriting code in many places. |
+| **Object-Oriented (OO)** | Encapsulates attributes (data) and methods (logic) in a self-contained structure. | Highly re-usable and maintainable; changes to one class have minimal side effects. |
+
+> [!important] Key Benefits of OOD
+> 1. **Encapsulation:** Packaging attributes and methods together, mirroring the physical world.
+> 2. **Reusability:** Recycling program components reduces development costs (critical for GUIs and databases).
+> 3. **Maintainability:** Since objects isolate data and behavior, adjustments in one class have minimal impact on others.
+
+---
+
+## 10.3 Part II: Object-Oriented Program Flow and Design Levels
+
+### 10.3.1 OO Program Flow
+In a three-layer OO system, multiple objects collaborate to execute a use case:
+1. **Window/View Object:** Displays a form to capture user inputs (e.g., enter Student ID) and sends messages to the domain layer.
+2. **Student/Domain Object:** Instantiated in memory to represent the business concept, communicates with database controllers to load/save data.
+3. **Database Access Object:** Executes queries on the database, retrieves data, populates the domain object, and returns status updates.
+
+### 10.3.2 Two Levels of Design
+1. **Architectural Design (Level 1):** Focuses on the macro-environment. Defines the overall system structure, hardware/network configuration, and how large logical components communicate.
+2. **Detailed Design (Level 2):** Focuses on the micro-environment. Defines the internal structure of individual use cases, specifying exact objects, attributes, methods, and their interactions.
+
+---
+
+## 10.4 Part III: UML Requirements vs. Design Models
+
+UML design is model-driven and use-case-driven. Requirements models directly feed into and refine design models:
+
+```mermaid
+graph TD
+    Domain[Domain Model Class Diagram] --> DCD[Design Class Diagrams]
+    Domain --> Package[Package Diagrams]
+    UC[Use Case Diagrams] --> Component[Component Diagrams]
+    UC --> Deploy[Deployment Diagrams]
+    UC --> Seq[Interaction / Sequence Diagrams]
+    Activity[Activity Diagrams & UC Descriptions] --> Seq
+    SSD[System Sequence Diagrams] --> Seq
+    StateReq[Requirements State Machine Diagrams] --> StateDes[Design State Machine Diagrams]
+    class Domain,DCD,Package,UC,Component,Deploy,Seq,Activity,SSD,StateReq,StateDes internal-link;
+```
+
+---
+
+## 10.5 Part IV: Software System Types and Architectures
+
+Software systems are generally divided into two types:
+1. **Single-User Systems:** Desktop-based or execute from a server without shared resources (e.g., spreadsheet programs).
+2. **Enterprise-Level Systems:** Shared resources among multiple people/groups across an organization. Almost always use client-server architectures with multiple layers.
+
+### 10.5.1 Enterprise Architecture Archetypes: Network vs. Internet
+How enterprise systems are deployed determines how the View layer interacts with the Domain and Data layers:
+
+| Design Issue | Client-Server Network-Based System | Internet-Based System (Web) |
+| :--- | :--- | :--- |
+| **State Management** | **Stateful:** The client-server connection is long-term and persistent. State is naturally maintained in memory. | **Stateless:** Connection is short-term with no inherent memory. Requires additional components (cookies, session variables) to manage user session. |
+| **Connection Type** | **Direct:** View layer classes interact directly with Domain layer classes. | **Indirect:** Requires scripts, language processors, or CGI scripts to bridge the gap between browser View classes and server Domain classes. |
+| **Client Configuration** | Screens/forms are programmed and displayed directly. Domain layer is on the client or split between client and server. | Screens/forms are rendered through a browser. Must conform to browser tech (HTML, CSS, JS, applets). |
+| **Client tier connects directly to client tier.** | Client tier connects indirectly to application server through a Web server. |
+
+---
+
+## 10.6 Part V: The Component Diagram
+
+A **component diagram** is a type of design diagram that shows the overall system architecture and the logical, reusable, and transportable components within it.
+
+> [!info] Key Component Concepts
+> - **Component:** A moveable, executable software module (reusable and pluggable). Represented in UML as a rectangle with component symbols on the side.
+> - **Application Program Interface (API):** The set of public methods that are available to the outside world to access the component's services.
+> - **Port:** An interaction point on the boundary of a component, shown as a small square.
+> - **Lollipop (Provided Interface / Ball):** A circle representing an interface that the component provides to define the methods other components can invoke.
+> - **Socket (Required Interface):** A semi-circle representing services that the component requires from other components.
+
+```mermaid
+classDiagram
+    class InventoryDatabaseSystem {
+        <<component>>
+        +API Output Interface()
+    }
+    class InventoryUpdateSubsystem {
+        <<component>>
+    }
+    InventoryUpdateSubsystem ..> InventoryDatabaseSystem : Uses Interface Socket
+```
+
+### 10.6.1 Two-Layer Internet Logical Design Component Diagram
+- **User Interface Layer:** Browser with cookies (executes JavaScript/ActiveX to format and display) -> Communicates via Internet -> Internet Server (executable component that retrieves pages and invokes other components).
+- **Domain Layer (Business Logic):** Internet Server communicates with:
+  - **Common Gateway Interface (CGI):** Compiled C/C++ programs to receive input data from server.
+  - **Application Server (Session Manager):** Invoked to process code (read/write database) and work with cookies to manage sessions (PHP, ASP, JSP, Servlets, ColdFusion).
+
+---
+
+## 10.7 Part VI: Design Class Symbols and Notation in UML
+
+In detailed design, design classes represent concrete software classes (not just conceptual work items).
+
+### 10.7.1 UML Design Class Stereotypes
+UML uses **stereotypes** (indicated by guillemots `« »`) to categorize design classes:
+
+1. **Entity Class (`«entity»`):** Represents problem domain classes whose data must be remembered (usually persistent). Symbol: A circle with a flat horizontal line underneath.
+2. **Boundary/View Class (`«boundary»`):** Lives on the system's automation boundary, such as input forms, windows, or Web pages. Symbol: A circle with a vertical line on the left.
+3. **Control Class (`«control»`):** Acts as a switchboard or mediator that routes messages between boundary classes and entity classes. Symbol: A circle with a circular arrow on top.
+4. **Data Access Class (`«dataAccess»`):** Dedicated layer to execute SQL, retrieve/save database records, and isolate database logic from domain entities. Symbol: A circle with flat lines on top and bottom.
+
+### 10.7.2 Design Class Notation
+A UML design class is represented by a box with three compartments:
+
+1. **Top Compartment (Class Name & Stereotype):** Displays the stereotype (e.g. `«entity»`), class name, and parent class (e.g. `ClassName::ParentClass`).
+2. **Middle Compartment (Attributes):** Expands domain attributes with visibility, types, and properties.
+   - *Format:* `visibility name: type-expression = initial-value {property}`
+   - *Visibility:* `-` (private, standard for attributes) or `+` (public).
+   - *Example:* `-studentID: integer {key}`
+3. **Bottom Compartment (Methods):** Shows the method signatures required to invoke messages.
+   - *Format:* `visibility name(parameter-list): return-type`
+   - *Example:* `+updateGPA(credits: Float): void`
+
+### 10.7.3 Elaborating attributes and methods (DCD Example)
+- **Domain Attribute:** `studentID`, `name`, `address`
+- **Design Class Elaboration:**
+  - `-studentID: integer {key}`
+  - `-name: string`
+  - `-address: string`
+- **Design Method signatures:**
+  - `+createStudent(name, address, major): Student`
+  - `+getName(): string`
+  - `+updateCreditHours()`
+
+## 10.8 Part VII: The 5 Steps of OO Detailed Design
+We develop design models iteratively, use case by use case:
+1. **Develop first-cut DCD** showing navigation visibility.
+2. **Determine class responsibilities and collaborations** using Class-Responsibility-Collaboration (CRC) cards.
+3. **Develop detailed sequence diagrams** (first-cut, then multilayer).4. **Update the DCD** with method signatures and navigation data based on CRC cards and sequence diagrams.
+5. **Partition the solution** into logical packages.
+
+---
+
+# Chapter 9: Object-Oriented Design: Principles (Part 2)
+
+## 10.9 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Detail the steps in creating a first-cut Design Class Diagram (DCD).
+> 2. Apply navigation visibility guidelines (superior/subordinate, independent/dependent).
+> 3. Use Class-Responsibility-Collaboration (CRC) cards for object-oriented detailed design.
+> 4. Evaluate quality metrics of software design using coupling and cohesion.
+> 5. Partition classes into packages according to coupling and cohesion principles.
+
+---
+
+## 10.10 Part I: Step-by-Step Creation of a First-Cut Design Class Diagram (DCD)
+
+Developing a Design Class Diagram (DCD) is a structured process executed use case by use case. 
+
+### 10.10.1 Steps to Create a DCD
+1. **Proceed Use Case by Use Case:** Evolve the diagram incrementally for each business process (e.g., `Create phone sale`).
+2. **Identify Involved Domain Classes:** Examine the domain model class diagram and refer to use case preconditions/postconditions for ideas.
+3. **Add a Controller Class:** Introduce a controller (mediary switchboard) to orchestrate the use case.
+4. **Elaborate Attributes:** Specify visibility (public/private), data types, and properties for all attributes.
+5. **Determine Navigation Visibility:** Establish code-level reference paths using standard guidelines.
+
+---
+
+## 10.11 Part II: Navigation Visibility and Design Rules
+
+> [!info] Definition: Navigation Visibility
+> The ability of one object to view and interact with another object by invoking its methods. In programming, it is implemented by embedding an object reference variable inside the caller class.
+> - **UML Representation:** Shown as an arrow head on the association line pointing from the viewing class to the viewed class.
+> - *Example:* A `Customer` class contains the attribute `-mySale: Sale`, allowing a customer to find and message a sale, while `Sale` remains unaware of the customer (one-way mirror).
+
+### 10.11.1 Navigation Design Rules
+- **Superior to Subordinate:** In a one-to-many relationship (whole-to-part), navigate from the superior class to the subordinate class.
+  - *Example:* `Sale` -> `SaleItem`
+- **Mandatory Associations (Independent to Dependent):** When a dependent object cannot exist without an independent object, navigate from the independent to the dependent.
+  - *Example:* `Customer` -> `Sale` (a sale requires a customer to exist)
+- **Hierarchy Navigation Chains:** Build navigation along natural hierarchical links.
+  - *Example:* `Promotion` -> `ProductItem` -> `InventoryItem`
+- **Information Dependency:** If an object needs data from another, draw an arrow pointing either to that object or its parent.
+- **Directionality:** Navigation arrows can be unidirectional (standard) or bidirectional if mutual access is required.
+
+### 10.11.2 Case Study: RMO DCD Navigation for `Create phone sale`
+The first-cut DCD navigation assignments are:
+- `SaleHandler` (Controller) -> `Customer`
+- `SaleHandler` (Controller) -> `Sale`
+- `SaleHandler` (Controller) -> `SaleItem`
+- `Customer` -> `Sale` (independent to dependent)
+- `Sale` -> `SaleItem` (superior to subordinate)
+- `SaleItem` -> `ProductItem` (requires product details)
+- `SaleItem` -> `InventoryItem` (requires stock levels)
+- `SaleItem` -> `PromoOffering` (requires discount calculation)
+
+---
+
+## 10.12 Part III: Detailed Design with CRC Cards
+
+> [!info] Definition: Class-Responsibility-Collaboration (CRC) Cards
+> A manual brainstorming technique using physical index cards (typically 3x5) to design how classes collaborate to complete a use case.
+> - **Classes (C):** The software components participating in the use case.
+> - **Responsibilities (R):** What the class knows (attributes/state) and what it does (methods/logic). Think of these as method requests.
+> - **Collaborations (C):** Other classes whose help is required to fulfill a responsibility.
+
+### 10.12.1 Anatomy of a CRC Card
+- **Front Side:**
+  - Class Name (at the top).
+  - Left Column: Responsibilities (verbs/activities, e.g., *process sale*).
+  - Right Column: Collaborating Classes (who it needs help from, and the returned data).
+- **Back Side:**
+  - Attributes needed by the class (e.g., `customerName`, `shippingAddress`).
+
+### 10.12.2 CRC Card Design Process
+1. Select a specific use case (e.g., `Create phone sale`).
+2. Identify the problem domain class that receives the first message from the controller (the primary entry point class, e.g., `Customer` receives the request to start a sale).
+3. Brainstorm other classes that must collaborate with the primary class to complete the use case (e.g., `Sale` and `SaleItem`).
+4. Eventually, add user interface (boundary) classes (e.g., `NewSaleWindow`) and data access classes to the cards.
+5. Update the first-cut DCD based on the responsibilities (which become methods) and collaborations.
+
+> [!example] CRC Results for RMO `Create phone sale`
+> - **SaleHandler Card:**
+>   - *Responsibility:* Handle new sale | *Collaborators:* Customer, Sale, SaleItem.
+> - **Customer Card:**
+>   - *Responsibility:* Update name, update address, process sale, request history | *Collaborator:* Sale, Transaction.
+> - **Sale Card:**
+>   - *Responsibility:* Update information, request shipping, update status, cancel sale, add items, take payment | *Collaborators:* SaleItem, Transaction.
+> - **SaleItem Card:**
+>   - *Responsibility:* Update information, cancel item, request backorder | *Collaborators:* PromoOffering, Product, InventoryItem.
+> - **NewSaleWindow (UI Layer) Card:**
+>   - *Responsibility:* Accept input, display results | *Collaborator:* SaleHandler.
+
+---
+
+## 10.13 Part IV: Software Quality Metrics: Coupling and Cohesion
+
+High-quality software architecture is guided by two fundamental metrics: **Coupling** and **Cohesion**.
+
+### 10.13.1 Coupling
+> [!info] Definition: Coupling
+> A measure of how closely different classes/components are linked or dependent on each other.
+> - **Goal:** **Low Coupling** (minimized interdependencies).
+> - **Risk of High Coupling (The Entangled Web):** Creates a ripple effect where changing code in one class breaks unrelated parts of the system.
+
+### 10.13.2 Cohesion
+> [!info] Definition: Cohesion
+> A measure of the focus and unity of purpose within a single class or module.
+> - **Goal:** **High Cohesion** (highly related responsibilities).
+> - **Risk of Low Cohesion (The God Class):** Creates overly complex, hard-to-maintain, and impossible-to-reuse classes that try to do everything.
+
+### 10.13.3 Class Packaging
+To enforce low coupling and high cohesion, classes are grouped into logical packages (`<<package>>`) based on shared functionality:
+
+```mermaid
+graph TD
+    subgraph Client Package
+        Customer
+        Membership
+    end
+    subgraph Transaction Package
+        Rental
+        Payment
+    end
+    subgraph Vehicle Package
+        Car
+        Maintenance
+    end
+    Client -.-> Transaction
+    Transaction -.-> Vehicle
+```
+
+- **Cohesion** is maximized by keeping tightly related classes (e.g., `Customer` and `Membership`) in the same package.
+- **Coupling** is minimized by establishing clean, one-way dependencies between packages (e.g., `Client` package depends on `Transaction` package, which in turn depends on `Vehicle` package).
