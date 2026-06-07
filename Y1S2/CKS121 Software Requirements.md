@@ -2255,10 +2255,11 @@ A **class** describes a static structural element of the system.
   1. **Top Compartment:** Name of the class (mandatory).
   2. **Middle Compartment:** Attributes of the class.
   3. **Bottom Compartment:** Methods/operations of the class.
-> [!info] Example: LibraryUser
-> - lastName
-> - firstName
-> - dateOfBirth
+- *Example:*
+  |`LibraryUser` |
+  | :--- |
+  | lastName<br/>firstName<br/>dateOfBirth |
+  | |
 
 ### 8.3.2 Attributes
 Attributes represent properties of a class.
