@@ -601,7 +601,7 @@ Active relationships are referred to as behavioral relationships and use action 
 
 ### 4.2.1 Two Techniques for Identifying Things
 
-#### 1. Brainstorming Technique
+#### 4.2.1.1 Brainstorming Technique
 Use a checklist of all the usual types of things typically found and brainstorm to identify domain classes of each type.
 - **Categories of things to ask about:** Tangible things, Roles played, Organizational units, Devices, Sites/locations, Incidents/events/interactions that need to be recorded.
 - **Steps:**
@@ -612,7 +612,7 @@ Use a checklist of all the usual types of things typically found and brainstorm 
   5. Merge the results, eliminate duplicates, compile an initial list.
   6. Continue to work with all users & stakeholders to expand the list.
 
-#### 2. The Noun Technique
+#### 4.2.1.2 The Noun Technique
 A systematic technique to identify problem domain classes (things) by finding, classifying, and refining a list of nouns that come up in discussions or documents. Good place to start when there are no users available to help brainstorm.
 - *Drawback:* Ends up with long lists and many nouns that are not things needing to be stored. Difficulty identifying synonyms and things that are really attributes.
 - **Steps:**
@@ -1042,7 +1042,7 @@ Extreme Programming (XP) is an adaptive, Agile development methodology that take
 3.  **Feedback:** Values continuous feedback throughout development from users, clients, and developers.
 4.  **Courage:** Requires developers to have the courage to make better decisions, even when it is difficult.
 
-#### 12 XP Practices
+#### 6.3.2.1 XP Practices
 *   **Planning:** Make a simple plan based on user stories and improve it as the project progresses.
 *   **Testing:** Test the software early and often (using **Test-First Development** where test code is written before system code).
 *   **Pair Programming:** Two programmers work together on the same code to improve quality.
@@ -1096,7 +1096,7 @@ Agile development is based on four core values:
 ### 6.4.2 Agile Modeling (AM)
 Agile modeling is about doing the right kind of modeling at the right level of detail for the right purposes. 
 
-#### 12 Practical Principles of Agile Modeling
+#### 6.4.2.1 Practical Principles of Agile Modeling
 1.  **Develop Software as the Main Goal:** A model is not the final product; if it doesn't help build software, rethink it.
 2.  **Support the Next Step:** Models should help the team move to the next stage (e.g. from requirements to design).
 3.  **Keep Modeling Small and Simple:** Create only the models you really need.
@@ -1336,9 +1336,9 @@ graph TD
 
 ---
 
-# Chapter 6: Essentials of Design and Design Activities
+# Chapter 8: Essentials of Design and Design Activities
 
-## 6.1 Introduction
+## 8.1 Introduction
 > [!info] Objective
 > By the end of this topic, you should be able to:
 > 1. Describe the difference between systems analysis and systems design.
@@ -1346,7 +1346,7 @@ graph TD
 > 3. Describe the major hardware and network environment options.
 > 4. Describe the various hosting services available.
 
-## 6.2 Part I: Systems Analysis vs. Systems Design
+## 8.2 Part I: Systems Analysis vs. Systems Design
 
 Systems design bridges the gap between requirements and actual software construction. It connects the conceptual understanding of a problem with a functional reality.
 
@@ -1356,23 +1356,23 @@ Systems design bridges the gap between requirements and actual software construc
 > [!info] Definition: Systems Design
 > Design defines **how** the system will be configured and constructed. It focuses on configuring the technology, organizing components, and blueprinting the construction. It is deeply tied to specific hardware, networks, and code.
 
-### 6.2.1 Two Levels of Design
+### 8.2.1 Two Levels of Design
 System design operates at two distinct depths:
 1. **Architectural Design (or General/Conceptual Design):** The broad design of the overall system structure, physical networks, and major software subsystems.
 2. **Detailed Design:** Low-level configuration detailing specific program logic, concrete database schemas, and distinct user interfaces. It serves as the definitive technical guide for the construction phase.
 
 ---
 
-## 6.3 Part II: The Six Core Pillars of System Design (Design Activities)
+## 8.3 Part II: The Six Core Pillars of System Design (Design Activities)
 
 When moving from analysis to design, analysts perform six major design activities, each representing a core pillar of system design:
 
-### 1. Design the Environment (Technology Architecture)
+### 8.3.1 Design the Environment (Technology Architecture)
 - Represents the hardware and network linking all components.
 - The environment encompasses all the physical and logical technology (servers, desktop computers, mobile devices, operating systems like Windows/Linux/iOS, communication protocols, LANs, routing) required to support the software application.
 - Dictates exactly how software must be written and deployed.
 
-### 2. Design the Application Architecture and Software
+### 8.3.2 Design the Application Architecture and Software
 - Involves defining the programs running the core logic.
 - Includes partitioning the system into subsystems and defining the software architecture (e.g., three-layer or model-view-controller).
 - Includes the detailed design of each use case (designing class diagrams, sequence diagrams, and state machine diagrams).
@@ -1383,22 +1383,22 @@ When moving from analysis to design, analysts perform six major design activitie
 > 2. **Business Logic / Domain Layer:** Implements the core business rules, processes, and calculations.
 > 3. **Data Layer:** Interacts directly with backend storage to save and retrieve information.
 
-### 3. Design the User Interfaces
+### 8.3.3 Design the User Interfaces
 - Dialog design begins with requirements models (use case flow of activities, system sequence diagrams).
 - Design adds screen layout, look and feel, navigation, and user experience (UX).
 - Modern systems require interface designs optimized for a diversity of client devices, including smartphones, tablets, iPads, and notebooks, handling varying screen sizes, resolutions, and touch vs. click inputs.
 
-### 4. Design the System Interfaces
+### 8.3.4 Design the System Interfaces
 - Modern information systems are rarely isolated; they must interact with many other systems, both internal and external.
 - System interfaces connect platforms in different ways: saving data another system uses, reading data another system saved, or handling real-time requests for information and software services.
 - Data is packaged in highly structured, machine-readable formats like XML and JSON/REST APIs to ensure seamless integration.
 
-### 5. Design the Database
+### 8.3.5 Design the Database
 - Begins with the domain model class diagram (or ERD).
 - Designers choose the database structure (usually a relational database, though ODBMS frameworks are possible), design the database schema (tables, columns, and data types), and design referential integrity constraints (foreign key references).
 - Translates a conceptual domain model into a concrete schema (e.g., table definitions in MySQL via phpMyAdmin).
 
-### 6. Design the Security and Controls
+### 8.3.6 Design the Security and Controls
 - Protects the organization's assets and data. It is crucial for internet and wireless applications.
 - **Network Controls:** Protecting against global intrusion via the open internet using firewalls and HTTPS/TLS (encrypted tunnels).
 - **User Interface Controls:** Ensuring only authorized users can log in and access specific application screens.
@@ -1407,9 +1407,9 @@ When moving from analysis to design, analysts perform six major design activitie
 
 ---
 
-## 6.4 Part III: Designing the Environment
+## 8.4 Part III: Designing the Environment
 
-### 6.4.1 Internal Deployment (LAN-Based)
+### 8.4.1 Internal Deployment (LAN-Based)
 Internal deployment features a client-server architecture securely confined to a single physical location or private network.
 - **Pros:** High security, tightly controlled environment, highly predictable performance.
 - **Key Terminology:**
@@ -1426,7 +1426,7 @@ Internal deployment features a client-server architecture securely confined to a
 > - **Domain Layer:** Implements business rules on the application server.
 > - **Data Layer:** Formulates database queries on the database server.
 
-### 6.4.2 External Deployment (Internet-Based)
+### 8.4.2 External Deployment (Internet-Based)
 External deployment involves distributed access over the web backbone routing through a protective firewall.
 - **Pros:** Massive accessibility for remote staff and customers, low-cost communication.
 - **Risks:** High security vulnerabilities, unpredictable throughput peaks, rapidly changing standards.
@@ -1443,24 +1443,24 @@ Hosting refers to running and maintaining a computer system on someone's behalf 
 
 ---
 
-## 6.5 Part IV: Designing the Architecture
+## 8.5 Part IV: Designing the Architecture
 
-### 6.5.1 The Tier Escalation Model: Distributing Logic
+### 8.5.1 The Tier Escalation Model: Distributing Logic
 - **Two-Tier Architecture:** Splits logic between a client (presentation + application) and a server (data access + storage). Creates "thick" or "thin" clients.
 - **Three-Tier Architecture:** Separates business rules from data management by placing client presentation on one tier, application server business logic on a second tier, and database server data management on a third tier.
 - **N-Tier Architecture:** Highly scalable standard for e-commerce (e.g., Client <-> Web Server <-> Application Server <-> Database Server). It generates more network traffic but scales well.
 
-### 6.5.2 Mobile Development Approaches
+### 8.5.2 Mobile Development Approaches
 Mobile apps can be built using one of three primary approaches, balancing device-centric versus web-centric priorities:
 1. **Native Applications:** Rich user experience with full access to device hardware (camera, GPS). Built using device-specific languages (e.g., Objective-C/Swift for iOS, Java/Kotlin for Android). High cost and effort, requiring rebuilding per OS update.
 2. **Cross-Platform Frameworks:** Write once, adapt many. Built using HTML/JavaScript wrapped in a framework. Good experience, but requires device-specific tweaking. Medium cost and effort. Best for informational apps.
 3. **Mobile Web Apps:** Built with HTML5. Low cost and effort, running in any mobile browser, but provides a generic UI and cannot access local device hardware. Requires a constant internet connection.
 
-### 6.5.3 Remote and Distributed Access
+### 8.5.3 Remote and Distributed Access
 - Can use two interfaces to the same Web app for internal versus external access (though external is not as secure).
 - **Virtual Private Network (VPN):** A closed network with security and closed access built on top of a public network (the internet) using an encrypted tunnel. Allows remote devices to interact with the system as if they were physically plugged into the internal LAN.
 
-### 6.5.4 Refining Architectural Choices
+### 8.5.4 Refining Architectural Choices
 Nonfunctional requirements act as the "building codes" that guide design decisions:
 - **Operational:** The technical environments in which the system must perform and evolve.
 - **Performance:** Response time, throughput, capacity, and system reliability.
@@ -1469,14 +1469,14 @@ Nonfunctional requirements act as the "building codes" that guide design decisio
 
 ---
 
-## 6.6 Part V: Hardware and Software Specification Process
+## 8.6 Part V: Hardware and Software Specification Process
 
 The specification process consists of:
 1. **Define Software:** Detail operating systems, applications (e.g., Oracle), and hidden costs like training and licensing.
 2. **Inventory Hardware:** List all servers, peripherals, and required quantities.
 3. **Set Requirements:** Establish minimum processing and storage needs for each component.
 
-### 6.6.1 The 7 Selection Factors for Hardware & Software
+### 8.6.1 The 7 Selection Factors for Hardware & Software
 1. **Functions and Features:** Does it actually do what the system requires (e.g., monitor size)?
 2. **Performance:** Is it fast enough to handle the expected workload (e.g., processor speed)?
 3. **Legacy Integration:** How well does it "talk" to existing systems?
@@ -1485,7 +1485,7 @@ The specification process consists of:
 6. **Political Factors (Political Preferences):** Are there organizational preferences or "standard" vendors we must use (resistance to change)?
 7. **Vendor Reputation (Vendor Performance):** Is the company stable? Do they provide good technical support (reputation/prospects)?
 
-### 6.6.2 Sample Hardware & Software Specification
+### 8.6.2 Sample Hardware & Software Specification
 
 | Component | Hardware Specification | Software Specification | OS / Middleware |
 | :--- | :--- | :--- | :--- |
@@ -1496,9 +1496,9 @@ The specification process consists of:
 
 ---
 
-# Chapter 7: Designing the User and System Interfaces
+# Chapter 9: Designing the User and System Interfaces
 
-## 7.1 Introduction
+## 9.1 Introduction
 > [!info] Objective
 > By the end of this topic, you should be able to:
 > 1. Describe the difference between user interfaces and system interfaces.
@@ -1510,7 +1510,7 @@ The specification process consists of:
 > 7. Define system inputs and outputs based on the requirements of the application program.
 > 8. Design printed and on-screen reports appropriate for recipients.
 
-## 7.2 Part I: User Interfaces vs. System Interfaces
+## 9.2 Part I: User Interfaces vs. System Interfaces
 
 Information systems interact with both human users and other computerized systems. Designing the interaction boundary requires distinguishing between these two types of interfaces:
 
@@ -1526,9 +1526,9 @@ Information systems interact with both human users and other computerized system
 
 ---
 
-## 7.3 Part II: Human-Computer Interaction (HCI) and User-Centered Design
+## 9.3 Part II: Human-Computer Interaction (HCI) and User-Centered Design
 
-### 7.3.1 User-Centered Design (UCD)
+### 9.3.1 User-Centered Design (UCD)
 UCD is an engineering philosophy embodying the core view that **to the user, the interface IS the system**. Modern systems analysis and design fully incorporates UCD principles to prevent unusable systems.
 
 UCD relies on three core iterative principles:
@@ -1536,7 +1536,7 @@ UCD relies on three core iterative principles:
 2. **Evaluate Usability:** Conduct usability testing to ensure cognitive friction remains low.
 3. **Iterate Frequently:** Continuously refine user interface designs based on user feedback.
 
-### 7.3.2 The Four HCI Metaphors
+### 9.3.2 The Four HCI Metaphors
 HCI design translates the physical world into digital interfaces using four major metaphors:
 1. **Direct Manipulation:** Dragging or clicking graphical items on a screen that look like or represent physical objects.
    - *Example:* Dragging a document file icon to the Recycle Bin or Trash Can to delete it.
@@ -1547,7 +1547,7 @@ HCI design translates the physical world into digital interfaces using four majo
 4. **Dialog:** User and computer accomplish tasks by engaging in a conversational query-response flow using text, voice, or labeled action buttons.
    - *Example:* Clicking "troubleshoot" on a printer warning, answering a series of yes/no questions, and selecting choices from a list.
 
-### 7.3.3 Core Usability Heuristics
+### 9.3.3 Core Usability Heuristics
 - **Visibility:** A control or status indicator must be clearly visible against the background so users are instantly aware of it.
   - *Example:* Loading progress bars showing `50%` or media player volume sliders.
 - **Affordance:** The physical appearance of a control should suggest its functionality.
@@ -1555,7 +1555,7 @@ HCI design translates the physical world into digital interfaces using four majo
 
 ---
 
-## 7.4 Part III: User Interface Design Guidelines
+## 9.4 Part III: User Interface Design Guidelines
 
 The following seven guidelines apply to all types of user interfaces to maximize usability:
 1. **Design for Consistency:** Maintain a predictable placement of elements, colors, and behaviors across all screens.
@@ -1568,7 +1568,7 @@ The following seven guidelines apply to all types of user interfaces to maximize
 
 ---
 
-## 7.5 Part IV: The Transition from Analysis to UI Design
+## 9.5 Part IV: The Transition from Analysis to UI Design
 
 The transition from abstract analysis models to concrete user interfaces is a structured, step-by-step process:
 
@@ -1610,34 +1610,34 @@ graph LR
 
 ---
 
-## 7.6 Part V: Platform-Specific Interface Guidelines
+## 9.6 Part V: Platform-Specific Interface Guidelines
 
 Different deployment environments present distinct layout, navigation, and usability challenges:
 
-### 7.6.1 Windows/Desktop Forms
+### 9.6.1 Windows/Desktop Forms
 - **Focus:** Complex layouts, strict consistency, and high-volume data-entry efficiency.
 - **Interface Layout:** Predictable placement, clear labels/headings, logical spatial distribution, and strategic color contrast to guide the eye.
 - **Controls:**
   - *Data Entry:* Text boxes, list boxes, combo boxes, check boxes, and radio buttons.
   - *Navigation & Support:* Minimize/maximize/close title bar icons, scroll bars, and window resize handles.
 
-### 7.6.2 Web Browser Interfaces
+### 9.6.2 Web Browser Interfaces
 - **Focus:** Adaptation to varying screen widths and hardware configurations.
 - **CSS Enforced Consistency:** Raw HTML structure must adapt via Cascading Style Sheets (CSS) to ensure consistent visual styles regardless of user/task.
 - **Performance:** Highly sensitive to connection speeds; layout and media weight must be optimized for transmission limits.
 - **Media Integration:** Pictures, video, and sound offer rich engagement but must balance against page load performance and browser compatibility issues.
 - **Accessibility (Users with Disabilities):** Web interfaces must integrate with Assistive Technologies (text-to-speech, voice-recognition software).
 
-### 7.6.3 Handheld/Mobile Interfaces
+### 9.6.3 Handheld/Mobile Interfaces
 - **Focus:** Small screen sizes, touch screen affordance (fat-finger errors), limited network capacity, and platform-specific UI toolkits (iOS/Android guidelines).
 
 ---
 
-## 7.7 Part VI: Identifying and Designing System Interfaces
+## 9.7 Part VI: Identifying and Designing System Interfaces
 
 System interfaces manage inputs and outputs with minimal human intervention.
 
-### 7.7.1 Automated Inputs and System Interoperability
+### 9.7.1 Automated Inputs and System Interoperability
 1. **Inputs and Outputs with other Systems:** Direct machine-to-machine interfaces formatted as network messages.
 2. **Highly Automated Inputs:** Data captured directly by hardware devices:
    - *Magnetic Card Readers* (swiping cards)
@@ -1648,7 +1648,7 @@ System interfaces manage inputs and outputs with minimal human intervention.
 3. **Inputs/Outputs to External Databases:** Systems supplying input directly to or accepting output from external databases.
 4. **XML for System Interfaces:** Extensible Markup Language (XML) embeds self-defining data structures within textual messages using tags (e.g., `<name>` and `</name>`) that label the meaning of data elements. Useful for sending messages across disparate hardware/software platforms.
 
-### 7.7.2 Designing System Inputs
+### 9.7.2 Designing System Inputs
 The primary objective of system input design is to achieve **Error-Free Input**.
 - **Four Rules of Automation:**
   1. Use electronic data-capture devices wherever possible.
@@ -1657,7 +1657,7 @@ The primary objective of system input design is to achieve **Error-Free Input**.
   4. Validate and correct information at the time and location it is entered.
 - **Design Process:** Examine incoming messages crossing the system boundary in System Sequence Diagrams (SSDs) and identify data types in design class diagrams.
 
-### 7.7.3 Designing System Outputs
+### 9.7.3 Designing System Outputs
 System outputs are structured around the requirements of the information recipient.
 
 #### Report Types
@@ -1677,7 +1677,7 @@ System outputs are structured around the requirements of the information recipie
 
 ---
 
-# Chapter 8: Object-Oriented Design: Principles (Part 1)
+# Chapter 10: Object-Oriented Design: Principles (Part 1)
 
 ## 10.1 Introduction
 > [!info] Objective
@@ -1830,9 +1830,9 @@ We develop design models iteratively, use case by use case:
 
 ---
 
-# Chapter 9: Object-Oriented Design: Principles (Part 2)
+# Chapter 11: Object-Oriented Design: Principles (Part 2)
 
-## 10.9 Introduction
+## 11.1 Introduction
 > [!info] Objective
 > By the end of this topic, you should be able to:
 > 1. Detail the steps in creating a first-cut Design Class Diagram (DCD).
@@ -1843,11 +1843,11 @@ We develop design models iteratively, use case by use case:
 
 ---
 
-## 10.10 Part I: Step-by-Step Creation of a First-Cut Design Class Diagram (DCD)
+## 11.2 Part I: Step-by-Step Creation of a First-Cut Design Class Diagram (DCD)
 
 Developing a Design Class Diagram (DCD) is a structured process executed use case by use case. 
 
-### 10.10.1 Steps to Create a DCD
+### 11.2.1 Steps to Create a DCD
 1. **Proceed Use Case by Use Case:** Evolve the diagram incrementally for each business process (e.g., `Create phone sale`).
 2. **Identify Involved Domain Classes:** Examine the domain model class diagram and refer to use case preconditions/postconditions for ideas.
 3. **Add a Controller Class:** Introduce a controller (mediary switchboard) to orchestrate the use case.
@@ -1856,14 +1856,14 @@ Developing a Design Class Diagram (DCD) is a structured process executed use cas
 
 ---
 
-## 10.11 Part II: Navigation Visibility and Design Rules
+## 11.3 Part II: Navigation Visibility and Design Rules
 
 > [!info] Definition: Navigation Visibility
 > The ability of one object to view and interact with another object by invoking its methods. In programming, it is implemented by embedding an object reference variable inside the caller class.
 > - **UML Representation:** Shown as an arrow head on the association line pointing from the viewing class to the viewed class.
 > - *Example:* A `Customer` class contains the attribute `-mySale: Sale`, allowing a customer to find and message a sale, while `Sale` remains unaware of the customer (one-way mirror).
 
-### 10.11.1 Navigation Design Rules
+### 11.3.1 Navigation Design Rules
 - **Superior to Subordinate:** In a one-to-many relationship (whole-to-part), navigate from the superior class to the subordinate class.
   - *Example:* `Sale` -> `SaleItem`
 - **Mandatory Associations (Independent to Dependent):** When a dependent object cannot exist without an independent object, navigate from the independent to the dependent.
@@ -1873,7 +1873,7 @@ Developing a Design Class Diagram (DCD) is a structured process executed use cas
 - **Information Dependency:** If an object needs data from another, draw an arrow pointing either to that object or its parent.
 - **Directionality:** Navigation arrows can be unidirectional (standard) or bidirectional if mutual access is required.
 
-### 10.11.2 Case Study: RMO DCD Navigation for `Create phone sale`
+### 11.3.2 Case Study: RMO DCD Navigation for `Create phone sale`
 The first-cut DCD navigation assignments are:
 - `SaleHandler` (Controller) -> `Customer`
 - `SaleHandler` (Controller) -> `Sale`
@@ -1886,7 +1886,7 @@ The first-cut DCD navigation assignments are:
 
 ---
 
-## 10.12 Part III: Detailed Design with CRC Cards
+## 11.4 Part III: Detailed Design with CRC Cards
 
 > [!info] Definition: Class-Responsibility-Collaboration (CRC) Cards
 > A manual brainstorming technique using physical index cards (typically 3x5) to design how classes collaborate to complete a use case.
@@ -1894,7 +1894,7 @@ The first-cut DCD navigation assignments are:
 > - **Responsibilities (R):** What the class knows (attributes/state) and what it does (methods/logic). Think of these as method requests.
 > - **Collaborations (C):** Other classes whose help is required to fulfill a responsibility.
 
-### 10.12.1 Anatomy of a CRC Card
+### 11.4.1 Anatomy of a CRC Card
 - **Front Side:**
   - Class Name (at the top).
   - Left Column: Responsibilities (verbs/activities, e.g., *process sale*).
@@ -1902,7 +1902,7 @@ The first-cut DCD navigation assignments are:
 - **Back Side:**
   - Attributes needed by the class (e.g., `customerName`, `shippingAddress`).
 
-### 10.12.2 CRC Card Design Process
+### 11.4.2 CRC Card Design Process
 1. Select a specific use case (e.g., `Create phone sale`).
 2. Identify the problem domain class that receives the first message from the controller (the primary entry point class, e.g., `Customer` receives the request to start a sale).
 3. Brainstorm other classes that must collaborate with the primary class to complete the use case (e.g., `Sale` and `SaleItem`).
@@ -1923,23 +1923,23 @@ The first-cut DCD navigation assignments are:
 
 ---
 
-## 10.13 Part IV: Software Quality Metrics: Coupling and Cohesion
+## 11.5 Part IV: Software Quality Metrics: Coupling and Cohesion
 
 High-quality software architecture is guided by two fundamental metrics: **Coupling** and **Cohesion**.
 
-### 10.13.1 Coupling
+### 11.5.1 Coupling
 > [!info] Definition: Coupling
 > A measure of how closely different classes/components are linked or dependent on each other.
 > - **Goal:** **Low Coupling** (minimized interdependencies).
 > - **Risk of High Coupling (The Entangled Web):** Creates a ripple effect where changing code in one class breaks unrelated parts of the system.
 
-### 10.13.2 Cohesion
+### 11.5.2 Cohesion
 > [!info] Definition: Cohesion
 > A measure of the focus and unity of purpose within a single class or module.
 > - **Goal:** **High Cohesion** (highly related responsibilities).
 > - **Risk of Low Cohesion (The God Class):** Creates overly complex, hard-to-maintain, and impossible-to-reuse classes that try to do everything.
 
-### 10.13.3 Class Packaging
+### 11.5.3 Class Packaging
 To enforce low coupling and high cohesion, classes are grouped into logical packages (`<<package>>`) based on shared functionality:
 
 ```mermaid
