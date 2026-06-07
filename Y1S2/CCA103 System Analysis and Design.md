@@ -892,6 +892,450 @@ High-priority candidates:
 
 ---
 
+# Chapter 6: Approaches to System Development
+
+## 6.1 The System Development Life Cycle (SDLC)
+The System Development Life Cycle (SDLC) is the basic framework used to develop an information system. 
+
+> [!important] Big Idea
+> The SDLC gives structure to system development, and the best methodology depends on the project's needs, complexity, technology, and timeline. 
+
+### 6.1.1 What Affects the Choice of Methodology?
+Six key characteristics help project teams determine which SDLC methodology is most suitable:
+1. **Clear User Requirements:** How well do users and analysts understand what the new system must do?
+2. **Technology Familiarity:** How much experience does the team have with the technology being used?
+3. **System Complexity:** Is the system large, feature-rich, or connected to many other systems?
+4. **System Reliability:** Does the system need to be highly reliable, or is some downtime acceptable?
+5. **Short Time Schedule:** Is the project deadline tight?
+6. **Schedule Visibility:** Do users, sponsors, or managers want to see regular progress updates?
+
+### 6.1.2 Predictive vs. Adaptive Approaches to the SDLC
+The choice of SDLC varies along a continuum from highly predictive to highly adaptive:
+
+*   **Predictive Approach (Waterfall Model):**
+    *   Assumes the project can be planned in advance and that the information system can be developed according to the plan.
+    *   Typically used when requirements are well understood and defined, and there is low technical risk.
+*   **Adaptive Approach (Iterative Model):**
+    *   Assumes the project must be more flexible and adapt to changing needs as the project progresses.
+    *   Typically used when requirements and needs are uncertain, and/or there is high technical risk.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    A[Predictive SDLC] <-->|Continuum| B[Adaptive SDLC]
+    style A fill:#ffebee,stroke:#c62828,stroke-width:1px;
+    style B fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px;
+```
+
+### 6.1.3 Traditional Predictive SDLC Phases
+In predictive approaches, activities are organized into sequential groups called **phases**:
+1.  **Project Initiation:** Identifies the business problem/opportunity and secures approval to develop a new system.
+2.  **Project Planning:** Involves planning, organizing, and scheduling the project to map out its overall structure.
+3.  **Analysis:** Focuses on discovering and understanding the details of the business problem or need.
+4.  **Design:** Focuses on configuring and structuring the new system components (program structure, databases, and algorithms).
+5.  **Implementation:** Includes programming and testing the system.
+6.  **Deployment:** Involves installing and putting the system into operation.
+
+### 6.1.4 The Waterfall Model
+The waterfall model is a step-by-step, sequential predictive SDLC method where work moves forward phase by phase.
+
+> [!warning] Key Characteristics
+> 1. **Sequential Process:** The team moves from one phase to the next in order.
+> 2. **Big Deliverables:** Each phase usually produces detailed documents and outputs.
+> 3. **Approval Needed:** The work from each phase is reviewed and approved before moving on.
+> 4. **One-Way Flow:** Once a phase ends, the next phase begins (like water flowing downward).
+> 5. **Hard to Go Back:** Going backward is difficult, costly, and time-consuming.
+
+#### Advantages
+*   Requirements are identified long before programming begins.
+*   Requirement changes are limited as the project progresses.
+
+#### Disadvantages
+*   The design must be completely specified before programming begins.
+*   Significant time elapses between project proposal (analysis) and delivery, which may treat testing as an afterthought.
+*   Deliverables are often a poor communication mechanism, leading to overlooked requirements.
+*   Missed requirements lead to expensive post-implementation programming.
+*   Users may forget the original purpose of the system because of the elapsed time.
+
+### 6.1.5 Variants of Waterfall Development
+
+#### Parallel Development
+*   Evolved to address the lengthy timeframe of waterfall development by executing design and implementation of different subprojects in parallel.
+*   Reduces the time required to deliver a system, making it less likely that changes in the business environment will cause rework.
+*   *Disadvantages:* Still suffers from voluminous deliverables. If subprojects are not completely independent, design decisions in one can negatively affect another, making integration challenging.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    P[Planning] --> A[Analysis]
+    A --> D1[Design Subproject 1] --> I1[Implementation Subproject 1]
+    A --> D2[Design Subproject 2] --> I2[Implementation Subproject 2]
+    I1 --> Int[Integration & Deployment]
+    I2 --> Int
+```
+
+#### The V-Model
+*   A variation of waterfall development that pays more explicit attention to testing.
+*   The development process proceeds down the left-hand slope of the V (requirements and design) and matches them with corresponding testing phases up the right-hand slope (unit, integration, system, and acceptance testing).
+*   *Advantages:* Emphasis on early development of test plans improves overall quality.
+*   *Disadvantages:* Suffers from the same rigidity as waterfall and is not suited for dynamic environments.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    Req[Analysis] --> Des[Design] --> Code[Implementation]
+    Req -.->|Acceptance test design| Acc[Acceptance testing]
+    Des -.->|System/Integration test design| Sys[System/Integration testing]
+    Code --> Sys --> Acc
+```
+
+### 6.1.6 Newer Adaptive Approaches to the SDLC
+*   **Iterative Development:** Project activities (including plans and models) are adjusted as the project progresses. Rather than sequential phases, iterations create a series of mini-projects. One small part is analyzed, designed, built, and tested during a single iteration, and the next iteration builds on the results.
+*   **Incremental Development:** The system is built in small increments and "grown" in an organic fashion. This gets working software into users' hands sooner so the business can begin accruing benefits early.
+*   **Walking Skeleton:** Provides a complete front-to-back implementation of the new system but with only the "bare bones" of functionality developed in a few early iterations. Later iterations then flesh out the skeleton with more functions.
+
+---
+
+## 6.2 Methodologies, Models, Tools, and Techniques
+
+> [!info] Core Definitions
+> *   **Methodology:** A collection of techniques used to complete activities and tasks within each phase or iteration of the SDLC.
+> *   **Model:** A representation of an important part of the real world, used to record or communicate information (e.g. use case diagrams, entity-relationship diagrams, Gantt charts).
+> *   **Tool:** Software support that helps create models or other components required in the project (e.g. IDEs, visual modeling tools, project management applications).
+> *   **Technique:** A collection of guidelines that helps an analyst complete an activity or task (e.g. data-modeling techniques, user-interviewing techniques).
+
+```mermaid
+graph LR
+    M((Methodology)) <--> T[Techniques]
+    M <--> Mod[Models]
+    M <--> Tools[Tools]
+```
+
+---
+
+## 6.3 The Unified Process (UP), Extreme Programming (XP), and Scrum
+
+### 6.3.1 The Unified Process (UP)
+The Unified Process (UP) is an object-oriented system development methodology based on an iterative approach to development. 
+
+#### Four UP Phases
+1.  **Inception:** Develop an approximate vision of the system, make the business case, define the scope, and produce rough estimates. Usually completed in one iteration.
+2.  **Elaboration:** Do necessary research and fact-finding to identify all requirements, finalize the scope, design and implement the core architecture, and produce realistic estimates. Spans several iterations.
+3.  **Construction:** Iteratively implement the remaining lower-risk, predictable elements and prepare for deployment.
+4.  **Transition:** Complete beta testing and deployment so users have a working system.
+
+#### Six Main UP Development Disciplines
+For each iteration, the project team performs activities across six core disciplines in varying amounts:
+1.  **Business Modeling:** Understand the business environment.
+2.  **Requirements:** Define the requirements the system portion must satisfy.
+3.  **Design:** Design a solution that satisfies the requirements.
+4.  **Implementation:** Write and integrate the code.
+5.  **Testing:** Thoroughly test the completed portion.
+6.  **Deployment:** Put the completed and tested part into operation.
+
+### 6.3.2 Extreme Programming (XP)
+Extreme Programming (XP) is an adaptive, Agile development methodology that takes proven industry best practices and focuses on them intensely in their most intense forms.
+
+#### Four Core Values of XP
+1.  **Communication:** Emphasizes clear and frequent communication among team members, users, and clients.
+2.  **Simplicity:** Encourages developers to build the system in the simplest way that works.
+3.  **Feedback:** Values continuous feedback throughout development from users, clients, and developers.
+4.  **Courage:** Requires developers to have the courage to make better decisions, even when it is difficult.
+
+#### 12 XP Practices
+*   **Planning:** Make a simple plan based on user stories and improve it as the project progresses.
+*   **Testing:** Test the software early and often (using **Test-First Development** where test code is written before system code).
+*   **Pair Programming:** Two programmers work together on the same code to improve quality.
+*   **Simple Design:** Create the system in the simplest way to solve the problem.
+*   **Refactoring:** Improve and clean up code without changing its functionality.
+*   **Collective Code Ownership:** All team members share responsibility for the code and can modify any part.
+*   **Continuous Integration:** Combine and test small pieces of code regularly.
+*   **On-Site Customer:** Keep the customer involved for quick feedback.
+*   **System Metaphor:** Use a simple shared idea or comparison to explain how the system works.
+*   **Small Releases:** Deliver software in small, incremental versions.
+*   **Forty-Hour Week:** Maintain a healthy workload to prevent stress.
+*   **Coding Standards:** Follow common coding rules for readability and maintainability.
+
+#### XP Project Activities Rings
+*   **Outer Ring (System):** Create user stories and define acceptance tests.
+*   **Middle Ring (Release):** Conduct tests and perform overall planning.
+*   **Inner Ring (Iteration):** Execute iterations of coding and testing.
+
+### 6.3.3 Scrum
+Scrum is an iterative, team-focused Agile philosophy responsive to highly changing, dynamic environments.
+
+#### Core Roles in Scrum
+*   **Product Owner:** Controls the requirements and approves what goes into the product backlog.
+*   **Scrum Master:** Facilitates the process and removes obstacles.
+*   **Scrum Team:** Small, self-organizing team that develops the software.
+
+#### Scrum Practices
+*   **Product Backlog:** A continually prioritized list of all the things the system should include (user functions/use cases, features/security, and technology/platforms).
+*   **Sprint:** A short, fixed work period (time box, usually 30 days) with a frozen scope.
+    *   *Sprint Planning:* The team selects tasks from the product backlog and sets a main goal.
+    *   *Daily Scrum:* A short (15-minute) daily meeting where each member answers:
+        1. What did I do yesterday?
+        2. What will I do today?
+        3. What problem is blocking me?
+    *   *End of Sprint:* The team delivers the agreed increment, holds a review meeting to check progress, and discusses improvements for the next sprint.
+
+---
+
+## 6.4 Agile Development and Agile Modeling
+
+### 6.4.1 Core Agile Values
+Agile development is based on four core values:
+1.  **Responding to change** over following a plan.
+2.  **Individuals and interactions** over processes and tools.
+3.  **Working software** over comprehensive documentation.
+4.  **Customer collaboration** over contract negotiation.
+
+> [!note] Chaordic
+> A term used to describe Agile projects, meaning a creative balance of **chaos** (unpredictable change, unknowns) and **order** (structure, direction, alignment).
+
+### 6.4.2 Agile Modeling (AM)
+Agile modeling is about doing the right kind of modeling at the right level of detail for the right purposes. 
+
+#### 12 Practical Principles of Agile Modeling
+1.  **Develop Software as the Main Goal:** A model is not the final product; if it doesn't help build software, rethink it.
+2.  **Support the Next Step:** Models should help the team move to the next stage (e.g. from requirements to design).
+3.  **Keep Modeling Small and Simple:** Create only the models you really need.
+4.  **Accept Change Gradually:** Be ready to adjust models as requirements evolve.
+5.  **Model with a Purpose:** Every model should have a clear reason.
+6.  **Use More Than One Model When Needed:** One model cannot show everything.
+7.  **Build Good Models and Get Fast Feedback:** Sloppy models create mistakes; early feedback from users is essential.
+8.  **Focus on Meaning, Not Beauty:** Whiteboard sketches are often enough; do not waste time making diagrams pretty.
+9.  **Learn Together Through Open Communication:** Share ideas openly and avoid being defensive.
+10. **Know Your Models:** Understand what each model is for and how to use it correctly.
+11. **Adapt to the Project:** Choose the modeling style (simple or detailed) that fits the project.
+12. **Focus on Stakeholder Value:** The system must deliver the best value to the stakeholders.
+
+---
+
+# Chapter 7: Project Planning and Project Management
+
+## 7.1 Principles of Project Management
+
+### 7.1.1 The Need for Project Management
+Project management is organizing and directing other people to achieve a planned result within a predetermined schedule and budget.
+
+#### Categories of Project Success
+*   **Successful Projects:** Completed on time, within budget, and on scope.
+*   **Challenged Projects:** Failed in one area (e.g. late, over budget, or missing features).
+*   **Failed Projects:** Cancelled before completion or not used.
+
+> [!important] Project Success by Development Paradigm
+> Statistics show that iterative, agile, and lean paradigms yield significantly higher success rates than traditional paradigms:
+> *   **Lean:** 72% Successful | 21% Challenged | 7% Failed
+> *   **Iterative:** 65% Successful | 28% Challenged | 7% Failed
+> *   **Agile:** 64% Successful | 30% Challenged | 6% Failed
+> *   **Ad hoc:** 50% Successful | 35% Challenged | 15% Failed
+> *   **Traditional:** 49% Successful | 32% Challenged | 18% Failed
+
+#### Common Reasons for Project Failure
+*   Undefined project management practices.
+*   Poor IT management and poor IT procedures.
+*   Inadequate executive support.
+*   Inexperienced project managers.
+*   Unclear business needs and project objectives.
+*   Inadequate user involvement.
+
+### 7.1.2 Project Manager Responsibilities
+
+#### Internal Responsibilities
+*   Developing the project schedule.
+*   Recruiting and training team members.
+*   Assigning work to teams and team members.
+*   Assessing project risks.
+*   Monitoring and controlling project deliverables and milestones.
+
+#### External Responsibilities
+*   Reporting the project’s status and progress.
+*   Working directly with the client (project sponsor) and other stakeholders.
+*   Identifying resource needs and obtaining resources.
+
+#### Key Project Stakeholders
+*   **Client:** The person or group that funds the project.
+*   **Oversight Committee:** Clients and key managers who review progress and direct the project.
+*   **Users:** The people who will use the new system.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    OC[Oversight Committee / Client] <--> PM[Project Manager]
+    PM --> TL1[Team Leader] --> M1[Member]
+    PM --> TL2[Team Leader] --> M2[Member]
+    PM --> Tech[Technical Staff]
+    User[Users] <--> PM
+```
+
+### 7.1.3 Project Management and Ceremony
+Ceremony is the level of formality of a project—the rigor of holding meetings and producing documentation:
+*   **High Ceremony:** Meetings are held on a predefined schedule with specific participants, agendas, minutes, and follow-through. Specifications and models are formally documented with abundant diagrams and verified through formal review meetings.
+*   **Low Ceremony:** Meetings occur informally (e.g. hallway or water cooler). Written documentation and formal specifications are kept to a minimum; developers and users work closely together on a daily basis.
+
+### 7.1.4 Project Management Body of Knowledge (PMBOK)
+PMBOK defines **10 key knowledge areas** that project teams need to manage:
+1.  **Project Integration Management:** Combines all parts of the project so everything works together smoothly.
+2.  **Project Scope Management:** Defines what work should be done and what is not included.
+3.  **Project Time Management:** Creates the schedule and makes sure tasks are finished on time.
+4.  **Project Cost Management:** Estimates the budget and controls project spending.
+5.  **Project Quality Management:** Ensures the project work and results meet the required standards.
+6.  **Project Human Resource Management:** Builds, manages, and motivates the project team.
+7.  **Project Communications Management:** Makes sure the right information reaches the right people at the right time.
+8.  **Project Risk Management:** Identifies possible problems and prepares ways to reduce them.
+9.  **Project Procurement Management:** Handles buying products or services from outside suppliers.
+10. **Project Stakeholder Management:** Identifies people affected by the project and keeps them involved and informed.
+
+### 7.1.5 Agile Project Management
+Agile project management balances flexibility with control of schedule, budget, and deliverables:
+*   **Agile Scope:** Scope is not well understood initially but is controlled by ranking work by value/urgency, delivering in iterations, and adapting to change.
+*   **Agile Time:** Schedules must be flexible to accommodate changes.
+*   **Agile Cost:** Costs are more difficult to estimate upfront.
+*   **Agile Risk:** Higher-risk aspects of the project are completed first.
+*   **Agile Quality:** Quality is assessed and verified after each iteration.
+
+---
+
+## 7.2 Identify the Problem and Obtain Approval
+
+### 7.2.1 Identifying and Defining the Problem
+Defining the problem and objectives is the foundation of determining what the system must accomplish.
+
+#### Signs of System Problems
+*   **Performance output criteria:** Too many errors, work completed slowly, work done incorrectly, work done incompletely, work not done at all.
+*   **Employee behavior:** High absenteeism, high job dissatisfaction, high job turnover.
+*   **External feedback:** Complaints from vendors/customers/suppliers, suggestions for improvement, loss of sales, lower sales.
+
+#### Problem Definition Components
+1.  **Problem Statement:** A short summary of the business problem (usually 1-2 paragraphs).
+2.  **Issues:** The current problems or major pieces of the situation (what is going wrong now).
+3.  **Objectives:** The desired results or goals that address each issue (what we want to achieve). Objectives must match issues point-by-point.
+
+### 7.2.2 The System Vision Document
+The System Vision Document is a key deliverable used to clearly define the problem and obtain project approval. It contains three main components:
+1.  **Problem Description:** Studies where the project idea came from (e.g. strategic plan, user problem) and explains the business need.
+2.  **System Capabilities:** High-level list of what the new system should be able to do, helping determine system size, complexity, and project scope.
+3.  **Business Benefits:** The value the organization expects to gain, focusing on financial benefits (e.g. reducing costs, increasing revenue).
+
+> [!example] Example: RMO's CSMS (Consolidated Sales and Marketing System)
+> *   **Problem Description:** Web-based sales and marketing CSS is outdated. Customers require catalog and sales systems with one-click ordering, deferred-purchase tracking, and social media integration. RMO must launch CSMS to respond to mobile computing and CSS limitations.
+> *   **System Capabilities:** Provide a shopping cart, automate customer sales, recommend related products, allow customer ratings, include a "friend" network, support split-order shipping, handle back-ordering, integrate with social media, and support mobile devices.
+> *   **Business Benefits:** Increase sales by connecting with customers, increase size and frequency of customer purchases, attract new customers, build loyalty, increase speed of product availability, and eliminate shipping delays.
+
+### 7.2.3 Determining Feasibility and Risk
+Project risk and feasibility analysis verifies whether a project can be started and completed successfully. 
+
+#### The Three Key Elements of Feasibility
+1.  **Technical Feasibility:** Checks whether the system can be built with current technology.
+    *   *Questions:* Do we have the hardware, software, and tools? Do we have skilled staff, or must we hire/outsource? Does existing software fit the need, or must it be customized?
+2.  **Economic Feasibility:** Checks whether the project is worth the cost by comparing short-term costs with long-term benefits.
+    *   *Tangible Benefits:* Faster processing, quicker access to information, less employee time.
+    *   *Intangible Benefits:* Better decision-making, higher accuracy, improved customer service, better business image.
+    *   *Tangible Costs:* Equipment, software, systems analyst and programmer time.
+    *   *Intangible Costs:* Losing competitive edge, declining company image, customer dissatisfaction.
+    *   *Financial Analysis Models:* **Break-Even Analysis** (where proposed and current system costs intersect), **Cash-Flow Analysis** (direction, size, and pattern of cash flow over time), and **Present Value Analysis** (calculating Net Present Value to assess the time value of money).
+3.  **Operational Feasibility:** Checks whether the system will work well and be accepted in the organization.
+    *   *Organizational/Cultural Risks:* Substantial computer phobia, perceived loss of control by staff/management, shifting of political power, fear of changes in job responsibilities, fear of job loss due to automation, reversal of long-standing work procedures.
+    *   *Solutions:* Early risk identification, active user support, and additional training sessions.
+
+---
+
+## 7.3 Plan and Monitor the Project
+
+### 7.3.1 Establish the Project Environment
+Tailoring and operationalizing the methodology involves:
+1.  **Record & Communicate:** Recording project parameters and clarifying "who, what, when, and how."
+2.  **Build the Work Environment:** Setting up workstations, software development tools (IDEs), servers, repositories, office/meeting space, and support staff.
+3.  **Define Process & Procedures:** Setting up rules for reporting, programming style (single vs. pair), testing, deliverables, and version control.
+
+```
+Sample Dashboard: Conference Registration System
+-----------------------------------------------------------------------------
+| Project Overview           | Issues & Risks      | Tasks                 |
+|----------------------------|---------------------|-----------------------|
+| Planned finish: Dec 2015   | Urgent issues: 3    | Tasks this iter: 45   |
+| Planned cost: $1,680,000   | Open issues: 22     | Tasks this week: 15   |
+| Time expended: 18%         | Assigned: 15        | Open: 35              |
+| Deliverables completed: 4/35| Unassigned: 7      | Unassigned: 22        |
+| Current iteration: 4/15    | Closed issues: 137  | Assigned: 13          |
+| Active tasks: 5            | Identified risks: 4 | Slipped - urgent: 3   |
+|                            |                     | Slipped - routine: 7  |
+|                            |                     | Completed tasks: 10   |
+-----------------------------------------------------------------------------
+```
+
+### 7.3.2 Schedule the Work
+Project schedules are managed at two levels:
+*   **Project Iteration Schedule:** A high-level list of iterations and the use cases or user stories assigned to each iteration. The length of each iteration is constant (usually 4 weeks).
+*   **Detailed Work Schedule:** A schedule within a single iteration that lists, organizes, and describes the dependencies of the detailed work tasks.
+
+#### Three-Step Process for Developing a Detailed Work Schedule
+1.  **Develop a Work Breakdown Structure (WBS):** A list or hierarchy of activities and tasks used to estimate the work. In software projects, tasks should take between **one to five working days** to complete.
+2.  **Estimate Effort and Identify Dependencies:**
+    *   Identify task times and dependencies (tasks that must be completed before another begins).
+    *   Identify the **critical path**—the sequence of tasks that cannot be delayed without delaying the entire project.
+    *   *Dependency Types:* Finish-to-Start (F-S), Start-to-Start (S-S), Finish-to-Finish (F-F), Start-to-Finish (S-F).
+3.  **Create a Schedule using a Gantt Chart:** A bar chart that portrays the schedule by the length of horizontal bars superimposed on a calendar, graphically showing dates, predecessors, tasks, and the critical path.
+
+```
+WBS Tree Diagram Example (Construction of a House):
+Level 1: Construction of a House
+   ├── Level 2: 1. Internal
+   │      ├── Level 3: 1.1 Electricity
+   │      │      └── Level 4: 1.1.1 Rough-in Electrical
+   │      │      └── Level 4: 1.1.2 Install and Terminate
+   │      │      └── Level 4: 1.1.3 HVAC Equipment
+   │      └── Level 3: 1.2 Plumbing
+   ├── Level 2: 2. Foundation
+   │      ├── Level 3: 2.1 Excavation
+   │      └── Level 3: 2.2 Steel Erection
+   │             └── Level 4: 2.2.1 Columns
+   │             └── Level 4: 2.2.2 Beams
+   │             └── Level 4: 2.2.3 Joists
+   └── Level 2: 3. External
+          ├── Level 3: 3.1 Masonry Work
+          └── Level 3: 3.2 Building Finishes
+```
+
+### 7.3.3 Staff and Allocate Resources
+Staffing involves five key tasks:
+1.  Developing a resource plan.
+2.  Identifying and requesting specific technical staff.
+3.  Identifying and requesting specific user staff.
+4.  Organizing the project team into work groups.
+5.  Conducting preliminary training and team-building exercises.
+
+### 7.3.4 Evaluate Work Processes (Retrospective)
+At the end of iterations, the team evaluates the work processes:
+*   Are our communication procedures adequate? How can they be improved?
+*   Are our working relationships with the user effective?
+*   Did we hit our deadlines? Why or why not?
+*   Did we miss any major issues? How can we avoid this in the future?
+*   What things went especially well? How can we ensure it continues?
+*   What were the bottlenecks or problem areas? How can we eliminate them?
+
+### 7.3.5 Monitor Progress and Make Corrections
+The project manager monitors project execution and takes corrective actions using a structured loop:
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    A[Assign work to person/team] --> B[Collect status]
+    B --> C{Is task complete?}
+    C -->|yes| A
+    C -->|no| D{Is task on target?}
+    D -->|yes| B
+    D -->|no| E[Analyze variance]
+    E --> F{Is variance significant?}
+    F -->|yes| G[Take corrective action] --> A
+    F -->|no| B
+```
+
+*   **Issues-Tracking Log:** Used to keep tabs on open, assigned, in-progress, late, or complete tasks, detailing issue IDs, dates, descriptions, priority, impact, owners, target dates, and resolution status.
+
+---
+
 # Chapter 6: Essentials of Design and Design Activities
 
 ## 6.1 Introduction
