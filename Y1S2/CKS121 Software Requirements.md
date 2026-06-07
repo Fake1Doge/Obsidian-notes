@@ -1416,8 +1416,8 @@ Natural language is inherently ambiguous. An ambiguously documented requirement 
 ```mermaid
 graph TD
     classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
-    Amb[Ambiguities in NL] --> US[1. Underspecified Requirements]
-    Amb --> DS[2. Defective Specified Requirements]
+    Amb[Ambiguities in NL] --> US[Underspecified Requirements]
+    Amb --> DS[Defective Specified Requirements]
     
     US --> MD[Missing Details]
     US --> Vag[Vagueness]
