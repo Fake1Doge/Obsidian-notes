@@ -2257,11 +2257,10 @@ A **class** describes a static structural element of the system.
   3. **Bottom Compartment:** Methods/operations of the class.
 - *Example:*
 
-
-| `LibraryUser` |
-| :--- |
+| `LibraryUser`                          |
+| :------------------------------------- |
 | lastName<br/>firstName<br/>dateOfBirth |
-| *(No methods specified)* |
+| *(No methods specified)*               |
 
 ### 8.3.2 Attributes
 Attributes represent properties of a class.
