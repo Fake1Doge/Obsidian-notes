@@ -31,6 +31,11 @@ async function splitPdf() {
         if (start < 0) start = 0;
         if (end >= numberOfPages) end = numberOfPages - 1;
 
+        if (start > end) {
+            console.error(`Error: start page (${start + 1}) cannot be greater than end page (${end + 1}) or total pages (${numberOfPages}).`);
+            process.exit(1);
+        }
+
         const doc = await PDFDocument.create();
         const pagesToCopy = Array.from({ length: end - start + 1 }, (_, i) => i + start);
         const copiedPages = await doc.copyPages(pdfDoc, pagesToCopy);

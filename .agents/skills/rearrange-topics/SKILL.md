@@ -1,18 +1,18 @@
 ---
 name: rearrange-topics
-description: Rearranges and renumbers headings like 'Chapter X' or 'Topic Y' sequentially in a markdown file, auto-detecting the most common prefix. Use when the user asks to renumber, organize, or make topics/chapters consistent in a file.
+description: Rearranges and renumbers headings like 'Chapter X' or 'Topic Y' sequentially in a markdown file, auto-detecting the most common prefix. Use to maintain clean, sequential, and consistent headers.
 ---
 
 # Rearrange Topics Skill
 
-This skill renumbers topic and chapter headings in a markdown file so they are sequential, without gaps. It automatically detects the most common prefix (e.g., Chapter, Topic, Module) and applies it consistently across all numbered headings.
+This skill renumbers topic and chapter headings in a markdown file so they are sequential, without gaps. It automatically detects the most common prefix (e.g., Chapter, Topic, Module) and applies it consistently across all numbered headings, verifying that titles and subtitles are completely consistent.
 
 ## How to use
 
-Run the bundled script on the target markdown file:
+Run the bundled script on the target markdown file using the `rtk` command proxy to optimize tokens:
 
 ```bash
-node <path-to-skill>/scripts/rearrange.js <path-to-markdown-file>
+rtk node "C:\Users\User\Desktop\Obsidian-notes\.agents\skills\rearrange-topics\scripts\rearrange.js" <path-to-markdown-file>
 ```
 
 ### Supported Prefixes
@@ -43,5 +43,7 @@ After (assuming 'Topic' is most common):
 ```
 
 ## Agent Instructions
-1. Run the script on the file specified by the user using `run_shell_command`. Use the absolute path to the script provided in the `<available_resources>` section when the skill is activated (e.g., `node "C:\Users\User\Desktop\Obsidian-notes\.gemini\skills\rearrange-topics\scripts\rearrange.js" <path-to-markdown-file>`).
-2. Read the script output. If successful, confirm to the user that the headings have been rearranged.
+1. **Trigger Frequency**: You must run this skill script **immediately after writing or updating each topic** in the master markdown note. Do not wait until the entire note is completed.
+2. **Execution**: Run the command using `rtk` command proxy and passing the absolute path to the file.
+3. **Consistency Check**: After running the script, read the updated file sections to ensure that all heading prefixes match (e.g., all main headings are `Chapter X: [Title]` or `Topic X: [Title]`) and all subheadings are hierarchically consistent (e.g., `## X.Y [Subtitle]`).
+4. **Verification**: Confirm that the script logs indicate a successful run with the correct number of renumbered headings.

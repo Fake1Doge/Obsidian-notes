@@ -1,4 +1,11 @@
 const fs = require('fs');
+const path = require('path');
+
+function cleanTitleText(rest) {
+    if (!rest) return '';
+    // Strip leading colons, dashes, dots, and spaces
+    return rest.replace(/^[\:\-\.\s]+/, '').trim();
+}
 
 function rearrangeHeadings(filePath) {
     if (!fs.existsSync(filePath)) {
@@ -7,6 +14,7 @@ function rearrangeHeadings(filePath) {
     }
 
     let content = fs.readFileSync(filePath, 'utf8');
+    const hasCRLF = content.includes('\r\n');
     // Normalize newlines before splitting
     content = content.replace(/\r\n/g, '\n');
     const lines = content.split('\n');
@@ -21,14 +29,32 @@ function rearrangeHeadings(filePath) {
     const subtopicRegex = /^(#+)\s+(\d+(?:\.\d+)*)([\:\-\.\s]+.*)?$/;
 
     const prefixCounts = {};
-    const validPrefixes = new Set(['chapter', 'topic', 'week', 'lecture', 'part', 'section', 'module', 'unit']);
+    const validPrefixes = new Set([
+        'chapter', 'topic', 'week', 'lecture', 'part', 'section', 
+        'module', 'unit', 'lab', 'tutorial', 'assignment', 
+        'appendix', 'project', 'step'
+    ]);
 
     let inCodeBlock = false;
+    let inFrontMatter = false;
     const matches = [];
+
+    // Check if the file starts with frontmatter
+    if (lines.length > 0 && lines[0].trim() === '---') {
+        inFrontMatter = true;
+    }
 
     // First pass: count main topic prefixes to find the most common one
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
+        
+        // Handle frontmatter toggle
+        if (inFrontMatter && i > 0 && line.trim() === '---') {
+            inFrontMatter = false;
+            continue;
+        }
+        if (inFrontMatter) continue;
+
         if (line.trim().startsWith('```')) {
             inCodeBlock = !inCodeBlock;
             continue;
@@ -50,11 +76,8 @@ function rearrangeHeadings(filePath) {
                     // It is a level 1 heading without a prefix (e.g. "# 7 Functional Modelling")
                     // We treat level 1 headings always as main topics (Chapters/Topics)
                     let rest = subMatch[3] || '';
-                    if (rest && !rest.trim().startsWith(':') && !rest.trim().startsWith('-')) {
-                        const cleanRest = rest.replace(/^[\:\-\.\s]+/, '');
-                        rest = `: ${cleanRest}`;
-                    }
-                    const simulatedMatch = [subMatch[0], subMatch[1], 'Chapter', subMatch[2], rest];
+                    const cleanRest = cleanTitleText(rest);
+                    const simulatedMatch = [subMatch[0], subMatch[1], 'Chapter', subMatch[2], cleanRest ? `: ${cleanRest}` : ''];
                     matches.push({ index: i, type: 'main', match: simulatedMatch });
                 } else {
                     matches.push({ index: i, type: 'sub', match: subMatch });
@@ -110,19 +133,20 @@ function rearrangeHeadings(filePath) {
         }
 
         if (type === 'main') {
-            const rest = match[4] || '';
-            lines[index] = `${hashes} ${mostCommonPrefix} ${currentNums[level]}${rest}`;
+            const cleanTitle = cleanTitleText(match[4]);
+            lines[index] = `${hashes} ${mostCommonPrefix} ${currentNums[level]}${cleanTitle ? ': ' + cleanTitle : ''}`;
             mainTopicRenumberedCount++;
         } else if (type === 'sub') {
-            const rest = match[3] || '';
+            const cleanTitle = cleanTitleText(match[3]);
             const hierarchicalNumber = currentNums.slice(1, level + 1).join('.');
-            lines[index] = `${hashes} ${hierarchicalNumber}${rest}`;
+            lines[index] = `${hashes} ${hierarchicalNumber}${cleanTitle ? ' ' + cleanTitle : ''}`;
             subtopicRenumberedCount++;
         }
     }
 
     // Write back with appropriate newline
-    fs.writeFileSync(filePath, lines.join('\n'), 'utf8');
+    const joinChar = hasCRLF ? '\r\n' : '\n';
+    fs.writeFileSync(filePath, lines.join(joinChar), 'utf8');
     console.log(`Success: Renumbered ${mainTopicRenumberedCount} main topics (using prefix '${mostCommonPrefix}') and ${subtopicRenumberedCount} subtopics sequentially.`);
 }
 
