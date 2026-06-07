@@ -888,11 +888,16 @@ We differentiate between three types of systems:
 > - Consider **all three types** of requirement sources (stakeholders, documents, and existing systems).
 > - Use **domain and system-specific checklists** to support the identification of requirements context objects and requirement sources.
 
+```
+Template for Checklist:
+---------------------------------------------------------------------------------------
 | Category     | Usage Facet | Subject Facet | IT System Facet | Dev Context | RE Context |
 |--------------|-------------|---------------|-----------------|-------------|------------|
 | Stakeholders | ...         | ...           | ...             | ...         | ...        |
 | Documents    | ...         | ...           | ...             | ...         | ...        |
 | Systems      | ...         | ...           | ...             | ...         | ...        |
+---------------------------------------------------------------------------------------
+```
 
 > [!example] Example: Context Object Checklist (Car Safety System)
 > - **Usage Facet:** driver, ACC-function (Adaptive Cruise Control), maintenance staff, engine control, acceleration system.
