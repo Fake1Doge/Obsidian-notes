@@ -2255,24 +2255,7 @@ A **class** describes a static structural element of the system.
   1. **Top Compartment:** Name of the class (mandatory).
   2. **Middle Compartment:** Attributes of the class.
   3. **Bottom Compartment:** Methods/operations of the class.
-- *Example Option 1 (Mermaid Diagram - Recommended):*
-  ```mermaid
-  classDiagram
-      class LibraryUser {
-          lastName
-          firstName
-          dateOfBirth
-      }
-  ```
-
-- *Example Option 2 (Corrected Markdown Table):*
-
-| `LibraryUser` |
-| :--- |
-| lastName<br/>firstName<br/>dateOfBirth |
-| |
-
-- *Example Option 3 (HTML Table):*
+- *Example:*
   <table>
     <tr><th align="left">LibraryUser</th></tr>
     <tr><td>lastName<br/>firstName<br/>dateOfBirth</td></tr>
