@@ -1,4 +1,4 @@
-	# Chapter 1: Introduction & Fundamentals of Requirements Engineering
+# Chapter 1: Introduction & Fundamentals of Requirements Engineering
 
 ## 1.1 Introduction to Requirements Engineering (RE)
 
