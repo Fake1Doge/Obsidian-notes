@@ -959,7 +959,7 @@ Besides identifying requirement sources, the goal of requirements elicitation is
 ```mermaid
 graph TD
     classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
-    subgraph "1. Incarnation of Predecessor ERP System"
+    subgraph "1: Incarnation of Predecessor ERP System"
         PD[Planning Dept]
         BD[Buying Dept]
         SC[Stock Control]
@@ -975,7 +975,7 @@ graph TD
         MS((Material Shipment)) --> SC
     end
     
-    subgraph "2. Essence of Predecessor ERP System"
+    subgraph "2: Essence of Predecessor ERP System"
         SSN[Satisfy Stock Need]
         RS[Receive Stock]
         O[(orders)]

@@ -1416,8 +1416,8 @@ Kurt Lewin’s classic model describes institutional transformation as a three-p
 
 ```mermaid
 graph TD
-    Unfreezing["1. Unfreezing (Creating Readiness)"] --> Changing["2. Changing (Implementing New Realities)"]
-    Changing --> Refreezing["3. Refreezing (Institutionalizing Transformation)"]
+    Unfreezing["1: Unfreezing (Creating Readiness)"] --> Changing["2: Changing (Implementing New Realities)"]
+    Changing --> Refreezing["3: Refreezing (Institutionalizing Transformation)"]
     class Unfreezing,Changing,Refreezing internal-link;
 ```
 
@@ -1573,11 +1573,11 @@ The architecture of any organization is built on five foundational structural de
 
 ```mermaid
 graph TD
-    A["Organizational Architecture"] --> B["1. Departmentalization"]
-    A --> C["2. Span of Control"]
-    A --> D["3. Centralization"]
-    A --> E["4. Chain of Command"]
-    A --> F["5. Formalization"]
+    A["Organizational Architecture"] --> B["1: Departmentalization"]
+    A --> C["2: Span of Control"]
+    A --> D["3: Centralization"]
+    A --> E["4: Chain of Command"]
+    A --> F["5: Formalization"]
     class B,C,D,E,F internal-link;
 ```
 
@@ -1957,10 +1957,10 @@ Maslow's model proposes that individuals are motivated by a hierarchy of five pr
 
 ```mermaid
 graph TD
-    SA["5. Self-Actualization (Creative opportunities, autonomy, personal growth)"] --> EN["4. Esteem Needs (Performance rewards, public respect)"]
-    EN --> SoN["3. Social Needs (Team collaboration, inclusive culture, recognition)"]
-    SoN --> SaN["2. Safety Needs (Job stability, health benefits, clear policies)"]
-    SaN --> PN["1. Physiological Needs (Fair wages, safe working conditions, adequate breaks)"]
+    SA["5: Self-Actualization (Creative opportunities, autonomy, personal growth)"] --> EN["4: Esteem Needs (Performance rewards, public respect)"]
+    EN --> SoN["3: Social Needs (Team collaboration, inclusive culture, recognition)"]
+    SoN --> SaN["2: Safety Needs (Job stability, health benefits, clear policies)"]
+    SaN --> PN["1: Physiological Needs (Fair wages, safe working conditions, adequate breaks)"]
     class SA,EN,SoN,SaN,PN internal-link;
 ```
 

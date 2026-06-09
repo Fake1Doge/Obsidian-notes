@@ -1574,9 +1574,9 @@ The transition from abstract analysis models to concrete user interfaces is a st
 
 ```mermaid
 graph LR
-    A["1. The Use Case"] --> B["2. Menu Hierarchy"]
-    B --> C["3. Dialog Design"]
-    C --> D["4. Storyboarding"]
+    A["1: The Use Case"] --> B["2: Menu Hierarchy"]
+    B --> C["3: Dialog Design"]
+    C --> D["4: Storyboarding"]
     class A,B,C,D internal-link;
 ```
 
