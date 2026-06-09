@@ -1577,7 +1577,6 @@ graph LR
     A["1: The Use Case"] --> B["2: Menu Hierarchy"]
     B --> C["3: Dialog Design"]
     C --> D["4: Storyboarding"]
-    class A,B,C,D internal-link;
 ```
 
 1. **The Use Case:** Examine the natural flow of activities (documented in use case descriptions and System Sequence Diagrams) to see what interactions occur.
@@ -1732,7 +1731,6 @@ graph TD
     Activity[Activity Diagrams & UC Descriptions] --> Seq
     SSD[System Sequence Diagrams] --> Seq
     StateReq[Requirements State Machine Diagrams] --> StateDes[Design State Machine Diagrams]
-    class Domain,DCD,Package,UC,Component,Deploy,Seq,Activity,SSD,StateReq,StateDes internal-link;
 ```
 
 ---

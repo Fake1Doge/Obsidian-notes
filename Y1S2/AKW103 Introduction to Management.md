@@ -955,7 +955,6 @@ graph TD
     B --> C[Phase 3: Strategic Implementation]
     C --> D[Phase 4: Strategic Evaluation]
     D --> A
-    class A,B,C,D internal-link;
 ```
 
 ### The Four Phases of the Strategic Process
@@ -1287,7 +1286,6 @@ graph LR
     P2 --> P3[3. Alternative Evaluation]
     P3 --> P4[4. Decision Implementation]
     P4 --> P5[5. Review & Feedback]
-    class P1,P2,P3,P4,P5 internal-link;
 ```
 
 ### Step 1: Problem Identification
@@ -1418,7 +1416,6 @@ Kurt Lewin’s classic model describes institutional transformation as a three-p
 graph TD
     Unfreezing["1: Unfreezing (Creating Readiness)"] --> Changing["2: Changing (Implementing New Realities)"]
     Changing --> Refreezing["3: Refreezing (Institutionalizing Transformation)"]
-    class Unfreezing,Changing,Refreezing internal-link;
 ```
 
 ### 1. Unfreezing (Creating Readiness for Change)
@@ -1478,7 +1475,6 @@ graph LR
     ES[Environmental Scanning] --> CR[Competitor Research]
     CR --> MI[Market Intelligence]
     MI --> SF[Strategic Foresight]
-    class ES,CR,MI,SF internal-link;
 ```
 
 ### Key Components of the CI Radar
@@ -1578,7 +1574,6 @@ graph TD
     A --> D["3: Centralization"]
     A --> E["4: Chain of Command"]
     A --> F["5: Formalization"]
-    class B,C,D,E,F internal-link;
 ```
 
 1. **Departmentalization:** The basis by which individual jobs are grouped together into departments or units.
@@ -1961,7 +1956,6 @@ graph TD
     EN --> SoN["3: Social Needs (Team collaboration, inclusive culture, recognition)"]
     SoN --> SaN["2: Safety Needs (Job stability, health benefits, clear policies)"]
     SaN --> PN["1: Physiological Needs (Fair wages, safe working conditions, adequate breaks)"]
-    class SA,EN,SoN,SaN,PN internal-link;
 ```
 
 > [!note] Adaptation Note
@@ -2037,7 +2031,6 @@ graph LR
     F2F["Face-to-Face (Richness: High) - Complex/Sensitive"] --> DP["Digital Platforms (Richness: Med-High) - Remote/Updates"]
     DP --> WF["Written Formats (Richness: Medium) - Formal/Records"]
     WF --> SN["Social Networks (Richness: Low-Med) - Broad Reach"]
-    class F2F,DP,WF,SN internal-link;
 ```
 
 - **Face-to-Face:** Provides rich non-verbal cues, immediate feedback, and trust. Best for complex discussions.
