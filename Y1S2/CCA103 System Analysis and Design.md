@@ -2304,8 +2304,6 @@ The RMO Tradeshow System is divided into 4 core subsystems:
 3. **Customer Account Subsystem (CAS)**
 4. **Sales Subsystem (SS)**
 
----
-
 # Chapter 11: Object-Oriented Design: Principles (Part 2)
 
 ## 11.1 Introduction
@@ -2317,52 +2315,108 @@ The RMO Tradeshow System is divided into 4 core subsystems:
 > 4. Evaluate quality metrics of software design using coupling and cohesion.
 > 5. Partition classes into packages according to coupling and cohesion principles.
 
----
-
 ## 11.2 Part I: Step-by-Step Creation of a First-Cut Design Class Diagram (DCD)
 
 Developing a Design Class Diagram (DCD) is a structured process executed use case by use case. 
 
-### 11.2.1 Steps to Create a DCD
-1. **Proceed Use Case by Use Case:** Evolve the diagram incrementally for each business process (e.g., `Create phone sale`).
-2. **Identify Involved Domain Classes:** Examine the domain model class diagram and refer to use case preconditions/postconditions for ideas.
-3. **Add a Controller Class:** Introduce a controller (mediary switchboard) to orchestrate the use case.
-4. **Elaborate Attributes:** Specify visibility (public/private), data types, and properties for all attributes.
-5. **Determine Navigation Visibility:** Establish code-level reference paths using standard guidelines.
+### 11.2.1 The 5 Steps of OO Detailed Design (Contextual Mapping)
+As a refresher, detailed design is model-driven and use-case-driven, following these five sequential steps iteratively:
+1. **Develop first-cut DCD** showing navigation visibility (Chapter 10/11).
+2. **Determine class responsibilities and collaborations** using CRC cards (Chapter 10/11).
+3. **Develop detailed sequence diagrams** (first-cut, then multilayer) (Chapter 11).
+4. **Update the DCD** with method signatures and navigation information using CRC cards and sequence diagrams (Chapter 11).
+5. **Partition the solution** into logical packages (Chapter 11).
+
+### 11.2.2 DCD Step 1: Proceed Use Case by Use Case
+1. **Proceed Use Case by Use Case:** Select a specific business process (e.g. `Create phone sale` in the RMO Sales Subsystem).
+2. **Pick Domain Classes Involved:** Look at the domain model class diagram and check the use case preconditions and postconditions to see which classes are affected.
+3. **Add a Controller Class:** Introduce a controller class (e.g., `SaleHandler`) to act as the entry point and coordinate the transaction.
+4. **Elaborate Attributes:** Specify the visibility (`-` for private, `+` for public), data types, default initial values, and properties (like `{key}`).
+5. **Determine Navigation Visibility:** Establish code-level reference paths.
 
 ---
 
-## 11.3 Part II: Navigation Visibility and Design Rules
+## 11.3 Part II: Inheritance and DCD Generalization Notation
+
+When domain classes share attributes and behaviors, OOD refines them into **inheritance hierarchies** (Generalization/Specialization).
+
+> [!important] DCD Inheritance Rules
+> - **Abstract Class:** A superclass that cannot be instantiated. Its sole purpose is to allow subclasses to inherit characteristics. In DCDs, the name of an abstract class is written in **Italics** (e.g., *`Sale`*).
+> - **Concrete Class:** A subclass that can be instantiated into objects. Written in standard text (e.g., `PhoneSale`).
+> - **Attribute/Method Distribution:** Subclasses inherit all attributes and methods of the superclass. They only list their specific, unique attributes and methods.
+
+### 11.3.1 Case Study: RMO Sale Generalization Hierarchy
+The following design classes represent RMO's sales classification:
+
+```mermaid
+classDiagram
+    class Sale {
+        <<abstract>>
+        -saleID: int {key}
+        -saleDate: date
+        -priorityCode: string
+        -shipping&Handling: float
+        -tax: float
+        -grandTotal: float
+        +addItem(): void
+        +cancelSale(): void
+        +makePayment(): void
+    }
+    class PhoneSale {
+        -clerkID: string
+        -callingPhone: string
+        -processTime: int
+        -noOfPhoneSales: int
+    }
+    class InternetSale {
+        -URLaddress: string
+        -timeOfDay: string
+        -timeToOrder: int
+        -noOfWebSales: int
+        +confirmEmail(): void
+    }
+    class StoreSale {
+        -storeID: string
+        -noOfStoreSales: int
+        +cancelSale(): void
+    }
+    Sale <|-- PhoneSale
+    Sale <|-- InternetSale
+    Sale <|-- StoreSale
+```
+*Note: Static variables like `noOfPhoneSales`, `noOfWebSales`, and `noOfStoreSales` are underlined in the class compartments to denote they are class-level (static) attributes.*
+
+---
+
+## 11.4 Part III: Navigation Visibility and Design Rules
 
 > [!info] Definition: Navigation Visibility
 > The ability of one object to view and interact with another object by invoking its methods. In programming, it is implemented by embedding an object reference variable inside the caller class.
-> - **UML Representation:** Shown as an arrow head on the association line pointing from the viewing class to the viewed class.
-> - *Example:* A `Customer` class contains the attribute `-mySale: Sale`, allowing a customer to find and message a sale, while `Sale` remains unaware of the customer (one-way mirror).
+> - **UML Representation:** Shown as a solid arrowhead on the association line pointing from the viewing class (caller) to the viewed class (callee).
+> - **Code Realization (The One-Way Mirror):** If `Customer` has navigation visibility to `Sale`, `Customer` gains the attribute `-mySale: Sale`. The customer can find and message the sale, but `Sale` is unaware of and cannot directly message `Customer`.
 
-### 11.3.1 Navigation Design Rules
-- **Superior to Subordinate:** In a one-to-many relationship (whole-to-part), navigate from the superior class to the subordinate class.
-  - *Example:* `Sale` -> `SaleItem`
-- **Mandatory Associations (Independent to Dependent):** When a dependent object cannot exist without an independent object, navigate from the independent to the dependent.
-  - *Example:* `Customer` -> `Sale` (a sale requires a customer to exist)
-- **Hierarchy Navigation Chains:** Build navigation along natural hierarchical links.
-  - *Example:* `Promotion` -> `ProductItem` -> `InventoryItem`
-- **Information Dependency:** If an object needs data from another, draw an arrow pointing either to that object or its parent.
-- **Directionality:** Navigation arrows can be unidirectional (standard) or bidirectional if mutual access is required.
+### 11.4.1 Navigation Visibility Guidelines
+1. **Superior to Subordinate:** In one-to-many relationships (whole-to-part), navigation should flow from the superior (whole) to the subordinate (part).
+   - *Example:* `Sale` (1) -> `SaleItem` (many)
+2. **Mandatory Associations (Independent to Dependent):** When a dependent object cannot exist without an independent object, navigate from the independent to the dependent.
+   - *Example:* `Customer` -> `Sale` (a sale requires a customer to exist)
+3. **Hierarchy Navigation Chains:** Build navigation along natural hierarchical links.
+   - *Example:* `Promotion` -> `ProductItem` -> `InventoryItem`
+4. **Information Dependency:** If an object needs data from another, draw an arrow pointing either to that object or its parent in a hierarchy.
+5. **Bidirectional Navigation:** Arrows can point both ways if mutual reference variables are necessary.
 
-### 11.3.2 Case Study: RMO DCD Navigation for `Create phone sale`
+### 11.4.2 Case Study: DCD Navigation for `Create phone sale`
 The first-cut DCD navigation assignments are:
-- `SaleHandler` (Controller) -> `Customer`
-- `SaleHandler` (Controller) -> `Sale`
-- `SaleHandler` (Controller) -> `SaleItem`
-- `Customer` -> `Sale` (independent to dependent)
-- `Sale` -> `SaleItem` (superior to subordinate)
-- `SaleItem` -> `ProductItem` (requires product details)
-- `SaleItem` -> `InventoryItem` (requires stock levels)
-- `SaleItem` -> `PromoOffering` (requires discount calculation)
+* `SaleHandler` (Controller) -> `Customer` (the entry point actor object)
+* `Customer` -> `Sale` (independent to dependent)
+* `Sale` -> `SaleItem` (superior to subordinate)
+* `SaleItem` -> `ProductItem` (requires product description)
+* `SaleItem` -> `InventoryItem` (requires stock quantity checking)
+* `SaleItem` -> `PromoOffering` (requires special discount checking)
 
 ---
 
-## 11.4 Part III: Detailed Design with CRC Cards
+## 11.5 Part IV: Detailed Design with CRC Cards
 
 > [!info] Definition: Class-Responsibility-Collaboration (CRC) Cards
 > A manual brainstorming technique using physical index cards (typically 3x5) to design how classes collaborate to complete a use case.
@@ -2370,65 +2424,193 @@ The first-cut DCD navigation assignments are:
 > - **Responsibilities (R):** What the class knows (attributes/state) and what it does (methods/logic). Think of these as method requests.
 > - **Collaborations (C):** Other classes whose help is required to fulfill a responsibility.
 
-### 11.4.1 Anatomy of a CRC Card
-- **Front Side:**
-  - Class Name (at the top).
-  - Left Column: Responsibilities (verbs/activities, e.g., *process sale*).
-  - Right Column: Collaborating Classes (who it needs help from, and the returned data).
-- **Back Side:**
-  - Attributes needed by the class (e.g., `customerName`, `shippingAddress`).
+### 11.5.1 CRC Card Anatomy
+* **Front Side:** Contains Class Name (top), Responsibilities (left column), and Collaborating Classes (right column).
+* **Back Side:** Lists Attributes needed by the class to track its state.
+* **Design Mantra:** Identify Nouns to discover Classes; identify Verbs to discover Responsibilities.
 
-### 11.4.2 CRC Card Design Process
-1. Select a specific use case (e.g., `Create phone sale`).
-2. Identify the problem domain class that receives the first message from the controller (the primary entry point class, e.g., `Customer` receives the request to start a sale).
-3. Brainstorm other classes that must collaborate with the primary class to complete the use case (e.g., `Sale` and `SaleItem`).
-4. Eventually, add user interface (boundary) classes (e.g., `NewSaleWindow`) and data access classes to the cards.
-5. Update the first-cut DCD based on the responsibilities (which become methods) and collaborations.
+### 11.5.2 RMO case study: CRC Results for `Create phone sale`
+During the brainstorming session, the following index cards are drafted:
 
-> [!example] CRC Results for RMO `Create phone sale`
-> - **SaleHandler Card:**
->   - *Responsibility:* Handle new sale | *Collaborators:* Customer, Sale, SaleItem.
-> - **Customer Card:**
->   - *Responsibility:* Update name, update address, process sale, request history | *Collaborator:* Sale, Transaction.
-> - **Sale Card:**
->   - *Responsibility:* Update information, request shipping, update status, cancel sale, add items, take payment | *Collaborators:* SaleItem, Transaction.
-> - **SaleItem Card:**
->   - *Responsibility:* Update information, cancel item, request backorder | *Collaborators:* PromoOffering, Product, InventoryItem.
-> - **NewSaleWindow (UI Layer) Card:**
->   - *Responsibility:* Accept input, display results | *Collaborator:* SaleHandler.
+````carousel
+```
+=====================================================
+FRONT: SaleHandler
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- handle new sale           | Customer, Sale, SaleItem
+=====================================================
+BACK: (Attributes)
+(none)
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: Customer
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- update name               | Sale
+- update address            | Transaction
+- process sale              | 
+- request history           | 
+=====================================================
+BACK: (Attributes)
+- customerNo, customerName, customerAddress, 
+  shippingAddress, dayPhone, nightPhone
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: Sale
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- update information        | SaleItem
+- request shipping          | Transaction
+- update status             | 
+- cancel sale               | 
+- add items to sale         | 
+- take payment              | 
+=====================================================
+BACK: (Attributes)
+- saleID, saleDate, priorityCode, 
+  shipping&Handling, tax, grandTotal
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: SaleItem
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- update information        | PromoOffering
+- cancel item               | ProductItem
+- request backorder         | InventoryItem
+=====================================================
+BACK: (Attributes)
+- saleItemID, quantity, price, backorderStatus
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: SaleTransaction
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- process payment           | Customer, Sale
+=====================================================
+BACK: (Attributes)
+- transactionID, saleDate, transactionType, amount
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: PromoOffering
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- provide price             | (none)
+=====================================================
+BACK: (Attributes)
+- price, specialPrice
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: ProductItem
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- provide description       | (none)
+=====================================================
+BACK: (Attributes)
+- productID, vendor, gender, description
+=====================================================
+```
+<!-- slide -->
+```
+=====================================================
+FRONT: InventoryItem
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- provide quantity          | (none)
+- update quantity           | 
+- order new supply          | 
+=====================================================
+BACK: (Attributes)
+- inventoryID, size, color, options, 
+  quantityOnHand, averageCost, reorderQuantity
+=====================================================
+```
+````
+
+#### Adding In User Interface (Boundary) Layer
+To complete the design, user interface boundary cards are added to define human-computer interaction:
+
+```
+=====================================================
+FRONT: NewsSaleWindow (UI Class)
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- accept input              | SaleHandler
+- display results           | 
+=====================================================
+```
+```
+=====================================================
+FRONT: InquireOnItemWindow (UI Class)
+-----------------------------------------------------
+Responsibilities:           | Collaborators:
+- accept item data          | SaleHandler
+- display items             | 
+=====================================================
+```
+
+### 11.5.3 Updating DCD: Responsibilities Become Methods
+Once the CRC session is complete, responsibilities are mapped directly into class methods in the Design Class Diagram (DCD):
+
+1. **`SaleHandler`:** `+processNewSale()`, `+addItemsToSale()`, `+makePayment()`
+2. **`Customer`:** `+updateName()`, `+updateAddress()`, `+processSale()`, `+requestHistory()`
+3. **`Sale`:** `+addItem()`, `+updateInformation()`, `+requestShipping()`, `+updateStatus()`, `+cancelSale()`, `+makePayment()`
+4. **`SaleItem`:** `+updateInformation()`, `+cancelItem()`, `+requestBackorder()`
+5. **`SaleTransaction`:** `+processPayment()`
+6. **`PromoOffering`:** `+getPrice()`
+7. **`ProductItem`:** `+getDescription()`
+8. **`InventoryItem`:** `+updateQOH()`
 
 ---
 
-## 11.5 Part IV: Software Quality Metrics: Coupling and Cohesion
+## 11.6 Part V: Software Quality Metrics: Coupling and Cohesion
 
 High-quality software architecture is guided by two fundamental metrics: **Coupling** and **Cohesion**.
 
-### 11.5.1 Coupling
+### 11.6.1 Coupling
 > [!info] Definition: Coupling
 > A measure of how closely different classes/components are linked or dependent on each other.
 > - **Goal:** **Low Coupling** (minimized interdependencies).
-> - **Risk of High Coupling (The Entangled Web):** Creates a ripple effect where changing code in one class breaks unrelated parts of the system.
+> - **Risk of High Coupling (The Entangled Web):** Creates a ripple effect where changing code in one class breaks unrelated parts of the system, making maintenance complex and bug-prone.
 
-### 11.5.2 Cohesion
+### 11.6.2 Cohesion
 > [!info] Definition: Cohesion
 > A measure of the focus and unity of purpose within a single class or module.
 > - **Goal:** **High Cohesion** (highly related responsibilities).
 > - **Risk of Low Cohesion (The God Class):** Creates overly complex, hard-to-maintain, and impossible-to-reuse classes that try to do everything.
 
-### 11.5.3 Class Packaging
+### 11.6.3 Packaging Classes for High Quality
 To enforce low coupling and high cohesion, classes are grouped into logical packages (`<<package>>`) based on shared functionality:
 
 ```mermaid
 graph TD
-    subgraph Client Package
+    subgraph Client Package [<<package>> Client]
         Customer
         Membership
     end
-    subgraph Transaction Package
+    subgraph Transaction Package [<<package>> Transaction]
         Rental
         Payment
     end
-    subgraph Vehicle Package
+    subgraph Vehicle Package [<<package>> Vehicle]
         Car
         Maintenance
     end
@@ -2436,5 +2618,5 @@ graph TD
     Transaction -.-> Vehicle
 ```
 
-- **Cohesion** is maximized by keeping tightly related classes (e.g., `Customer` and `Membership`) in the same package.
-- **Coupling** is minimized by establishing clean, one-way dependencies between packages (e.g., `Client` package depends on `Transaction` package, which in turn depends on `Vehicle` package).
+* **Cohesion** is maximized by keeping tightly related classes (e.g., `Customer` and `Membership`) in the same package.
+* **Coupling** is minimized by establishing clean, one-way dependencies between packages (e.g., `Client` package depends on `Transaction` package, which in turn depends on `Vehicle` package).
