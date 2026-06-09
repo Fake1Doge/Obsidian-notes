@@ -1879,47 +1879,136 @@ Different deployment environments present distinct layout, navigation, and usabi
 
 ---
 
-## 9.7 Part VI: Identifying and Designing System Interfaces
+## 9.7 Part VI: Identifying System Interfaces
 
-System interfaces manage inputs and outputs with minimal human intervention.
+System interfaces manage inputs and outputs crossing the system boundary with minimal or no human intervention.
 
-### 9.7.1 Automated Inputs and System Interoperability
-1. **Inputs and Outputs with other Systems:** Direct machine-to-machine interfaces formatted as network messages.
-2. **Highly Automated Inputs:** Data captured directly by hardware devices:
-   - *Magnetic Card Readers* (swiping cards)
-   - *Bar Code Scanners* (scanning merchandise)
-   - *RFID Tags* (tracking inventory wirelessly)
-   - *Optical Character Recognition (OCR)* (reading printed text)
-   - *Digitizers* (capturing digital signatures/drawings)
-3. **Inputs/Outputs to External Databases:** Systems supplying input directly to or accepting output from external databases.
-4. **XML for System Interfaces:** Extensible Markup Language (XML) embeds self-defining data structures within textual messages using tags (e.g., `<name>` and `</name>`) that label the meaning of data elements. Useful for sending messages across disparate hardware/software platforms.
+```mermaid
+graph TD
+    A["Our System"] --> B1["Inputs from External Database"]
+    B1 --> A
+    A --> B2["Outputs to External Database"]
+    B2 --> A
+    A --> B3["Outputs with Minimal HCI"]
+    A --> B4["Messages to External Systems"]
+    B5["Messages from External Systems"] --> A
+    B6["Highly Automated Inputs"] --> A
+```
 
-### 9.7.2 Designing System Inputs
-The primary objective of system input design is to achieve **Error-Free Input**.
-- **Four Rules of Automation:**
-  1. Use electronic data-capture devices wherever possible.
-  2. Avoid human involvement in data entry as much as possible.
-  3. If information is already electronic, reuse it; do not re-enter it.
-  4. Validate and correct information at the time and location it is entered.
-- **Design Process:** Examine incoming messages crossing the system boundary in System Sequence Diagrams (SSDs) and identify data types in design class diagrams.
+### 9.7.1 System Interface Classifications
+1. **Inputs and Outputs with Other Systems (System Interoperability):** Direct machine-to-machine interfaces where data is formatted as standardized network messages (e.g., JSON, XML, or binary data streams) sent over protocols like HTTP, MQTT, or TCP/IP.
+2. **Highly Automated Inputs:** Data captured directly by hardware devices without human typing or translation, removing data-entry errors.
+3. **Inputs and Outputs to External Databases:** Direct connections where our system supplies input data directly to or accepts output data from external databases managed by third parties.
 
-### 9.7.3 Designing System Outputs
-System outputs are structured around the requirements of the information recipient.
+### 9.7.2 XML for System Interfaces
+> [!info] Definition: Extensible Markup Language (XML)
+> A markup language standard that embeds self-defining data structures within textual messages. It is critical for system interfaces, allowing disparate systems to send structured data over network messages that can be easily parsed and displayed in a user interface.
 
-#### Report Types
-- **Detailed Reports:** Contain specific, row-by-row information on individual business transactions. Primarily for *Clerks and Frontline Staff*.
-- **Summary Reports:** Summarize detail data or recap periodic activities. Primarily for *Mid-level Managers*.
-- **Exception Reports:** Show details or summaries of transactions that fall outside a predefined normal range. Primarily for *Operations Managers*.
-- **Executive Reports:** High-level metrics and dashboards used to assess overall organizational health. Primarily for the *C-Suite and Executive Managers*.
+* **XML Tags:** Character sequences (such as `<name>` and `</name>`) that define the beginning, end, and meaning of the text that appears between them.
+* **Typings / Schema:** XML is self-describing; the tags themselves describe what the data represents.
 
-#### Output Classifications by Destination
-- **Internal Outputs:** Reports produced exclusively for use within the organization.
-- **External Outputs:** Reports produced for people outside the organization (e.g., statements, notices, stockholder reports). Require high visual quality, color, and professional styling to reflect the organization's image.
-- **Turnaround Documents:** External outputs printed with a section intended to be torn off and returned with new data or payment (e.g., utility bills, invoice slips).
+> [!example] XML Message Example (From Lecture)
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <customer>
+>     <type>Recorder</type>
+>     <id>Than-Proc</id>
+>     <name>William Jones</name>
+>     <title>51338.28</title>
+>     <record>$31.06</record>
+> </customer>
+> ```
+> *Note: In the lecture slides, the XML sample features slight typographical anomalies (e.g., `conding="uTF-?"` and `<ider>`), but standard XML follows the clean structure above.*
 
-#### Electronic Output Enhancements
-- **Drill-Down Dynamics:** Interactive electronic reports that allow users to click summary figures to instantly expand and view the underlying transaction details.
-- **Graphical Tools:** Using bar charts, pie charts, and line graphs to make trends and data deviations visually clear for strategic decision-making.
+---
+
+## 9.8 Part VII: Designing System Inputs
+
+System input design governs how data enters the information system.
+
+### 9.8.1 The Primary Objective: Error-Free Input
+The main goal of input design is to achieve **Error-Free Input**. Every time a human enters data manually, the risk of error increases. Therefore, designers follow the **Four Rules of Automation**:
+
+> [!important] The Four Rules of Automation
+> 1. **Use electronic devices and automatic data-capture devices** wherever possible (e.g., scanners, sensors, card readers).
+> 2. **Avoid human involvement** in data entry as much as possible.
+> 3. **If information is already in electronic form, reuse it;** do not re-enter it (e.g., retrieve customer details from their account number rather than re-typing their address).
+> 4. **Validate and correct information at the time and location it is entered** (e.g., instant field validation on a web form).
+
+### 9.8.2 Automated Input Devices
+* **Magnetic Card Readers:** Captures account details from magnetic strips (e.g., credit/debit card swiping).
+* **Bar Code Scanners:** Scans printed barcodes to identify merchandise instantly.
+* **RFID Tags (Radio Frequency Identification):** Captures tracking data wirelessly using radio waves, enabling bulk inventory scanning.
+* **Optical Character Recognition (OCR):** Software that converts printed text or typed characters into digital text.
+* **Digitizers:** Captures physical coordinate inputs, such as signature capture pads.
+* **Speech Recognition:** Translates voice commands or spoken text into digital data inputs.
+* **Touch Screens & Electronic Pens:** Allow direct graphical inputs.
+
+### 9.8.3 Input Design Process
+1. **Identify Inputs crossing the System Boundary:** Analysts examine **System Sequence Diagrams (SSDs)** to find all incoming messages.
+2. **Define Data Content and Structures:** Analysts examine **Design Class Diagrams** to identify the specific attributes, data types, and parameters associated with each message.
+3. **Establish Input Controls:** Determine validation rules (e.g., range checks, format checks, required fields).
+
+#### Case Study: Inputs Crossing the Boundary
+In the lecture sequence diagram example (a payroll/employee system), three inputs cross the system boundary to update `:System`:
+* `updateEmployee (empID, empInformation)` - sent by the *Manager* actor.
+* `updateTaxRate (taxTableID, rateID, rateInformation)` - sent by the *TaxBureauSystem* external system.
+* `inputTimeCard (empID, date, hours)` - sent by the *TimeCardSystem* external system.
+* *(Note: The TimeCardSystem itself gathers inputs from the Employee actor using `signIn(time)` and `signOut(time)` messages before sending the consolidated timecard details to the main system).*
+
+---
+
+## 9.9 Part VIII: Designing System Outputs
+
+System output design governs how information is formatted, presented, and distributed to its recipients.
+
+### 9.9.1 Report Types and Audiences
+Information systems generate different types of reports based on the organizational role and data needs of the recipient:
+
+| Report Type | Definition / Data Granularity | Primary Audience |
+| --- | --- | --- |
+| **Detailed Reports** | Contain specific, row-by-row information on individual business transactions (no summarization). | Clerks, Frontline Staff, and Operators |
+| **Summary Reports** | Summarize detail data or recap periodic activities (e.g., monthly sales totals by category). | Mid-level Managers |
+| **Exception Reports** | Show details or summaries of transactions that fall outside a predefined, normal range. | Operations Managers |
+| **Executive Reports** | High-level metrics, KPIs, and dashboards used to assess overall organizational health. | C-Suite and Executive Managers |
+
+### 9.9.2 Output Classifications by Destination
+System outputs are styled differently depending on where they are sent:
+
+* **Internal Outputs:** Reports produced exclusively for use within the organization. These are formatted for quick reading, functionality, and data density.
+* **External Outputs:** Reports and documents produced for people outside the organization (e.g., statements, purchase receipts, stockholder reports). These require high visual quality, professional colors, and styling to reflect the organization's public image.
+* **Turnaround Documents:** External outputs printed with a specific section intended to be torn off and returned by the customer (e.g., utility bills, invoice slips).
+  - *Process Flow:* The system prints the turnaround document (a bill) -> sends it to the customer -> customer tears off the stub and returns it with a payment -> the system scans the barcode on the returned stub to process the payment automatically without manual typing.
+
+### 9.9.3 Electronic Output Enhancements
+Modern electronic outputs are dynamic, providing interactive features that printed reports cannot:
+
+* **Drill-Down Dynamics:** Interactive online reports that allow users to click a summary figure to instantly expand and view the underlying detailed transactions.
+  - *Example:* Clicking the "Footwear - Web Sales: $289,323" summary figure in a "Monthly Sales Summary" report to instantly open a "Monthly Sales Detail" report showing the specific orders (e.g., Product ID RMO12987 Winter Parka sales).
+  - *Control Break Reports:* Reports that group data and insert subtotals at logical break points (e.g., grouping jackets by size and color, showing a subtotal of 1,500 jackets).
+* **Graphical Tools:** Using visual graphs (e.g., pie charts for category distribution, bar charts for seasonal sales comparisons, line graphs for trends) to make data patterns and anomalies immediately recognizable for strategic decision-making.
+
+---
+
+## 9.10 Chapter Summary and Study Map
+
+To synthesize the design of user and system interfaces, review this study map comparing the human and machine dimensions of interface design:
+
+```mermaid
+graph TD
+    A["Interface Design Study Map"] --> B["The Human Interface (User-Facing)"]
+    A --> C["The Machine Interface (System-Facing)"]
+    
+    B --> B1["UCD Principles: Iterative design, Early focus on users"]
+    B --> B2["HCI Metaphors: Direct manipulation, Desktop, Document, Dialog"]
+    B --> B3["UI Heuristics: Affordance, Visibility, Consistency"]
+    B --> B4["Design Process: Dialog Design & Storyboarding (Wireframing)"]
+    
+    C --> C1["System Inputs: Automated devices, Error-free data capture"]
+    C --> C2["System Interfaces: XML/JSON mapping, B2B network messages"]
+    C --> C3["System Outputs: Detailed, Summary, Exception, and Executive reports"]
+    C --> C4["Output Destinations: Internal, External, and Turnaround documents"]
+```
 
 ---
 
