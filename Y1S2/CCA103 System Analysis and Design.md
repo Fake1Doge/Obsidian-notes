@@ -1651,7 +1651,7 @@ Never force users to remember information from one screen to another (e.g., prod
 
 ## 9.5 Part IV: The Transition from Analysis to UI Design
 
-The transition from abstract analysis models to concrete user interfaces is a structured, step-by-step process:
+The transition from abstract analysis models to concrete user interfaces is a structured, step-by-step process that bridges use case requirements with physical screens:
 
 ```mermaid
 graph LR
@@ -1660,33 +1660,176 @@ graph LR
     C --> D["4: Storyboarding"]
 ```
 
-1. **The Use Case:** Examine the natural flow of activities (documented in use case descriptions and System Sequence Diagrams) to see what interactions occur.
+1. **The Use Case:** Identify the natural flow of activities (documented in use case descriptions and System Sequence Diagrams) to see what interactions occur.
 2. **Menu Hierarchy:** Group related use cases together to organize access to functionality. Different types of users will require different menus. Establish the overall hierarchy first, then build subsets for specific roles.
 3. **Dialog Design:** Draft the natural, text-based conversation flow between the user and the system.
 4. **Storyboard:** Create a sequence of screen sketches (wireframes) to visualize the dialog flow and review it with users before writing code.
 
-> [!example] Dialog to Storyboard: RMO Shopping Cart Checkout
-> 1. **Dialog Draft:**
->    - *System:* "What would you like to do?"
->    - *User:* "I'd like to check out."
->    - *System:* "What is your email or account number?"
->    - *User:* "nwells22@gmail.com"
->    - *System:* [Validates] "You are Nancy Wells at 1122 Silicon Avenue. Correct?"
->    - *User:* "Yes."
->    - *System:* [Displays order summary and ship options] "How would you like items shipped?"
->    - *User:* "Free UPS ground."
->    - *System:* [Displays totals and payment prompt] "Shall I charge your card ending in 0899?"
->    - *User:* "Yes."
->    - *System:* "Payment approved. Your order number is 6773823."
-> 2. **Storyboard Sketching:**
->    - *Screen 1:* Main page with drop-down navigation -> Cart -> "Check out".
->    - *Screen 2:* Account login popup with input field for email address.
->    - *Screen 3:* Account information verification panel with "That's me" and "That's not me" options.
->    - *Screen 4:* Order summary table alongside radio button selections for shipping options.
->    - *Screen 5:* Shipping address confirmation panel with option to "Use another address".
->    - *Screen 6:* Add new shipping address form fields (Name, Street, City, State, Zip).
->    - *Screen 7:* Final payment details panel showing subtotal, shipping fee, tax, total, and "OK" payment confirmation button.
->    - *Screen 8:* Order success page displaying confirmation number, delivery estimates, and thank you message.
+---
+
+### 9.5.1 Use Cases and Menu Hierarchies
+
+Menus organize access to use case functionality. In systems design, developers first map out how use cases are routed. 
+
+> [!important] Menu Hierarchy Rules
+> - **Actor-Based Menus:** Different types of users require different menus (e.g., a customer sees catalog/cart menus, while an administrator sees product and inventory management menus).
+> - **Establish Hierarchy First:** Define the overall routing structure, then implement subsets for specific user roles.
+> - **Non-Activity Options:** Menus usually include options that are not activities or use cases from the event list (e.g., "Help", "Settings", "About", or "Exit").
+> - **Styles:** Once the hierarchy is established, menus can be implemented in a variety of styles: drop-down lists, sidebars, hamburger menus, tabs, or ribbons.
+
+#### RMO Case Study: Grouping Use Cases by Subsystem and Actor
+To build a menu hierarchy, systems analysts group the system's use cases by actor and subsystem:
+
+| Subsystem | Use Case | Users/Actors |
+| --- | --- | --- |
+| **Sales** | Search for item | Customer, Customer Service Rep, Store Sales Rep |
+| **Sales** | View product comments and ratings | Customer, Customer Service Rep, Store Sales Rep |
+| **Sales** | View accessory combinations | Customer, Customer Service Rep, Store Sales Rep |
+| **Sales** | Fill shopping cart | Customer |
+| **Sales** | Empty shopping cart | Customer |
+| **Sales** | Check out shopping cart | Customer |
+| **Sales** | Fill reserve cart | Customer |
+| **Sales** | Empty reserve cart | Customer |
+| **Sales** | Convert reserve cart | Customer |
+| **Sales** | Create phone sale | Customer Service Rep |
+| **Sales** | Create store sale | Store Sales Rep |
+| **Order Fulfillment** | Ship items | Shipping Clerk |
+| **Order Fulfillment** | Manage shippers | Shipping Clerk |
+| **Order Fulfillment** | Create backorder | Shipping Clerk |
+| **Order Fulfillment** | Create item return | Shipping Clerk, Customer |
+| **Order Fulfillment** | Look up order status | Shipping Clerk, Customer, Management |
+| **Order Fulfillment** | Track shipment | Shipping Clerk, Customer, Marketing |
+| **Order Fulfillment** | Rate and comment on product | Customer |
+| **Order Fulfillment** | Provide suggestion | Customer |
+
+#### RMO First-Cut Menu Hierarchy
+By grouping the use cases above, the team designs a first-cut menu hierarchy to distribute functionality:
+
+```mermaid
+graph TD
+    A["RMO Information System"] --> B["Customer Menu"]
+    A --> C["Customer Service / Sales Menu"]
+    A --> D["Shipping / Order Fulfillment Menu"]
+    
+    B --> B1["Shopping Cart Functions"]
+    B --> B2["Customer Order Control"]
+    
+    B1 --> B1a["Search for Item"]
+    B1 --> B1b["View Comments/Ratings"]
+    B1 --> B1c["View Accessories"]
+    B1 --> B1d["Switch Carts (Primary/Reserve)"]
+    B1 --> B1e["Fill Shopping Cart"]
+    B1 --> B1f["Empty Shopping Cart"]
+    B1 --> B1g["Checkout"]
+    
+    B2 --> B2a["Look up Order Status"]
+    B2 --> B2b["Track Shipment"]
+    B2 --> B2c["Create Item Return"]
+    B2 --> B2d["Rate/Comment on Product"]
+    B2 --> B2e["Provide Suggestion"]
+    
+    C --> C1["Search for Item"]
+    C --> C2["View Comments/Ratings"]
+    C --> C3["View Accessories"]
+    C --> C4["Create Sale"]
+    
+    D --> D1["Ship Items"]
+    D --> D2["Manage Shippers"]
+    D --> D3["Create Backorder"]
+    D --> D4["Create Item Return"]
+    D --> D5["Look up Order Status"]
+    D --> D6["Track Shipment"]
+```
+
+---
+
+### 9.5.2 Dialog Design
+A dialog represents a conversational flow between the user and the system. For each menu option, analysts write a natural-language dialog script.
+* **Source Material:** Dialogs are based directly on System Sequence Diagrams (SSDs) and the flow of activities in Use Case Descriptions.
+* **Objective:** Use natural language to emphasize prompt and response logic, ensuring the system provides clear feedback at each step.
+
+#### Detailed Dialog Transcript: RMO Shopping Cart Checkout
+The following is the complete, two-part dialog script designed for RMO's checkout use case:
+
+> [!example] RMO Checkout Dialog (Part 1)
+> * **SYSTEM:** What would you like to do?
+> * **USER:** I'd like to check out.
+> * **SYSTEM:** Okay. What is your e-mail address or account number?
+> * **USER:** My e-mail address is nwells22@gmail.com.
+> * **SYSTEM:** Fine. You are Nancy Wells at 1122 Silicon Avenue. Correct?
+> * **USER:** Yes.
+> * **SYSTEM:** All items in your cart are in stock and can be shipped today. Because your order subtotal is over $100, you qualify for free UPS ground shipping (3-5 days). Other shipping options include next day ($35.00), two day ($20.00), and USPS parcel post ($11.70, 5-7 days). How would you like your items to be shipped?
+> * **USER:** Free UPS ground shipping.
+
+> [!example] RMO Checkout Dialog (Part 2)
+> * **SYSTEM:** We have a shipping address on file for you (1122 Silicon Avenue). Do you want your order shipped to that address?
+> * **USER:** No.
+> * **SYSTEM:** To what address would you like the order shipped?
+> * **USER:** John Wells, 1612 Jefferson Street NE, Albuquerque, NM 87123.
+> * **SYSTEM:** Okay, the total charge is $125.56 ($117.90 item subtotal plus $7.66 sales tax). Shall I charge that amount to your credit card on file (a Visa with an account number ending in 0899)?
+> * **USER:** Yes.
+> * **SYSTEM:** Your payment has been approved, and your order is being prepared for shipment. A confirmation e-mail has been sent to you, and another will be sent with a shipment tracking number when the order is shipped later today. Can I help you with anything else?
+> * **USER:** No.
+
+---
+
+### 9.5.3 Storyboarding
+Storyboarding translates the dialog script into a sequence of screen sketches (wireframes) to show the user's journey. Analysts review these mockups with users before developers write any code.
+
+```mermaid
+graph LR
+    S1["1: Cart Summary"] --> S2["2: Login Prompt"]
+    S2 --> S3["3: Confirm Account"]
+    S3 --> S4["4: Shipping Options"]
+    S4 --> S5["5: Confirm Address"]
+    S5 --> S6["6: Enter New Address"]
+    S6 --> S7["7: Payment Details"]
+    S7 --> S8["8: Success Page"]
+```
+
+#### Detailed Wireframe Descriptions: RMO Shopping Cart Checkout
+The following screen-by-screen flow represents RMO's storyboard mockups:
+
+1. **Screen 1: Cart Summary**
+   - *Layout:* Ridgeline Mountain Outfitters top navigation banner with options: `Browse`, `Share`, `Cart` (dropdown), `Orders`, `Account`.
+   - *Interaction:* The user hovers over `Cart` and clicks `Check out` from the dropdown list.
+2. **Screen 2: Login Prompt**
+   - *Layout:* A modal popup box in the center of the screen.
+   - *Content:* Text prompt stating "You need to log in. Please enter your e-mail address or account number."
+   - *Input:* A single text field containing `nwells22@gmail.com` with a cursor.
+3. **Screen 3: Confirm Account**
+   - *Layout:* A modal dialog box in the center of the screen.
+   - *Content:* Text prompt: "Please confirm account information." Lists details retrieved from database: `Nancy Wells`, `1122 Silicon Avenue`, `Alamagordo, NM 87989`.
+   - *Actions:* Buttons for `That's me` (clicked by user) and `That's not me`.
+4. **Screen 4: Shipping Method Selection**
+   - *Layout:* Order summary table displaying selected items:
+     - Qty: 1 | SKU: 10967335 | Description: Toddler parka red | Price: $44.95 | Status: in-stock
+     - Qty: 1 | SKU: 94462 | Description: Ladies parka blue | Price: $72.95 | Status: in-stock
+   - *Content:* Prompt: "All items will ship today. Please choose ship. method:"
+   - *Inputs:* Radio buttons showing shipping options:
+     - `(•) Free - UPS ground (3-5 days)` (selected by default)
+     - `( ) $35.00 - UPS next day`
+     - `( ) $20.00 - UPS two days`
+     - `( ) $11.70 - USPS parcel post (5-7 days)`
+5. **Screen 5: Confirm Shipping Address**
+   - *Layout:* A modal dialog box in the center.
+   - *Content:* Prompt: "Please confirm shipping address." Lists default address: `Nancy Wells`, `1122 Silicon Avenue`, `Alamagordo, NM 87989`.
+   - *Actions:* Buttons for `OK` and `Use another address` (clicked by user).
+6. **Screen 6: Enter New Shipping Address**
+   - *Layout:* A form modal containing input fields.
+   - *Fields:* Name (`John Wells`), Apt# (empty), Street (`1612 Jefferson Street NE`), City (`Albuquerque`), State (`New Mexico`), Zip Code (`87123`).
+   - *Actions:* Buttons for `OK` (clicked by user) and `Cancel`.
+7. **Screen 7: Payment Details**
+   - *Layout:* Order summary totals:
+     - Subtotal: $117.90
+     - Shipping: $0.00
+     - Sales Tax: $7.66
+     - **Total: $125.50** (Wait, note that total charge is $125.56 in slide text, but the wireframe screen total says $125.50. We should list both or note this slight text mismatch as an inconsistency).
+   - *Content:* Prompt: "Please confirm payment." Details: `Nancy Wells`, `Visa xxxx-xxxx-xxxx-0899`, `Exp. 02/17`.
+   - *Actions:* Buttons for `OK` (clicked by user) and `Another method`.
+8. **Screen 8: Success / Order Confirmation**
+   - *Layout:* Order success panel.
+   - *Content:* Text: "Your payment has been approved. Your Visa credit card (xxxx-xxxx-xxxx-0899) has been charged for $125.56. Your order number is 6773823. The order will be shipped today for delivery in 3-5 days. Thank you shopping with RMO!"
 
 ---
 
