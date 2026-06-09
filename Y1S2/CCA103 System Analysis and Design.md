@@ -1587,16 +1587,65 @@ For a user interface to be usable, controls must incorporate the dual concepts o
 
 ---
 
-## 9.4 Part III: User Interface Design Guidelines
+## 9.4 Part III: User Interface Design Concepts (Metaphors & Guidelines)
 
-The following seven guidelines apply to all types of user interfaces to maximize usability:
-1. **Design for Consistency:** Maintain a predictable placement of elements, colors, and behaviors across all screens.
-2. **Provide Shortcuts:** Enable experienced users to perform tasks faster (e.g., keyboard shortcuts like `CTRL+S` for save or `CMD+P` for print).
-3. **Provide Feedback:** Offer immediate visual or auditory confirmation of actions (e.g., showing a "Success! Data Saved" dialog after submission).
-4. **Dialogs Should Yield Closure:** Design a clear beginning, middle, and end for transactions so users know when their task is officially finished.
-5. **Error Handling that Provides Guidance:** Design error messages that explain what went wrong and provide clear steps to correct the problem.
-6. **Easy Reversal of Actions:** Ensure users can easily back out of mistake decisions (e.g., undo options, cancel/back buttons).
-7. **Reduce Short-Term Memory Load:** Never force users to remember information from one screen to the next; display relevant details contextually.
+### 9.4.1 Translating the Physical World: The Four HCI Metaphors
+HCI design translates physical-world objects, structures, and workflows into digital representations using four primary metaphors:
+
+| Metaphor | Description | Example from Lecture |
+| --- | --- | --- |
+| **Direct Manipulation** | Manipulating objects on a screen display that look like physical objects (pictures/icons) or represent them directly. | Dragging a document file icon with the cursor and dropping it into a Recycle Bin or Trash Can icon to delete it. |
+| **Desktop** | Organizing the visual display into distinct regions, featuring a large work area in the center and tool/settings panels around the perimeter, resembling a physical desk surface. | Starting up a computer and seeing a background "desktop" populated with utility icons (e.g., clock, calendar, calculator, notepad, and sticky notes/Post-its). |
+| **Document** | Visually representing data entry and display as if they were printed paper pages, forms, or books. | Filling out input fields on a digital invoice or product registration form; reading a user manual package as a PDF file with a clickable table of contents. |
+| **Dialog** | User and computer accomplish tasks by engaging in a conversational query-response flow using text, voice, or labeled action buttons. | Clicking a button labeled "Troubleshoot" for a broken printer; the system displays yes/no diagnostic questions, and the user selects answers from a list. |
+
+### 9.4.2 The Seven Core User Interface Design Guidelines
+These seven guidelines apply universally to all user interface designs to maximize usability and reduce user frustration.
+
+```mermaid
+graph TD
+    A["7 UI Design Guidelines"] --> B["Navigation & Flow"]
+    A --> C["System Status"]
+    A --> D["Error & Memory"]
+    
+    B --> B1["1. Design for Consistency"]
+    B --> B2["2. Provide Shortcuts"]
+    
+    C --> C1["3. Provide Feedback"]
+    C --> C2["4. Dialogs Should Yield Closure"]
+    
+    D --> D1["5. Error Handling / Guidance"]
+    D --> D2["6. Easy Reversal of Actions"]
+    D --> D3["7. Reduce Short-Term Memory Load"]
+```
+
+#### 9.4.2.1 Design for Consistency
+Maintain predictable layout placement, color schemes, font hierarchies, and control behaviors across all windows, forms, and pages.
+* *Example:* Always placing the navigation bar at the top, utility menus on the left, and confirming buttons (like "OK" or "Submit") in the bottom-right corner.
+
+#### 9.4.2.2 Provide Shortcuts
+Enable experienced users to bypass standard menu navigation and perform frequent tasks rapidly.
+* *Example:* Keyboard shortcuts (e.g., `CTRL + S` or `CMD + S` for Save, `CTRL + P` or `CMD + P` for Print) and mouse shortcuts (e.g., double-clicking a file to open it).
+
+#### 9.4.2.3 Provide Feedback
+Provide immediate visual, auditory, or textual confirmation for every action the user takes, so they know the system has received and is processing their request.
+* *Example:* Showing a progress bar showing `Loading... 50%` during long operations, or displaying a temporary badge showing "Success! Data Saved" upon form submission.
+
+#### 9.4.2.4 Dialogs Should Yield Closure
+Organize sequences of activities with a distinct beginning, middle, and end, letting users know exactly when a multi-step transaction is officially completed.
+* *Example:* A checkout process that finishes with a final summary page stating "Thank you for your order! Your confirmation number is #6773823."
+
+#### 9.4.2.5 Error Handling that Provides Guidance
+Never display cryptic system codes or blame the user when something goes wrong. Design error messages that explain the issue in plain language and suggest clear steps to correct it.
+* *Example:* Instead of showing "Error 0x892", show a dialog box stating "The email address you entered is missing an '@' symbol. Please correct it to proceed."
+
+#### 9.4.2.6 Easy Reversal of Actions
+Always provide a way to undo actions, back out of choices, or cancel processes. This reduces user anxiety, encouraging exploration.
+* *Example:* Providing an "Undo" button (curved back arrow), a "Cancel" button on wizards, or a confirmation prompt before deleting files.
+
+#### 9.4.2.7 Reduce Short-Term Memory Load
+Never force users to remember information from one screen to another (e.g., product IDs, prices, or shipping addresses). Keep all necessary context visible or pre-populated.
+* *Example:* Displaying the items and order subtotal on the payment screen rather than expecting the user to remember them from the previous shopping cart page.
 
 ---
 
