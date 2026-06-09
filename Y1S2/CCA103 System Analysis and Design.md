@@ -2023,144 +2023,286 @@ graph TD
 > 4. Explain the difference between UML requirements models and design models.
 > 5. Describe design class symbols, stereotypes, and notations in UML.
 
+---
+
 ## 10.2 Part I: The Object-Oriented Paradigm Shift
 
-Object-oriented design (OOD) acts as the translation layer between requirements analysis and code construction. It specifies exactly *how* developers will build the system.
+Object-Oriented Design (OOD) is the translation engine that bridges requirements analysis with code implementation:
+
+```mermaid
+graph LR
+    A["Discovery & Understanding (Analysis)"] --> B["Blueprint for Programming (Design)"]
+    B --> C["Actual Code (Implementation)"]
+```
+
+* **Analysis:** Focuses on discovery and understanding. It defines *what* the system must do (requirements models).
+* **Design:** Focuses on creating the blueprint for programming. It specifies *how* the system will be configured and constructed (design models).
+* **The Analogy:** Just as a builder cannot construct a house without detailed architectural blueprints, developers should not write enterprise code without system design models.
+
+> [!tip] Extra Notes: Reversing SAD Activities for Better Context
+> To relate systems analysis and design (SAD) to programming experience, consider the reverse sequence:
+> 1. **Implementation Program:** Writing code (e.g., HTML, CSS, JavaScript, PHP, SQL).
+> 2. **Design:** Structuring and organizing components into layers, classes, and APIs.
+> 3. **Analysis:** Modeling the business workflows, use cases, and requirements.
+
+### 10.2.1 Case Study: Code to Design Layering
+Consider the following PHP implementation of a user interface class:
+
+```php
+<?php
+// C:\Users\User\Desktop\Obsidian-notes\Y1S2\CCA103\SupplierView.php
+class SupplierView
+{
+    private Supplier $theSupplier;
+
+    function __construct()
+    {
+        // Instantiates the model class
+        $this->theSupplier = new Supplier();
+    }
+
+    function lookupSupplier()
+    {
+        include('lookupSupplier.inc.html');
+    }
+
+    function displaysSupplier()
+    {
+        include('displaysSupplierTop.inc.html');
+        extract($_REQUEST); // Retrieves incoming Form data
+        
+        // Calls the Supplier model class to retrieve the data
+        $results = $this->theSupplier->getSupplierInfo($supplier, $category, $product, $country, $contact);
+        
+        // Dynamically renders the results into an HTML table
+        foreach ($results as $resultItem) {
+            ?>
+            <tr>
+                <td style="border:1px solid black"><?php echo $resultItem->supplierName?></td>
+                <td style="border:1px solid black"><?php echo $resultItem->contactName?></td>
+                <td style="border:1px solid black"><?php echo $resultItem->contactPosition?></td>
+            </tr>
+            <?php
+        }
+        include('displaysSupplierFoot.inc.html');
+    }
+}
+?>
+```
+
+The code above is organized into two logical layers in a **Package Diagram**:
+
+```mermaid
+graph TD
+    subgraph Supplier Subsystem
+        subgraph View Layer [View Layer - PHP, HTML/CSS, JS]
+            SV["SupplierView\n+lookUpSupplier()\n+displaysSupplier()"]
+            CV["ContactView\n+lookUpContact()\n+displayContact()"]
+            JS["Javascript Functions\n+validateSupplierInput()\n+validateContactInput()"]
+        end
+        subgraph Model Layer [Model Layer - PHP, SQL]
+            S["Supplier\n+getSupplierInfo()"]
+            C["Contact\n+getContactInfo()"]
+        end
+    end
+    View Layer -.-> Model Layer
+```
+
+This design realizes the following **Use Case Diagram**:
+* **Actors:** Purchasing Agent, Manager.
+* **Use Cases:** `Look up supplier`, `Enter/update supplier information`, `Look up contact`, `Enter/update contact information`.
+
+### 10.2.2 Traditional Procedural vs. Object-Oriented Paradigms
 
 | Paradigm | Data and Code Relationship | Maintenance & Adaptation |
 | :--- | :--- | :--- |
-| **Traditional Procedural** | Separates data from program code. | Cumbersome; changes require rewriting code in many places. |
-| **Object-Oriented (OO)** | Encapsulates attributes (data) and methods (logic) in a self-contained structure. | Highly re-usable and maintainable; changes to one class have minimal side effects. |
+| **Traditional Procedural** | Separates data fields from the program code that operates on them. | Changing data formats requires modifying code in multiple places, making maintenance and adaptation **cumbersome**. |
+| **Object-Oriented (OO)** | Encapsulates both attributes (data) and methods (actions) inside a single, self-contained structure. | Highly maintainable. A change inside one object has minimal or no impact on other objects. |
 
-> [!important] Key Benefits of OOD
-> 1. **Encapsulation:** Packaging attributes and methods together, mirroring the physical world.
-> 2. **Reusability:** Recycling program components reduces development costs (critical for GUIs and databases).
-> 3. **Maintainability:** Since objects isolate data and behavior, adjustments in one class have minimal impact on others.
+> [!important] Key Benefits of the OO Paradigm
+> 1. **Encapsulation:** Packaging data and actions together. This mirrors physical-world objects (e.g., a box of cake mix packages ingredients/attributes with baking instructions/methods; a sweater packages the fabric/attributes with the wash instructions/methods).
+> 2. **Reusability:** Program components can be recycled easily in other systems, significantly reducing development costs (especially vital for GUI toolkits and database layers).
+> 3. **Maintainability:** Self-contained classes isolate changes, preventing error propagation.
 
 ---
 
-## 10.3 Part II: Object-Oriented Program Flow and Design Levels
+## 10.3 Part II: OO Program Flow and Design Levels
 
-### 10.3.1 OO Program Flow
-In a three-layer OO system, multiple objects collaborate to execute a use case:
-1. **Window/View Object:** Displays a form to capture user inputs (e.g., enter Student ID) and sends messages to the domain layer.
-2. **Student/Domain Object:** Instantiated in memory to represent the business concept, communicates with database controllers to load/save data.
-3. **Database Access Object:** Executes queries on the database, retrieves data, populates the domain object, and returns status updates.
+### 10.3.1 Object-Oriented Program Flow
+In a standard three-layer OO architecture, multiple objects collaborate to carry out a single use case:
+1. **View/Window Object:** Displays a user interface form, collects inputs (e.g. studentID), and sends a message to the domain layer.
+2. **Domain Object:** Created in memory to represent the entity (e.g. Student), goes to the database object to load values, and manages business logic.
+3. **Database Access Object:** Dedicated retriever. Connects to the database, pulls raw table fields, populates the domain object, and saves updates.
 
 ### 10.3.2 Two Levels of Design
-1. **Architectural Design (Level 1):** Focuses on the macro-environment. Defines the overall system structure, hardware/network configuration, and how large logical components communicate.
-2. **Detailed Design (Level 2):** Focuses on the micro-environment. Defines the internal structure of individual use cases, specifying exact objects, attributes, methods, and their interactions.
+* **Level 1: Architectural Design (High-Level Design):** Focuses on the macro-environment. Defines the overall system structure, hardware networks, server configurations, logical deployment packages, and how large components communicate (the "Where" and "What").
+* **Level 2: Detailed Design (Low-Level Design):** Focuses on the micro-environment. Specifies the individual object classes, their attributes, methods, visibility, and exact message-passing interactions (the "How").
 
 ---
 
 ## 10.4 Part III: UML Requirements vs. Design Models
 
-UML design is model-driven and use-case-driven. Requirements models directly feed into and refine design models:
+OO design is model-driven and use-case-driven. Analysts directly map requirements models (analysis models) to design models:
 
-```mermaid
-graph TD
-    Domain[Domain Model Class Diagram] --> DCD[Design Class Diagrams]
-    Domain --> Package[Package Diagrams]
-    UC[Use Case Diagrams] --> Component[Component Diagrams]
-    UC --> Deploy[Deployment Diagrams]
-    UC --> Seq[Interaction / Sequence Diagrams]
-    Activity[Activity Diagrams & UC Descriptions] --> Seq
-    SSD[System Sequence Diagrams] --> Seq
-    StateReq[Requirements State Machine Diagrams] --> StateDes[Design State Machine Diagrams]
-```
+| Requirements / Analysis Model (What the system needs to do) | Design Model (How the system will be constructed) |
+| --- | --- |
+| **Domain Model Class Diagram** | Design Class Diagrams (DCDs) & Package Diagrams |
+| **Use Case Diagrams** | Component Diagrams, Deployment Diagrams, & Interaction (Sequence) Diagrams |
+| **Activity Diagrams & Use Case Descriptions** | Interaction (Sequence) Diagrams |
+| **System Sequence Diagrams (SSDs)** | Interaction (Sequence) Diagrams |
+| **Requirements State Machine Diagrams** | Design State Machine Diagrams |
+| **Use Case Diagrams / Domain Model** | Package Diagrams (grouping by layer/subsystem) |
 
 ---
 
 ## 10.5 Part IV: Software System Types and Architectures
 
-Software systems are generally divided into two types:
-1. **Single-User Systems:** Desktop-based or execute from a server without shared resources (e.g., spreadsheet programs).
-2. **Enterprise-Level Systems:** Shared resources among multiple people/groups across an organization. Almost always use client-server architectures with multiple layers.
+Software systems are classified into two deployment types:
+1. **Single-User Systems:** Run on a single desktop or server without shared resources (e.g., a spreadsheet program or simple standalone accounting application).
+2. **Enterprise-Level Systems:** Share resources (e.g., databases) among multiple users or business units. They almost always utilize client-server architectures partitioned into multiple layers.
 
-### 10.5.1 Enterprise Architecture Archetypes: Network vs. Internet
-How enterprise systems are deployed determines how the View layer interacts with the Domain and Data layers:
+### 10.5.1 Client-Server Network vs. Internet-Based Architectures
 
-| Design Issue | Client-Server Network-Based System | Internet-Based System (Web) |
+| Design Dimension | Client-Server Network-Based System | Internet-Based System (Web-Based) |
 | :--- | :--- | :--- |
-| **State Management** | **Stateful:** The client-server connection is long-term and persistent. State is naturally maintained in memory. | **Stateless:** Connection is short-term with no inherent memory. Requires additional components (cookies, session variables) to manage user session. |
-| **Connection Type** | **Direct:** View layer classes interact directly with Domain layer classes. | **Indirect:** Requires scripts, language processors, or CGI scripts to bridge the gap between browser View classes and server Domain classes. |
-| **Client Configuration** | Screens/forms are programmed and displayed directly. Domain layer is on the client or split between client and server. | Screens/forms are rendered through a browser. Must conform to browser tech (HTML, CSS, JS, applets). |
-| **Client tier connects directly to client tier.** | Client tier connects indirectly to application server through a Web server. |
+| **State Management** | **Stateful:** The connection between view client and server is persistent and long-term. State is naturally maintained in memory. | **Stateless:** Connection is temporary (request-response). Has no inherent memory. Requires **cookies** or **session variables** to track user state. |
+| **Connection Type** | **Direct:** View layer classes on the client machine interact directly with Domain layer classes. | **Indirect:** View layer (browser) is decoupled. Requires web servers, CGI scripts, or applets to bridge the gap to the domain/data classes. |
+| **Client Configuration** | Screens/forms are compiled and displayed directly. The domain layer is hosted on the client or split across machines. | Screens/forms are rendered in a browser. Must conform to browser tech (HTML, CSS, JS, applets, ActiveX). |
+| **Server Configuration** | Application/data servers connect directly to the client tier. | Client connects indirectly to application servers through intermediate Web servers. |
+
+```mermaid
+graph TD
+    subgraph Client-Server Network Archetype [Client-Server Network (Stateful)]
+        V1[View Layer] --> D1[Domain Layer] --> DA1[Data Layer]
+    end
+    subgraph Internet-Based Archetype [Internet-Based Web System (Stateless)]
+        Browser[Browser View] --> Cookies[Cookies]
+        Cookies --> WebServer[Internet Server]
+        WebServer --> CGI[CGI C/C++ / App Server Session Mgr]
+        CGI --> SessionVar[Session Variables]
+        SessionVar --> DomainClass[Domain / Database]
+    end
+```
 
 ---
 
 ## 10.6 Part V: The Component Diagram
 
-A **component diagram** is a type of design diagram that shows the overall system architecture and the logical, reusable, and transportable components within it.
+A **component diagram** shows the overall system architecture and the logical, reusable, and transportable components that define the system implementation.
 
-> [!info] Key Component Concepts
-> - **Component:** A moveable, executable software module (reusable and pluggable). Represented in UML as a rectangle with component symbols on the side.
-> - **Application Program Interface (API):** The set of public methods that are available to the outside world to access the component's services.
-> - **Port:** An interaction point on the boundary of a component, shown as a small square.
-> - **Lollipop (Provided Interface / Ball):** A circle representing an interface that the component provides to define the methods other components can invoke.
-> - **Socket (Required Interface):** A semi-circle representing services that the component requires from other components.
+> [!info] Component Notation & Symbols
+> - **Component:** A physical, moveable, executable, and pluggable software module (e.g. an assembly, DLL, or source code file). Symbolized as a box with two small rectangles protruding from its left side.
+> - **Application Program Interface (API):** The set of public methods made available to the outside world.
+> - **Port:** A small square on the component boundary representing an interaction point.
+> - **Lollipop / Provided Interface (Ball):** A solid circle representing a service/interface that the component implements and exposes.
+> - **Socket / Required Interface:** A semi-circle socket representing a service that the component requires from another.
+> - **Assembly Connector:** Joining a lollipop (ball) and a socket together shows a direct connection where one component uses another's API. A dashed arrow can also show access.
 
-```mermaid
-classDiagram
-    class InventoryDatabaseSystem {
-        <<component>>
-        +API Output Interface()
-    }
-    class InventoryUpdateSubsystem {
-        <<component>>
-    }
-    InventoryUpdateSubsystem ..> InventoryDatabaseSystem : Uses Interface Socket
-```
-
-### 10.6.1 Two-Layer Internet Logical Design Component Diagram
-- **User Interface Layer:** Browser with cookies (executes JavaScript/ActiveX to format and display) -> Communicates via Internet -> Internet Server (executable component that retrieves pages and invokes other components).
-- **Domain Layer (Business Logic):** Internet Server communicates with:
-  - **Common Gateway Interface (CGI):** Compiled C/C++ programs to receive input data from server.
-  - **Application Server (Session Manager):** Invoked to process code (read/write database) and work with cookies to manage sessions (PHP, ASP, JSP, Servlets, ColdFusion).
+### 10.6.1 Two-Layer Internet Logical Architecture Diagram
+This component diagram shows how components are distributed:
+* **User Interface Layer:** Browser with cookies (displays frameset page containing JavaScript, VBScript, Applets, or ActiveXControls) connected via Internet to the Internet Server (coordinates pages and invokes backend processes).
+* **Domain Layer (Business Logic):** The Internet Server routes requests to:
+  - **Common Gateway Interface (CGI):** Directory containing compiled programs (C/C++) available to receive inputs.
+  - **Application Server (Session Manager):** Invoked to execute code (read/write databases) and manage user session cookies (PHP, ASP, JSP, Servlets, ColdFusion).
 
 ---
 
 ## 10.7 Part VI: Design Class Symbols and Notation in UML
 
-In detailed design, design classes represent concrete software classes (not just conceptual work items).
+In detailed design, design classes represent concrete classes of software.
 
 ### 10.7.1 UML Design Class Stereotypes
-UML uses **stereotypes** (indicated by guillemots `« »`) to categorize design classes:
+UML categorizes design classes using **stereotypes** (indicated by guillemots `« »`):
 
-1. **Entity Class (`«entity»`):** Represents problem domain classes whose data must be remembered (usually persistent). Symbol: A circle with a flat horizontal line underneath.
-2. **Boundary/View Class (`«boundary»`):** Lives on the system's automation boundary, such as input forms, windows, or Web pages. Symbol: A circle with a vertical line on the left.
-3. **Control Class (`«control»`):** Acts as a switchboard or mediator that routes messages between boundary classes and entity classes. Symbol: A circle with a circular arrow on top.
-4. **Data Access Class (`«dataAccess»`):** Dedicated layer to execute SQL, retrieve/save database records, and isolate database logic from domain entities. Symbol: A circle with flat lines on top and bottom.
+1. **Entity Class (`«entity»`):** A problem domain class whose objects must persist in storage after the system shuts down. Symbol: A circle placed on top of a flat horizontal line.
+2. **Boundary/View Class (`«boundary»`):** Lives on the system's automation boundary (e.g. input windows, forms, Web pages). Symbol: A circle with a vertical line on the left.
+3. **Control Class (`«control»`):** Acts as a mediator or switchboard routing messages between boundary classes and entity classes. Symbol: A circle with a circular arrow on top.
+4. **Data Access Class (`«dataAccess»`):** Isolates database access and query logic (SQL) from domain classes. Symbol: A circle placed between two parallel flat lines.
 
-### 10.7.2 Design Class Notation
-A UML design class is represented by a box with three compartments:
+### 10.7.2 Design Class Notation Syntax
+A design class is represented as a box with three distinct compartments:
 
-1. **Top Compartment (Class Name & Stereotype):** Displays the stereotype (e.g. `«entity»`), class name, and parent class (e.g. `ClassName::ParentClass`).
-2. **Middle Compartment (Attributes):** Expands domain attributes with visibility, types, and properties.
-   - *Format:* `visibility name: type-expression = initial-value {property}`
-   - *Visibility:* `-` (private, standard for attributes) or `+` (public).
-   - *Example:* `-studentID: integer {key}`
-3. **Bottom Compartment (Methods):** Shows the method signatures required to invoke messages.
-   - *Format:* `visibility name(parameter-list): return-type`
-   - *Example:* `+updateGPA(credits: Float): void`
+```
++-------------------------------------------------------------+
+|                        «Stereotype»                         |
+|                  ClassName::ParentClass                     |
++-------------------------------------------------------------+
+| - attributeName: type-expression = initial-value {property} |
++-------------------------------------------------------------+
+| + methodName(parameter-list): return-type                   |
+| + classLevelMethod() // static method (underlined)          |
++-------------------------------------------------------------+
+```
 
-### 10.7.3 Elaborating attributes and methods (DCD Example)
-- **Domain Attribute:** `studentID`, `name`, `address`
-- **Design Class Elaboration:**
-  - `-studentID: integer {key}`
-  - `-name: string`
-  - `-address: string`
-- **Design Method signatures:**
-  - `+createStudent(name, address, major): Student`
-  - `+getName(): string`
-  - `+updateCreditHours()`
+1. **Top Compartment (Name Compartment):** Contains the class name, stereotype markers, and parent class (if inheriting).
+2. **Middle Compartment (Attributes List):** Expands on domain model attributes.
+   - **Visibility:** `-` (Private - hidden from other classes, standard for attributes) or `+` (Public - accessible).
+   - **Name:** camelCase notation.
+   - **Type Expression:** class type, `string`, `integer`, `double`, `date`, `float`, etc.
+   - **Initial Value:** Default value if applicable (e.g., `= 01`).
+   - **Property:** Meta-properties (e.g., `{key}`).
+3. **Bottom Compartment (Methods List):** Shows method signatures.
+   - **Method Name:** camelCase notation (usually verb-noun, e.g. `setName`).
+   - **Parameters:** Variables passed into the method.
+   - **Return Type:** Type of data returned (e.g., `: void`, `: string`).
+   - **Class-Level Attributes/Methods:** Represent **static** fields/methods that apply to the class as a whole rather than specific instances. In UML, these are **underlined** (e.g., `+findStudentsAboveHours(hours)`).
+   - **Abstract Class:** Cannot be instantiated; used only for inheritance. In UML, its name is written in **Italics** (e.g., *`Sale`*).
+   - **Concrete Class:** Can be instantiated into runtime objects. Name written in normal text (e.g., `StoreSale`).
+
+### 10.7.3 Elaborating Attributes and Methods: Domain vs. Design Class
+
+```mermaid
+classDiagram
+    class Domain_Student {
+        studentID
+        name
+        address
+        major
+    }
+    class Design_Student {
+        <<entity>>
+        -studentID: integer {key}
+        -name: string
+        -address: string
+        -major: string
+        +createStudent(name, address, major): Student
+        +changeName(name): void
+        +getName(): string
+        +updateCreditHours(): void
+        +findStudentsAboveHours(hours)* Array
+    }
+```
+*Note: `findStudentsAboveHours` is static (class-level), so its method name is underlined in DCDs. The class name `Student` maps directly to code class structure.*
+
+---
 
 ## 10.8 Part VII: The 5 Steps of OO Detailed Design
-We develop design models iteratively, use case by use case:
-1. **Develop first-cut DCD** showing navigation visibility.
-2. **Determine class responsibilities and collaborations** using Class-Responsibility-Collaboration (CRC) cards.
-3. **Develop detailed sequence diagrams** (first-cut, then multilayer).4. **Update the DCD** with method signatures and navigation data based on CRC cards and sequence diagrams.
-5. **Partition the solution** into logical packages.
+
+UML detailed design is model-driven and use-case-driven, progressing iteratively:
+
+| Step | Detailed Design Step | Chapter |
+| --- | --- | --- |
+| **Step 1** | Develop the first-cut design class diagram (DCD) showing navigation visibility. | Chapter 10 |
+| **Step 2** | Determine class responsibilities and collaborations using Class-Responsibility-Collaboration (CRC) cards. | Chapter 10 |
+| **Step 3** | Develop detailed sequence diagrams for each use case (First-cut sequence diagrams, then Multilayer sequence diagrams). | Chapter 11 |
+| **Step 4** | Update the DCD with method signatures and navigation information using CRC cards and/or sequence diagrams. | Chapter 11 |
+| **Step 5** | Partition the solution into logical packages as appropriate. | Chapter 11 |
+
+### 10.8.1 The Iterative Lifecycle
+UML design executes these steps in a loop:
+1. Identify system boundaries, actors, and use cases (Behavioral view).
+2. Create use case scenarios.
+3. Hold CRC Card sessions ("Object Think") to discover core classes.
+4. Develop a list of Things/candidate classes.
+5. Create Sequence Diagrams based on scenarios to map interactions.
+6. Complete the Class Diagram (Structural view) using CRUD matrices.
+
+### 10.8.2 Case Study: RMO Tradeshow System Subsystems
+The RMO Tradeshow System is divided into 4 core subsystems:
+1. **Supplier Information Subsystem (SIS)**
+2. **Product Information Subsystem (PIS)**
+3. **Customer Account Subsystem (CAS)**
+4. **Sales Subsystem (SS)**
 
 ---
 
