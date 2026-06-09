@@ -1835,24 +1835,47 @@ The following screen-by-screen flow represents RMO's storyboard mockups:
 
 ## 9.6 Part V: Platform-Specific Interface Guidelines
 
-Different deployment environments present distinct layout, navigation, and usability challenges:
+Different deployment environments present distinct layout, navigation, and usability challenges. System designers must design interfaces to fit specific platforms:
 
 ### 9.6.1 Windows/Desktop Forms
-- **Focus:** Complex layouts, strict consistency, and high-volume data-entry efficiency.
-- **Interface Layout:** Predictable placement, clear labels/headings, logical spatial distribution, and strategic color contrast to guide the eye.
-- **Controls:**
-  - *Data Entry:* Text boxes, list boxes, combo boxes, check boxes, and radio buttons.
-  - *Navigation & Support:* Minimize/maximize/close title bar icons, scroll bars, and window resize handles.
+* **Primary Focus:** Complex screen layouts, strict consistency, and high-volume data-entry efficiency.
+* **Layout and Formatting Guidelines:**
+  - **Consistency:** Predictable placement of elements (e.g., action buttons, menu options) across all screens.
+  - **Labels & Headings:** Use clear, natural-language text for labels and section headers for immediate comprehension.
+  - **Distribution & Order:** Arrange information in a logical spatial flow (e.g., top-to-bottom, left-to-right) matching the user's natural scanning habits.
+  - **Fonts & Colors:** Strategic use of clean typography and high contrast to guide the eye to important fields and statuses, avoiding excessive or distracting decoration.
+* **Desktop Controls Anatomy:**
+  - **Data Entry Controls:**
+    - *Text Box:* For entering unstructured alphanumeric strings.
+    - *List Box:* Displays a static scrollable list of choices; users select one or more.
+    - *Combo Box:* Combines a text box with a drop-down list of choices, allowing selection or manual entry.
+    - *Radio Buttons (Option Buttons):* Used for mutually exclusive choices where only one option in the group can be selected.
+    - *Check Boxes:* Used for independent, non-mutably exclusive options (the user can check zero, one, or multiple boxes).
+  - **Navigation & Support Controls:**
+    - *Window Controls:* Minimize, Maximize, and Close buttons located in the window's title bar.
+    - *Scroll Bars:* Vertical or horizontal bars allowing users to navigate content extending beyond the window boundaries.
+    - *Resize Handles:* Corners or edges that permit dragging to scale the window dimensions.
 
 ### 9.6.2 Web Browser Interfaces
-- **Focus:** Adaptation to varying screen widths and hardware configurations.
-- **CSS Enforced Consistency:** Raw HTML structure must adapt via Cascading Style Sheets (CSS) to ensure consistent visual styles regardless of user/task.
-- **Performance:** Highly sensitive to connection speeds; layout and media weight must be optimized for transmission limits.
-- **Media Integration:** Pictures, video, and sound offer rich engagement but must balance against page load performance and browser compatibility issues.
-- **Accessibility (Users with Disabilities):** Web interfaces must integrate with Assistive Technologies (text-to-speech, voice-recognition software).
+* **Primary Focus:** Adapting to varying screen resolutions, hardware configurations, and connection speeds.
+* **CSS-Enforced Consistency:** Unlike fixed-size desktop forms, web pages must be highly flexible. Designers separate raw HTML structure (which defines content) from Cascading Style Sheets (CSS), which encode consistent visual styles regardless of the user's browser, screen width, or task.
+* **Key Design Considerations:**
+  - **Performance Considerations:** Web interfaces are highly sensitive to network connection speeds. Designers must optimize page size, limit script overhead, and balance the amount/type of information transmitted to prevent slow page load times.
+  - **Media Integration:** Pictures, video, and sound offer rich, powerful user engagement. However, they must be balanced carefully against page load weights and potential browser compatibility issues.
+  - **Accessibility (Users with Disabilities):** Web interfaces must integrate seamlessly with Assistive Technologies (e.g., screen readers, text-to-speech utilities, and voice-recognition software) to ensure usability for users with visual, auditory, or motor impairments.
 
 ### 9.6.3 Handheld/Mobile Interfaces
-- **Focus:** Small screen sizes, touch screen affordance (fat-finger errors), limited network capacity, and platform-specific UI toolkits (iOS/Android guidelines).
+* **Primary Focus:** Designing for physical mobility, constrained screens, and finger-based touch inputs.
+* **Key Design Considerations:**
+  - **Small Screen Sizes:** Interfaces must be decluttered, displaying only the most critical information and using collapsible menus.
+  - **Touch Screen Affordances:** Design buttons and tap targets large enough to accommodate finger sizes and prevent "fat-finger" selection errors.
+  - **Limited Network Capacity:** Mobile devices frequently operate on cellular networks with varying signal quality and speeds. Data transfers must be minimized.
+  - **Platform-Specific App Toolkits:** Interfaces must align with standard design guidelines and interactive elements provided by mobile OS platforms (e.g., Apple's iOS Human Interface Guidelines and Google's Android Material Design).
+
+### 9.6.4 Assistive Technologies
+> [!info] Definition: Assistive Technologies
+> Specialized software or hardware (e.g., text-to-speech screen readers, screen magnifiers, voice-recognition software, and alternative input devices) that adapts standard user interfaces to meet the needs of persons with physical, sensory, or cognitive disabilities.
+> - **Design Constraint:** Ensuring semantic HTML (using tags like `<alt>` for images) and standardized UI controls is crucial in both web and desktop environments to allow assistive tools to parse screen contents accurately.
 
 ---
 
