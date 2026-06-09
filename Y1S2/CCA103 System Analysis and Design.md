@@ -1512,46 +1512,78 @@ The specification process consists of:
 
 ## 9.2 Part I: User Interfaces vs. System Interfaces
 
-Information systems interact with both human users and other computerized systems. Designing the interaction boundary requires distinguishing between these two types of interfaces:
+Information systems do not operate in isolation; they interact with both human users and other computerized systems. Designing the interaction boundary requires distinguishing between these two types of interfaces, as they involve different design paradigms, primary risks, and formats.
 
-> [!info] Definition: User Interface
-> Inputs and outputs that directly involve a human user/actor. It focuses on the dialog going back and forth between a person and the computer.
-> - **Primary Risk:** Cognitive overload and usability/data-entry errors.
-> - **Formats:** Web forms, mobile/desktop apps, interactive dashboards.
+> [!important] The Core Goal of Interface Design
+> Interface design acts as the "bridge" between human intent and machine execution. 
+> - **Inputs and Outputs:** Both user and system interfaces involve managing inputs (capturing data) and outputs (presenting or sending data).
+> - **Usability vs. Efficiency:** A poorly designed user interface can make the entire system unusable for humans. Conversely, a poorly designed system interface is a major source of system errors, data corruption, and operational inefficiency.
+> - **Stakeholder Involvement:** Interface design is highly collaborative and must involve a large number of stakeholders (users, business analysts, system designers, developers, database administrators, and external integration partners).
 
+### 9.2.1 User Interfaces
+> [!info] Definition: User Interface (UI)
+> Inputs and outputs that directly involve a human user or actor. It focuses on the interactive dialog going back and forth between a person and the computer.
+
+* **Primary Actor:** Human user (e.g., customer, clerk, administrator).
+* **Interaction Style:** Interactive dialog going back and forth between the actor and the system.
+* **Primary Risk:** Cognitive overload, user fatigue, usability friction, and manual data-entry errors.
+* **Formats:** Web forms, mobile apps, desktop forms, interactive dashboards, voice commands, and search bars.
+
+### 9.2.2 System Interfaces
 > [!info] Definition: System Interface
-> Inputs and outputs that require minimal or no human intervention. They connect one system/device directly to another system or database.
-> - **Primary Risk:** Data format mismatch, communication protocol incompatibility, and integration inefficiency.
-> - **Formats:** XML/JSON text streams, APIs (REST/SOAP), database replication links, and automated hardware scanner feeds.
+> Inputs and outputs that require minimal or no human intervention. They connect one computerized system, database, or hardware device directly to another.
+
+* **Primary Actor:** Other systems, databases, or automated devices (no direct human operator in the real-time flow).
+* **Interaction Style:** Automated inputs, network messages, and direct data outputs.
+* **Primary Risk:** Data format mismatches (schema differences), network transmission latency, protocol incompatibility, integration breakdowns, and processing inefficiency.
+* **Formats:** XML/JSON text streams, REST/SOAP APIs, database replication links, and hardware sensor feeds (e.g., RFID, bar code scanners).
+
+### 9.2.3 Designing for Humans vs. Machines: Comparison Table
+
+| Dimension | User Interfaces (Designing for Humans) | System Interfaces (Designing for Machines) |
+| --- | --- | --- |
+| **Primary Actor** | Human user | Other systems / minimal human intervention |
+| **Interaction Style** | Dialog going back and forth | Automated inputs, network messages, direct outputs |
+| **Primary Risk** | Cognitive overload & usability errors | Data mismatch & integration inefficiency |
+| **Format Example** | Web forms, applications, dashboards | XML/JSON streams, APIs, automated scanners |
+| **Feedback Mechanism** | UI status messages, progress bars, confirmations | Response status codes (e.g., HTTP 200/400/500), API logs |
+| **Design Priority** | Cognitive ease, affordance, error prevention | Data integrity, throughput, protocol compatibility |
 
 ---
 
-## 9.3 Part II: Human-Computer Interaction (HCI) and User-Centered Design
+## 9.3 Part II: Human-Computer Interaction (HCI), User-Centered Design, and Usability Heuristics
 
-### 9.3.1 User-Centered Design (UCD)
-UCD is an engineering philosophy embodying the core view that **to the user, the interface IS the system**. Modern systems analysis and design fully incorporates UCD principles to prevent unusable systems.
+### 9.3.1 Human-Computer Interaction (HCI)
+> [!info] Definition: Human-Computer Interaction (HCI)
+> A multidisciplinary field of study concerned with the **efficiency** and **effectiveness** of user interaction with computer systems, human-oriented input and output technology, and the psychological and cognitive aspects of user interfaces.
+
+### 9.3.2 User-Centered Design (UCD)
+UCD is an engineering and design philosophy embodying the core axiom: **"To the user, the interface IS the system."** Modern systems analysis and design fully integrates UCD principles to ensure that system workflows adapt to human habits, rather than forcing humans to adapt to rigid system requirements.
+
+> [!note] Historical Context of UCD
+> UCD concepts date back to the **1980s**, championed during the pioneering development of the **Apple Macintosh**. Today, UCD is recognized as a fundamental cornerstone of contemporary **Agile & Iterative Analysis and Design (A&D)** methods.
 
 UCD relies on three core iterative principles:
-1. **Focus Early:** Observe users in their actual work environments and study their workflows.
-2. **Evaluate Usability:** Conduct usability testing to ensure cognitive friction remains low.
-3. **Iterate Frequently:** Continuously refine user interface designs based on user feedback.
+1. **Focus Early on Users:** Directly observe users in their actual work environments, study their daily tasks, and analyze their cognitive workflows rather than just asking for their requirements.
+2. **Evaluate Usability:** Conduct structured usability testing and user testing throughout development to ensure cognitive friction and system friction remain low.
+3. **Iterate Frequently:** Continuously refine user interface mockups and prototypes based on user feedback, repeating the cycle of design, testing, and feedback.
 
-### 9.3.2 The Four HCI Metaphors
-HCI design translates the physical world into digital interfaces using four major metaphors:
-1. **Direct Manipulation:** Dragging or clicking graphical items on a screen that look like or represent physical objects.
-   - *Example:* Dragging a document file icon to the Recycle Bin or Trash Can to delete it.
-2. **Desktop:** Organizing the screen display into distinct regions with a large work area in the center and tool/settings panels around the perimeter.
-   - *Example:* Starting up a computer and seeing a background screen populated with icons for calendar, notepad, clock, folders, and sticky notes.
-3. **Document:** Visually representing data entry and display as if they were paper pages or forms.
-   - *Example:* Filling out a product registration form on a manufacturer's website or reading a manual packaged as a PDF file with a clickable table of contents.
-4. **Dialog:** User and computer accomplish tasks by engaging in a conversational query-response flow using text, voice, or labeled action buttons.
-   - *Example:* Clicking "troubleshoot" on a printer warning, answering a series of yes/no questions, and selecting choices from a list.
+### 9.3.3 Core Usability Heuristics: Visibility and Affordance
+For a user interface to be usable, controls must incorporate the dual concepts of visibility and affordance.
 
-### 9.3.3 Core Usability Heuristics
-- **Visibility:** A control or status indicator must be clearly visible against the background so users are instantly aware of it.
-  - *Example:* Loading progress bars showing `50%` or media player volume sliders.
-- **Affordance:** The physical appearance of a control should suggest its functionality.
-  - *Example:* A screen button designed with shading, borders, and depth so it looks like a physical button that can be clicked or pushed.
+> [!info] Definition: Visibility
+> A control or status indicator must be clearly visible and distinguishable to the user against the interface background, ensuring they are instantly aware of its existence and current state.
+> - **Visual Examples:**
+>   - A progress bar showing `Loading... 50%` so the user knows the system is working and when it will finish.
+>   - Media player status indicators, such as a highlighted mute button or a sound wave icon, that clearly show the audio state.
+>   - Media player volume sliders showing the current level.
+
+> [!info] Definition: Affordance
+> The physical appearance of a control should suggest its functionality and how it is operated (e.g., clicking, sliding, dragging, or typing).
+> - **Visual Examples:**
+>   - A screen button designed with shading, borders, and depth (a drop shadow) so it looks like a physical button that can be clicked or pushed.
+>   - A slider track with a handle (like a volume slider or scroll bar) that visually suggests it can be dragged left/right or up/down.
+>   - Text input boxes with clear empty fields and cursor indicators that suggest typing.
 
 ---
 
