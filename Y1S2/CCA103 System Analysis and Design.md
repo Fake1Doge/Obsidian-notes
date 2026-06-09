@@ -2094,18 +2094,18 @@ The code above is organized into two logical layers in a **Package Diagram**:
 
 ```mermaid
 graph TD
-    subgraph Supplier Subsystem
-        subgraph View Layer [View Layer - PHP, HTML/CSS, JS]
+    subgraph SupplierSubsystem ["Supplier Subsystem"]
+        subgraph ViewLayer ["View Layer - PHP, HTML/CSS, JS"]
             SV["SupplierView\n+lookUpSupplier()\n+displaysSupplier()"]
             CV["ContactView\n+lookUpContact()\n+displayContact()"]
             JS["Javascript Functions\n+validateSupplierInput()\n+validateContactInput()"]
         end
-        subgraph Model Layer [Model Layer - PHP, SQL]
+        subgraph ModelLayer ["Model Layer - PHP, SQL"]
             S["Supplier\n+getSupplierInfo()"]
             C["Contact\n+getContactInfo()"]
         end
     end
-    View Layer -.-> Model Layer
+    ViewLayer -.-> ModelLayer
 ```
 
 This design realizes the following **Use Case Diagram**:
@@ -2172,13 +2172,13 @@ Software systems are classified into two deployment types:
 
 ```mermaid
 graph TD
-    subgraph Client-Server Network Archetype [Client-Server Network (Stateful)]
+    subgraph ClientServerNetworkArchetype ["Client-Server Network (Stateful)"]
         V1[View Layer] --> D1[Domain Layer] --> DA1[Data Layer]
     end
-    subgraph Internet-Based Archetype [Internet-Based Web System (Stateless)]
+    subgraph InternetBasedArchetype ["Internet-Based Web System (Stateless)"]
         Browser[Browser View] --> Cookies[Cookies]
         Cookies --> WebServer[Internet Server]
-        WebServer --> CGI[CGI C/C++ / App Server Session Mgr]
+        WebServer --> CGI["CGI C/C++ / App Server Session Mgr"]
         CGI --> SessionVar[Session Variables]
         SessionVar --> DomainClass[Domain / Database]
     end
@@ -2260,17 +2260,17 @@ classDiagram
         major
     }
     class Design_Student {
-        <<entity>>
-        -studentID: integer {key}
+        -studentID: integer
         -name: string
         -address: string
         -major: string
-        +createStudent(name, address, major): Student
-        +changeName(name): void
-        +getName(): string
-        +updateCreditHours(): void
-        +findStudentsAboveHours(hours)* Array
+        +createStudent(name, address, major) Student
+        +changeName(name) void
+        +getName() string
+        +updateCreditHours() void
+        +findStudentsAboveHours(hours) Array
     }
+    <<entity>> Design_Student
 ```
 *Note: `findStudentsAboveHours` is static (class-level), so its method name is underlined in DCDs. The class name `Student` maps directly to code class structure.*
 
@@ -2351,16 +2351,15 @@ The following design classes represent RMO's sales classification:
 ```mermaid
 classDiagram
     class Sale {
-        <<abstract>>
-        -saleID: int {key}
+        -saleID: int
         -saleDate: date
         -priorityCode: string
-        -shipping&Handling: float
+        -shippingAndHandling: float
         -tax: float
         -grandTotal: float
-        +addItem(): void
-        +cancelSale(): void
-        +makePayment(): void
+        +addItem() void
+        +cancelSale() void
+        +makePayment() void
     }
     class PhoneSale {
         -clerkID: string
@@ -2373,13 +2372,14 @@ classDiagram
         -timeOfDay: string
         -timeToOrder: int
         -noOfWebSales: int
-        +confirmEmail(): void
+        +confirmEmail() void
     }
     class StoreSale {
         -storeID: string
         -noOfStoreSales: int
-        +cancelSale(): void
+        +cancelSale() void
     }
+    <<abstract>> Sale
     Sale <|-- PhoneSale
     Sale <|-- InternetSale
     Sale <|-- StoreSale
@@ -2602,20 +2602,20 @@ To enforce low coupling and high cohesion, classes are grouped into logical pack
 
 ```mermaid
 graph TD
-    subgraph Client Package [<<package>> Client]
+    subgraph ClientPackage ["<<package>> Client"]
         Customer
         Membership
     end
-    subgraph Transaction Package [<<package>> Transaction]
+    subgraph TransactionPackage ["<<package>> Transaction"]
         Rental
         Payment
     end
-    subgraph Vehicle Package [<<package>> Vehicle]
+    subgraph VehiclePackage ["<<package>> Vehicle"]
         Car
         Maintenance
     end
-    Client -.-> Transaction
-    Transaction -.-> Vehicle
+    ClientPackage -.-> TransactionPackage
+    TransactionPackage -.-> VehiclePackage
 ```
 
 * **Cohesion** is maximized by keeping tightly related classes (e.g., `Customer` and `Membership`) in the same package.
