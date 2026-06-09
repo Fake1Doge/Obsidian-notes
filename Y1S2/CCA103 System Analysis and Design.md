@@ -1608,15 +1608,15 @@ graph TD
     A --> C["System Status"]
     A --> D["Error & Memory"]
     
-    B --> B1["1. Design for Consistency"]
-    B --> B2["2. Provide Shortcuts"]
+    B --> B1["1: Design for Consistency"]
+    B --> B2["2: Provide Shortcuts"]
     
-    C --> C1["3. Provide Feedback"]
-    C --> C2["4. Dialogs Should Yield Closure"]
+    C --> C1["3: Provide Feedback"]
+    C --> C2["4: Dialogs Should Yield Closure"]
     
-    D --> D1["5. Error Handling / Guidance"]
-    D --> D2["6. Easy Reversal of Actions"]
-    D --> D3["7. Reduce Short-Term Memory Load"]
+    D --> D1["5: Error Handling / Guidance"]
+    D --> D2["6: Easy Reversal of Actions"]
+    D --> D3["7: Reduce Short-Term Memory Load"]
 ```
 
 #### 9.4.2.1 Design for Consistency
