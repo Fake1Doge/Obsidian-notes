@@ -1976,12 +1976,12 @@ Frederick Herzberg posits that job satisfaction and dissatisfaction are driven b
 
 ## 14.7 Group Dynamics: Tuckman's Five Stages of Group Formation
 Teams develop through five distinct stages, requiring different leadership styles at each phase:
-1. **Forming (Getting Acquainted):** Team members meet,Cautious, polite interactions. High dependence on the leader for guidance.
+1. **Forming (Getting Acquainted):** Team members meet and learn about opportunities and challenges. Polite, cautious, interactions. High dependence on the leader for guidance.
 2. **Storming (Working Through Conflicts):** Interpersonal conflicts emerge over roles, responsibilities, and leadership. A critical phase requiring skilled conflict resolution.
 3. **Norming (Establishing Trust):** Mutual trust, group norms, and team cohesion develop. Collaborative problem-solving begins.
 4. **Performing (Peak Performance):** High autonomy and coordination. The team focuses on goal achievement, effective communication, and rapid adaptation.
 5. **Adjourning (Closure and Reflection):** Task completion and team dissolution, accompanied by recognition of achievements and learning consolidation.
-
+	
 ## 14.8 Group Roles and Norms
 - **Role Clarity Benefits:** Eliminates task overlap and responsibility gaps, reduces stress caused by ambiguous expectations, enhances individual accountability, and prevents boundary conflicts.
 - **Shared Norms Benefits:** Establishes common standards for behavior, creates predictable group interaction patterns, and builds psychological safety, trust, and mutual respect.
