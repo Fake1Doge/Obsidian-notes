@@ -1939,13 +1939,13 @@ Perception shapes how we view workplace reality, but cognitive shortcuts can lea
 ## 14.4 Personality: The Big Five Model
 Five core personality dimensions shape individual behavior in the workplace:
 
-| Trait | Description | Workplace Impact |
-| :--- | :--- | :--- |
-| **Openness** | Curiosity, creativity, and willingness to embrace new experiences. | Challenges established processes; highly effective in innovative roles. |
-| **Conscientiousness** | High organization, dependability, and goal-directed behavior. | Strong predictor of job performance; reliable and consistent team member. |
-| **Extraversion** | Sociability, assertiveness, and high energy levels. | Effective in leadership roles; thrives in collaborative team settings. |
-| **Agreeableness** | Cooperation, trust, empathy, and kindness. | Promotes conflict resolution and acts as a team harmony builder. |
-| **Neuroticism** | Emotional instability, anxiety, and stress-prone response patterns. | High levels make performance under pressure difficult. |
+| Trait                 | Description                                                         | Workplace Impact                                                          |
+| :-------------------- | :------------------------------------------------------------------ | :------------------------------------------------------------------------ |
+| **Openness**          | Curiosity, creativity, and willingness to embrace new experiences.  | Challenges established processes; highly effective in innovative roles.   |
+| **Conscientiousness** | High organization, dependability, and goal-directed behavior.       | Strong predictor of job performance; reliable and consistent team member. |
+| **Extraversion**      | Sociability, assertiveness, and high energy levels.                 | Effective in leadership roles; thrives in collaborative team settings.    |
+| **Agreeableness**     | Cooperation, trust, empathy, and kindness.                          | Promotes conflict resolution and acts as a team harmony builder.          |
+| **Neuroticism**       | Emotional instability, anxiety, and stress-prone response patterns. | High levels make performance under pressure difficult.                    |
 
 ## 14.5 Motivation: Maslow's Hierarchy of Needs
 Maslow's model proposes that individuals are motivated by a hierarchy of five progressive needs:
