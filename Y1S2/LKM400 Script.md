@@ -4,7 +4,7 @@
 > Sila hafal ikut bahagian ini. Ayat telah dipendekkan dan menggunakan bahasa lisan harian yang lebih santai supaya otak anda lebih mudah mengingat.
 
 ---
-
+	
 ## BAHAGIAN 1: ISU FOMO DAN EKONOMI
 
 ### IDEA 1: PENGENALAN FOMO
@@ -27,22 +27,19 @@ Cuba kita tengok negara maju macam Jepun dan Korea Selatan. Ekonomi mereka sanga
 
 ---
 
-## BAHAGIAN 2: ISU RASUAH DAN INTEGRITI
-
-### IDEA 7: PENGENALAN INTEGRITI
-Sekarang kita masuk bab kejujuran pula. Hos, di sinilah bezanya antara bangsa yang betul-betul merdeka, dengan bangsa yang merdeka pada nama saja. Kita tidak akan jadi bangsa yang bebas kalau kita masih jadi hamba kepada rasuah dan gila duit.
-
+### BAHAGIAN 2: ISU RASUAH DAN INTEGRITI 
+### IDEA 7: PENGENALAN INTEGRITI (PERISAI RASUAH) 
+Menjawab soalan Hos tadi, jiwa merdeka inilah perisai paling kuat untuk halang rasuah. Di sinilah kita nampak beza antara bangsa yang betul-betul merdeka, dengan bangsa yang merdeka pada nama saja. Kita takkan jadi bangsa yang bebas kalau kita masih jadi hamba rasuah dan gila duit. 
 ### IDEA 8: ANALOGI RUMAH KAYU DAN ANAI-ANAI
-Saya selalu samakan rasuah ini macam serangan anai-anai pada sebuah rumah kayu yang cantik. Dari luar, rumah itu nampak hebat dan kuat. Sama macam negara kita yang ada jalan raya cantik dan bangunan tinggi. Tapi awas, kalau tak ada sikap jujur, anai-anai rasuah ini sedang diam-diam makan tiang rumah kita dari dalam. Bila datang ujian besar macam krisis ekonomi, negara kita boleh runtuh sekelip mata sebab tiang asasnya dah reput.
+Rasuah ini macam anai-anai yang makan rumah kayu. Dari luar, rumah itu nampak cantik dan kuat. Sama macam negara kita, nampak hebat ada jalan raya dan bangunan tinggi. Tapi, kalau kita tak jujur, rasuah ini macam anai-anai yang diam-diam makan tiang rumah dari dalam. Bila ada krisis ekonomi, negara kita boleh runtuh sekelip mata sebab tiang asasnya dah reput. 
 
-### IDEA 9: KESAN RASUAH PADA ORANG SUSAH
-Kita kena sedar, setiap kali duit negara hilang berbilion ringgit sebab rasuah, rakyat biasalah yang kena tanggung derita. Cuba letak diri kita di tempat orang susah. Dengan berbilion ringgit yang lesap itu, cuba bayangkan, berapa banyak sekolah rosak di kampung boleh dibaiki? Berapa banyak katil hospital dan ambulans baru boleh dibeli? Dan berapa banyak modal niaga boleh diberi pada keluarga miskin?
+### IDEA 9: KESAN RASUAH PADA ORANG SUSAH 
+Kita kena ingat, bila duit negara hilang berbilion ringgit sebab rasuah, rakyat biasalah yang paling susah. Cuba letak diri kita di tempat orang susah. Dengan duit berbilion yang hilang tu, cuba bayangkan, berapa banyak sekolah rosak di kampung kita boleh baiki? Berapa banyak katil hospital dan ambulans baru kita boleh beli? Berapa banyak modal perniagaan kita boleh bagi pada keluarga miskin untuk tolong mereka bina hidup baru? 
+### IDEA 10: DUIT MASA DEPAN KENA CURI 
+Setiap sen yang hilang sebab rasuah adalah duit masa depan anak-anak kita yang kena curi. 
 
-### IDEA 10: DUIT MASA DEPAN KENA CURI
-Kita wajib ingat, setiap sen yang hilang sebab rasuah adalah duit yang dicuri daripada masa depan anak-anak kita.
-
-### IDEA 11: PATRIOTISME ADALAH SIKAP JUJUR
-Jadi, semangat cinta negara perlukan tindakan. Bukan sekadar kibar bendera setahun sekali. Cara paling baik untuk buktikan kita sayang negara adalah dengan bersikap jujur di tempat kerja. Kalau kita berniaga, jangan tipu timbangan. Kalau makan gaji, buatlah kerja dengan amanah dan jangan ambil duit kopi. Lawan rasuah adalah perjuangan sebenar kita hari ini. Kita mungkin tak dijajah askar luar, tapi kita boleh musnah sebab sikap tamak bangsa sendiri.
+### IDEA 11: PATRIOTISME ADALAH SIKAP JUJUR 
+Jadi, sayang negara perlukan tindakan. Bukan setakat kibar bendera masa bulan Ogos saja. Cara paling baik nak tunjuk kita sayang negara adalah dengan bersikap jujur masa kerja. Kalau berniaga, jangan tipu timbangan. Kalau makan gaji, buat kerja betul-betul dan tolak duit kopi. Lawan rasuah ini adalah perjuangan kita yang sebenar hari ini. Kita mungkin tak dijajah oleh askar luar, tapi negara boleh musnah sebab sikap tamak bangsa sendiri.
 
 ---
 
