@@ -9,7 +9,7 @@
 
 ### 1. Pengenalan FOMO
 - Terima kasih Hos atas soalan yang bagus tadi.
-- Memang betul, sikap FOMO atau takut ketinggalan zaman ini sangat bahaya untuk ekonomi kita.
+- Memang betul, sikap FOMO atau takut ketinggalan zaman ini bawa kesan yang sangat buruk kepada ekonomi negara.
 
 ### 2. Contoh FOMO
 - Golongan muda sekarang selalu ada sikap FOMO.
