@@ -1,17 +1,17 @@
-# Struktur Hafazan: Chiew Yee Fan (Versi Bahasa Mudah)
+# Struktur Hafazan Penuh: Chiew Yee Fan (Pakar Ekonomi & Sosial)
 
 > [!tip] Nota Hafazan
-> Sila hafal ikut bahagian ini. Ayat telah dipendekkan dan menggunakan bahasa lisan harian yang lebih santai supaya otak anda lebih mudah mengingat.
+> Sila hafal ikut bahagian ini. Teks telah disusun mengikut blok idea menggunakan bahasa lisan harian yang lebih santai supaya otak anda lebih mudah mengingat jalannya.
 
 ---
-	
+
 ## BAHAGIAN 1: ISU FOMO DAN EKONOMI
 
 ### IDEA 1: PENGENALAN FOMO
 Terima kasih Hos atas soalan yang bagus tadi. Memang betul, isu FOMO atau rasa takut ketinggalan zaman ini bawa kesan yang sangat buruk pada ekonomi negara. Mari kita lihat hal ini dengan cara yang paling senang untuk kita faham.
 
 ### IDEA 2: CONTOH FOMO
-Bila masyarakat kita, lebih-lebih lagi orang muda, terlalu suka ikut gaya luar sebab FOMO, kita selalu habiskan duit tanpa fikir panjang. Contoh paling senang, ramai sanggup beli beg jenama luar yang mahal. Ada juga yang sanggup beratur panjang semata-mata nak beli kopi dari luar negara. Padahal, kopi tempatan kita jauh lebih murah dan sedap.
+Sikap FOMO atau takut ketinggalan zaman ini sangat ketara dalam kalangan masyarakat kita, lebih-lebih lagi orang muda. Bila ada perasaan FOMO ini, mereka akan rasa risau kalau tidak ikut trend atau gaya dari luar negara. Jadi, demi nak nampak hebat dan tidak ketinggalan zaman, mereka sanggup habiskan duit tanpa fikir panjang. Contoh paling senang, ramai yang sanggup beli beg jenama luar yang sangat mahal. Ada juga yang sanggup beratur panjang semata-mata nak beli kopi import. Padahal, kopi tempatan kita sebenarnya jauh lebih murah dan rasanya pun sangat sedap.
 
 ### IDEA 3: PENJAJAHAN MINDA
 Bila kita buat macam ini, sedar tak sedar, kita sebenarnya sedang hantar duit kita keluar negara. Kita selalu laung merdeka setiap bulan Ogos. Tapi fikiran kita masih kena jajah sebab kita rasa barang import sentiasa lebih bagus, lebih moden, dan nampak hebat. Ini namanya penjajahan minda. Jiwa merdeka dari segi ekonomi maksudnya, kita bangga guna barang buatan orang kita sendiri.
@@ -23,22 +23,25 @@ Untuk bagi nampak jelas, saya suka guna contoh baldi ekonomi. Bayangkan ekonomi 
 Tapi kalau kita asyik tiru gaya orang luar dan beli barang import, kita sebenarnya sedang tebuk banyak lubang pada baldi itu. Sikit-sikit, duit kita mengalir keluar tanpa kita sedar. Kesannya, peniaga kita terpaksa tutup kedai, orang kita hilang kerja, dan nilai duit Ringgit kita akan makin jatuh.
 
 ### IDEA 6: CONTOH NEGARA MAJU
-Cuba kita tengok negara maju macam Jepun dan Korea Selatan. Ekonomi mereka sangat kuat sebab rakyat mereka sangat bangga guna barang sendiri dari dulu lagi. Kekuatan sebuah negara bermula bila duit rakyat digunakan untuk bangunkan negara sendiri.
+Cuba kita tengok negara maju macam Jepun dan Korea Selatan. Ekonomi mereka sangat kuat sebab rakyat mereka sangat bangga guna barang sendiri dari dulu lagi. Kekuatan sebuah negara bermula bila duit rakyat digunakan sepenuhnya untuk bangunkan negara sendiri.
 
 ---
 
-## BAHAGIAN 2: ISU RASUAH DAN INTEGRITI 
-### IDEA 7: PENGENALAN INTEGRITI (PERISAI RASUAH) 
-Menjawab soalan Hos tadi, jiwa merdeka inilah perisai paling kuat untuk halang rasuah. Di sinilah kita nampak beza antara bangsa yang betul-betul merdeka, dengan bangsa yang merdeka pada nama saja. Kita takkan jadi bangsa yang bebas kalau kita masih jadi hamba rasuah dan gila duit. 
+## BAHAGIAN 2: ISU RASUAH DAN INTEGRITI
+
+### IDEA 7: PENGENALAN INTEGRITI (PERISAI RASUAH)
+Menjawab soalan Hos tadi, jiwa merdeka inilah perisai paling kuat untuk halang rasuah. Di sinilah kita nampak beza antara bangsa yang betul-betul merdeka, dengan bangsa yang merdeka pada nama saja. Kita takkan jadi bangsa yang bebas kalau kita masih jadi hamba rasuah dan gila duit.
+
 ### IDEA 8: ANALOGI RUMAH KAYU DAN ANAI-ANAI
-Rasuah ini macam anai-anai yang makan rumah kayu. Dari luar, rumah itu nampak cantik dan kuat. Sama macam negara kita, nampak hebat ada jalan raya dan bangunan tinggi. Tapi, kalau kita tak jujur, rasuah ini macam anai-anai yang diam-diam makan tiang rumah dari dalam. Bila ada krisis ekonomi, negara kita boleh runtuh sekelip mata sebab tiang asasnya dah reput. 
+Rasuah ini macam anai-anai yang makan rumah kayu. Dari luar, rumah itu nampak cantik dan kuat. Sama macam negara kita, nampak hebat ada jalan raya dan bangunan tinggi. Tapi, kalau kita tak jujur, rasuah ini macam anai-anai yang diam-diam makan tiang rumah dari dalam. Bila ada krisis ekonomi, negara kita boleh runtuh sekelip mata sebab tiang asasnya dah reput.
 
-### IDEA 9: KESAN RASUAH PADA ORANG SUSAH 
-Kita kena ingat, bila duit negara hilang berbilion ringgit sebab rasuah, rakyat biasalah yang paling susah. Cuba letak diri kita di tempat orang susah. Dengan duit berbilion yang hilang tu, cuba bayangkan, berapa banyak sekolah rosak di kampung kita boleh baiki? Berapa banyak katil hospital dan ambulans baru kita boleh beli? Berapa banyak modal perniagaan kita boleh bagi pada keluarga miskin untuk tolong mereka bina hidup baru? 
-### IDEA 10: DUIT MASA DEPAN KENA CURI 
-Setiap sen yang hilang sebab rasuah adalah duit masa depan anak-anak kita yang kena curi. 
+### IDEA 9: KESAN RASUAH PADA ORANG SUSAH
+Kita kena ingat, bila duit negara hilang berbilion ringgit sebab rasuah, rakyat biasalah yang paling susah. Cuba letak diri kita di tempat orang susah. Dengan duit berbilion yang hilang tu, cuba bayangkan, berapa banyak sekolah rosak di kampung kita boleh baiki? Berapa banyak katil hospital dan ambulans baru kita boleh beli? Berapa banyak modal perniagaan kita boleh bagi pada keluarga miskin untuk tolong mereka bina hidup baru?
 
-### IDEA 11: PATRIOTISME ADALAH SIKAP JUJUR 
+### IDEA 10: DUIT MASA DEPAN KENA CURI
+Setiap sen yang hilang sebab rasuah adalah duit masa depan anak-anak kita yang kena curi.
+
+### IDEA 11: PATRIOTISME ADALAH SIKAP JUJUR
 Jadi, sayang negara perlukan tindakan. Bukan setakat kibar bendera masa bulan Ogos saja. Cara paling baik nak tunjuk kita sayang negara adalah dengan bersikap jujur masa kerja. Kalau berniaga, jangan tipu timbangan. Kalau makan gaji, buat kerja betul-betul dan tolak duit kopi. Lawan rasuah ini adalah perjuangan kita yang sebenar hari ini. Kita mungkin tak dijajah oleh askar luar, tapi negara boleh musnah sebab sikap tamak bangsa sendiri.
 
 ---
