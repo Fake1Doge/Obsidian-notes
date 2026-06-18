@@ -27,7 +27,7 @@ Cuba kita tengok negara maju macam Jepun dan Korea Selatan. Ekonomi mereka sanga
 
 ---
 
-### BAHAGIAN 2: ISU RASUAH DAN INTEGRITI 
+## BAHAGIAN 2: ISU RASUAH DAN INTEGRITI 
 ### IDEA 7: PENGENALAN INTEGRITI (PERISAI RASUAH) 
 Menjawab soalan Hos tadi, jiwa merdeka inilah perisai paling kuat untuk halang rasuah. Di sinilah kita nampak beza antara bangsa yang betul-betul merdeka, dengan bangsa yang merdeka pada nama saja. Kita takkan jadi bangsa yang bebas kalau kita masih jadi hamba rasuah dan gila duit. 
 ### IDEA 8: ANALOGI RUMAH KAYU DAN ANAI-ANAI
