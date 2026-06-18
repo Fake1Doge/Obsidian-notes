@@ -53,7 +53,7 @@
 - Dari luar, rumah nampak cantik.
 - Macam negara kita yang nampak hebat ada bangunan tinggi.
 - Tapi kalau kita tak jujur, anai-anai rasuah ini akan makan tiang rumah dari dalam.
-- Bila ada krisis ekonomi, negara boleh runtuh sekelip mata sebab tiangnya dah reput.
+- Bila ada krisis ekonomi, negara boleh runtuh sekelip mata sebab tiangnya dah **reput**.
 
 - Ingat, bila duit negara hilang berbilion ringgit sebab rasuah, rakyat biasalah yang paling susah.
 - Cuba letak diri di tempat orang miskin.
