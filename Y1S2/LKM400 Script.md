@@ -8,7 +8,7 @@
 ## BAHAGIAN 1: ISU FOMO DAN EKONOMI
 
 ### IDEA 1: PENGENALAN FOMO
-Terima kasih Hos atas soalan yang bagus tadi. Memang betul, isu FOMO atau rasa takut ketinggalan zaman ini bawa kesan yang sangat buruk pada ekonomi negara. Mari kita lihat hal ini dengan cara yang paling senang untuk kita faham.
+Terima kasih Hos atas soalan yang bagus tadi. Memang betul, isu FOMO atau rasa takut ketinggalan zaman ini bawa kesan yang sangat buruk pada ekonomi negara. 
 
 ### IDEA 2: CONTOH FOMO
 Sikap FOMO atau takut ketinggalan zaman ini sangat ketara dalam kalangan masyarakat kita, lebih-lebih lagi orang muda. Bila ada perasaan FOMO ini, mereka akan rasa risau kalau tidak ikut trend atau gaya dari luar negara. Jadi, demi nak nampak hebat dan tidak ketinggalan zaman, mereka sanggup habiskan duit tanpa fikir panjang. Contoh paling senang, ramai yang sanggup beli beg jenama luar yang sangat mahal. Ada juga yang sanggup beratur panjang semata-mata nak beli kopi import. Padahal, kopi tempatan kita sebenarnya jauh lebih murah dan rasanya pun sangat sedap.
