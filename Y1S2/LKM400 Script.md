@@ -88,4 +88,4 @@
 
 - Bangsa yang berjiwa merdeka adalah bangsa yang bermaruah tinggi.
 - Mari sama-sama jadikan kemajuan negara ini satu kenyataan.
-- Sekian saja dari saya, kembali kepada Hos.
+- Sekian saja dari saya, saya serahkan kembali kepada Hos.
