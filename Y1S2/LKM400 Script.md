@@ -63,7 +63,7 @@
 
 - Setiap sen yang hilang sebab rasuah, sebenarnya adalah duit masa depan anak-anak kita yang dicuri.
 
-- Jadi, Jadi, semangat patriotisme ini kena dibuktikan dengan tindakan.
+- Jadi, semangat patriotisme ini kena dibuktikan dengan tindakan.
 - Bukan cuma gantung bendera saja.
 - Cara paling senang nak tunjuk patriotisme kita, buat kerja dengan jujur.
 - Kalau berniaga, jangan tipu orang.
