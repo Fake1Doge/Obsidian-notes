@@ -83,7 +83,7 @@
 
 - Banggalah jadi rakyat Malaysia.
 - Buktikan dengan tindakan, bukan sembang kosong.
-- Tunjuk semangat sayang negara dengan selalu beli barang tempatan.
+- Kita boleh menunjuk semangat sayang negara dengan selalu beli barang tempatan.
 - Rajin bekerja, sentiasa jujur, tolak rasuah, dan tolong-menolong tanpa kira bangsa.
 
 - Bangsa yang berjiwa merdeka adalah bangsa yang bermaruah tinggi.
