@@ -65,7 +65,7 @@
 
 - Jadi, sayang negara kena ada tindakan.
 - Bukan cuma gantung bendera saja.
-- Cara paling senang nak tunjuk sayang negara, buat kerja dengan jujur.
+- Cara paling senang nak tunjuk semangat patriotisme, buat kerja dengan jujur.
 - Kalau berniaga, jangan tipu orang.
 - Kalau makan gaji, jangan ambil duit kopi.
 - Kita semua wajib tolak rasuah.
@@ -83,7 +83,7 @@
 
 - Banggalah jadi rakyat Malaysia.
 - Buktikan dengan tindakan, bukan sembang kosong.
-- Kita boleh menunjuk semangat sayang negara dengan selalu beli barang tempatan.
+- Kita boleh menunjuk semangat Patriotisme dengan selalu beli barang tempatan.
 - Rajin bekerja, sentiasa jujur, tolak rasuah, dan tolong-menolong tanpa kira bangsa.
 
 - Bangsa yang berjiwa merdeka adalah bangsa yang bermaruah tinggi.
