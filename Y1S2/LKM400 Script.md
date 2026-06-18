@@ -73,14 +73,14 @@
 ### 10. Curi Masa Depan
 - Setiap sen yang hilang sebab rasuah, sebenarnya adalah duit masa depan anak-anak kita yang dicuri.
 
-### 11. Patriotisme = Jujur
-- Jadi, sayang negara mesti ada tindakan.
-- Bukan sekadar kibar bendera bulan Ogos saja.
-- Cara paling senang nak tunjuk kita sayang negara, jadilah orang yang jujur masa bekerja.
+### 11. Patriotisme Maksudnya Jujur
+- Jadi, sayang negara kena ada tindakan.
+- Bukan cuma gantung bendera saja.
+- Cara paling senang nak tunjuk sayang negara, buat kerja dengan jujur.
 - Kalau berniaga, jangan tipu orang.
-- Kalau makan gaji, tolak terus duit kopi.
-- Lawan rasuah inilah perjuangan kita sekarang.
-- Negara kita takkan hancur sebab musuh luar, tapi boleh hancur sebab sikap tamak kita sendiri.
+- Kalau makan gaji, jangan ambil duit kopi.
+- Kita semua wajib tolak rasuah.
+- Kita tak hancur sebab musuh luar, tapi kita hancur kalau orang kita sendiri yang tamak.
 
 ---
 
