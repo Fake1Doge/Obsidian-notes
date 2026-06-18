@@ -69,7 +69,7 @@
 - Kalau berniaga, jangan tipu orang.
 - Kalau makan gaji, jangan ambil duit kopi.
 - Kita semua wajib tolak rasuah.
-- Kita tak hancur sebab musuh luar, tapi kita hancur kalau orang kita sendiri yang tamak.
+- Negara kita akan rosak bukan sebab orang luar, tapi sebab orang kita tamak.
 
 ---
 
