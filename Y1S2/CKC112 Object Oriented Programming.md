@@ -3068,7 +3068,7 @@ To use STL algorithms, you must include the `<algorithm>` header:
 
 Here are 8 key algorithms provided by the STL:
 
-### 1. `binary_search`
+### 10.6.1 `binary_search`
 Tests whether a target value exists within a sorted range.
 - **Complexity:** $O(\log n)$ comparisons.
 - **Requirement:** The container elements must be sorted in ascending order before calling this function.
@@ -3100,7 +3100,7 @@ Tests whether a target value exists within a sorted range.
 
 ---
 
-### 2. `count`
+### 10.6.2 `count`
 Counts the number of elements in a range that are equal to a specified target value.
 
 > [!example] Code & Output: `count`
@@ -3127,7 +3127,7 @@ Counts the number of elements in a range that are equal to a specified target va
 
 ---
 
-### 3. `find`
+### 10.6.3 `find`
 Locates the first occurrence of a specified value in a range.
 - **Complexity:** Linear time $O(n)$.
 - **Return Value:** An iterator to the first matching element. If no match is found, it returns the end iterator (`container.end()`).
@@ -3166,7 +3166,7 @@ Locates the first occurrence of a specified value in a range.
 
 ---
 
-### 4. `for_each`
+### 10.6.4 `for_each`
 Applies a specified function or function object to each element within a range, from beginning to end.
 
 > [!example] Code & Output: `for_each`
@@ -3195,7 +3195,7 @@ Applies a specified function or function object to each element within a range, 
 
 ---
 
-### 5. `max_element`
+### 10.6.5 `max_element`
 Finds the largest element in a range.
 - **Return Value:** An iterator pointing to the first occurrence of the largest element. Returns the end iterator if the range is empty.
 
@@ -3228,7 +3228,7 @@ Finds the largest element in a range.
 
 ---
 
-### 6. `min_element`
+### 10.6.6 `min_element`
 Finds the smallest element in a range.
 - **Return Value:** An iterator pointing to the first occurrence of the smallest element.
 
@@ -3261,7 +3261,7 @@ Finds the smallest element in a range.
 
 ---
 
-### 7. `random_shuffle`
+### 10.6.7 `random_shuffle`
 Shuffles the elements in a range into a random order.
 - **Note:** Uses a pseudorandom generator. It is common to seed `srand` using `time(0)`.
 
@@ -3300,7 +3300,7 @@ Shuffles the elements in a range into a random order.
 
 ---
 
-### 8. `sort`
+### 10.6.8 `sort`
 Sorts the elements of a range in ascending order.
 - **Complexity:** $O(n \log n)$ average and worst-case comparisons (using Introsort).
 
