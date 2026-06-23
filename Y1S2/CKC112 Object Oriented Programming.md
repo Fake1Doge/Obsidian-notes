@@ -2572,3 +2572,795 @@ When the `new` operator fails to allocate requested memory (e.g., if the system 
         }
     }
     ```
+
+---
+
+# Chapter 10: Templates and STL
+
+## 10.1 Function Templates
+A function template is a "generic" function that can work with any data type. The programmer writes the specifications of the function but substitutes parameter names for actual data types.
+
+> [!info] Definition: Function Template
+> A "generic" function definition that serves as a mold or template from which the compiler can generate one or more actual functions at compile-time based on the types used in calls.
+
+### Core Concepts
+- **Not an Actual Function:** A function template by itself does not consume memory or generate machine code. It is merely a blueprint.
+- **Compiler Code Generation:** When the compiler encounters a call to a template function, it examines the data types of the arguments passed and automatically generates the matching function code (this is called template instantiation).
+- **Generic Data Types:** Type parameters are used to specify generic data types inside the template prefix.
+
+> [!note] Important Rules for Function Templates
+> - All type parameters defined in the template prefix must appear at least once in the function's parameter list.
+> - An actual instance of the function is created in memory only when the compiler encounters a call to it.
+> - If a user-defined class object is passed to a template function, the class must support all operations performed on that parameter in the template (e.g., if the template uses `*`, the class must contain an overloaded `*` operator).
+
+### Syntax of a Function Template
+The general syntax begins with the template prefix:
+```cpp
+template <class T>
+T square(T number)
+{
+    return number * number;
+}
+```
+- **Template Prefix:** `template <class T>` tells the compiler that the following definition is a template, and that `T` is a generic type parameter.
+- **Type Parameter:** `class T` (or `typename T`) declares `T` as a generic placeholder type that will be replaced with an actual data type (such as `int` or `double`) when the function is instantiated.
+
+> [!example] Visualizing Code Generation
+> Let's look at the difference between regular overloaded functions and a template definition:
+> 
+> **Regular Overloads (Manual Duplication):**
+> ```cpp
+> int square(int number) {
+>     return number * number;
+> }
+> double square(double number) {
+>     return number * number;
+> }
+> ```
+> 
+> **Template Definition (Compiler Handles Instances):**
+> When the programmer calls `square(4)` and `square(6.2)`, the compiler automatically instantiates:
+> 1. `int square(int number) { return number * number; }`
+> 2. `double square(double number) { return number * number; }`
+
+### Complete Implementation Example
+Here is a complete program demonstrating the declaration and usage of the `square` template:
+
+```cpp
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+// Function template definition
+template <class T>
+T square(T num)
+{
+    return num * num;
+}
+
+int main()
+{
+    int userInt;
+    double userDouble;
+    
+    cout << setprecision(5);
+    cout << "Enter an integer and a floating-point value: ";
+    cin >> userInt >> userDouble;
+    
+    // The compiler generates two separate versions of square at compile-time
+    cout << "Here are their squares: ";
+    cout << square(userInt) << " and " << square(userDouble) << endl;
+    
+    return 0;
+}
+```
+
+### Reference Parameters in Function Templates
+Function templates can also use reference variables to pass parameters by reference.
+
+> [!example] Example: Generic Value Swapper
+> Below is a function template that swaps the contents of two variables of the same type:
+> ```cpp
+> template <class T>
+> void swapVars(T &var1, T &var2)
+> {
+>     T temp;
+>     temp = var1;
+>     var1 = var2;
+>     var2 = temp;
+> }
+> ```
+
+Here is a driver program demonstrating `swapVars` working with `char`, `int`, and `double` data types:
+
+```cpp
+#include <iostream>
+using namespace std;
+
+template <class T>
+void swapVars(T &var1, T &var2)
+{
+    T temp;
+    temp = var1;
+    var1 = var2;
+    var2 = temp;
+}
+
+int main()
+{
+    char firstChar, secondChar;
+    int firstInt, secondInt;
+    double firstDouble, secondDouble;
+
+    cout << "Enter two characters: ";
+    cin >> firstChar >> secondChar;
+    swapVars(firstChar, secondChar);
+    cout << firstChar << " " << secondChar << endl;
+
+    cout << "Enter two integers: ";
+    cin >> firstInt >> secondInt;
+    swapVars(firstInt, secondInt);
+    cout << firstInt << " " << secondInt << endl;
+
+    cout << "Enter two floating-point numbers: ";
+    cin >> firstDouble >> secondDouble;
+    swapVars(firstDouble, secondDouble);
+    cout << firstDouble << " " << secondDouble << endl;
+
+    return 0;
+}
+```
+
+### Function Templates with Multiple Data Types
+You can define templates that accept multiple generic types by separating them with commas in the template prefix:
+```cpp
+template <class T1, class T2>
+```
+
+> [!note] Best Practice
+> Each type parameter declared in the template prefix is recommended to be used somewhere in the template definition.
+
+> [!example] Example: Determining the Larger Type Size
+> This function compares the memory sizes of two different parameters and returns the larger size in bytes:
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> 
+> template <class T1, class T2>
+> int largest(const T1 &var1, T2 &var2)
+> {
+>     if (sizeof(var1) > sizeof(var2))
+>         return sizeof(var1);
+>     else
+>         return sizeof(var2);
+> }
+> 
+> int main()
+> {
+>     int i = 0;
+>     char c = ' ';
+>     float f = 0.0;
+>     double d = 0.0;
+>     
+>     cout << "Comparing an int and a double, the largest\n"
+>          << "of the two is " << largest(i, d) << " bytes.\n"; // int (4) vs double (8) -> returns 8
+>          
+>     cout << "Comparing a char and a float, the largest\n"
+>          << "of the two is " << largest(c, f) << " bytes.\n"; // char (1) vs float (4) -> returns 4
+>          
+>     return 0;
+> }
+> ```
+
+### Overloading Function Templates
+Like regular functions, function templates can be overloaded.
+- Each overloaded template must have a unique parameter list so the compiler can resolve which template to use.
+- The templates must be defined before they are called.
+
+> [!example] Example: Overloaded `sum` Template
+> ```cpp
+> // Overload 1: Computes the sum of two values
+> template <class T>
+> T sum(T val1, T val2)
+> {
+>     return val1 + val2;
+> }
+> 
+> // Overload 2: Computes the sum of three values
+> template <class T>
+> T sum(T val1, T val2, T val3)
+> {
+>     return val1 + val2 + val3;
+> }
+> ```
+
+### How to Start Designing Templates
+It is much easier to convert an existing, working function into a template than it is to design and write a template from scratch.
+1. Write the function first as a regular function with a specific type (e.g., `int` or `double`).
+2. Test and debug it to make sure it works correctly.
+3. Once working, add the template prefix (e.g., `template <class T>`).
+4. Replace the specific type names inside the function parameter list, return type, and local declarations with the type parameter placeholder `T`.
+
+> [!tip] Extra Notes: typename vs class
+> In C++ template prefixes, the keywords `class` and `typename` are completely interchangeable. For instance, `template <class T>` and `template <typename T>` behave identically. Historically, `class` was the original keyword, but `typename` was added to reduce confusion since templates can be parameterized with primitive types (like `int` or `char`), which are not actual classes.
+
+> [!tip] Extra Notes: Compilation and Linking of Templates
+> Unlike regular functions, templates are compiled on-demand. Since the compiler needs to see the template definition (not just its declaration) to instantiate the code, template definitions are almost always written directly in header files (`.h` or `.hpp`) rather than separated into `.cpp` implementation files. Placing template definitions in a `.cpp` file can lead to unresolved external symbol errors during linking.
+
+## 10.2 Class Templates
+Just as function templates allow us to write generic functions, class templates allow us to create generic classes and Abstract Data Types (ADTs).
+
+> [!info] Definition: Class Template
+> A blueprint for a class where member variables and/or member functions can use placeholder types, enabling the class to handle different data types without code duplication.
+
+### Core Concepts
+- **Preventing Duplication:** Class templates allow the programmer to write a single definition for a class instead of creating duplicate classes (e.g., `IntStack`, `DoubleStack`, `StringStack`) to handle different data types.
+- **Explicit Instantiation:** Unlike function templates where the compiler can often infer type parameters from arguments, class templates **must** be instantiated with explicit type arguments (e.g., `<int>`, `<double>`) enclosed in angle brackets at the point of object definition.
+
+### Syntax of a Class Template
+Here is an example class template called `grade`:
+```cpp
+template <class T>
+class grade
+{
+private:
+    T score;
+public:
+    grade(T s) { score = s; }
+    void setGrade(T s) { score = s; }
+    T getGrade() { return score; }
+};
+```
+- The template prefix `template <class T>` is placed immediately before the class definition.
+- The type parameter `T` is used as the data type for the private member `score`, constructor argument, mutator argument, and accessor return type.
+
+### Instantiating Class Objects
+To define objects of a class template, pass the concrete type inside angle brackets:
+```cpp
+grade<int> testList[20];      // Array of 20 grade objects holding integer scores
+grade<double> quizList[20];   // Array of 20 grade objects holding double scores
+```
+Once defined, these objects are used exactly like ordinary class objects:
+```cpp
+testList[0].setGrade(95);
+quizList[0].setGrade(88.5);
+```
+
+### Defining Member Functions Outside the Class Definition
+If you define member functions of a class template outside the class definition body, you must define them as function templates. The syntax requires:
+1. The template prefix before each function definition.
+2. The class name qualified with the type parameter (e.g., `ClassName<T>::FunctionName`).
+
+> [!example] Example: Out-of-Class Member Function Definitions
+> ```cpp
+> template <class T>
+> class grade
+> {
+> private:
+>     T score;
+> public:
+>     grade(T s);
+>     void setGrade(T s);
+>     T getGrade();
+> };
+> 
+> // Constructor definition
+> template <class T>
+> grade<T>::grade(T s)
+> {
+>     score = s;
+> }
+> 
+> // Mutator definition
+> template <class T>
+> void grade<T>::setGrade(T s)
+> {
+>     score = s;
+> }
+> 
+> // Accessor definition
+> template <class T>
+> T grade<T>::getGrade()
+> {
+>     return score;
+> }
+> ```
+
+### Class Templates and Inheritance
+Class templates can participate in inheritance hierarchies. A class template can inherit from another class template:
+```cpp
+template <class T>
+class Rectangle
+{
+protected:
+    T width;
+    T length;
+public:
+    Rectangle(T w, T l) : width(w), length(l) {}
+};
+
+template <class T>
+class Square : public Rectangle<T>
+{
+public:
+    Square(T side) : Rectangle<T>(side, side) {}
+};
+```
+> [!important] Crucial Inheritance Rule
+> When deriving a class template from another class template, you must use the type parameter `T` (e.g., `<T>`) everywhere the base class name is referenced in the derived class declaration (such as `public Rectangle<T>`).
+
+> [!tip] Extra Notes: Class Templates with Non-Type Parameters
+> Class templates can also accept non-type parameters (also called value parameters), which are typically integers. These parameters act as compile-time constants.
+> ```cpp
+> template <class T, int size>
+> class ArrayWrapper {
+> private:
+>     T arr[size]; // Statically-allocated array whose size is set at compile-time
+> public:
+>     T& operator[](int index) { return arr[index]; }
+> };
+> 
+> // Usage:
+> ArrayWrapper<int, 50> myIntArray; // Array of 50 integers
+> ArrayWrapper<double, 10> myDoubleArray; // Array of 10 doubles
+> ```
+
+> [!tip] Extra Notes: Default Template Arguments
+> Just as functions can have default parameter values, class templates can have default type arguments:
+> ```cpp
+> template <class T = int>
+> class Counter {
+>     T value;
+> };
+> // Usage:
+> Counter<> myCounter; // Defaults to Counter<int>
+> ```
+
+## 10.3 Introduction to the Standard Template Library (STL)
+The Standard Template Library (STL) is a powerful library of generic, reusable classes and functions in C++ that implement many commonly used data structures and algorithms.
+
+> [!info] Definition: Standard Template Library (STL)
+> A software library included in the C++ Standard Library containing generic containers, iterators, algorithms, and function objects.
+
+### Core Components of STL
+The STL is built upon three primary components:
+1. **Containers:** Class templates that store and organize data in memory (e.g., arrays, linked lists, vectors).
+2. **Iterators:** Pointer-like objects used to traverse the elements of a container. They act as the bridge between containers and algorithms.
+3. **Algorithms:** Function templates that perform operations on containers (e.g., sorting, searching, copying) via iterators.
+
+---
+
+## 10.4 Introduction to Containers
+A container is an STL class template designed to hold and organize elements in memory.
+
+### Categories of Containers
+STL containers are broadly classified into three types:
+- **Sequence Containers:** Store elements in a linear sequence (e.g., `vector`, `list`, `deque`).
+- **Associative Containers:** Store data in a sorted order for fast lookup (e.g., `set`, `map`). They use keys to access values.
+- **Container Adapters:** Provide a restricted interface to sequence containers (e.g., `stack` (LIFO), `queue` (FIFO), `priority_queue`).
+
+### Vector: A Dynamic Sequence Container
+A `vector` is a sequence container that represents a dynamic array. It can grow or shrink in size automatically as elements are added or removed.
+
+> [!example] Example: Vector Member Functions
+> Here is a program demonstrating the usage of basic member functions like `size()`, `push_back()`, and `pop_back()`:
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> using namespace std;
+> 
+> int main() { 
+>     int count; 
+>     vector<int> vect; 
+>     
+>     // Get initial size
+>     cout << "vect starts with " << vect.size() << " elements.\n"; 
+>     
+>     // Append elements to the end of vector
+>     for (count = 0; count < 10; count++) 
+>         vect.push_back(count); 
+>         
+>     cout << "Now vect has " << vect.size() << " elements. Here they are:\n"; 
+>     for (count = 0; count < vect.size(); count++) 
+>         cout << vect[count] << " "; 
+>     cout << endl; 
+>     
+>     // Remove elements from the end
+>     cout << "Popping the values out of vect...\n"; 
+>     for (count = 0; count < 10; count++) 
+>         vect.pop_back(); 
+>         
+>     cout << "Now vect has " << vect.size() << " elements.\n"; 
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> vect starts with 0 elements.
+> Now vect has 10 elements. Here they are:
+> 0 1 2 3 4 5 6 7 8 9 
+> Popping the values out of vect...
+> Now vect has 0 elements.
+> ```
+
+---
+
+## 10.5 Introduction to Iterators
+An iterator is an object that behaves like a pointer. It is used to point to and access individual elements within a container, allowing traversal.
+
+### Core Iterator Operations
+- `*iter` (Dereference): Accesses the element currently pointed to by the iterator.
+- `iter++` / `iter--`: Moves the iterator forward or backward to the next/previous element.
+- `begin()`: Member function of containers returning an iterator to the **first** element.
+- `end()`: Member function of containers returning an iterator pointing to the element **just past the last element** (half-open range: `[begin, end)`).
+
+> [!example] Example: Traversing Vector with Iterators
+> The following program demonstrates how to declare an iterator and use it to traverse a vector in both forward and backward directions:
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> using namespace std;
+> 
+> int main() { 
+>     int count; 
+>     vector<int> vect; 
+>     
+>     // Declaring an iterator for a vector of integers
+>     vector<int>::iterator iter; 
+>     
+>     for(count = 0; count < 10; count++) 
+>         vect.push_back(count); 
+>         
+>     cout << "Here are the values in vect: "; 
+>     // Forward traversal using begin() and end()
+>     for(iter = vect.begin(); iter < vect.end(); iter++) 
+>         cout << *iter << " "; 
+>         
+>     cout << "\nand here they are backwards: "; 
+>     // Backward traversal using end() - 1 and begin()
+>     for(iter = vect.end() - 1; iter >= vect.begin(); iter--) 
+>         cout << *iter << " "; 
+>         
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Here are the values in vect: 0 1 2 3 4 5 6 7 8 9 
+> and here they are backwards: 9 8 7 6 5 4 3 2 1 0 
+> ```
+
+> [!tip] Extra Notes: The Half-Open Range [begin, end)
+> STL uses half-open ranges. The iterator returned by `end()` does **not** point to a valid element; it points to the memory location immediately following the last element. Dereferencing `end()` causes undefined behavior. This design simplifies loops because the condition `iter != end()` is true as long as there are elements left to process.
+
+## 10.6 STL Algorithms
+The algorithms provided by the STL are implemented as function templates and perform various operations on elements of containers. They are designed to operate on container elements indirectly through iterators.
+
+To use STL algorithms, you must include the `<algorithm>` header:
+```cpp
+#include <algorithm>
+```
+
+Here are 8 key algorithms provided by the STL:
+
+### 1. `binary_search`
+Tests whether a target value exists within a sorted range.
+- **Complexity:** $O(\log n)$ comparisons.
+- **Requirement:** The container elements must be sorted in ascending order before calling this function.
+- **Return Type:** Returns `true` if the target is found, otherwise `false`.
+
+> [!example] Code & Output: `binary_search`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for binary_search
+> using namespace std;
+> 
+> int main() {
+>     vector<int> numbers {10, 20, 30, 40, 50};
+>     int target = 30;
+>     
+>     if (binary_search(numbers.begin(), numbers.end(), target))
+>         cout << target << " was found in the vector!" << endl;
+>     else
+>         cout << target << " was not found." << endl;
+>         
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> 30 was found in the vector!
+> ```
+
+---
+
+### 2. `count`
+Counts the number of elements in a range that are equal to a specified target value.
+
+> [!example] Code & Output: `count`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for count
+> using namespace std;
+> 
+> int main() { 
+>     vector<int> numbers {10, 20, 30, 20, 40, 20, 50};
+>     int target = 20;
+>     
+>     int totalCount = count(numbers.begin(), numbers.end(), target);
+>     cout << "The value " << target << " appears " << totalCount << " times." << endl;
+>     
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> The value 20 appears 3 times.
+> ```
+
+---
+
+### 3. `find`
+Locates the first occurrence of a specified value in a range.
+- **Complexity:** Linear time $O(n)$.
+- **Return Value:** An iterator to the first matching element. If no match is found, it returns the end iterator (`container.end()`).
+
+> [!example] Code & Output: `find`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for find
+> using namespace std;
+> 
+> int main() { 
+>     vector<int> numbers {10, 20, 30, 40, 50};
+>     int target = 40; 
+>     
+>     vector<int>::iterator resultIter = find(numbers.begin(), numbers.end(), target); 
+>     
+>     if (resultIter != numbers.end()) {
+>         cout << "Found target " << target << "!" << endl;
+>         // Calculate index by subtracting the beginning iterator
+>         int index = resultIter - numbers.begin();
+>         cout << "Found at location: " << index + 1 << endl;
+>         cout << "Value stored at iterator location: " << *resultIter << endl;
+>     } else {
+>         cout << target << " was not found in the container." << endl;
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Found target 40!
+> Found at location: 4
+> Value stored at iterator location: 40
+> ```
+
+---
+
+### 4. `for_each`
+Applies a specified function or function object to each element within a range, from beginning to end.
+
+> [!example] Code & Output: `for_each`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for for_each
+> using namespace std;
+> 
+> void printDoubled(int element) { 
+>     cout << (element * 2) << " ";
+> }
+> 
+> int main() { 
+>     vector<int> numbers {5, 10, 15, 20}; 
+>     cout << "Doubled values: "; 
+>     for_each(numbers.begin(), numbers.end(), printDoubled); 
+>     cout << endl; 
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Doubled values: 10 20 30 40 
+> ```
+
+---
+
+### 5. `max_element`
+Finds the largest element in a range.
+- **Return Value:** An iterator pointing to the first occurrence of the largest element. Returns the end iterator if the range is empty.
+
+> [!example] Code & Output: `max_element`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for max_element
+> using namespace std;
+> 
+> int main() { 
+>     vector<int> numbers {23, 89, 45, 71, 12}; 
+>     vector<int>::iterator maxIter = max_element(numbers.begin(), numbers.end()); 
+>     
+>     if (maxIter != numbers.end()) { 
+>         cout << "The largest value is: " << *maxIter << endl; 
+>         int index = maxIter - numbers.begin(); 
+>         cout << "Found at index position: " << index << endl;
+>     } else { 
+>         cout << "The vector is empty." << endl;
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> The largest value is: 89
+> Found at index position: 1
+> ```
+
+---
+
+### 6. `min_element`
+Finds the smallest element in a range.
+- **Return Value:** An iterator pointing to the first occurrence of the smallest element.
+
+> [!example] Code & Output: `min_element`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for min_element
+> using namespace std;
+> 
+> int main() { 
+>     vector<int> numbers {67, 34, 89, 12, 55}; 
+>     vector<int>::iterator minIter = min_element(numbers.begin(), numbers.end()); 
+>     
+>     if (minIter != numbers.end()) { 
+>         cout << "The smallest value is: " << *minIter << endl; 
+>         int index = minIter - numbers.begin(); 
+>         cout << "Found at index position: " << index << endl;
+>     } else {
+>         cout << "The vector is empty." << endl;
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> The smallest value is: 12
+> Found at index position: 3
+> ```
+
+---
+
+### 7. `random_shuffle`
+Shuffles the elements in a range into a random order.
+- **Note:** Uses a pseudorandom generator. It is common to seed `srand` using `time(0)`.
+
+> [!example] Code & Output: `random_shuffle`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for random_shuffle
+> #include <ctime>     // Required for time
+> #include <cstdlib>   // Required for srand and rand
+> using namespace std;
+> 
+> int main() { 
+>     srand(time(0)); // Seed randomizer
+>     vector<int> numbers {1, 2, 3, 4, 5, 6, 7, 8}; 
+>     
+>     cout << "Before shuffle: "; 
+>     for (int num : numbers) 
+>         cout << num << " "; 
+>     cout << endl; 
+>     
+>     random_shuffle(numbers.begin(), numbers.end()); 
+>     
+>     cout << "After shuffle: "; 
+>     for (int num : numbers) 
+>         cout << num << " "; 
+>     cout << endl; 
+>     return 0;
+> }
+> ```
+> **Output (Example):**
+> ```text
+> Before shuffle: 1 2 3 4 5 6 7 8 
+> After shuffle: 5 1 3 8 2 7 4 6 
+> ```
+
+---
+
+### 8. `sort`
+Sorts the elements of a range in ascending order.
+- **Complexity:** $O(n \log n)$ average and worst-case comparisons (using Introsort).
+
+> [!example] Code & Output: `sort`
+> ```cpp
+> #include <iostream>
+> #include <vector>
+> #include <algorithm> // Required for sort
+> using namespace std;
+> 
+> int main() { 
+>     vector<int> numbers {45, 12, 89, 23, 71, 5}; 
+>     
+>     cout << "Before sorting: "; 
+>     for (int num : numbers) 
+>         cout << num << " "; 
+>     cout << endl; 
+>     
+>     sort(numbers.begin(), numbers.end()); 
+>     
+>     cout << "After sorting: "; 
+>     for (int num : numbers) 
+>         cout << num << " "; 
+>     cout << endl; 
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Before sorting: 45 12 89 23 71 5 
+> After sorting: 5 12 23 45 71 89 
+> ```
+
+> [!tip] Extra Notes: Binary Search vs. Linear Search Complexity
+> `std::binary_search` is much faster than `std::find` for large datasets because it runs in logarithmic time $O(\log n)$ by repeatedly halving the search space. However, it requires sorted input. If your data is unsorted, you must either sort it first (taking $O(n \log n)$ time) or use linear search (`std::find`), which takes $O(n)$ time.
+
+> [!tip] Extra Notes: Deprecation and Removal of random_shuffle
+> In modern C++, `std::random_shuffle` was deprecated in C++14 and completely removed in C++17 because it relied on the internal, low-quality `std::rand` generator. In modern projects, you should use `std::shuffle` along with standard C++11 random number generators, such as `std::mt19937`:
+> ```cpp
+> #include <random>
+> #include <algorithm>
+> // ...
+> std::random_device rd;
+> std::mt19937 g(rd());
+> std::shuffle(numbers.begin(), numbers.end(), g);
+> ```
+
+## 10.7 Vector Class Template Member Functions
+The `std::vector` class template provides a rich set of member functions to query and modify vector contents and manage capacity.
+
+### Member Functions Reference Table
+
+| Member Function | Description | Example Syntax |
+| :--- | :--- | :--- |
+| `at(element)` | Returns the value of the element located at the index `element`. Unlike the `[]` operator, `at()` performs bounds checking and throws an out-of-range exception if the index is invalid. | `x = vect.at(5);` |
+| `back()` | Returns a reference to the last element in the vector. | `cout << vect.back() << endl;` |
+| `begin()` | Returns an iterator pointing to the vector's first element. | `iter = vect.begin();` |
+| `capacity()` | Returns the maximum number of elements that can be stored in the vector without allocating more memory. This is distinct from `size()`. | `x = vect.capacity();` |
+| `clear()` | Deletes all elements from the vector, leaving it with a `size` of 0. | `vect.clear();` |
+| `empty()` | Returns `true` if the vector contains zero elements; otherwise, returns `false`. | `if (vect.empty())` |
+| `end()` | Returns an iterator pointing to the memory location immediately following the last element in the vector. | `iter = vect.end();` |
+| `erase(iter)` | Removes the single element pointed to by the iterator `iter` from the vector. | `vect.erase(iter);` |
+| `erase(iter1, iter2)` | Removes a range of elements starting at iterator `iter1` up to (but not including) iterator `iter2`. | `vect.erase(firstIter, secondIter);` |
+| `front()` | Returns a reference to the first element in the vector. | `cout << vect.front() << endl;` |
+| `insert(iter, value)` | Inserts `value` into the vector immediately before the element pointed to by iterator `iter`. | `vect.insert(iter, 22);` |
+| `resize(n, value)` | Resizes the vector to contain `n` elements. If the vector grows, the new elements are initialized to `value`. | `vect.resize(10, 0);` |
+
+> [!warning] Common Mistake: Reversing a Vector
+> The lecture slide mentions `vect.reverse();`. However, in standard C++, `std::vector` does **not** have a `reverse()` member function. 
+> 
+> To reverse a vector, you must use the generic `std::reverse` algorithm from the `<algorithm>` library:
+> ```cpp
+> #include <algorithm>
+> // ...
+> std::reverse(vect.begin(), vect.end());
+> ```
+> *(Note: `std::list` does contain a `.reverse()` member function, which may be the source of this confusion).*
+
+> [!tip] Extra Notes: size() vs capacity()
+> It is important to distinguish between a vector's `size()` and its `capacity()`:
+> - **Size:** The number of elements currently stored in the vector.
+> - **Capacity:** The amount of elements the vector can store before it needs to reallocate its internal array to a larger memory block. Reallocation is an expensive $O(n)$ operation because it involves allocating new space, copying the existing elements, and deleting the old space. To avoid frequent reallocations, vectors typically double their capacity when full. You can pre-allocate memory using `vect.reserve(n)`.
+
+
+
+
+
