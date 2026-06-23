@@ -2362,216 +2362,240 @@ When the `new` operator fails to allocate requested memory (e.g., if the system 
 - This is especially true if the program runs without aborting and produces output that seems "reasonable" at first glance.
 - However, just because a program runs and produces output does not mean that it is correct.
 - The program may still contain **logic errors** that cause the output to be incorrect under certain conditions.
-
 ## 9.2 Hand Tracing
-- > [!info] Definition: Hand Tracing
-  - Hand tracing is a debugging process where you pretend that you are the computer executing a program.
-- You step through each of the program's statements one by one in sequence.
-- **Process:**
-  - Construct a chart (table) containing a column for each variable in the program.
-  - Step through the code from top to bottom.
-  - After each statement executes, record the updated contents of each variable in the corresponding column of the chart.
-- This process is highly effective for locating mathematical mistakes and other logic errors.
+> [!info] Definition: Hand Tracing
+> Hand tracing is a debugging process where you pretend that you are the computer executing a program.
+> Step through each of the program's statements one by one in sequence.
 
-- > [!example] Example: Hand Tracing Average Calculation
-  - Consider the following C++ code snippet that is supposed to calculate the average of three numbers:
-  - ```cpp
-    int main() {
-        double num1, num2, num3, avg;
-        cout << "Enter the first number: ";
-        cin >> num1; // Input: 5
-        cout << "Enter the second number: ";
-        cin >> num2; // Input: 10
-        cout << "Enter the third number: ";
-        cin >> num3; // Input: 15
-        avg = num1 + num2 + num3 / 3;
-        cout << "The average is " << avg << endl;
-        return 0;
-    }
-    ```
-  - **Hand Tracing Chart:**
-    | Statement / Line | `num1` | `num2` | `num3` | `avg` |
-    | :--- | :---: | :---: | :---: | :---: |
-    | `double num1, num2, num3, avg;` | ? | ? | ? | ? |
-    | `cin >> num1;` (user enters 5) | 5 | ? | ? | ? |
-    | `cin >> num2;` (user enters 10) | 5 | 10 | ? | ? |
-    | `cin >> num3;` (user enters 15) | 5 | 10 | 15 | ? |
-    | `avg = num1 + num2 + num3 / 3;` | 5 | 10 | 15 | 20 |
-  - **Revealed Error:**
-    - The expected average of 5, 10, and 15 is 10.0. However, the hand trace shows `avg` is calculated as 20.0.
-    - **Analysis:** Due to operator precedence, C++ evaluates division (`/`) before addition (`+`). The expression is evaluated as:
-      $$avg = num1 + num2 + \frac{num3}{3} = 5 + 10 + \frac{15}{3} = 5 + 10 + 5 = 20$$
-    - **Correction:** Parentheses must be added to force the addition to occur first:
-      ```cpp
-      avg = (num1 + num2 + num3) / 3;
-      ```
+**Process:**
+- Construct a chart (table) containing a column for each variable in the program.
+- Step through the code from top to bottom.
+- After each statement executes, record the updated contents of each variable in the corresponding column of the chart.
+
+This process is highly effective for locating mathematical mistakes and other logic errors.
+
+> [!example] Example: Hand Tracing Average Calculation
+> Consider the following C++ code snippet that is supposed to calculate the average of three numbers:
+> ```cpp
+> int main() {
+>     double num1, num2, num3, avg;
+>     cout << "Enter the first number: ";
+>     cin >> num1; // Input: 5
+>     cout << "Enter the second number: ";
+>     cin >> num2; // Input: 10
+>     cout << "Enter the third number: ";
+>     cin >> num3; // Input: 15
+>     avg = num1 + num2 + num3 / 3;
+>     cout << "The average is " << avg << endl;
+>     return 0;
+> }
+> ```
+> 
+> **Hand Tracing Chart:**
+> | Statement / Line | `num1` | `num2` | `num3` | `avg` |
+> | :--- | :---: | :---: | :---: | :---: |
+> | `double num1, num2, num3, avg;` | ? | ? | ? | ? |
+> | `cin >> num1;` (user enters 5) | 5 | ? | ? | ? |
+> | `cin >> num2;` (user enters 10) | 5 | 10 | ? | ? |
+> | `cin >> num3;` (user enters 15) | 5 | 10 | 15 | ? |
+> | `avg = num1 + num2 + num3 / 3;` | 5 | 10 | 15 | 20 |
+> 
+> **Revealed Error:**
+> - The expected average of 5, 10, and 15 is 10.0. However, the hand trace shows `avg` is calculated as 20.0.
+> - **Analysis:** Due to operator precedence, C++ evaluates division (`/`) before addition (`+`). The expression is evaluated as:
+>   $$avg = num1 + num2 + \frac{num3}{3} = 5 + 10 + \frac{15}{3} = 5 + 10 + 5 = 20$$
+> - **Correction:** Parentheses must be added to force the addition to occur first:
+>   ```cpp
+>   avg = (num1 + num2 + num3) / 3;
+>   ```
 
 ## 9.3 Test Data Sets
 - To determine if a program works correctly, it must be tested with data whose correct output is already known or can be predicted.
 - **Quality over Quantity:** A small set of well-thought-out, high-quality test cases provides significantly more information about how a program works than twice as many random or poorly chosen test cases.
 - **Design Principle:** Each test case should be designed to test a specific aspect of the program, and you must know exactly what each test set is verifying.
 
-- > [!example] Example: Test Case Analysis for Student Score Program
-  - Consider a program designed to prompt for a student's name and two scores, validate that each score is between 0 and 100 (non-inclusive of boundaries in the buggy version), calculate the average, and repeat until the user enters 'Q' or 'q' to quit.
-  - **Buggy Code Snippet:**
-    ```cpp
-    int main() {
-        string name;
-        int count = 1, score, totalScore = 0;
-        double average;
-        cout << fixed << showpoint << setprecision(1);
-        cout << "Enter the first name of student " << count << " (or Q to quit): ";
-        cin >> name;
-        while (name != "Q" && name != "q") {
-            cout << "Enter score 1: ";
-            cin >> score;
-            if (score <= 0 || score >= 100) {
-                cout << "Score must be between 0 and 100. Please reenter: ";
-                cin >> score;
-            }
-            totalScore += score;
-            cout << "Enter score 2: ";
-            cin >> score;
-            if (score <= 0 || score >= 100) {
-                cout << "Score must be between 0 and 100. Please reenter: ";
-                cin >> score;
-            }
-            totalScore += score;
-            average = totalScore / 2;
-            cout << name << setw(6) << average << endl;
-            cout << "Enter the first name of student " << count++ << " (or Q to quit): ";
-            cin >> name;
-        }
-        return 0;
-    }
-    ```
-  - **Test Cases and Revealed Errors:**
-    | Test Case Characteristic | Input Sequence | Expected Correct Result | Actual Result / Error Revealed |
-    | :--- | :--- | :--- | :--- |
-    | **1. Standard Valid Test** | `Ali 80 90 Q` | `Ali 85.0` | `Ali 85.0` (Works as expected) |
-    | **2. Decimal-Result Test** | `Ali 80 81 Q` | `Ali 80.5` | `Ali 80.0`. **Error:** Integer division `totalScore / 2` drops the fractional part because both operands are integers. To fix, cast or use a double literal: `totalScore / 2.0`. |
-    | **3. Multiple-Student Test** | `Ali 80 90 Sara 70 80 Q` | `Ali 85.0`<br>`Sara 75.0` | `Ali 85.0`<br>`Sara 160.0`. **Error:** `totalScore` is not reset to `0` inside the loop for each new student, leading to accumulating scores. |
-    | **4. Lower Boundary Test** | `Ali 0 80 Q` | `Ali 40.0` | Prompted to re-enter score. **Error:** Score of `0` is wrongly rejected. The validation condition `score <= 0` should be `score < 0` if `0` is a valid score. |
-    | **5. Upper Boundary Test** | `Ali 100 80 Q` | `Ali 90.0` | Prompted to re-enter score. **Error:** Score of `100` is wrongly rejected. The validation condition `score >= 100` should be `score > 100` if `100` is a valid score. |
-    | **6. Repeated Invalid Input** | `Ali -5 -10 80 90 Q` | Keep prompting until a valid score is entered | Accepts `-10`. **Error:** Validation uses an `if` statement instead of a `while` loop, allowing a second consecutive invalid input to pass through unchecked. |
+> [!example] Example: Test Case Analysis for Student Score Program
+> Consider a program designed to prompt for a student's name and two scores, validate that each score is between 0 and 100 (non-inclusive of boundaries in the buggy version), calculate the average, and repeat until the user enters 'Q' or 'q' to quit.
+> 
+> **Buggy Code Snippet:**
+> ```cpp
+> int main() {
+>     string name;
+>     int count = 1, score, totalScore = 0;
+>     double average;
+>     cout << fixed << showpoint << setprecision(1);
+>     cout << "Enter the first name of student " << count << " (or Q to quit): ";
+>     cin >> name;
+>     while (name != "Q" && name != "q") {
+>         cout << "Enter score 1: ";
+>         cin >> score;
+>         if (score <= 0 || score >= 100) {
+>             cout << "Score must be between 0 and 100. Please reenter: ";
+>             cin >> score;
+>         }
+>         totalScore += score;
+>         cout << "Enter score 2: ";
+>         cin >> score;
+>         if (score <= 0 || score >= 100) {
+>             cout << "Score must be between 0 and 100. Please reenter: ";
+>             cin >> score;
+>         }
+>         totalScore += score;
+>         average = totalScore / 2;
+>         cout << name << setw(6) << average << endl;
+>         cout << "Enter the first name of student " << count++ << " (or Q to quit): ";
+>         cin >> name;
+>     }
+>     return 0;
+> }
+> ```
+> 
+> **Test Cases and Revealed Errors:**
+> | Test Case Characteristic | Input Sequence | Expected Correct Result | Actual Result / Error Revealed |
+> | :--- | :--- | :--- | :--- |
+> | **1. Standard Valid Test** | `Ali 80 90 Q` | `Ali 85.0` | `Ali 85.0` (Works as expected) |
+> | **2. Decimal-Result Test** | `Ali 80 81 Q` | `Ali 80.5` | `Ali 80.0`. **Error:** Integer division `totalScore / 2` drops the fractional part because both operands are integers. To fix, cast or use a double literal: `totalScore / 2.0`. |
+> | **3. Multiple-Student Test** | `Ali 80 90 Sara 70 80 Q` | `Ali 85.0`<br>`Sara 75.0` | `Ali 85.0`<br>`Sara 160.0`. **Error:** `totalScore` is not reset to `0` inside the loop for each new student, leading to accumulating scores. |
+> | **4. Lower Boundary Test** | `Ali 0 80 Q` | `Ali 40.0` | Prompted to re-enter score. **Error:** Score of `0` is wrongly rejected. The validation condition `score <= 0` should be `score < 0` if `0` is a valid score. |
+> | **5. Upper Boundary Test** | `Ali 100 80 Q` | `Ali 90.0` | Prompted to re-enter score. **Error:** Score of `100` is wrongly rejected. The validation condition `score >= 100` should be `score > 100` if `100` is a valid score. |
+> | **6. Repeated Invalid Input** | `Ali -5 -10 80 90 Q` | Keep prompting until a valid score is entered | Accepts `-10`. **Error:** Validation uses an `if` statement instead of a `while` loop, allowing a second consecutive invalid input to pass through unchecked. |
+> | **7. Incorrect Student Indexing** | `Ali 80 90 Sara 70 80 Q` | Sequence prompts: `student 1`, `student 2` | Prompts `student 1` for both Ali and Sara. **Error:** The post-increment `count++` in the loop prompt evaluates to the current count (1) before incrementing to 2, so it prompts "student 1" again. To fix, increment `count` separately or use `++count`. |
 
 ## 9.4 Stubs and Drivers
-- > [!info] Definition: Stubs and Drivers
-  - Stubs and drivers are diagnostic tools used to test and debug programs that rely on functions. They allow programmers to isolate and test individual functions independently of the rest of the program.
+> [!info] Definition: Stubs and Drivers
+> Stubs and drivers are diagnostic tools used to test and debug programs that rely on functions. They allow programmers to isolate and test individual functions independently of the rest of the program.
 
 ### Stubs
-- > [!info] Definition: Stub
-  - A stub is a dummy or placeholder function that is called instead of the actual function it represents during development.
+> [!info] Definition: Stub
+> A stub is a dummy or placeholder function that is called instead of the actual function it represents during development.
+
 - Typically, a stub displays a simple diagnostic message indicating that it was successfully called, along with the arguments passed to it, and returns a dummy test value.
 - **Purpose:** Stubs let you focus testing on the overall flow and the parts of the program that call the function, without needing the actual function implementation to be ready.
-- **Example of a Stub:**
-  ```cpp
-  int sum(int num1, int num2) {
-      cout << "The sum function was called with the following arguments:\n"
-           << "1st number: " << num1 << endl 
-           << "2nd number: " << num2 << endl;
-      cout << "This function returns an integer to the calling function.\n";
-      return 0; // Returns dummy test value
-  }
-  ```
+
+> [!example] Example of a Stub
+> ```cpp
+> int sum(int num1, int num2) {
+>     cout << "The sum function was called with the following arguments:\n"
+>          << "1st number: " << num1 << endl 
+>          << "2nd number: " << num2 << endl;
+>     cout << "This function returns an integer to the calling function.\n";
+>     return 0; // Returns dummy test value
+> }
+> ```
+
+> [!tip] Extra Notes: Slide 21 Syntax Errors
+> In the original lecture slide (Slide 21), the `sum` stub function code contains compiler syntax errors:
+> 1. **Missing Semicolon:** The first `cout` statement lacks an ending semicolon.
+> 2. **Smart Quotes:** The string literals use curly/smart double quotes `“` and `”` instead of straight ones (`"`), which will fail to compile in standard C++.
+> 
+> *The code example above shows the corrected C++ version.*
 
 ### Drivers
-- > [!info] Definition: Driver
-  - A driver is a program or script designed specifically to test a particular function in isolation by calling it directly.
+> [!info] Definition: Driver
+> A driver is a program or script designed specifically to test a particular function in isolation by calling it directly.
+
 - **Purpose:** If the function accepts arguments, the driver passes predetermined test data. If it returns a value, the driver displays the return value on the screen, allowing you to verify that the function performs correctly before integrating it into the larger project.
 
-- > [!example] Example 1: Static Variable Driver/Test
-  - A driver program to verify the behavior of a static counter function:
-  - ```cpp
-    #include <iostream>
-    using namespace std;
-    
-    void counter();
-    
-    int main() {
-        counter(); // Output: Function called 1 times.
-        counter(); // Output: Function called 2 times.
-        counter(); // Output: Function called 3 times.
-        return 0;
-    }
-    
-    void counter() {
-        static int count = 0;
-        count++;
-        cout << "Function called " << count << " times." << endl;
-    }
-    ```
+> [!example] Example 1: Static Variable Driver/Test
+> A driver program to verify the behavior of a static counter function:
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> 
+> void counter();
+> 
+> int main() {
+>     counter(); // Output: Function called 1 times.
+>     counter(); // Output: Function called 2 times.
+>     counter(); // Output: Function called 3 times.
+>     return 0;
+> }
+> 
+> void counter() {
+>     static int count = 0;
+>     count++;
+>     cout << "Function called " << count << " times." << endl;
+> }
+> ```
 
-- > [!example] Example 2: Default Argument Testing Driver
-  - A driver program to verify parameter defaulting:
-  - ```cpp
-    #include <iostream>
-    using namespace std;
-    
-    double calculateCost(double price, double taxRate = 0.05);
-    
-    int main() {
-        cout << "Total cost with default tax: ";
-        cout << calculateCost(100) << endl; // Output: 105
-        
-        cout << "Total cost with custom tax: ";
-        cout << calculateCost(100, 0.1) << endl; // Output: 110
-        return 0;
-    }
-    
-    double calculateCost(double price, double taxRate) {
-        return price + (price * taxRate);
-    }
-    ```
+> [!example] Example 2: Default Argument Testing Driver
+> A driver program to verify parameter defaulting:
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> 
+> double calculateCost(double price, double taxRate = 0.05);
+> 
+> int main() {
+>     cout << "Total cost with default tax: ";
+>     cout << calculateCost(100) << endl; // Output: 105
+>     
+>     cout << "Total cost with custom tax: ";
+>     cout << calculateCost(100, 0.1) << endl; // Output: 110
+>     return 0;
+> }
+> 
+> double calculateCost(double price, double taxRate) {
+>     return price + (price * taxRate);
+> }
+> ```
 
-- > [!example] Example 3: Reference Parameter Verification Driver
-  - A driver to verify swapping variables by reference:
-  - ```cpp
-    #include <iostream>
-    using namespace std;
-    
-    void swap(int &a, int &b);
-    
-    int main() {
-        int x = 5, y = 10;
-        cout << "Before swap: x = " << x << ", y = " << y << endl; // 5, 10
-        swap(x, y);
-        cout << "After swap: x = " << x << ", y = " << y << endl;  // 10, 5
-        return 0;
-    }
-    
-    void swap(int &a, int &b) {
-        int temp = a;
-        a = b;
-        b = temp;
-    }
-    ```
+> [!tip] Extra Notes: Slide 24 Syntax & Semantic Errors
+> In the original lecture slide (Slide 24), the default argument testing driver code has several issues:
+> 1. **Prototype Typo:** The prototype is declared as `double calculateCost(doube, double = 0.05);` with `doube` instead of `double`.
+> 2. **Smart Quotes & Comma:** Curly double quotes are used, and the third print ends with a comma instead of a semicolon (`cout << "Total cost with custom tax: “,`).
+> 3. **Redefined Default Argument:** The default value `= 0.05` is specified in both the function prototype and the function definition. In C++, default arguments must only be defined once (usually in the prototype/declaration).
+> 
+> *The code example above shows the corrected C++ version.*
 
-- > [!example] Example 4: Validation and Program Exit Driver
-  - A driver verifying critical validation paths:
-  - ```cpp
-    #include <iostream>
-    #include <cstdlib>
-    using namespace std;
-    
-    void checkNumber(int);
-    
-    int main() {
-        int num;
-        cout << "Enter a number: ";
-        cin >> num;
-        checkNumber(num);
-        cout << "You entered: " << num << endl;
-        return 0;
-    }
-    
-    void checkNumber(int n) {
-        if (n < 0) {
-            cout << "Negative No. Exiting program." << endl;
-            exit(1);
-        }
-    }
-    ```
+> [!example] Example 3: Reference Parameter Verification Driver
+> A driver to verify swapping variables by reference:
+> ```cpp
+> #include <iostream>
+> using namespace std;
+> 
+> void swap(int &a, int &b);
+> 
+> int main() {
+>     int x = 5, y = 10;
+>     cout << "Before swap: x = " << x << ", y = " << y << endl; // 5, 10
+>     swap(x, y);
+>     cout << "After swap: x = " << x << ", y = " << y << endl;  // 10, 5
+>     return 0;
+> }
+> 
+> void swap(int &a, int &b) {
+>     int temp = a;
+>     a = b;
+>     b = temp;
+> }
+> ```
+
+> [!example] Example 4: Validation and Program Exit Driver
+> A driver verifying critical validation paths:
+> ```cpp
+> #include <iostream>
+> #include <cstdlib>
+> using namespace std;
+> 
+> void checkNumber(int);
+> 
+> int main() {
+>     int num;
+>     cout << "Enter a number: ";
+>     cin >> num;
+>     checkNumber(num);
+>     cout << "You entered: " << num << endl;
+>     return 0;
+> }
+> 
+> void checkNumber(int n) {
+>     if (n < 0) {
+>         cout << "Negative No. Exiting program." << endl;
+>         exit(1);
+>     }
+> }
+> `````
 
 ---
 
