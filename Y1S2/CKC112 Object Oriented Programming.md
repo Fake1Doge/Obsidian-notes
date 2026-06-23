@@ -2364,8 +2364,8 @@ When the `new` operator fails to allocate requested memory (e.g., if the system 
 - The program may still contain **logic errors** that cause the output to be incorrect under certain conditions.
 
 ## 9.2 Hand Tracing
-> [!info] Definition: Hand Tracing
-Hand tracing is a debugging process where you pretend that you are the computer executing a program.
+- > [!info] Definition: Hand Tracing
+  - Hand tracing is a debugging process where you pretend that you are the computer executing a program.
 - You step through each of the program's statements one by one in sequence.
 - **Process:**
   - Construct a chart (table) containing a column for each variable in the program.
