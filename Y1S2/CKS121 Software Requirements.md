@@ -2430,7 +2430,7 @@ stateDiagram-v2
 
 ### 9.2.1 Core Modelling Constructs
 
-#### 1. State
+#### 9.2.1.1 State
 A state represents a condition or situation during the life of an object during which it satisfies some condition, performs some activity, or waits for some event.
 - **Notation:** Rounded rectangle.
 - **Internal Behavior:** A state can define actions executed under specific conditions:
@@ -2445,7 +2445,7 @@ A state represents a condition or situation during the life of an object during 
 >   - `exit`: Turn off the keyboard.
 > - **Transition:** When the user presses "Done", it triggers the transition to `Calculating route`.
 
-#### 2. Transition
+#### 9.2.1.2 Transition
 A transition is a directed relationship between two states indicating that an object in the first state will enter the second state when a specified event occurs and specified conditions are satisfied.
 - **Notation:** Directed arrow.
 - **Syntax:** `event [guard condition] / action`
@@ -2453,15 +2453,15 @@ A transition is a directed relationship between two states indicating that an ob
   - **Guard Condition:** A boolean expression in brackets. The transition only occurs if the event happens and the guard is `true`.
   - **Action:** An atomic execution performed during the transition.
 
-#### 3. Default State (Initial State)
+#### 9.2.1.3 Default State (Initial State)
 Denotes the starting point of the state machine. It is not a real state but a pointer.
 - **Notation:** Filled black circle.
 
-#### 4. Final State
+#### 9.2.1.4 Final State
 Denotes the termination of the state machine's execution.
 - **Notation:** Filled black circle inside a circle.
 
-#### 5. Submachine State
+#### 9.2.1.5 Submachine State
 Refers to an externally defined state machine, supporting the **reuse** of behavioral models across different parts of a system.
 - **Notation:** A state box containing a submachine icon (two small connected circles).
 
@@ -2577,7 +2577,7 @@ To prepare for prioritisation, requirements engineers must execute four steps:
 > - $\text{Value \%}$ is the requirement's value relative to the total value of all requirements.
 > - $\text{Cost \%}$ and $\text{Risk \%}$ are the relative proportions of cost and risk.
 
-#### 9-Step Wiegers' Matrix Process
+#### 10.2.3.1 Step Wiegers' Matrix Process
 1. **Determine weights** (scale 1-9) for benefit, penalty, cost, and risk.
 2. **List all requirements** in the matrix.
 3. **Estimate relative benefit** (1-9) for each requirement.
