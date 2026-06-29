@@ -2381,4 +2381,342 @@ A generalisation set classifies how subclasses partition the superclass space ba
 - **Rule:** An entity type represents an object with an independent identity. A relationship type represents an association whose identity is derived from the participating entities.
 - *Example:* The relationship `BORROWS` derives its identity from the participating `LIBRARY USER` and `BOOK` instances. If the relationship itself has complex behavior or independent identity, consider using an Association Class (or reifying it as a separate entity).
 
+---
 
+# Chapter 9: Behavioral Modelling
+
+Behavioral modelling specifies solution-oriented requirements from the **behavioural perspective**, documenting how the system reacts to events and transitions between states.
+
+## 9.1 Introduction to Behavioral Modelling
+While functional models describe what the system does (processes) and data models describe what information it holds (structure), behavioral models specify **how the system behaves over time** in response to external stimuli.
+
+> [!info] Definition: Behavioral Requirement
+> Behavioral requirements describe how a system (or a subsystem/business object) reacts to different events, what states it can reside in, and the conditions under which it transitions from one state to another.
+
+### 9.1.1 State and Lifecycle Examples
+States can characterize either the entire system or individual business objects:
+- **System States:** E.g., a device can be `On`, `Standby`, or `Off`.
+- **Business Object Lifecycles:** An `Order` object goes through a prescribed sequence of states:
+  1. `Placed`
+  2. `Validated`
+  3. `Paid`
+  4. `Shipped`
+  5. `Completed`
+
+### 9.1.2 Modeling Languages
+The most common languages for behavioral modelling include:
+- **Finite Automata:** Deterministic (DFA) or Non-deterministic (NFA) state machines representing transitions.
+- **Finite State Transducers:** E.g., Mealy or Moore machines that produce outputs based on states/transitions.
+- **Statecharts:** Extended state machines (introduced by David Harel) supporting hierarchy, concurrency, and actions.
+- **UML State Machine Diagrams:** The standardized UML representation of statecharts.
+
+---
+
+## 9.2 Statecharts and UML State Machine Diagrams
+Statecharts extend basic state machines to handle complex real-world systems by providing advanced modelling constructs:
+
+```mermaid
+stateDiagram-v2
+    state "Idle" as Idle
+    state "Waiting for Payment" as Waiting
+    state "Dispensing Item" as Dispensing
+    
+    [*] --> Idle
+    Idle --> Waiting : insertCoin
+    Waiting --> Dispensing : selectItem
+    Waiting --> Idle : reset
+    Dispensing --> Idle : reset
+```
+
+### 9.2.1 Core Modelling Constructs
+
+#### 1. State
+A state represents a condition or situation during the life of an object during which it satisfies some condition, performs some activity, or waits for some event.
+- **Notation:** Rounded rectangle.
+- **Internal Behavior:** A state can define actions executed under specific conditions:
+  - `entry / action`: Executed immediately when entering the state.
+  - `exit / action`: Executed immediately when leaving the state.
+  - `do / activity` (or `throughout` in Harel statecharts): Executed continuously while residing in the state.
+
+> [!example] Example: Waze Keyboard Behavior
+> - **State:** `Input of destination`
+>   - `entry`: Turn on the keyboard.
+>   - `do`: Update search suggestions as the user types.
+>   - `exit`: Turn off the keyboard.
+> - **Transition:** When the user presses "Done", it triggers the transition to `Calculating route`.
+
+#### 2. Transition
+A transition is a directed relationship between two states indicating that an object in the first state will enter the second state when a specified event occurs and specified conditions are satisfied.
+- **Notation:** Directed arrow.
+- **Syntax:** `event [guard condition] / action`
+  - **Event (Trigger):** The stimulus that triggers the transition.
+  - **Guard Condition:** A boolean expression in brackets. The transition only occurs if the event happens and the guard is `true`.
+  - **Action:** An atomic execution performed during the transition.
+
+#### 3. Default State (Initial State)
+Denotes the starting point of the state machine. It is not a real state but a pointer.
+- **Notation:** Filled black circle.
+
+#### 4. Final State
+Denotes the termination of the state machine's execution.
+- **Notation:** Filled black circle inside a circle.
+
+#### 5. Submachine State
+Refers to an externally defined state machine, supporting the **reuse** of behavioral models across different parts of a system.
+- **Notation:** A state box containing a submachine icon (two small connected circles).
+
+---
+
+## 9.3 Advanced Behavioral Constructs
+
+### 9.3.1 Hierarchical Refinement
+Hierarchical state refinement allows grouping related states into **super-states** (composite states) to manage diagram complexity (similar to organizing files into folders).
+- **Benefits:**
+  - Decomposes the system into multiple abstraction layers.
+  - Avoids "spaghetti" diagrams by encapsulating sub-behaviors.
+  - Allows defining default states within composite states.
+- **Entry and Exit Points:** UML state machine diagrams support explicit entry and exit interfaces (circles with `+` or `x`) to super-states to maintain consistent decomposition across multiple abstraction layers.
+
+```mermaid
+stateDiagram-v2
+    state "on" as On {
+        [*] --> monitor
+        monitor --> recalculate : aberration
+    }
+    [*] --> off
+    off --> On : start
+    On --> off : shutdown
+```
+
+### 9.3.2 Concurrency
+Concurrency allows a super-state to be decomposed into **several concurrent states** (orthogonal regions) that run in parallel.
+- **Concept:** When the system enters the concurrent super-state, it enters all orthogonal regions simultaneously.
+- **Car Dashboard Example:** When the car is `On`, the tachometer, fuel gauge, speedometer, and odometer regions all monitor data concurrently.
+- **State Explosion Warning:** Requirements engineers should use concurrency carefully; excessive or unnecessary concurrency leads to a state explosion problem (exponential growth of possible combinations), making the model unmanageable.
+
+```mermaid
+stateDiagram-v2
+    state "Finalize transaction" as Finalize {
+        state "Receive cash" as ReceiveCash {
+            [*] --> AwaitingCoin
+            AwaitingCoin --> AwaitingNote : coin
+        }
+        --
+        state "Credit card" as Credit {
+            [*] --> CreditCardCharged
+        }
+    }
+```
+
+### 9.3.3 History State
+A history state is a mechanism that allows a super-state to **remember the last active sub-state** it was in before it was exited.
+- **Shallow History [H]:** Remembers only the immediate (top-level) sub-state of the super-state. It does not restore nested sub-states.
+- **Deep History [H*]:** Remembers the exact state configuration, including all deeply nested sub-states.
+
+> [!example] Analogy: House Floors and Rooms
+> - **Shallow History:** You leave the house from the second-floor bedroom. When you return using shallow history, the system remembers you were on the **second floor** but not which room. You re-enter the second floor and must start at its default room.
+> - **Deep History:** When you return using deep history, the system remembers you were specifically in the **bedroom** on the second floor and restores you directly to that room.
+> - *Netflix Example:* Netflix uses deep history to pick up a movie exactly where a user left off, whereas returning to a settings menu might only require shallow history (returning to the general section).
+
+---
+
+# Chapter 10: Requirements Management
+
+Requirements Management (RM) is a cross-sectional activity focused on observing the context for changes, managing RE activities, and systematically tracking requirements artefacts throughout the system lifecycle.
+
+## 10.1 RM Goals and Activities
+Requirements management ensures the structured progression and control of the requirements engineering process:
+1. **Observing the RE Context:** Goal is to identify changes in the environment (e.g., laws, competitor products, stakeholder needs) and estimate their impact. Critical objects (like laws) are continuously monitored, while less critical aspects are periodically scanned.
+2. **Managing RE Activities:** Goal is to monitor and adjust workflows. It utilizes two approaches:
+   - *Phase-oriented approach:* Applies the same sequence of activities to all artefacts.
+   - *Situational approach:* Dynamically determines the next activities based on the current status of existing artefacts.
+3. **Managing Requirements Artefacts:** Handles the storage, attributes, dependencies, and evolution of artefacts. It consists of five sub-tasks:
+   - Defining a requirements attribute scheme.
+   - Maintaining requirements traceability.
+   - Handling requirements change management.
+   - Performing requirements configuration management.
+   - Executing requirements prioritisation.
+
+---
+
+## 10.2 Requirements Prioritisation
+Prioritisation resolves resource constraints (limited budget, time, or personnel) by systematically ordering requirements by their importance.
+
+### 10.2.1 Prioritisation Process Preparation
+To prepare for prioritisation, requirements engineers must execute four steps:
+1. **Determine the artefacts to be prioritised:** To avoid errors, only compare artefacts of the **same type** and at the **same level of abstraction** (e.g., compare goals with goals, not goals with functional primitives). Prioritise top-down.
+2. **Select the prioritisation criteria:** Decide what aspects to measure (e.g., cost, risk, business value).
+3. **Identify the relevant stakeholders:** Involve stakeholders who have the specific knowledge to evaluate the chosen criteria.
+4. **Select prioritisation techniques:** Choose the appropriate technique based on requirements volume and complexity.
+
+### 10.2.2 Prioritisation Criteria
+- **Importance:** Urgency of implementing, importance for acceptance of the system, importance for architectural design, strategic importance to market position.
+- **Cost:** Financial resources needed for implementation.
+- **Damage:** Disadvantage from neglecting the requirement.
+- **Duration:** Time needed to realize the requirement.
+- **Risk:** Probability that the requirement cannot be realized due to technological or organizational problems.
+- **Volatility:** Probability that the requirement changes during a certain time.
+- **Business Value:** The direct value the asset creates for the business (e.g., scrum uses business value/cost benefit to prioritize use cases).
+
+### 10.2.3 Prioritisation Techniques
+- **Ad-hoc Ranking:** Stakeholders rank requirements in a list based on a chosen criterion. (Effort: Low. Best for: small sets of requirements).
+- **Top-Ten Technique:** Stakeholders select a fixed number (e.g., 10) of top-priority requirements from the set, then rank them. (Effort: Very Low. Best for: small sets).
+- **One-Criterion Classification:** Classifies requirements into three categories based on necessity:
+  - *Essential:* The system will not be acceptable unless these requirements are fulfilled.
+  - *Conditional:* Would enhance the system, but would not make it unacceptable if they are absent.
+  - *Optional:* A class of requirements that may or may not be worthwhile.
+  (Effort: Low. Best for: low complexity).
+- **Kano Classification:** Classifies requirements based on their effect on customer satisfaction (Dissatisfiers, Satisfiers, Delighters). (Effort: Low).
+- **Wiegers' Prioritisation Matrix:** An analytical technique that calculates priority based on four parameters: relative benefit, relative penalty, relative cost, and relative risk.
+
+> [!important] Wiegers' Prioritisation Formula
+> Priority is calculated using the following formula:
+> $$\text{Priority} = \frac{\text{Value \%}}{(\text{Cost \%} \times \text{Weight}_{\text{Cost}}) + (\text{Risk \%} \times \text{Weight}_{\text{Risk}})}$$
+> Where:
+> - $\text{Value} = (\text{Relative Benefit} \times \text{Weight}_{\text{Benefit}}) + (\text{Relative Penalty} \times \text{Weight}_{\text{Penalty}})$
+> - $\text{Value \%}$ is the requirement's value relative to the total value of all requirements.
+> - $\text{Cost \%}$ and $\text{Risk \%}$ are the relative proportions of cost and risk.
+
+#### 9-Step Wiegers' Matrix Process
+1. **Determine weights** (scale 1-9) for benefit, penalty, cost, and risk.
+2. **List all requirements** in the matrix.
+3. **Estimate relative benefit** (1-9) for each requirement.
+4. **Estimate relative penalty** (1-9) if the requirement is omitted.
+5. **Calculate Value** and its percentage ($\text{Value \%}$) for each requirement.
+6. **Estimate relative cost** (1-9) and calculate its percentage ($\text{Cost \%}$).
+7. **Estimate relative risk** (1-9) and calculate its percentage ($\text{Risk \%}$).
+8. **Calculate Priority** for each requirement.
+9. **Rank requirements** in descending order of priority.
+
+---
+
+## 10.3 Version and Configuration Management
+Requirements artefacts change over time. Configuration management controls these changes to prevent chaos in complex projects.
+
+### 10.3.1 Configuration Items
+A **configuration item** is a single entity in the configuration management process. In RE, this can be:
+- A single requirement.
+- A set of requirements (e.g., functional specification).
+- A model (functional, behavioural, or data model).
+- A requirements document.
+
+Requirements configuration management can be defined at three levels:
+1. **Document Level:** The requirements document is the smallest managed unit.
+2. **Requirement Artefact Level:** Individual goals, scenarios, or SORs are the smallest managed units.
+3. **Requirements Attribute Level:** Individual attributes of a requirement are managed separately (highest control, highest effort).
+
+### 10.3.2 Versioning vs. Incrementing
+- **Version:** A defined state of an representation representing major changes or releases (e.g., `v1.0`, `v2.0`). When a new version is created, the increment number is reset to `0`.
+- **Increment:** Represents minor changes or corrections between versions (e.g., `v1.1`, `v1.2`).
+- **Syntax:** `v<version>.<increment>`
+
+### 10.3.3 Configurations and Baselines
+- **Requirements Configuration:** A set of specific versions of requirements artefacts, characterized by:
+  - *Consistency:* Free of conflicts.
+  - *Unique Identification (UID)*
+  - *Not Changeable:* Freezes a state; modifications create a new configuration.
+  - *Basis for Roll-back:* Restores previous consistent states.
+- **Requirements Baseline:** A specific, customer-visible requirements configuration that constitutes a reference point for planning releases, estimating effort, and comparing with competitor products. Baselines are subject to formal change management.
+
+```mermaid
+graph TD
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
+    C1[Configuration 1: v1.0] -->|Minor change| C1_1[Configuration 2: v1.1]
+    C1_1 -->|Major change / Release| B1((Baseline 1: v2.0))
+    style B1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+```
+
+---
+
+## 10.4 Requirements Traceability
+Requirements traceability is the ability to follow the life of a requirement in both forwards and backwards directions.
+
+```mermaid
+graph LR
+    subgraph RE_Context ["RE Context (Facets & Dev)"]
+        Sub[Subject Facet]
+        Use[Usage Facet]
+        IT[IT System Facet]
+        Dev[Development Context]
+    end
+
+    subgraph Requirements_Artefacts ["Requirements Artefacts"]
+        G[Goals]
+        S[Scenarios]
+        SOR[Solution-oriented requirements]
+    end
+
+    subgraph Successor_Artefacts ["Successor Artefacts"]
+        Design[Design]
+        Impl[Implementation]
+        Test[Test Cases]
+    end
+
+    RE_Context -->|"(1) Pre-traceability"| Requirements_Artefacts
+    Requirements_Artefacts -->|"(2) Post-traceability"| Successor_Artefacts
+    Requirements_Artefacts -->|"(3) Between artefacts"| Requirements_Artefacts
+```
+
+### 10.4.1 Pre- and Post-Traceability
+1. **Pre-traceability:** Traces requirements back to their source, origin, or context aspects (e.g., tracing a warning requirement back to a safety regulation).
+2. **Post-traceability:** Traces requirements forward to successor artefacts representing their realization (architectural design, source code, test cases).
+3. **Traceability between requirements artefacts:** Traces relationships within the requirements space (e.g., tracing a detailed solution-oriented requirement back to the stakeholder goal it refines).
+
+### 10.4.2 Benefits of Traceability
+- **Accountability:** Assigns development effort and costs to specific requirements.
+- **Process Improvement:** Traces operational bugs back to their root cause.
+- **Change Management:** Identifies which artefacts are impacted if a requirement changes.
+- **Risk Management:** Identifies which parts of the system are affected by a specific risk.
+- **Gold Plating:** Detects system functions or code that were implemented but never requested in the requirements.
+
+### 10.4.3 Documentation Formats for Traceability
+Traceability links can be documented in four ways:
+- **Textual Annotation:** Documented as a comment (e.g., `R17: ... *Is based on G2*`).
+- **Attribute Scheme:** Traceability defined in structured attributes (e.g., `Based on: G2`, `Refined by: R17.1`).
+- **Traceability Matrices:** A grid mapping source artefacts (rows) to target artefacts (columns). Suited for small sets of requirements.
+- **Traceability Graphs:** A network diagram where nodes represent requirements artefacts and edges represent traceability links (e.g., `based-on`, `satisfies`).
+
+### 10.4.4 Traceability Link Types (UML / ISO Standards)
+- **Replaces:** Target artefact replaces source.
+- **Satisfies:** Realization of source satisfies target.
+- **Based on:** Target influenced the definition of source.
+- **Formalizes:** Source is the formal representation of target.
+- **Refines:** Source defines target in more detail.
+- **Derived:** Source is derived from a set of target artefacts.
+
+---
+
+## 10.5 Change Management of Requirements
+Change management is a systematically defined process to handle modifications to requirements and context objects throughout the system lifecycle. RM changes occur due to:
+- Evolution of stakeholder needs.
+- Changes to national/international laws.
+- New technology inventions.
+- New competitor products.
+- Operational problems (errors, data inconsistencies).
+
+### 10.5.1 The Change Control Board (CCB)
+The Change Control Board (CCB) is a formal committee responsible for receiving, evaluating, deciding on, and monitoring change requests.
+- **CCB Members:** Typically includes the Change Manager, Client/Customer, Product Manager, Developer/Architect, Project Manager, Requirements Engineer, Configuration Manager, and Quality Assurance Manager.
+- **Process Steps:**
+  1. **Classification:** Incoming requests are classified by the Change Manager as *Corrective* (fixing errors), *Adaptive* (adjusting to context changes), or *Exceptional* (urgent, implemented immediately outside standard CCB flow).
+  2. **Impact Analysis:** Experts estimate the effort and resource consumption required to integrate the change, identifying affected artefacts using traceability links.
+  3. **Evaluation:** The CCB evaluates the estimated effort against the expected benefits (market position, prestige, contract fulfillment). The CCB decides to accept or reject the request.
+  4. **Prioritisation:** Accepted requests are prioritised and assigned to a system release or change project.
+  5. **Monitoring:** The CCB monitors the integration progress and keeps the originator informed of the realization status.
+
+```mermaid
+graph TD
+    Start([Start]) --> Step1[1. Classification of the Change Request]
+    Step1 --> Decision1{Category?}
+    Decision1 -->|Corrective / Adaptive| Step2[2. Impact Analysis]
+    Decision1 -->|Exceptional| Direct[Direct Integration outside CCB]
+    
+    Step2 --> Step3[3. Evaluation of the Change Request]
+    Step3 --> Decision2{Decision?}
+    Decision2 -->|Accept| Step4[4. Prioritisation of Change Request]
+    Decision2 -->|Reject| End([End])
+    
+    Step4 --> Step5[5. Monitoring of Change Integration]
+    Step5 --> End
+    Direct --> End
+```
