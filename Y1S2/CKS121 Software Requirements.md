@@ -137,7 +137,8 @@ graph TD
 1. **Functional Requirements:** 
     - *IREB Definition:* A requirement concerning a result or behavior that shall be provided by a function of a system.
     - *Scope:* Further classified into: Functions (services/features), Behaviors (reactions to inputs/situations), and Data/Structures (representation and storage).
-    - > [!quote] Ian Sommerville (2007)
+    - **Quote:**
+      > [!quote] Ian Sommerville (2007)
       > "These [functional requirements] are statements of services the system should provide, how the system should react to particular inputs and how the system should behave in particular situations. In some cases, the functional requirements may also state what the system should not do. [...] When expressed as user requirements, the requirements are usually described in a fairly abstract way. However, functional system requirements describe the system function in detail, its inputs and outputs, exceptions and so on."
     - *Examples:*
         - **R-4:** The house information system shall generate monthly statements of allowed and denied accesses.
@@ -451,7 +452,8 @@ Requirements are documented using three types of complementary artefacts:
      ```
 2. **Scenarios:** Concrete examples of satisfying or failing to satisfy a goal (or set of goals).
    - *Characteristics:* Documents a concrete example of system usage, defines a sequence of interaction steps, puts requirements into context, and increases comprehensibility of goals.
-   - > [!example] Example: "Entry of destination" Scenario
+   - **Example:**
+     > [!example] Example: "Entry of destination" Scenario
      > 1. Driver selects the navigation to a desired destination.
      > 2. Navigation system asks for the address of the destination.
      > 3. Driver types in the address.
