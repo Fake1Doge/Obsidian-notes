@@ -140,6 +140,7 @@ graph TD
     - **Quote:**
       > [!quote] Ian Sommerville (2007)
       > "These \[functional requirements\] are statements of services the system should provide, how the system should react to particular inputs and how the system should behave in particular situations. In some cases, the functional requirements may also state what the system should not do. \[...\] When expressed as user requirements, the requirements are usually described in a fairly abstract way. However, functional system requirements describe the system function in detail, its inputs and outputs, exceptions and so on."
+
     - *Examples:*
         - **R-4:** The house information system shall generate monthly statements of allowed and denied accesses.
         - **R-6:** If a sensor detects damage to the window, the system shall inform the security company.
