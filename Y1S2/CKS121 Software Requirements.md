@@ -134,48 +134,51 @@ graph TD
     CList --> C1[Budget, Deadlines, Team, Process, Legislation, Norms, Standards, Operations]
 ```
 
-1. **Functional Requirements:** 
-    - *IREB Definition:* A requirement concerning a result or behavior that shall be provided by a function of a system.
-    - *Scope:* Further classified into: Functions (services/features), Behaviors (reactions to inputs/situations), and Data/Structures (representation and storage).
-    - **Quote:**
-      > [!quote] Ian Sommerville (2007)
-      > "These \[functional requirements\] are statements of services the system should provide, how the system should react to particular inputs and how the system should behave in particular situations. In some cases, the functional requirements may also state what the system should not do. \[...\] When expressed as user requirements, the requirements are usually described in a fairly abstract way. However, functional system requirements describe the system function in detail, its inputs and outputs, exceptions and so on."
+**1. Functional Requirements:** 
+- *IREB Definition:* A requirement concerning a result or behavior that shall be provided by a function of a system.
+- *Scope:* Further classified into: Functions (services/features), Behaviors (reactions to inputs/situations), and Data/Structures (representation and storage).
+- **Quote:**
 
-    - *Examples:*
-        - **R-4:** The house information system shall generate monthly statements of allowed and denied accesses.
-        - **R-6:** If a sensor detects damage to the window, the system shall inform the security company.
-        - **R-9:** If a correct PIN is entered at the keyboard of the access system, the system shall remove the door lock and shall record the access date, time, and the PIN entered.
-2. **Quality Requirements:** 
-    - *IREB Definition:* A requirement that pertains to a quality concern that is not covered by functional requirements.
-    - *Description:* Defines a quality property for the entire system, a system component, a service, or a function. These requirements have a big influence on the system architecture.
-    - *Examples:*
-        - **R-12:** The user interface shall be easy to use for the house owner. (Usability/Satisfaction)
-        - **R-15:** The release of the locking mechanism shall take $0.8\text{ seconds}$ at most. (Performance Efficiency)
-        - **R-17:** The user password stored in the system shall be protected against unauthorized access. (Security)
-    - *Standards:* **ISO/IEC 25010:2011** defines quality models:
-        - **Quality in Use (5 characteristics):**
-            - *Effectiveness:* Accuracy and completeness with which users achieve specified goals.
-            - *Efficiency:* Resources expended in relation to the accuracy and completeness with which users achieve goals.
-            - *Satisfaction:* Degree to which user needs are satisfied when a product or system is used in a specified context of use.
-            - *Freedom from Risk:* Degree to which a product or system mitigates the potential risk to economic status, human life, health, or the environment.
-            - *Context Coverage:* Degree to which a product or system can be used with effectiveness, efficiency, freedom from risk, and satisfaction in both contexts of use and contexts beyond those initially explicitly identified.
-        - **System/Software Product Quality (8 characteristics):**
-            - *Functional Suitability:* Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions.
-            - *Performance Efficiency:* Performance relative to the amount of resources (e.g., other software products, hardware configuration) used under stated conditions.
-            - *Compatibility:* Degree to which a product, system, or component can exchange information with other products, systems, or components, and/or perform its required functions, while sharing the same hardware or software environment.
-            - *Reliability:* Degree to which a system, product, or component performs specified functions under specified conditions for a specified period of time.
-            - *Security:* Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization.
-            - *Maintainability:* Degree to which a product or system can be modified by the intended maintainers.
-            - *Portability:* Degree to which a system, product, or component can be transferred from one hardware, software, or other operational or usage environment to another.
-            - *Usability:* (Noted in slide 44/standards as part of system quality)
-3. **Constraints:** 
-    - *IREB Definition:* A requirement that limits the solution space beyond what is necessary for meeting the given functional requirements and quality requirements. They are not implemented but limit the solution space.
-    - *Types of Constraints:* Organisational/project (Budget, Deadlines, Team, Process), Technical, Physical, Legal (Legislation, Norms, Standards, Guidelines), Cultural, Operations.
-    - *Examples:*
-        - **C-9 (Cultural):** The user interface shall not contain symbols or graphics abusive for any culture.
-        - **C-16 (Organisational/Project):** The effort for system development shall not exceed $480\text{ person months}$.
-        - **C-36 (Physical):** The electronic control unit in the vehicle interior shall work at temperatures from $-10$ to $+50\text{ }^{\circ}\text{C}$.
-        - **C-41 (Legal):** The system shall process personal data in compliance with the EU's Data Protection Directive 95/46/EC.
+> [!quote] Ian Sommerville (2007)
+> "These \[functional requirements\] are statements of services the system should provide, how the system should react to particular inputs and how the system should behave in particular situations. In some cases, the functional requirements may also state what the system should not do. \[...\] When expressed as user requirements, the requirements are usually described in a fairly abstract way. However, functional system requirements describe the system function in detail, its inputs and outputs, exceptions and so on."
+
+- *Examples:*
+    - **R-4:** The house information system shall generate monthly statements of allowed and denied accesses.
+    - **R-6:** If a sensor detects damage to the window, the system shall inform the security company.
+    - **R-9:** If a correct PIN is entered at the keyboard of the access system, the system shall remove the door lock and shall record the access date, time, and the PIN entered.
+
+**2. Quality Requirements:** 
+- *IREB Definition:* A requirement that pertains to a quality concern that is not covered by functional requirements.
+- *Description:* Defines a quality property for the entire system, a system component, a service, or a function. These requirements have a big influence on the system architecture.
+- *Examples:*
+    - **R-12:** The user interface shall be easy to use for the house owner. (Usability/Satisfaction)
+    - **R-15:** The release of the locking mechanism shall take $0.8\text{ seconds}$ at most. (Performance Efficiency)
+    - **R-17:** The user password stored in the system shall be protected against unauthorized access. (Security)
+- *Standards:* **ISO/IEC 25010:2011** defines quality models:
+    - **Quality in Use (5 characteristics):**
+        - *Effectiveness:* Accuracy and completeness with which users achieve specified goals.
+        - *Efficiency:* Resources expended in relation to the accuracy and completeness with which users achieve goals.
+        - *Satisfaction:* Degree to which user needs are satisfied when a product or system is used in a specified context of use.
+        - *Freedom from Risk:* Degree to which a product or system mitigates the potential risk to economic status, human life, health, or the environment.
+        - *Context Coverage:* Degree to which a product or system can be used with effectiveness, efficiency, freedom from risk, and satisfaction in both contexts of use and contexts beyond those initially explicitly identified.
+    - **System/Software Product Quality (8 characteristics):**
+        - *Functional Suitability:* Degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions.
+        - *Performance Efficiency:* Performance relative to the amount of resources (e.g., other software products, hardware configuration) used under stated conditions.
+        - *Compatibility:* Degree to which a product, system, or component can exchange information with other products, systems, or components, and/or perform its required functions, while sharing the same hardware or software environment.
+        - *Reliability:* Degree to which a system, product, or component performs specified functions under specified conditions for a specified period of time.
+        - *Security:* Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization.
+        - *Maintainability:* Degree to which a product or system can be modified by the intended maintainers.
+        - *Portability:* Degree to which a system, product, or component can be transferred from one hardware, software, or other operational or usage environment to another.
+        - *Usability:* (Noted in slide 44/standards as part of system quality)
+
+**3. Constraints:** 
+- *IREB Definition:* A requirement that limits the solution space beyond what is necessary for meeting the given functional requirements and quality requirements. They are not implemented but limit the solution space.
+- *Types of Constraints:* Organisational/project (Budget, Deadlines, Team, Process), Technical, Physical, Legal (Legislation, Norms, Standards, Guidelines), Cultural, Operations.
+- *Examples:*
+    - **C-9 (Cultural):** The user interface shall not contain symbols or graphics abusive for any culture.
+    - **C-16 (Organisational/Project):** The effort for system development shall not exceed $480\text{ person months}$.
+    - **C-36 (Physical):** The electronic control unit in the vehicle interior shall work at temperatures from $-10$ to $+50\text{ }^{\circ}\text{C}$.
+    - **C-41 (Legal):** The system shall process personal data in compliance with the EU's Data Protection Directive 95/46/EC.
 
 ---
 
