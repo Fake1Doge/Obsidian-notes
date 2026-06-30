@@ -2620,3 +2620,385 @@ graph TD
 
 * **Cohesion** is maximized by keeping tightly related classes (e.g., `Customer` and `Membership`) in the same package.
 * **Coupling** is minimized by establishing clean, one-way dependencies between packages (e.g., `Client` package depends on `Transaction` package, which in turn depends on `Vehicle` package).
+
+---
+
+# Chapter 12: Object-Oriented Design: Use Case Realization
+
+## 12.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Define Use Case Realization and explain how OOD translates requirements into detailed design.
+> 2. Differentiate between sequence diagrams and communication diagrams.
+> 3. Construct detailed sequence diagrams representing View, Domain, and Data Access layers.
+> 4. Structure software classes into package diagrams representing a three-layer architecture.
+> 5. Recognize and apply common system design patterns (Controller, Adapter, Factory, Singleton).
+
+## 12.2 Part I: Use Case Realization Concepts
+> [!info] Definition: Use Case Realization
+> The process of elaborating a detailed design by determining exactly which software objects collaborate—and what messages they send to each other—to satisfy the business logic and requirements of a particular use case.
+
+- Detailed design proceeds **use case by use case** and **layer by layer** (from the View layer to the Domain layer and down to the Data Access layer).
+- Any utility or supporting classes (such as database helpers or security tokens) are identified during this realization phase.
+- Design is modeled using UML interaction diagrams: **Sequence Diagrams** and **Communication Diagrams**.
+
+### 12.2.1 Sequence Diagrams vs. Communication Diagrams
+UML defines two types of interaction diagrams to represent use case realization:
+
+1. **Sequence Diagrams (The Timeline):**
+   - Focuses on the timeline and chronological order of messages.
+   - Uses vertical lifelines and activation rectangles.
+   - **Advantage:** Highly readable for mapping complex logic flows over time.
+2. **Communication Diagrams (The Network):**
+   - Focuses on object coupling and structural architecture.
+   - Uses numbered link lines (e.g., `1`, `1.1`, `1.2.1`) to show sequential message flow without lifelines.
+   - **Advantage:** Best suited for quick whiteboard sketching and diagnosing object relationships at a single glance.
+
+---
+
+## 12.3 Part II: Detailed Design with Sequence Diagrams
+
+### 12.3.1 First-Cut Sequence Diagrams
+A first-cut sequence diagram replaces the single `:System` box from the analysis phase's System Sequence Diagram (SSD) with actual internal domain classes and a use case controller. 
+
+> [!important] The Conversational Flow
+> Think of a first-cut sequence diagram as a group chat where objects request services from one another. An **activation lifeline** represents the exact time an object's method is awake and executing.
+
+#### Case Study: First-Cut Sequence Diagram for `Create customer account`
+This diagram represents the domain-layer sequence design for creating a customer account, expanding the original SSD:
+
+```mermaid
+sequenceDiagram
+    actor Clerk as "Clerk"
+    participant CustomerHandler as ":CustomerHandler"
+    participant Customer as "aC:Customer"
+    participant Address as "aAdd:Address"
+    participant Account as "aAcc:Account"
+    
+    Clerk->>CustomerHandler: createNewCustomer(name, phones, email)
+    activate CustomerHandler
+    CustomerHandler->>Customer: create(name, phones, email)
+    activate Customer
+    deactivate Customer
+    CustomerHandler-->>Clerk: (custID, name, phones, email)
+    deactivate CustomerHandler
+    
+    Clerk->>CustomerHandler: enterAddress(address)
+    activate CustomerHandler
+    CustomerHandler->>Customer: enterAddress(address)
+    activate Customer
+    Customer->>Address: create(address)
+    activate Address
+    deactivate Address
+    deactivate Customer
+    CustomerHandler-->>Clerk: (updated address)
+    deactivate CustomerHandler
+    
+    Clerk->>CustomerHandler: enterCreditCard(cc-info)
+    activate CustomerHandler
+    CustomerHandler->>Customer: enterCreditCard(cc-info)
+    activate Customer
+    Customer->>Account: create(cc-info)
+    activate Account
+    deactivate Account
+    deactivate Customer
+    CustomerHandler-->>Clerk: (updated cc-info)
+    deactivate CustomerHandler
+```
+
+---
+
+## 12.4 Part III: Multilayer Design (Three-Layer Architecture)
+In a fully realized detailed design, the **"perfect memory" assumption** is dropped. Systems do not possess perfect memory—to execute a use case, data must be actively retrieved from and saved to a database. 
+
+A robust design enforces the **Separation of Responsibilities** by isolating all UI logic, business logic, and SQL executions into dedicated, decoupled layers:
+- **View Layer:** Displays electronic forms and reports, captures input events (clicks, key entries), and forwards validated inputs to the controller.
+- **Domain Layer:** The core of the application that processes business rules and instantiates domain objects.
+- **Data Access Layer (Data Persistence):** Establishes database connections, contains SQL statements, and populates domain objects from database result sets.
+
+### 12.4.1 Case Study: Multilayer Sequence Diagram for `Fill shopping cart`
+The following diagram illustrates how messages flow vertically through the three layers (from a user window, to a business controller, down to a data access object to read/write the database):
+
+```mermaid
+sequenceDiagram
+    participant SearchItemWindow as ":SearchItemWindow"
+    participant CartHandler as ":CartHandler"
+    participant CustomerDA as ":CustomerDA"
+    participant Customer as "aC:Customer"
+    participant OnlineCart as "aCrt:OnlineCart"
+    participant OnlineCartDA as ":OnlineCartDA"
+    
+    SearchItemWindow->>CartHandler: addItemToCart(promoNo, prodID, size, color, qty)
+    activate CartHandler
+    CartHandler->>CustomerDA: aC := findCustomer(acctNo)
+    activate CustomerDA
+    CustomerDA-->>CartHandler: (aC:Customer object)
+    deactivate CustomerDA
+    
+    CartHandler->>Customer: aCrt := createCart()
+    activate Customer
+    Note over Customer: If firstTime, instantiate OnlineCart
+    Customer->>OnlineCart: createCart()
+    activate OnlineCart
+    deactivate OnlineCart
+    Customer-->>CartHandler: (aCrt:OnlineCart object)
+    deactivate Customer
+    
+    CartHandler->>OnlineCart: addItemToCart(promoNo, prodID, size, color, qty)
+    activate OnlineCart
+    Note over OnlineCart: Create and populate CartItem, then save
+    OnlineCart->>OnlineCartDA: saveCart(aCrt)
+    activate OnlineCartDA
+    deactivate OnlineCartDA
+    OnlineCart-->>CartHandler: (cart details)
+    deactivate OnlineCart
+    
+    CartHandler-->>SearchItemWindow: (updated cart details)
+    deactivate CartHandler
+```
+
+---
+
+## 12.5 Part IV: Structuring Components with UML Package Diagrams
+To organize large applications, packages are used to group related classes by functional layer or subsystem.
+
+### 12.5.1 Three-Layer Package Diagram
+This diagram depicts the one-way dependencies between packages. Dashed arrows trace vulnerability—if the structure of the Data Access layer changes, the Domain layer must be audited:
+
+```mermaid
+graph TD
+    subgraph ViewPackage ["<<package>> View Layer"]
+        SearchItemWindow
+        AddItemWindow
+        CustLoginWindow
+    end
+    subgraph DomainPackage ["<<package>> Domain Layer"]
+        CartHandler
+        CustomerHandler
+        Customer
+        OnlineCart
+    end
+    subgraph DataAccessPackage ["<<package>> Data Access Layer"]
+        CustomerDA
+        OnlineCartDA
+        CartItemDA
+    end
+    ViewPackage -.-> DomainPackage
+    DomainPackage -.-> DataAccessPackage
+```
+
+### 12.5.2 Subsystem Package Diagram (RMO)
+Large systems partition packages by subsystem. For example, the Sales Subsystem has a dependency on the Customer Account Subsystem to retrieve customer data:
+
+```mermaid
+graph TD
+    subgraph SalesSubsystem ["<<package>> Sales Subsystem"]
+        ViewLayerSales["View Layer"]
+        DomainLayerSales["Domain Layer"]
+        DataLayerSales["Data Access Layer"]
+    end
+    subgraph CustomerSubsystem ["<<package>> Customer Account Subsystem"]
+        CustomerHandler
+        Customer
+    end
+    SalesSubsystem -.-> CustomerSubsystem
+```
+
+---
+
+## 12.6 Part V: Layer Responsibilities and Implementation Issues
+
+### 12.6.1 The IDE "Shortcut Trap"
+Ease of graphical user interface (GUI) builders tempts developers to embed SQL code and business logic directly into window click events. 
+- **Risk:** Leads to "fat" view layers, extremely high maintenance debt, and a complete lack of scalability (requiring a full system rewrite to add a Web or Mobile front-end later).
+- **Solution:** Adhere strictly to object responsibility and layer boundaries.
+
+### 12.6.2 Summary of Layer Duties
+- **View Layer:**
+  - Display electronic forms and reports.
+  - Capture input events (clicks, key entries).
+  - Perform basic GUI validation (e.g. required field checks).
+  - Forward validated inputs to the controller.
+- **Domain Layer:**
+  - Create problem domain (persistent) classes.
+  - Process all business rules and calculation logic.
+  - Prepare persistent classes for storage.
+- **Data Access Layer:**
+  - Establish and maintain database connections.
+  - Contain and execute all SQL queries.
+  - Process database result sets into appropriate domain objects.
+  - Disconnect gracefully from the database.
+
+---
+
+## 12.7 Part VI: Common System Design Patterns
+Design patterns are standardized design techniques and templates recognized as industry best practices for solving recurring design problems.
+
+| Pattern Name | Design Problem | The Metaphor | Pattern Benefit |
+|--------------|----------------|--------------|-----------------|
+| **Controller** | Which domain class receives UI inputs? | The Switchboard | Decouples View classes from Domain classes, reducing overall coupling. |
+| **Adapter** | How to connect to an external/purchased system that might change? | The Universal Plug | Translates standard system calls into the external system's custom signatures, insulating the core from external changes. |
+| **Factory** | Who creates complex utility or database objects? | The Assembly Line | Centralizes object creation, keeping domain classes highly cohesive and clean. |
+| **Singleton** | How to ensure only ONE instance of a class exists (e.g., database connection)? | The Single Key | Prevents conflicting resource instances in memory, maximizing performance and efficiency. |
+
+---
+
+# Chapter 13: Making the System Operational
+
+## 13.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Detail the fifth (Build, Test, and Integrate) and sixth (Complete System Tests and Deploy) core processes of system development.
+> 2. Explain the purpose, defect targets, and techniques for different types of software testing.
+> 3. Compare three implementation/development orders (IPO, Top-Down, Bottom-Up).
+> 4. Describe deployment logistics including data conversion, user training, and production environment setup.
+> 5. Outline change control, release staging, and the shift from SCCS to DVCS (Git/GitHub).
+
+## 13.2 Part I: Implementation and Deployment Activities
+Making a system operational spans two primary phases: **Implementation** (Build & Test) and **Deployment** (Transition & Go-Live).
+
+1. **Implementation Activities (5th Core Process):**
+   - Program the software components.
+   - Unit test individual methods and classes.
+   - Identify and build test cases.
+   - Integrate and test combinations of components.
+2. **Deployment Activities (6th Core Process):**
+   - Perform full system and stress tests.
+   - Perform user acceptance tests (UAT).
+   - Convert existing legacy data to the new database format.
+   - Build training materials and conduct user training.
+   - Configure and set up the production environment.
+   - Deploy the final software solution.
+
+---
+
+## 13.3 Part II: Software Testing Concepts and Types
+Testing is a rigorous, structured activity performed throughout implementation and deployment to locate and correct defects before a system goes live.
+
+```mermaid
+graph TD
+    UnitTest["Unit Testing (Isolation)"] --> IntegrationTest["Integration Testing (Group Behavior)"]
+    IntegrationTest --> SystemTest["System & Usability Testing (Full Performance/UI)"]
+    SystemTest --> UAT["User Acceptance Testing (Business Verification)"]
+```
+
+### 13.3.1 Summary of Test Types
+
+| Test Type | Testing Phase & Defect Target | Real-World Example |
+|-----------|-------------------------------|--------------------|
+| **Unit Testing** | **Phase:** Implementation.<br>**Target:** Fails in isolation (individual methods/classes). | Incorrect sales tax calculation code for specific postal zones. |
+| **Integration Testing** | **Phase:** Implementation.<br>**Target:** Fails in combination (inter-object behavior). | Data conversion errors when passing an object from order entry to shipping modules. |
+| **Usability Testing** | **Phase:** Implementation.<br>**Target:** Fails ease of use/UI requirements. | Needlessly complex UI navigation paths that frustrate users during a simple task. |
+| **System & Stress Testing** | **Phase:** Deployment.<br>**Target:** Fails non-functional performance/load requirements. | Query execution takes 2 seconds with a single user but drops to 30 seconds under peak live load. |
+| **User Acceptance Testing (UAT)** | **Phase:** Deployment.<br>**Target:** Fails business requirement fulfillment (final check). | End-users reject a system because the final version lacks a required "archive view" feature. |
+
+### 13.3.2 Test Stubs and Drivers
+During unit and integration testing, some parts of the system may not yet be programmed. Developers write temporary simulation modules to facilitate testing:
+
+- **Driver (Simulated Caller):** A temporary method or class written to send input messages to a lower-level module that is ready for testing.
+- **Stub (Simulated Target):** A temporary method or class that returns a hardcoded mock value when invoked, simulating a lower-level module that has not yet been written.
+
+```mermaid
+graph LR
+    subgraph TopDown ["Top-Down Integration (uses Stubs)"]
+        Login -->|Calls| CurrentBalanceStub["Current Balance (Stub)"]
+    end
+    subgraph BottomUp ["Bottom-Up Integration (uses Drivers)"]
+        CurrentBalanceDriver["Current Balance (Driver)"] -->|Calls| Deposit
+    end
+```
+
+### 13.3.3 Build and Smoke Tests
+A **build and smoke test** is an automated system integration test performed daily (or several times a week). The application is completely compiled and linked (the build), and a battery of automated tests is executed to see whether any critical feature malfunctions in an obvious way ("smokes"). This catches regressions and code conflicts early.
+
+---
+
+## 13.4 Part III: Implementation and Development Order
+When building a multi-class, multi-layer application, teams must decide the order in which to program and test modules:
+
+```mermaid
+graph TD
+    subgraph IPO ["Input, Process, Output (IPO)"]
+        InputLayer[Input Modules / UI] --> ProcessLayer[Process Modules / Logic]
+        ProcessLayer --> OutputLayer[Output Modules / Reports]
+    end
+```
+
+### 13.4.1 Comparison of Development Orders
+
+1. **Input-Process-Output (IPO):**
+   - **Core Mechanic:** Based strictly on data flow through the system. Input modules are built first, process logic next, and output modules last.
+   - **Advantage:** Simplifies testing because inputs feed test data directly to process modules.
+   - **Disadvantage (The Waterfall Drawback):** Stakeholders cannot see a fully working end-to-end feature until the very end.
+   - **Modern Equivalent:** **Vertical Slicing** (Agile development where a tiny slice of input, process, and output is built concurrently for a single feature).
+2. **Top-Down Development:**
+   - **Core Mechanic:** Follows hierarchical organization structure. Highest-level view and controller methods are implemented first, calling downward.
+   - **Prerequisite Workaround:** Requires writing dummy stubs to simulate lower-level database and logic classes.
+   - **Advantage:** Guarantees a working, testable prototype at all times.
+   - **Disadvantage:** Creates early engineering bottlenecks when database classes are delayed.
+3. **Bottom-Up Development:**
+   - **Core Mechanic:** Low-level foundation classes (e.g. `InventoryItem`, database access helpers) are implemented first, building upward.
+   - **Prerequisite Workaround:** Requires writing temporary drivers to execute and test foundational modules in the absence of a UI.
+   - **Advantage:** Maximizes parallel programming; an army of developers can build foundational code immediately.
+   - **Disadvantage:** Delays usability testing and use-case integration until late in the cycle.
+
+---
+
+## 13.5 Part IV: Deployment, Configuration, and Support Logistics
+
+### 13.5.1 Data Conversion and Initialization
+An operational system requires a fully populated database at startup. Data can be converted and initialized from several sources:
+- Files or databases of the legacy system being replaced (using export/import tools or scripts).
+- Manual paper records (requiring manual data entry or Optical Character Recognition (OCR) tools).
+- Files or databases from other subsystems in the organization.
+
+### 13.5.2 User Training
+- **End-User Training:** Emphasizes hands-on use for specific business tasks (order entry, inventory control). Training must match varying skill levels using practice exercises, tutorials, and Q&A sessions.
+- **System Operator Training:** Focuses on server administrators. Can be less formal since operators can learn starting/stopping, backing up/archiving, and query management via self-study.
+
+### 13.5.3 Configuring the Production Environment
+Before application software is deployed, the production infrastructure must be acquired, installed, and configured by network administrators:
+- **Interaction Standards:** Standardizing how components communicate (REST, gRPC, GraphQL, SOAP, or event streaming via Apache Kafka).
+- **Supporting Infrastructure:** Setting up firewalls, API Gateways, Service Meshes, directory services (Active Directory), and naming structures (DNS/DHCP).
+
+### 13.5.4 Deployment Strategies
+When launching a system, organizations choose between three main strategies:
+1. **Direct Deployment ("Cold Turkey"):** Installs the new system and immediately turns off the old one. **Higher risk, lower cost.**
+2. **Parallel Deployment:** Operates the old and new systems concurrently for an extended period. **Lower risk, higher cost** (double data entry, double infrastructure cost).
+3. **Phased Deployment:** Installs and launches the new system in a series of steps or phases (e.g., by module or department). **Moderate risk, moderate cost.**
+
+---
+
+## 13.6 Part V: Change and Version Control
+
+### 13.6.1 Release Staging
+To manage complexity across multiple software updates, releases are structured into distinct stages:
+
+```mermaid
+graph LR
+    Alpha["Alpha Version (Internal testing)"] --> Beta["Beta Version (End-user testing)"]
+    Beta --> Production["Production Release (Live environment)"]
+    Production --> Maintenance["Maintenance Release (Bug fixes)"]
+```
+
+- **Alpha Version:** An incomplete test version ready only for internal integration and usability testing.
+- **Beta Version:** A stable test version distributed to external end-users for testing over an extended period.
+- **Production Release:** A fully validated system version formally distributed to users and made operational.
+- **Maintenance Release:** A system update containing bug fixes and minor feature adjustments.
+
+### 13.6.2 The Shift to Distributed Version Control Systems (DVCS)
+Software configuration management has evolved to eliminate collaboration bottlenecks:
+- **The Past: Source Code Control Systems (SCCS):** Relied on strict, pessimistic **file locking** where only one developer could check out a file in read/write mode at a time, halting progress.
+- **The Present: Distributed Version Control (DVCS) like Git:** Every developer clones a full, independent local copy of the repository and its history. This enables optimistic control where multiple developers edit the same files simultaneously offline, merging conflicts seamlessly later.
+
+#### Git vs. GitHub
+- **Git (The Engine):** Local command-line software that tracks files, manages branches, and records commits locally.
+- **GitHub (The Platform):** A cloud-based platform hosting Git repositories that facilitates team collaboration, Pull Requests (PRs), code reviews, and project management.
+
+#### Git Workflow
+1. **Main Branch:** The central repository branch (`main` or `master`) holding the production-ready code.
+2. **Feature Branches:** Developers branch out (`feature-cart`) to isolate their task changes.
+3. **Pull Requests (PR):** Once a feature is complete, a PR is opened on GitHub to review and discuss the code.
+4. **Safe Integration:** Upon approval, the feature is safely merged into the main branch.
+
+

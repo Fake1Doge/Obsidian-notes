@@ -22,24 +22,27 @@ When a course is requested (e.g. "CKS121"):
 
 ## 2. Compile Course Notes (Hierarchical Process)
 
-1. **Sequential Delegation (Looping)**:
-   - For each course material file identified in the plan:
-     - **Invoke the `lecture-to-obsidian` skill** to process the file and write or merge its contents into the master note.
+1. **Sequential Chapter-by-Chapter Writing (Looping)**:
+   - For each course material file identified in the plan, process and write it **single chapter by single chapter**:
+     - **Invoke the `lecture-to-obsidian` skill** to process the current file and generate its formatted notes.
+     - **Write/Merge Immediately**: Immediately append or merge this single chapter/topic's content into the master markdown file on disk and save it before moving on to the next file. **Never** wait to write all chapters in a single bulk operation at the end.
      - Ensure that no details, examples, or formulas are lost during the transition.
      - Apply appropriate prefixes for special files (e.g., `# Lab X: [Title]` for a lab document).
-2. **Post-Processing (Renumbering)**:
-   - Once all materials are successfully processed and written to the master note, **invoke the `rearrange-topics` skill** to clean up the heading structure and renumber all topics sequentially.
+2. **Immediate Renumbering**:
+   - **Immediately after writing each chapter** to the master note, **invoke the `rearrange-topics` skill** to clean up the heading structure and renumber topics/labs sequentially. This ensures the master note is kept up-to-date and syntactically clean at every step.
    - Run the script using the `rtk` command proxy to save tokens:
      ```bash
      rtk node "<workspace-root>/.agents/skills/rearrange-topics/scripts/rearrange.js" "<path-to-master-note>"
      ```
-3. **Quality Verification**:
-   - Check the final notes to ensure all Mermaid diagrams conform to syntax rules:
-     - **No Spaces in Node/Subgraph IDs** (e.g., use `ViewLayer` instead of `View Layer`).
-     - **No Special Characters in Class Member Types/Names** (e.g., no `&`, `{`, `}`, or `*`).
-     - **Stereotype Syntax** must be applied on a separate line (e.g., `<<abstract>> Sale`).
-   - Ensure the document starts directly with the content (no YAML frontmatter/properties).
-   - Verify that subtopics under all sections (Chapters, Labs, etc.) are correctly aligned to their parent heading's number (e.g., `## X.Y [Subtitle]`).
+3. **Chapter Verification**:
+   - Verify the quality of each written chapter immediately after it is saved and renumbered:
+     - Check that all Mermaid diagrams conform to syntax rules:
+       - **No Spaces in Node/Subgraph IDs** (e.g., use `ViewLayer` instead of `View Layer`).
+       - **No Special Characters in Class Member Types/Names** (e.g., no `&`, `{`, `}`, or `*`).
+       - **Stereotype Syntax** must be applied on a separate line (e.g., `<<abstract>> Sale`).
+     - Ensure the appended section starts directly with its heading and does not contain YAML frontmatter/properties.
+     - Verify that subtopics are correctly aligned to their parent heading's number (e.g., `## X.Y [Subtitle]`).
+
 
 ---
 
