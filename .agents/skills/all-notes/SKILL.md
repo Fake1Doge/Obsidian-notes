@@ -13,28 +13,37 @@ When a course is requested (e.g. "CKS121"):
 
 1. **Locate Course Directory**: Search the workspace (typically under `Y1S1/` or `Y1S2/`) for the target course directory.
 2. **Identify Master Note**: Find the master note markdown file (e.g., `<CourseCode> <CourseName>.md`). If it doesn't exist, create it.
-3. **Inventory Lecture Notes**: List all lecture files (PDFs, slides, text files) in the course folder, sorted sequentially.
-4. **Present the Plan**: Create a mapping table of lectures to chapters and present it to the user.
+3. **Inventory Course Materials**: List all files (PDFs, slides, text files) in the course folder, sorted sequentially. Separate them into different types of materials:
+   - **Lectures**: Theoretical content (will become `Chapter` or `Topic` headings).
+   - **Labs/Tutorials/Assignments**: Practical exercises (will become `Lab`, `Tutorial`, `Assignment` headings).
+4. **Present the Plan**: Create a detailed mapping table of files to chapters, labs, or sections and present it to the user.
 
 ---
 
 ## 2. Compile Course Notes (Hierarchical Process)
 
 1. **Sequential Delegation (Looping)**:
-   - For each lecture note identified in the inventory:
+   - For each course material file identified in the plan:
      - **Invoke the `lecture-to-obsidian` skill** to process the file and write or merge its contents into the master note.
      - Ensure that no details, examples, or formulas are lost during the transition.
+     - Apply appropriate prefixes for special files (e.g., `# Lab X: [Title]` for a lab document).
 2. **Post-Processing (Renumbering)**:
-   - Once all lectures are successfully processed and written to the master note, **invoke the `rearrange-topics` skill** to clean up the heading structure and renumber all topics sequentially:
+   - Once all materials are successfully processed and written to the master note, **invoke the `rearrange-topics` skill** to clean up the heading structure and renumber all topics sequentially.
+   - Run the script using the `rtk` command proxy to save tokens:
      ```bash
      rtk node "<workspace-root>/.agents/skills/rearrange-topics/scripts/rearrange.js" "<path-to-master-note>"
      ```
 3. **Quality Verification**:
-   - Check the final notes to ensure all Mermaid diagrams conform to syntax rules (no spaces in subgraph/node IDs, stereotypes on separate lines).
+   - Check the final notes to ensure all Mermaid diagrams conform to syntax rules:
+     - **No Spaces in Node/Subgraph IDs** (e.g., use `ViewLayer` instead of `View Layer`).
+     - **No Special Characters in Class Member Types/Names** (e.g., no `&`, `{`, `}`, or `*`).
+     - **Stereotype Syntax** must be applied on a separate line (e.g., `<<abstract>> Sale`).
    - Ensure the document starts directly with the content (no YAML frontmatter/properties).
+   - Verify that subtopics under all sections (Chapters, Labs, etc.) are correctly aligned to their parent heading's number (e.g., `## X.Y [Subtitle]`).
 
 ---
 
 ## 3. Cleanup
 
-Automatically delete any temporary text files (such as `temp_pdf_text.txt`) or split PDFs created by the `pdf-extractor` skill during the process.
+Automatically delete any temporary text files (such as `temp_pdf_text.txt`) or split PDFs (like `<FileName>_part_X.pdf` or `<FileName>_pages_X_to_Y.pdf`) created by the `pdf-extractor` skill during the process.
+

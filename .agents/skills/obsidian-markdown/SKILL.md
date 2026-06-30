@@ -93,6 +93,9 @@ Default properties: `tags` (searchable labels), `aliases` (alternative note name
 
 See [PROPERTIES.md](references/PROPERTIES.md) for all property types, tag syntax rules, and advanced usage.
 
+> [!IMPORTANT]
+> **Conditional Rule**: Frontmatter properties must only be placed at the very top of standalone notes files. When compiling, merging, or appending lecture notes to a master note (as in the `lecture-to-obsidian` and `all-notes` workflows), **NEVER** add frontmatter at the top of the appended section, as it will break markdown rendering inside the master note.
+
 ## Tags
 
 ```markdown
@@ -141,6 +144,23 @@ graph TD
 ````
 
 To link Mermaid nodes to Obsidian notes, add `class NodeName internal-link;`.
+
+### Strict Mermaid Syntax Constraints
+
+To prevent syntax and rendering errors in Obsidian, you must strictly follow these constraints when writing or modifying Mermaid diagrams:
+
+1. **No Spaces in Node or Subgraph IDs**:
+   - Subgraph and node identifiers must not contain spaces (e.g., use `ViewLayer` instead of `View Layer`).
+   - If you need spaces in the display name, specify the ID as a single word and wrap the display label in double quotes:
+     ```mermaid
+     subgraph ViewLayer ["View Layer - PHP, HTML/CSS"]
+         homePage["Home Page"]
+     end
+     ```
+2. **No Special Characters in Class Member Types/Names**:
+   - Avoid using characters like `&`, `{`, `}`, or `*` directly inside class diagrams' attributes or methods (e.g., replace `shipping&Handling` with `shippingAndHandling`, and remove `{key}` properties from attributes as curly braces conflict with class delimiters).
+3. **Stereotype Syntax**:
+   - Stereotypes for classes must be applied on a separate line (e.g., `<<abstract>> Sale` or `<<entity>> DesignStudent`) instead of inside the class braces where they can cause parsing failures.
 
 ## Footnotes
 

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+// Helper to clean leading delimiters and trim whitespace from title
 function cleanTitleText(rest) {
     if (!rest) return '';
     // Strip leading colons, dashes, dots, and spaces
@@ -19,32 +20,32 @@ function rearrangeHeadings(filePath) {
     content = content.replace(/\r\n/g, '\n');
     const lines = content.split('\n');
 
-    // Regexes:
-    // 1. Main Topic (e.g., "# Chapter 1: Intro")
-    // Group 1: hashes, Group 2: Prefix (word), Group 3: number, Group 4: rest
-    const mainTopicRegex = /^(#+)\s+([A-Za-z]+)\s+(\d+)([\:\-\.\s]+.*)?$/;
-
-    // 2. Subtopic (e.g., "## 1.1 Intro" or "### 1.1.1 Importance")
-    // Group 1: hashes, Group 2: digits/dots, Group 3: rest
-    const subtopicRegex = /^(#+)\s+(\d+(?:\.\d+)*)([\:\-\.\s]+.*)?$/;
-
-    const prefixCounts = {};
-    const validPrefixes = new Set([
-        'chapter', 'topic', 'week', 'lecture', 'part', 'section', 
-        'module', 'unit', 'lab', 'tutorial', 'assignment', 
-        'appendix', 'project', 'step'
+    // Categories of valid prefixes
+    const LECTURE_PREFIXES = new Set([
+        'chapter', 'topic', 'week', 'lecture', 'module', 'unit', 'part', 'section'
     ]);
+    const SPECIAL_PREFIXES = new Set([
+        'lab', 'tutorial', 'assignment', 'appendix', 'project', 'step'
+    ]);
+    const VALID_PREFIXES = new Set([...LECTURE_PREFIXES, ...SPECIAL_PREFIXES]);
+
+    // Regexes for parsing
+    // 1. Heading with a prefix word and number: e.g. "Chapter 1: Title" or "Lab 2 - Title"
+    const prefixNumberRegex = /^\s*([A-Za-z]+)\s+(\d+(?:\.\d+)*)([\:\-\.\s]+.*)?$/;
+    // 2. Heading with just a number: e.g. "1.1 Title" or "2 Title"
+    const justNumberRegex = /^\s*(\d+(?:\.\d+)*)([\:\-\.\s]+.*)?$/;
 
     let inCodeBlock = false;
     let inFrontMatter = false;
     const matches = [];
+    const lecturePrefixCounts = {};
 
     // Check if the file starts with frontmatter
     if (lines.length > 0 && lines[0].trim() === '---') {
         inFrontMatter = true;
     }
 
-    // First pass: count main topic prefixes to find the most common one
+    // First pass: scan all lines to find numbered headings and count lecture prefixes
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         
@@ -61,83 +62,141 @@ function rearrangeHeadings(filePath) {
         }
         if (inCodeBlock) continue;
 
-        const match = line.match(mainTopicRegex);
-        if (match) {
-            const prefix = match[2].toLowerCase();
-            if (validPrefixes.has(prefix)) {
-                prefixCounts[prefix] = (prefixCounts[prefix] || 0) + 1;
-                matches.push({ index: i, type: 'main', match: match });
-            }
-        } else {
-            const subMatch = line.match(subtopicRegex);
-            if (subMatch) {
-                const level = subMatch[1].length;
-                if (level === 1) {
-                    // It is a level 1 heading without a prefix (e.g. "# 7 Functional Modelling")
-                    // We treat level 1 headings always as main topics (Chapters/Topics)
-                    let rest = subMatch[3] || '';
-                    const cleanRest = cleanTitleText(rest);
-                    const simulatedMatch = [subMatch[0], subMatch[1], 'Chapter', subMatch[2], cleanRest ? `: ${cleanRest}` : ''];
-                    matches.push({ index: i, type: 'main', match: simulatedMatch });
-                } else {
-                    matches.push({ index: i, type: 'sub', match: subMatch });
+        // Check if line starts with hashes
+        const headingMatch = line.match(/^(#+)\s+(.*)$/);
+        if (headingMatch) {
+            const hashes = headingMatch[1];
+            const level = hashes.length;
+            const titlePart = headingMatch[2].trim();
+
+            let parsed = null;
+
+            // Attempt to match with prefix and number
+            const matchA = titlePart.match(prefixNumberRegex);
+            if (matchA) {
+                const prefix = matchA[1];
+                const prefixLower = prefix.toLowerCase();
+                if (VALID_PREFIXES.has(prefixLower)) {
+                    parsed = {
+                        hasPrefix: true,
+                        prefix: prefix,
+                        prefixLower: prefixLower,
+                        numStr: matchA[2],
+                        rest: matchA[3] || ""
+                    };
                 }
             }
+
+            // If prefix not valid/matched, check if it starts with just a number
+            if (!parsed) {
+                const matchB = titlePart.match(justNumberRegex);
+                if (matchB) {
+                    parsed = {
+                        hasPrefix: false,
+                        prefix: "",
+                        prefixLower: "",
+                        numStr: matchB[1],
+                        rest: matchB[2] || ""
+                    };
+                }
+            }
+
+            if (parsed) {
+                // If it is a level 1 heading and falls under LECTURE_PREFIXES or has no prefix
+                if (level === 1) {
+                    if (!parsed.hasPrefix || LECTURE_PREFIXES.has(parsed.prefixLower)) {
+                        const p = parsed.hasPrefix ? parsed.prefixLower : 'chapter';
+                        lecturePrefixCounts[p] = (lecturePrefixCounts[p] || 0) + 1;
+                    }
+                }
+                matches.push({
+                    index: i,
+                    level: level,
+                    parsed: parsed,
+                    hashes: hashes
+                });
+            }
         }
     }
 
-    // Determine the most common prefix for main topics
-    let mostCommonPrefix = '';
+    // Determine the most common lecture prefix
+    let mostCommonLecturePrefix = '';
     let maxCount = 0;
-    for (const [prefix, count] of Object.entries(prefixCounts)) {
+    for (const [prefix, count] of Object.entries(lecturePrefixCounts)) {
         if (count > maxCount) {
             maxCount = count;
-            mostCommonPrefix = prefix;
+            mostCommonLecturePrefix = prefix;
         }
     }
 
-    if (mostCommonPrefix) {
-        // Capitalize first letter of most common prefix
-        mostCommonPrefix = mostCommonPrefix.charAt(0).toUpperCase() + mostCommonPrefix.slice(1);
+    if (mostCommonLecturePrefix) {
+        mostCommonLecturePrefix = mostCommonLecturePrefix.charAt(0).toUpperCase() + mostCommonLecturePrefix.slice(1);
     } else {
-        mostCommonPrefix = 'Chapter'; // Fallback default
+        mostCommonLecturePrefix = 'Chapter'; // Default fallback
     }
 
     // Second pass: renumber headings sequentially and hierarchically
     const currentNums = Array(10).fill(0);
+    let lectureCounter = 0;
+    const specialCounters = {};
     let mainTopicRenumberedCount = 0;
     let subtopicRenumberedCount = 0;
+    const specialStats = {};
 
     for (const item of matches) {
-        const { index, type, match } = item;
-        const hashes = match[1];
-        const level = hashes.length;
+        const { index, level, parsed, hashes } = item;
 
         if (level >= currentNums.length) {
-            continue; // Ignore excessively deep headings to prevent out of bounds
+            continue; // Ignore excessively deep headings
         }
 
-        // Increment the current level count
-        currentNums[level]++;
+        if (level === 1) {
+            // Main topic heading (Level 1)
+            let chosenPrefix = '';
+            let assignedNumber = 0;
 
-        // Reset all levels below the current level to 0
-        for (let i = level + 1; i < currentNums.length; i++) {
-            currentNums[i] = 0;
-        }
-
-        // Ensure parent levels are initialized to at least 1 if they are 0
-        for (let i = 1; i < level; i++) {
-            if (currentNums[i] === 0) {
-                currentNums[i] = 1;
+            if (!parsed.hasPrefix || LECTURE_PREFIXES.has(parsed.prefixLower)) {
+                // Lecture topic
+                lectureCounter++;
+                assignedNumber = lectureCounter;
+                chosenPrefix = mostCommonLecturePrefix;
+            } else if (SPECIAL_PREFIXES.has(parsed.prefixLower)) {
+                // Special section (Lab, Assignment, etc.)
+                const pLower = parsed.prefixLower;
+                specialCounters[pLower] = (specialCounters[pLower] || 0) + 1;
+                assignedNumber = specialCounters[pLower];
+                // Keep original prefix name properly capitalized
+                chosenPrefix = parsed.prefix.charAt(0).toUpperCase() + parsed.prefix.slice(1).toLowerCase();
+                
+                specialStats[chosenPrefix] = (specialStats[chosenPrefix] || 0) + 1;
             }
-        }
 
-        if (type === 'main') {
-            const cleanTitle = cleanTitleText(match[4]);
-            lines[index] = `${hashes} ${mostCommonPrefix} ${currentNums[level]}${cleanTitle ? ': ' + cleanTitle : ''}`;
+            // Set current level 1 number and reset child levels
+            currentNums[1] = assignedNumber;
+            for (let i = 2; i < currentNums.length; i++) {
+                currentNums[i] = 0;
+            }
+
+            const cleanTitle = cleanTitleText(parsed.rest);
+            lines[index] = `${hashes} ${chosenPrefix} ${assignedNumber}${cleanTitle ? ': ' + cleanTitle : ''}`;
             mainTopicRenumberedCount++;
-        } else if (type === 'sub') {
-            const cleanTitle = cleanTitleText(match[3]);
+        } else {
+            // Subtopic heading (Level > 1)
+            currentNums[level]++;
+
+            // Reset all levels below the current level to 0
+            for (let i = level + 1; i < currentNums.length; i++) {
+                currentNums[i] = 0;
+            }
+
+            // Ensure parent levels are initialized to at least 1 if they are 0
+            for (let i = 1; i < level; i++) {
+                if (currentNums[i] === 0) {
+                    currentNums[i] = 1;
+                }
+            }
+
+            const cleanTitle = cleanTitleText(parsed.rest);
             const hierarchicalNumber = currentNums.slice(1, level + 1).join('.');
             lines[index] = `${hashes} ${hierarchicalNumber}${cleanTitle ? ' ' + cleanTitle : ''}`;
             subtopicRenumberedCount++;
@@ -147,7 +206,15 @@ function rearrangeHeadings(filePath) {
     // Write back with appropriate newline
     const joinChar = hasCRLF ? '\r\n' : '\n';
     fs.writeFileSync(filePath, lines.join(joinChar), 'utf8');
-    console.log(`Success: Renumbered ${mainTopicRenumberedCount} main topics (using prefix '${mostCommonPrefix}') and ${subtopicRenumberedCount} subtopics sequentially.`);
+
+    // Build detailed stats output
+    let statsStr = `${lectureCounter} lecture topics (using prefix '${mostCommonLecturePrefix}')`;
+    const specialParts = Object.entries(specialStats).map(([pref, cnt]) => `${cnt} ${pref}s`);
+    if (specialParts.length > 0) {
+        statsStr += ` and special sections: ${specialParts.join(', ')}`;
+    }
+
+    console.log(`Success: Renumbered ${mainTopicRenumberedCount} main topics (${statsStr}) and ${subtopicRenumberedCount} subtopics sequentially.`);
 }
 
 const args = process.argv.slice(2);
