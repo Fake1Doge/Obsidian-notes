@@ -3384,6 +3384,425 @@ The `std::vector` class template provides a rich set of member functions to quer
 > - **Size:** The number of elements currently stored in the vector.
 > - **Capacity:** The amount of elements the vector can store before it needs to reallocate its internal array to a larger memory block. Reallocation is an expensive $O(n)$ operation because it involves allocating new space, copying the existing elements, and deleting the old space. To avoid frequent reallocations, vectors typically double their capacity when full. You can pre-allocate memory using `vect.reserve(n)`.
 
+---
+
+# Chapter 11: Containers and Iterators
+
+## 11.1 Introduction
+> [!info] Objective
+> By the end of this topic, you should be able to:
+> 1. Differentiate between sequence containers, associative containers, and container adapters.
+> 2. Detail the characteristics and performance trade-offs of vector, list, forward_list, and deque.
+> 3. Compare ordered and unordered associative containers (sets, maps, multisets, multimaps).
+> 4. Describe container adapters (stack, queue) and their underlying implementations.
+> 5. Identify the five categories of iterators and map them to their compatible containers.
+
+---
+
+## 11.2 Part I: Sequence Containers
+Sequence containers organize data in a linear sequence, similar to a standard array. Each element has a distinct position determined by its insertion order.
+
+### 11.2.1 Vector (`vector`)
+A dynamic array that allows fast random access but is inefficient for insertions or deletions anywhere other than at the end.
+- **Header:** `#include <vector>`
+- **Lookup:** $O(1)$ constant-time random access.
+- **Insertion/Deletion:** $O(n)$ linear time if done in the middle (due to element shifting); $O(1)$ amortized at the end.
+
+### 11.2.2 Singly Linked List (`forward_list`)
+Added in C++11, this container represents a singly linked list. Each node contains a value and a pointer to the next node.
+- **Header:** `#include <forward_list>`
+- **Traversal:** Can only be traversed forward.
+- **Insertion/Deletion:** $O(1)$ constant-time insertion or deletion at the beginning or after a given iterator. Highly memory-efficient as it does not store backward pointers.
+
+> [!example] Complete C++ Implementation: `forward_list`
+> ```cpp
+> #include <iostream>
+> #include <forward_list>
+> using namespace std;
+> 
+> int main() {
+>     forward_list<int> myList;
+>     
+>     // Insert elements at the front
+>     myList.push_front(30);
+>     myList.push_front(20);
+>     myList.push_front(10);
+>     myList.push_front(99); // List is now: {99, 10, 20, 30}
+>     
+>     // Remove first element
+>     myList.pop_front(); // List is now: {10, 20, 30}
+>     
+>     cout << "Forward list elements: ";
+>     for (int num : myList) {
+>         cout << num << " ";
+>     }
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Forward list elements: 10 20 30
+> ```
+
+### 11.2.3 Doubly Linked List (`list`)
+A doubly linked list where each node contains pointers to both the previous and next nodes.
+- **Header:** `#include <list>`
+- **Lookup:** $O(n)$ linear time. Random access is **not** supported.
+- **Insertion/Deletion:** $O(1)$ constant-time insertion or deletion at any position once an iterator to the target position is acquired.
+
+> [!example] Complete C++ Implementation: `list`
+> ```cpp
+> #include <iostream>
+> #include <list>
+> using namespace std;
+> 
+> int main() {
+>     list<int> myList;
+>     
+>     // Append elements
+>     myList.push_back(10);
+>     myList.push_back(20);
+>     myList.push_back(30);
+>     myList.push_back(40); // List: {10, 20, 30, 40}
+>     
+>     // Remove last element
+>     myList.pop_back(); // List: {10, 20, 30}
+>     
+>     cout << "List elements: ";
+>     for (int num : myList) {
+>         cout << num << " ";
+>     }
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> List elements: 10 20 30
+> ```
+
+### 11.2.4 Double-Ended Queue (`deque`)
+Pronounced "deck", this container provides the benefits of both vectors and lists in one class.
+
+- **Header:** `#include <deque>`
+- **Lookup:** $O(1)$ constant-time indexed access (using subscripting `[]`).
+- **Insertion/Deletion:** $O(1)$ constant-time push and pop at both the front and the end. Inefficient for middle insertions.
+- **Memory Architecture:** Unlike vectors, deques do not store elements in a single contiguous block of memory. Instead, they use a **manager object** containing an **address map** of pointers pointing to separate non-contiguous **heap memory chunks** (typically 512 bytes each). This prevents the need for a full reallocation of the entire container when growing.
+
+```
+       Manager Object (Address Map)
+      +----+----+----+----+----+
+      | &Z | &A | &B | &C | &D |
+      +----+----+----+----+----+
+        |    |    |
+        |    |    +---> [ CHUNK B: 30 | 40 | 60 | .. ] -> Heap Region
+        |    +--------> [ CHUNK A: 10 | 20 | .. ]
+        +-------------> [ CHUNK Z:  5 | .. ]
+```
+
+> [!example] Complete C++ Implementation: `deque`
+> ```cpp
+> #include <iostream>
+> #include <deque>
+> using namespace std;
+> 
+> int main() {
+>     deque<int> myDeque;
+>     
+>     myDeque.push_back(20);  // Deque: {20}
+>     myDeque.push_back(30);  // Deque: {20, 30}
+>     myDeque.push_front(10); // Deque: {10, 20, 30}
+>     myDeque.push_front(99); // Deque: {99, 10, 20, 30}
+>     myDeque.push_back(40);  // Deque: {99, 10, 20, 30, 40}
+>     
+>     myDeque.pop_front();    // Removes 99 -> Deque: {10, 20, 30, 40}
+>     myDeque.pop_back();     // Removes 40 -> Deque: {10, 20, 30}
+>     
+>     cout << "Deque elements: ";
+>     for (int i = 0; i < myDeque.size(); ++i) {
+>         cout << myDeque[i] << " ";
+>     }
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Deque elements: 10 20 30
+> ```
+
+---
+
+## 11.3 Part II: Associative Containers
+Associative containers store data in an ordered (or hashed) structure where elements are accessed via keys rather than sequential indexes. This allows fast searches.
+
+### 11.3.1 Key Container Types
+1. **Set (`set`):** Stores a set of unique keys. Duplicate values are **not** allowed.
+2. **Multiset (`multiset`):** Stores a set of keys. Duplicate values **are** allowed.
+3. **Map (`map`):** Maps a set of unique keys to data elements (key-value pairs). Duplicate keys are **not** allowed.
+4. **Multimap (`multimap`):** Maps keys to values. Duplicate keys **are** allowed (one-to-many relationship).
+
+### 11.3.2 Ordered vs. Unordered Containers
+Each associative container has an unordered counterpart (added in C++11): `unordered_set`, `unordered_multiset`, `unordered_map`, `unordered_multimap`.
+
+- **Ordered Containers:**
+  - **Structure:** Implemented internally using self-balancing binary search trees (usually Red-Black Trees).
+  - **Order:** Elements are kept in sorted order based on keys (defaulting to ascending order using the `less<T>` comparator).
+  - **Complexity:** $O(\log n)$ logarithmic search, insertion, and deletion.
+- **Unordered Containers:**
+  - **Structure:** Implemented internally using hash tables.
+  - **Order:** Elements are unsorted; grouped into buckets based on hash values.
+  - **Complexity:** $O(1)$ constant-time average search, insertion, and deletion. Offers much faster performance than ordered containers for large datasets when sorted traversal is not required.
+
+---
+
+### 11.3.3 Associative Containers Examples
+
+> [!example] Complete C++ Implementation: `multiset` (Ordered vs. Unordered)
+> ```cpp
+> #include <iostream>
+> #include <set>
+> #include <unordered_set>
+> using namespace std;
+> 
+> int main() {
+>     // Ordered Multiset (Sorted automatically)
+>     multiset<int> myMultiset;
+>     myMultiset.insert(30);
+>     myMultiset.insert(10);
+>     myMultiset.insert(20);
+>     myMultiset.insert(20); // Duplicate values allowed
+>     myMultiset.insert(40); // Elements: {10, 20, 20, 30, 40}
+>     myMultiset.erase(40);  // Elements: {10, 20, 20, 30}
+>     
+>     cout << "Ordered Multiset: ";
+>     for (int num : myMultiset) cout << num << " ";
+>     cout << endl;
+>     
+>     // Unordered Multiset (Hashed, unsorted)
+>     unordered_multiset<int> myUnorderedMultiset;
+>     myUnorderedMultiset.insert(30);
+>     myUnorderedMultiset.insert(10);
+>     myUnorderedMultiset.insert(20);
+>     myUnorderedMultiset.insert(20);
+>     
+>     cout << "Unordered Multiset: ";
+>     for (int num : myUnorderedMultiset) cout << num << " ";
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Ordered Multiset: 10 20 20 30 
+> Unordered Multiset: 20 20 10 30 
+> ```
+
+> [!example] Complete C++ Implementation: `set` (Ordered vs. Unordered)
+> ```cpp
+> #include <iostream>
+> #include <set>
+> #include <unordered_set>
+> using namespace std;
+> 
+> int main() {
+>     // Ordered Set
+>     set<double> mySet;
+>     mySet.insert(3.14);
+>     mySet.insert(1.11);
+>     mySet.insert(2.55);
+>     mySet.insert(2.55); // Duplicate ignored!
+>     mySet.insert(4.88); // Elements: {1.11, 2.55, 3.14, 4.88}
+>     mySet.erase(4.88);
+>     
+>     cout << "Ordered Set: ";
+>     for (double num : mySet) cout << num << " ";
+>     cout << endl;
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Ordered Set: 1.11 2.55 3.14 
+> ```
+
+> [!example] Complete C++ Implementation: `multimap` (Ordered vs. Unordered)
+> ```cpp
+> #include <iostream>
+> #include <map>
+> #include <unordered_map>
+> #include <string>
+> using namespace std;
+> 
+> int main() {
+>     // Ordered Multimap (keys sorted in ascending order)
+>     multimap<int, string> schoolCatalog;
+>     schoolCatalog.insert(make_pair(11, "Alice"));
+>     schoolCatalog.insert(make_pair(9, "Bob"));
+>     schoolCatalog.insert(make_pair(10, "Charlie"));
+>     schoolCatalog.insert(make_pair(10, "David")); // Duplicate key (10) allowed
+>     schoolCatalog.insert(make_pair(12, "Emma"));
+>     schoolCatalog.erase(12);
+>     
+>     cout << "Ordered Multimap (Sorted by Grade):" << endl;
+>     for (const auto& student : schoolCatalog) {
+>         cout << "Grade " << student.first << ": " << student.second << endl;
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Ordered Multimap (Sorted by Grade):
+> Grade 9: Bob
+> Grade 10: Charlie
+> Grade 10: David
+> Grade 11: Alice
+> ```
+
+> [!example] Complete C++ Implementation: `map` (Ordered vs. Unordered)
+> ```cpp
+> #include <iostream>
+> #include <map>
+> #include <string>
+> using namespace std;
+> 
+> int main() {
+>     // Ordered Map (keys must be unique)
+>     map<string, int> flightDelays;
+>     flightDelays.insert(make_pair("JFK", 45));
+>     flightDelays.insert(make_pair("LHR", 12));
+>     flightDelays.insert(make_pair("HND", 0));
+>     
+>     // Attempt to insert duplicate key "JFK". 
+>     // std::map::insert will ignore duplicate keys. The delay remains 45!
+>     flightDelays.insert(make_pair("JFK", 90)); 
+>     
+>     flightDelays.erase("LHR");
+>     
+>     cout << "Ordered Map (Alphabetical):" << endl;
+>     for (const auto& airport : flightDelays) {
+>         cout << "Airport: " << airport.first << " | Delay: " << airport.second << " mins" << endl;
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Ordered Map (Alphabetical):
+> Airport: HND | Delay: 0 mins
+> Airport: JFK | Delay: 45 mins
+> ```
+> *Note: To update an existing key in a map, use subscript notation instead of insert: `flightDelays["JFK"] = 90;`*
+
+---
+
+## 11.4 Part III: Container Adapters
+Container adapters are classes that wrap around standard sequence containers to present a restricted, specialized interface. They do **not** support iterators.
+
+### 11.4.1 Stack Adapter (`stack`)
+A Last-In, First-Out (LIFO) data structure. By default, it is implemented using a `std::deque` as the underlying container, but can also use `std::vector` or `std::list`.
+
+- **Header:** `#include <stack>`
+- **Key Operations:**
+  - `push(element)`: Inserts element at the top (calls `push_back`).
+  - `emplace(...)`: Constructs element in-place at the top.
+  - `pop()`: Removes the top element (calls `pop_back`).
+  - `top()`: Returns a reference to the top element (calls `back`).
+  - `empty()`: Returns `true` if empty (calls `empty`).
+  - `size()`: Returns the number of elements (calls `size`).
+
+> [!example] Complete C++ Implementation: `stack`
+> ```cpp
+> #include <iostream>
+> #include <stack>
+> #include <string>
+> using namespace std;
+> 
+> int main() {
+>     stack<string> internetHistory;
+>     
+>     internetHistory.push("google.com");
+>     internetHistory.emplace("wikipedia.org");
+>     internetHistory.emplace("github.com");
+>     
+>     cout << "Initial stack size: " << internetHistory.size() << endl;
+>     cout << "--- Backtracking (LIFO) ---" << endl;
+>     while (!internetHistory.empty()) {
+>         cout << "Current Page: " << internetHistory.top() << endl;
+>         internetHistory.pop();
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Initial stack size: 3
+> --- Backtracking (LIFO) ---
+> Current Page: github.com
+> Current Page: wikipedia.org
+> Current Page: google.com
+> ```
+
+### 11.4.2 Queue Adapter (`queue`)
+A First-In, First-Out (FIFO) data structure. By default, it uses a `std::deque` as the underlying container, but can also use `std::list`.
+
+- **Header:** `#include <queue>`
+- **Key Operations:**
+  - `push(element)`: Inserts element at the back (calls `push_back`).
+  - `pop()`: Removes element from the front (calls `pop_front`).
+  - `front()`: Returns a reference to the front element (calls `front`).
+  - `back()`: Returns a reference to the last element (calls `back`).
+
+> [!example] Complete C++ Implementation: `queue`
+> ```cpp
+> #include <iostream>
+> #include <queue>
+> #include <string>
+> using namespace std;
+> 
+> int main() {
+>     queue<string> printQueue;
+>     
+>     printQueue.push("TaxReturn.pdf");
+>     printQueue.push("Resume.pdf");
+>     printQueue.push("Photo.jpg");
+>     
+>     cout << "Front item: " << printQueue.front() << endl;
+>     cout << "Back item: " << printQueue.back() << endl;
+>     cout << "--- Processing Print Queue (FIFO) ---" << endl;
+>     while (!printQueue.empty()) {
+>         cout << "Printing: " << printQueue.front() << endl;
+>         printQueue.pop();
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Front item: TaxReturn.pdf
+> Back item: Photo.jpg
+> --- Processing Print Queue (FIFO) ---
+> Printing: TaxReturn.pdf
+> Printing: Resume.pdf
+> Printing: Photo.jpg
+> ```
+
+---
+
+## 11.5 Part IV: Iterators Detail
+
+Iterators are generalizations of pointers. The type of container dictates the type of iterator supported:
+
+### 11.5.1 Iterator Categories
+1. **Forward Iterator:** Can only move forward in a container (supports `++`). Compatible with `std::forward_list`.
+2. **Bidirectional Iterator:** Can move forward or backward (supports `++` and `--`). Compatible with `std::list`, `std::set`, `std::map`.
+3. **Random-Access Iterator:** Can move forward/backward and jump to any index in constant time (supports `++`, `--`, `+`, `-`, `[]`, `<`, `>`). Compatible with `std::vector`, `std::deque`.
+4. **Input Iterator:** Read-only iterator that can only move forward. Used to read from input streams.
+5. **Output Iterator:** Write-only iterator that can only move forward. Used to write to output streams.
+
+
 
 
 
