@@ -161,6 +161,9 @@ To prevent syntax and rendering errors in Obsidian, you must strictly follow the
    - Avoid using characters like `&`, `{`, `}`, or `*` directly inside class diagrams' attributes or methods (e.g., replace `shipping&Handling` with `shippingAndHandling`, and remove `{key}` properties from attributes as curly braces conflict with class delimiters).
 3. **Stereotype Syntax**:
    - Stereotypes for classes must be applied on a separate line (e.g., `<<abstract>> Sale` or `<<entity>> DesignStudent`) instead of inside the class braces where they can cause parsing failures.
+4. **No Markdown Lists in Node Labels (Unsupported markdown: list)**:
+   - Node labels and titles must not contain text that parses as a Markdown list item (e.g., text starting with `- `, `* `, `+ `, or a number followed by a period and space like `1. `).
+   - If you need a numbered label, wrap it in double quotes and escape the period with a backslash (e.g. `Step1["1\. Classification"]`) or use an alternative separator like a colon (e.g. `Step1[1: Classification]`).
 
 ## Footnotes
 
