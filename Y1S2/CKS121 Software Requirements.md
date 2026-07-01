@@ -2712,17 +2712,17 @@ The Change Control Board (CCB) is a formal committee responsible for receiving, 
 
 ```mermaid
 graph TD
-    Start([Start]) --> Step1[1. Classification of the Change Request]
+    Start([Start]) --> Step1["1\. Classification of the Change Request"]
     Step1 --> Decision1{Category?}
-    Decision1 -->|Corrective / Adaptive| Step2[2. Impact Analysis]
+    Decision1 -->|Corrective / Adaptive| Step2["2\. Impact Analysis"]
     Decision1 -->|Exceptional| Direct[Direct Integration outside CCB]
     
-    Step2 --> Step3[3. Evaluation of the Change Request]
+    Step2 --> Step3["3\. Evaluation of the Change Request"]
     Step3 --> Decision2{Decision?}
-    Decision2 -->|Accept| Step4[4. Prioritisation of Change Request]
+    Decision2 -->|Accept| Step4["4\. Prioritisation of Change Request"]
     Decision2 -->|Reject| End([End])
     
-    Step4 --> Step5[5. Monitoring of Change Integration]
+    Step4 --> Step5["5\. Monitoring of Change Integration"]
     Step5 --> End
     Direct --> End
 ```

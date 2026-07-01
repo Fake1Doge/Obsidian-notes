@@ -1282,10 +1282,10 @@ A structured framework helps managers navigate complex decisions systematically:
 
 ```mermaid
 graph LR
-    P1[1. Problem Identification] --> P2[2. Information Gathering]
-    P2 --> P3[3. Alternative Evaluation]
-    P3 --> P4[4. Decision Implementation]
-    P4 --> P5[5. Review & Feedback]
+    P1["1\. Problem Identification"] --> P2["2\. Information Gathering"]
+    P2 --> P3["3\. Alternative Evaluation"]
+    P3 --> P4["4\. Decision Implementation"]
+    P4 --> P5["5\. Review & Feedback"]
 ```
 
 ### Step 1: Problem Identification
