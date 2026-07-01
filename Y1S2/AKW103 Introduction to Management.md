@@ -2155,10 +2155,10 @@ Developed by Abraham Maslow, this theory proposes that human motivation is drive
 
 ```mermaid
 graph TD
-    SA["5. Self-Actualization (Growth, autonomy, personal potential)"] --> E["4. Esteem Needs (Recognition, status, respect)"]
-    E --> So["3. Social/Love Needs (Friendship, belonging, teamwork)"]
-    So --> Sa["2. Safety Needs (Job security, stable income, safe environment)"]
-    Sa --> P["1. Physiological Needs (Fair wages, shelter, basic physical comfort)"]
+    SA["5: Self-Actualization (Growth, autonomy, personal potential)"] --> E["4: Esteem Needs (Recognition, status, respect)"]
+    E --> So["3: Social/Love Needs (Friendship, belonging, teamwork)"]
+    So --> Sa["2: Safety Needs (Job security, stable income, safe environment)"]
+    Sa --> P["1: Physiological Needs (Fair wages, shelter, basic physical comfort)"]
 ```
 
 #### Workplace Application of Maslow's Hierarchy:
