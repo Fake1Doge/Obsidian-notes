@@ -2395,14 +2395,28 @@ A generalisation set classifies how subclasses partition the superclass space ba
 Behavioral modelling specifies solution-oriented requirements from the **behavioural perspective**, documenting how the system reacts to events and transitions between states.
 
 ## 9.1 Introduction to Behavioral Modelling
+
 While functional models describe what the system does (processes) and data models describe what information it holds (structure), behavioral models specify **how the system behaves over time** in response to external stimuli.
 
-> [!info] Definition: Behavioral Requirement
-> Behavioral requirements describe how a system (or a subsystem/business object) reacts to different events, what states it can reside in, and the conditions under which it transitions from one state to another.
+### 9.1.1 The Behavioral Perspective in the RE Framework
+In the Requirements Engineering Framework, requirements artifacts are classified into Goals, Scenarios, and **Solution-oriented Requirements**. Under solution-oriented requirements, model-based documentation is structured across three orthogonal perspectives:
 
-### 9.1.1 State and Lifecycle Examples
+| Perspective | Core Model / Diagram Type | Focus & Description |
+| :--- | :--- | :--- |
+| **Data Perspective** | Entity-Relationship Diagram (ERD) | Documents the structure, entities, and relationships within the system. |
+| **Functional Perspective** | Data Flow Diagram (DFD) | Documents the processes, data transformations, and functions. |
+| **Behavioral Perspective** | Statechart / State Transition Diagram | Documents states, events, conditions, and state transitions over time. |
+
+> [!example] Example: Three Perspectives of a Security Alarm
+> Consider a natural language requirement:
+> *"If a glass break detector attached to the entrance door detects that the entrance door has been damaged, the system shall enter the alarm state and inform the security company."*
+> - **Data Perspective:** Focuses on the entities `entrance door` and `glass break detector` and their relationship.
+> - **Functional Perspective:** Focuses on the function `inform security company` and its inputs/outputs.
+> - **Behavioral Perspective:** Focuses on the event `entrance door damaged` which triggers a transition from a normal state to the `alarm state`.
+
+### 9.1.2 State and Lifecycle Examples
 States can characterize either the entire system or individual business objects:
-- **System States:** E.g., a device can be `On`, `Standby`, or `Off`.
+- **System States:** e.g., a device can reside in states like `On`, `Standby`, or `Off`.
 - **Business Object Lifecycles:** An `Order` object goes through a prescribed sequence of states:
   1. `Placed`
   2. `Validated`
@@ -2410,120 +2424,268 @@ States can characterize either the entire system or individual business objects:
   4. `Shipped`
   5. `Completed`
 
-### 9.1.2 Modeling Languages
+### 9.1.3 Common Modeling Languages
 The most common languages for behavioral modelling include:
-- **Finite Automata:** Deterministic (DFA) or Non-deterministic (NFA) state machines representing transitions.
-- **Finite State Transducers:** E.g., Mealy or Moore machines that produce outputs based on states/transitions.
-- **Statecharts:** Extended state machines (introduced by David Harel) supporting hierarchy, concurrency, and actions.
+- **Finite Automata:** Deterministic (DFA) or Non-deterministic (NFA) state machines representing state transitions.
+- **Finite State Transducers:** State machines (e.g., Mealy or Moore machines) that produce outputs based on states and transitions.
+- **Statecharts:** Extended state machines (introduced by David Harel) that support hierarchy, concurrency, and actions.
 - **UML State Machine Diagrams:** The standardized UML representation of statecharts.
+
+### 9.1.4 Capabilities Provided by Statecharts
+Compared to simple, flat state machines, statecharts provide advanced constructs that make them highly expressive and scalable:
+1. **Hierarchical Refinement:** Grouping related states into super-states (composite states) to manage diagram complexity.
+2. **Concurrent Behavior:** Allowing parallel states (orthogonal regions) to run concurrently.
+3. **Actions and Activities:** Specifying what actions happen during a state or during a transition.
+4. **Transition Conditions:** Supporting guard conditions so that transitions only occur when specific rules are satisfied.
 
 ---
 
-## 9.2 Statecharts and UML State Machine Diagrams
-Statecharts extend basic state machines to handle complex real-world systems by providing advanced modelling constructs:
+## 9.2 Core Statechart and UML Notation Constructs
 
-```mermaid
-stateDiagram-v2
-    state "Idle" as Idle
-    state "Waiting for Payment" as Waiting
-    state "Dispensing Item" as Dispensing
-    
-    [*] --> Idle
-    Idle --> Waiting : insertCoin
-    Waiting --> Dispensing : selectItem
-    Waiting --> Idle : reset
-    Dispensing --> Idle : reset
-```
-
-### 9.2.1 Core Modelling Constructs
-
-#### 9.2.1.1 State
+### 9.2.1 State
 A state represents a condition or situation during the life of an object during which it satisfies some condition, performs some activity, or waits for some event.
 - **Notation:** Rounded rectangle.
-- **Internal Behavior:** A state can define actions executed under specific conditions:
-  - `entry / action`: Executed immediately when entering the state.
-  - `exit / action`: Executed immediately when leaving the state.
-  - `do / activity` (or `throughout` in Harel statecharts): Executed continuously while residing in the state.
+- **Internal Behavior:** A state can define actions executed under specific conditions. There are minor differences in notation between Harel Statecharts and UML State Machine Diagrams:
+
+| Action Trigger | Harel Statechart Syntax | UML State Machine Syntax | Execution Timing |
+| :--- | :--- | :--- | :--- |
+| **Entry** | `entry action` | `entry / action` | Executed immediately upon entering the state. |
+| **Exit** | `exit action` | `exit / action` | Executed immediately upon leaving the state. |
+| **Continuous** | `throughout activity` | `do / activity` | Executed continuously while residing in the state. |
 
 > [!example] Example: Waze Keyboard Behavior
 > - **State:** `Input of destination`
->   - `entry`: Turn on the keyboard.
->   - `do`: Update search suggestions as the user types.
->   - `exit`: Turn off the keyboard.
-> - **Transition:** When the user presses "Done", it triggers the transition to `Calculating route`.
+>   - `entry`: input device on (turns on the virtual keyboard)
+>   - `throughout` (Harel) / `do` (UML): process input (dynamically updates suggestions as the user types)
+>   - `exit`: input device off (turns off the keyboard when the user finishes input)
+> - **Transition:** When the user presses "Done", it triggers the transition to the `Calculating route` state (action: `store destination`).
 
-#### 9.2.1.2 Transition
+### 9.2.2 Transition
 A transition is a directed relationship between two states indicating that an object in the first state will enter the second state when a specified event occurs and specified conditions are satisfied.
 - **Notation:** Directed arrow.
-- **Syntax:** `event [guard condition] / action`
-  - **Event (Trigger):** The stimulus that triggers the transition.
-  - **Guard Condition:** A boolean expression in brackets. The transition only occurs if the event happens and the guard is `true`.
-  - **Action:** An atomic execution performed during the transition.
+- **Syntax:** 
+  - *Harel Statecharts:* `event (condition) / action`
+  - *UML State Machine:* `trigger [guard condition] / activity`
+- **Guard Condition:** A boolean expression in brackets `[ ]` or parentheses `( )`. The transition only occurs if the event occurs and the guard condition evaluates to `true`.
+- **Action / Activity / Effect:** An operation performed during the transition.
 
-#### 9.2.1.3 Default State (Initial State)
-Denotes the starting point of the state machine. It is not a real state but a pointer.
-- **Notation:** Filled black circle.
+> [!example] Example: GPS State Selection
+> Consider an Inactive system transitioning based on a GPS signal event:
+> - **Condition A:** `activation (no GPS signal)` $\to$ Transitions to `Waiting for GPS signal` state.
+> - **Condition B:** `activation (GPS signal)` $\to$ Transitions to `Acquiring position` state.
 
-#### 9.2.1.4 Final State
-Denotes the termination of the state machine's execution.
-- **Notation:** Filled black circle inside a circle.
+### 9.2.3 Initial and Final States
+- **Initial (Pseudo) State / Default State:** Denotes the starting point of the state machine. Delineated by a filled black circle. 
+  - *Note:* In Harel statecharts, this is a reference to a default state, which is not a real state itself, but a pointer (often drawn as a red dot with an arrow pointing to the initial real state).
+- **Final State:** Denotes the termination of the state machine's execution. Delineated by a filled black circle inside a circle.
+  - *Note:* UML state machine diagrams support final states representing system termination, differing from Harel statecharts where termination is less formal.
 
-#### 9.2.1.5 Submachine State
-Refers to an externally defined state machine, supporting the **reuse** of behavioral models across different parts of a system.
-- **Notation:** A state box containing a submachine icon (two small connected circles).
+### 9.2.4 Vending Machine Statechart Example
+A state chart representing a standard vending machine illustrates how these core elements interact.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Idle : reset
+    Idle --> WaitingForPayment : insertCoin
+    WaitingForPayment --> Idle : reset
+    WaitingForPayment --> DispensingItem : selectItem
+    DispensingItem --> Idle : reset
+```
 
 ---
 
 ## 9.3 Advanced Behavioral Constructs
 
 ### 9.3.1 Hierarchical Refinement
-Hierarchical state refinement allows grouping related states into **super-states** (composite states) to manage diagram complexity (similar to organizing files into folders).
-- **Benefits:**
-  - Decomposes the system into multiple abstraction layers.
-  - Avoids "spaghetti" diagrams by encapsulating sub-behaviors.
-  - Allows defining default states within composite states.
-- **Entry and Exit Points:** UML state machine diagrams support explicit entry and exit interfaces (circles with `+` or `x`) to super-states to maintain consistent decomposition across multiple abstraction layers.
+Hierarchical state refinement allows grouping related states into **super-states** (composite states) to manage diagram complexity, similar to organizing files into folders.
+- **Benefits:** Decomposes the system into multiple abstraction layers and avoids "spaghetti" diagrams by encapsulating sub-behaviors.
+- **Visual Improvement:** By grouping states, duplicate transitions can be factored out.
+
+#### Navigation System Comparison
+Consider a navigation system with and without hierarchical refinement.
+
+##### Without Hierarchical Refinement
+Every state must explicitly transition back to `Ready` if navigation is cancelled, resulting in multiple redundant arrows:
 
 ```mermaid
 stateDiagram-v2
-    state "on" as On {
-        [*] --> monitor
-        monitor --> recalculate : aberration
-    }
-    [*] --> off
-    off --> On : start
-    On --> off : shutdown
+    [*] --> AcquiringPosition
+    AcquiringPosition --> InputDestination : positionAcquired
+    InputDestination --> CalculatingRoute : destinationEntered
+    CalculatingRoute --> TrackingWaypoints : routeCalculated / displayRoute
+    TrackingWaypoints --> CalculatingRoute : deviationDetected
+    TrackingWaypoints --> Ready : destinationReached
+    Ready --> InputDestination : navigationStarted
+    InputDestination --> Ready : navigationCancelled
+    CalculatingRoute --> Ready : navigationCancelled
+    TrackingWaypoints --> Ready : navigationCancelled
 ```
 
-### 9.3.2 Concurrency
-Concurrency allows a super-state to be decomposed into **several concurrent states** (orthogonal regions) that run in parallel.
-- **Concept:** When the system enters the concurrent super-state, it enters all orthogonal regions simultaneously.
-- **Car Dashboard Example:** When the car is `On`, the tachometer, fuel gauge, speedometer, and odometer regions all monitor data concurrently.
-- **State Explosion Warning:** Requirements engineers should use concurrency carefully; excessive or unnecessary concurrency leads to a state explosion problem (exponential growth of possible combinations), making the model unmanageable.
+##### With Hierarchical Refinement
+By grouping `InputDestination`, `CalculatingRoute`, and `TrackingWaypoints` into a composite `Navigating` state, the cancellation transition is defined once from the boundary of the super-state:
 
 ```mermaid
 stateDiagram-v2
-    state "Finalize transaction" as Finalize {
-        state "Receive cash" as ReceiveCash {
-            [*] --> AwaitingCoin
-            AwaitingCoin --> AwaitingNote : coin
+    [*] --> AcquiringPosition
+    AcquiringPosition --> Navigating : positionAcquired
+    Ready --> Navigating : navigationStarted
+
+    state Navigating {
+        [*] --> InputDestination
+        InputDestination --> CalculatingRoute : destinationEntered
+        CalculatingRoute --> TrackingWaypoints : routeCalculated / displayRoute
+        TrackingWaypoints --> CalculatingRoute : deviationDetected
+    }
+
+    Navigating --> Ready : navigationCancelled
+    TrackingWaypoints --> Ready : destinationReached
+```
+
+### 9.3.2 Entry and Exit Points in Hierarchies
+UML state machine diagrams support explicit interfaces on super-state boundaries to allow custom startup or termination behaviors:
+- **Entry Point:** Represented as an empty circle on the super-state boundary. Defines a particular entry path that bypasses the default initial state.
+- **Exit Point:** Represented as a circle with an `X` inside on the super-state boundary. Defines a specific exit path from a sub-state to an outside state.
+
+> [!example] Example: Restarting Navigation
+> In our navigation system, we can define custom entry and exit points on the `Navigating` super-state:
+> - **Normal Entry:** Entering `Navigating` via `navigationStarted` points to the boundary and uses the default initial state (`InputDestination`).
+> - **Custom Entry Point (Restart Navigation):** Entering via `positionAcquired` bypasses `InputDestination` and connects directly to `CalculatingRoute`, as the location has already been acquired.
+> - **Custom Exit Point (Stop Navigation):** Exiting via the `Stop Navigation` exit point on the boundary to return to `Ready`.
+
+```mermaid
+stateDiagram-v2
+    state Navigating {
+        state "Entry Point: Restart Navigation" as RestartNav
+        state "Exit Point: Stop Navigation" as StopNav
+        
+        [*] --> InputDestination
+        InputDestination --> CalculatingRoute : destinationEntered
+        CalculatingRoute --> TrackingWaypoints : routeCalculated / displayRoute
+        TrackingWaypoints --> CalculatingRoute : deviationDetected
+        
+        RestartNav --> CalculatingRoute
+        TrackingWaypoints --> StopNav
+    }
+    
+    AcquiringPosition --> RestartNav : positionAcquired
+    Ready --> Navigating : navigationStarted
+    StopNav --> Ready : cancelNavigation
+    Navigating --> Ready : navigationCancelled
+```
+
+### 9.3.3 Concurrency
+Concurrency allows a super-state to be decomposed into **several concurrent states** (orthogonal regions) that run in parallel.
+- **Concept:** When the system enters a concurrent super-state, it enters all orthogonal regions simultaneously.
+- **State Explosion Warning:** Requirements engineers must use concurrency carefully. Unnecessary concurrency leads to a state explosion problem (exponential growth of possible state combinations), making the model unmanageable.
+
+> [!info] Concept: Flattening Concurrency
+> If a concurrent state has two regions $S_{21}$ and $S_{22}$, each containing 3 sub-states, the concurrent model remains small. However, if we flatten it to a single state machine, the system requires $3 \times 3 = 9$ composite states to represent every possible parallel combination (e.g., $S_{211/221}$, $S_{211/222}$, $S_{212/221}$, etc.). Concurrency keeps the model readable but the underlying state space grows exponentially.
+
+#### POS Checkout System Example
+A POS checkout system is a classic example of concurrent behavior, where scanning items and weighing goods happen in parallel, and later, payment collection can accept cash or card.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Ready
+    Ready --> ScanningAndWeighing : startScanner
+    
+    state ScanningAndWeighing {
+        state "Scanning Region" as ScanningReg {
+            [*] --> BarcodeScanned
+            BarcodeScanned --> BarcodeScanned : barcode
         }
         --
-        state "Credit card" as Credit {
-            [*] --> CreditCardCharged
+        state "Weighing Region" as WeighingReg {
+            [*] --> GoodWeighed
+            GoodWeighed --> GoodWeighed : goods
         }
     }
+    
+    state FinalizeTransaction {
+        state ReceiveCash {
+            state "Coins Region" as CoinsReg {
+                [*] --> AwaitingCoin
+                AwaitingCoin --> AwaitingCoin : coin
+            }
+            --
+            state "Notes Region" as NotesReg {
+                [*] --> AwaitingNote
+                AwaitingNote --> AwaitingNote : note
+            }
+        }
+        state CreditCardCharged
+    }
+    
+    ScanningAndWeighing --> ReceiveCash : openCashTray
+    ScanningAndWeighing --> CreditCardCharged : insertCreditCard
+    
+    FinalizeTransaction --> Ready : printReceipt
 ```
 
-### 9.3.3 History State
-A history state is a mechanism that allows a super-state to **remember the last active sub-state** it was in before it was exited.
-- **Shallow History [H]:** Remembers only the immediate (top-level) sub-state of the super-state. It does not restore nested sub-states.
-- **Deep History [H*]:** Remembers the exact state configuration, including all deeply nested sub-states.
+### 9.3.4 History State
+A history state allows a super-state to **remember the last active sub-state** it was in before it was exited, resuming from that state upon re-entry instead of starting from the default state.
+- **Shallow History `[H]`:** Remembers only the immediate (top-level) sub-state of the super-state. It does not restore nested sub-states.
+- **Deep History `[H*]`:** Remembers the exact state configuration, including all deeply nested sub-states.
 
 > [!example] Analogy: House Floors and Rooms
-> - **Shallow History:** You leave the house from the second-floor bedroom. When you return using shallow history, the system remembers you were on the **second floor** but not which room. You re-enter the second floor and must start at its default room.
-> - **Deep History:** When you return using deep history, the system remembers you were specifically in the **bedroom** on the second floor and restores you directly to that room.
-> - *Netflix Example:* Netflix uses deep history to pick up a movie exactly where a user left off, whereas returning to a settings menu might only require shallow history (returning to the general section).
+> - **Shallow History:** You leave the house from the second-floor bedroom. When you return using shallow history, the system remembers you were on the **second floor** (top-level sub-state), but not which room. You start at the default room of the second floor.
+> - **Deep History:** When you return using deep history, the system remembers you were in the **bedroom** (nested sub-state) on the second floor and restores you directly there.
+> - *Real-world Examples:* Netflix uses deep history to resume a movie exactly where a user left off. Returning to a general system settings tab might only require shallow history (remembering the tab, but not the specific field focused).
+
+#### Login Failure Lockout Example
+History states are highly useful for retaining security states, such as tracking invalid login attempts when a user session interrupts.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Offline
+    Offline --> StartScreen : URLentered
+    StartScreen --> LoginScreen : LogInClicked
+    
+    state LoginScreen {
+        state "History State [H]" as HistoryNode
+        [*] --> HistoryNode
+        HistoryNode --> Failed1
+        Failed1 --> Failed2 : wrongPassword
+        Failed2 --> LockUser : wrongPassword
+    }
+    
+    LoginScreen --> Offline : browserClosed
+    LoginScreen --> Authenticated : correctPassword
+    LoginScreen --> HistoryNode : wrongPassword
+```
+
+### 9.3.5 Choice / Junction (Condition State)
+A condition or choice state simplifies state charts by reducing transition arrow clutter when branching based on guard conditions.
+- **Notation:** Circle with `C` inside.
+- **Mechanism:** An event transitions the system to a choice point `C`, which evaluates guard conditions and routes the system to the appropriate target state.
+
+```mermaid
+stateDiagram-v2
+    state "State A" as StateA
+    state "Choice Point [C]" as ChoicePoint
+    state "Target 1" as Target1
+    state "Target 2" as Target2
+    state "Target 3" as Target3
+    
+    StateA --> ChoicePoint : eventA
+    ChoicePoint --> Target1 : [Condition 1]
+    ChoicePoint --> Target2 : [Condition 2]
+    ChoicePoint --> Target3 : [Condition 3]
+```
+
+### 9.3.6 Submachine State
+A submachine state represents an externally defined state machine, supporting modular design and behavioral reuse.
+- **Notation:** A state box containing a submachine icon (two small connected circles).
+- **Difference from Hierarchical Refinement:** Hierarchical refinement defines sub-states *inline* inside the composite state. A submachine state references an *external* state machine definition. This keeps diagrams clean and modular, allowing the same behavior (e.g., a standard verification flow) to be reused across different parts of the system.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Ready
+    Ready --> NavigatingSubmachine : navigationStarted
+    state "Navigating [Submachine]" as NavigatingSubmachine
+    NavigatingSubmachine --> Ready : navigationCancelled
+```
 
 ---
 
