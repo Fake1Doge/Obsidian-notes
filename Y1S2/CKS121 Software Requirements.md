@@ -2342,8 +2342,8 @@ A generalisation set classifies how subclasses partition the superclass space ba
 > ```mermaid
 > classDiagram
 >     class LibraryUser {
->         +lastName: String [1..1]
->         +firstName: String [1..*]
+>         +lastName: String
+>         +firstName: List~String~
 >         +dateOfBirth: Date
 >     }
 >     class Book {
@@ -2356,7 +2356,8 @@ A generalisation set classifies how subclasses partition the superclass space ba
 >     }
 >     
 >     LibraryUser "0..1" --> "0..20" Book : borrows
->     (LibraryUser, Book) .. Lending
+>     LibraryUser .. Lending
+>     Book .. Lending
 >     
 >     Book <|-- Textbook
 >     Book <|-- Dictionary
