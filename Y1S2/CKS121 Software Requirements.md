@@ -2046,16 +2046,16 @@ Because DFDs can be ambiguous, a **data dictionary** is used to formally define 
 > The entries of a data dictionary are typically defined in an **EBNF** (Extended Backus-Naur Form) language to specify composition. It does not aim to define the actual implementation data structures, but rather their conceptual content.
 
 ### EBNF Operators for Data Dictionaries
-| Operator | Meaning | Explanation | Example |
-|---|---|---|---|
-| **`=`** | Equivalence | "Is equivalent to" / defines a data element. | `name = given name + family name` |
-| **`+`** | AND | Composition of data elements (concatenation). | `address = street + city` |
-| **`(...)`** | Optional | Zero or one occurrence of the elements in brackets. | `address = street + city + (+ country)` |
-| **`[...]`** | Selection | Choice of exactly one of several possible alternatives, separated by `\|`. | `address type = ["home" \| "parents" \| "emergency contact"]` |
-| **`{...}`** | Iteration | Selection/repetition of 0 to $N$ elements. | `students = {student}` |
-| **`x{...}y`** | Bounded Iteration | Repetition with a lower boundary $x$ and upper boundary $y$. | `pet = 1{dog \| cat \| bird}2` (at least 1, at most 2) |
-| **`"..."`** | Data Primitive | Primitive data value which is not further decomposed. | `gender = ["M" \| "F"]` |
-| **`*...*`** | Comment | Textual description or explanation. | `*student since registration*` |
+| Operator      | Meaning           | Explanation                                                                | Example                                                       |
+| ------------- | ----------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **`=`**       | Equivalence       | "Is equivalent to" / defines a data element.                               | `name = given name + family name`                             |
+| **`+`**       | AND               | Composition of data elements (concatenation).                              | `address = street + city`                                     |
+| **`(...)`**   | Optional          | Zero or one occurrence of the elements in brackets.                        | `address = street + city + (+ country)`                       |
+| **`[...]`**   | Selection         | Choice of exactly one of several possible alternatives, separated by `\|`. | `address type = ["home" \| "parents" \| "emergency contact"]` |
+| **`{...}`**   | Iteration         | Selection/repetition of 0 to $N$ elements.                                 | `students = {student}`                                        |
+| **`x{...}y`** | Bounded Iteration | Repetition with a lower boundary $x$ and upper boundary $y$.               | `pet = 1{dog \| cat \| bird}2` (at least 1, at most 2)        |
+| **`"..."`**   | Data Primitive    | Primitive data value which is not further decomposed.                      | `gender = ["M" \| "F"]`                                       |
+| **`*...*`**   | Comment           | Textual description or explanation.                                        | `*student since registration*`                                |
 
 > [!example] Example 1: Student Graduation Status
 > ```
