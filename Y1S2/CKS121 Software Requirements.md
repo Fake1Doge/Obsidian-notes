@@ -456,12 +456,13 @@ Requirements are documented using three types of complementary artefacts:
      ```
 2. **Scenarios:** Concrete examples of satisfying or failing to satisfy a goal (or set of goals).
    - *Characteristics:* Documents a concrete example of system usage, defines a sequence of interaction steps, puts requirements into context, and increases comprehensibility of goals.
-   - **Example:**
-     > [!example] Example: "Entry of destination" Scenario
-     > 1. Driver selects the navigation to a desired destination.
-     > 2. Navigation system asks for the address of the destination.
-     > 3. Driver types in the address.
-     > 4. Navigation system checks the inserted information.
+
+> [!example] Example: "Entry of destination" Scenario
+> 1. Driver selects the navigation to a desired destination.
+> 2. Navigation system asks for the address of the destination.
+> 3. Driver types in the address.
+> 4. Navigation system checks the inserted information.
+
 3. **Solution-Oriented Requirements:** Specify requirements at a level of detail sufficient for supporting later activities (design and test). They are conceptual/logical, conflict-free, agreed upon by all stakeholders, and as complete as possible.
    - **Data Perspective:** Considers static data structures. Defines data types, attributes, and relationships.
    - **Functional Perspective:** Considers the manipulation of data by system functions. Defines the transformation of inputs to outputs.
