@@ -881,7 +881,7 @@ We differentiate between three types of systems:
 - **Step 1:** Identification of potential relevant requirements sources.
 - **Step 2:** Selection of requirements sources to be considered.
 
-#### Chapter 1: Potential Relevant Requirements Sources
+#### 4.3.1.1 Potential Relevant Requirements Sources
 **Goal:** Identify a large set of potential relevant sources.
 **Activities:**
 1.1 Use known sources and/or suitable checklists to **identify additional**, potential sources.
@@ -917,7 +917,7 @@ Template for Checklist:
 > - **Documents:** car manual, user interface descriptions, documents of the engine control, specification of analogue systems, AUTOSAR standard.
 > - **Systems:** previous safety system, safety systems of competitors, sensors systems, HCI systems, systems interacting with safety system, flight safety systems, train safety systems, metro safety systems.
 
-#### Chapter 2: Selection Requirements Sources
+#### 4.3.1.2 Selection Requirements Sources
 **Goal:** Select the most relevant sources from the identified sources.
 - Execute a **100 Dollar Test** in a group meeting:
   - In a 100-dollar test each stakeholder metaphorically **spends 100 dollars** on the items (sources).
