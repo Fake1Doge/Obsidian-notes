@@ -2867,6 +2867,9 @@ graph TD
 ## 10.4 Requirements Traceability
 Requirements traceability is the ability to follow the life of a requirement in both forwards and backwards directions.
 
+> [!info] Definition: Requirements Traceability
+> "The ability to describe and follow the life of a requirement, in both a forwards and backwards direction (i.e. from its origins, through its development and specification, to its subsequent deployment and use, and through all periods of on-going refinement and iteration in any of these phases)." — *Gotel and Finkelstein 1994*
+
 ```mermaid
 graph LR
     subgraph RE_Context ["RE Context (Facets & Dev)"]
@@ -2894,65 +2897,96 @@ graph LR
 ```
 
 ### 10.4.1 Pre- and Post-Traceability
-1. **Pre-traceability:** Traces requirements back to their source, origin, or context aspects (e.g., tracing a warning requirement back to a safety regulation).
-2. **Post-traceability:** Traces requirements forward to successor artefacts representing their realization (architectural design, source code, test cases).
-3. **Traceability between requirements artefacts:** Traces relationships within the requirements space (e.g., tracing a detailed solution-oriented requirement back to the stakeholder goal it refines).
+1. **Pre-traceability:** Traces requirements back to their predecessor artefacts, sources, origins, or context aspects (subject, usage, IT system, and development facets).
+   - *Example:* Tracing requirement `R17: The mobile phone shall allow for the surveillance of one's living space` back to:
+     - Usage context (customer thought): *"The customer wants to be able to monitor his house or apartment with his mobile phone."*
+     - IT system/development context: *Product Strategy Document v2.3, Page 22: "We want to facilitate the control and surveillance of living space via a mobile phone as of 2015."*
+2. **Post-traceability:** Traces requirements forward to successor artefacts representing their realization (architectural components, source code implementation, test cases).
+   - *Example:* Tracing requirement `R17` forward to its realization in the *architecture diagram*, *detailed design*, and specific *test cases*.
+3. **Traceability between requirements artefacts:** Traces relationships within the requirements space itself, either between artefacts of the same type or different types.
+   - *Example:* Tracing requirement `R17` back to the goal it refines: `G2: The mobile phone shall be able to offer location-based services`.
 
-### 10.4.2 Benefits of Traceability
-- **Accountability:** Assigns development effort and costs to specific requirements.
-- **Process Improvement:** Traces operational bugs back to their root cause.
-- **Change Management:** Identifies which artefacts are impacted if a requirement changes.
+### 10.4.2 Motivation and Benefits of Traceability
+Maintaining high-quality traceability information directly influences the quality of the developed system and the overall manageability of the engineering process.
+- **Accountability:** Allows assigning development effort and costs to individual requirements.
+- **Process Improvement:** Traces operational bugs or problems in the development process back to their root causes.
+- **Change Management:** Facilitates a systematic impact analysis to identify which artefacts are affected if a requirement changes.
 - **Risk Management:** Identifies which parts of the system are affected by a specific risk.
-- **Gold Plating:** Detects system functions or code that were implemented but never requested in the requirements.
+- **Gold Plating:** Detects "gold-plated" functions or code implementation that were never requested in the requirements.
+- **Additional Benefits:** Enhances verifiability, system acceptance, quality assurance, maintenance, re-engineering, and design reuse.
 
 ### 10.4.3 Documentation Formats for Traceability
-Traceability links can be documented in four ways:
-- **Textual Annotation:** Documented as a comment (e.g., `R17: ... *Is based on G2*`).
-- **Attribute Scheme:** Traceability defined in structured attributes (e.g., `Based on: G2`, `Refined by: R17.1`).
+Traceability relationships can be documented in four ways:
+- **Textual Annotation:** Documented as an annotated comment directly within the requirement text (e.g., `R17: ... *Is based on R9*`).
+- **Attribute Scheme:** Traceability defined in structured attributes within a requirements scheme (e.g., `Based on: R9`).
 - **Traceability Matrices:** A grid mapping source artefacts (rows) to target artefacts (columns). Suited for small sets of requirements.
-- **Traceability Graphs:** A network diagram where nodes represent requirements artefacts and edges represent traceability links (e.g., `based-on`, `satisfies`).
+  - *Single Relationship Matrix:* Tracks a single relationship type (e.g., `satisfies`).
+  - *Multiple Relationship Matrix:* Tracks multiple relationship types in cell values (e.g., `satisfies`, `based on`, `conflicts`).
+  - *Constraint:* Traceability matrices are not suited to visualise traceability links for a large number of requirements due to readability constraints.
+- **Traceability Graphs:** A network diagram where nodes represent requirements artefacts (goals, scenarios, functional requirements) and edges represent traceability links (e.g., `based-on`, `satisfies`).
 
 ### 10.4.4 Traceability Link Types (UML / ISO Standards)
-- **Replaces:** Target artefact replaces source.
-- **Satisfies:** Realization of source satisfies target.
-- **Based on:** Target influenced the definition of source.
-- **Formalizes:** Source is the formal representation of target.
-- **Refines:** Source defines target in more detail.
-- **Derived:** Source is derived from a set of target artefacts.
+- **Replaces:** A target artefact replaces a source.
+- **Satisfies:** The realization of a source satisfies the realization of a target.
+- **Based on:** A target has influenced the definition of a source.
+- **Formalizes:** A source is the formal documentation of a target.
+- **Refines:** A source defines a target in more detail.
+- **Derived:** A source is derived from a (set of) target artefacts.
 
 ---
 
 ## 10.5 Change Management of Requirements
-Change management is a systematically defined process to handle modifications to requirements and context objects throughout the system lifecycle. RM changes occur due to:
-- Evolution of stakeholder needs.
-- Changes to national/international laws.
-- New technology inventions.
-- New competitor products.
-- Operational problems (errors, data inconsistencies).
+Change management is a systematically defined process to handle modifications to requirements and context objects throughout the system lifecycle. 
 
-### 10.5.1 The Change Control Board (CCB)
+### 10.5.1 Triggers for Change
+Requirements artefacts must be adapted to cope with changes that originate from two primary sources:
+1. **Changes in the RE Context:**
+   - Evolution of stakeholder needs due to new insights.
+   - Changes to national or international laws and regulations.
+   - Invention of new technologies.
+   - Introduction of new competitor products.
+2. **Problems in System Operation:**
+   - Data inconsistencies, operational errors, and insufficient system quality.
+
+> [!example] Example: Context-Driven Requirement Change
+> - **Original Requirement (R98):** *"The navigation system shall calculate the estimated duration of a trip. To calculate the estimated duration of the trip, an average speed of 68 mph shall be assumed for motorways."*
+> - **Trigger:** Customer feedback indicates that estimated driving times are always too optimistic.
+> - **Updated Requirement (R98.r1):** *"The navigation system shall calculate the estimated duration of a trip. To calculate the estimated duration of the trip, an average speed of 55 mph shall be assumed for motorways."*
+
+### 10.5.2 The Change Control Board (CCB)
 The Change Control Board (CCB) is a formal committee responsible for receiving, evaluating, deciding on, and monitoring change requests.
-- **CCB Members:** Typically includes the Change Manager, Client/Customer, Product Manager, Developer/Architect, Project Manager, Requirements Engineer, Configuration Manager, and Quality Assurance Manager.
-- **Process Steps:**
-  1. **Classification:** Incoming requests are classified by the Change Manager as *Corrective* (fixing errors), *Adaptive* (adjusting to context changes), or *Exceptional* (urgent, implemented immediately outside standard CCB flow).
-  2. **Impact Analysis:** Experts estimate the effort and resource consumption required to integrate the change, identifying affected artefacts using traceability links.
-  3. **Evaluation:** The CCB evaluates the estimated effort against the expected benefits (market position, prestige, contract fulfillment). The CCB decides to accept or reject the request.
-  4. **Prioritisation:** Accepted requests are prioritised and assigned to a system release or change project.
-  5. **Monitoring:** The CCB monitors the integration progress and keeps the originator informed of the realization status.
+- **Typical CCB Members:** Change Manager, Client/Customer, Product Manager, Developer/Architect, Project Manager, Requirements Engineer, Configuration Manager, and Quality Assurance Manager.
+- **CCB Responsibilities:**
+  - *Classification:* Analyses incoming change requests and assigns them to categories.
+  - *Effort Estimation:* Estimates the effort and resource consumption required to integrate the change.
+  - *Evaluation:* Evaluates change requests regarding the effort vs. benefits relation, deciding to accept or reject them.
+  - *Prioritisation:* Prioritises accepted requests and assigns them to system releases or change projects.
+
+### 10.5.3 The Change Management Process Steps
+1. **Classification of the Change Request:** Incoming requests are analyzed and classified by the Change Manager (and approved by the CCB) into three typical categories:
+   - *Corrective Change:* Fixes system errors or incorrect behaviors caused by poorly specified requirements.
+   - *Adaptive Change:* Adjusts requirements to context changes (e.g., laws, competitor products, stakeholder needs).
+   - *Exceptional Change:* Crucial changes that must be integrated immediately. These bypass the standard CCB evaluation flow and go straight to direct integration.
+2. **Impact Analysis:** Estimates resource consumption using traceability links to identify affected artefacts. This task is assigned to the Change Control Manager or specific experts.
+   > [!warning] Architecture Restructuring
+   > A high-impact change request can imply restructuring the entire system architecture, which requires significantly high effort.
+3. **Evaluation of the Change Request:** The CCB evaluates estimated effort against expected benefits (e.g., market position improvement, avoidance of loss of prestige, contract fulfillment, and avoidance of penalties). The CCB formally decides whether to accept or reject the request.
+4. **Prioritisation of Change Request:** Accepted requests are prioritized and assigned to a specific system release or change project.
+5. **Monitoring of Change Integration:** The CCB monitors integration progress, tracks realization status, and keeps the request's originator informed.
 
 ```mermaid
 graph TD
-    Start([Start]) --> Step1["1\. Classification of the Change Request"]
+    Start([Start]) --> Step1["1: Classification of the Change Request"]
     Step1 --> Decision1{Category?}
-    Decision1 -->|Corrective / Adaptive| Step2["2\. Impact Analysis"]
-    Decision1 -->|Exceptional| Direct[Direct Integration outside CCB]
+    Decision1 -->|Corrective / Adaptive| Step2["2: Impact Analysis"]
+    Decision1 -->|Exceptional| Direct["Direct Integration outside CCB"]
     
-    Step2 --> Step3["3\. Evaluation of the Change Request"]
+    Step2 --> Step3["3: Evaluation of the Change Request"]
     Step3 --> Decision2{Decision?}
-    Decision2 -->|Accept| Step4["4\. Prioritisation of Change Request"]
+    Decision2 -->|Accept| Step4["4: Prioritisation of Change Request"]
     Decision2 -->|Reject| End([End])
     
-    Step4 --> Step5["5\. Monitoring of Change Integration"]
+    Step4 --> Step5["5: Monitoring of Change Integration"]
     Step5 --> End
     Direct --> End
 ```
