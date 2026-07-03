@@ -2685,22 +2685,21 @@ stateDiagram-v2
     [*] --> Ready
     Ready --> NavigatingSubmachine : navigationStarted
     state "Navigating [Submachine]" as NavigatingSubmachine
-    NavigatingSubmachine --> Ready : navigationCancelled
-```
-
----
-
 # Chapter 10: Requirements Management
 
 Requirements Management (RM) is a cross-sectional activity focused on observing the context for changes, managing RE activities, and systematically tracking requirements artefacts throughout the system lifecycle.
 
+---
+
 ## 10.1 RM Goals and Activities
 Requirements management ensures the structured progression and control of the requirements engineering process:
-1. **Observing the RE Context:** Goal is to identify changes in the environment (e.g., laws, competitor products, stakeholder needs) and estimate their impact. Critical objects (like laws) are continuously monitored, while less critical aspects are periodically scanned.
-2. **Managing RE Activities:** Goal is to monitor and adjust workflows. It utilizes two approaches:
-   - *Phase-oriented approach:* Applies the same sequence of activities to all artefacts.
-   - *Situational approach:* Dynamically determines the next activities based on the current status of existing artefacts.
-3. **Managing Requirements Artefacts:** Handles the storage, attributes, dependencies, and evolution of artefacts. It consists of five sub-tasks:
+1. **Observing the RE Context:** The goal is to identify changes in the environment (e.g., laws, competitor products, stakeholder needs) and estimate their impact. 
+   - *Context Monitoring:* Critical objects to the success of the system (e.g., laws and regulations) must be continuously observed.
+   - *Periodical Scanning:* Less critical aspects are periodically scanned.
+2. **Managing RE Activities:** The goal is to monitor, control, and adjust the planned workflow of elicitation, documentation, negotiation, validation, and management activities. It utilizes two approaches:
+   - *Phase-oriented approach:* Applies the same sequence of activities to all requirements artefacts.
+   - *Situational approach:* Dynamically determines the next activities to be executed based on an assessment of the current status of existing requirements artefacts.
+3. **Managing Requirements Artefacts:** Handles the storage, attributes, dependencies, and evolution of artefacts. Its goal is to continuously keep track of all requirements artefacts, their relevant attributes, relationships, and evolution. It consists of five main sub-tasks:
    - Defining a requirements attribute scheme.
    - Maintaining requirements traceability.
    - Handling requirements change management.
@@ -2710,34 +2709,57 @@ Requirements management ensures the structured progression and control of the re
 ---
 
 ## 10.2 Requirements Prioritisation
-Prioritisation resolves resource constraints (limited budget, time, or personnel) by systematically ordering requirements by their importance.
+Prioritisation resolves resource constraints (limited budget, time, capacity of people, or personnel) by systematically ordering requirements by their importance. It ensures that requirements are considered with the appropriate intensity and realized to the correct degree.
 
 ### 10.2.1 Prioritisation Process Preparation
 To prepare for prioritisation, requirements engineers must execute four steps:
-1. **Determine the artefacts to be prioritised:** To avoid errors, only compare artefacts of the **same type** and at the **same level of abstraction** (e.g., compare goals with goals, not goals with functional primitives). Prioritise top-down.
-2. **Select the prioritisation criteria:** Decide what aspects to measure (e.g., cost, risk, business value).
-3. **Identify the relevant stakeholders:** Involve stakeholders who have the specific knowledge to evaluate the chosen criteria.
-4. **Select prioritisation techniques:** Choose the appropriate technique based on requirements volume and complexity.
+1. **Determine the artefacts to be prioritised:** To prevent prioritisation errors, only compare artefacts of the **same type** and at the **same level of abstraction** (e.g., compare goals with goals, not goals with functional primitives). Prioritise top-down (high-level requirements first).
+   - *Goals:* Determines relevance for market success.
+   - *Use Cases:* Determines implementation in system releases.
+   - *Scenarios:* Determines criticality of exception scenarios.
+2. **Select the prioritisation criteria:** Decide what aspects to measure. Prioritisation can be performed according to a single or multiple criteria.
+3. **Identify the relevant stakeholders:** Involve stakeholders who have specific knowledge about the project context and the requirements to be prioritised.
+4. **Select prioritisation techniques:** Choose the appropriate technique based on the number of requirements to be prioritised, their complexity, and the effort of applying the technique.
+
+> [!tip] Extra Notes: Prioritisation Criteria Mapping
+> Criteria should map to specific project goals:
+> - **Resolving Conflicts:** Prioritize by *Damage* (resolving high-damage conflicts first) and *Volatility* (highly volatile requirements are likely to cause more conflicts).
+> - **Intensity and Order of Validation:** Prioritize by *Cost* (early validation avoids costly downstream modifications) and *Duration* (early validation avoids additional development time).
+> - **Order for Documentation:** Prioritize by *Importance* (acceptance criteria must be documented in detail).
+
+#### 10.2.1.1 Stakeholder Identification Table
+Stakeholder involvement should be tailored to the specific prioritisation criteria:
+| Prioritisation Goal | Criterion | Relevant Stakeholders |
+| :--- | :--- | :--- |
+| Identify requirements critical for system acceptance | Importance | Users, business managers, system analysts |
+| Sort requirements by complexity | Cost | Architects, domain experts, system analysts |
+| Prioritize by importance of supported business processes | Business Value | Managers, customers, users |
+| Determine risk of low system performance | Risk | User representatives, customers, managers, IT-specialists, system analysts |
 
 ### 10.2.2 Prioritisation Criteria
 - **Importance:** Urgency of implementing, importance for acceptance of the system, importance for architectural design, strategic importance to market position.
-- **Cost:** Financial resources needed for implementation.
-- **Damage:** Disadvantage from neglecting the requirement.
+- **Cost:** Financial and capacity resources needed for implementation.
+- **Damage:** Disadvantage or penalty resulting from neglecting the requirement.
 - **Duration:** Time needed to realize the requirement.
-- **Risk:** Probability that the requirement cannot be realized due to technological or organizational problems.
+- **Risk:** Probability that the requirement cannot be realized appropriately due to technological or organizational problems.
 - **Volatility:** Probability that the requirement changes during a certain time.
-- **Business Value:** The direct value the asset creates for the business (e.g., scrum uses business value/cost benefit to prioritize use cases).
+- **Business Value:** The direct value the asset creates for the business (e.g., Scrum uses business value/cost benefit to prioritize use cases to be implemented first).
 
 ### 10.2.3 Prioritisation Techniques
 - **Ad-hoc Ranking:** Stakeholders rank requirements in a list based on a chosen criterion. (Effort: Low. Best for: small sets of requirements).
-- **Top-Ten Technique:** Stakeholders select a fixed number (e.g., 10) of top-priority requirements from the set, then rank them. (Effort: Very Low. Best for: small sets).
+- **Top-Ten Technique:** Stakeholders select a fixed number (e.g., 10) of top-priority requirements from the set, then rank them. Selection is typically determined by a single criterion. (Effort: Very Low. Best for: small sets).
 - **One-Criterion Classification:** Classifies requirements into three categories based on necessity:
-  - *Essential:* The system will not be acceptable unless these requirements are fulfilled.
-  - *Conditional:* Would enhance the system, but would not make it unacceptable if they are absent.
-  - *Optional:* A class of requirements that may or may not be worthwhile.
+   - *Essential:* The system will not be acceptable unless these requirements are fulfilled in an agreed manner.
+   - *Conditional:* Would enhance the system, but would not make it unacceptable if they are absent.
+   - *Optional:* A class of requirements that may or may not be worthwhile.
   (Effort: Low. Best for: low complexity).
-- **Kano Classification:** Classifies requirements based on their effect on customer satisfaction (Dissatisfiers, Satisfiers, Delighters). (Effort: Low).
-- **Wiegers' Prioritisation Matrix:** An analytical technique that calculates priority based on four parameters: relative benefit, relative penalty, relative cost, and relative risk.
+- **Kano Classification:** Relates system features (or customer requirements) to their effect on customer satisfaction. Requirements are classified into three types:
+   - *Dissatisfiers (Must-be requirements):* Stakeholders take them for granted ("goes without saying"). They are often not explicitly communicated, but the system must realize them to enable market entry.
+   - *Satisfiers (Performance factors / 1D customer requirements):* Conscious and intended requirements that stakeholders explicitly communicate and demand.
+   - *Delighters (Excitement factors / Attractive requirements):* Unexpected features of which customers are not aware or do not expect. They create high customer satisfaction if implemented.
+   > [!note] Kano Evolution Rule
+   > Over time, delightful innovations naturally mature and become basic must-be needs (dissatisfiers).
+- **Wiegers' Prioritisation Matrix:** An analytical technique that calculates priority based on four parameters: relative benefit, relative penalty, relative cost, and relative risk. It is effective only if requirements are defined at the same abstraction level and have no dependencies.
 
 > [!important] Wiegers' Prioritisation Formula
 > Priority is calculated using the following formula:
@@ -2748,7 +2770,7 @@ To prepare for prioritisation, requirements engineers must execute four steps:
 > - $\text{Cost \%}$ and $\text{Risk \%}$ are the relative proportions of cost and risk.
 
 #### 10.2.3.1 Step Wiegers' Matrix Process
-1. **Determine weights** (scale 1-9) for benefit, penalty, cost, and risk.
+1. **Determine weights** (scale 1-9) for benefit, penalty, cost, and risk. (e.g., typical weights: Benefit = 2, Penalty = 1, Cost = 1, Risk = 0.5). If risk is not taken into account, its weight is set to 0.
 2. **List all requirements** in the matrix.
 3. **Estimate relative benefit** (1-9) for each requirement.
 4. **Estimate relative penalty** (1-9) if the requirement is omitted.
@@ -2758,35 +2780,74 @@ To prepare for prioritisation, requirements engineers must execute four steps:
 8. **Calculate Priority** for each requirement.
 9. **Rank requirements** in descending order of priority.
 
+#### 10.2.3.2 Selection and Suitability Matrix
+Selecting the appropriate technique depends on the number and complexity of requirements (where `***` = well suited, `**` = ok, `*` = not well suited):
+
+| Technique | Relative Effort | Large Qty / High Complexity | Low Qty / High Complexity | Large Qty / Low Complexity | Low Qty / Low Complexity |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Ranking** | Low | `*` | `**` | `***` | `***` |
+| **Top-Ten** | Very Low | `*` | `**` | `***` | `***` |
+| **One-Criterion** | Low | `*` | `**` | `**` | `***` |
+| **Kano** | Low | `**` | `***` | `**` | `**` |
+| **Wiegers Matrix** | Medium | `*` | `*` | `*` | `**` |
+
+#### 10.2.3.3 Combination of Techniques
+In practice, different techniques are often used complementarily when prioritising a large volume of requirements:
+1. **Step 1:** Use an ad-hoc technique (like Top-Ten or One-Criterion classification) first to filter down requirements with low effort.
+2. **Step 2:** Use the analytical Wiegers matrix only on those requirements with a high risk or high critical importance to prevent misclassification and resolve conflicts accurately.
+
 ---
 
 ## 10.3 Version and Configuration Management
-Requirements artefacts change over time. Configuration management controls these changes to prevent chaos in complex projects.
+Requirements artefacts change over time. Configuration management (CM) is the discipline of controlling changes in large and complex systems to prevent chaos caused by numerous corrections, extensions, and adaptations over its lifetime.
 
-### 10.3.1 Configuration Items
-A **configuration item** is a single entity in the configuration management process. In RE, this can be:
-- A single requirement.
-- A set of requirements (e.g., functional specification).
-- A model (functional, behavioural, or data model).
+### 10.3.1 Software Release Management
+> [!info] Definition: Software Release Management
+> "The process through which software is made available to and obtained by its users" (Hoek et al. 1997).
+> 
+> A system release reflects a certain configuration of requirements artefacts, which are implemented and delivered to the customer.
+
+### 10.3.2 Configuration Items
+A **configuration item** is a single entity in the configuration management process that can change over time. In RE, potential configuration items include:
+- A single requirement artefact.
+- A set of requirements (of the same or different types).
 - A requirements document.
+- A functional model, behavioural model, or data model.
 
 Requirements configuration management can be defined at three levels:
-1. **Document Level:** The requirements document is the smallest managed unit.
-2. **Requirement Artefact Level:** Individual goals, scenarios, or SORs are the smallest managed units.
-3. **Requirements Attribute Level:** Individual attributes of a requirement are managed separately (highest control, highest effort).
+1. **Document Level:** The requirements document is the smallest managed unit (smallest configuration item).
+2. **Requirement Artefact Level:** Individual goals, scenarios, or solution-oriented requirements are the smallest managed units.
+3. **Requirements Attribute Level:** Individual attributes of a requirements artefact are the smallest managed units (highest control, highest effort).
 
-### 10.3.2 Versioning vs. Incrementing
-- **Version:** A defined state of an representation representing major changes or releases (e.g., `v1.0`, `v2.0`). When a new version is created, the increment number is reset to `0`.
-- **Increment:** Represents minor changes or corrections between versions (e.g., `v1.1`, `v1.2`).
-- **Syntax:** `v<version>.<increment>`
+### 10.3.3 Versioning of Requirements
+Requirements change over time due to several dimensions:
+- **Content dimension:** A requirements artefact is specified at different levels of detail over time.
+- **Agreement dimension:** The agreement achieved for an artefact changes over time (stakeholders may agree now and disagree later).
+- **Documentation dimension:** The representation format changes (e.g., informal at the beginning, more formal towards the end).
+- **Other reasons:** Artefacts are withdrawn, quality attributes change, or contextual information changes.
 
-### 10.3.3 Configurations and Baselines
+#### 10.3.3.1 Version vs. Increment
+A version of a requirements artefact is a defined state of the artefact at a given point in time. It must be uniquely identifiable.
+- **Version:** A defined state representing major changes or releases (e.g., `v1.0`, `v2.0`). 
+- **Increment:** Represents minor changes or corrections between major versions (e.g., `v1.1`, `v1.2`).
+- **Syntax:** `v<version>.<increment>` (e.g., `v1.3`).
+- **Increment Reset:** When a new major version is created, the version number is incremented and the increment number is reset to `0` (e.g., moving from `v0.3` to `v1.0`).
+
+### 10.3.4 Configurations and Baselines
 - **Requirements Configuration:** A set of specific versions of requirements artefacts, characterized by:
-  - *Consistency:* Free of conflicts.
-  - *Unique Identification (UID)*
-  - *Not Changeable:* Freezes a state; modifications create a new configuration.
-  - *Basis for Roll-back:* Restores previous consistent states.
-- **Requirements Baseline:** A specific, customer-visible requirements configuration that constitutes a reference point for planning releases, estimating effort, and comparing with competitor products. Baselines are subject to formal change management.
+  - *Consistency:* The versions of the artefacts grouped together are free of conflicts.
+  - *Unique Identification (UID):* Has an identifier to identify the configuration unambiguously.
+  - *Not Changeable:* Freezes a particular state; any modification in artefacts creates a new version and a new configuration.
+  - *Basic for Roll-back:* Provides the basis to roll back to previous consistent states.
+- **Requirements Baseline:** A specific, customer-visible requirements configuration that constitutes a reference point in the development process.
+  - Baselines have all properties of a requirements configuration plus:
+    - *Basis for planning system releases:* Defines the requirement artefacts realized in a certain system release.
+    - *Visible to the customer.*
+    - *Subject to change management:* Can only be changed through a formally defined change management process.
+  - Baselines support:
+    - *Planning system releases:* Serve as a basis for planning releases with stable requirements.
+    - *Estimation of realization effort:* Forms the basis for estimating development effort required for a particular release.
+    - *Comparison with competitors' products:* Used to compare planned releases with competing systems in the market.
 
 ```mermaid
 graph TD
