@@ -2685,6 +2685,11 @@ stateDiagram-v2
     [*] --> Ready
     Ready --> NavigatingSubmachine : navigationStarted
     state "Navigating [Submachine]" as NavigatingSubmachine
+    NavigatingSubmachine --> Ready : navigationCancelled
+```
+
+---
+
 # Chapter 10: Requirements Management
 
 Requirements Management (RM) is a cross-sectional activity focused on observing the context for changes, managing RE activities, and systematically tracking requirements artefacts throughout the system lifecycle.
