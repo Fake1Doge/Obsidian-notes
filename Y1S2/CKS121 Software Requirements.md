@@ -1618,21 +1618,35 @@ According to Herbert Stachowiak, any model must fulfill three properties:
 
 ```mermaid
 graph LR
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
-    R[Reality: Universe of Discourse] -->|Perceived by senses| P[Perception]
-    P -->|Conceived| C[Notional Image / Conception]
-    C -->|Represented| Model[Model Representation]
+    R["Reality: Universe of Discourse"] -->|Perceived by senses| P["Perception"]
+    P -->|Conceived| C["Notional Image / Conception"]
+    C -->|Represented| Model["Model Representation"]
     
     style Model fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
 ```
 
-### 6.1.3 Data Modelling Process
+### 6.1.3 Conceptual Modelling Process (Reality vs. Model World)
 - **Perceive World:** The modeler observes reality (requires domain knowledge).
 - **Construct Model:** The modeler uses a modeling language and method knowledge to build the model in the model world.
 - **Interpret Model:** Stakeholders read the model (requires language knowledge).
 - **Associate:** Stakeholders associate the model concepts back with the real world, assessing whether it is a **good model** (useful) or a **bad model** (leads to incorrect associations).
 
-### 6.1.4 Key Benefits of Conceptual Models
+> [!note] Different Abstractions of the Same Reality
+> Different conceptual models can be defined for the same reality to support different purposes. These models can overlap, but they do not have to (e.g., a city map highlighting tourist sights vs. a public transportation map showing train lines).
+
+### 6.1.4 Characteristics of Models
+According to the fundamentals of systems modelling, models have the following characteristics:
+- **Purpose-defined:** A model is always defined for a given purpose, and its content directly depends on this purpose.
+- **Varying Abstraction:** Models can differ in their level of abstraction and detail depending on stakeholder needs.
+- **Comprehensibility:** Models are easier to comprehend and memorise than natural language texts.
+- **Ubiquity:** Models are used frequently in daily life (e.g., maps, blueprints).
+
+### 6.1.5 Properties of a Conceptual Model & Language
+- **Created via Language:** Conceptual models are always constructed using a specific modelling language.
+- **Purpose-designed Language:** The modelling language itself is designed for a specific purpose (e.g., UML for object-oriented design).
+- **Language Constructs:** Information is documented systematically using the predefined modelling constructs of that language.
+
+### 6.1.6 Key Benefits of Conceptual Models
 - **Focus:** Targets a specific purpose supported by a specific modeling language.
 - **Comprehend:** Easier to understand and memorize than long natural-language texts.
 - **Reduce Complexity:** Focuses only on relevant aspects and discards unnecessary details.
@@ -1645,14 +1659,17 @@ graph LR
 ## 6.2 Goal Models
 
 Goal models describe the system through the decomposition of high-level goals into sub-goals.
-- **Vision Formulation:** Excellent for defining and communicating the system's vision.
-- **Decomposition:** Goals are represented as **AND-OR-trees**:
+- **Vision Formulation:** Excellent for defining and communicating the system's vision, offering a **highly positive effect with relatively low effort**.
+- **Singular Goals:** Each individual goal is represented through natural language.
+- **AND-OR-Trees:** Goals are decomposed into sub-goals by AND/OR decomposition relationships:
   - **AND-Decomposition:** All sub-goals must be satisfied to satisfy the parent goal.
   - **OR-Decomposition:** At least one sub-goal must be satisfied to satisfy the parent goal.
+- **Graphical Notation:** Indicates the type of decomposition:
+  - **AND-Decomposition Notation:** A horizontal bar connecting the sub-goals below the parent.
+  - **OR-Decomposition Notation:** Angled branches meeting at a single point (an angle/triangle `^`).
 
 ```mermaid
 graph TD
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;
     G1["Comfortable navigation to destination"]
     
     G1_1["Dynamic route calculation with respect to traffic congestion"]
@@ -1678,9 +1695,19 @@ Conceptual models specify solution-oriented requirements from three complementar
 
 | Perspective | Description | Typical Models |
 |---|---|---|
-| **Functional** | Specifies the information manipulated by the system and the data transmitted to the system context. | Use Case Diagrams, Activity Diagrams, Data Flow Diagrams (DFDs) |
-| **Data** | Specifies the structures of input/output data, static-structural aspects, and dependencies in the context. | Class Diagrams, Entity Relationship Diagrams (ERDs) |
-| **Behavioural** | Documenting the reaction of the system to events, state-triggering conditions, and environmental effects. | State Machine Diagrams / Statecharts |
+| **Functional** | Specifies the information of the system context being manipulated by the system to be developed, and which data is being transmitted to the system context by the system. | Use Case Diagrams, Activity Diagrams, Data Flow Diagrams (DFDs) |
+| **Data** | Specifies the structures of input and output data, as well as static-structural aspects of the system's usage and dependency relationships in the system context. | Class Diagrams, Entity Relationship Diagrams (ERDs) |
+| **Behavioural** | Documenting the reaction of the system to events within the system context, documenting the conditions that trigger a state change or documenting the effects that the system has on its environment. | State Machine Diagrams / Statecharts |
+
+### 6.3.1 Structured vs. Object-Oriented (OO) Modeling Approaches
+Depending on the engineering paradigm, different modeling techniques are preferred:
+- **Object-Oriented (OO) Approach:**
+  - **Functional Perspective:** Use Case Diagrams, Activity Diagrams
+  - **Data Perspective:** Domain Class Models / Class Diagrams
+- **Structured Approach:**
+  - **Functional Perspective:** Data Flow Diagrams (DFDs)
+  - **Data Perspective:** Entity Relationship Diagrams (ERDs)
+- **Behavioral Perspective (Shared):** State Machine Diagrams / Statecharts (used in both paradigms)
 
 ---
 
@@ -1688,23 +1715,31 @@ Conceptual models specify solution-oriented requirements from three complementar
 
 Use cases were first proposed by **Ivar Jacobson (1992)** to document planned or existing system functionalities based on simple models.
 
-### 6.4.1 Core Concepts
+### 6.4.1 Why Use Cases?
+- **Reducing Complexity:** A single use case isolates a specific sequence of actions, making complex processes with multiple branches easier to understand.
+- **Understandability:** Enhances communication and common understanding of requirements among stakeholders.
+- **Two Key Concepts (Used in Conjunction):**
+  1. **Use Case Diagrams:** Visual representations showing actors (users/systems) and the use cases they interact with.
+  2. **Use Case Specifications (Templates):** Detailed textual descriptions detailing scenarios, inputs, outputs, preconditions, and rules.
+
+### 6.4.2 Core Concepts
 - **Definition:** A use case describes a completed, uninterrupted sequence of actions of an actor with the system, yielding an added value result.
 - **Initiator:** An actor always starts a use case (can be a **Human**, an **Event**, or another **System**).
+- **Goal-Oriented:** The initiating actor always has a specific **business goal** they want to achieve through the use case.
 - **Viewpoint:** Described and named from the actor's viewpoint using a **verb** representing the action (e.g., `place order`, `calculate total`).
 
-### 6.4.2 Scenarios and Use Cases
-- Use cases are used to group and integrate related scenarios:
-  - **Main Scenario:** Exactly one path representing the standard successful flow.
-  - **Alternative Scenarios:** Zero to multiple paths representing alternative successful flows.
-  - **Exception Scenarios:** Zero to multiple paths representing errors or failures.
+### 6.4.3 Scenarios and Use Cases
+Use cases are used to group and integrate related scenarios:
+- **Main Scenario:** Exactly one path representing the standard successful flow.
+- **Alternative Scenarios:** Zero to multiple paths representing alternative successful flows.
+- **Exception Scenarios:** Zero to multiple paths representing errors or failures.
 
 ```
 Use Case Structure:
 +-------------------------------------------------------+
 | Use Case Name                                         |
 |-------------------------------------------------------|
-| Context (Goals, Pre-conditions, Post-conditions)       |
+| Context (Goals, Pre-conditions, Post-conditions)      |
 |-------------------------------------------------------|
 | Main Scenario (Path 1)                                |
 |-------------------------------------------------------|
@@ -1714,56 +1749,99 @@ Use Case Structure:
 +-------------------------------------------------------+
 ```
 
-### 6.4.3 Modelling Constructs
+### 6.4.4 Modelling Relationships & Constructs
+Use case diagrams represent relations between use cases, and between use cases and actors:
 
-1. **Actor:** Covers external entities (roles, not specific instances) that interact with the system.
-   - *Notation:* Stick figure (or rectangle with `<<actor>>`).
+1. **Actor:** Covers external entities (roles, not specific instances) that interact with the system by participating in use cases.
+   - *Notation:* Stick figure (or rectangle with `<<actor>>`). E.g., `<<actor>> Payment service` or `User`.
 2. **Use Case:** A specific way of using the system by performing a part of the functionality.
    - *Notation:* Oval containing the name.
-3. **System Boundary:** Separates the system (use cases inside) from its operational context (actors outside).
+3. **System Boundary:** Separates the system (use cases inside) from its operational context (actors outside), defining the **scope** for which requirements are specified.
    - *Notation:* Rectangle containing system name.
-4. **Association:** Represents bidirectional participation of an actor in a use case.
-   - *Notation:* Solid line.
-5. **Use Case Generalisation:** Specializes a general use case into more specific ones.
-   - *Notation:* Solid line with a hollow triangle pointing to the general use case.
-6. **Actor Generalisation:** Specializes a general actor role into specific roles.
+4. **Association:** Represents bidirectional participation of an actor in a use case. Instances of actors (roles) communicate with instances of use cases. Association lines are solid and **bidirectional**.
+5. **Actor Generalisation:** Specialises a general actor role into more specific roles. Specialised actors inherit associations and may have additional properties.
    - *Notation:* Solid line with a hollow triangle pointing to the general actor.
-7. **Relationships:**
-   - `<<include>>`: Denotes that the source use case explicitly incorporates the behavior of another use case.
-   - `<<extend>>`: Denotes that the source use case optionally extends the behavior of another use case.
+6. **Use Case Generalisation:** Specialises a general use case into more specific ones. Specialised use cases inherit behavior and relationships, but can add properties or specialized steps.
+   - *Notation:* Solid line with a hollow triangle pointing to the general use case.
+7. **Include Relationship (`<<include>>`):**
+   - **Definition:** Expresses that the base (including) use case explicitly incorporates the behavior of another (included) use case.
+   - **Execution:** The included use case is **always executed** whenever the base use case runs (unconditional).
+   - **Typical Purpose:** Used to extract common sequences of interactions shared by multiple use cases (like a subroutine/delegated task).
+   - **Dependency:** The base use case depends on the included use case to complete its goal.
+   - **Notation:** Dashed arrow pointing from the **base use case to the included use case** labeled with `<<include>>`.
+8. **Extend Relationship (`<<extend>>`):**
+   - **Definition:** Allows an extension use case to conditionally insert additional functionality into a base (extended) use case at a defined extension point.
+   - **Execution:** The extension use case is executed **only if certain conditions are met** (conditional).
+   - **Independence:** The base use case stands on its own and does not depend on the extension to complete its core workflow.
+   - **Notation:** Dashed arrow pointing from the **extension use case to the base use case** labeled with `<<extend>>`, associated with a note specifying the condition and the extension point.
+
+#### Include vs. Extend Comparison Table
+| Feature | Include Relationship (`<<include>>`) | Extend Relationship (`<<extend>>`) |
+|---|---|---|
+| **Execution** | **Mandatory** (Always executed as part of base) | **Optional** (Executed only if condition is true) |
+| **Base Dependency** | Base use case is incomplete without included behavior | Base use case stands alone and is fully complete |
+| **Arrow Direction** | Points from **Base $\to$ Included** | Points from **Extension $\to$ Base** |
+| **Extension Points** | Not required | Requires named extension points in base use case |
+| **Typical Purpose** | Avoid redundancy (subroutines, shared tasks) | Handle exceptional paths, optional features, add-ons |
 
 ```mermaid
 graph LR
-    subgraph "Online Shopping System (System Boundary)"
-        UC1(View items)
-        UC2(Make purchase)
-        UC3(Complete checkout)
-        UC4(Log in)
+    subgraph OnlineShopping ["Online Shopping System"]
+        UC1["View items"]
+        UC2["Make purchase"]
+        UC3["Complete checkout"]
+        UC4["Log in"]
     end
-    
-    Cust((Customer)) --> UC1
+
+    Cust(("Customer")) --> UC1
     Cust --> UC2
     Cust --> UC4
-    
-    UC2 -->|includes| UC1
-    UC2 -->|includes| UC3
-    
-    Auth((Authentication service)) --> UC1
+
+    UC2 -.->|"<<include>>"| UC1
+    UC2 -.->|"<<include>>"| UC3
+
+    Auth(("Authentication Service")) --> UC1
     Auth --> UC3
     Auth --> UC4
-    
-    IdP((Identity Provider)) --> UC4
+
+    IdP(("Identity Provider")) --> UC4
     IdP --> UC3
-    
-    CPS((Credit Payment Service)) --> UC3
-    PP((PayPal)) --> UC3
+
+    CPS(("Credit Payment Service")) --> UC3
+    PP(("PayPal")) --> UC3
 ```
 
-> [!example] Example: Use Case Generalisation (Driver Assistance System)
+> [!example] Example: Use Case & Actor Generalisation (Driver Assistance System)
 > - General Use Case: `Communicate externally`
 > - Specialised Use Cases: `Communicate via phone` $\to$ inherits from `Communicate externally`; `Communicate via email` $\to$ inherits from `Communicate externally`.
 > - General Actor: `User`
 > - Specialised Actors: `student` $\to$ inherits from `User`; `lecturer` $\to$ inherits from `User`.
+
+```mermaid
+graph LR
+    subgraph DriverAssistanceSystem ["Driver Assistance System"]
+        UC_Nav["Navigate to destination"]
+        UC_Comm["Communicate externally"]
+        UC_Phone["Communicate via phone"]
+        UC_Email["Communicate via email"]
+        UC_Conf["Configure car"]
+        UC_Maint["Support maintenance"]
+    end
+
+    InfoServer(("Information Server")) --> UC_Nav
+    CommSystem(("Communication System")) --> UC_Comm
+    Mechanic(("Mechanic")) --> UC_Maint
+
+    UC_Phone -->|Generalization| UC_Comm
+    UC_Email -->|Generalization| UC_Comm
+
+    UC_Nav --> Driver(("Driver"))
+    UC_Comm --> Driver
+    UC_Conf --> Driver
+
+    UC_Conf --> CSEmployee(("Customer Service Employee"))
+    UC_Maint --> CSEmployee
+```
 
 > [!example] Case Study: Ticket Selling System Use Case Diagram
 > - **System Boundary:** Ticket Selling System.
@@ -1774,13 +1852,146 @@ graph LR
 >   - `Supervisor` (initiates `Survey Sales`).
 >   - `Credit Card Service` (participates in `Make Charges`).
 
-> [!example] Exercise: Home-Baker's Ordering System
-> A home-baker's ordering system allows customers to place orders for baked goods online.
+> [!example] Case Study: Video on Demand Use Case Diagram
+> - **System Boundary:** Video on demand
+> - **Actors:** `Customer`, `Video Provider`, `Video Database`, `Customer Service Employee`
+> - **Use Cases:**
+>   - `Login customer` (has extension point `Create customer`)
+>   - `Register customer` (extends `Login customer` at extension point `Create customer` if customer not registered)
+>   - `Rent video` (has extension point `Payment data`, includes `Collect payment data`, extended by `Collect payment data` if payment data not defined)
+>   - `Collect payment data`
+>   - `Upload new video`
+>   - `Perform online support`
+
+```mermaid
+graph LR
+    subgraph VideoOnDemand ["Video on demand"]
+        UC_Login["Login customer"]
+        UC_Register["Register customer"]
+        UC_Rent["Rent video"]
+        UC_Collect["Collect payment data"]
+        UC_Upload["Upload new video"]
+        UC_Support["Perform online support"]
+    end
+
+    Customer(("Customer")) --> UC_Login
+    Customer --> UC_Register
+    Customer --> UC_Rent
+    Customer --> UC_Support
+
+    VideoProvider(("Video Provider")) --> UC_Upload
+    VideoDatabase(("Video Database")) --> UC_Upload
+    VideoDatabase --> UC_Rent
+
+    CSEmployee(("Customer Service Employee")) --> UC_Support
+
+    UC_Register -.->|"<<extend>>"| UC_Login
+    UC_Rent -.->|"<<include>>"| UC_Collect
+    UC_Collect -.->|"<<extend>>"| UC_Rent
+```
+
+> [!example] Exercise 1: Home-Baker's Ordering System
+> A home-baker's ordering system allows customers to place orders for baked goods online. Key functionalities include browsing the menu, filling out an order form, choosing delivery or pickup options, and making payments. The system also includes order notifications and follow-up communications for feedback.
 > - **System Boundary:** Home-Baker's Ordering System.
 > - **Actors:** `Customer`, `Baker` (or Supervisor), `Payment Service` \<\<system\>\>.
-> - **Use Cases:** `Browse Menu`, `Fill Order Form` (includes `Browse Menu`), `Choose Delivery/Pickup`, `Make Payment` (includes `Fill Order Form`, associated with `Payment Service`), `Send Order Notification`, `Provide Feedback`..
+> - **Use Cases:** `Browse Menu`, `Fill Order Form` (includes `Browse Menu`), `Choose Delivery/Pickup`, `Make Payment` (includes `Fill Order Form`, associated with `Payment Service`), `Send Order Notification`, `Provide Feedback`.
 
-### 6.4.4 Specifying Use Cases with Use Case Templates
+```mermaid
+graph LR
+    subgraph HomeBakerSystem ["Home-Baker's Ordering System"]
+        UC_Browse["Browse Menu"]
+        UC_FillForm["Fill Order Form"]
+        UC_ChooseDelivery["Choose Delivery/Pickup"]
+        UC_MakePayment["Make Payment"]
+        UC_Notify["Send Order Notification"]
+        UC_Feedback["Provide Feedback"]
+    end
+
+    Customer(("Customer")) --> UC_FillForm
+    Customer --> UC_ChooseDelivery
+    Customer --> UC_Feedback
+
+    Baker(("Baker")) --> UC_Notify
+    Baker --> UC_Feedback
+
+    PaymentService(("Payment Service")) --> UC_MakePayment
+
+    UC_FillForm -.->|"<<include>>"| UC_Browse
+    UC_MakePayment -.->|"<<include>>"| UC_FillForm
+```
+
+> [!example] Exercise 2: Foodpanda / Grabfood Delivery System
+> The platform allows users to browse menus from various nearby restaurants, place orders, and track their delivery status in real time. Customers can easily log in to their account, search for favourite dishes, and add them to cart. Once they place an order, they receive an estimated delivery time and can track the delivery driver's location. The system also lets customers save their preferred payment method and favourite restaurants for quicker ordering in the future.
+> On the restaurant side, managers can update their menu, accept orders, and mark items as "Out of Stock" when necessary. They also get real-time notifications when a customer places an order and can track the delivery status to ensure smooth service.
+> Besides, delivery drivers receive delivery assignments directly on their app. They can view the customer's address, pick up the food from the restaurant, and mark the order as "Delivered" once it reaches the customer.
+> 
+> **Question 1:** From the scenario, identify where `<<include>>` and `<<extend>>` relationships are appropriate.
+> * **Include Relationships:**
+>   - `Place order` $\to$ `Log in`: Authenticates the user before allowing order completion.
+>   - `Place order` $\to$ `Add to cart`: Requires items to be added to cart before placing an order.
+>   - `Place order` $\to$ `Make payment`: Completing payment is mandatory to finalize an order.
+> * **Extend Relationships:**
+>   - `Save payment method` extends `Make payment`: Optionally saves billing info for future use. (Condition: User checks "Save details").
+>   - `Save favourite restaurant` extends `Browse menu`: Optionally adds the restaurant to favorites. (Condition: User selects "Favorite").
+>   - `Track delivery driver` extends `Place order` / `Track order`: Optionally tracks driver's coordinates once the order is active. (Condition: Driver is assigned).
+>   - `Mark item as Out of Stock` extends `Update menu`: Optionally flags unavailable items. (Condition: Item is out of stock).
+> 
+> **Question 2:** Why is it important to differentiate between `include` and `extend` relationships when designing use case diagrams?
+> 1. **Clarity of Requirements (Mandatory vs. Optional):** Differentiating them clarifies which behaviors are mandatory parts of the system workflow (include) versus those that are optional/exceptional paths triggered only under specific conditions (extend).
+> 2. **System Design & Implementation:** Include relationships imply synchronous, always-run dependencies (like subroutines), whereas extend relationships require conditional logic and extension points (hooks) in the code.
+> 3. **MVP Scope Management:** It helps project teams distinguish core MVP features (base use cases + includes) from optional add-ons or exceptions (extends) to plan development sprints.
+
+```mermaid
+graph LR
+    subgraph FoodDeliverySystem ["Foodpanda / Grabfood System"]
+        UC_BrowseMenu["Browse menu"]
+        UC_SaveFav["Save favourite restaurant"]
+        UC_SearchDishes["Search dishes"]
+        UC_AddToCart["Add to cart"]
+        UC_PlaceOrder["Place order"]
+        UC_Login["Log in"]
+        UC_MakePayment["Make payment"]
+        UC_SavePayMethod["Save payment method"]
+        UC_TrackDriver["Track delivery driver"]
+        
+        UC_UpdateMenu["Update menu"]
+        UC_MarkOutOfStock["Mark item as Out of Stock"]
+        UC_AcceptOrder["Accept order"]
+        UC_NotifyOrder["Receive order notification"]
+        UC_TrackStatus["Track delivery status"]
+        
+        UC_RecvAssign["Receive delivery assignment"]
+        UC_ViewAddr["View customer address"]
+        UC_PickUp["Pick up food"]
+        UC_MarkDelivered["Mark order as Delivered"]
+    end
+
+    Customer(("Customer")) --> UC_BrowseMenu
+    Customer --> UC_SearchDishes
+    Customer --> UC_PlaceOrder
+    Customer --> UC_TrackDriver
+
+    Manager(("Restaurant Manager")) --> UC_UpdateMenu
+    Manager --> UC_AcceptOrder
+    Manager --> UC_NotifyOrder
+    Manager --> UC_TrackStatus
+
+    Driver(("Delivery Driver")) --> UC_RecvAssign
+    Driver --> UC_ViewAddr
+    Driver --> UC_PickUp
+    Driver --> UC_MarkDelivered
+
+    UC_PlaceOrder -.->|"<<include>>"| UC_Login
+    UC_PlaceOrder -.->|"<<include>>"| UC_AddToCart
+    UC_PlaceOrder -.->|"<<include>>"| UC_MakePayment
+
+    UC_SaveFav -.->|"<<extend>>"| UC_BrowseMenu
+    UC_SavePayMethod -.->|"<<extend>>"| UC_MakePayment
+    UC_TrackDriver -.->|"<<extend>>"| UC_PlaceOrder
+    UC_MarkOutOfStock -.->|"<<extend>>"| UC_UpdateMenu
+```
+
+### 6.4.5 Specifying Use Cases with Use Case Templates
 Use case diagrams provide a visual overview of system functions and actors, but they lack detail. **Use case templates** provide structured, detailed textual descriptions (specifications) explaining the exact behavior of each use case.
 
 > [!info] Purpose of Use Case Templates
@@ -1854,7 +2065,7 @@ A fully specified detailed template includes the following sections:
 > - **Use Case ID:** `UC-04`
 > - **Use Case Name:** `Navigate to destination`
 > - **Author(s):** Peter Miller, Jane Smith
-> - **Source:** L. White (domain expert for navigation systems)
+> - **Source:** J. Smith (domain expert for navigation systems)
 > - **Responsible Stakeholder:** J. Smith
 > - **Short Description:** The driver of the car enters the destination. The navigation system guides the driver to the desired destination.
 > - **Associated Goal(s):** Entry of the destination, automatic navigation to destination.
@@ -1921,7 +2132,12 @@ A fully specified detailed template includes the following sections:
 > | **Flow Of Activities** | **Actor:**<br>1. Tenant and management enter valid email and password.<br>2. Tenant go to the profile page.<br>3. Tenant edit the profile details like change the password, name, house number.<br>4. Tenant click the save button.<br><br>**System:**<br>1. System verifies emails and password is valid.<br>2. System allow user to log in.<br>3. System able to save the data into the database. |
 > | **Exception Conditions** | - User does not have an account.<br>- User enter invalid email or password.<br>- User do click the save button. |
 
----
+> [!tip] Extra Notes: Agentic Design Patterns in Software Engineering
+> Slide 29 shows **Multi-Agent Collaboration** (referencing the ChatDev framework by Qian et al., 2023). 
+> - **Traditional Waterfall vs. Chat Chain:** While traditional software development follows structured sequential phases (Designing $\to$ Coding $\to$ Testing $\to$ Documenting), modern generative AI allows this process to be automated using role-playing autonomous agents (e.g., CEO, CPO, CTO, Programmer, Reviewer, Tester) collaborating in a "Chat Chain."
+> - **Relevance to Requirements:** In an agentic workflow, the CPO (Chief Product Officer) agent processes the initial user requirements (the prompt) to formulate the product vision, which is then translated by the CEO and CTO agents into functional designs, code, and test cases. This demonstrates how conceptual and process modeling is applied to coordinate multi-agent system execution.
+
+-----
 
 # Chapter 7: Functional Modelling
 
@@ -2734,12 +2950,13 @@ To prepare for prioritisation, requirements engineers must execute four steps:
 
 #### 10.2.1.1 Stakeholder Identification Table
 Stakeholder involvement should be tailored to the specific prioritisation criteria:
-| Prioritisation Goal | Criterion | Relevant Stakeholders |
-| :--- | :--- | :--- |
-| Identify requirements critical for system acceptance | Importance | Users, business managers, system analysts |
-| Sort requirements by complexity | Cost | Architects, domain experts, system analysts |
-| Prioritize by importance of supported business processes | Business Value | Managers, customers, users |
-| Determine risk of low system performance | Risk | User representatives, customers, managers, IT-specialists, system analysts |
+
+| Prioritisation Goal                                      | Criterion      | Relevant Stakeholders                                                      |
+| :------------------------------------------------------- | :------------- | :------------------------------------------------------------------------- |
+| Identify requirements critical for system acceptance     | Importance     | Users, business managers, system analysts                                  |
+| Sort requirements by complexity                          | Cost           | Architects, domain experts, system analysts                                |
+| Prioritize by importance of supported business processes | Business Value | Managers, customers, users                                                 |
+| Determine risk of low system performance                 | Risk           | User representatives, customers, managers, IT-specialists, system analysts |
 
 ### 10.2.2 Prioritisation Criteria
 - **Importance:** Urgency of implementing, importance for acceptance of the system, importance for architectural design, strategic importance to market position.

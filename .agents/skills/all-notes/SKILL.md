@@ -23,9 +23,11 @@ When a course is requested (e.g. "CKS121"):
 ## 2. Compile Course Notes (Hierarchical Process)
 
 1. **Sequential Chapter-by-Chapter Writing (Looping)**:
-   - For each course material file identified in the plan, process and write it **single chapter by single chapter**:
+   - For each course material file identified in the plan, process and write it **single chapter by single chapter** (topic by topic):
+     - **One File at a Time**: Process only one lecture/material file per iteration. Do not load, summarize, or translate multiple files concurrently.
      - **Invoke the `lecture-to-obsidian` skill** to process the current file and generate its formatted notes.
-     - **Write/Merge Immediately**: Immediately append or merge this single chapter/topic's content into the master markdown file on disk and save it before moving on to the next file. **Never** wait to write all chapters in a single bulk operation at the end.
+     - **Write/Merge Immediately**: Immediately append or merge this single chapter/topic's content into the master markdown file on disk and save it before moving on to the next file. **Never** compile multiple chapters in memory or write them in a single bulk operation at the end.
+     - **No Bulk Generation**: Do not attempt to generate or output notes for multiple chapters/topics in a single turn. Write the note, save, and proceed iteratively.
      - Ensure that no details, examples, or formulas are lost during the transition.
      - Apply appropriate prefixes for special files (e.g., `# Lab X: [Title]` for a lab document).
 2. **Immediate Renumbering**:
