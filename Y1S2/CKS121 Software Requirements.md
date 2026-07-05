@@ -371,9 +371,9 @@ The RE framework is designed to structure the requirements engineering process b
 - **Reference Structure for Teaching:** Successfully introduced in numerous organizations, companies, and universities.
 
 ```mermaid
-graph TD
-    subgraph "Requirements Engineering Context"
-        subgraph "System Context"
+flowchart TD
+    subgraph REContext ["Requirements Engineering Context"]
+        subgraph SysContext ["System Context"]
             SF[Subject Facet]
             UF[Usage Facet]
             IF[IT System Facet]
@@ -381,25 +381,25 @@ graph TD
         DC[Development Context]
     end
 
-    subgraph "Core Activities"
+    subgraph CoreActivities ["Core Activities"]
         Elic[Elicitation] <--> Neg[Negotiation]
         Neg <--> Doc[Documentation]
         Doc <--> Elic
     end
 
-    subgraph "Requirements Artefacts"
+    subgraph ReqArtefacts ["Requirements Artefacts"]
         G[Goals]
         S[Scenarios]
         SOR[Solution-Oriented Requirements]
     end
 
-    Validation{Validation} <--> "System Context"
-    Validation <--> "Core Activities"
-    Validation <--> "Requirements Artefacts"
+    Validation{Validation} <--> SysContext
+    Validation <--> CoreActivities
+    Validation <--> ReqArtefacts
 
-    Management{Management} <--> "System Context"
-    Management <--> "Core Activities"
-    Management <--> "Requirements Artefacts"
+    Management{Management} <--> SysContext
+    Management <--> CoreActivities
+    Management <--> ReqArtefacts
 ```
 
 ### 2.1.2 System Vision
