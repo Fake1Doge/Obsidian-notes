@@ -1399,13 +1399,13 @@ Additional information records the execution of RE activities to support verific
 ### 5.3.1 Elicitation & Negotiation Artifacts
 - **Elicitation:** Typical info includes interview minutes, list of identified sources, brainstorming notes, and exploratory scenarios.
   - *Interview minutes* should use a predefined template:
-    > [!example] Predefined Interview Minutes Template
-    > - **Identifier:** `INT-<number>`
-    > - **Date:** Date of interview
-    > - **Goal:** Goal of the interview in one sentence
-    > - **Interviewer:** Name of interviewer
-    > - **Interviewee(s):** Name, function, and organization of interviewee(s)
-    > - **Notes:** Bullet points detailing the discussion
+  > [!example] Predefined Interview Minutes Template
+  > - **Identifier:** `INT-<number>`
+  > - **Date:** Date of interview
+  > - **Goal:** Goal of the interview in one sentence
+  > - **Interviewer:** Name of interviewer
+  > - **Interviewee(s):** Name, function, and organization of interviewee(s)
+  > - **Notes:** Bullet points detailing the discussion
 - **Negotiation:** Records conflicts detected, arguments exchanged, resolutions reached, and final decisions.
   - *Decision Meetings* must document the project, date, participants, issues, voting counts, and the chosen/declined arguments.
 
