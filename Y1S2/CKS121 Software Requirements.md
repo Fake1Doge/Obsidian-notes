@@ -1030,14 +1030,14 @@ Three Categories of Creativity:
 > - **Assistance techniques** support elicitation techniques (e.g., by developing new ideas or experiencing features of the future system).
 
 ### 4.5.1 Classification of Elicitation Techniques
-| Technique | Effort | Suited for: Identifying Sources | Suited for: Eliciting Existing | Suited for: Developing Innovative |
-|---|---|---|---|---|
-| **Interview** | Medium to High | Yes (X) | Yes (X) | Partially ((X)) |
-| **Workshop** | High to Very High | Yes (X) | Yes (X) | Yes (X) |
-| **Focus Groups** | Medium to High | | Yes (X) | Yes (X) |
-| **Observation** | High to Very High | | Yes (X) | |
-| **Questionnaire** | Low to Medium | Yes (X) | Yes (X) | |
-| **Perspective-Based Reading** | Medium to High | | Yes (X) | |
+| Technique                     | Effort            | Suited for: Identifying Sources | Suited for: Eliciting Existing | Suited for: Developing Innovative |
+| ----------------------------- | ----------------- | ------------------------------- | ------------------------------ | --------------------------------- |
+| **Interview**                 | Medium to High    | Yes (X)                         | Yes (X)                        | Partially ((X))                   |
+| **Workshop**                  | High to Very High | Yes (X)                         | Yes (X)                        | Yes (X)                           |
+| **Focus Groups**              | Medium to High    |                                 | Yes (X)                        | Yes (X)                           |
+| **Observation**               | High to Very High |                                 | Yes (X)                        |                                   |
+| **Questionnaire**             | Low to Medium     | Yes (X)                         | Yes (X)                        |                                   |
+| **Perspective-Based Reading** | Medium to High    |                                 | Yes (X)                        |                                   |
 
 ### 4.5.2 Detailed Elicitation Techniques
 
