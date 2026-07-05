@@ -1331,8 +1331,10 @@ A comprehensive requirements document contains three types of information:
 ### 5.1.3 Representation Formats
 Information can be documented using different formats depending on the target audience and purpose:
 - **Textual:** Natural language text, structured text, or tabular templates.
-- **Model-based:** Conceptual models (e.g., DFDs, ERDs, Statecharts) capturing functional, data, or behavioral perspectives.
+- **Model-based:** Conceptual models (e.g., Data Flow Diagrams, Entity Relationship Diagrams, Statecharts) capturing functional, data, or behavioral perspectives.
 - **Combined:** Conceptual models with textual annotations or structured templates containing embedded models.
+  - **Conceptual models with textual annotations:** Clarifying specific rules directly on a diagram. For example, annotating a Customer-Holiday Package ERD with: *"These are only private customers, no business customers"* or *"Holiday package contains flight, transfer, and hotel"*.
+  - **Text including conceptual models:** Using a structured template (like a use case description) that references or contains a diagram (like a UML use case diagram).
 
 ### 5.1.4 Documentation Templates
 Templates provide a structured format (usually tabular) with predefined slots (attribute types) and values.
@@ -1392,27 +1394,155 @@ A requirements specification serves as input for detailed software design. It de
 
 ---
 
+## 5.3 Documentation Guidelines
+
+### 5.3.1 Definition and Characteristics
+> [!info] Definition: Documentation Guidelines
+> Documentation guidelines support the creation of a specific document by guiding:
+> 1. The documentation of the required content in the desired structure.
+> 2. The use of appropriate representation formats.
+> 3. The fulfillment of the defined quality criteria.
+
+Documentation guidelines possess the following characteristics:
+- **Document-specific:** Tailored to the needs and purpose of a particular document type.
+- **Defined on Content, Format, and Quality:** Built directly around these three key document characteristics.
+- **Accessible and Practical:** Must be easy to understand and apply.
+- **Shared Knowledge:** Must be known and understood by at least all requirements engineers in the project.
+
+### 5.3.2 Scope of Guidelines
+Documentation guidelines can be defined at two levels of scope:
+1. **Whole Document:** E.g., guidelines for structuring a complete requirements specification.
+2. **Specific Item:** E.g., guidelines for documenting an individual requirement or attribute.
+
+> [!example] Example: Textual Requirements Guidelines for Validation
+> - **Guidelines for Complete Document:**
+>   - Document all requirements marked as to be included in the next system release (to achieve completeness with respect to the release).
+>   - Pre-check if there are contradictions between the requirements (to achieve consistency).
+> - **Guidelines for Single Information Item:**
+>   - Use Template No. 245-A to document each individual requirement (to ensure no important attributes are forgotten).
+>   - If an attribute is not known yet, mark it clearly as `TBD` (to make documentation gaps clearly visible).
+
+### 5.3.3 Content Guidelines
+Content guidelines determine the required content and its structure for a specific document.
+- **Structure Guidelines:** Support the organization of information (chapters, sections, order of content).
+- **Content Detail Guidelines:** Support the documentation of information (level of detail, abstraction layers, system perspective).
+
+The content required varies based on the document's purpose:
+| Guidelines for | Purpose: Document for Management Review | Purpose: Specification |
+|---|---|---|
+| **Single Information Item** | Only document the identifier, name, author, sources, and requirement text for low/medium criticality requirements (provides the minimum necessary info for validation). | Document each requirement with all attributes defined in document `ATTR-1255` (do not miss any important details). |
+| **Complete Document** | Describe the content in no more than 4 pages (ensures all information can be processed during the meeting). | Document the system according to the hierarchies defined in document `D-H-334` (ensures all required details are captured). |
+
+### 5.3.4 Format Guidelines
+Format guidelines define the representation format (textual, model-based, combined) used to document the content.
+- **Textual:** Natural language, structured text, templates.
+- **Model-based:** Data-perspective (e.g., EER diagrams), behavior-perspective (e.g., UML Statecharts), functional-perspective (e.g., DFDs).
+- **Combined:** Conceptual models with textual annotations, or templates containing embedded diagrams.
+
+The chosen format must align with the document's purpose and audience:
+| Guidelines for | Purpose: Document for Management Review | Purpose: Specification |
+|---|---|---|
+| **Single Information Item** | Define a narrative scenario describing the intended way of achieving the goals associated with the function (supports comprehension of functions by management). | Document each scenario using Message Sequence Charts (MSC) notation (facilitates automation and verification in succeeding development activities). |
+| **Complete Document** | Use English language in active voice (ensures understandability by a multi-national management team). | Annotate the models with decisions and rationales in English (supports design decisions by providing key arguments about important requirements decisions). |
+
+### 5.3.5 Quality Guidelines
+Quality guidelines ensure the desired quality is achieved for both the content and the representation format of the documented information.
+1. **Content Quality Guidelines:** Ensure the documented information is complete, consistent, and correct.
+2. **Format Quality Guidelines:** Ensure correct usage of modelling syntax, syntactical patterns, and compliance with modelling guidelines (e.g., the $7 \pm 2$ rule for Data Flow Diagrams).
+
+| Guidelines for | Purpose: Document for Management Review | Purpose: Specification |
+|---|---|---|
+| **Single Information Item** | If you are unsure if there is a disagreement about a requirement, tag it as "potential disagreement" (indicates potential conflicts to management). | Check the documentation of each requirement for consistency (ensures consistency for each individual requirement). |
+| **Complete Document** | Check the correct use of the use case diagram syntax (ensures management is not distracted by syntactical errors). | Use the `XYZ-modelling` tool to ensure syntactical correctness, and formally check the correctness of the modelled requirements (provides designers with consistent models). |
+
+---
+
 ## 5.3 Documentation of Additional Information
 
 Additional information records the execution of RE activities to support verification, traceability, and future change management.
 
 ### 5.3.1 Elicitation & Negotiation Artifacts
 - **Elicitation:** Typical info includes interview minutes, list of identified sources, brainstorming notes, and exploratory scenarios.
+  - *Guidelines for Documenting Interviews:*
+    - **Content:** Document interview minutes using the predefined template below, marking unfilled slots with `TBD` (to be defined) or `N/A` (not applicable) to clearly indicate documentation gaps.
+    - **Format:** All interview minutes shall be documented in English (project-wide use of a common language).
+    - **Quality:** The interviewee shall approve the interview minutes to ensure agreement on the documented information.
   - *Interview minutes* should use a predefined template:
   > [!example] Predefined Interview Minutes Template
-  > - **Identifier:** `INT-<number>`
-  > - **Date:** Date of interview
-  > - **Goal:** Goal of the interview in one sentence
-  > - **Interviewer:** Name of interviewer
-  > - **Interviewee(s):** Name, function, and organization of interviewee(s)
-  > - **Notes:** Bullet points detailing the discussion
+  > - **Identifier:** `INT-<number>` (e.g., `INT-23`)
+  > - **Date:** Date of interview (e.g., `05.07.2015`)
+  > - **Goal:** Goal of the interview in one sentence (e.g., *"Elicitation of requirements for the booking process"*)
+  > - **Interviewer:** Name of interviewer (e.g., `Matthias Gerdes`)
+  > - **Interviewee(s):** Name, function, and organization of interviewee(s) (e.g., `Julia Reisig (Account Manager, Far-Away-Travel Ltd.)`)
+  > - **Notes/Minutes:** Bullet points detailing the discussion (e.g., *"Provide dedicated functions for booking holiday packages, flights and hotels"*, *"The booking of rental cars should be included in the system"*).
 - **Negotiation:** Records conflicts detected, arguments exchanged, resolutions reached, and final decisions.
   - *Decision Meetings* must document the project, date, participants, issues, voting counts, and the chosen/declined arguments.
+  > [!example] Decision Meeting Documentation Structure
+  > - **Metadata:** Project Name, Date, and list of Participants.
+  > - **Decisions:** Identifier (e.g., `D-1.1`), Issue (e.g., *"Should the booking system support holiday packages?"*), Voting Count (total votes, yes votes, no votes, yes/no percentage).
+  > - **Decisions per Participant:** Log of individual participant votes (e.g., `Ms. Meier: Yes`, `Mr. Smith: No`).
+  > - **Arguments:** Pros and contras for both the chosen position and the declined position.
 
 ### 5.3.2 Validation & Management Artifacts
 - **Validation:** Typical info includes potential errors/defects detected and stakeholder lists.
   - *Inspection protocols* record reviewers, date, document under inspection, and reviewer comments (defect details and severity).
 - **Management:** Typical info includes project plans, traceability links, change requests, and resource consumption logs.
+
+---
+
+## 5.3 Documentation of Requirements
+
+### 5.3.1 Definition and Formats
+> [!info] Definition: Documented Requirement
+> A documented requirement is a requirement that is explicitly recorded.
+
+A documented requirement can be recorded:
+- Using **any kind of representation format** (sketches, drawings, natural language, formal models).
+- At **any level of detail** (content) and in **any kind of structure**.
+- In **any level of quality** (it may be consistent or not, completely documented or not).
+
+Requirements are typically documented for a given purpose and are part of a larger document. The documentation process should be supported by documentation guidelines defined for the document or the requirement itself.
+
+### 5.3.2 Examples of Documented Requirements
+Depending on the stage of RE and the target audience, requirements can be documented in various formats:
+1. **Scenario Sketches:** Freehand drawings or diagrams created during creativity sessions to capture initial ideas.
+2. **Textual Solution-Oriented Requirements:** Detailed tabular templates documenting all necessary attributes.
+   > [!example] Example: Textual Solution-Oriented Requirement (from Elicitation)
+   > - **Identifier:** `R-S-33-8`
+   > - **Name:** Recommendation for rental car after booking
+   > - **Author:** Matthias Gerdes
+   > - **Version:** V3
+   > - **Sources:** Ms. Reisig, Mr. Meier, `TBD` (incomplete)
+   > - **Short Description:** Recommendation of rental cars provided by InterCars.
+   > - **Requirement:** After booking a flight or holiday package, the booking system shall display a selection of available rental cars provided by InterCars. The rental cars shown shall be available at the destination point and during the whole time of the travel. Each rental car shall be described by displaying category, type, price per day. Additionally, a picture of a car in the car category should be shown.
+3. **Textual Interaction Scenarios:** Structured tabular flows used for internal documentation between team members.
+4. **Data Models:** Entity Relationship Diagrams (ERD) specifying data structures and relationships.
+5. **Behavioral Models:** Message Sequence Charts (MSC) or Statecharts specifying system states and transitions.
+
+### 5.3.3 Textual vs. Modeled Requirements
+While textual requirements are easier for stakeholders to write and read, modeled requirements (e.g., activity diagrams) provide formal structure, eliminate ambiguity, and show paths clearly.
+
+> [!example] Comparison: Textual vs. Modeled Requirements
+> - **Textual Format:**
+>   - **REQ001:** The customer places an order.
+>   - **REQ002:** The customer pays for the order.
+>   - **REQ003:** If the payment succeeded, then the order is produced.
+>   - **REQ004:** If the payment failed, then the order is canceled.
+>   - **REQ005:** After the order is produced, it is delivered to the customer.
+>   - **REQ006:** The order can be canceled if the customer does not pay for it.
+> - **Modeled Format (Activity Diagram):**
+>
+> ```mermaid
+> stateDiagram-v2
+>     [*] --> CustomerPlacesOrder
+>     CustomerPlacesOrder --> CustomerPaysForOrder : [Order not canceled]
+>     CustomerPlacesOrder --> OrderCanceled : [Order canceled (REQ006)]
+>     CustomerPaysForOrder --> ProduceOrder : [Payment succeeded (REQ003)]
+>     CustomerPaysForOrder --> OrderCanceled : [Payment failed (REQ004)]
+>     ProduceOrder --> DeliverOrder : (REQ005)
+>     DeliverOrder --> [*]
+>     OrderCanceled --> [*]
+> ```
 
 ---
 
