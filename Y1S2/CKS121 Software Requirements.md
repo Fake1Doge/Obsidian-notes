@@ -1457,11 +1457,11 @@ Quality guidelines ensure the desired quality is achieved for both the content a
 
 ---
 
-## 5.3 Documentation of Additional Information
+## 5.4 Documentation of Additional Information
 
 Additional information records the execution of RE activities to support verification, traceability, and future change management.
 
-### 5.3.1 Elicitation & Negotiation Artifacts
+### 5.4.1 Elicitation & Negotiation Artifacts
 - **Elicitation:** Typical info includes interview minutes, list of identified sources, brainstorming notes, and exploratory scenarios.
   - *Guidelines for Documenting Interviews:*
     - **Content:** Document interview minutes using the predefined template below, marking unfilled slots with `TBD` (to be defined) or `N/A` (not applicable) to clearly indicate documentation gaps.
@@ -1483,16 +1483,16 @@ Additional information records the execution of RE activities to support verific
   > - **Decisions per Participant:** Log of individual participant votes (e.g., `Ms. Meier: Yes`, `Mr. Smith: No`).
   > - **Arguments:** Pros and contras for both the chosen position and the declined position.
 
-### 5.3.2 Validation & Management Artifacts
+### 5.4.2 Validation & Management Artifacts
 - **Validation:** Typical info includes potential errors/defects detected and stakeholder lists.
   - *Inspection protocols* record reviewers, date, document under inspection, and reviewer comments (defect details and severity).
 - **Management:** Typical info includes project plans, traceability links, change requests, and resource consumption logs.
 
 ---
 
-## 5.3 Documentation of Requirements
+## 5.5 Documentation of Requirements
 
-### 5.3.1 Definition and Formats
+### 5.5.1 Definition and Formats
 > [!info] Definition: Documented Requirement
 > A documented requirement is a requirement that is explicitly recorded.
 
@@ -1503,7 +1503,7 @@ A documented requirement can be recorded:
 
 Requirements are typically documented for a given purpose and are part of a larger document. The documentation process should be supported by documentation guidelines defined for the document or the requirement itself.
 
-### 5.3.2 Examples of Documented Requirements
+### 5.5.2 Examples of Documented Requirements
 Depending on the stage of RE and the target audience, requirements can be documented in various formats:
 1. **Scenario Sketches:** Freehand drawings or diagrams created during creativity sessions to capture initial ideas.
 2. **Textual Solution-Oriented Requirements:** Detailed tabular templates documenting all necessary attributes.
@@ -1519,7 +1519,7 @@ Depending on the stage of RE and the target audience, requirements can be docume
 4. **Data Models:** Entity Relationship Diagrams (ERD) specifying data structures and relationships.
 5. **Behavioral Models:** Message Sequence Charts (MSC) or Statecharts specifying system states and transitions.
 
-### 5.3.3 Textual vs. Modeled Requirements
+### 5.5.3 Textual vs. Modeled Requirements
 While textual requirements are easier for stakeholders to write and read, modeled requirements (e.g., activity diagrams) provide formal structure, eliminate ambiguity, and show paths clearly.
 
 > [!example] Comparison: Textual vs. Modeled Requirements
@@ -1546,7 +1546,7 @@ While textual requirements are easier for stakeholders to write and read, modele
 
 ---
 
-## 5.4 Ambiguities in Natural Language Requirements
+## 5.6 Ambiguities in Natural Language Requirements
 
 Natural language is inherently ambiguous. An ambiguously documented requirement has **more than one valid interpretation**, which can lead to costly defects during design and implementation.
 
@@ -1565,7 +1565,7 @@ graph TD
     DS --> Sem[Semantic Ambiguity]
 ```
 
-### 5.4.1 Underspecified Requirements
+### 5.6.1 Underspecified Requirements
 Underspecified requirements lack the necessary details or use vague language, leading to misinterpretation.
 - **Vagueness:** A word is vague if it admits borderline cases where its applicability is uncertain.
   > [!example] Example: Vagueness
@@ -1573,7 +1573,7 @@ Underspecified requirements lack the necessary details or use vague language, le
   > - **Problem:** A response time of $1\text{ second}$ is neither clearly fast nor slow. It might be fast for a desktop map, but slow for a car racing dashboard.
   > - **Improved Statement:** "The system shall display the map within $1.0\text{ second}$ after user selection."
 
-### 5.4.2 Lexical Ambiguity
+### 5.6.2 Lexical Ambiguity
 Lexical ambiguity occurs when a word has more than one meaning.
 - **Synonyms:** Different words representing the same meaning (e.g., "car" and "automobile").
 - **Homonyms:** Words spelled in the same way but having unrelated meanings (e.g., "Bank" as a financial institution vs. a river edge).
@@ -1582,7 +1582,7 @@ Lexical ambiguity occurs when a word has more than one meaning.
     - *Process vs. Product:* "Her writing was flawless" (the act of writing vs. the written product).
     - *Type vs. Unit:* "Please buy this vase" (a specific physical vase vs. a specific model of vase).
 
-### 5.4.3 Syntactic (Structural) Ambiguity
+### 5.6.3 Syntactic (Structural) Ambiguity
 Syntactic ambiguity occurs when a sentence can be assigned multiple syntax trees, resulting in different meanings.
 1. **Analytical Ambiguity:** A word or phrase plays multiple possible grammatical roles.
    - *Example:* "The British race car driver did a good job."
@@ -1604,7 +1604,7 @@ Syntactic ambiguity occurs when a sentence can be assigned multiple syntax trees
      - *Interpretation 1:* Dave sees a man who is taller than Joe is.
      - *Interpretation 2:* Dave sees a taller man than Joe sees.
 
-### 5.4.4 Semantic Ambiguity
+### 5.6.4 Semantic Ambiguity
 Semantic ambiguity occurs when a sentence has multiple interpretations in a specific context despite having clear grammar and vocabulary.
 1. **Scope Ambiguity:** Caused by quantifiers (all, some, a) or negation operators.
    - *Example:* "All users enter a coupon code."
@@ -1618,9 +1618,9 @@ Semantic ambiguity occurs when a sentence has multiple interpretations in a spec
 
 ---
 
-## 5.5 Techniques for Avoiding Ambiguity
+## 5.7 Techniques for Avoiding Ambiguity
 
-### 5.5.1 Glossaries
+### 5.7.1 Glossaries
 A glossary is a collection of technical terms with their specific meanings, related terms, and examples.
 - **Structure of a Glossary Entry:**
   - **Term:** Name of the term (e.g., `Route`).
@@ -1630,7 +1630,7 @@ A glossary is a collection of technical terms with their specific meanings, rela
   - **Examples / Counter-examples:** E.g., links to map screenshots.
 - **Benefits:** Prevents different stakeholders from interpreting terms differently or using different terms for the same real-world object.
 
-### 5.5.2 Syntactic Requirements Patterns
+### 5.7.2 Syntactic Requirements Patterns
 A requirements pattern defines a strict syntactic structure for documenting natural-language requirements and sets the meaning of keywords:
 - **Rupp's Template (Rupp 2009):**
   $$\text{[<When?>]} \to \text{THE SYSTEM} \to \text{\{SHALL / SHOULD / MIGHT\}} \to \text{\{<process> / PROVIDE <whom?> WITH ABILITY TO <process> / BE ABLE TO <process>\}} \to \text{<object>}$$
@@ -1652,7 +1652,7 @@ A requirements pattern defines a strict syntactic structure for documenting natu
 >   - `<process>`: inform
 >   - `<object>`: the operation office of the security service
 
-### 5.5.3 Controlled Languages
+### 5.7.3 Controlled Languages
 A controlled language restricts the natural-language grammar (syntax) and vocabulary for a specific domain to reduce ambiguity and support automated verification.
 
 ##### Steps to Define a Controlled Language:
@@ -1679,7 +1679,7 @@ A controlled language restricts the natural-language grammar (syntax) and vocabu
 
 ---
 
-## 5.6 Transformation Defects in Natural-Language Requirements
+## 5.8 Transformation Defects in Natural-Language Requirements
 
 During documentation, requirements engineers transform their perception of reality into a natural language representation, which introduces **transformation defects**.
 
@@ -1697,7 +1697,7 @@ graph TD
     style Representation fill:#ffcccc,stroke:#ff0000,stroke-width:1px;
 ```
 
-### 5.6.1 Types of Transformation Effects
+### 5.8.1 Types of Transformation Effects
 1. **Nominalization:**
    - Turning a process (verb) into a single event (noun), leading to information loss.
    - *Trigger words:* transmission, input, booking, acceptance, restart.
