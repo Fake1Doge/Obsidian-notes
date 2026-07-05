@@ -1,578 +1,228 @@
-# Chapter 1: Organisation Structure and Design
+# CKS121 Software Requirements Study Summary
 
-## 1.1 Introduction to Organizational Design
-Organizational design is the strategic process of aligning an organization's structure with its purpose, enabling it to achieve its long-term goals through systematic coordination and efficient resource allocation.
-- **Within the P-O-L-C Framework:** While *Planning* sets the strategic direction, *Organizing* establishes the structural foundation required to coordinate tasks, allocate resources, and support the *Leading* and *Controlling* functions.
-- **Design as a Strategic Lever:** Effective design goes beyond arranging boxes on a chart; it improves communication flow, clarifies roles, accelerates decision-making, and fosters innovation in dynamic business environments.
+## Chapter 1: Introduction & Fundamentals of Requirements Engineering
 
-## 1.2 Defining Organizational Structure
-> [!info] Definition: Organizational Structure
-> The formal system of task and reporting relationships that controls, coordinates, and motivates employees to work together to achieve organizational goals.
+### 1.1 Key Concepts
+- **Brooks' Quote:** "The hardest single part of building a software system is deciding precisely what to build. No other part of the conceptual work is as difficult as establishing the detailed technical requirements..." (Fred Brooks, 1987)
+- **CHAOS Report Statistics (1994-2012):** Poor Requirements Engineering (RE) accounts for **48.1%** of reasons for challenged projects (completed with resource overspend and/or functional restrictions) and **44.1%** of failed (cancelled) projects.
+- **Error Correction Cost (Boehm & Basili 2001):** The effort to fix requirements defects scales exponentially as the project progresses:
+  - *Small/Non-critical projects:* Post-delivery correction takes **5x** the effort compared to finding it in the analysis phase.
+  - *Large/Critical projects:* Post-delivery correction takes **100x** the effort.
 
-Structure serves as the operational blueprint, defining:
-- **Roles & Responsibilities:** Clarifying who does what.
-- **Communication Channels:** Establishing how information travels across the organization.
-- **Task Coordination:** Setting up mechanisms to integrate activities across different departments.
+### 1.2 Core Definitions
+- **Requirement (IEEE 610.12):**
+  1. A condition or capability needed by a user to solve a problem or achieve an objective.
+  2. A condition or capability that must be met or possessed by a system to satisfy a contract, standard, or specification.
+  3. A documented representation of (1) or (2).
+- **Requirement (IREB):** (1) A need perceived by a stakeholder, (2) a capability or property a system shall have, or (3) a documented representation thereof.
+- **Stakeholder:** A person, group, or organization who influences system requirements or is impacted by the system.
 
-## 1.3 The Strategic Purpose of Design
-Organizational design is implemented to achieve four primary strategic objectives:
-1. **Operational Excellence:** Minimizes redundancy, eliminates duplicate functions, and streamlines workflows across departments.
-2. **Decision Agility:** Establishes clear authority lines and reduces approval layers, enabling faster response times.
-3. **Cultural Reinforcement:** Aligns the formal structure with desired organizational values, behaviors, and employee engagement strategies.
-4. **Strategic Adaptability:** Balances stability with flexibility, maintaining operational consistency while enabling rapid market responsiveness.
+### 1.3 The Goal of RE
+Requirements Engineering is a **cooperative, iterative, and incremental process** aiming to ensure that:
+1. All relevant requirements are explicitly known and understood at the required level of detail (**Content Dimension**: vague $\to$ complete).
+2. A sufficient agreement is achieved between the stakeholders (**Agreement Dimension**: individual $\to$ consolidated).
+3. All requirements are documented in compliance with guidelines (**Documentation Dimension**: non-compliant $\to$ compliant).
+*Note: These three dimensions are orthogonal—progress in one does not automatically guarantee progress in the others.*
 
-> [!important] Strategic Design Principle
-> Structure is not static; it is a primary source of strategic competitive advantage. It must adapt dynamically to changes in strategy and environment.
+### 1.4 Three Types of Requirements
+1. **Functional Requirements:** Concern results or behaviors provided by a system function (Functions, Behaviors, Data/Structures).
+2. **Quality Requirements:** Concern quality properties of the system (ISO/IEC 25010 defines *Quality in Use* and *System/Product Quality*: Performance, Reliability, Security, Usability, etc.).
+3. **Constraints:** Limit the solution space (Budget, Deadlines, Legal/Legislation, Technical/Physical limits).
+> [!warning] The Myth of NFRs
+> "Non-functional Requirements" is an informal term. Every "NFR" must be refined into precise functional requirements or quality requirements to be designable and testable.
 
-## 1.4 Five Key Elements of Structure
-The architecture of any organization is built on five foundational structural decisions:
-
-```mermaid
-graph TD
-    A["Organizational Architecture"] --> B["1: Departmentalization"]
-    A --> C["2: Span of Control"]
-    A --> D["3: Centralization"]
-    A --> E["4: Chain of Command"]
-    A --> F["5: Formalization"]
-```
-
-1. **Departmentalization:** The basis by which individual jobs are grouped together into departments or units.
-2. **Span of Control:** The number of subordinates reporting directly to a single manager.
-3. **Centralization:** The degree to which decision-making authority is concentrated at higher levels of the organization.
-4. **Chain of Command:** The continuous line of authority that extends from upper organizational levels to the lowest levels, clarifying reporting lines.
-5. **Formalization:** The extent to which policies, procedures, job descriptions, and rules are written and standardized.
-
-## 1.5 Departmentalization Models
-Organizations group jobs using different models depending on their size, strategy, and environmental complexity:
-
-### 1.5.1 Functional Structure
-Groups employees based on specialized functions or expertise (e.g., Marketing, Finance, Operations, HR).
-- **Strengths:** Deep functional expertise, clear career progression paths, high resource utilization efficiency, and economies of scale.
-- **Challenges:** Creation of functional silos (departments working in isolation), slower cross-departmental response times, reduced customer focus, and communication barriers.
-
-### 1.5.2 Product-Based Structure
-Organizes units around specific products, services, or business lines.
-- **Advantages:** Enhanced product focus, faster decision-making within divisions, clear accountability for product performance, and specialized product expertise.
-- **Key Challenge:** *Resource Duplication.* Each product division requires its own HR, IT, and marketing support, which increases overhead and operational costs.
-- **Ideal For:** Large diversified firms (e.g., consumer electronics, pharmaceutical firms, automotive manufacturers).
-
-### 1.5.3 Geographic Structure
-Organizes activities by territory, country, or region (e.g., Asia-Pacific, Europe, Americas divisions).
-- **Benefits:** Enables local market adaptation, cultural sensitivity, local regulatory compliance, and regional competitive responsiveness.
-- **Ideal For:** Multinational corporations operating in highly varied global markets.
-
-### 1.5.4 Process Structure
-Groups activities along the sequence of the workflow or production stages (e.g., Raw Material Sourcing $\rightarrow$ Manufacturing $\rightarrow$ Distribution $\rightarrow$ Customer Sales).
-- **Benefits:** Streamlines production flow, enhances process efficiency, and creates clear workflows.
-
-### 1.5.5 Customer-Centric Departmentalization
-Places specific customer segments at the center of the structural design.
-- **Strategic Advantages:** Enhanced service quality, tailored solutions for distinct user needs, and improved customer satisfaction and loyalty.
-- **Common Applications:**
-  - *Banking:* Separating retail banking from corporate/investment banking.
-  - *Healthcare:* Dividing pediatric care from geriatric care.
-  - *Technology:* Structuring B2B (business-to-business) separately from B2C (business-to-consumer) divisions.
-
-## 1.6 Centralization vs. Decentralization
-The distribution of decision-making authority significantly shapes organizational speed and control:
-
-### Centralization (Authority at the Top)
-Decision-making authority remains concentrated at upper management levels.
-- **Pros:** Consistent policy implementation, strong organizational control and oversight, reduced internal conflict, and a unified strategic direction.
-- **Cons:** Bureaucratic delays, decision-making bottlenecks, and low employee empowerment.
-- **Best Suited For:** Stable environments, highly regulated industries, and large-scale standardized operations.
-
-### Decentralization (Empowering Lower Levels)
-Authority is delegated to lower-level and frontline managers.
-- **Pros:** Enhanced agility, quick response to market and customer shifts, faster decision-making (fewer approval layers), greater employee motivation, and leverage of local frontline insights.
-- **Cons:** Risk of inconsistent customer experiences and potential duplicate efforts.
-- **Key Philosophy:** Local teams respond faster than centralized commands.
-
-## 1.7 Span of Control: Narrow vs. Wide
-The span of control determines the shape of the organizational hierarchy:
-
-| Feature | Narrow Span of Control | Wide Span of Control |
-| :--- | :--- | :--- |
-| **Hierarchy** | Tall structure (many management layers). | Flat structure (few management layers). |
-| **Autonomy** | Close supervision and mentorship. | Greater employee autonomy and empowerment. |
-| **Communication** | Multi-layered, slower feedback loops. | Faster, more direct communication flow. |
-| **Overhead** | High management overhead and costs. | Reduced management overhead. |
-| **Strengths** | Enhanced quality control, clear accountability. | Encourages employee initiative, reduces bureaucracy. |
-
-### Factors Determining the Optimal Span
-Effective span determination requires a balanced analysis of three critical factors:
-1. **Subordinate Skill Level:** Highly skilled, experienced, and professional employees require less supervision, supporting a wider span.
-2. **Task Complexity:** Routine, standardized tasks support wider spans, whereas complex, highly specialized work requires closer oversight and a narrower span.
-3. **Management Support Systems:** The presence of robust digital communication systems, clear procedures, and automated tracking extends a manager's reach, enabling wider spans.
-
-## 1.8 Formalization and Standardization
-Formalization balances rule-following compliance with operational flexibility:
-- **High Formalization (Compliance Focus):** Characterized by detailed written procedures, standardized processes, clear compliance guidelines, and consistent outcomes. It reduces ambiguity and is essential for quality control in safety-critical sectors.
-- **Low Formalization (Innovation Focus):** Emphasizes flexible guidelines, adaptive processes, employee autonomy, and creative problem-solving. It enhances rapid response capabilities and is critical for innovation-driven cultures.
-
-## 1.9 Organizational Charts and Chart Types
-Organizational charts are visual management tools used to depict formal hierarchies, clarify chains of command, facilitate communication, support onboarding, and enable strategic planning.
-
-### Four Advanced Chart Types
-- **Vertical (Hierarchical):** Traditional pyramid model showing defined authority levels and a clear top-down chain of command. *Best for: Established corporations, manufacturing.*
-- **Horizontal (Lateral):** Flat model that minimizes management layers, prioritizing collaboration and cross-functional teamwork over strict hierarchy. *Best for: Startups, creative agencies.*
-- **Matrix Structure:** Dual-reporting model where employees report to both a functional manager (e.g., Head of Engineering) and a project/product manager. *Best for: Project-based firms, consulting.*
-- **Circular (Network):** A decentralized model consisting of concentric circles, emphasizing equal access to leadership, collaborative decision-making, and open information sharing. *Best for: Innovation labs, research centers.*
-
-```mermaid
-graph TD
-    subgraph MatrixReporting ["Matrix Reporting"]
-        PM[Project Manager] --> Emp[Employee]
-        FM[Functional Manager] --> Emp
-    end
-```
-
-## 1.10 Designing for Change: Agile and Project-Based Structures
-To survive in dynamic markets, modern organizations adopt adaptive designs:
-- **Agile Structures:** Cross-functional teams organized around projects or customer needs rather than rigid departments. They iterate rapidly through short feedback cycles and operate with high autonomy.
-- **Project-Based Teams:** Dynamic groups formed to achieve specific objectives within set timelines. Once the project concludes, the teams dissolve and reform elsewhere, ensuring optimal resource allocation.
-- **Benefits:** Faster market response, enhanced innovation, and reduced bureaucratic delays.
-
-## 1.11 Network and Virtual Organizations
-Network structures create decentralized ecosystems that extend beyond traditional physical boundaries:
-- **Core Strategy:** Outsource non-core functions to specialized external partners, replacing rigid hierarchies with strategic alliances.
-- **Benefits:** Minimizes fixed infrastructure costs, scales operations up or down instantly based on demand, and provides access to global talent.
-- **Example:** *GitLab* operates with 1,300+ employees across 65+ countries with no physical headquarters.
-
-## 1.12 Technology's Impact on Structure
-Technology acts as a primary enabler of structural flattening and agility:
-- **Digital Collaboration Revolution:** Platforms like Slack, Microsoft Teams, and Asana remove communication barriers, allowing instant coordination across time zones and departments.
-- **Cloud-Enabled Flexibility:** Cloud-based repositories allow seamless, secure access to shared resources, reducing dependency on physical offices.
-- **Structural Transformation:** Organizations adopting integrated digital platforms and flatter reporting structures report up to **40% faster decision-making** and accelerated innovation cycles.
-
-## 1.13 Remote Work and Data-Driven Design
-As physical presence becomes optional, design shifts toward data-driven optimization:
-- **Outcome-Based Management:** Management focus shifts from physical presence to performance. Results-driven KPIs replace time-based tracking, and trust becomes a structural pillar.
-- **AI-Driven Analytics:** Machine learning models analyze collaboration patterns, identify communication bottlenecks, and optimize team compositions.
-- **Smart Structural Optimization:** Continuous refinement of reporting lines and spans of control through automated data-feedback loops.
-
-## 1.14 Cultural Alignment and Structure Fit
-Culture and structure share a symbiotic relationship; each shapes and reinforces the other.
-
-```mermaid
-graph LR
-    Culture["Culture (Values & Norms)"] <--> Structure["Structure (Roles & Systems)"]
-```
-
-### Three Key Cultural Alignments
-1. **Innovation Culture:** Requires a **flat, decentralized structure** with cross-functional teams to support autonomy and experimentation.
-2. **Stability Culture:** Requires a **hierarchical, centralized, and highly formalized structure** to ensure consistency, control, and compliance.
-3. **Inclusion Culture:** Requires a **matrix or network structure** with transparent communication to promote equity, voice, and collaborative leadership.
-
-## 1.15 Global Considerations in Design
-Multinational structures must balance the tension between global integration and local responsiveness:
-- **Global Integration Benefits:** Standardized processes, consistent brand identity worldwide, economies of scale, and cross-regional knowledge sharing.
-- **Local Responsiveness Needs:** Customizing products to local customer preferences, adapting to regional competitive dynamics, and complying with local regulations.
-- **Structural Models:**
-  - *Regional Divisions:* Provide high local autonomy.
-  - *Global Product Lines:* Enforce a unified global strategy.
-  - *Global Matrix:* Combines both to manage complex dual demands.
-
-## 1.16 Common Pitfalls and Best Practices
-### Structural Pitfalls to Avoid
-- **Over-Structuring:** Excessive hierarchy and bureaucracy that slows decision-making and stifles innovation.
-- **Under-Structuring:** Unclear roles, lack of accountability, and coordination chaos.
-- **Strategy Misalignment:** A structure that fails to support organizational goals, leading to conflicting priorities and resource inefficiencies.
-
-### Design Excellence Principles
-- **Start with Strategy:** Align the organizational structure directly with strategic objectives, and conduct regular strategy-structure reviews.
-- **Involve Employees:** Gather frontline insights during structural changes, build buy-in through participation, and test designs.
-- **Keep It Simple:** Minimize unnecessary complexity, ensure clear reporting lines, and create an intuitive organizational flow.
+### 1.5 Evolution of RE
+- **Traditional Systems Analysis:** Regarded as the early phase of system development. Focuses on current-state model (CSM) analysis and desired-state model (DSM) specification. Shortcomings: lacks continuity, time-consuming, ad-hoc reuse, narrow focus.
+- **Continuous RE:** Executed continuously across the entire product lifecycle. Uses a central **Requirements Base** to manage changes dynamically and select requirements for subsequent system releases.
 
 ---
 
-# Chapter 2: Human Resource Management
+## Chapter 2: The Requirements Engineering Framework
 
-## 2.1 Introduction to Strategic HRM
-Modern Human Resource Management (HRM) has evolved from a traditional administrative department into a core strategic business partnership:
-- **The Strategic Shift:** Moving beyond basic payroll, compliance, and record-keeping (cost-center model) to act as a primary value creator.
-- **Strategic Integration:** Aligning human capital strategies directly with overall organizational objectives.
-- **Competitive Advantage:** Developing the workforce as a source of sustainable, inimitable differentiation.
-- **Performance Alignment:** Connecting individual employee performance directly to business outcomes.
+### 2.1 Framework Structure
+The RE Framework structures the process across three components:
+1. **RE Context:** System Context (Subject, Usage, IT System Facets) and Development Context.
+2. **Core Activities:** Elicitation, Documentation, and Negotiation.
+3. **Requirements Artefacts:** Goals, Scenarios, and Solution-Oriented Requirements.
 
-## 2.2 The Strategic Role of HR
-Modern HR acts as a cornerstone of organizational success by fulfilling four distinct roles:
-1. **Culture Architect:** Shapes values, expectations, employee behaviors, and organizational identity.
-2. **Innovation Catalyst:** Drives creative thinking, adaptability, and organizational change management.
-3. **Performance Partner:** Aligns human capital capabilities with business goals, optimizing productivity.
-4. **Competitive Advantage Developer:** Builds unique, valuable organizational capabilities through targeted talent acquisition and growth.
+### 2.2 System Vision
+- **Vision:** An intended change to a current reality. It represents the start of the RE process.
+- **Characteristics:** Brief and precise; filters the context (funnel effect); justifies project expenditures. Tiny changes to the vision significantly alter the requirements scope.
 
-## 2.3 HRM in the USM APEX Context
-In institutions like Universiti Sains Malaysia (USM), the APEX initiative integrates values-driven management with HR excellence:
-- **Excellence:** Fostering continuous improvement in recruitment, data-driven strategic workforce planning, and innovation in career development.
-- **Harmony:** Creating inclusive environments, building cross-departmental collaboration, and supporting work-life balance.
-- **Togetherness:** Developing leaders who unite people around shared institutional goals and strengthen cross-functional partnerships.
+### 2.3 Complementary Artefacts
+- **Goals:** High-level stakeholder intentions (represented as AND/OR trees).
+- **Scenarios:** Concrete examples of satisfying or failing to satisfy a goal (sequence of interaction steps).
+- **Solution-Oriented Requirements:** Detailed, agreed-upon, complete specifications representing three perspectives: **Data** (static structures), **Functional** (data transformations), and **Behavioral** (state reactions).
 
-> [!tip] APEX HR Impact
-> By embedding Excellence, Harmony, and Togetherness into daily HR practices, USM builds a values-driven culture that supports both individual growth and institutional excellence.
-
-## 2.4 Core Functions of HRM
-The HR value chain relies on five essential pillars:
-1. **Recruitment:** Strategic talent acquisition through competency-based hiring and cultural alignment.
-2. **Training & Development:** Enhancing capabilities through structured learning and skill advancement.
-3. **Performance Management:** Evaluating and providing feedback systematically to drive excellence.
-4. **Compensation & Benefits:** Designing fair, competitive reward systems to attract and motivate talent.
-5. **Employee Relations:** Fostering a positive workplace culture through communication and conflict resolution.
-
-## 2.5 Recruitment and Competency-Based Hiring
-Traditional recruitment focused heavily on credentials and experience. Today’s strategic approach prioritizes **competencies** and **cultural fit**:
-- **Job Analysis:** Thoroughly examining role responsibilities to determine required competencies.
-- **Person Specifications:** Creating detailed profiles of the ideal candidate's behaviors and attributes.
-- **Behavioral Interviews:** Utilizing structured questions about past behavior to predict future performance.
-- **Assessment Centers:** Applying multi-method evaluations, including role-play simulations and group exercises.
-
-> [!note] Hiring Impact
-> Competency-based hiring increases employee retention by **40%** and improves performance alignment by **60%** compared to traditional hiring methods.
-
-## 2.6 Strategic Training and Development (T&D)
-T&D builds long-term organizational capability through continuous learning.
-
-### Training Needs Analysis (TNA) Framework
-Before launching training, HR must apply the TNA framework:
-- Identify skill gaps between current employee capabilities and required competencies.
-- Align training objectives with organizational strategic goals.
-- Assess learning needs across individual, team, and organizational levels.
-- Evaluate the anticipated return on investment (ROI) for training initiatives.
-
-### Strategic Training Programs
-- **Leadership Development:** Cultivating next-generation leaders.
-- **Technical Upskilling:** Helping employees adapt to technological changes.
-- **Cross-functional Training:** Building organizational flexibility.
-- **Cultural Competency:** Enhancing global collaboration.
-- *Impact:* Investing in structured T&D programs reports **40% higher employee retention** and a **25% improvement in operational efficiency**.
-
-## 2.7 Workforce Planning and Forecasting
-Workforce planning ensures the organization has the *right people, in the right roles, at the right time*.
-- **The Delphi Method:** A strategic forecasting technique where a panel of experts answers questionnaires in multiple anonymous rounds. A facilitator summarizes the responses and feeds them back, allowing experts to reach a consensus. It eliminates bias and is ideal for long-term planning under uncertainty.
-- **Trend Analysis:** Utilizing historical operational data to recognize patterns, model future staffing needs, and integrate promotion and departure trends.
-- **Benefits:** Reduced recruitment costs, shorter time-to-fill, and enhanced organizational agility.
-
-## 2.8 Key HR Metrics for Forecasting
-HR professionals use data-driven metrics to anticipate staffing gaps:
-
-1. **Turnover Rate:**
-   $$\text{Turnover Rate (\%)} = \left( \frac{\text{Number of separations during period}}{\text{Average number of employees during period}} \right) \times 100$$
-   *Purpose:* Identifies retention risks and predicts future hiring needs.
-2. **Absenteeism Rate:**
-   $$\text{Absenteeism Rate (\%)} = \left( \frac{\text{Total days absent}}{\text{Total possible workdays}} \right) \times 100$$
-   *Purpose:* Assesses workforce reliability and productivity patterns.
-3. **Time-to-Hire:**
-   $$\text{Time-to-Hire (Days)} = \text{Date of offer acceptance} - \text{Date of job posting}$$
-   *Purpose:* Measures recruitment efficiency and process bottlenecks.
-4. **Employee-to-Manager Ratio:**
-   $$\text{Employee-to-Manager Ratio} = \frac{\text{Total number of employees}}{\text{Total number of managers}}$$
-   *Purpose:* Evaluates structural flatness and organizational scalability.
-
-## 2.9 Succession Planning and Continuity
-Succession planning ensures leadership continuity and prevents knowledge loss:
-- **Talent Identification:** Systematically assessing high-potential employees using performance data and leadership competencies.
-- **Development Pathways:** Constructing structured mentoring, cross-functional assignments, and leadership training.
-- **Knowledge Transfer:** Documenting critical processes and client relationships.
-- **Transition Planning:** Designing clear timelines and support systems for smooth leadership changes.
-- *Impact:* Robust succession planning reduces leadership gaps by **75%** and maintains operational continuity.
-
-## 2.10 Employment Law in Malaysia
-HR practices must align with Malaysia's foundational employment laws:
-- **Employment Act 1955:** Governs basic terms of employment, including minimum wage, working hours, and leave entitlements, establishing fundamental employee protections.
-- **Industrial Relations Act 1967:** Regulates relationship standards between employers, employees, and trade unions, outlining collective bargaining and peaceful dispute resolution.
-- **Occupational Safety and Health Act (OSHA) 1994:** Mandates employer responsibility to ensure safe, healthy work environments through risk assessments and training.
-
-## 2.11 Legal Compliance & Employee Rights
-Key compliance standards in Malaysia include:
-- **Minimum Wage:** Under the Minimum Wage Act 2018, the current rate is **RM 1,500 per month** (as of 2024), covering all skilled and semi-skilled workers.
-- **Working Hours:** Daily limit of **8 hours** and a weekly limit of **48 hours**, with mandatory rest break intervals.
-- **Leave Entitlements:** Minimum of **12 days annual leave** (after 1 year of service), **14 days sick leave**, and **60 days paid maternity leave**.
-- **Anti-Discrimination:** Protects employees from discrimination based on race, gender, religion, or disability during hiring, promotion, and termination under the Employment Act 1955.
-
-## 2.12 Strategic Diversity & Inclusion (D&I)
-- **Strategic Value:** Inclusive organizations outperform competitors by leveraging diverse perspectives to drive innovation, enhance decision-making, and reduce groupthink.
-- **Talent Magnet:** Attracting top performers from all backgrounds, improving market intelligence.
-- *D&I Advantage:* Organizations with diverse leadership teams are **70% more likely to capture new markets** and report higher employee engagement (Malaysian Diversity Research, 2023).
-
-## 2.13 Malaysian Workforce Demographics and the Leadership Gap
-Despite progress, a significant gap remains between general workforce participation and senior leadership representation:
-- **Gender Split:** The general labor force is almost equal (**Male 51% \| Female 49%**), but senior management remains heavily skewed (**Male 82% \| Female 18%**).
-- **Ethnic Breakdown:** The labor force consists of **Malay 69%**, **Chinese 23%**, **Indian 7%**, and **Others 1%**. In senior management, the split is **Malay 72%**, **Chinese 21%**, **Indian 4%**, and **Others/PWD < 1%**.
-- **Persons with Disabilities (PWD):** Make up **2.4%** of the general workforce but hold **less than 1%** of senior management roles.
-
-> [!warning] The Gap Challenge
-> Despite near-equal workforce participation, women hold only 18% of senior roles, while ethnic minorities and PWD face significant leadership representation barriers.
-
-## 2.14 Digital Transformation in HR
-Organizations leverage technology to achieve administrative excellence:
-- **HR Information Systems (HRIS):** Integrate databases, automate workflows, and provide self-service employee portals.
-- **Cloud-Based Advantages:** Reduce IT infrastructure costs, enhance data security, and enable remote access.
-- **Streamlined Operations:** Automate payroll, track digital attendance, and monitor statutory compliance.
-- *Impact:* Malaysian SMEs report a **40% reduction in HR administrative workloads** after implementing an HRIS.
-
-## 2.15 AI and Automation in Recruitment
-AI tools improve efficiency but require ethical safeguards:
-- **AI-Driven Tools:** Resume screening algorithms (reduce time-to-hire by up to 75%), video interview analyzers (speech/facial pattern metrics), and chatbot pre-screening.
-- **Algorithmic Bias Risks:** Risks of cultural, linguistic, gender, or age-related bias.
-- **Critical Safeguards:** Final decisions must require human judgment, regular bias audits must be conducted, and candidates must retain the right to human review.
-
-## 2.16 Industrial Relations and Collective Bargaining
-Building sustainable labor agreements requires trust and collaboration:
-- **The Collective Bargaining Process:**
-  $$\text{Preparation \& Research} \longrightarrow \text{Formal Negotiations} \longrightarrow \text{Agreement Drafting} \longrightarrow \text{Implementation \& Monitoring}$$
-- **Success Story:** In the Malaysian palm oil sector, open dialogue and data-driven proposals led to mutually beneficial wage agreements, reducing labor tensions while improving productivity.
-
-## 2.17 Dispute Resolution and Industrial Action
-The Industrial Relations Act 1967 requires a structured process to resolve disputes:
-1. **Initial Dispute:** Workplace conflict emerges.
-2. **Mediation & Dialogue:** Joint consultative committees engage to resolve the issue.
-3. **Ministry Intervention:** The Ministry of Human Resources steps in for formal mediation.
-4. **Resolution:** A sustainable agreement is reached.
-*Note:* Unauthorized strikes carry strict legal consequences; mandatory notice and ministry approval are required before industrial action.
-
-## 2.18 Employee Well-being and Mental Health
-- **Strategic Integration:** Employee mental health is treated as a strategic priority under Malaysia's National Mental Health Policy (2022).
-- **Core Components:** Confidential Employee Assistance Programs (EAPs), mental health awareness campaigns, manager training to recognize distress, and flexible leave policies (mental health days).
-- *Impact:* Organizations prioritizing mental health see **21% higher profitability** and **40% lower turnover rates** (WHO Global Health Observatory, 2023).
-
-## 2.19 Leadership and Emotional Intelligence (EI) in HR
-HR leaders must possess high emotional intelligence to navigate complex interpersonal dynamics:
-- **Self-Awareness:** Recognizing personal emotions and biases.
-- **Self-Regulation:** Maintaining composure under pressure.
-- **Motivation:** Driving excellence and inspiring teams.
-- **Empathy:** Understanding employee perspectives.
-- **Social Skills:** Facilitating effective communication and conflict resolution.
-- *Applications:* 360-degree feedback, mindfulness training, and mentoring programs.
-
-## 2.20 Global HRM and Expatriate Management
-Managing international talent requires a structured expatriate framework:
-- **International Staffing Challenges:** Assessing cultural intelligence (CQ), providing language and cultural pre-departure preparation, managing culture shock, and designing strategic repatriation to prevent reverse culture shock and retain talent.
-
-## 2.21 Ethics and Data Privacy (PDPA)
-Malaysia’s Personal Data Protection Act (PDPA) 2010 mandates transparent data processing:
-- **Key Principles:** Consent (explicit permission), Purpose Limitation (use data only for specific HR purposes), Data Accuracy, Security Safeguards (encrypted storage), and Retention Limits.
-- *Compliance:* Employees have the right to access, correct, and request deletion of personal information, which must be addressed within 30 days.
-
-## 2.22 HRM from an Islamic Perspective
-In the Malaysian context, Islamic management principles provide ethical foundations:
-- **Amanah (Trust):** Sacred responsibility to manage human resources with transparency, accountability, and ethical stewardship.
-- **Adl (Justice):** Providing equitable treatment, fair compensation, and balanced decision-making.
-- **Sidq (Truthfulness):** Promoting honest communication, authentic feedback, and integrity across all HR processes.
-
-## 2.23 Future Trends and Reflections
-- **Emerging Trends:** The evolution of the gig economy requiring adaptive strategies, green HR practices (aligning operations with environmental stewardship), and AI-human partnerships.
-- **Final Reflection:**
-  > [!quote] Reflective Insight
-  > "The future of HRM lies not in systems alone—it is in the human spirit that transforms organizations into communities where every individual thrives."
-  > — Dr. Ainul Mohsein Abdul Mohsin
+### 2.4 Cross-Sectional Activities
+- **Validation:** Checks compliance of artefacts, activities, and context considerations.
+- **Management:** Prioritization, persistent recording, traceability, and change control of artefacts, activities, and context.
 
 ---
 
-# Chapter 3: Elements of Behaviour in Organisation
+## Chapter 3: Context
 
-## 3.1 Introduction to Organisational Behaviour
-> [!info] Definition: Organisational Behaviour (OB)
-> The systematic study of how individuals and groups interact within workplace settings, and how these interactions influence organizational effectiveness, culture, and ethical environments.
+### 3.1 Facets of the System Context
+A requirement is always defined for a specific context. The system context is divided into three facets:
+1. **Subject Facet:** Objects represented within the system (e.g., domain data, entities, data privacy laws).
+2. **Usage Facet:** Actors, user groups, and external systems directly interacting with or benefiting from the system.
+3. **IT System Facet:** The technical/operational environment (hardware, communication networks, external interfaces, sensors, actuators).
 
-### Core Focus Areas of OB
-- **Individual Dynamics:** Psychological foundations that shape individual workplace behaviors.
-- **Group Interactions:** How teams and social structures influence performance and collaboration.
-- **Organizational Systems:** Cultural and structural factors that guide employee conduct.
-- **Ethical Framework:** Responsible decision-making and value-driven leadership.
+### 3.2 Boundaries and the Grey Zone
+- **System Boundary:** Separates the system (changeable scope) from the system context (unchangeable environment).
+- **Context Boundary:** Separates the system context from the irrelevant environment.
+- **Grey Zone:** The area containing objects for which it is not yet clear whether they are system or context objects. Requirements engineers must continuously evaluate and resolve grey zone items to keep the grey zone as small as possible.
 
-## 3.2 Psychological Foundations of Individual Behavior
-Understanding what drives individual behavior begins with examining the internal psychological drivers that shape how employees think, feel, and act:
-- **Perception:** How individuals interpret and organize sensory information from their environment to create their personal lens of organizational reality.
-- **Attitudes:** Learned evaluations (positive or negative) that influence behavior toward people, objects, and situations, directly impacting job satisfaction and commitment.
-- **Personality:** Stable mental and behavioral traits that predict behavior patterns, leadership potential, and team compatibility.
-- **Values:** Fundamental, enduring beliefs that guide behavior and decisions, determining what individuals consider important and worthwhile.
+---
 
-## 3.3 Perception and Perceptual Distortions
-Perception shapes how we view workplace reality, but cognitive shortcuts can lead to unfair judgments and biased decisions:
-- **Halo Effect:** When one positive characteristic (e.g., physical attractiveness, speaking skill) influences the overall evaluation of an individual, leading to assumptions of high competency.
-- **Stereotyping:** Assigning generalized characteristics to an individual based solely on their membership in a specific demographic group (e.g., assuming older workers lack technology skills).
-- **Selective Perception:** The tendency to focus only on information that confirms existing beliefs while ignoring contradictory, objective performance data.
+## Chapter 4: Elicitation
 
-> [!warning] Biases in the Workplace
-> Perceptual distortions undermine organizational fairness, reduce employee trust, and contribute significantly to workplace conflict.
+### 4.1 Requirements Sources
+1. **Stakeholders:** People or organizations with interest in the desired system.
+2. **Documents:** General binding (laws, standards), organization-specific (strategies, policies), and product-specific (user manuals, predecessor system specs).
+3. **Existing Systems:** Predecessor systems, systems of competitors, and systems from other domains (sources of delighters).
 
-## 3.4 Personality: The Big Five Model
-Five core personality dimensions shape individual behavior in the workplace:
+### 4.2 Elicitation Techniques vs. Assistance Techniques
+- **Elicitation Techniques:** Used to gather existing requirements, identify sources, or create innovative requirements.
+  - *Rough Classification Table:*
+    - **Interview:** Effort: Medium-High. Suited for: Identifying sources (Yes), Eliciting existing (Yes), Innovative (Partially).
+    - **Workshop:** Effort: High-Very High. Suited for: Identifying sources (Yes), Eliciting existing (Yes), Innovative (Yes).
+    - **Focus Groups:** Effort: Medium-High. Suited for: Identifying sources (No), Eliciting existing (Yes), Innovative (Yes).
+    - **Observation:** Effort: High-Very High. Suited for: Eliciting existing (Yes - uncovers implicit behaviors).
+    - **Questionnaire:** Effort: Low-Medium. Suited for: Identifying sources (Yes), Eliciting existing (Yes).
+    - **Perspective-based Reading:** Effort: Medium-High. Suited for: Eliciting existing (Yes).
+- **Assistance Techniques:** Support elicitation by helping stakeholders generate ideas or experience features:
+  - **Brainstorming:** Group creativity technique. Rules: Quantity over quality, free association, combine ideas, *criticism strictly forbidden*, and overcome at least two long-lasting deadlocks.
+  - **KJ Method:** Card-based sorting technique. Process: Card writing (silent) $\to$ Presentation (numbered, unsorted) $\to$ Grouping (by subject) $\to$ Labeling & Relationship Analysis. Managers must limit group size to at most 8-10 stakeholders.
+  - **Prototyping:** Demonstrates system look/feel (e.g., TOXLAND Hop & Help game interface).
+  - **Mind Mapping** & **Checklists**.
 
-| Trait | Description | Workplace Impact |
-| :--- | :--- | :--- |
-| **Openness** | Curiosity, creativity, and willingness to embrace new experiences. | Challenges established processes; highly effective in innovative roles. |
-| **Conscientiousness** | High organization, dependability, and goal-directed behavior. | Strong predictor of job performance; reliable and consistent team member. |
-| **Extraversion** | Sociability, assertiveness, and high energy levels. | Effective in leadership roles; thrives in collaborative team settings. |
-| **Agreeableness** | Cooperation, trust, empathy, and kindness. | Promotes conflict resolution and acts as a team harmony builder. |
-| **Neuroticism** | Emotional instability, anxiety, and stress-prone response patterns. | High levels make performance under pressure difficult. |
+### 4.3 Kano Classification Model
+Classifies requirements based on their impact on **customer satisfaction**:
+1. **Dissatisfiers (Must-Be):** Taken for granted, never communicated. If missing, cause extreme dissatisfaction. Best found via **Observation** or **Document-centric** analysis.
+2. **Satisfiers (One-Dimensional):** Explicitly demanded. Satisfaction is proportional to fulfillment. Best found via **Interviews** and **Questionnaires**.
+3. **Delighters (Attractive):** Unexpected features, never communicated. Fulfilling them increases satisfaction disproportionately. Best found via **Creativity techniques**.
+*Evolution over Time:* Requirements mature over time: Delighters $\to$ Satisfiers $\to$ Dissatisfiers (e.g., ABS brakes).
 
-## 3.5 Motivation: Maslow's Hierarchy of Needs
-Maslow's model proposes that individuals are motivated by a hierarchy of five progressive needs:
+---
 
-```mermaid
-graph TD
-    SA["5: Self-Actualization (Creative opportunities, autonomy, personal growth)"] --> EN["4: Esteem Needs (Performance rewards, public respect)"]
-    EN --> SoN["3: Social Needs (Team collaboration, inclusive culture, recognition)"]
-    SoN --> SaN["2: Safety Needs (Job stability, health benefits, clear policies)"]
-    SaN --> PN["1: Physiological Needs (Fair wages, safe working conditions, adequate breaks)"]
-```
+## Chapter 5: Documentation of Requirements
 
-> [!note] Adaptation Note
-> In multicultural and remote work environments, the hierarchy remains highly relevant but requires adaptive management to address isolation and diverse cultural values.
+### 5.1 Representation Formats
+- **Textual:** Natural language text, structured text, or tabular templates.
+- **Model-based:** Conceptual models (EER, Class diagrams, DFDs, Statecharts).
+- **Combined:** Models with textual annotations (e.g., Customer-Holiday Package ERD annotations) or text files containing embedded diagrams.
 
-## 3.6 Motivation: Herzberg's Two-Factor Theory
-Frederick Herzberg posits that job satisfaction and dissatisfaction are driven by two independent sets of factors:
+### 5.2 Documentation Guidelines
+Guidelines can be defined for a **whole document** (e.g., requirements specification) or a **single item** (individual attributes, e.g., using `TBD` for empty slots).
+- **Management Review vs. Specification Guidelines:**
+  - *Content:* Management review demands summarized/critical info (e.g., max 4 pages); specification demands comprehensive attribute listings (e.g., `ATTR-1255`).
+  - *Format:* Management review uses narrative scenarios or natural language; specification uses formal models (e.g., Message Sequence Charts).
+  - *Quality:* Management review highlights potential disagreements or syntax compliance; specification demands formal tool-based syntactic checking.
 
-### 3.6.1 Hygiene Factors (Extrinsic) - *Dissatisfaction Preventers*
-- These factors do not create motivation, but their absence causes high dissatisfaction.
-- *Examples:* Salary and benefits, job security, working conditions, company policies, quality of supervision, and interpersonal relations.
-- *Rule:* Absence = Dissatisfaction; Presence = Neutrality (no dissatisfaction, but no motivation).
+### 5.3 Additional Information Artefacts
+- **Interviews:** Documented in English, approved by the interviewee, with unfilled slots marked as `TBD`.
+- **Decision Meetings:** Must log Project, Date, Participants, Decisions (ID, Issue, Vote Count), Votes per Participant, and Pros/Cons for chosen/declined arguments.
+- **Textual vs. Modeled Requirements:** Compare textual requirements (lists of statements) against visual process models (such as activity state diagrams):
+  ```mermaid
+  stateDiagram-v2
+      [*] --> CustomerPlacesOrder
+      CustomerPlacesOrder --> CustomerPaysForOrder : [Order not canceled]
+      CustomerPlacesOrder --> OrderCanceled : [Order canceled (REQ006)]
+      CustomerPaysForOrder --> ProduceOrder : [Payment succeeded (REQ003)]
+      CustomerPaysForOrder --> OrderCanceled : [Payment failed (REQ004)]
+      ProduceOrder --> DeliverOrder : (REQ005)
+      DeliverOrder --> [*]
+      OrderCanceled --> [*]
+  ```
 
-### 3.6.2 Motivators (Intrinsic) - *Satisfaction Creators*
-- These factors drive genuine job satisfaction and high performance.
-- *Examples:* Achievement, recognition, meaningful work, responsibility, autonomy, personal growth, and advancement opportunities.
-- *Rule:* Presence = High motivation; Absence = Neutrality (no motivation, but no dissatisfaction).
+---
 
-## 3.7 Group Dynamics: Tuckman's Five Stages of Group Formation
-Teams develop through five distinct stages, requiring different leadership styles at each phase:
-1. **Forming (Getting Acquainted):** Team members meet,Cautious, polite interactions. High dependence on the leader for guidance.
-2. **Storming (Working Through Conflicts):** Interpersonal conflicts emerge over roles, responsibilities, and leadership. A critical phase requiring skilled conflict resolution.
-3. **Norming (Establishing Trust):** Mutual trust, group norms, and team cohesion develop. Collaborative problem-solving begins.
-4. **Performing (Peak Performance):** High autonomy and coordination. The team focuses on goal achievement, effective communication, and rapid adaptation.
-5. **Adjourning (Closure and Reflection):** Task completion and team dissolution, accompanied by recognition of achievements and learning consolidation.
+## Chapter 6: Model-based Documentation of Requirements
 
-## 3.8 Group Roles and Norms
-- **Role Clarity Benefits:** Eliminates task overlap and responsibility gaps, reduces stress caused by ambiguous expectations, enhances individual accountability, and prevents boundary conflicts.
-- **Shared Norms Benefits:** Establishes common standards for behavior, creates predictable group interaction patterns, and builds psychological safety, trust, and mutual respect.
+### 6.1 Conceptual Modelling Fundamentals
+- **Conceptual Model:** A purposeful abstraction of the universe of discourse.
+- **Stachowiak's Model Properties:**
+  1. *Representation Property:* Maps/represents an existing or conceived reality.
+  2. *Reduction Property:* Captures only a simplified subset of reality.
+  3. *Pragmatic Property:* Developed for a specific user, purpose, and time frame.
+- **Model Quality:** Syntax (language rules), Semantics (meaning), and Pragmatics (interpretability).
 
-> [!quote] Group Transformation
-> "When everyone knows their role and shares common expectations, groups transform from collections of individuals into cohesive teams."
+### 6.2 Goal Models
+- Define system goals and vision as AND/OR trees:
+  - **AND-Decomposition:** All sub-goals must be satisfied to satisfy the parent.
+  - **OR-Decomposition:** At least one sub-goal must be satisfied to satisfy the parent.
 
-## 3.9 Organizational Culture: The Invisible Architecture
-Organizational culture is the shared values, beliefs, assumptions, and practices that define how members interact and make decisions:
-- **Values & Beliefs:** Guide decision-making processes, shape organizational priorities, and define ethical standards.
-- **Shared Practices:** Include daily rituals, routines, communication patterns, and problem-solving approaches.
-- **Behavioral Impact:** Determines employee engagement levels, innovation capacity, and resistance or acceptance of change.
+### 6.3 Use Case Modelling
+Defines system boundary, actors (context), and use cases (system scope). Use case templates complement the diagrams by specifying flows, pre-conditions, and post-conditions.
 
-## 3.10 Hofstede's Cultural Dimensions in the Workplace
-National culture shapes communication and workplace dynamics across three primary dimensions:
-- **Power Distance:**
-  - *High Power Distance:* Hierarchical structures and top-down decisions (e.g., Malaysia).
-  - *Low Power Distance:* Equality emphasis and participative management (e.g., Sweden).
-- **Individualism vs. Collectivism:**
-  - *Individualistic:* Prioritizes personal goals, autonomy, and individual achievement (e.g., USA).
-  - *Collectivistic:* Prioritizes in-group harmony, loyalty, and consensus (e.g., Japan).
-- **Uncertainty Avoidance:**
-  - *High Avoidance:* Relies on clear rules, structured environments, and stability (e.g., Germany).
-  - *Low Avoidance:* Embraces innovation, risk-taking, and change (e.g., Singapore).
+---
 
-## 3.11 Sources of Power in Organizations
-Power is the capacity to influence the behavior of others. Managers draw power from six sources:
-1. **Legitimate Power:** Formal authority derived from position within the hierarchy.
-2. **Reward Power:** The authority to distribute positive reinforcement (promotions, bonuses, recognition).
-3. **Coercive Power:** The authority to apply disciplinary actions, penalties, or sanctions (damages long-term trust).
-4. **Expert Power:** Influence built on specialized knowledge, skills, and expertise.
-5. **Referent Power:** Influence based on personal charisma, respect, and admiration.
-6. **Information Power:** Influence stemming from control over access to critical information.
+## Chapter 7: Functional Modelling
 
-## 3.12 Organizational Politics and Influence Tactics
-- **Positive Influence Tactics:** Focus on inspirational appeals (building vision), rational persuasion (using data and facts), consultation (involving others), and coalition building (creating supportive alliances).
-- **Negative Political Behaviors:** Involve manipulation (deception), intimidation (creating fear), information hoarding, and blame-shifting (avoiding accountability).
+### 7.1 Data Flow Diagrams (DFDs)
+DFDs represent the system from the functional perspective (data transformation).
+- **Core Elements:**
+  - *Process:* Circle/Bubble representing data manipulation.
+  - *Data Flow:* Directed arrow representing data transit.
+  - *Data Store:* Parallel lines representing persistent data.
+  - *External Entity:* Rectangle representing usage/context interaction.
+- **Hierarchization (Levelling):**
+  - *Context Diagram (Level 0):* Represents the system as a single process surrounded by external entities.
+  - *Level 1, 2, ... DFDs:* Decompose parent processes into finer processes.
+- **Balancing:** Inputs and outputs of a decomposed parent process must match the inputs and outputs of the child DFD.
+- **Data Dictionaries:** Define the structure of all data flows and stores systematically.
+- **Mini Specs:** Define the internal processing logic of primitive (non-decomposed) processes.
 
-> [!note] Politics and Trust
-> Ethical influence tactics build organizational trust and drive change, whereas negative politics erodes corporate culture and performance.
+---
 
-## 3.13 Communication Channels and Media Richness
-Media Richness Theory states that the choice of communication channel must match the complexity of the message:
+## Chapter 8: Data Modelling
 
-```mermaid
-graph LR
-    F2F["Face-to-Face (Richness: High) - Complex/Sensitive"] --> DP["Digital Platforms (Richness: Med-High) - Remote/Updates"]
-    DP --> WF["Written Formats (Richness: Medium) - Formal/Records"]
-    WF --> SN["Social Networks (Richness: Low-Med) - Broad Reach"]
-```
+### 8.1 Entity-Relationship (ER) Modelling
+Represents requirements from the static data perspective:
+- **Entity:** An object of interest in the universe of discourse (represented as a rectangle).
+- **Relationship:** A connection between entities (represented as a diamond).
+- **Attribute:** Properties of entities/relationships (represented as ovals).
+- **Cardinalities:** Constraints on relationship participation (1:1, 1:N, N:M).
 
-- **Face-to-Face:** Provides rich non-verbal cues, immediate feedback, and trust. Best for complex discussions.
-- **Digital Platforms (Video/Chat):** Real-time interaction, visual/audio cues. Best for remote collaboration.
-- **Written Formats (Reports/Emails):** Permanent record, detailed information. Best for formal announcements and instructions.
-- **Social Networks:** Broad reach, rapid dissemination. Best for brand building and team engagement.
+### 8.2 UML Class Diagrams
+Object-oriented notation representing data structure:
+- **Class:** Captures attributes and operations.
+- **Associations:** Relationships between classes.
+- **Aggregation (Open Diamond):** "Part-of" relationship (weak association where parts can exist independently of the whole).
+- **Composition (Filled Diamond):** Strong "part-of" relationship (parts cannot exist without the whole; lifetime is bound to the whole).
+- **Generalization/Inheritance (Empty Arrow):** Represents "is-a" taxonomy.
 
-## 3.14 Barriers to Effective Communication
-- **Digital Age Challenges:** Information overload (constant notifications, reduced attention span) and technical barriers (platform incompatibility, connectivity issues).
-- **Remote Work Complications:** Loss of non-verbal cues (missing facial expressions, higher risk of misinterpretation) and time zone gaps (delayed responses, reduced spontaneous collaboration).
+---
 
-## 3.15 Ethical Behavior and Decision-Making
-- **Core Principles:** Integrity (actions aligned with values), transparency (open processes), accountability (taking responsibility), and fairness (equity for stakeholders).
-- **Impact:** Builds long-term trust, enhances brand reputation, reduces compliance risks, and creates a sustainable competitive advantage.
+## Chapter 9: Behavioral Modelling
 
-## 3.16 Ethical Theories in Practice
-Managers use four primary ethical frameworks to resolve workplace dilemmas:
-- **Utilitarianism:** Focuses on consequences. The goal is to maximize overall happiness and utility (e.g., cost-benefit analysis for restructuring to save the majority of jobs).
-- **Deontology:** Focuses on moral duty and universal rules regardless of outcomes (e.g., refusing to manipulate financial data even if it prevents a stock decline).
-- **Virtue Ethics:** Focuses on character, integrity, and moral virtues (e.g., demonstrating courage and fairness in daily leadership decisions).
-- **Justice Theory:** Focuses on fairness and equitable distribution of opportunities, resources, and benefits (e.g., implementing unbiased hiring and promotions).
+### 9.1 Statecharts (State Machines)
+Represent the system from the behavioral perspective, modeling system states and transitions.
+- **Core Elements:**
+  - *State:* Permitted condition of the system (represented as a rounded rectangle).
+  - *Transition:* Transition from one state to another (directed arrow).
+  - *Triggering Event:* Stimulus that initiates a transition.
+  - *Guard:* A boolean condition that must be true for the transition to occur.
+  - *Action:* Operation executed during a transition.
+- **Advanced Constructs:**
+  - *Composite States:* States nested within a superstate to represent hierarchy.
+  - *Orthogonal States:* Parallel sub-states representing concurrent system behaviors.
+  - *History States:* Remember the last active sub-state when leaving a composite state.
 
-## 3.17 Managing Change and Resistance
-Resistance is a natural psychological reaction to organizational transitions.
+---
 
-### Core Reasons for Resistance
-- **Fear of the Unknown:** Uncertainty about job security, skill adequacy, and new processes.
-- **Loss of Control:** Disruption to established routines, decision-making power, and reporting structures.
-- **Perceived Inequity:** Uneven distribution of benefits, favoritism concerns, or inconsistent communication.
-- *Example:* A Malaysian manufacturing firm's ERP implementation faced major resistance due to job redundancy fears and inadequate training.
+## Chapter 10: Requirements Management (RM)
 
-## 3.18 Kotter's 8-Step Change Model
-To overcome resistance, Kotter provides a behaviorally grounded framework:
-1. **Create Urgency:** Highlight the risks of inaction with compelling stories.
-2. **Form a Coalition:** Assemble influential leaders as change champions.
-3. **Create a Vision:** Develop a clear, values-aligned direction.
-4. **Communicate the Vision:** Use multiple channels for consistent messaging.
-5. **Empower Action:** Remove structural obstacles and provide training.
-6. **Generate Wins:** Celebrate early successes to build momentum.
-7. **Sustain Acceleration:** Use credibility from wins to tackle bigger challenges.
-8. **Anchor Changes:** Embedded new approaches into organizational culture.
+### 10.1 Key RM Activities
+- **Version and Configuration Management:** Defines baselines (agreed-upon versions of requirements) and manages evolution using configuration items.
+- **Change Management:** Monitors change requests through a formal process: Classification $\to$ Impact Analysis $\to$ Evaluation (CCB approval) $\to$ Prioritisation $\to$ Monitoring.
+- **Requirements Traceability:** Enables tracking a requirement backward to its origin (pre-RS traceability) and forward to design, code, and test cases (post-RS traceability).
 
-## 3.19 Leadership Influence and Models
-- **Trait Leadership (Who Leaders *Are*):** Predicts potential based on innate qualities like confidence, integrity, decisiveness, and intelligence.
-- **Behavioral Leadership (What Leaders *Do*):** Focuses on learnable behaviors, balancing Task Orientation (results-focused) with Relationship Orientation (people-focused).
-- **Situational Leadership (How Leaders *Adapt*):** Styles must match follower readiness:
-  - *Directing:* Low competence, low commitment.
-  - *Coaching:* Low competence, high commitment.
-  - *Supporting:* High competence, low commitment.
-  - *Delegating:* High competence, high commitment.
-
-## 3.20 Transformational Leadership: The Four I's
-Transformational leadership drives high performance and innovation through four behaviors:
-1. **Idealized Influence:** Acting as ethical role models, demonstrating integrity, and building authentic trust.
-2. **Inspirational Motivation:** Articulating a compelling vision and communicating optimism to energize teams.
-3. **Intellectual Stimulation:** Challenging the status quo and encouraging creative, out-of-the-box problem-solving.
-4. **Individualized Consideration:** Providing personalized coaching, mentoring, and support based on unique needs.
-5. *Impact:* Transformational leaders increase employee engagement by up to **40%** and foster innovation.
-
-## 3.21 Workplace Diversity and Inclusion
-To enhance innovation and agility, organizations must implement the full D&I framework:
-- **Diversity:** Ensuring representation of different backgrounds, experiences, and perspectives.
-- **Inclusion:** Fostering a sense of belonging, equal voice in decisions, and psychological safety.
-- **Equity:** Ensuring fair access to opportunities and eliminating systemic barriers.
-- *Benefits:* Diverse thinking enhances creativity, improves decision-making, increases retention, and helps understand diverse customer needs.
-
-## 3.22 Stress and Employee Well-being
-- **Stressors:** Excessive workload, role ambiguity, job insecurity, poor work-life balance, and interpersonal conflict.
-- **Individual Coping:** Problem-focused coping (time management, boundary setting) and emotion-focused coping (mindfulness, resilience building).
-- **Organizational Well-being Programs:** Employee Assistance Programs (EAPs), flexible work arrangements, mental health training, and creating psychologically safe spaces.
-- *Impact:* Comprehensive well-being programs lead to **25% lower turnover** and higher engagement.
-
-## 3.23 Team Performance and Virtual Teams
-- **Team Effectiveness Model:** Relies on *Inputs* (composition, skills, resources), *Processes* (communication, decision-making, conflict resolution), and *Outputs* (performance, innovation, quality).
-- **Virtual Team Challenges:**
-  - *Trust Building:* Requires deliberate transparency, consistent follow-through, and regular check-ins.
-  - *Technology Integration:* Using Slack/Teams for collaboration, video conferencing for connection, and project management tools for accountability.
-
-## 3.24 Synthesis: The Human Element in Progress
-Sustainable organizational success depends on the dynamic interplay of individual behavior, group dynamics, and ethical leadership:
-- **Individual Foundations:** Perception, personality, and motivation form the base of effective management.
-- **Group Dynamics:** Teams that navigate formation stages and establish role clarity achieve peak performance.
-- **Cultural Architecture:** Organizational culture acts as the invisible force guiding behavior and change.
-- **Ethical Leadership:** Prioritizing integrity and adaptability builds trust and drives transformation.
-- *Conclusion:* The science of organizational behavior continues to evolve, but people remain at the heart of all progress.
+### 10.2 Prioritisation Methods
+- **100 Dollar Test:** Stakeholders metaphorically spend $100 on requirements to establish weightings.
+- **Wiegers' Prioritisation Matrix:** Evaluates priority mathematically:
+  $$\text{Priority} = \frac{\text{Value \%}}{(\text{Cost \%} \times \text{Weight}_{\text{Cost}}) + (\text{Risk \%} \times \text{Weight}_{\text{Risk}})}$$
+  Where:
+  - $\text{Value} = (\text{Relative Benefit} \times \text{Weight}_{\text{Benefit}}) + (\text{Relative Penalty} \times \text{Weight}_{\text{Penalty}})$
+  - $\text{Value \%}$, $\text{Cost \%}$, and $\text{Risk \%}$ are normalized percentages.
