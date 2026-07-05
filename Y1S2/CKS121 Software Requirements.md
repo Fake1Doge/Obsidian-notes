@@ -1455,6 +1455,7 @@ Content guidelines determine the required content and its structure for a specif
 - **Content Detail Guidelines:** Support the documentation of information (level of detail, abstraction layers, system perspective).
 
 The content required varies based on the document's purpose:
+
 | Guidelines for | Purpose: Document for Management Review | Purpose: Specification |
 |---|---|---|
 | **Single Information Item** | Only document the identifier, name, author, sources, and requirement text for low/medium criticality requirements (provides the minimum necessary info for validation). | Document each requirement with all attributes defined in document `ATTR-1255` (do not miss any important details). |
@@ -1467,6 +1468,7 @@ Format guidelines define the representation format (textual, model-based, combin
 - **Combined:** Conceptual models with textual annotations, or templates containing embedded diagrams.
 
 The chosen format must align with the document's purpose and audience:
+
 | Guidelines for | Purpose: Document for Management Review | Purpose: Specification |
 |---|---|---|
 | **Single Information Item** | Define a narrative scenario describing the intended way of achieving the goals associated with the function (supports comprehension of functions by management). | Document each scenario using Message Sequence Charts (MSC) notation (facilitates automation and verification in succeeding development activities). |
