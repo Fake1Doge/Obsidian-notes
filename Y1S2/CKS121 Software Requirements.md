@@ -1159,14 +1159,36 @@ A card-based technique to support groups of stakeholders in eliciting, structuri
 
 ##### Process / Application:
 1. **Preparation:**
-   - Define the goal, appoint a room, select participants ($8\text{ to }10$ max), and provide cards, markers, and pin boards. Appoint a moderator and a minute-taker.
+   - Define the goal of the KJ session.
+   - Appoint a suitable, undisturbed room.
+   - Select participants ($8\text{ to }10$ max to avoid excessive effort in presenting/grouping) considering representative coverage of the RE context.
+   - Provide a sufficient amount of cards, markers, and large-enough pin boards.
+   - Create a sample card as guidance (only one idea per card).
+   - Appoint a neutral moderator (who can also write cards himself) and a minute-taker.
 2. **Execution:**
-   - *Card Writing:* Each participant writes down keywords characterizing requirements/sources on cards (one idea per card, $\sim 10\text{ minutes}$).
-   - *Presentation:* Moderator collects, reads out, and numbers each card, pinning them unsorted. Participants explain unclear cards.
-   - *Grouping:* Participants group cards on the board by subject. Duplicate cards are pinned on top of each other.
-   - *Labeling & Analysis:* Participants identify headings for each group and analyze relationships.
+   - *Card Writing:* Each participant writes down keywords characterizing requirements or requirements sources on a set of file cards ($\sim 10\text{ minutes}$).
+   - *Presentation and Explanation:* Moderator collects the cards, reads out each card, assigns a number, and pins it up unsorted. Participants explain and clarify any card whose meaning is unclear. The minute-taker records these questions and answers.
+   - *Grouping:* Participants group the cards on the board by subject (moderator facilitates, decided by the group). Duplicate or similar cards are pinned on top of each other.
+   - *Labeling & Analysis:* Participants identify meaningful headings for each group of cards and analyze relationships/dependencies within and across groups.
+   - *Selection (Optional):* Participants select the best ideas to be processed further.
 3. **Follow-Up:**
-   - Document results (e.g., take photos), document minutes with card references, define next steps, distribute, and collect feedback.
+   - Document the results of the KJ session (e.g., by taking photos of the pin board).
+   - Document explanations, questions, and answers in the minutes, using card numbers as references.
+   - Define with the participants how the results shall be further processed.
+   - Distribute the minutes and collect feedback.
+
+##### Critical Success Factors:
+- **Clearly Defined Goal:** As with all elicitation techniques.
+- **Participant Limits:** Limit to at most $8\text{ to }10$ stakeholders per session to keep grouping effort manageable. If the group is larger, split them into sub-groups.
+- **Active Facilitation:** The moderator must actively facilitate the grouping of the cards, ensuring meaningful labeling and appropriate sorting.
+
+##### Key Benefits:
+- A simple, cheap, and effective technique for eliciting existing requirements/goals and identifying potential requirements sources.
+- Can focus on one specific part of the RE context (e.g., by providing a pin wall for each part of the context) or on one specific type of source.
+- Increases the likelihood of getting valuable input from reserved or shy participants compared to brainstorming.
+
+##### Effort:
+- **Very Low:** Requires no substantial activities for preparation or follow-up, and little time for execution (though slightly more time than brainstorming).
 
 #### 4.6.2.3 Prototyping
 Allows stakeholders to experience how the future system would look and behave.
