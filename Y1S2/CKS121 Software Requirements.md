@@ -1286,10 +1286,15 @@ graph LR
 > - Make sure to include some **delighters** to stand out in the market.
 
 ### 4.8.4 Correlation of Elicitation Techniques with Kano Model
-Different elicitation techniques are better suited for different Kano categories:
-- **Basic factors (Dissatisfiers):** Best uncovered using **Observation** (since stakeholders take them for granted and don't speak about them) or **Document-centric** and **predecessor system analysis**.
-- **Performance factors (Satisfiers):** Best uncovered using **Interviews** and **Questionnaires** (since stakeholders are conscious of them and explicitly communicate them).
-- **Excitement factors (Delighters):** Best uncovered using **Creativity techniques** (brainstorming, workshops) and analyzing systems in **other domains**.
+Different elicitation techniques are better suited for different Kano categories depending on whether the requirements are implicit, explicit, or attractive:
+
+| Elicitation Technique | Basic Factors (Dissatisfiers) | Performance Factors (Satisfiers) | Excitement Factors (Delighters) |
+|---|:---:|:---:|:---:|
+| **Interviews** | | **Primary** (explicitly communicated) | **Secondary** (via open questions or group discussions) |
+| **Questionnaire** | | **Primary** (explicitly communicated) | |
+| **Creativity Techniques** (Brainstorming, Workshops) | | | **Primary** (excitement/attractive ideas) |
+| **Observation** | **Primary** (uncovers taken-for-granted needs) | | |
+| **Document-centric** / Predecessor Systems | **Primary** (uncovers baseline requirements) | | |
 
 ---
 
