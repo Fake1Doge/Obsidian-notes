@@ -1174,13 +1174,13 @@ graph TD
     Choice -->|User-Centric| UGT[User Goal Technique]
     Choice -->|Event-Centric| EDT[Event Decomposition Technique]
     
-    subgraph User Goal Technique
+    subgraph UserGoalTechnique ["User Goal Technique"]
         UGT1[Identify Users & Roles] --> UGT2[Interview Users for Goals]
         UGT2 --> UGT3[List Preliminary Use Cases]
         UGT3 --> UGT4[Resolve Duplicates & Inconsistencies]
     end
     
-    subgraph Event Decomposition Technique
+    subgraph EventDecompositionTechnique ["Event Decomposition Technique"]
         EDT1[Identify Business Events] --> EDT2[Map Events to Use Cases]
         EDT2 --> EDT3[Apply Perfect Tech Assumption]
         EDT3 --> EDT4[Filter Out System Controls]
@@ -1231,15 +1231,15 @@ The Event Decomposition Technique is the most comprehensive way to identify use 
 
 ```mermaid
 graph LR
-    subgraph External Event
+    subgraph ExternalEvent ["External Event"]
         Actor[Customer] -- Triggers --> E_Event["External Event<br>(Places Order)"] --> UC1(["Use Case: Create Order"])
     end
     
-    subgraph Temporal Event
+    subgraph TemporalEvent ["Temporal Event"]
         Time[Clock: End of Month] -- Triggers --> T_Event["Temporal Event<br>(Month Ends)"] --> UC2(["Use Case: Generate Monthly Statements"])
     end
     
-    subgraph State Event
+    subgraph StateEvent ["State Event"]
         State[System State: Stock < Reorder] -- Triggers --> S_Event["State Event<br>(Reorder reached)"] --> UC3(["Use Case: Reorder Inventory"])
     end
 ```
@@ -1296,7 +1296,7 @@ A **Use Case Diagram** is a UML model used to graphically represent the use case
 
 ```mermaid
 graph TB
-    subgraph Automation Boundary: Sales Subsystem
+    subgraph AutomationBoundarySalesSubsystem ["Automation Boundary: Sales Subsystem"]
         UC1(["Search product catalog"])
         UC2(["Create order"])
         UC3(["Track order status"])
@@ -1395,12 +1395,12 @@ graph TD
     Choice -->|Checklist & Brainstorming| BT[Brainstorming Technique]
     Choice -->|Document Noun Filtering| NT[Noun Technique]
     
-    subgraph Brainstorming Technique
+    subgraph BrainstormingTechnique ["Brainstorming Technique"]
         BT1[Use Checklist of 6 Categories] --> BT2[Brainstorm with Users]
         BT2 --> BT3[Merge Lists & Resolve Duplicates]
     end
     
-    subgraph Noun Technique
+    subgraph NounTechnique ["Noun Technique"]
         NT1[Extract Nouns from Docs/Stories] --> NT2[Classify & Filter Nouns]
         NT2 --> NT3[Determine Class vs. Attribute vs. Out-of-Scope]
     end
@@ -1727,7 +1727,7 @@ Activity diagrams can represent repeating loops (e.g., for each `SaleItem`) and 
 graph TD
     Start([Start]) --> OpenCart[Open Shopping Cart]
     
-    subgraph Loop: For Each Item
+    subgraph LoopForEachItem ["Loop: For Each Item"]
         OpenCart --> AddItem[Add Item to Cart]
         AddItem --> ChooseDetails{{"<< includes >> <br> Customize drink"}}
         ChooseDetails --> CheckOutDecision{Finished Shopping?}
@@ -1961,12 +1961,12 @@ A waterfall variant that places an explicit focus on quality assurance by planni
 
 ```mermaid
 graph TD
-    subgraph Defining Requirements & Design
+    subgraph DefiningRequirementsAndDesign ["Defining Requirements & Design"]
         Anal[Analysis] --> Des[Design]
         Des --> Code[Coding / Implementation]
     end
     
-    subgraph Testing & Verification
+    subgraph TestingAndVerification ["Testing & Verification"]
         Acc[Acceptance Testing]
         Sys[System / Integration Testing]
         Unit[Unit Testing]
@@ -2068,11 +2068,11 @@ XP organizes project activities into three concentric rings:
 
 ```mermaid
 graph TD
-    subgraph Outer Ring: System
+    subgraph OuterRingSystem ["Outer Ring: System"]
         US[Write User Stories] --> AT[Define Acceptance Tests]
-        subgraph Middle Ring: Release
+        subgraph MiddleRingRelease ["Middle Ring: Release"]
             RP[Release Planning] --> CT[Conduct Release Tests]
-            subgraph Inner Ring: Iteration
+            subgraph InnerRingIteration ["Inner Ring: Iteration"]
                 IP[Iteration Planning] --> Code[Write Code] --> TFD[Test-First Development] --> Unit[Unit/Integration Testing]
             end
         end
