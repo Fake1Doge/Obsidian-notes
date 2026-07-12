@@ -103,7 +103,6 @@ graph TD
     R2 -.-> S1
     R3 -.-> S3
     
-    class E1,E2,R1,R2,R3,R4,S1,S2,S3 internal-link;
 ```
 
 ### 1.2.2 Software Development Concepts
@@ -346,7 +345,6 @@ classDiagram
     Supplier "1" -- "1..*" ProductItem : Supplies
     ProductItem "1" -- "0..*" ProductPicture : Has pictures
     
-    class Supplier,Contact,ProductItem,ProductPicture internal-link;
 ```
 
 #### Day 3: In-Depth Fact-Finding and Designing User Experience
@@ -379,7 +377,6 @@ graph TD
     M --> UC3
     M --> UC4
     
-    class PA,M internal-link;
 ```
 
 ##### Activity Diagram: Look up supplier workflow
@@ -413,7 +410,6 @@ graph TD
     RetrieveContact --> ViewContact
     ViewContact --> End
     
-    class Start,EnterName,ViewSupplier,SelectContact,ViewContact,End,ReturnSupplier,RetrieveContact internal-link;
 ```
 
 > [!tip] Extra Notes: Swimlanes in Activity Diagrams
@@ -448,7 +444,6 @@ graph LR
         Sub2["Product Subsystem"]
     end
     
-    class Browser,WebServer,TS,Sub1,Sub2 internal-link;
 ```
 
 ##### Preliminary Design Class Diagram (DCD)
@@ -463,7 +458,7 @@ classDiagram
         +displayContact()
     }
     class Supplier {
-        -supplierID: integer {key}
+        -supplierID: integer
         -name: string
         -address: string
         -address2: string
@@ -475,8 +470,8 @@ classDiagram
         +getSupplierInfo()
     }
     class Contact {
-        -contactID: integer {key}
-        -name: string {index}
+        -contactID: integer
+        -name: string
         -title: string
         -waddress1: string
         -waddress2: string
@@ -496,7 +491,6 @@ classDiagram
     ContactView --> Contact : Calls
     Supplier "1" --> "1..*" Contact : Association
     
-    class SupplierView,ContactView,Supplier,Contact internal-link;
 ```
 
 ##### Subsystem Architectural Design Diagram
@@ -516,7 +510,6 @@ graph TB
     SV --> S
     CV --> C
     
-    class SV,CV,JS,S,C internal-link;
 ```
 
 > [!tip] Extra Notes: Separation of Concerns (Presentation vs. Domain)
@@ -597,7 +590,6 @@ graph TD
     FixErrors --> ConductTests
     ErrorDecision -->|No| End([End])
     
-    class Start,CreateData,ConductTests,DocErrors,FixErrors,End internal-link;
 ```
 
 ### 1.5.3 First Iteration Recap
@@ -638,7 +630,6 @@ graph TD
     A3 --> A4
     A4 --> A5
     
-    class A1,A2,A3,A4,A5 internal-link;
 ```
 
 ### 2.2.1 Gather Detailed Information
@@ -700,7 +691,6 @@ graph TD
     
     FR --> PayrollExample
     
-    class SR,FR,NFR,F1,F2,F3,F4,F5 internal-link;
 ```
 
 > [!note] Key Point
@@ -773,7 +763,6 @@ graph LR
     C --> D["Document the answers"]
     D --> E["Follow up in future sessions"]
     
-    class A,B,C,D,E internal-link;
 ```
 
 #### Designing Interview Questions
@@ -804,7 +793,6 @@ graph TD
         M2 --> H2["High-level: very general"]
     end
     
-    class H1,M1,L1,L2,M2,H2 internal-link;
 ```
 
 #### Preparing and Executing Interviews
@@ -907,7 +895,6 @@ graph TD
         BeforeJAD --> DuringJAD --> AfterJAD
     end
     
-    class A1,A2,A3,B1,B2,B3,C1,C2 internal-link;
 ```
 
 > [!tip] Extra Notes: Modern JAD Adaptations
@@ -1077,7 +1064,6 @@ graph TD
     ReceiveShipment --> JoinEnd
     JoinEnd --> End
     
-    class Start,SelectOrder,PickItem,PrepareShip,StoreRecord,TransmitShipment,IdentifyOrder,TransmitDetails,UpdateStatus,End,FindStock,DecrementStock,GenerateTracking,ReceiveShipment internal-link;
 ```
 
 #### Example: Activity Diagram with Concurrent Paths
@@ -1123,7 +1109,6 @@ graph TD
     JoinBar --> ScheduleProd
     ScheduleProd --> End
     
-    class Start,AcceptOrder,OrderDoc,MakeSpecs,BuyMaterials,ProgramComputer,ScheduleProd,End internal-link;
 ```
 
 ---
@@ -2490,7 +2475,6 @@ graph TD
     AnalysisModels --> TranslationEngine
     TranslationEngine --> DesignModels
 
-    class AnalysisModels,DesignModels internal-link;
 ```
 
 ### 8.2.3 Two Levels of Design
@@ -3192,7 +3176,6 @@ graph TD
         OurSystem --> HCIOut["Interactive Queries & Reports (HCI)"]
     end
     
-    class OurSystem,ExtDBIn,ExtDBOut,MinHCIOut,MsgOut,MsgIn,AutoIn,HCIIn,HCIOut internal-link;
 ```
 
 ### 9.7.2 System Interface Classifications
@@ -3902,11 +3885,11 @@ Below is the Mermaid class diagram illustrating the first-cut DCD navigation vis
 
 ```mermaid
 classDiagram
+    <<controller>> SaleHandler
     class SaleHandler {
-        <<controller>>
     }
     class Customer {
-        -accountNo: string {key}
+        -accountNo: string
         -name: string
         -billingAddress: string
         -shippingAddress: string
@@ -3915,7 +3898,7 @@ classDiagram
         -mySale: Sale
     }
     class Sale {
-        -saleID: int {key}
+        -saleID: int
         -saleDate: date
         -priorityCode: string
         -shippingAndHandling: float
@@ -3923,7 +3906,7 @@ classDiagram
         -grandTotal: float
     }
     class SaleItem {
-        -saleItemID: int {key}
+        -saleItemID: int
         -quantity: int
         -price: float
         -backorderStatus: string
@@ -3933,13 +3916,13 @@ classDiagram
         -specialPrice: float
     }
     class ProductItem {
-        -productID: string {key}
+        -productID: string
         -vendor: string
         -gender: string
         -description: string
     }
     class InventoryItem {
-        -inventoryID: string {key}
+        -inventoryID: string
         -size: string
         -color: string
         -options: string
@@ -4115,14 +4098,14 @@ Below is the Mermaid class diagram illustrating the updated DCD with method sign
 
 ```mermaid
 classDiagram
+    <<controller>> SaleHandler
     class SaleHandler {
-        <<controller>>
         +processNewSale() void
         +addItemsToSale() void
         +makePayment() void
     }
     class Customer {
-        -accountNo: string {key}
+        -accountNo: string
         -name: string
         -billingAddress: string
         -shippingAddress: string
@@ -4135,7 +4118,7 @@ classDiagram
         +requestHistory() void
     }
     class Sale {
-        -saleID: int {key}
+        -saleID: int
         -saleDate: date
         -priorityCode: string
         -shippingAndHandling: float
@@ -4149,7 +4132,7 @@ classDiagram
         +makePayment() void
     }
     class SaleItem {
-        -saleItemID: int {key}
+        -saleItemID: int
         -quantity: int
         -price: float
         -backorderStatus: string
@@ -4158,7 +4141,7 @@ classDiagram
         +requestBackorder() void
     }
     class SaleTransaction {
-        -transactionID: int {key}
+        -transactionID: int
         -saleDate: date
         -transactionType: string
         -amount: float
@@ -4166,21 +4149,21 @@ classDiagram
         +processPayment() void
     }
     class PromoOffering {
-        -catalogID: string {key}
-        -productID: string {key}
+        -catalogID: string
+        -productID: string
         -price: float
         -specialPrice: float
         +getPrice() float
     }
     class ProductItem {
-        -productID: string {key}
+        -productID: string
         -vendor: string
         -gender: string
         -description: string
         +getDescription() string
     }
     class InventoryItem {
-        -inventoryID: string {key}
+        -inventoryID: string
         -size: string
         -color: string
         -options: string
@@ -4500,19 +4483,19 @@ Once detailed sequence flows are modeled, the First-Cut Design Class Diagram is 
 
 ```mermaid
 classDiagram
+    <<controller>> CustHandler
     class CustHandler {
-        <<controller>>
         +createNewCustomer() void
         +enterAddress() void
         +enterCreditCard() void
     }
+    <<controller>> CartHandler
     class CartHandler {
-        <<controller>>
         +addItemToCart() void
         +addAccessToCart() void
     }
     class Customer {
-        -accountNo: string {key}
+        -accountNo: string
         -name: string
         -mobilePhone: string
         -homePhone: string
@@ -4543,7 +4526,7 @@ classDiagram
         +createAddress() void
     }
     class OnlineCart {
-        -saleID: int {key}
+        -saleID: int
         -saleDateTime: date
         -priorityCode: string
         -SH: float
@@ -4553,7 +4536,7 @@ classDiagram
         +addItemToCart() void
     }
     class CartItem {
-        -saleItemId: int {key}
+        -saleItemId: int
         -productItem: string
         -quantity: int
         -soldPrice: float
