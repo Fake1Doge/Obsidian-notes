@@ -3482,6 +3482,26 @@ A doubly linked list where each node contains pointers to both the previous and 
 > List elements: 10 20 30
 > ```
 
+#### List Member Functions
+Unlike vectors, `std::list` does not store elements in contiguous memory, meaning it cannot support fast random-access `[]` indexing. However, it provides several member functions specifically optimized for list manipulation:
+
+| Member Function | Description | Example Syntax |
+| :--- | :--- | :--- |
+| `push_front(value)` | Inserts a new element at the beginning of the list. | `myList.push_front(5);` |
+| `pop_front()` | Removes the first element of the list. | `myList.pop_front();` |
+| `push_back(value)` | Appends a new element to the end of the list. | `myList.push_back(10);` |
+| `pop_back()` | Removes the last element of the list. | `myList.pop_back();` |
+| `insert(iter, value)` | Inserts `value` before the element pointed to by the iterator `iter`. | `myList.insert(iter, 15);` |
+| `erase(iter)` | Removes the element pointed to by `iter`. | `myList.erase(iter);` |
+| `remove(value)` | Removes all elements from the list that compare equal to `value`. | `myList.remove(20);` |
+| `reverse()` | Reverses the order of the elements in the list. | `myList.reverse();` |
+| `sort()` | Sorts the elements of the list in ascending order. | `myList.sort();` |
+| `unique()` | Removes consecutive duplicate values (list must be sorted first). | `myList.unique();` |
+| `merge(other_list)` | Merges a sorted `other_list` into the current sorted list. | `myList.merge(otherList);` |
+
+> [!tip] Extra Notes: Slide Incompleteness on List Member Functions
+> Slide 12 is titled *"Containers - Sequence - list member functions"* but contains only the word *"Double"* under its bullet points. This is an incomplete placeholder slide. The reference table above details the actual standard library functions provided by `std::list`. Notice that because `std::list` only supports bidirectional iterators, you cannot use the generic algorithm `std::sort()` (which requires random-access iterators) on a list. Instead, you must use the list's own member function `myList.sort()`.
+
 ### 11.2.4 Double-Ended Queue (`deque`)
 Pronounced "deck", this container provides the benefits of both vectors and lists in one class.
 
@@ -3607,7 +3627,7 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 > using namespace std;
 > 
 > int main() {
->     // Ordered Set
+>     // Ordered Set (default sorted order, unique elements)
 >     set<double> mySet;
 >     mySet.insert(3.14);
 >     mySet.insert(1.11);
@@ -3619,12 +3639,26 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 >     cout << "Ordered Set: ";
 >     for (double num : mySet) cout << num << " ";
 >     cout << endl;
+>     
+>     // Unordered Set (hashed, unsorted, unique elements)
+>     unordered_set<double> myUnorderedSet;
+>     myUnorderedSet.insert(3.14);
+>     myUnorderedSet.insert(1.11);
+>     myUnorderedSet.insert(2.55);
+>     myUnorderedSet.insert(2.55); // Duplicate ignored!
+>     myUnorderedSet.insert(4.88);
+>     myUnorderedSet.erase(4.88);
+>     
+>     cout << "Unordered Set: ";
+>     for (double num : myUnorderedSet) cout << num << " ";
+>     cout << endl;
 >     return 0;
 > }
 > ```
 > **Output:**
 > ```text
 > Ordered Set: 1.11 2.55 3.14 
+> Unordered Set: 2.55 1.11 3.14 
 > ```
 
 > [!example] Complete C++ Implementation: `multimap` (Ordered vs. Unordered)
@@ -3649,6 +3683,20 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 >     for (const auto& student : schoolCatalog) {
 >         cout << "Grade " << student.first << ": " << student.second << endl;
 >     }
+>     
+>     // Unordered Multimap (keys hashed, unsorted)
+>     unordered_multimap<int, string> schoolCatalogUnordered;
+>     schoolCatalogUnordered.insert(make_pair(11, "Alice"));
+>     schoolCatalogUnordered.insert(make_pair(9, "Bob"));
+>     schoolCatalogUnordered.insert(make_pair(10, "Charlie"));
+>     schoolCatalogUnordered.insert(make_pair(10, "David"));
+>     schoolCatalogUnordered.insert(make_pair(12, "Emma"));
+>     schoolCatalogUnordered.erase(12);
+>     
+>     cout << "\nUnordered Multimap (Hashed Grouping):" << endl;
+>     for (const auto& student : schoolCatalogUnordered) {
+>         cout << "Grade " << student.first << ": " << student.second << endl;
+>     }
 >     return 0;
 > }
 > ```
@@ -3659,12 +3707,19 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 > Grade 10: Charlie
 > Grade 10: David
 > Grade 11: Alice
+> 
+> Unordered Multimap (Hashed Grouping):
+> Grade 9: Bob
+> Grade 10: Charlie
+> Grade 10: David
+> Grade 11: Alice
 > ```
 
 > [!example] Complete C++ Implementation: `map` (Ordered vs. Unordered)
 > ```cpp
 > #include <iostream>
 > #include <map>
+> #include <unordered_map>
 > #include <string>
 > using namespace std;
 > 
@@ -3685,6 +3740,19 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 >     for (const auto& airport : flightDelays) {
 >         cout << "Airport: " << airport.first << " | Delay: " << airport.second << " mins" << endl;
 >     }
+>     
+>     // Unordered Map (keys hashed, unique)
+>     unordered_map<string, int> flightDelaysUnordered;
+>     flightDelaysUnordered.insert(make_pair("JFK", 45));
+>     flightDelaysUnordered.insert(make_pair("LHR", 12));
+>     flightDelaysUnordered.insert(make_pair("HND", 0));
+>     flightDelaysUnordered.insert(make_pair("JFK", 90)); // Ignored!
+>     flightDelaysUnordered.erase("LHR");
+>     
+>     cout << "\nUnordered Map (Hashed Bucket Order):" << endl;
+>     for (const auto& airport : flightDelaysUnordered) {
+>         cout << "Airport: " << airport.first << " | Delay: " << airport.second << " mins" << endl;
+>     }
 >     return 0;
 > }
 > ```
@@ -3693,8 +3761,19 @@ Each associative container has an unordered counterpart (added in C++11): `unord
 > Ordered Map (Alphabetical):
 > Airport: HND | Delay: 0 mins
 > Airport: JFK | Delay: 45 mins
+> 
+> Unordered Map (Hashed Bucket Order):
+> Airport: JFK | Delay: 45 mins
+> Airport: HND | Delay: 0 mins
 > ```
 > *Note: To update an existing key in a map, use subscript notation instead of insert: `flightDelays["JFK"] = 90;`*
+
+> [!tip] Extra Notes: Slide Typos in Associative Containers
+> The lecture slides contain several errors and inconsistencies in container titles:
+> 1. **Slide 17 (Unordered Multiset):** The slide code declares `unordered_multiset<int> myMultiset;` but attempts to insert elements using `myUnorderedMultiset.insert(...)`. This causes a compile error. The variable name must be consistent.
+> 2. **Slide 21 & 22 (Multimap):** Slide 21 is titled *"multimap - Unordered"* but contains the code for a standard sorted `std::multimap`. Conversely, Slide 22 is titled *"multimap - Ordered"* but contains the code for `std::unordered_multimap`. Their titles are swapped.
+> 3. **Slide 23 & 24 (Map):** Slide 23 is titled *"map - Unordered"* but contains the code for a sorted `std::map`. Slide 24 is titled *"map - Ordered"* but contains the code for `std::unordered_map`. These titles are also swapped.
+> The examples above have been corrected and aligned with standard C++ conventions.
 
 ---
 
@@ -3789,6 +3868,54 @@ A First-In, First-Out (FIFO) data structure. By default, it uses a `std::deque` 
 > Printing: Photo.jpg
 > ```
 
+### 11.4.3 Priority Queue Adapter (`priority_queue`)
+A container adapter that behaves like a priority queue (LIFO/FIFO hybrid), where the element with the highest priority (by default, the largest element) is always at the front. It is typically implemented using a `std::vector` as its underlying container (and structured as a max-heap).
+
+- **Header:** `#include <queue>`
+- **Key Operations:**
+  - `push(element)`: Inserts element and structures it into its heap position ($O(\log n)$).
+  - `pop()`: Removes the top element ($O(\log n)$).
+  - `top()`: Returns a reference to the top (highest-priority) element ($O(1)$).
+  - `empty()`: Returns `true` if empty.
+  - `size()`: Returns the number of elements.
+
+> [!example] Complete C++ Implementation: `priority_queue`
+> ```cpp
+> #include <iostream>
+> #include <queue>
+> using namespace std;
+> 
+> int main() {
+>     priority_queue<int> pq;
+>     
+>     // Insert elements in arbitrary order
+>     pq.push(30);
+>     pq.push(10);
+>     pq.push(50);
+>     pq.push(20);
+>     
+>     cout << "Priority Queue size: " << pq.size() << endl;
+>     cout << "--- Processing elements (highest value first) ---" << endl;
+>     while (!pq.empty()) {
+>         cout << "Top element: " << pq.top() << endl;
+>         pq.pop();
+>     }
+>     return 0;
+> }
+> ```
+> **Output:**
+> ```text
+> Priority Queue size: 4
+> --- Processing elements (highest value first) ---
+> Top element: 50
+> Top element: 30
+> Top element: 20
+> Top element: 10
+> ```
+
+> [!tip] Extra Notes: Slide Typo on Container Adapter Operations
+> Slide 30 is titled *"stack Adaptor operations"* but the descriptions in the bullet points specify `queue` operations (e.g. push to the back, pop from the front, `front()` and `back()` member functions). A stack adapter does **not** support `front()` or `back()`, only `top()`. Slide 30 should be titled *"queue Adaptor operations"*.
+
 ---
 
 ## 11.5 Part IV: Iterators Detail
@@ -3802,8 +3929,21 @@ Iterators are generalizations of pointers. The type of container dictates the ty
 4. **Input Iterator:** Read-only iterator that can only move forward. Used to read from input streams.
 5. **Output Iterator:** Write-only iterator that can only move forward. Used to write to output streams.
 
+### 11.5.2 Iterator Categories and Container Compatibility Reference
+The table below details which standard containers support which categories of iterators:
 
+| Container | Iterator Category | Operations Supported |
+| :--- | :--- | :--- |
+| `std::vector` | Random-Access | `++`, `--`, `+`, `-`, `[]`, `+=`, `-=`, comparisons (`<`, `>`, `<=`, `>=`) |
+| `std::deque` | Random-Access | `++`, `--`, `+`, `-`, `[]`, `+=`, `-=`, comparisons (`<`, `>`, `<=`, `>=`) |
+| `std::list` | Bidirectional | `++`, `--` |
+| `std::forward_list` | Forward | `++` |
+| `std::set` / `std::multiset` | Bidirectional | `++`, `--` |
+| `std::map` / `std::multimap` | Bidirectional | `++`, `--` |
+| `std::unordered_set` / `std::unordered_multiset` | Forward | `++` |
+| `std::unordered_map` / `std::unordered_multimap` | Forward | `++` |
 
-
-
-
+### 11.5.3 Iterator Constraints in STL Algorithms
+The category of iterator a container supports directly limits which STL algorithms can be used with it:
+- **`std::sort` requires Random-Access Iterators:** Because of this, you cannot use `std::sort(myList.begin(), myList.end())` on a `std::list`. Instead, `std::list` provides its own specialized member function `myList.sort()`, which is implemented using merge sort.
+- **Set/Map elements are constant:** When iterating through a `std::set` or keys of a `std::map`, the iterators behave as `const_iterator` even if you declare them as regular `iterator`. Modifying a set element or a map key in-place would violate the internal sorting tree structure, so C++ prevents this. If you must change a key, you must erase the element and insert a new one.
