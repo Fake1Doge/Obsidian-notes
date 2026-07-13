@@ -1939,7 +1939,16 @@ int main()
 ```
 
 > [!warning] Common Mistake: Accessing Out-of-Bounds Subscripts
-> You **cannot** use the subscript operator `[]` to access or write to elements that do not exist (e.g., trying to write `numbers[10] = 5` when the vector only has 5 elements). Doing so does not resize the vector; it results in undefined behavior or memory corruption. To grow a vector, use `.push_back()`.
+> You **cannot** use the subscript operator `[]` to access or write to elements that do not exist (e.g., trying to write `hours[index]` when `index >= hours.size()`). Doing so does not resize the vector; it results in undefined behavior or memory corruption.
+> 
+> > [!tip] Extra Notes: Slide Question - What if we run the loop 100 times?
+> > The lecture notes pose the question: *What if we make the loop for 100 times and enter the information of 100 employees?*
+> > - If you simply change the loop limit to 100 (`index < 100`) but keep the vector declaration at `vector<int> hours(5);`, the program will attempt to access out-of-bound indices (`5` to `99`) using `hours[index]`. This causes **undefined behavior** (usually a crash).
+> > - To solve this, you can:
+> >   1. Initialize the vector size to 100 at definition: `vector<int> hours(100);`
+> >   2. Use an empty vector `vector<int> hours;` and use `hours.push_back(val)` instead of subscripts to insert values.
+> > 
+> > When using `.push_back()`, each time the vector needs to grow beyond its current capacity, it is automatically assigned a new, larger contiguous memory location. All existing elements are copied/moved to this new location, and the old memory block is released.
 
 ### Range-Based for Loops with Vectors
 Range-based for loops provide a clean syntax to traverse vectors.
