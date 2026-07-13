@@ -1543,118 +1543,470 @@ void moveDiscs(int num, int A, int B, int C)
 ## 6.1 Introduction to Strings
 - In C++, a **C-string** is a sequence of characters stored in consecutive memory locations, terminated by a null character (`\0`).
 - The C++ language stores strings primarily in two ways:
-  1. As `string` objects
-  2. As C-strings
-- **Null Terminator:** `\0` ("backslash zero") is the escape sequence representing the null terminator (ASCII code 0).
+  1. As **`string` objects** (using the Standard Library `std::string` class).
+  2. As **C-strings** (character arrays).
+- **Null Terminator (`\0`):** This is the escape sequence representing the null terminator, corresponding to the ASCII code `0`.
 - The C programming language does not provide a string class like C++ does; C relies solely on C-strings.
 
+> [!info] Memory Layout of a C-String
+> When you declare a C-string literal:
+> ```cpp
+> char str[] = "HELLO";
+> ```
+> The characters are stored in consecutive memory bytes, followed by the null character:
+> 
+> | Index | 0 | 1 | 2 | 3 | 4 | 5 |
+> | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+> | **Memory (`char`)** | `'H'` | `'E'` | `'L'` | `'L'` | `'O'` | `'\0'` |
+> | **Address** | `1000` | `1001` | `1002` | `1003` | `1004` | `1005` |
+> 
+> The string literal `"HELLO"` is enclosed in double quotes, but internally requires 6 bytes of memory because of the null terminator.
+
 ### C-String Library Functions
-- `strlen()`: Returns length of string.
-- `strcat()`: Concatenates strings.
-- `strcpy()`: Copies strings.
-- `strstr()`: Finds a substring.
-- `strcmp()`: Compares strings.
+To use C-string library functions, you must `#include <cstring>`.
+
+- **`strlen()`**: Counts and returns the length of a C-string (excluding the null terminator).
+  - *Example:* For `"HELLO"`, `strlen` returns `5`.
+- **`strcat(char* dest, const char* src)`**: Concatenates `src` to the end of `dest`. 
+  - *Mechanism:* It starts copying characters from `src` beginning at the position of the null terminator `\0` of `dest`, and appends a new null terminator at the end of the combined string.
+- **`strcpy(char* dest, const char* src)`**: Copies all characters from `src` to `dest`, including the null terminator `\0`.
+- **`strstr(const char* main_str, const char* sub_str)`**: Finds the first occurrence of `sub_str` in `main_str`.
+  - *Mechanism:* It compares the strings step-by-step. If a match is found, it returns a pointer to the first character of the first occurrence in `main_str`. If no match is found, it returns `nullptr` (or `0`).
+- **`strcmp(const char* str1, const char* str2)`**: Compares two C-strings lexicographically based on their ASCII values.
+  - *Mechanism:* It compares characters one-by-one starting from index `0`.
+    - If a mismatch occurs, it returns the difference of the ASCII values of the first mismatched characters: $\text{ASCII}(str1[i]) - \text{ASCII}(str2[i])$.
+    - If both strings reach `\0` at the same time without mismatches, it returns `0` (strings are equal).
+    - If $str1$ is lexicographically greater than $str2$ (comes after it), it returns a positive value ($> 0$).
+    - If $str1$ is lexicographically smaller than $str2$ (comes before it), it returns a negative value ($< 0$).
+
+> [!example] `strcmp()` Behavior Examples
+> - **Case 1: Mismatch (Greater)**
+>   Comparing `"hello"` ($str1$) and `"hall"` ($str2$):
+>   Mismatch occurs at index `1` (`'e'` vs `'a'`).
+>   $\text{ASCII}('e') = 101$, $\text{ASCII}('a') = 97$.
+>   Return value: $101 - 97 = 4$ ($> 0$) $\implies$ $str1$ is greater than $str2$.
+> - **Case 2: Equal**
+>   Comparing `"hea"` ($str1$) and `"hea"` ($str2$):
+>   Both strings reach `\0` at the same time.
+>   Return value: `0` $\implies$ strings are equal.
+> - **Case 3: Mismatch (Smaller)**
+>   Comparing `"apple"` ($str1$) and `"applf"` ($str2$):
+>   Mismatch occurs at index `4` (`'e'` vs `'f'`).
+>   $\text{ASCII}('e') = 101$, $\text{ASCII}('f') = 102$.
+>   Return value: $101 - 102 = -1$ ($< 0$) $\implies$ $str1$ is smaller than $str2$.
+
+> [!warning] Security & Hardening: Buffer Overflows in C-Strings
+> Functions like `strcpy()` and `strcat()` do not perform boundary checking. If the destination array is not large enough to hold the source string plus the null terminator, they will write past the buffer, corrupting memory. This is a common security vulnerability. Use bounds-checked functions like `strncpy()` and `strncat()`, or prefer the C++ `std::string` class which manages memory dynamically.
+
+---
 
 ## 6.2 C++ String Class
-- Standard C++ provides a special data type for storing and working with strings via `#include <string>`.
-- The `string` class is an **Abstract Data Type (ADT)**.
-- It is not a built-in, primitive data type like `int` or `char`. It is a programmer-defined data type accompanying the C++ language.
-- Being an ADT means you interact with what it does, while how it is implemented is hidden.
+- Standard C++ provides the `std::string` class for storing and working with strings, which requires `#include <string>`.
+- The `string` class is an **Abstract Data Type (ADT)**. It is not a built-in primitive type like `int` or `char`, but a programmer-defined class template provided by the Standard Library.
+- **Abstraction:** The class hides the internal details of memory allocation and management, presenting only a public interface.
 
-### Defining and Using String Objects
-```cpp
-string movieTitle;
-movieTitle = "Fast and Furious";
-cout << "My favorite movie is " << movieTitle << endl;
-```
+> [!info] The Driver vs. Mechanic Analogy of ADTs
+> - **A Driver** only needs to know *what* a car does and *how to operate* it (e.g., using the steering wheel, pedals, and public controls). The internal engineering details (how the engine combustion works, transmission systems) are hidden. This represents a programmer using the `string` class's public interface.
+> - **A Mechanic** understands the car's internal details and implementation (how it is built under the hood). This represents the developers who write the library implementation of the `string` class.
 
-> [!example] Example: Reading a Line
+### Defining and Initializing String Objects
+There are several ways to define and initialize `string` objects:
+
+| Definition | Description |
+| :--- | :--- |
+| `string address;` | Defines an empty string object named `address`. |
+| `string name("William Smith");` | Defines a string object initialized with `"William Smith"`. |
+| `string person1(person2);` | Defines a string object as a copy of `person2` (where `person2` can be a `string` object or a C-string character array). |
+| `string set1(set2, 5);` | Defines a string object initialized with the first 5 characters of the character array `set2`. |
+| `string lineFull('z', 10);` | Defines a string object initialized with 10 `'z'` characters. |
+| `string firstName(fullName, 0, 7);` | Defines a string object initialized with a substring of the string `fullName`, starting at position `0` and spanning `7` characters. |
+
+### Operators with String Objects
+The `string` class overloads several C++ operators to simplify operations:
+
+| Operator | Description |
+| :--- | :---: |
+| `>> name` | Extracts characters from a stream into `name`, copying until a whitespace character or end-of-stream is encountered. |
+| `<< name` | Inserts the contents of `name` into an output stream. |
+| `name1 = name2` | Assigns the contents of `name2` to `name1`. |
+| `name1 += name2` | Appends a copy of `name2` to `name1`. |
+| `name1 + name2` | Returns a new string containing the concatenation of `name1` and `name2`. |
+| `[]` | Array-subscript notation. Returns a reference to the character at position `x` (e.g., `name[x]`). Does not perform bounds checking. |
+
+> [!example] Example: String Operators & Concatenation
 > ```cpp
-> string name;
-> cout << "What is your name? ";
-> getline(cin, name);
-> cout << "Good morning " << name << endl;
+> #include <iostream>
+> #include <string>
+> using namespace std;
+> 
+> int main()
+> {
+>     string str1, str2, str3;
+>     str1 = "ABC";
+>     str2 = "DEF";
+>     str3 = str1 + str2; // Concatenation
+>     cout << str1 << endl; // Output: ABC
+>     cout << str2 << endl; // Output: DEF
+>     cout << str3 << endl; // Output: ABCDEF
+> 
+>     str3 += "GHI"; // Appending
+>     cout << str3 << endl; // Output: ABCDEFGHI
+>     return 0; 
+> }
 > ```
 
+### Reading Input into String Objects
+Standard input streams can read values into string objects in two ways:
+
+#### 1. Reading a Single Word (`cin >>`)
+The stream extraction operator `>>` reads characters until a whitespace (space, tab, newline) is encountered.
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name;
+    cout << "What is your name? ";
+    cin >> name; // If user enters "Mohammad Ali", it only reads "Mohammad"
+    cout << "Good morning " << name << endl;
+    return 0;
+}
+```
+- **Input:** `Mohammad Ali`
+- **Output:** `Good morning Mohammad`
+
+#### 2. Reading a Full Line (`getline()`)
+To read a string containing spaces, use the global function `getline(istream&, string&)`.
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string name;
+    cout << "What is your name? ";
+    getline(cin, name); // Reads the entire line including spaces
+    cout << "Good morning " << name << endl;
+    return 0;
+}
+```
+- **Input:** `Mohammad Ali Sarvghadi`
+- **Output:** `Good morning Mohammad Ali Sarvghadi`
+
 ### Comparing String Objects
-- You can use relational operators (`<`, `>`, `<=`, `>=`, `==`, `!=`) directly on `string` objects without needing library functions.
-- Comparisons with C-strings are also valid (e.g., `str == "William"`).
+`string` objects can be compared directly using standard relational operators (`<`, `>`, `<=`, `>=`, `==`, `!=`). The comparisons are case-sensitive and based on the ASCII values of the characters. Comparisons are also valid between `string` objects and C-strings.
 
-> [!note] Ways to Define String Objects
-> - `string address;` (Empty string)
-> - `string name("William Smith");` (Initialized)
-> - `string person1(person2);` (Copy of another string or C-string)
-> - `string set1(set2, 5);` (Initialized with first 5 chars of `set2`)
-> - `string lineFull('z', 10);` (Initialized with 10 'z' characters)
-> - `string firstName(fullName, 0, 7);` (Substring of length 7 starting at index 0)
+> [!example] Example: Relational Comparisons
+> ```cpp
+> string set1 = "ABC";
+> string set2 = "XYZ";
+> if (set1 < set2)
+>     cout << "set1 is less than set2.\n"; // Output: set1 is less than set2.
+> ```
+> 
+> *Typo in lecture slides:* The slides show `string name1 = "Mary"; string name2 = "Mark"; if (set1 < set2)...`. Correct comparison of `name1 < name2` evaluates to `false` because `"Mary"` is lexicographically greater than `"Mark"` (since `'y'` has ASCII value 121 and `'k'` has ASCII value 107).
 
-### String Operators
-- `>>`: Extracts characters from a stream (stops at space).
-- `<<`: Inserts string into a stream.
-- `=`: Assigns content.
-- `+=` or `+`: Concatenates strings.
-- `[]`: Array-subscript notation to access individual characters.
+> [!example] Example: Comparing String Codes
+> ```cpp
+> #include <iostream>
+> #include <iomanip>
+> #include <string>
+> using namespace std;
+> 
+> int main()
+> {
+>     const double APRICE = 249.00;
+>     const double BPRICE = 299.00;
+>     string partNum;
+> 
+>     cout << "The stereo part numbers are:\n";
+>     cout << "\tBoom Box, part number S147-29A\n";
+>     cout << "\tShelf Model, part number S147-29B\n";
+>     cout << "Enter the part number of the stereo you wish to purchase: ";
+>     cin >> partNum;
+> 
+>     cout << fixed << showpoint << setprecision(2);
+>     if (partNum == "S147-29A")
+>         cout << "The price is $" << APRICE << endl;
+>     else if (partNum == "S147-29B")
+>         cout << "The price is $" << BPRICE << endl;
+>     else
+>         cout << partNum << " is not a valid part number.\n";
+> 
+>     return 0;
+> }
+> ```
 
-### String Class Member Functions
-- **Appending:** `.append(n, 'z')`, `.append(str2)`, `.append(str2, n)`, `.append(str2, x, n)`
-- **Assigning:** `.assign(n, 'z')`, `.assign(str2)`, `.assign(str2, n)`, `.assign(str2, x, n)`
-- **Accessing:** `.at(x)`, `.back()`, `.front()`, `.begin()`, `.end()`
-- **C-string Conversion:** `.c_str()` returns the address to the first element (e.g. `char* ptr = str1.c_str()`).
-- **Info:** `.capacity()`, `.length()`, `.size()`, `.empty()`
-- **Modifying:** `.clear()`, `.erase(x, n)`, `.insert(x, n, 'z')`, `.insert(x, str)`, `.replace(x, n, str)`, `.resize(n, 'z')`, `.swap(str)`
-- **Searching:** `.find(str, x)`, `.compare(str2)`
-- **Substrings:** `.substr(x, n)`
+> [!example] Example: Alphabetical Sorting of Strings
+> ```cpp
+> #include <iostream>
+> #include <string>
+> using namespace std;
+> 
+> int main()
+> {
+>     string name1, name2;
+>     cout << "Enter a name (last name first): ";
+>     getline(cin, name1);
+>     cout << "Enter another name: ";
+>     getline(cin, name2);
+> 
+>     cout << "Here are the names sorted alphabetically:\n";
+>     if (name1 < name2)
+>         cout << name1 << endl << name2 << endl;
+>     else if (name1 > name2)
+>         cout << name2 << endl << name1 << endl;
+>     else
+>         cout << "You entered the same name twice!\n";
+> 
+>     return 0;
+> }
+> ```
+
+### String Class Member Functions Reference
+For the examples below, assume:
+```cpp
+string str1("Mohammad"), str2("Ali");
+```
+
+#### Appending and Assigning
+- **`str1.append(n, 'z')`**: Appends `n` copies of character `'z'` to the end of `str1`.
+  - *Example:* `str1.append(3, 'z');` $\implies$ `str1` becomes `"Mohammadzzz"`.
+- **`str1.append(str2)`**: Appends `str2` to the end of `str1`.
+  - *Example:* `str1.append(str2);` $\implies$ `str1` becomes `"MohammadAli"`.
+- **`str1.append(str2, pos)`**: Appends a substring of `str2` starting at index `pos` to the end of `str1`.
+  - *Example:* `str1.append(str2, 2);` $\implies$ `str1` becomes `"Mohammadi"` (starting at index 2 of `"Ali"`, which is `'i'`).
+- **`str1.append(str2, pos, n)`**: Appends `n` characters from `str2` starting at index `pos` to the end of `str1`.
+  - *Example:* `str1.append(str2, 1, 2);` $\implies$ `str1` becomes `"Mohammadli"` (substring `"li"`).
+- **`str1.assign(n, 'z')`**: Replaces the content of `str1` with `n` copies of character `'z'`.
+  - *Example:* `str1.assign(6, 'z');` $\implies$ `str1` becomes `"zzzzzz"`.
+- **`str1.assign(str2)`**: Replaces the content of `str1` with `str2`.
+  - *Example:* `str1.assign(str2);` $\implies$ `str1` becomes `"Ali"`.
+- **`str1.assign(str2, pos)`**: Replaces content with a substring of `str2` starting at index `pos`.
+  - *Example:* `str1.assign(str2, 1);` $\implies$ `str1` becomes `"li"`.
+- **`str1.assign(str2, pos, n)`**: Replaces content with a substring of `str2` of length `n` starting at index `pos`.
+  - *Example:* `str1.assign(str2, 0, 2);` $\implies$ `str1` becomes `"Al"`.
+
+#### Accessing Elements
+- **`str1.at(pos)`**: Returns the character at index `pos`. Performs bounds checking and throws an `out_of_range` exception if `pos >= str1.size()`.
+  - *Example:* `str1.at(7)` $\implies$ returns `'d'`.
+- **`str1.back()`**: Returns a reference to the last character in the string (C++11 and above).
+  - *Example:* `str1.back()` $\implies$ returns `'d'`.
+- **`str1.front()`**: Returns a reference to the first character in the string (C++11 and above).
+  - *Example:* `str1.front()` $\implies$ returns `'M'`.
+- **`str1.begin()`**: Returns an iterator pointing to the first character of the string.
+  - *Example:* `str1.begin()` points to `'M'`.
+- **`str1.end()`**: Returns an iterator pointing to the theoretical element past the end of the string.
+  - *Example:* `cout << *(str1.end() - 1);` $\implies$ prints `'d'`.
+
+#### Size and Capacity Info
+- **`str1.size()` / `str1.length()`**: Returns the number of characters in the string.
+  - *Examples:*
+    - `str1.length();` $\implies$ returns `8`.
+    - `str1.size();` $\implies$ returns `8`.
+- **`str1.capacity()`**: Returns the size of the storage space currently allocated for the string.
+- **`str1.empty()`**: Returns `true` (1) if the string is empty (length is 0), and `false` (0) otherwise.
+
+#### C-String Conversion and Copying
+- **`str1.c_str()`**: Returns a pointer to a null-terminated character array (C-string) representing the string's content.
+  - *Example:* `const char* ptr = str1.c_str();` $\implies$ `ptr` points to `"Mohammad"`.
+- **`str1.copy(dest, n, pos)`**: Copies a substring of `str1` of length `n` starting at index `pos` into the character array `dest`.
+  - *Example:*
+    ```cpp
+    char dest[9];
+    str1.copy(dest, 8, 0); // Copies "Mohammad"
+    dest[8] = '\0'; // Manually null-terminate!
+    ```
+    $\implies$ `dest` becomes `"Mohammad"`. Note that `copy` does **not** append a null terminator.
+
+#### Modifying and Mutating
+- **`str1.clear()`**: Erases the contents of the string, making it empty (size 0).
+- **`str1.erase(pos, n)`**: Erasing `n` characters starting at index `pos`.
+  - *Example:* `str1.erase(3, 4);` $\implies$ `str1` becomes `"Mohd"` (removes `"amma"` from `"Mohammad"`).
+- **`str1.insert(pos, n, 'z')`**: Inserts `n` copies of character `'z'` starting at index `pos`.
+  - *Example:* `str1.insert(3, 4, 'z');` $\implies$ `str1` becomes `"Mohzzzzammad"`.
+- **`str1.insert(pos, str2)`**: Inserts a copy of `str2` starting at index `pos`.
+  - *Example:* `str1.insert(3, str2);` $\implies$ `str1` becomes `"MohAliammad"`.
+- **`str1.replace(pos, n, str2)`**: Replaces `n` characters starting at index `pos` with `str2`.
+  - *Example:* `str1.replace(3, 2, str2);` $\implies$ `str1` becomes `"MohAlimad"`.
+- **`str1.resize(n, 'z')`**: Resizes the string to a length of `n` characters. If the new size is larger than the current size, the new elements are initialized to `'z'`.
+  - *Example:* `str1.resize(10, 'z');` $\implies$ `str1` becomes `"Mohammadzz"`.
+- **`str1.swap(str2)`**: Swaps the contents of `str1` and `str2`.
+  - *Example:* `str1.swap(str2);` $\implies$ `str1` becomes `"Ali"`, `str2` becomes `"Mohammad"`.
+
+#### Searching and Substrings
+- **`str1.compare(str2)`**: Lexicographically compares `str1` and `str2`. Returns `0` if equal, negative if `str1 < str2`, and positive if `str1 > str2`.
+- **`str1.compare(pos, n, str2)`**: Compares a substring of `str1` of length `n` starting at index `pos` with `str2`.
+  - *Example:* `str1.compare(3, 1, str2)` compares substring `"a"` (from `"Mohammad"`) with `"Ali"`. Since `'a'` (ASCII 97) is greater than `'A'` (ASCII 65), the difference at index 0 is $97 - 65 = 32$. Returns `32`.
+- **`str1.find(str, pos)`**: Searches for the first occurrence of `str` in `str1` starting the search from index `pos`. Returns the starting index of the match if found; otherwise, returns `string::npos` (represented as `-1` or `18446744073709551615` on 64-bit systems).
+  - *Examples:*
+    - `str1.find(str2, 1);` $\implies$ returns `string::npos`.
+    - `str1.find("ham", 1);` $\implies$ returns `2` (starts at index 2 of `"Mohammad"`).
+    - `str1.find('z', 1);` $\implies$ returns `string::npos`.
+- **`str1.substr(pos, n)`**: Returns a newly constructed `string` object initialized with a substring of length `n` starting at index `pos`.
+  - *Example:* `str1.substr(3, 4);` $\implies$ returns `"amma"`.
+
+> [!warning] Modern C++ Compilation Error: `c_str()` Return Type
+> The slides list the example:
+> `char* ptr = str1.c_str();`
+> This will **not compile** in modern C++. The member function `c_str()` returns a `const char*` to prevent external code from directly modifying the string's internal character array. The correct code must be:
+> ```cpp
+> const char* ptr = str1.c_str();
+> ```
+
+---
 
 ## 6.3 Vectors
-- C++ offers a **vector** data type, which in many ways is superior to standard arrays.
-- Vectors are not part of the C++ language but were created in addition to built-in types.
-- A vector is a **sequence container**.
+- The C++ Standard Template Library (STL) provides the `std::vector` data type, which is a **sequence container** that represents a dynamic array.
+- In many programming contexts, vectors are superior to standard fixed-size arrays.
 
-### Similarities to Arrays
-- Holds a sequence of values/elements.
-- Stores elements in contiguous memory locations.
-- Array subscript operator `[]` can be used to read individual elements.
+### Comparison: Vectors vs. Standard Arrays
 
-### Advantages over Arrays
-- No need to declare the number of elements in advance.
-- If a new value is added to a full vector, the vector automatically increases its size to accommodate it.
-- Vectors can report the number of elements they contain.
+#### Similarities to Arrays
+1. Holds a sequence of values or elements of the same type.
+2. Stores its elements in contiguous memory locations.
+3. The array subscript operator `[]` can be used to access or modify individual elements.
+
+#### Advantages over Arrays
+1. **Dynamic Size:** There is no need to declare the fixed number of elements the vector will hold in advance.
+2. **Auto-Resizing:** If a new value is appended to a vector that is already full, the vector automatically increases its memory capacity to accommodate the new value.
+3. **Self-Reporting:** Vectors can report the exact number of elements they currently contain using the `.size()` member function.
 
 ### Defining a Vector
-- Requires `#include <vector>`.
-- `vector<int> numbers;`
-- `vector<int> numbers(10);` (Starts with size 10)
-- `vector<int> numbers(10, 2);` (Size 10, initialized with value 2)
-- `vector<int> set2(set1);` (Copy from another vector)
-- `vector<int> numbers { 10, 20, 30, 40 };` (Initialized with values)
+To define vector objects, you must `#include <vector>`.
 
-### Under the Hood: Dynamic Memory
-- Each time we enter data more than the starting size, the vector is assigned a new memory location to accommodate the new size. It also releases the old memory allocated.
+| Syntax | Description |
+| :--- | :--- |
+| `vector<float> amounts;` | Defines an empty vector of `float` elements. |
+| `vector<string> names;` | Defines an empty vector of `string` objects. |
+| `vector<int> scores(15);` | Defines a vector of 15 `int` elements, default-initialized to `0`. |
+| `vector<char> letters(25, 'A');` | Defines a vector of 25 `char` elements, each initialized to `'A'`. |
+| `vector<double> values2(values1);` | Defines a vector of `double` elements as an exact copy of `values1`. |
+| `vector<int> numbers {10, 20, 30, 40};` | Defines a vector initialized with the list elements (C++11 initialization list). |
 
-### Range-Based for Loop
+> [!important] Size Declarator Syntax
+> When specifying the starting size of a vector, the size declarator must be enclosed in **parentheses `()`**, not square brackets `[]`.
+> - **Correct:** `vector<int> numbers(10);`
+> - **Incorrect:** `vector<int> numbers[10];` (This defines an array of 10 empty vectors of integers).
+
+### Under the Hood: Dynamic Memory Management
+When a vector grows beyond its initial allocated size, C++ manages memory automatically:
+1. It allocates a new, larger block of contiguous memory elsewhere.
+2. It copies (or moves) all existing elements from the old block to the new block.
+3. It destroys the elements in the old block and releases the old memory.
+4. It appends the new value.
+
+> [!warning] Performance Overhead of Reallocation
+> This reallocation process is computationally expensive because it requires copying all elements. To optimize, you can use `.reserve(n)` to pre-allocate capacity if you know how many elements you will insert.
+
+### Storing and Retrieving Values
+You can read and write values in a vector using subscript notation `[]` just like an array, as long as the elements already exist.
+
+```cpp
+#include <iostream>
+#include <iomanip>
+#include <vector>
+using namespace std;
+
+int main()
+{
+    const int NUM_EMPLOYEES = 5;
+    vector<int> hours(NUM_EMPLOYEES);
+    vector<double> payRate(NUM_EMPLOYEES);
+    int index;
+
+    cout << "Enter the hours worked by " << NUM_EMPLOYEES
+         << " employees and their hourly rates.\n";
+
+    for (index = 0; index < NUM_EMPLOYEES; index++)
+    {
+        cout << "Hours worked by employee #" << (index + 1) << ": ";
+        cin >> hours[index]; // Storing values
+        cout << "Hourly pay rate for employee #" << (index + 1) << ": ";
+        cin >> payRate[index];
+    }
+
+    cout << "\nHere is the gross pay for each employee:\n";
+    cout << fixed << showpoint << setprecision(2);
+    for (index = 0; index < NUM_EMPLOYEES; index++)
+    {
+        double grossPay = hours[index] * payRate[index]; // Retrieving values
+        cout << "Employee #" << (index + 1) << ": $" << grossPay << endl;
+    }
+    return 0;
+}
+```
+
+> [!warning] Common Mistake: Accessing Out-of-Bounds Subscripts
+> You **cannot** use the subscript operator `[]` to access or write to elements that do not exist (e.g., trying to write `numbers[10] = 5` when the vector only has 5 elements). Doing so does not resize the vector; it results in undefined behavior or memory corruption. To grow a vector, use `.push_back()`.
+
+### Range-Based for Loops with Vectors
+Range-based for loops provide a clean syntax to traverse vectors.
+
+#### Traversing by Value (Read-Only)
 ```cpp
 vector<int> numbers { 10, 20, 30, 40, 50 };
-for (int val : numbers)
+for (int val : numbers) // val is a copy of each element
     cout << val << endl;
+```
 
-// By reference to modify:
-for (int &val : numbers)
+#### Traversing by Reference (Allows Modification)
+To modify elements, use reference variables (`&`) in the loop:
+```cpp
+vector<int> numbers(5);
+for (int &val : numbers) // val points directly to each element
 {
     cout << "Enter an integer value: ";
     cin >> val;
 }
 ```
 
-### Vector Member Functions
-- `.push_back(val)`: Stores a value as the last element. If the vector is full, it creates a new last element.
-- `.size()`: Returns the number of elements contained. Especially useful when passing vectors to functions.
-- `.pop_back()`: Removes the last element from the vector.
-- `.clear()`: Completely clears the contents of a vector.
-- `.empty()`: Returns true if the vector is empty.
-- `.reverse()`: Reverses the order of the elements in the vector.
+### Vector Member Functions Reference
 
-> [!warning] Out of Bounds
-> It is not possible to use the `[]` operator to add a new element to a vector that does not exist. Use `push_back` instead.
+- **`.push_back(val)`**: Appends a new value `val` to the end of the vector. If the vector is full, it automatically resizes.
+  - *Example:*
+    ```cpp
+    vector<int> numbers; // empty vector
+    numbers.push_back(25); // stores 25 as the first element
+    ```
+- **`.size()`**: Returns the number of elements currently stored in the vector.
+- **`.pop_back()`**: Removes the last element from the vector, decreasing the size by 1.
+  - *Example:*
+    ```cpp
+    vector<int> numbers { 10, 20, 30 };
+    numbers.pop_back(); // removes 30, leaving { 10, 20 }
+    ```
+- **`.clear()`**: Completely clears the contents of a vector, making its size `0`.
+- **`.empty()`**: Returns `true` if the vector is empty, and `false` otherwise.
+  - *Example:*
+    ```cpp
+    if (numbers.empty())
+        cout << "No values in numbers.\n";
+    ```
+
+> [!warning] Critical Correction: Reversing a Vector
+> The lecture slides show:
+> `numbers.reverse(); // To reverse the order of the elements`
+> This is **incorrect** and will result in a compilation error. `std::vector` does **not** have a `.reverse()` member function.
+> To reverse the elements of a vector in C++, you must `#include <algorithm>` and use `std::reverse()`:
+> ```cpp
+> #include <algorithm>
+> #include <vector>
+> // ...
+> std::reverse(numbers.begin(), numbers.end());
+> ```
+
+> [!tip] Extra Notes: Passing Vectors as Function Arguments
+> When passing a vector to a function, passing it by value (e.g., `void showValues(vector<int> vect)`) creates a copy of the entire vector. This is highly inefficient in terms of memory and CPU cycles.
+> To optimize, pass the vector by **`const` reference**:
+> ```cpp
+> void showValues(const vector<int> &vect)
+> {
+>     for (int count = 0; count < vect.size(); count++)
+>         cout << vect[count] << endl;
+> }
+> ```
 
 ---
 
