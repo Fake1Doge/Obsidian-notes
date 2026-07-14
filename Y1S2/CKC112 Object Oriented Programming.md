@@ -3714,20 +3714,20 @@ The `std::vector` class template provides a rich set of member functions to quer
 
 ### Member Functions Reference Table
 
-| Member Function | Description | Example Syntax |
-| :--- | :--- | :--- |
-| `at(element)` | Returns the value of the element located at the index `element`. Unlike the `[]` operator, `at()` performs bounds checking and throws an out-of-range exception if the index is invalid. | `x = vect.at(5);` |
-| `back()` | Returns a reference to the last element in the vector. | `cout << vect.back() << endl;` |
-| `begin()` | Returns an iterator pointing to the vector's first element. | `iter = vect.begin();` |
-| `capacity()` | Returns the maximum number of elements that can be stored in the vector without allocating more memory. This is distinct from `size()`. | `x = vect.capacity();` |
-| `clear()` | Deletes all elements from the vector, leaving it with a `size` of 0. | `vect.clear();` |
-| `empty()` | Returns `true` if the vector contains zero elements; otherwise, returns `false`. | `if (vect.empty())` |
-| `end()` | Returns an iterator pointing to the memory location immediately following the last element in the vector. | `iter = vect.end();` |
-| `erase(iter)` | Removes the single element pointed to by the iterator `iter` from the vector. | `vect.erase(iter);` |
-| `erase(iter1, iter2)` | Removes a range of elements starting at iterator `iter1` up to (but not including) iterator `iter2`. | `vect.erase(firstIter, secondIter);` |
-| `front()` | Returns a reference to the first element in the vector. | `cout << vect.front() << endl;` |
-| `insert(iter, value)` | Inserts `value` into the vector immediately before the element pointed to by iterator `iter`. | `vect.insert(iter, 22);` |
-| `resize(n, value)` | Resizes the vector to contain `n` elements. If the vector grows, the new elements are initialized to `value`. | `vect.resize(10, 0);` |
+| Member Function       | Description                                                                                                                                                                              | Example Syntax                       |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------- |
+| `at(element)`         | Returns the value of the element located at the index `element`. Unlike the `[]` operator, `at()` performs bounds checking and throws an out-of-range exception if the index is invalid. | `x = vect.at(5);`                    |
+| `back()`              | Returns a reference to the last element in the vector.                                                                                                                                   | `cout << vect.back() << endl;`       |
+| `begin()`             | Returns an iterator pointing to the vector's first element.                                                                                                                              | `iter = vect.begin();`               |
+| `capacity()`          | Returns the maximum number of elements that can be stored in the vector without allocating more memory. This is distinct from `size()`.                                                  | `x = vect.capacity();`               |
+| `clear()`             | Deletes all elements from the vector, leaving it with a `size` of 0.                                                                                                                     | `vect.clear();`                      |
+| `empty()`             | Returns `true` if the vector contains zero elements; otherwise, returns `false`.                                                                                                         | `if (vect.empty())`                  |
+| `end()`               | Returns an iterator pointing to the memory location immediately following the last element in the vector.                                                                                | `iter = vect.end();`                 |
+| `erase(iter)`         | Removes the single element pointed to by the iterator `iter` from the vector.                                                                                                            | `vect.erase(iter);`                  |
+| `erase(iter1, iter2)` | Removes a range of elements starting at iterator `iter1` up to (but not including) iterator `iter2`.                                                                                     | `vect.erase(firstIter, secondIter);` |
+| `front()`             | Returns a reference to the first element in the vector.                                                                                                                                  | `cout << vect.front() << endl;`      |
+| `insert(iter, value)` | Inserts `value` into the vector immediately before the element pointed to by iterator `iter`.                                                                                            | `vect.insert(iter, 22);`             |
+| `resize(n, value)`    | Resizes the vector to contain `n` elements. If the vector grows, the new elements are initialized to `value`.                                                                            | `vect.resize(10, 0);`                |
 
 > [!warning] Common Mistake: Reversing a Vector
 > The lecture slide mentions `vect.reverse();`. However, in standard C++, `std::vector` does **not** have a `reverse()` member function. 
