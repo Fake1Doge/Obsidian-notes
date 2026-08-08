@@ -48,3 +48,6 @@ temp_*.pdf
 # Antigravity / Agent CLI local-only files
 .antigravitycli/
 Antigravity CLI.bat
+
+# Quartz subdirectory
+/quartz/
