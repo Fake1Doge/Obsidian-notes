@@ -1,51 +1,59 @@
 ---
 name: pdf-extractor
-description: Extracts text notes and splits PDFs automatically. Use this skill when working with large PDFs that exceed read limits to process them sequentially.
+description: Extracts structured Markdown notes from documents (PDF, PPTX, DOCX) and splits large PDFs automatically. Use when processing course materials, converting lecture slides, or chunking oversized PDFs.
 ---
 
-# PDF Extractor
+# Document & PDF Extractor
 
 ## Overview
-This skill provides automated scripts to extract text and split PDF files. It is intended for use when dealing with files that are too large to read directly.
-**Note:** The native `read_file` tool handles PDF text extraction intrinsically. Always prefer `read_file` for reading PDFs over the Node.js scripts below, as it is faster and doesn't require temporary files. Use the scripts here *if and only if* the file is too large to read directly (e.g., exceeds file size or token limits).
+This skill provides automated tools to extract structured content from course materials and handle large files:
+1. **AnyDoc Engine (`extract_document.js`)**: Converts documents (Word `.docx`, PowerPoint `.pptx`, Excel `.xlsx`, and text PDFs) directly into clean GitHub-Flavored Markdown.
+2. **PDF Chunking (`split_pdf.js`)**: Splits large PDFs into page-range chunks to avoid context or token limits.
+3. **Smart Fallback**: If a PDF contains image-only or diagram slides that need visual inspection, it extracts the available text layer via `pdf2json` and flags pages for visual inspection via `view_file`.
+
+---
 
 ## Workflows
 
-### 1. Direct Reading (Preferred Method)
-1. Directly use the `read_file` tool on the target PDF file if it is small or medium-sized.
-2. Read the returned text directly to generate Obsidian notes topic-by-topic.
+### 1. Document Extraction & Conversion (AnyDoc)
+Use this whenever you need to convert `.docx`, `.pptx`, `.xlsx`, or text-heavy `.pdf` files into structured Markdown:
+```bash
+node "<path-to-skill>/scripts/extract_document.js" "<path-to-document>" [-o "<output-markdown-path>"]
+```
+- Default output: `temp_extracted_content.md` (and `temp_pdf_text.txt` for PDFs) in the target file's directory.
+- **Direct CLI shortcut**: You can also use the global `anydoc` CLI directly:
+  ```bash
+  anydoc "<path-to-file>" -o "<output-file.md>"
+  ```
+- **Crucial Cleanup**: If a temporary file was generated (e.g. `temp_extracted_content.md` or `temp_pdf_text.txt`), delete it immediately after integrating the content into the master note.
 
 ### 2. Splitting a Large PDF for Topic-by-Topic Processing
-If a PDF file is too large to read directly, you can split it by specific page ranges or into sequential chunks:
+If a PDF file is too large to read directly (e.g. 50+ or 100+ pages), split it by page ranges or into sequential chunks:
 
 - **Extracting a Specific Page Range**:
-  Use this when you know exactly which pages correspond to the current topic:
   ```bash
-  rtk node "<path-to-skill>/scripts/split_pdf.js" <absolute-path-to-target-pdf> <start-page> <end-page>
+  node "<path-to-skill>/scripts/split_pdf.js" "<path-to-target-pdf>" <start-page> <end-page>
   ```
-- **Splitting into Fixed-Size Chunks (Recommended for processing whole directories)**:
-  Use this to split the PDF into small parts of `N` pages (default is 20 pages):
+- **Splitting into Fixed-Size Chunks (Default 20 pages)**:
   ```bash
-  rtk node "<path-to-skill>/scripts/split_pdf.js" <absolute-path-to-target-pdf> --chunk 20
+  node "<path-to-skill>/scripts/split_pdf.js" "<path-to-target-pdf>" --chunk 20
   ```
 
 Once split:
-1. Read the split PDF part(s) using the `read_file` tool.
-2. Process the topic, write/merge it into the master note.
+1. Extract or read each chunk (`extract_document.js` or `view_file`).
+2. Process the topic and write/merge into the master note.
 3. Run the `rearrange-topics` script on the master file.
-4. **Crucial Cleanup:** Immediately delete the temporary split PDF files.
+4. **Crucial Cleanup**: Immediately delete temporary split PDF files.
 
-### 3. Extracting Text from a PDF (Fallback Method)
-If `read_file` fails or a raw text dump is needed for a large file:
-1. Run the extractor script with `rtk` (uses `pdf-parse` for fast text extraction):
-   ```bash
-   rtk node "<path-to-skill>/scripts/extract_pdf.js" <absolute-path-to-target-pdf>
-   ```
-2. The script will generate `temp_pdf_text.txt` in the same directory as the PDF. Read this file sequentially (e.g., topic by topic using line ranges).
-3. **Crucial Cleanup:** Delete `temp_pdf_text.txt` from the workspace immediately after finishing the topic.
+### 3. Handling Scanned / Visual Slides
+If `extract_document.js` notes that a PDF has pages needing OCR, or if the lecture consists of scanned images:
+- Use the native agent `view_file` tool on the specific page or file for multimodal visual understanding.
+- Preserve formulas, diagrams, and figures in Obsidian Markdown using LaTeX (`$...$`) and Mermaid diagrams.
+
+---
 
 ## Included Scripts
-- `extract_pdf.js`: Uses `pdf-parse` to extract text content to a `.txt` file.
-- `split_pdf.js`: Uses `pdf-lib` to extract page ranges or split a PDF into sequential page chunks.
-- `package.json`: Contains dependencies (`pdf-lib`, `pdf-parse`, `pdf2json`).
-
+- `extract_document.js`: Primary extractor combining `@firecrawl/anydoc` (for structured Markdown from PDF/DOCX/PPTX) and `pdf2json` fallback.
+- `extract_pdf.js`: Backwards-compatible alias delegating to `extract_document.js`.
+- `split_pdf.js`: Uses `pdf-lib` to extract page ranges or split PDFs into chunks.
+- `package.json`: Contains `@firecrawl/anydoc`, `pdf-lib`, `pdf-parse`, and `pdf2json`.

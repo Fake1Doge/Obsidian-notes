@@ -13,7 +13,10 @@ This skill guides you in transforming a **single** raw lecture material (text fi
 2. **No Loss of Detail**: Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. The output must be comprehensive. Do not excessively summarize or omit information.
 3. **Dependencies**:
    - Use the `obsidian-markdown` skill to guide the markdown formatting (callouts, links, math, code blocks, etc.).
-   - Use the `pdf-extractor` skill **if and only if** the source PDF is too big to be read directly (e.g., exceeds file read limits or context limits). For very large PDFs, use chunked splitting (`--chunk 20`) to process page ranges sequentially. For files that can be read directly, do not use `pdf-extractor`.
+   - Use the `pdf-extractor` skill (incorporating `anydoc` and `split_pdf.js`):
+     - For PowerPoint (`.pptx`) or Word (`.docx`) files, use `anydoc` or `extract_document.js` to convert them directly into structured Markdown drafts.
+     - For large PDFs (e.g. exceeding read or token limits), use chunked splitting (`--chunk 20`) via `split_pdf.js` to process page ranges sequentially.
+     - For small/medium text-based files, read them directly or parse with `extract_document.js`.
 4. **Consistency**: Ensure that the headings, titles, and subheadings added are consistent in style and hierarchy with the existing chapters in the master note.
 5. **Clarity Enhancement (Extra Notes)**: If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
 6. **No Redundant Headers**: Do NOT add course overviews. Start directly with the content or the chapter/topic header.
@@ -25,13 +28,18 @@ This skill guides you in transforming a **single** raw lecture material (text fi
 
 1. **Activate Dependencies**: Activate the `obsidian-markdown` and `pdf-extractor` skills.
 2. **Locate Target Section**: Locate the corresponding chapter or section in the master note.
-3. **Read Lecture Content**: Read the content of the single lecture. If the file is too big to read directly, use `pdf-extractor` to split it into chunks or extract specific page ranges first.
+3. **Read Lecture Content**:
+   - If the material is in `.pptx` or `.docx` format, extract it into structured Markdown using `extract_document.js` or `anydoc`.
+   - If the file is a PDF that is too large to read directly, use `split_pdf.js` to split it into chunks or extract content using `extract_document.js`.
+   - For visual/scanned slide pages requiring OCR, use the native `view_file` tool.
 4. **Compare and Integrate:**
    - Compare the source content with the existing note.
    - If the note already contains the chapter, merge any missing details, examples, formulas, tables, or diagrams.
    - If the chapter is missing, format it and append it to the end of the master note.
    - **Mixed Content**: If the lecture notes contain distinct materials (like a lab, assignment, tutorial, or appendix), use the appropriate special section prefix (e.g. `# Lab X: [Title]` or `# Appendix X: [Title]`) so they are correctly numbered in separate sequences.
 5. **Verify Style**: Check that all new sections conform to the **Obsidian Formatting Guidelines** below.
+6. **Sync to Knowledge Base**: Invoke the `update-knowledge` skill to summarize the newly created or updated note/chapter into `knowledge.md` and link it directly back to the original section.
+
 
 ---
 

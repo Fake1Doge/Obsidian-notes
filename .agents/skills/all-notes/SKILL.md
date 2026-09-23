@@ -44,6 +44,9 @@ When a course is requested (e.g. "CKS121"):
        - **Stereotype Syntax** must be applied on a separate line (e.g., `<<abstract>> Sale`).
      - Ensure the appended section starts directly with its heading and does not contain YAML frontmatter/properties.
      - Verify that subtopics are correctly aligned to their parent heading's number (e.g., `## X.Y [Subtitle]`).
+4. **Knowledge Base Synchronization**:
+   - Invoke the `update-knowledge` skill to summarize the newly added chapters/course into `knowledge.md`, ensuring all headings, concepts, and definitions link directly to their exact anchors in the master note.
+
 
 
 ---
