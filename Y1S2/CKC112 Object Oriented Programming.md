@@ -59,6 +59,16 @@ struct <structName>
   Student bill;
   ```
 
+```mermaid
+graph TD
+    subgraph bill ["Variable: bill (Type: Student)"]
+        bill_id["studentID (int)"]
+        bill_name["name (string)"]
+        bill_year["yearInSchool (short)"]
+        bill_gpa["gpa (double)"]
+    end
+```
+
 ## 1.3 Accessing Structure Members
 - Use the dot (`.`) operator to refer to members of `struct` variables:
   ```cpp
@@ -119,6 +129,20 @@ struct <structName>
 >     cout << "Gross Pay: $" << employee.grossPay << endl;
 >     return 0;
 > }
+> ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter the employee's number: 489 [Enter]
+> Enter the employee's name: Jill Smith [Enter]
+> How many hours did the employee work? 40 [Enter]
+> What is the employee's hourly pay rate? 20 [Enter]
+> Here is the employee's payroll data:
+> Name: Jill Smith
+> Number: 489
+> Hours worked: 40
+> Hourly pay rate: 20
+> Gross Pay: $800.00
 > ```
 
 > [!warning] Common Mistake: Displaying a `struct` Variable
@@ -230,6 +254,24 @@ struct <structName>
 >     return 0;
 > }
 > ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter the hours worked by 3 employees and their hourly rates.
+> Hours worked by employee #1: 10 [Enter]
+> Hourly pay rate for employee #1: 9.75 [Enter]
+> 
+> Hours worked by employee #2: 20 [Enter]
+> Hourly pay rate for employee #2: 10.00 [Enter]
+> 
+> Hours worked by employee #3: 40 [Enter]
+> Hourly pay rate for employee #3: 20.00 [Enter]
+> 
+> Here is the gross pay for each employee:
+> Employee #1: $97.50
+> Employee #2: $200.00
+> Employee #3: $800.00
+> ```
 
 ## 1.6 Nested Structures
 A structure can contain another structure as a member:
@@ -257,19 +299,50 @@ struct Student
   ```
 
 ## 1.7 Structures as Function Arguments
-- May pass members of `struct` variables to functions: `computeGPA(stu.gpa);`
-- May pass entire `struct` variables to functions: `showData(stu);`
+- **Passing structure members:** Individual members can be passed just like regular variables:
+  ```cpp
+  computeGPA(stu.gpa);
+  ```
+- **Passing entire structure variables:** You can pass an entire `struct` variable to a function:
+  ```cpp
+  showData(stu);
+  ```
+- Can use a **reference parameter** if the function needs to modify the contents of the structure variable.
 
-> [!note] Important Notes on Function Arguments
-> - Using a value parameter for a structure can slow down a program and waste space.
-> - Using a reference parameter will speed up the program, but the function may change data in the structure.
-> - Using a `const` reference parameter allows read-only access to the reference parameter, does not waste space, and increases speed.
+> [!example] Example: Excerpts from Program 11-6 (Pass by Value)
+> ```cpp
+> struct InventoryItem
+> {
+>     int partNum;         // Part number
+>     string description;  // Item description
+>     int onHand;          // Units on hand
+>     double price;        // Unit price
+> };
+> 
+> void showItem(InventoryItem p)
+> {
+>     cout << fixed << showpoint << setprecision(2);
+>     cout << "Part Number: " << p.partNum << endl;
+>     cout << "Description: " << p.description << endl;
+>     cout << "Units On Hand: " << p.onHand << endl;
+>     cout << "Price: $" << p.price << endl;
+> }
+> ```
 
-> [!example] Example of `const` Reference Parameter
+> [!note] Parameter Passing Mechanics & Trade-offs
+> - **Value Parameter (`Type var`)**: Passes a complete copy of the structure. For large structures with many members, this can significantly slow down execution and waste stack memory.
+> - **Reference Parameter (`Type &var`)**: Passes the memory address rather than a copy. This speeds up the program and conserves memory, but allows the function to accidentally modify the original structure's contents.
+> - **Constant Reference Parameter (`const Type &var`)**: Provides the optimal solution for read-only access. It passes by reference (avoiding copying overhead and saving speed/space) while the `const` qualifier prevents accidental modification of the original data.
+
+> [!example] Example: Revised `showItem` Function (`const` Reference)
 > ```cpp
 > void showItem(const InventoryItem &p)
 > {
+>     cout << fixed << showpoint << setprecision(2);
 >     cout << "Part Number: " << p.partNum << endl;
+>     cout << "Description: " << p.description << endl;
+>     cout << "Units On Hand: " << p.onHand << endl;
+>     cout << "Price: $" << p.price << endl;
 > }
 > ```
 
@@ -348,6 +421,14 @@ struct Student
 >     return tempCircle;
 > }
 > ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter the diameter of a circle: 10 [Enter]
+> The radius and area of the circle are:
+> Radius: 5.00
+> Area: 78.54
+> ```
 
 ## 1.9 Using Structured Binding Declarations with Structures
 - A structured binding declaration defines a set of variables and initializes them with the values that are stored in a structure.
@@ -417,6 +498,15 @@ auto [variable1, variable2, etc...] = structureVar;
 > 
 >     return c;
 > }
+> ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter your name: Jill Johnson [Enter]
+> Enter your email address: jjohnson@example.com [Enter]
+> You entered:
+> Jill Johnson
+> jjohnson@example.com
 > ```
 
 ## 1.10 Pointers to Structures
@@ -520,6 +610,16 @@ auto [variable1, variable2, etc...] = structureVar;
 >     return 0;
 > }
 > ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter the sales for day 0: 1525.00 [Enter]
+> Enter the sales for day 1: 1896.50 [Enter]
+> Enter the sales for day 2: 1975.63 [Enter]
+> Enter the sales for day 3: 1678.33 [Enter]
+> Enter the sales for day 4: 1498.52 [Enter]
+> The total sales are $8573.98
+> ```
 
 - **Anonymous Enumerated Types:** An anonymous enumerated type does not have a name:
   ```cpp
@@ -565,8 +665,22 @@ auto [variable1, variable2, etc...] = structureVar;
 >     return 0;
 > }
 > ```
+>
+> **Program Output with Example Input Shown in Bold:**
+> ```text
+> Enter the sales for day 0: 1525.00 [Enter]
+> Enter the sales for day 1: 1896.50 [Enter]
+> Enter the sales for day 2: 1975.63 [Enter]
+> Enter the sales for day 3: 1678.33 [Enter]
+> Enter the sales for day 4: 1498.52 [Enter]
+> The total sales are $8573.98
+> ```
 
-- **Unique Scopes:** Enumerators must be unique within the same scope (unless using strongly typed enums). Error results if the same enumerator name is declared twice.
+- **Unique Scopes:** Enumerators must be unique within the same scope (unless using strongly typed enums). For example, an error will result if both of the following traditional enumerated types are declared within the same scope:
+  ```cpp
+  enum Presidents { MCKINLEY, ROOSEVELT, TAFT };
+  enum VicePresidents { ROOSEVELT, FAIRBANKS, SHERMAN }; // Error: ROOSEVELT is declared twice in global scope
+  ```
 
 ### Strongly Typed enums (C++11)
 - C++11 introduced a new type known as a strongly typed enum.

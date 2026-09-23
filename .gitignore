@@ -4,14 +4,28 @@
 .obsidian/workspace-mobile
 .obsidian/workspace-mobile.json
 .obsidian/graph.json
+.obsidian/cache/
+.obsidian/indexeddb/
 .obsidian/plugins/obsidian-git/obsidian_askpass.sh
+conflict-files-obsidian-git.md
 .trash/
 
 # Operating System files
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
 Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 desktop.ini
 $RECYCLE.BIN/
+*~
+.fuse_hidden*
+.directory
 
 # Package managers and node modules
 node_modules/
@@ -19,26 +33,61 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.pnpm-store/
+
+# Python / Scripts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
 
 # IDEs and text editors
 .vscode/
 .idea/
 *.swp
+*.swo
 *.bak
 *.tmp
 
-# Temporary/Cache files
-temp_*.txt
-temp_*.pdf
+# Temporary, Cache and Download files
+temp_*
+*.tmp
+*.temp
+*.crdownload
+*.part
+*.download
+*_part_*.pdf
+*_pages_*_to_*.pdf
 
 # Large and binary files
 *.pdf
 *.ipynb
 *.pptx
+*.ppt
 *.docx
+*.doc
 *.xlsx
+*.xls
 *.zip
 *.tar.gz
+*.tar
+*.gz
+*.7z
+*.rar
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.mp3
+*.wav
+*.flac
+*.exe
+*.msi
+*.dmg
+*.iso
 
 # Environment and secret files
 .env
@@ -49,5 +98,9 @@ temp_*.pdf
 .antigravitycli/
 Antigravity CLI.bat
 
-# Quartz subdirectory
+# Quartz digital garden & build artifacts
 /quartz/
+.quartz-cache/
+.quartz/
+tsconfig.tsbuildinfo
+

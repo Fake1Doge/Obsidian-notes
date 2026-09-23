@@ -461,8 +461,11 @@ classDiagram
 ```
 
 ### 5.1 [[Y1S2/CKC112 Object Oriented Programming#Chapter 1: Structured Data|Structured Data & Memory Alignment]]
-- **`struct` Mechanics**: Member access (`.`), pointer to member (`->`), memory layout, structs inside structs.
-- **Function Interfacing**: Passing structs by `const Type&` to avoid copying overhead; `enum class` scoped enumerations.
+- **`struct` Definition & Memory Layout**: Groups heterogeneous types into a single composite entity via [[Y1S2/CKC112 Object Oriented Programming#1.2 Combining Data into Structures|`struct` declarations]]; memory is only allocated upon variable instantiation, packing fields sequentially according to data alignment.
+- **Member Access & Traversal**: Access fields using the direct dot operator (`.`) for instances or arrow operator (`->`) for [[Y1S2/CKC112 Object Oriented Programming#1.10 Pointers to Structures|pointers to structures]] (`stuPtr->member` equivalent to `(*stuPtr).member`).
+- **Function Interfacing & Efficiency**: [[Y1S2/CKC112 Object Oriented Programming#1.7 Structures as Function Arguments|Parameter passing optimization]] — pass by value incurs severe memory copying overhead; pass by `const Type&` ensures zero-copy performance while enforcing read-only safety.
+- **C++17 Structured Binding**: [[Y1S2/CKC112 Object Oriented Programming#1.9 Using Structured Binding Declarations with Structures|Unpacking structures]] directly into alias variables via `auto [var1, var2, ...] = structVar;`.
+- **Enumerations & Type Safety**: [[Y1S2/CKC112 Object Oriented Programming#1.11 Enumerated Data Types|Traditional vs Strongly Typed enums]] — traditional `enum` introduces integer constants that pollute the enclosing scope; C++11 `enum class` enforces scope resolution (`Enum::VAL`) and prevents implicit numeric conversions.
 
 ### 5.2 [[Y1S2/CKC112 Object Oriented Programming#Chapter 2: Introduction to Classes|Class Foundations & Encapsulation]]
 - **Encapsulation & Access Specifiers**: `public`, `private`, `protected`.
@@ -773,6 +776,7 @@ graph TD
 ## 10. 📖 Master Glossary of Core Terminology
 
 - **Abstract Base Class (ABC)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions|A class containing at least one pure virtual function (`= 0`), serving as a non-instantiable structural interface]].
+- **Abstract Data Type (ADT)**: [[Y1S2/CKC112 Object Oriented Programming#1.1 Abstract Data Types|A programmer-defined data model specifying allowed values and operations while abstracting internal implementation details]].
 - **Booth's Algorithm**: [[Y1S1/CCA102 Computer Organisation#Topic 3: Computer Arithmetic|A hardware multiplication algorithm multiplying two signed binary numbers in two's complement notation by encoding strings of 1s]].
 - **Cache Coherence**: [[Y1S1/CCA102 Computer Organisation#Topic 13: Multiprocessor Organisation|The synchronization of data across multiple local caches in a multiprocessor system to guarantee a consistent global memory view (MESI protocol)]].
 - **Change Control Board (CCB)**: [[Y1S2/CKS121 Software Requirements#Chapter 10: Requirements Management|A formally constituted committee responsible for reviewing, evaluating, approving, or rejecting proposed changes to project baselines]].
@@ -792,6 +796,8 @@ graph TD
 - **RAII (Resource Acquisition Is Initialization)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 7: Pointers and Dynamic Variables|A core C++ idiom tying the lifecycle of resources to object scope and destructor invocation]].
 - **Requirements Traceability Matrix (RTM)**: [[Y1S2/CKS121 Software Requirements#Chapter 10: Requirements Management|A cross-referencing table mapping business requirements forward to architectural designs, source code, and test verification cases]].
 - **SOLID Principles**: [[Y1S2/CCA103 System Analysis and Design#Chapter 11: Object-Oriented Design: Principles (Part 2)|Five foundational object-oriented design principles: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion]].
+- **Strongly Typed Enum (`enum class`)**: [[Y1S2/CKC112 Object Oriented Programming#1.11 Enumerated Data Types|A scoped C++11 enumeration that eliminates global identifier collisions and requires explicit type casting for numeric operations]].
+- **Structured Binding**: [[Y1S2/CKC112 Object Oriented Programming#1.9 Using Structured Binding Declarations with Structures|A C++17 mechanism allowing composite data structures and arrays to be unpacked directly into individual alias variables]].
 - **Translation Lookaside Buffer (TLB)**: [[Y1S1/CCA102 Computer Organisation#Topic 12: Memory Management and Virtual Memory|A high-speed associative hardware cache in the MMU storing recent virtual-to-physical page table translations]].
 - **Use Case Realization**: [[Y1S2/CCA103 System Analysis and Design#Chapter 12: Object-Oriented Design: Use Case Realization|The modeling process illustrating how domain objects collaborate in sequence diagrams to execute a use case]].
 - **vtable (Virtual Table)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions|An internal lookup table created by C++ compilers containing function pointers to virtual methods for dynamic dispatch]].

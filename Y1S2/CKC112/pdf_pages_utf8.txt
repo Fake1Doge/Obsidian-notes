@@ -1,0 +1,153 @@
+﻿Warning: Setting up fake worker.
+--- Page 1 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Chapter 11: Structured Data
+--- Page 2 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.1 Abstract Data Types
+--- Page 3 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Abstract Data Types ΓÇó A data type that specifies ΓÇó values that can be stored ΓÇó operations that can be done on the values ΓÇó User of an abstract data type does not  need to know the implementation of the  data type,  e.g. , how the data is stored ΓÇó ADTs are created by programmers
+--- Page 4 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Abstraction and Data Types ΓÇó Abstraction : a definition that captures general  characteristics without details ΓÇó Ex: An abstract triangle is a 3 - sided polygon. A specific triangle  may be scalene, isosceles, or equilateral ΓÇó Data Type defines the values that can be stored in a  variable and the operations that can be performed on it
+--- Page 5 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.2 Combining Data into Structures
+--- Page 6 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Combining Data into Structures ΓÇó Structure : C++ construct that allows multiple variables to be  grouped together ΓÇó General Format: struct < structName > { type 1 field 1 ; type 2 field 2 ; . . . };
+--- Page 7 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Example  struct Declaration
+--- Page 8 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. struct Declaration Notes ΓÇó Must have  ; after closing  } ΓÇó struct names commonly begin with  uppercase letter ΓÇó Multiple fields of same type can be in  comma - separated list: string name, address;
+--- Page 9 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Defining Variables ΓÇó struct declaration does not allocate  memory or create variables ΓÇó To define variables, use structure tag as  type name: Student bill;
+--- Page 10 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.3 Accessing Structure Members
+--- Page 11 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Accessing Structure Members ΓÇó Use the dot  (.) operator to refer to members of  struct variables: cin >> stu1.studentID; getline(cin, stu1.name); stu1.gpa = 3.75; ΓÇó Member variables can be used in any manner appropriate for their  data type
+--- Page 12 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 13 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 14 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 15 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Displaying a  struct Variable ΓÇó To display the contents of a  struct variable, must  display each field separately, using the dot operator: cout << bill; // won ΓÇÖ t work cout << bill.studentID << endl; cout << bill.name << endl; cout << bill.yearInSchool; cout << " " << bill.gpa;
+--- Page 16 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Comparing  struct Variables ΓÇó Cannot compare  struct variables directly: if (bill == william) // won ΓÇÖ t work ΓÇó Instead, must compare on a field basis: if (bill.studentID == william.studentID) ...
+--- Page 17 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.4 Initializing a Structure
+--- Page 18 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Initializing a Structure ΓÇó struct variable can be initialized when  defined: Student s = {11465, "Joan", 2, 3.75}; ΓÇó Can also be initialized member - by - member after definition: s.name = "Joan"; s.gpa = 3.75;
+--- Page 19 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. More on Initializing a Structure ΓÇó May initialize only some members: Student bill = {14579}; ΓÇó Cannot skip over members: Student s = {1234, "John", , 2.83}; // illegal ΓÇó Cannot initialize in the structure  declaration, since this does not allocate  memory
+--- Page 20 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Excerpts From Program 11 - 3
+--- Page 21 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.5 Arrays of Structures
+--- Page 22 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Arrays of Structures ΓÇó Structures can be defined in arrays ΓÇó Can be used in place of parallel arrays const int NUM_STUDENTS = 20; Student stuList[NUM_STUDENTS]; ΓÇó Individual structures accessible using subscript  notation ΓÇó Fields within structures accessible using dot  notation: cout << stuList[5].studentID;
+--- Page 23 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 24 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 25 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 26 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.6 Nested Structures
+--- Page 27 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Nested Structures A structure can contain another structure as a  member: struct PersonInfo {    string name, address, city; }; struct Student { int studentID; PersonInfo pData; short yearInSchool; double gpa; };
+--- Page 28 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Members of Nested Structures ΓÇó Use the dot operator multiple times to refer to fields of  nested structures: Student s; s.pData.name = "Joanne"; s.pData.city = "Tulsa";
+--- Page 29 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.7 Structures as Function Arguments
+--- Page 30 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Structures as Function  Arguments ΓÇó May pass members of   struct variables to  functions: computeGPA(stu.gpa); ΓÇó May pass entire  struct variables to functions: showData(stu); ΓÇó Can use reference parameter if function needs  to modify contents of structure variable
+--- Page 31 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Excerpts from Program 11 - 6
+--- Page 32 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Structures as Function Arguments  - Notes ΓÇó Using value parameter for structure can  slow down a program, waste space ΓÇó Using a reference parameter will speed up  program, but function may change data in  structure ΓÇó Using a  const reference parameter  allows read - only access to reference  parameter, does not waste space, speed
+--- Page 33 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Revised  showItem Function
+--- Page 34 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.8 Returning a Structure from a  Function
+--- Page 35 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Returning a Structure from a Function ΓÇó Function can return a  struct : Student getStudentData(); // prototype stu1 = getStudentData(); // call ΓÇó Function must define a local structure ΓÇó for internal use ΓÇó for use with  return statement
+--- Page 36 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Returning a Structure from a Function  - Example Student getStudentData() { Student tempStu; cin >> tempStu.studentID; getline(cin, tempStu.pData.name); getline(cin, tempStu.pData.address); getline(cin, tempStu.pData.city); cin >> tempStu.yearInSchool; cin >> tempStu.gpa; return tempStu; }
+--- Page 37 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 38 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 39 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 40 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.9 Using Structured Binding  Declarations with Structures
+--- Page 41 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Structured Binding Declarations  (1 of 3) ΓÇó A structured binding declaration defines a set of variables and  initializes them with the values that are stored in a structure. ΓÇó A process known as  unpacking a structure ΓÇó Can also be used to unpack arrays (see Chapter 7) ΓÇó Structured binding declarations were introduced in C++ 17
+--- Page 42 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Structured Binding Declarations  (2 of 3) ΓÇó General format: auto [ variable1, variable2, etc ...] =  structureVar ;
+--- Page 43 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Structured Binding Declarations  (3 of 3) ΓÇó Example: struct Automobile { string make; int year; double mileage; }; Automobile car = { "Porsche", 2020, 12400.0 }; auto [first, second, third] = car; cout << first << endl; cout << second << endl; cout << third << endl; This code will display: Porsche 2020 12400.0
+--- Page 44 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 45 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 46 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.10 Pointers to Structures
+--- Page 47 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Pointers to Structures ΓÇó A structure variable has an address ΓÇó Pointers to structures are variables that can hold the  address of a structure: Student *stuPtr; ΓÇó Can use  & operator to assign address: stuPtr = & stu1; ΓÇó Structure pointer can be a function parameter
+--- Page 48 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Accessing Structure Members via Pointer  Variables ΓÇó Must use  () to dereference pointer  variable, not field within structure: cout << (*stuPtr).studentID; ΓÇó Can use structure pointer operator to  eliminate  () and use clearer notation: cout << stuPtr - >studentID;
+--- Page 49 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. From Program 11 - 9
+--- Page 50 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. 11.12 Enumerated Data Types
+--- Page 51 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (1 of 9) ΓÇó An enumerated data type is a programmer - defined data type. It consists of values  known as  enumerators , which represent  integer constants.
+--- Page 52 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (2 of 9) ΓÇó Example: enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY }; ΓÇó The identifiers  MONDAY ,  TUESDAY ,  WEDNESDAY ,  THURSDAY , and  FRIDAY ,  which are listed inside the braces, are  enumerators . They represent the values  that belong to the  Day data type.
+--- Page 53 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (3 of 9) enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY }; Note that the enumerators are not strings, so they arenΓÇÖt enclosed in quotes.  They are identifiers.
+--- Page 54 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (4 of 9) ΓÇó Once you have created an enumerated data type in your  program, you can define variables of that type. Example: Day workDay; ΓÇó This statement defines  workDay as a variable of the  Day type.
+--- Page 55 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (5 of 9) ΓÇó We may assign any of the enumerators  MONDAY ,  TUESDAY ,  WEDNESDAY ,  THURSDAY , or  FRIDAY to a variable of the  Day type. Example: workDay = WEDNESDAY;
+--- Page 56 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (6 of 9) ΓÇó So, what is an  enumerator ? ΓÇó Think of it as an integer named constant ΓÇó Internally, the compiler assigns integer  values to the enumerators, beginning at 0.
+--- Page 57 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (7 of 9) enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY }; In memory... MONDAY     = 0 TUESDAY    = 1 WEDNESDAY  = 2 THURSDAY   = 3 FRIDAY     = 4
+--- Page 58 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (8 of 9) ΓÇó Using the  Day declaration, the following  code... cout << MONDAY <<  "  " << WEDNESDAY <<  "  ΓÇ£ << FRIDAY << endl; ...will produce this output: 0 2 4
+--- Page 59 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Assigning an integer to an  enum Variable ΓÇó You cannot directly assign an integer value  to an  enum variable. This will not work: workDay = 3; // Error! ΓÇó Instead, you must cast the integer: workDay = static_cast<Day>(3);
+--- Page 60 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Assigning an Enumerator to an  int Variable ΓÇó You CAN assign an enumerator to an  int variable. For example: int x; x = THURSDAY; ΓÇó This code assigns 3 to  x .
+--- Page 61 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Comparing Enumerator Values ΓÇó Enumerator values can be compared using  the relational operators. For example, using  the  Day data type the following code will  display the message "Friday is greater than  Monday.ΓÇ£ if (FRIDAY > MONDAY) { cout << "Friday is greater " << "than Monday. \ n"; }
+--- Page 62 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 63 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 64 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerated Data Types  (9 of 9) ΓÇó Program 11 - 9 shows enumerators used to  control a loop: // Get the sales for each day. for (index = MONDAY; index <= FRIDAY; index++) { cout << "Enter the sales for day " << index << ": "; cin >> sales[index]; }
+--- Page 65 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Anonymous Enumerated Types ΓÇó An  anonymous enumerated type is simply  one that does not have a name. For  example, in Program 11 - 10 we could have  declared the enumerated type as: enum { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
+--- Page 66 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Using Math Operators with  enum Variables  (1 of 2) ΓÇó You can run into problems when trying to perform math  operations with  enum variables. For example: Day day1, day2; // Define two Day variables. day1 = TUESDAY; // Assign TUESDAY to day1. day2 = day1 + 1;// ERROR! Will not work! ΓÇó The third statement will not work because the expression  day1 + 1 results in the integer value 2, and you cannot  store an int in an  enum variable.
+--- Page 67 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Using Math Operators with  enum Variables  (2 of 2) ΓÇó You can fix this by using a cast to explicitly  convert the result to  Day , as shown here: // This will work. day2 = static_cast<Day>(day1 + 1);
+--- Page 68 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Using an  enum Variable to Step  through an Array's Elements  (1 of 3) ΓÇó Because enumerators are stored in memory as  integers, you can use them as array subscripts.  For example: enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY }; const int NUM_DAYS = 5; double sales[NUM_DAYS]; sales[MONDAY] = 1525.0; sales[TUESDAY] = 1896.5; sales[WEDNESDAY] = 1975.63; sales[THURSDAY] = 1678.33; sales[FRIDAY] = 1498.52;
+--- Page 69 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Using an  enum Variable to Step  through an Array's Elements  (2 of 3) ΓÇó Remember, though, you cannot use the ++  operator on an  enum variable. So, the following  loop will NOT work. Day workDay; // Define a Day variable // ERROR!!! This code will NOT work. for (workDay = MONDAY; workDay <= FRIDAY; workDay++) { cout << "Enter the sales for day " << workDay << ": "; cin >> sales[workDay]; }
+--- Page 70 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Using an  enum Variable to Step  through an Array's Elements  (3 of 3) ΓÇó You must rewrite the loopΓÇÖs update  expression using a cast instead of ++: for (workDay = MONDAY; workDay <= FRIDAY; workDay = static_cast<Day>(workDay + 1)) { cout << "Enter the sales for day " << workDay << ": "; cin >> sales[workDay]; }
+--- Page 71 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 72 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved.
+--- Page 73 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Enumerators Must Be Unique  Within the same Scope ΓÇó Enumerators must be unique within the same  scope. (Unless strongly typed) ΓÇó For example, an error will result if both of the  following enumerated types are declared  within the same scope:
+--- Page 74 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Strongly Typed  enum s  (1 of 2) ΓÇó In C++ 11 and later, you can use a new type of  enum ,  known as a  strongly typed enum ΓÇó Allows you to have multiple enumerators in the same  scope with the same name enum class Presidents { MCKINLEY, ROOSEVELT, TAFT }; enum class VicePresidents { ROOSEVELT, FAIRBANKS, SHERMAN };
+--- Page 75 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Strongly Typed  enum s  (2 of 2) ΓÇó Prefix the enumerator with the name of the  enum , followed by the  :: operator: Presidents prez = Presidents::ROOSEVELT; VicePresidents vp = VicePresidents::ROOSEVELT; ΓÇó Use a cast operator to retrieve integer value: int x = static_cast<int>(Presidents::ROOSEVELT);
+--- Page 76 ---
+Copyright ┬⌐ 2021, 2018, 2015, 2012, 2009 Pearson Education, Inc. All rights reserved. Declaring the Type and Defining  the Variables in One Statement ΓÇó You can declare an enumerated data type  and define one or more variables of the  type in the same statement. For example: enum Car { PORSCHE, FERRARI, JAGUAR } sportsCar; This code declares the  Car data type and defines a  variable named  sportsCar .
