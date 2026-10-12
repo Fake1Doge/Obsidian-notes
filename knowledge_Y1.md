@@ -1,46 +1,46 @@
 ---
-title: Master Knowledge Base - Year 1 & Year 2
+title: Master Knowledge Base - Year 1 (Y1S1 & Y1S2)
 tags:
   - knowledge-base
   - comp-sci
   - year-1
-  - year-2
   - y1s1
   - y1s2
-  - y2s1
   - master-summary
 aliases:
-  - Computer Science & Software Engineering Master Knowledge Base
-  - Master Knowledge Summary
+  - Computer Science & Software Engineering Year 1 Knowledge Base
+  - Year 1 Master Knowledge Summary
 date: 2026-10-12
 ---
 
-# 🧠 Computer Science & Software Engineering Master Knowledge Base
+# 🧠 Computer Science & Software Engineering Master Knowledge Base — Year 1
 
 > [!abstract] Overview & Navigation
-> This master document provides a rigorous, interconnected synthesis of all knowledge learned across **Year 1 Semester 1 (Y1S1)**, **Year 1 Semester 2 (Y1S2)**, and **Year 2 Semester 1 (Y2S1)**.
+> This master document provides a comprehensive, interconnected synthesis of all foundational knowledge acquired across **Year 1 Semester 1 (Y1S1)** and **Year 1 Semester 2 (Y1S2)**.
 > 
-> Every section and topic in this document links directly into the exact chapters and sections of your original vault notes:
+> Every section and topic in this document links directly into the exact chapters and sections of your original Year 1 vault notes:
 > 
-> ### 💻 Core Computer Science & Software Engineering Curriculum:
+> ### 💻 Core Computer Science & Systems Curriculum:
 > - **Y1S1 Core**:
 >   - [[Y1S1/CCA101 Principle of Programming|CCA101: Principle of Programming]]
 >   - [[Y1S1/CCA102 Computer Organisation|CCA102: Computer Organisation]]
 >   - [[Y1S1/CKC111 Discrete Structures|CKC111: Discrete Structures]]
 > - **Y1S2 Core**:
->   - [[Y1S2/CKC112 Object Oriented Programming|CKC112: Object Oriented Programming]]
 >   - [[Y1S2/CCA103 System Analysis and Design|CCA103: System Analysis and Design]]
+>   - [[Y1S2/CKC112 Object Oriented Programming|CKC112: Object Oriented Programming (C++)]]
 >   - [[Y1S2/CKS121 Software Requirements|CKS121: Software Requirements]]
-> - **Y2S1 Core**:
->   - [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]]
 > 
 > ---
-> > [!warning] 🌟 Non-Core Course Exception
-> > **[[Y1S2/AKW103 Introduction to Management|AKW103: Introduction to Management]]** is classified as a **Non-Core / Management Elective Exception**. While valuable for managerial literacy and team governance, it sits outside the core technical Computer Science & Software Engineering stream and is documented in its own dedicated section: [[#🌟 Part IV: Non-Core Elective Exception|AKW103 Management Summary]].
+> > [!warning] 🌟 Non-Core Elective Exception
+> > **[[Y1S2/AKW103 Introduction to Management|AKW103: Introduction to Management]]** is classified as a **Non-Core / Management Elective Exception**. While valuable for managerial literacy and team governance, it sits outside the core technical Computer Science stream and is synthesized in its own dedicated section: [[#🌟 Part III: Non-Core Elective Exception (Y1S2)|Part III: AKW103 Management Summary]].
+> 
+> > [!tip] ➡️ Advanced Curriculum Navigation
+> > For Year 2 content, advanced lifecycles, and quantitative project controls, navigate to:
+> > **[[knowledge_Y2|🔄 Year 2 Master Knowledge Base (Y2S1 & Advanced Controls)]]**
 
 ---
 
-## 🗺️ Academic Roadmap & Interdisciplinary Architecture
+## 🗺️ Academic Roadmap & Interdisciplinary Architecture (Year 1)
 
 ```mermaid
 flowchart TD
@@ -56,26 +56,19 @@ flowchart TD
         CKS121["CKS121: Software Requirements"]
     end
 
-    subgraph Y2S1_Core ["Year 2 Semester 1: Advanced Processes"]
-        CKS222["CKS222: Software Process & Life Cycle"]
-    end
-
     subgraph Elective_Exception ["🌟 Non-Core Elective Exception"]
         AKW103["AKW103: Introduction to Management"]
     end
 
-    CCA101 -->|Syntax, Memory| CKC112
-    CCA102 -->|Data Representation| CKC112
-    CKC111 -->|Relations & Logic| CCA103
-    CKC111 -->|Discrete Models| CKS121
-    CCA101 -->|Algorithms| CCA103
-    CCA103 -->|Class Realization| CKC112
-    CKS121 -->|Specification| CCA103
-    CKS121 -->|Requirements & Scope| CKS222
-    CCA103 -->|SDLC & Design| CKS222
-    AKW103 -.->|Governance| CCA103
-    AKW103 -.->|Stakeholder Dynamics| CKS121
-    AKW103 -.->|Team RACI & Decision| CKS222
+    CCA101 -->|Syntax, Functions, Pointers| CKC112
+    CCA102 -->|Data Representation & Memory| CKC112
+    CKC111 -->|Relations & Propositional Logic| CCA103
+    CKC111 -->|Discrete Models & Sets| CKS121
+    CCA101 -->|Algorithms & Decomposition| CCA103
+    CCA103 -->|Design Class Realization| CKC112
+    CKS121 -->|Formal Specification & EARS| CCA103
+    AKW103 -.->|Managerial Governance| CCA103
+    AKW103 -.->|Stakeholder Power Dynamics| CKS121
 ```
 
 ---
@@ -634,75 +627,14 @@ flowchart TD
 
 ---
 
-# 📙 Part III: Year 2 Semester 1 (Y2S1 Core)
+# 🌟 Part III: Non-Core Elective Exception (Y1S2)
 
 ---
 
-## 7. 🔄 [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]]
-
-Investigates formal software engineering lifecycles, prescriptive vs. descriptive process modeling (MVP-L, SPEM 2.0), requirements scope governance (Texas DIR, Scope Pillars), and advanced quantitative project auditing (EVM, Earned Schedule, EVM Triads).
-
-```mermaid
-flowchart TD
-    A["Descriptive Modeling<br/>(Elicit Lived Practices)"] --> B["Process Metamodeling<br/>(MVP-L & SPEM 2.0)"]
-    B --> C["Lifecycle Tailoring<br/>(Waterfall, Spiral, UP)"]
-    C --> D["Scope Governance<br/>(Texas DIR & Scope Pillars)"]
-    D --> E["Quantitative Auditing<br/>(EVM, ES & EVM Triads)"]
-```
-
-### 7.1 [[Y2S1/CKS222 Software Process and Life Cycle#1.2 Defining Software Engineering & The Software Crisis|Software Engineering Foundations & Empirical Realities]]
-- **Formal Definition (ISO/IEC/IEEE 24765:2017)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.2.1 Formal Definition of Software Engineering|Disciplined application of scientific knowledge to design, code, test, and document software]].
-- **The Standish Group CHAOS Report**: [[Y2S1/CKS222 Software Process and Life Cycle#1.2.2 Empirical Project Outcomes: The Standish Group CHAOS Report|Empirical failure rates across 25,000+ projects]]: Large Waterfall projects fail at **42%** vs. Agile at **23%** due to rigid planning and coordination complexity.
-- **The Human Dimension**: [[Y2S1/CKS222 Software Process and Life Cycle#1.3 The Human and Social Dimension of Software Development|Primacy of psychological safety, trust, and soft skills]]; developers perform best under professional self-determination.
-- **Process-Product Causality**: [[Y2S1/CKS222 Software Process and Life Cycle#1.5 The Process-Product Causality Principle|Fundamental formula $Goal \approx f(Process, Context)$]]; high quality relies on repeatable processes, not unsustainable heroic overtime.
-- **Regulatory Standards**: [[Y2S1/CKS222 Software Process and Life Cycle#1.7 Regulatory Standards & Process Obligations|Critical process compliance in safety domains]] via IEC 61508 (Functional Safety), ISO 26262 (Automotive), IEC 62304 (Medical Devices), ECSS (Space), and CMMI / SPICE.
-
-### 7.2 [[Y2S1/CKS222 Software Process and Life Cycle#1.11 Classical Lifecycle Process Models: Deep Architectural Analysis|Prescriptive Lifecycle Architectures]]
-- **Waterfall Model (Royce 1970)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.11.1 Winston Royce's Waterfall Model (1970)|Linear abstraction progression with adjacent feedback loops]]; optimal only when requirements are fully stable upfront.
-- **Iterative Enhancement (Basili & Turner 1975)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.11.2 Basili & Turner's Iterative Enhancement Model (1975)|Stepwise refinement building an executable architectural core first]], executing mini-waterfalls with architectural refactoring.
-- **Spiral Model (Boehm 1986)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.11.3 Barry Boehm's Spiral Model (1986)|Risk-driven meta-model cycling through 4 quadrants]] (Objectives, Risk Resolution, Development & Verification, Planning Next Phases).
-- **Unified Process (Jacobson et al. 1999)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.11.4 The Unified Process (UP) (Jacobson, Booch, Rumbaugh 1999)|Architecture-centric, use-case driven iterative framework]] structured into Inception, Elaboration, Construction, and Transition.
-- **Cleanroom Software Engineering (Mills et al. 1987)**: [[Y2S1/CKS222 Software Process and Life Cycle#1.11.5 IBM's Cleanroom Software Engineering (Mills, Dyer, Linger 1987)|Defect prevention via mathematical formal verification]]; development compiles zero code; independent certification team performs statistical testing to certify MTTF.
-
-### 7.3 [[Y2S1/CKS222 Software Process and Life Cycle#2.2 The Five Core Objectives of Process Modeling (Curtis et al. 1992)|Process Modeling Objectives & Descriptive Elicitation]]
-- **Curtis et al. (1992) 5 Objectives**: [[Y2S1/CKS222 Software Process and Life Cycle#2.2 The Five Core Objectives of Process Modeling (Curtis et al. 1992)|Communication, Continuous Improvement, Project Management & Control, Human Guidance (EPGs), and Automated Tool Execution]].
-- **The 8-Step Descriptive Methodology**: [[Y2S1/CKS222 Software Process and Life Cycle#2.3 The 8-Step Descriptive Process Modeling Methodology|Disciplined process engineering method]] (Objectives & Scope, Schema, Formalisms, Elicitation Plan, Field Elicitation, Role Views, Analysis, Packaging).
-- **Elicitation Psychology & Traps**: [[Y2S1/CKS222 Software Process and Life Cycle#2.3.4 Step 5: Process Elicitation Techniques & Industrial Psychology|Adopting a non-judgmental stance to avoid process embellishment]]; anchoring interviews in concrete work products (artifacts first) to capture real variations.
-- **Defect Detection in Process Models**: [[Y2S1/CKS222 Software Process and Life Cycle#2.3.5 Step 7: Process Model Analysis & Defect Detection|Static & dynamic analysis detecting dangling references, inconsistent preconditions, orphan entities, and dependency deadlocks]].
-- **Multi-View Integration**: [[Y2S1/CKS222 Software Process and Life Cycle#2.4 Multi-View Process Modeling and Integration|Four-step synthesis of independent role-specific views]]: Modeling $\to$ Similarity Analysis $\to$ Consistency Checking $\to$ Global Integration.
-
-### 7.4 [[Y2S1/CKS222 Software Process and Life Cycle#2.7 Multi-View Process Language (MVP-L)|Process Metamodels: MVP-L vs. SPEM 2.0]]
-- **MVP-L Information Hiding**: [[Y2S1/CKS222 Software Process and Life Cycle#2.7.1 Applying Parnas' Information Hiding (1972) to Processes|Applies David Parnas' modularity]]; separates visible Process Interface (parameters, attributes, entry/exit criteria) from hidden Process Body (tool instructions) to ensure locality of change.
-- **MVP-L Typed Constructs & Control Flow**: [[Y2S1/CKS222 Software Process and Life Cycle#2.7.2 The Four Typed Models in MVP-L|Four models (`product_model`, `resource_model`, `process_model`, `attribute_model`)]]; [[Y2S1/CKS222 Software Process and Life Cycle#2.7.3 Implicit Control Flow & State Transition Semantics|implicit control flow driven by Boolean entry/exit criteria and local invariants]].
-- **SPEM 2.0 Decoupling**: [[Y2S1/CKS222 Software Process and Life Cycle#2.8.1 Decoupling Reusable Method Content from Context-Specific Processes|Separates static Method Content (reusable Role, Task, and Work Product definitions) from dynamic Context-Specific Processes (timeline breakdown structures)]].
-- **EPF Composer Variability**: [[Y2S1/CKS222 Software Process and Life Cycle#2.9.2 Process Variability (Inheritance) Mechanisms in EPF|Object-oriented process inheritance mechanisms]]: Contribute, Replace, Extend, and Extend & Replace.
-
-### 7.5 [[Y2S1/CKS222 Software Process and Life Cycle#3.3 The Two Pillars of Non-Functional Scope: Quality Attributes vs. Constraints|Scope Governance, Quality Attributes & Team RACI]]
-- **Texas DIR (2008) Framework**: [[Y2S1/CKS222 Software Process and Life Cycle#3.2.2 The Texas DIR (2008) Requirements Quality Framework|8 mandatory requirements criteria]] (Correct, Unambiguous, Complete, Consistent, Ranked, Verifiable, Modifiable, Traceable); non-functional criteria must be quantified with metrics, thresholds, and stress contexts.
-- **The Two Scope Pillars**:
-  - *Pillar 1: Quality Attributes*: [[Y2S1/CKS222 Software Process and Life Cycle#3.3 The Two Pillars of Non-Functional Scope: Quality Attributes vs. Constraints|Internally engineered trade-offs evaluated on a continuous spectrum]] (Maintainability, Reliability, Portability, Efficiency).
-  - *Pillar 2: Architectural Constraints*: [[Y2S1/CKS222 Software Process and Life Cycle#3.3 The Two Pillars of Non-Functional Scope: Quality Attributes vs. Constraints|Externally mandated, non-negotiable boundaries evaluated via binary compliance]] (Technology limits, OS runtimes, statutory laws like PDPA, PCI-DSS, BNM RMiT).
-- **RACI Governance**: [[Y2S1/CKS222 Software Process and Life Cycle#3.8.2 RACI Matrix Governance|Responsible, Accountable, Consulted, Informed]]; strict Golden Rule: **exactly one Accountable (A) owner per deliverable**.
-- **Estimation & Consensus**: [[Y2S1/CKS222 Software Process and Life Cycle#3.10.2 Story Points vs. Ideal Days|Relative Story Points (Fibonacci scale) vs. Ideal Days]]; Planning Poker defeats optimism bias; [[Y2S1/CKS222 Software Process and Life Cycle#3.9.2 The "Fist of Five" Consensus Technique|Fist of Five consensus voting]].
-
-### 7.6 [[Y2S1/CKS222 Software Process and Life Cycle#3.11 Advanced Project Auditing: Traditional EVM vs. Earned Schedule (ES)|Quantitative Project Controls: EVM, Earned Schedule & EVM Triads]]
-- **Traditional EVM Metrics**: [[Y2S1/CKS222 Software Process and Life Cycle#3.11.1 Traditional Earned Value Management (EVM) Foundations|$PV$, $EV$, $AC$, Cost Variance ($CV = EV - AC$), Schedule Variance ($SV = EV - PV$), $CPI = EV / AC$, and $SPI = EV / PV$]].
-- **The Late-Stage EVM Metric Collapse**: [[Y2S1/CKS222 Software Process and Life Cycle#3.11.3 The Late-Stage EVM Flaw: The Metric Collapse Phenomenon|As a delayed project nears completion, $EV \to PV = BAC \implies SV \to 0$ and $SPI \to 1.0$, falsely masking project delays]].
-- **Time-Based Earned Schedule (ES)**: [[Y2S1/CKS222 Software Process and Life Cycle#3.11.3 The Late-Stage EVM Flaw: The Metric Collapse Phenomenon|Mathematical correction restoring temporal accuracy]]: $SV_t = ES - AT$ (time variance in months) and $SPI_t = ES / AT$.
-- **EVM Triads & A-SPSRI Scope Governance**:
-  - *Triad Formulation*: [[Y2S1/CKS222 Software Process and Life Cycle#3.12.1 Formulation of the EVM Triad|$\text{EVM Triad} = (x\%, S_{xj}, C_{xj})$]] combining physical progress $x\%$, A-SPSRI scope score $S_{xj}$ (0–100), and accumulated expenditure $C_{xj}$.
-  - *A-SPSRI Index*: [[Y2S1/CKS222 Software Process and Life Cycle#3.12.2 The 22 A-SPSRI Scope Critical Elements|22 critical scope elements across Requirements, Architecture, and Verification]]; Monte Carlo simulations forecast cost overruns before they materialize.
-
----
-
-# 🌟 Part IV: Non-Core Elective Exception
-
----
-
-## 8. 🏛️ [[Y1S2/AKW103 Introduction to Management|AKW103: Introduction to Management]]
+## 7. 🏛️ [[Y1S2/AKW103 Introduction to Management|AKW103: Introduction to Management]]
 
 > [!important] ⚠️ Non-Core Course Exception Status
-> **AKW103** is an **Elective / Non-Core Management Course**. It does not form part of the technical Computer Science / Software Engineering foundation (CCA101, CCA102, CKC111, CCA103, CKC112, CKS121, CKS222), but provides valuable knowledge in organizational structure, leadership, strategic decision-making, and team dynamics that support software project governance and management.
+> **AKW103** is an **Elective / Non-Core Management Course**. It does not form part of the technical Computer Science / Software Engineering foundation (CCA101, CCA102, CKC111, CCA103, CKC112, CKS121), but provides valuable knowledge in organizational structure, leadership, strategic decision-making, and team dynamics that support software project governance and management.
 
 ```mermaid
 flowchart TD
@@ -770,17 +702,17 @@ flowchart TD
 
 ---
 
-# 🔗 Part V: Cross-Disciplinary Synthesis & Concept Matrix
+# 🔗 Part IV: Year 1 Cross-Disciplinary Synthesis & Concept Matrix
 
 ---
 
-## 9. 🌐 The Interconnected Matrix of Computing & Software Engineering
+## 8. 🌐 The Interconnected Matrix of Computing (Year 1)
 
-Understanding the unified nature of computer science is critical: software abstractions in higher-level languages directly map onto discrete mathematics and physical hardware circuits, while large-scale software engineering requires structured requirements, architectural patterns, formal process lifecycles, and organizational governance.
+Year 1 forms an indivisible continuum connecting mathematical rigor, digital hardware execution, and modular software construction:
 
 ```mermaid
 flowchart TD
-    subgraph TheoryAndHardware ["Foundational Theory & Architecture"]
+    subgraph TheoryAndHardware ["Foundational Theory & Hardware"]
         CKC111_Logic["CKC111: Boolean Logic & Proofs"] --> CCA102_Circuits["CCA102: Logic Gates & ALU"]
         CKC111_Theory["CKC111: Recurrences & Complexity"] --> CCA101_Algos["CCA101: Search/Sort Algorithms"]
         CCA102_Mem["CCA102: RAM, Cache & Virtual Memory"] --> CKC112_Ptrs["CKC112: Heap, Stack & Smart Pointers"]
@@ -790,20 +722,17 @@ flowchart TD
         CKS121_Req["CKS121: Requirements & EARS"] --> CCA103_Analysis["CCA103: Domain Modeling & SSDs"]
         CCA103_Design["CCA103: GRASP & SOLID Patterns"] --> CKC112_Code["CKC112: C++ OOP Implementation"]
         CKS121_Trace["CKS121: RTM & Traceability"] --> CCA103_Realize["CCA103: Design Class Realization"]
-        CKS121_Req --> CKS222_Proc["CKS222: Process Models & Scope Pillars"]
-        CCA103_Design --> CKS222_Proc
     end
 
     subgraph NonCoreElective ["Non-Core Governance Exception"]
         AKW103_Gov["AKW103: POLC & Team Dynamics"] -.-> CCA103_Proj["CCA103: Project Scheduling & Agile"]
         AKW103_Gov -.-> CKS121_CCB["CKS121: CCB & Stakeholder Analysis"]
-        AKW103_Gov -.-> CKS222_Gov["CKS222: Team RACI & Consensus"]
     end
 
     TheoryAndHardware --> SoftwareEngineering
 ```
 
-### 9.1 Direct Conceptual Mappings Across Courses
+### 8.1 Direct Conceptual Mappings Across Year 1 Courses
 
 | Concept Dimension | Foundational / Theoretical Source | Applied Engineering Destination | Synthesis / Direct Mapping |
 | :--- | :--- | :--- | :--- |
@@ -813,13 +742,12 @@ flowchart TD
 | **System Modeling** | [[Y1S2/CKS121 Software Requirements#Chapter 6: Model-based Documentation of Requirements\|CKS121 (Requirements Views)]] | [[Y1S2/CCA103 System Analysis and Design#Chapter 3: Use Cases\|CCA103 (Use Cases & SSDs)]] | Elicited stakeholder needs and EARS statements formalize into Use Case Specifications, SSDs, and Design Class Realizations. |
 | **Design to Code** | [[Y1S2/CCA103 System Analysis and Design#Chapter 10: Object-Oriented Design: Principles (Part 1)\|CCA103 (GRASP & SOLID)]] | [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions\|CKC112 (Polymorphism & vtables)]] | High Cohesion and Dependency Inversion in SAD translate directly to C++ Abstract Base Classes (Pure Virtual Functions) and RAII containers. |
 | **Governance & Process**| [[Y1S2/AKW103 Introduction to Management#Chapter 1: Managing in Today's World\|AKW103 (POLC & Leadership)]] *(Non-core)* | [[Y1S2/CCA103 System Analysis and Design#Chapter 7: Project Planning and Project Management\|CCA103 (SDLC, WBS, Feasibility)]] & [[Y1S2/CKS121 Software Requirements#Chapter 10: Requirements Management\|CKS121 (CCB, Traceability)]] | Management principles govern agile Scrum teams, stakeholder power-interest management, change control boards, and economic ROI/NPV feasibility analyses. |
-| **Process & Scope Governance** | [[Y1S2/CKS121 Software Requirements#Chapter 1: Introduction & Fundamentals of Requirements Engineering\|CKS121 (Requirements)]] & [[Y1S2/CCA103 System Analysis and Design#Chapter 6: Approaches to System Development\|CCA103 (SDLC)]] | [[Y2S1/CKS222 Software Process and Life Cycle#3.3 The Two Pillars of Non-Functional Scope: Quality Attributes vs. Constraints\|CKS222 (Scope Pillars & EVM Triads)]] | Requirements baselines and SDLC methodologies feed into formal process models (MVP-L, SPEM 2.0), Texas DIR quality criteria, and multi-dimensional EVM Triad risk auditing. |
 
 ---
 
-## 10. 📊 High-Yield Master Comparative Reference
+## 9. 📊 High-Yield Master Comparative Reference (Year 1)
 
-### 10.1 Programming Paradigms: Procedural vs Object-Oriented
+### 9.1 Programming Paradigms: Procedural vs Object-Oriented
 
 | Dimension | Procedural Programming ([[Y1S1/CCA101 Principle of Programming#Programming Paradigms\|CCA101]]) | Object-Oriented Programming ([[Y1S2/CKC112 Object Oriented Programming#Chapter 2: Introduction to Classes\|CKC112]] / [[Y1S2/CCA103 System Analysis and Design#Chapter 10: Object-Oriented Design: Principles (Part 1)\|CCA103]]) |
 | :--- | :--- | :--- |
@@ -829,7 +757,7 @@ flowchart TD
 | **Extensibility** | Modifying existing functions or adding new branching logic (`switch`/`if`) | Polymorphism, overriding virtual methods, open for extension (OCP) |
 | **State Protection** | Weak; data exposed globally or via pointer references | Strong; encapsulation via `private`/`protected` access specifiers |
 
-### 10.2 Memory Management Strategies in C++
+### 9.2 Memory Management Strategies in C++
 
 | Paradigm | Allocation Syntax | Deallocation Syntax | Ownership Model | Failure Modes / Hazards |
 | :--- | :--- | :--- | :--- | :--- |
@@ -838,7 +766,7 @@ flowchart TD
 | **`unique_ptr` (C++11)**| `std::make_unique<T>()` | Automatic (destructor) | Exclusive, Move-only | Overhead of dereferencing; cannot share ownership |
 | **`shared_ptr` (C++11)**| `std::make_shared<T>()` | Automatic (ref-count $= 0$)| Shared reference-counted | Circular reference leaks (resolved via `std::weak_ptr`) |
 
-### 10.3 System Development Life Cycle (SDLC) Approaches
+### 9.3 System Development Life Cycle (SDLC) Approaches
 
 | Characteristic | Predictive / Waterfall ([[Y1S2/CCA103 System Analysis and Design#Chapter 1: An Overview of System Analysis and Design\|CCA103]]) | Agile / Scrum ([[Y1S2/CCA103 System Analysis and Design#Chapter 6: Approaches to System Development\|CCA103]] / [[Y1S2/CKS121 Software Requirements#Chapter 2: The Requirements Engineering Framework\|CKS121]]) |
 | :--- | :--- | :--- |
@@ -847,20 +775,10 @@ flowchart TD
 | **Customer Engagement** | High at project initiation and sign-off, low in-between | Constant collaboration with Product Owner throughout |
 | **Risk Profile** | High late-stage integration and scope-mismatch risk | Early risk discovery; continuous verification and validation |
 
-### 10.4 Quantitative Project Auditing & Control Paradigms
-
-| Dimension | Traditional EVM ([[Y2S1/CKS222 Software Process and Life Cycle#3.11.1 Traditional Earned Value Management (EVM) Foundations\|CKS222]]) | Earned Schedule (ES) ([[Y2S1/CKS222 Software Process and Life Cycle#3.11.3 The Late-Stage EVM Flaw: The Metric Collapse Phenomenon\|CKS222]]) | EVM Triads with A-SPSRI ([[Y2S1/CKS222 Software Process and Life Cycle#3.12.1 Formulation of the EVM Triad\|CKS222]]) |
-| :--- | :--- | :--- | :--- |
-| **Primary Metric Units** | Monetary currency values ($PV, EV, AC, CV, SV$). | Calendar time units ($ES, AT, SV_t, SPI_t$ in months/weeks). | Vector $(x\%, S_{xj}, C_{xj})$ combining progress %, A-SPSRI scope score (0–100), and actual cost. |
-| **Schedule Variance** | $SV = EV - PV$ (expressed in currency). | $SV_t = ES - AT$ (expressed in time duration). | Tracks schedule via physical milestone completion $x\%$. |
-| **Late-Stage Behavior** | **Metric Collapse Flaw:** As $EV \to PV$, $SV \to 0$ and $SPI \to 1.0$, falsely masking project delays! | **Reliable:** Retains true time variance ($SV_t < 0$) and true velocity index ($SPI_t < 1.0$) until actual delivery. | **Predictive:** Couples cost with scope completeness to simulate probability distributions (Monte Carlo). |
-| **Scope Stability Tracking** | Blind to scope creep; assumes baseline scope definition is perfect. | Blind to scope volatility; tracks only temporal progression. | **Active Scope Governance:** Evaluates 22 critical scope elements (A-SPSRI) across requirements, design, and verification. |
-
 ---
 
-## 11. 📖 Master Glossary of Core Terminology
+## 10. 📖 Master Glossary of Year 1 Core Terminology
 
-- **A-SPSRI (Agile Software Project Scope Rating Index)**: [[Y2S1/CKS222 Software Process and Life Cycle#3.12.2 The 22 A-SPSRI Scope Critical Elements|A 22-element scope maturity index (0–100) auditing user stories, architecture, and verification to predict cost overruns]].
 - **Abstract Base Class (ABC)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions|A class containing at least one pure virtual function (`= 0`), serving as a non-instantiable structural interface]].
 - **Abstract Data Type (ADT)**: [[Y1S2/CKC112 Object Oriented Programming#1.1 Abstract Data Types|A programmer-defined data model specifying allowed values and operations while abstracting internal implementation details]].
 - **Booth's Algorithm**: [[Y1S1/CCA102 Computer Organisation#Topic 3: Computer Arithmetic|A hardware multiplication algorithm multiplying two signed binary numbers in two's complement notation by encoding strings of 1s]].
@@ -869,39 +787,29 @@ flowchart TD
 - **De Morgan's Laws**: [[Y1S1/CKC111 Discrete Structures#📖 Chapter 1: Logic and Proofs|Fundamental theorems in Boolean logic and set theory relating conjunction and disjunction through negation]]: $\overline{A \cdot B} = \overline{A} + \overline{B}$.
 - **Dependency Inversion Principle (DIP)**: [[Y1S2/CCA103 System Analysis and Design#Chapter 11: Object-Oriented Design: Principles (Part 2)|A SOLID design guideline stating high-level modules should depend on abstractions (interfaces) rather than concrete low-level implementations]].
 - **Direct Memory Access (DMA)**: [[Y1S1/CCA102 Computer Organisation#Topic 9: Interfacing and Communication|A specialized hardware module allowing I/O peripherals to transfer data directly to/from main memory without continuous CPU intervention]].
-- **Earned Schedule (ES)**: [[Y2S1/CKS222 Software Process and Life Cycle#3.11.3 The Late-Stage EVM Flaw: The Metric Collapse Phenomenon|An extension of EVM mapping earned value back to the baseline schedule to provide time-based schedule variance ($SV_t$) and performance index ($SPI_t$)]].
-- **Earned Value Management (EVM)**: [[Y2S1/CKS222 Software Process and Life Cycle#3.11.1 Traditional Earned Value Management (EVM) Foundations|A quantitative project management technique integrating scope, schedule, and cost baselines using Planned Value, Earned Value, and Actual Cost]].
 - **EARS (Easy Approach to Requirements Syntax)**: [[Y1S2/CKS121 Software Requirements#Chapter 5: Documentation of Requirements|A standardized rule set for authoring unambiguous requirements using structured syntactic patterns (Ubiquitous, Event-driven, State-driven, Option-driven, Unwanted Event)]].
 - **Encapsulation**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 2: Introduction to Classes|The bundling of data attributes and methods within a class, restricting direct outside access via access specifiers]].
-- **EVM Triads**: [[Y2S1/CKS222 Software Process and Life Cycle#3.12.1 Formulation of the EVM Triad|A multi-dimensional audit vector $(x\%, S_{xj}, C_{xj})$ linking progress percentage, A-SPSRI scope score, and actual expenditure]].
 - **FURPS+**: [[Y1S2/CCA103 System Analysis and Design#Chapter 2: Investigating System Requirements|A requirements classification framework categorizing capabilities into Functionality, Usability, Reliability, Performance, Supportability, and supplementary constraints]].
 - **GRASP Patterns**: [[Y1S2/CCA103 System Analysis and Design#Chapter 10: Object-Oriented Design: Principles (Part 1)|General Responsibility Assignment Software Patterns guiding object-oriented design]].
 - **Hasse Diagram**: [[Y1S1/CKC111 Discrete Structures#🔗 Chapter 3: Relations|A simplified topological drawing representing a finite partially ordered set (Poset), omitting reflexive loops and transitive edges]].
 - **IEEE 754**: [[Y1S1/CCA102 Computer Organisation#Topic 3: Computer Arithmetic|The international industry standard for encoding floating-point numbers in binary formats]].
 - **Locality of Reference**: [[Y1S1/CCA102 Computer Organisation#Topic 11: Cache Memory Architecture|The phenomenon whereby programs access localized portions of address space (Spatial and Temporal)]].
 - **Mintzberg's Roles**: [[Y1S2/AKW103 Introduction to Management#Chapter 1: Managing in Today's World|Ten distinct managerial roles grouped into Interpersonal, Informational, and Decisional categories]].
-- **MVP-L (Multi-View Process Language)**: [[Y2S1/CKS222 Software Process and Life Cycle#2.7.1 Applying Parnas' Information Hiding (1972) to Processes|A formal process modeling language implementing David Parnas' information hiding and implicit Boolean control flow]].
 - **P-O-L-C Framework**: [[Y1S2/AKW103 Introduction to Management#Chapter 1: Managing in Today's World|The foundational management taxonomy encompassing Planning, Organizing, Leading, and Controlling]].
 - **Polymorphism**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions|The object-oriented capability allowing entities of different types to be invoked through a uniform interface via virtual method tables (`vtables`)]].
-- **Process Schema**: [[Y2S1/CKS222 Software Process and Life Cycle#2.3.2 Step 2: The Process Schema (Metamodel)|A conceptual metamodel defining the entities (Activities, Work Products, Roles, Resources) and relationships used to describe a process]].
-- **Quality Attributes vs. Constraints**: [[Y2S1/CKS222 Software Process and Life Cycle#3.3 The Two Pillars of Non-Functional Scope: Quality Attributes vs. Constraints|Internally engineered continuous trade-offs (Quality Attributes) versus externally mandated, non-negotiable binary boundaries (Constraints)]].
-- **RACI Matrix**: [[Y2S1/CKS222 Software Process and Life Cycle#3.8.2 RACI Matrix Governance|A governance framework allocating Responsible, Accountable, Consulted, and Informed roles, requiring exactly one Accountable owner per deliverable]].
 - **RAII (Resource Acquisition Is Initialization)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 7: Pointers and Dynamic Variables|A core C++ idiom tying the lifecycle of resources to object scope and destructor invocation]].
 - **Requirements Traceability Matrix (RTM)**: [[Y1S2/CKS121 Software Requirements#Chapter 10: Requirements Management|A cross-referencing table mapping business requirements forward to architectural designs, source code, and test verification cases]].
 - **SOLID Principles**: [[Y1S2/CCA103 System Analysis and Design#Chapter 11: Object-Oriented Design: Principles (Part 2)|Five foundational object-oriented design principles: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion]].
-- **SPEM 2.0 (Software & Systems Process Engineering Metamodel)**: [[Y2S1/CKS222 Software Process and Life Cycle#2.8.1 Decoupling Reusable Method Content from Context-Specific Processes|An OMG standard metamodel decoupling reusable static Method Content from dynamic context-specific project workflows]].
 - **Strongly Typed Enum (`enum class`)**: [[Y1S2/CKC112 Object Oriented Programming#1.11 Enumerated Data Types|A scoped C++11 enumeration that eliminates global identifier collisions and requires explicit type casting for numeric operations]].
 - **Structured Binding**: [[Y1S2/CKC112 Object Oriented Programming#1.9 Using Structured Binding Declarations with Structures|A C++17 mechanism allowing composite data structures and arrays to be unpacked directly into individual alias variables]].
-- **Texas DIR (2008) Framework**: [[Y2S1/CKS222 Software Process and Life Cycle#3.2.2 The Texas DIR (2008) Requirements Quality Framework|Eight mandatory criteria for requirements specification, mandating explicit quantification of non-functional thresholds and stress contexts]].
 - **Translation Lookaside Buffer (TLB)**: [[Y1S1/CCA102 Computer Organisation#Topic 12: Memory Management and Virtual Memory|A high-speed associative hardware cache in the MMU storing recent virtual-to-physical page table translations]].
 - **Use Case Realization**: [[Y1S2/CCA103 System Analysis and Design#Chapter 12: Object-Oriented Design: Use Case Realization|The modeling process illustrating how domain objects collaborate in sequence diagrams to execute a use case]].
 - **vtable (Virtual Table)**: [[Y1S2/CKC112 Object Oriented Programming#Chapter 4: Inheritance, Polymorphism, and Virtual Functions|An internal lookup table created by C++ compilers containing function pointers to virtual methods for dynamic dispatch]].
 
 ---
+
 > [!tip] Direct Vault Navigation
-> Jump to any dedicated subject note directly:
 > - **Y1S1 Core**: [[Y1S1/CCA101 Principle of Programming|CCA101 Principle of Programming]] | [[Y1S1/CCA102 Computer Organisation|CCA102 Computer Organisation]] | [[Y1S1/CKC111 Discrete Structures|CKC111 Discrete Structures]]
 > - **Y1S2 Core**: [[Y1S2/CKC112 Object Oriented Programming|CKC112 Object Oriented Programming]] | [[Y1S2/CCA103 System Analysis and Design|CCA103 System Analysis and Design]] | [[Y1S2/CKS121 Software Requirements|CKS121 Software Requirements]]
-> - **Y2S1 Core**: [[Y2S1/CKS222 Software Process and Life Cycle|CKS222 Software Process and Life Cycle]]
 > - **Non-Core Elective Exception**: [[Y1S2/AKW103 Introduction to Management|AKW103 Introduction to Management]]
-
+> - **Next Year Master Document**: [[knowledge_Y2|🔄 Year 2 Master Knowledge Base (Y2S1 & Advanced Controls)]]
