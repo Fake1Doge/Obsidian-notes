@@ -20,4 +20,8 @@ title: Course Notes Directory
 - **[[Y1S2/AKW103 Introduction to Management|AKW103 Introduction to Management]]** *(Non-Core / Elective Exception)*
 
 ### 📅 Year 2 - Semester 1
+- **[[Y2S1/CCA201 Operating Systems|CCA201 Operating Systems]]** *(Core)*
+- **[[Y2S1/CCA202 Database Fundamentals|CCA202 Database Fundamentals]]** *(Core)*
+- **[[Y2S1/CKS221 Software Architecture and Design|CKS221 Software Architecture and Design]]** *(Core)*
 - **[[Y2S1/CKS222 Software Process and Life Cycle|CKS222 Software Process and Life Cycle]]** *(Core)*
+

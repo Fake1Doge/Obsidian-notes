@@ -26,6 +26,9 @@ $RECYCLE.BIN/
 *~
 .fuse_hidden*
 .directory
+*.lnk
+*.url
+
 
 # Package managers and node modules
 node_modules/
@@ -61,6 +64,9 @@ temp_*
 *.download
 *_part_*.pdf
 *_pages_*_to_*.pdf
+temp_pdf_text.txt
+temp_extracted_content.md
+~$*
 
 # Large and binary files
 *.pdf
@@ -96,11 +102,16 @@ temp_*
 
 # Antigravity / Agent CLI local-only files
 .antigravitycli/
+.antigravity/
+.agent/
 Antigravity CLI.bat
+agy-*.log
 
 # Quartz digital garden & build artifacts
 /quartz/
 .quartz-cache/
 .quartz/
+public/
 tsconfig.tsbuildinfo
+
 
