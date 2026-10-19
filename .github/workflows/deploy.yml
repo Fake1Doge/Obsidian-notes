@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Vault
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetches all history for accurate creation/modification dates
@@ -29,22 +29,35 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies
-        working-directory: quartz
-        run: npm ci
+      - name: Clone Quartz Engine
+        run: |
+          git clone --depth 1 --branch v5 https://github.com/jackyzha0/quartz.git ../quartz-engine
 
-      - name: Install Quartz plugins
-        working-directory: quartz
-        run: npm run install-plugins
+      - name: Prepare Quartz Configuration & Content
+        run: |
+          cp quartz.config.yaml ../quartz-engine/quartz.config.yaml
+          if [ -f quartz.lock.json ]; then cp quartz.lock.json ../quartz-engine/quartz.lock.json; fi
+          rm -rf ../quartz-engine/content
+          ln -s "$GITHUB_WORKSPACE" ../quartz-engine/content
+
+      - name: Install dependencies
+        working-directory: ../quartz-engine
+        run: |
+          npm ci
+          npm run install-plugins
 
       - name: Build Quartz
-        working-directory: quartz
+        working-directory: ../quartz-engine
         run: npx quartz build
+
+      - name: Prepare build artifacts
+        run: |
+          cp -r ../quartz-engine/public "$GITHUB_WORKSPACE/public"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'quartz/public'
+          path: 'public'
 
   deploy:
     needs: build
