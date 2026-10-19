@@ -68,9 +68,9 @@ flowchart TD
     CKS121 -->|Requirement Traceability & GWT Criteria| CKS222
     CCA103 -->|Process Lifecycle Milestones| CKS222
 
-    CCA201 <===>|File Block I/O & RAM Buffer Caching| CCA202
-    CCA202 <===>|Data Models Realized in C&C & Logical Views| CKS221
-    CKS221 <===>|Architecture Contracts Modeled in A-SPSRI Bucket 2| CKS222
+    CCA201 <==>|File Block I/O & RAM Buffer Caching| CCA202
+    CCA202 <==>|Data Models Realized in C&C & Logical Views| CKS221
+    CKS221 <==>|Architecture Contracts Modeled in A-SPSRI Bucket 2| CKS222
 ```
 
 ---
