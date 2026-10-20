@@ -12,7 +12,7 @@ This skill provides an automated, programmatic toolchain to generate high-fideli
 ## 1. Environment & Prerequisites
 
 - **Python Environment**: Uses the workspace virtual environment located at `.venv/` (contains `python-pptx`, `Pillow`, `lxml`, `XlsxWriter`).
-  - Windows execution: `.venv\bin\python.exe <script.py>`
+  - Execution: `.venv\bin\python.exe <script.py>` (or `.venv\Scripts\python.exe <script.py>`)
 - **Dimensions**: Always use **16:9 Widescreen** (`13.333" x 7.500"`):
   ```python
   prs.slide_width = Inches(13.333333)
@@ -83,11 +83,10 @@ deck.save("Output_Presentation.pptx")
 
 ### Creating a New Presentation
 1. Define the outline, audience, timing, and slide count.
-2. Write a generator script importing `slide_engine` or using `python-pptx`.
+2. Write a generator script importing `slide_engine` or using `python-pptx` (recommend writing scratch scripts to `<appDataDir>\brain\<conversation-id>/scratch/` to keep the vault clean).
 3. Execute generation:
    ```bash
    .venv\bin\python.exe scripts/build_deck.py
    ```
 4. Verify slide count, dimensions, and text rendering.
 5. Move the finalized presentation to its target course folder (e.g. `Y2S1/.../Others/`).
-6. Clean up temporary generation scripts from the vault root.

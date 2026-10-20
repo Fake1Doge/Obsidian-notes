@@ -462,3 +462,486 @@ flowchart TD
 - **Perspective:** Operates at the lowest level of abstraction, describing how binary records are physically organized, indexed, clustered, and stored on persistent media (magnetic platters, NVMe SSD blocks).
 - **Independence:** **Physical Independence**.
   - Modifying physical storage parameters (e.g., migrating from magnetic RAID arrays to NVMe flash storage, or changing block allocation sizes) does not require changes to the internal model or application code.
+
+---
+
+# Chapter 3: The Relational Database Model: Structure, Operators, and Integrity
+
+## 3.1 Logical View of Data and Relational Table Anatomy
+
+### 3.1.1 Relations, Tuples, and Attributes
+The **Relational Database Model** represents data logically as two-dimensional tables termed **Relations**. Conceptualized by Dr. Edgar F. Codd in 1970, the relational model decouples logical data structures from low-level physical disk layouts.
+
+```mermaid
+flowchart TD
+    subgraph RelationAnatomy["Anatomy of a Relational Table (Relation)"]
+        direction TB
+        R_Heading["Relation Heading (Attributes / Columns)"]
+        subgraph Tuples["Relation Body (Tuples / Rows / Records)"]
+            T1["Tuple 1: (1001, 'Smith', 'John', 3.85)"]
+            T2["Tuple 2: (1002, 'Ortega', 'Maria', 3.92)"]
+            T3["Tuple 3: (1003, 'Tan', 'Wei', 3.40)"]
+        end
+        R_Heading --> Tuples
+    end
+```
+
+- **Relation (Table):** A two-dimensional grid of rows and columns containing data describing an entity set.
+- **Tuple (Row / Record):** A single horizontal row describing an individual real-world entity occurrence within the entity set.
+- **Attribute (Column / Field):** A named vertical column describing a specific property, characteristic, or measurement of the entity.
+- **Domain:** The set of all legal, permissible atomic values an attribute can hold (e.g., $\text{Domain}(\text{STU\_GPA}) = [0.00, 4.00]$, $\text{Domain}(\text{GENDER}) = \{'M', 'F'\}$).
+
+#### Entity Terminology Distinctions
+- **Entity:** An individual, real-world object or occurrence possessing an independent existence (corresponds to a single **tuple/row** in a table).
+- **Entity Type:** A category or definition of an entity (corresponds to the **relation schema/table name**).
+- **Entity Set:** The collection of all entities of a given entity type currently stored in the database (corresponds to the **entire set of rows** in a table).
+
+---
+
+### 3.1.2 Foundational Characteristics of a Relational Table
+A properly constructed relational table satisfies eight rigorous mathematical properties:
+1. **Two-Dimensional Structure:** Composed of rows (tuples) and columns (attributes).
+2. **Entity Occurrence per Row:** Each row represents a single distinct entity instance within the entity set.
+3. **Distinct Attribute Names:** Each column possesses a distinct, unambiguous attribute name within the relation.
+4. **Data Type Uniformity:** All values in a column conform strictly to the same attribute characteristics and domain constraints.
+5. **Atomic Values:** Multi-valued attributes or repeating groups are disallowed; every cell contains exactly one atomic value.
+6. **Order Independence of Rows:** The sequence of rows is completely immaterial to the database engine.
+7. **Order Independence of Columns:** The sequence of columns does not impact retrieval or logic.
+8. **Primary Key Identification:** Every table must possess an identifying attribute or combination of attributes that uniquely identifies each row.
+
+---
+
+### 3.1.3 Relation vs. Relvar (C.J. Date Formulation)
+In formal database theory, C.J. Date made the crucial theoretical distinction between a **Relation** and a **Relvar (Relation Variable)**:
+
+```mermaid
+flowchart LR
+    Relvar["Relvar (Container / Variable)<br/>• Heading: Set of (Attribute Name, Type) pairs<br/>• Body: The current state / relation assigned"]
+    RelationVal["Relation (Data Content / Value)<br/>• An immutable mathematical set of tuples<br/>• Changes dynamically whenever INSERT, UPDATE, DELETE executes"]
+    Relvar <-->|Holds / Bound To| RelationVal
+```
+
+- **Relvar (Relation Variable):** A named container or variable whose value is a relation. The relvar schema remains constant while its contents change.
+- **Relation:** The mathematical state or value (the actual set of tuples) residing inside the relvar at any given nanosecond.
+
+---
+
+## 3.2 Relational Keys, Determination, and Functional Dependencies
+
+### 3.2.1 Determination and Functional Dependency
+The mathematical foundation of relational keys is **Determination**:
+
+> [!info] Principle of Determination
+> Determination is the state in which knowing the value of one attribute makes it possible to uniquely determine the value of another attribute. 
+> 
+> Notation:
+> $$A \to B \quad (\text{"A functionally determines B"})$$
+> - $A$ is the **Determinant**.
+> - $B$ is the **Dependent**.
+
+- **Functional Dependence:** The value of attribute $B$ is functionally dependent on attribute $A$ if each value of $A$ in the table is associated with exactly one value of $B$.
+  - *Example:* $\text{STU\_NUM} \to \text{STU\_LNAME}$ (Knowing student ID 1001 unambiguously determines that their last name is "Smith").
+- **Full Functional Dependence:** In a composite determinant $(A, B)$, attribute $C$ is *fully functionally dependent* on $(A, B)$ if $C$ depends on the combination $(A, B)$ but is **not** dependent on any individual subset of the determinant:
+  $$(\text{ProjectNum}, \text{EmployeeNum}) \to \text{WorkingHours}$$
+  Neither $\text{ProjectNum} \to \text{WorkingHours}$ nor $\text{EmployeeNum} \to \text{WorkingHours}$ holds independently; only the joint pair determines hours worked.
+
+---
+
+### 3.2.2 Taxonomy of Relational Database Keys
+
+```mermaid
+flowchart TD
+    subgraph KeysHierarchy["Relational Database Key Classifications"]
+        direction TB
+        SK["<b>1. Superkey:</b> Any attribute or combination that uniquely identifies every tuple in a relation.<br/>Determines all attributes in the row; may contain redundant attributes."]
+        CK["<b>2. Candidate Key:</b> A minimal superkey without unnecessary or redundant attributes.<br/>Based on full functional dependency."]
+        PK["<b>3. Primary Key (PK):</b> The chosen candidate key selected by the designer to uniquely identify tuples.<br/>Enforces Entity Integrity (strictly unique, non-null)."]
+        FK["<b>4. Foreign Key (FK):</b> An attribute in one table whose values match the Primary Key in another table.<br/>Enforces Referential Integrity."]
+        SecK["<b>5. Secondary Key:</b> An attribute or combination used strictly for indexing and fast data retrieval.<br/>(e.g., Customer Last Name + Phone)."]
+    end
+    SK -->|Minimal Subset| CK
+    CK -->|Selected by Designer| PK
+    PK -.->|Referenced By| FK
+```
+
+| Key Type | Formal Mathematical Definition | Real-World Database Example |
+| :--- | :--- | :--- |
+| **Composite Key** | A key composed of two or more attributes (multi-attribute key). | $(\text{COURSE\_CODE}, \text{SECTION\_ID})$ |
+| **Superkey** | Any set of attributes $K$ such that for any two distinct tuples $t_1, t_2$, $t_1[K] \ne t_2[K]$. | $(\text{STU\_NUM})$, $(\text{STU\_NUM}, \text{STU\_LNAME})$, $(\text{STU\_NUM}, \text{EMAIL})$ |
+| **Candidate Key** | A superkey $K$ such that no proper subset of $K$ is a superkey. | $\text{STU\_NUM}$, or $(\text{IC\_NUMBER})$ |
+| **Primary Key (PK)**| The candidate key designated as the primary row identifier. | $\underline{\text{STU\_NUM}}$ |
+| **Foreign Key (FK)** | An attribute set in relation $R_1$ that references the PK of relation $R_2$. | $\text{DEPT\_CODE}$ in $\text{STUDENT}$ referencing $\text{DEPARTMENT}$ |
+| **Secondary Key** | Attributes utilized for search indexing; uniqueness is not required. | $(\text{CUS\_LNAME}, \text{CUS\_PHONE})$ |
+
+---
+
+## 3.3 Relational Integrity Rules: Entity and Referential Integrity
+
+Relational database reliability rests upon two non-negotiable integrity constraints:
+
+```mermaid
+flowchart TD
+    subgraph IntegrityRules["The Two Inviolable Relational Integrity Rules"]
+        direction TB
+        subgraph EntityIntegrity["1. Entity Integrity (Primary Key Constraint)"]
+            EI1["Every table must possess an identifying Primary Key."]
+            EI2["All Primary Key values must be strictly UNIQUE."]
+            EI3["NO component of a Primary Key can ever be NULL."]
+            EI4["Ensures every entity has a distinct identity in reality."]
+        end
+        subgraph ReferentialIntegrity["2. Referential Integrity (Foreign Key Constraint)"]
+            RI1["Foreign Key values must either match an existing Primary Key value in the parent table..."]
+            RI2["...OR be explicitly NULL (if the relationship is optional)."]
+            RI3["Prevents orphan child records referencing phantom entities."]
+        end
+    end
+    EntityIntegrity <==> ReferentialIntegrity
+```
+
+### The Concept of Controlled Redundancy
+Relationships in relational databases are created through **common attributes** (Foreign Keys). Although a Foreign Key repeats values across multiple rows in a child table, this is **controlled redundancy**—the intentional, mathematically required mechanism that makes relational table joining possible.
+
+### Proper Handling of Null Values
+A **Null** signifies the absence of a value. It represents:
+1. An unknown attribute value (e.g., student GPA not yet calculated).
+2. A known but missing attribute value (e.g., customer mobile phone omitted during sign-up).
+3. A "not applicable" condition (e.g., spouse name for an unmarried employee).
+
+- **Handling Nulls:** Designers use database flags (e.g., assigning a dummy code `-99` for an unassigned agent), and enforce `NOT NULL` and `UNIQUE` constraints to prevent data corruption.
+
+---
+
+## 3.4 Relational Algebra and Set Operators
+
+Relational algebra is a theoretical formal system for manipulating relation contents using specialized operators. Relational operators exhibit the fundamental mathematical property of **Closure**:
+
+> [!info] The Property of Closure
+> The execution of any relational algebra operator (or combination of operators) on existing relations always produces a **new relation** as its output.
+
+```mermaid
+flowchart TD
+    subgraph RelationalOperators["The Eight Core Relational Algebra Operators"]
+        direction TB
+        subgraph UnaryOps["Unary Operators (Single Relation Input)"]
+            Op1["SELECT / RESTRICT (sigma - σ): Horizontal row subsetting."]
+            Op2["PROJECT (pi - π): Vertical column subsetting."]
+        end
+        subgraph BinarySetOps["Binary Set Operators (Requires Union-Compatibility)"]
+            Op3["UNION (∪): Combines rows from two tables, excluding duplicates."]
+            Op4["INTERSECT (∩): Yields only rows appearing in both tables."]
+            Op5["DIFFERENCE (-): Yields rows in Table A that are not in Table B."]
+        end
+        subgraph ProductAndJoinOps["Multi-Table Joining & Division"]
+            Op6["PRODUCT (x): Cartesian product yielding all possible row pairs."]
+            Op7["JOIN (⋈): Combines relations based on matching common attributes."]
+            Op8["DIVIDE (÷): Identifies dividend entities associated with all divisor rows."]
+        end
+    end
+```
+
+---
+
+### 3.4.1 Detailed Breakdown of Operators
+
+#### 3.4.1.1 SELECT (or RESTRICT) ($\sigma$)
+- **Nature:** Unary horizontal filtering operator.
+- **Syntax:** $\sigma_{\text{Condition}}(\text{Relation})$
+- **Example:** Select all customers residing in Penang with balance $> 1000$:
+  $$\sigma_{\text{CITY = 'Penang' } \land \text{ BALANCE > 1000}}(\text{CUSTOMER})$$
+
+#### 3.4.1.2 PROJECT ($\pi$)
+- **Nature:** Unary vertical attribute projection operator.
+- **Syntax:** $\pi_{\text{AttributeList}}(\text{Relation})$
+- **Example:** Extract only customer names and phone numbers for customer 10010:
+  $$\pi_{\text{CUS\_FNAME, CUS\_LNAME, CUS\_PHONE}}(\sigma_{\text{CUS\_CODE = 10010}}(\text{CUSTOMER}))$$
+
+#### 3.4.1.3 UNION ($\cup$), INTERSECT ($\cap$), and DIFFERENCE ($-$)
+- **Mandatory Prerequisite: Union-Compatibility:** Two tables are **Union-Compatible** if and only if:
+  1. They possess the exact same number of columns ($n$).
+  2. Corresponding columns share compatible data types and domains ($\text{Domain}(A_i) = \text{Domain}(B_i)$ for all $1 \le i \le n$).
+- **UNION ($\cup$):** Combines tuples from both relations, discarding duplicate rows ($\text{SUPPLIER} \cup \text{VENDOR}$).
+- **INTERSECT ($\cap$):** Yields only tuples that exist in *both* relations simultaneously ($\text{SUPPLIER} \cap \text{VENDOR}$).
+- **DIFFERENCE ($-$):** Yields all tuples residing in the first relation that do not exist in the second ($\text{SUPPLIER} - \text{VENDOR}$).
+
+#### 3.4.1.4 PRODUCT ($\times$)
+- **Nature:** Cartesian product. Pairs every tuple of Relation $R$ (cardinality $m$) with every tuple of Relation $S$ (cardinality $n$), producing a relation with $m \times n$ tuples and $\text{deg}(R) + \text{deg}(S)$ columns.
+
+---
+
+### 3.4.2 The Family of JOIN Operators ($\bowtie$)
+The **JOIN** operator combines related data across multiple tables.
+
+```mermaid
+flowchart TD
+    subgraph JoinTaxonomy["The Relational JOIN Hierarchy"]
+        direction TB
+        subgraph InnerJoins["1. Inner Joins (Returns Only Matched Records)"]
+            direction LR
+            NJ["Natural Join (⋈)<br/>3 Steps: Product -> Select common attrs -> Project out duplicate column"]
+            EJ["Equijoin (=)<br/>Equality condition; preserves duplicate columns in output"]
+            TJ["Theta Join (⋈_θ)<br/>Inequality condition (<, <=, >, >=, !=)"]
+        end
+        subgraph OuterJoins["2. Outer Joins (Preserves Unmatched Tuples with NULLs)"]
+            direction LR
+            LOJ["Left Outer Join<br/>Keeps all left table rows; unmatched right cells = NULL"]
+            ROJ["Right Outer Join<br/>Keeps all right table rows; unmatched left cells = NULL"]
+            FOJ["Full Outer Join<br/>Keeps all rows from both tables; fills gaps with NULL"]
+        end
+    end
+```
+
+#### The 3-Step Mechanics of a Natural Join
+A **Natural Join** ($\text{CUSTOMER} \bowtie \text{AGENT}$) is mathematically derived from primitive operators:
+1. **Step 1 (Cartesian Product):** Form the full product $\text{CUSTOMER} \times \text{AGENT}$.
+2. **Step 2 (Selection on Common Key):** Execute $\sigma_{\text{CUSTOMER.AGENT\_CODE = AGENT.AGENT\_CODE}}(\text{CUSTOMER} \times \text{AGENT})$.
+3. **Step 3 (Projection):** Project out the duplicate join column, keeping only a single copy of `AGENT_CODE`.
+
+#### Outer Joins for Diagnosing Referential Integrity
+While an Inner Join silently discards unmatched rows, a **Left Outer Join** retains every row from the left table. If a customer tuple displays `NULL` across all agent fields, it immediately alerts the database administrator to a broken relationship or missing foreign key reference.
+
+---
+
+### 3.4.3 The DIVIDE Operator ($\div$)
+- **Nature:** Binary operator operating on a 2-column dividend relation $R(A, B)$ and a 1-column divisor relation $S(B)$.
+- **Output:** A single-column relation containing all values of attribute $A$ that are paired with **every single value** of attribute $B$ in $S$.
+- **Real-World Application:** Answering "all" queries: *"Find all students who have taken EVERY course required for the Computer Science major."*
+
+---
+
+## 3.5 The Data Dictionary, Controlled Redundancy, and Indexing
+
+### 3.5.1 The Data Dictionary and System Catalog
+- **Data Dictionary:** A specialized metadata repository containing detailed structural definitions of all tables, columns, data types, constraints, default values, and foreign key relationships created by database designers. Known as *"the database designer's database"*.
+- **System Catalog:** An internal system data dictionary automatically managed by the DBMS, containing environmental metadata (table owners, creation timestamps, index statistics, user access permissions).
+
+#### Resolving Homonyms and Synonyms
+The data dictionary serves as the central authority to eliminate semantic naming bugs:
+- **Homonym:** The same attribute name used to represent different concepts (e.g., using `NAME` for customer names and consultant names). *Resolution:* Qualify attribute names (`CUS_NAME`, `CONS_NAME`).
+- **Synonym:** Different attribute names used to describe the exact same real-world characteristic (e.g., `AUTO_NO` and `CAR_ID`). *Resolution:* Standardize onto a single enterprise attribute name.
+
+---
+
+### 3.5.2 Controlled Redundancy: Historical Accuracy Preservation
+While normalization generally eliminates redundant columns, **controlled redundancy** is deliberately introduced to preserve **Historical Accuracy**:
+
+> [!important] The Invoice Price Case Study
+> An order invoice line item table (`LINE`) stores `LINE_PRICE` alongside `PROD_CODE`, even though `PRODUCT` already contains `PROD_PRICE`.
+> 
+> *Why?* If the product catalog price increases tomorrow from RM 100 to RM 150, queries recalculating past revenue must read the historical price charged on the invoice date (`LINE_PRICE`), not the current volatile catalog price (`PROD_PRICE`). Omitting this controlled redundancy would retroactively and illegally corrupt past financial records.
+
+---
+
+### 3.5.3 Database Indexing Mechanics
+An **Index** is an auxiliary data structure engineered to enable high-speed data retrieval without scanning every page of a table sequentially:
+- **Anatomy:** An index consists of an **Index Key** (the ordered attribute value) and a set of **Pointers** (physical storage disk block/record IDs).
+- **Complexity:** Shifts table search complexity from $O(N)$ linear scans down to $O(\log N)$ or $O(1)$ logarithmic/hash searches using balanced B+ Trees.
+- **Unique Index:** An index where every index key maps to exactly one physical pointer, commonly created automatically on Primary Key columns.
+
+---
+
+## 3.6 Dr. E.F. Codd's Twelve Relational Database Rules (1985)
+
+In 1985, Dr. Edgar F. Codd published 12 foundational rules (plus Rule 0) to benchmark commercial systems claiming relational conformance:
+
+```mermaid
+flowchart TD
+    subgraph CoddRules["Core Highlights of Dr. Codd's 12 Rules"]
+        direction TB
+        R0["<b>Rule 0: Foundation Rule</b><br/>The system must manage data entirely through its relational capabilities."]
+        R1["<b>Rule 1: Information Rule</b><br/>All information is represented explicitly at the logical level in exactly one way: as values in tables."]
+        R2["<b>Rule 2: Guaranteed Access</b><br/>Every individual datum is guaranteed accessible via: (Table Name, Primary Key Value, Column Name)."]
+        R3["<b>Rule 3: Systematic Treatment of NULLs</b><br/>Null values must be supported systematically for representing missing/unapplicable data, independent of data type."]
+        R4["<b>Rule 4: Dynamic Online Catalog</b><br/>The database description is represented at the logical level just like ordinary data, queryable via SQL."]
+        R5["<b>Rule 5: Comprehensive Data Sublanguage</b><br/>Must support at least one linear language supporting DDL, DML, transaction boundaries, and integrity constraints (SQL)."]
+        R6["<b>Rule 6: View Updating Rule</b><br/>All views that are theoretically updatable must be updatable by the system."]
+    end
+```
+
+---
+
+# Chapter 4: Entity-Relationship (ER) Modeling: Concepts, Cardinality, and Schema Design
+
+## 4.1 Foundations of the Entity-Relationship (ER) Model
+
+### 4.1.1 ER Modeling vs. The Relational Model
+While the relational model focuses on logical tables, data types, and SQL execution, the **Entity-Relationship (ER) Model** operates at the **conceptual design phase**:
+
+```mermaid
+flowchart LR
+    subgraph ER_Phase["1. Conceptual Design: ER Model (Chen / Crow's Foot)"]
+        direction TB
+        ER1["Captures user requirements visually."]
+        ER2["Models real-world entities, attributes, and business relationships."]
+        ER3["Completely software and hardware independent."]
+    end
+
+    subgraph Rel_Phase["2. Logical Implementation: Relational Model"]
+        direction TB
+        RM1["Converts entities into relational tables."]
+        RM2["Implements relationships via Foreign Keys."]
+        RM3["Enforces ACID constraints via SQL DDL."]
+    end
+
+    ER_Phase ==>|Schema Translation| Rel_Phase
+```
+
+- **The Entity Distinction in ER Modeling:** In ER modeling, the word **Entity** refers to the **Entity Set** (the entire table), whereas a single instance is called an **Entity Occurrence** or **Instance**.
+
+---
+
+## 4.2 Attributes Classification in ER Models
+
+Attributes describe the properties of entities, categorized across five structural dimensions:
+
+```mermaid
+flowchart TD
+    subgraph AttributeTaxonomy["Taxonomy of Entity Attributes in ER Modeling"]
+        direction TB
+        ReqOpt["<b>1. Value Requirement:</b><br/>• <i>Required Attribute:</i> Must contain a non-null value.<br/>• <i>Optional Attribute:</i> Value may be left blank/null."]
+        CompSimp["<b>2. Structural Decomposition:</b><br/>• <i>Composite Attribute:</i> Can be subdivided (e.g., Address -> Street, City, Zip).<br/>• <i>Simple Attribute:</i> Atomic, cannot be subdivided (e.g., Gender, Age)."]
+        SingleMulti["<b>3. Value Cardinality:</b><br/>• <i>Single-Valued Attribute:</i> Only one value per entity (e.g., IC Number).<br/>• <i>Multi-Valued Attribute:</i> Multiple values per entity (e.g., Degrees, Certifications)."]
+        StoredDerived["<b>4. Derivation:</b><br/>• <i>Stored Attribute:</i> Saved directly in database media (e.g., Date of Birth).<br/>• <i>Derived (Computed) Attribute:</i> Calculated on the fly (e.g., Age = CurrentDate - DOB)."]
+        Identifiers["<b>5. Entity Identification:</b><br/>• <i>Identifier (PK):</i> Underlined attribute uniquely identifying entity instances.<br/>• <i>Composite Identifier:</i> Multi-attribute primary key."]
+    end
+```
+
+### Resolving Multi-Valued Attributes
+Multi-valued attributes violate 1st Normal Form and cannot be implemented directly in a relational table cell. Database designers evaluate two architectural solutions:
+- **Flawed Option 1 (Adding Multiple Columns):** Creating `DEGREE_1`, `DEGREE_2`, `DEGREE_3`. This introduces structural rigidity, wasted storage nulls for individuals with one degree, and arbitrary limits.
+- **Recommended Option 2 (Creating a Related Entity):** Spawn a new entity (`EMPLOYEE_DEGREE`) linked to `EMPLOYEE` via a $1:M$ identifying relationship.
+
+---
+
+## 4.3 Relationships: Connectivity, Cardinality, and Existence
+
+### 4.3.1 Connectivity vs. Cardinality
+- **Connectivity:** Describes the structural classification of the relationship ($1:1$, $1:M$, $M:N$).
+- **Cardinality:** Quantifies the **minimum and maximum** entity occurrences that can be associated with one occurrence of the related entity, formatted as $(min, max)$:
+  $$\text{PROFESSOR teaches CLASS } (1, 4)$$
+  *(A professor teaches a minimum of 1 class and a maximum of 4 classes).*
+
+```mermaid
+flowchart LR
+    subgraph CrowsFootSymbols["Crow's Foot Cardinality Notation Symbols"]
+        direction TB
+        ZeroOne["Zero or One: Optional (0, 1)"]
+        OneOnly["Exactly One: Mandatory (1, 1)"]
+        ZeroMany["Zero or Many: Optional Many (0, N)"]
+        OneMany["One or Many: Mandatory Many (1, N)"]
+    end
+```
+
+---
+
+### 4.3.2 Relationship Strength: Weak vs. Strong Relationships
+The strength of a relationship depends on how the primary key of the related child entity is constructed:
+
+```mermaid
+flowchart TD
+    subgraph RelationshipStrength["Relationship Strength Categorization"]
+        direction TB
+        subgraph NonIdentifying["Weak (Non-Identifying) Relationship"]
+            NI1["Child entity's PK does NOT contain the parent's PK."]
+            NI2["Drawn as a <b>dashed line</b> in Crow's Foot ER diagrams."]
+            NI3["Example: COURSE (<u>CRS_CODE</u>) and CLASS (<u>CLASS_CODE</u>, CRS_CODE)"]
+        end
+        subgraph Identifying["Strong (Identifying) Relationship"]
+            I1["Child entity's PK CONTAINS the parent's PK as a composite component."]
+            I2["Drawn as a <b>solid line</b> in Crow's Foot ER diagrams."]
+            I3["Example: COURSE (<u>CRS_CODE</u>) and CLASS (<u>CRS_CODE, CLASS_SECTION</u>)"]
+        end
+    end
+```
+
+---
+
+### 4.3.3 Weak Entities
+A **Weak Entity** is an entity that meets two mandatory conditions:
+1. **Existence Dependence:** It cannot exist in the database without being associated with a parent entity.
+2. **Derived Primary Key:** Its primary key is partially or totally derived from the parent entity (its PK contains the parent's PK).
+
+> [!tip] Case Study: Building and Room
+> A `ROOM` cannot exist without a `BUILDING`. In a university, room number `101` exists in multiple buildings. Therefore, `ROOM` is a **Weak Entity** whose composite PK is $(\underline{\text{BLDG\_CODE, ROOM\_NUM}})$, linked to `BUILDING` via a **Strong (Identifying) Relationship**.
+
+---
+
+### 4.3.4 Relationship Participation: Optional vs. Mandatory
+- **Optional Participation:** An entity occurrence does not require a corresponding entity occurrence in the relationship (minimum cardinality = $0$). Represented by a small circle ($O$) on the Crow's Foot line.
+- **Mandatory Participation:** An entity occurrence strictly requires at least one corresponding entity occurrence (minimum cardinality $\ge 1$). Represented by a vertical bar ($|$) on the Crow's Foot line.
+
+---
+
+## 4.4 Relationship Degrees and Recursive Topologies
+
+The **Degree** of a relationship indicates the number of participating entity sets:
+
+```mermaid
+flowchart LR
+    subgraph Degrees["Relationship Degrees"]
+        direction TB
+        subgraph Unary["1. Unary (Degree 1)"]
+            U1["Association within a single entity set."]
+            U2["Also called a <b>Recursive Relationship</b>."]
+        end
+        subgraph Binary["2. Binary (Degree 2)"]
+            B1["Association between two distinct entity sets."]
+            B2["The most common relationship type in databases."]
+        end
+        subgraph Ternary["3. Ternary (Degree 3)"]
+            T1["Simultaneous association among three entity sets."]
+            T2["e.g., DOCTOR prescribes DRUG to PATIENT."]
+        end
+    end
+```
+
+### Recursive Relationships
+A recursive relationship occurs when an entity is associated with occurrences of itself:
+- **1:1 Unary:** An `EMPLOYEE` is married to zero or one `EMPLOYEE`.
+- **1:M Unary:** An `EMPLOYEE` manages many `EMPLOYEE`s; each employee is managed by one manager.
+- **M:N Unary:** A `COURSE` has many `COURSE`s as prerequisites, and a `COURSE` can be a prerequisite to many `COURSE`s.
+
+---
+
+## 4.5 Resolving M:N Relationships with Associative Entities
+
+Relational database tables cannot implement $M:N$ relationships directly. An $M:N$ relationship is systematically decomposed into two $1:M$ relationships using an **Associative Entity** (also termed a **Composite Entity** or **Bridge Entity**):
+
+```mermaid
+flowchart LR
+    subgraph DirectMN["Direct Conceptual M:N Relationship (Unsupported in RDBMS)"]
+        STUDENT["STUDENT"] <===>|M:N| CLASS["CLASS"]
+    end
+
+    subgraph ResolvedMN["Decomposed Relational Architecture (Bridge Entity)"]
+        direction LR
+        S["STUDENT<br/><u>STU_NUM</u>"] -->|1:M| ENROLL["ENROLL (Bridge Entity)<br/><u>STU_NUM, CLASS_CODE</u><br/>ENROLL_GRADE, ENROLL_DATE"]
+        CLASS_T["CLASS<br/><u>CLASS_CODE</u>"] -->|1:M| ENROLL
+    end
+
+    DirectMN ==>|Decompose via Bridge| ResolvedMN
+```
+
+- **Anatomy of a Bridge Entity:**
+  1. Primary Key is composite, composed of the Foreign Keys referencing the two parent entities.
+  2. Inherits a $1:M$ relationship from *both* parent entities.
+  3. Can store independent payload attributes describing the transaction (e.g., `ENROLL_GRADE`, `ENROLL_DATE`).
+
+---
+
+## 4.6 Developing an Enterprise ER Diagram: The Six-Step Methodology
+
+Real-world database engineering translates informal business operations into formal schemas through a systematic six-step methodology:
+
+```mermaid
+flowchart TD
+    subgraph ERD_Methodology["The Six-Step Enterprise ERD Design Process"]
+        direction TB
+        S1["<b>Step 1: Operational Narrative</b><br/>Author a comprehensive description of the organization's business activities."]
+        S2["<b>Step 2: Business Rules Extraction</b><br/>Isolate concise, unambiguous policy statements defining entities and constraints."]
+        S3["<b>Step 3: Entity & Relationship Identification</b><br/>Extract candidate nouns (entities) and candidate verbs (relationships)."]
+        S4["<b>Step 4: Initial ERD Drafting</b><br/>Map connectivities, cardinalities, and relationship strengths."]
+        S5["<b>Step 5: Attribute Assignment & PK Selection</b><br/>Allocate attributes, identify primary keys, and resolve multi-valued attributes."]
+        S6["<b>Step 6: Review, Normalization, & Refinement</b><br/>Verify schema against user needs, resolve fan traps, and verify Boyce-Codd normal forms."]
+        S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    end
+```

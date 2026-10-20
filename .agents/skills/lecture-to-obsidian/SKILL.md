@@ -3,65 +3,69 @@ name: lecture-to-obsidian
 description: Converts a single raw lecture note (PDF, text, slides) into a detailed, high-fidelity Obsidian-flavored Markdown note, integrating it into the master note.
 ---
 
-# Lecture to Obsidian Processor
+# Lecture to Obsidian Processor (Maximum Detail Preservation)
 
-This skill guides you in transforming a **single** raw lecture material (text file, PDF, or slides) into a rich, highly detailed Obsidian-flavored Markdown note, integrating it into the subject's master note without losing detail.
+This skill guides you in transforming a **single** raw lecture material (text file, PDF, or slides) into a rich, exhaustive Obsidian-flavored Markdown note, integrating it into the subject's master note with a strict **Zero Loss of Detail** guarantee.
 
-## 1. Core Principles
+---
 
-1. **Automatic Activation**: Whenever you are asked to write or update a single lecture note, you MUST automatically use this skill to write/update it in the Obsidian Markdown format without losing any detail of the source.
-2. **No Loss of Detail**: Your primary mandate is to **preserve all details, examples, code snippets, and nuances** from the source material. The output must be comprehensive. Do not excessively summarize or omit information.
-3. **Dependencies**:
-   - Use the `obsidian-markdown` skill to guide the markdown formatting (callouts, links, math, code blocks, etc.).
-   - Use the `pdf-extractor` skill (incorporating `anydoc` and `split_pdf.js`):
-     - For PowerPoint (`.pptx`) or Word (`.docx`) files, use `anydoc` or `extract_document.js` to convert them directly into structured Markdown drafts.
-     - For large PDFs (e.g. exceeding read or token limits), use chunked splitting (`--chunk 20`) via `split_pdf.js` to process page ranges sequentially.
-     - For small/medium text-based files, read them directly or parse with `extract_document.js`.
-4. **Consistency**: Ensure that the headings, titles, and subheadings added are consistent in style and hierarchy with the existing chapters in the master note.
-5. **Clarity Enhancement (Extra Notes)**: If a part of the lecture notes is not clearly explained or lacks sufficient context, you MUST provide additional explanation or context. This must be clearly labeled as "Extra Notes" using an Obsidian callout.
-6. **No Redundant Headers**: Do NOT add course overviews. Start directly with the content or the chapter/topic header.
-7. **Properties/Frontmatter Block**: **NEVER** add frontmatter to the top of compiled or appended lecture sections, as it will break the rendering of the master note. If working on a standalone file that requires frontmatter, place it at the very top of the file as per the `obsidian-markdown` guidelines.
+## 1. Core Principles (Maximum Detail Preservation)
+
+1. **Zero Loss of Detail Mandate**:
+   - Your primary directive is to **preserve every concept, definition, example, code snippet, edge case, and architectural diagram** from the source material.
+   - Do **NOT** summarize away nuances, skip slides, abbreviate code, or hand-wave steps. The resulting note must serve as a comprehensive, standalone study reference.
+2. **Slide Coverage Audit Protocol**:
+   - Every single slide or page must be accounted for.
+   - Run a pre-flight inspection via `extract_document.js <file> --analyze` to identify the total slide count (e.g., 44 slides) and all visual slides.
+   - When writing the note, verify that all topics spanning from Slide 1 through Slide N are represented.
+3. **Verbatim Code & Math Fidelity**:
+   - **Full Code Blocks**: Never truncate code with `// ... rest of code` or omit declarations. Provide complete, compilable, syntax-highlighted code blocks with language identifiers (e.g. ` ```cpp `, ` ```sql `).
+   - **Rigorous LaTeX**: Every equation, formula, matrix, or complexity notation ($O(n \log n)$) must be transcribed using LaTeX (`$...$` for inline, `$$...$$` for blocks).
+4. **Visual & Architecture Diagram Reconstruction**:
+   - Every flowchart, class diagram, memory layout, or state machine in the slides must be visually inspected and translated into an interactive **Mermaid diagram** (or embedded image).
+5. **Contextual Enrichment ("Extra Notes")**:
+   - If a slide is brief, bullet-only, or assumes external context, you MUST expand upon it with an explanatory callout:
+     ```markdown
+     > [!tip] Extra Notes: [Topic]
+     > [Detailed external context, operational mechanics, or common pitfalls]
+     ```
+6. **Properties / Frontmatter Rule**:
+   - **NEVER** add frontmatter at the top of appended lecture sections in master notes, as multiple frontmatters break Obsidian rendering. Place frontmatter solely at the very top of standalone notes files.
 
 ---
 
 ## 2. Single-Lecture Processing Workflow
 
-1. **Activate Dependencies**: Activate the `obsidian-markdown` and `pdf-extractor` skills.
-2. **Locate Target Section**: Locate the corresponding chapter or section in the master note.
-3. **Read Lecture Content**:
-   - If the material is in `.pptx` or `.docx` format, extract it into structured Markdown using `extract_document.js` or `anydoc`.
-   - If the file is a PDF that is too large to read directly, use `split_pdf.js` to split it into chunks or extract content using `extract_document.js`.
-   - For visual/scanned slide pages requiring OCR, use the native `view_file` tool.
-4. **Compare and Integrate:**
-   - Compare the source content with the existing note.
-   - If the note already contains the chapter, merge any missing details, examples, formulas, tables, or diagrams.
-   - If the chapter is missing, format it and append it to the end of the master note.
-   - **Mixed Content**: If the lecture notes contain distinct materials (like a lab, assignment, tutorial, or appendix), use the appropriate special section prefix (e.g. `# Lab X: [Title]` or `# Appendix X: [Title]`) so they are correctly numbered in separate sequences.
-5. **Verify Style**: Check that all new sections conform to the **Obsidian Formatting Guidelines** below.
-6. **Sync to Knowledge Base**: Invoke the `update-knowledge` skill to summarize the newly created or updated note/chapter into `knowledge.md` and link it directly back to the original section.
-
+1. **Pre-Flight Analysis**:
+   - Run `node "<workspace-root>/.agents/skills/pdf-extractor/scripts/extract_document.js" "<path-to-file>" --analyze` to learn the total slide count and identify visual slides.
+2. **Chunking Decision**:
+   - If total slides > 45, split into chunks of 20 pages using `split_pdf.js --chunk 20 -o "<scratch-dir>"` to prevent context saturation.
+3. **Structured & Verbatim Extraction**:
+   - Extract content using `extract_document.js <file> --mode auto`.
+   - Review both the AnyDoc structural outline and the slide-by-slide transcript (`### 📄 Slide X`).
+4. **Multimodal Visual Inspection**:
+   - For all slides flagged as visual or low-text (or slides featuring architectural figures), inspect them directly using `read_file` to capture diagram topology and visual details.
+5. **Synthesize & Merge into Master Note**:
+   - Append or integrate the comprehensive chapter into the course master note (`<CourseCode> <CourseName>.md`).
+   - Use `# Chapter X: [Title]` or `# Topic X: [Title]` for theory lectures, and `# Lab X: [Title]` for practicals.
+   - Format subheadings as `## X.Y [Subtitle]`.
+6. **Immediate Renumbering**:
+   - Run `node "<workspace-root>/.agents/skills/rearrange-topics/scripts/rearrange.js" "<path-to-master-note>"` to ensure sequential heading integrity.
+7. **Knowledge Base Synchronization**:
+   - For **Core Courses and Field-Electives** (School of Computer Sciences subjects and domain electives), invoke `update-knowledge` to sync deep wikilinks and conceptual summaries into [knowledge_Y1.md](file:///C:/Users/User/Desktop/Obsidian-notes/knowledge_Y1.md) (Year 1) or [knowledge_Y2.md](file:///C:/Users/User/Desktop/Obsidian-notes/knowledge_Y2.md) (Year 2).
+   - For **Free Modules** (such as AKW104 from other faculties), **SKIP** this step entirely. Free modules must never be inserted into knowledge bases.
 
 ---
 
-## 3. Obsidian Formatting Guidelines
+## 3. Obsidian Formatting Standards
 
-When structuring the note, apply the following (as per the `obsidian-markdown` skill):
-
-### 3.1 Hierarchical Headings
-Organize content logically using Markdown headers (`#`, `##`, `###`).
-- **Chapter/Topic Titles**: For top-level chapters/topics, explicitly write the chosen prefix before the number (e.g., `# Chapter X: [Title]` or `# Topic X: [Title]`).
-- **Special Sections**: For labs, tutorials, assignments, or appendices, use their distinct prefix (e.g., `# Lab X: [Title]` or `# Appendix X: [Title]`).
-- **Subtopics**: For all subtopics (level 2 and below), just use the hierarchical numbers without the prefix word (e.g., `## X.Y [Subtitle]`). Do NOT write prefix words like "Chapter" or "Topic" in level 2+ headings.
-- **Unnumbered Subheadings**: If a subheading represents a small section without a number, do not include any number or prefix (e.g., `### Defining Variables`).
-
-### 3.2 Callouts for Emphasis
-Use Obsidian callouts (`> [!type]`) to highlight key information extensively:
-- **Definitions**: `> [!info] Definition: [Term]`
-- **Important Notes**: `> [!note] Important`
-- **Examples**: `> [!example] Example: [Title]`
-- **Warnings**: `> [!warning] Common Mistake`
-- **Extra Notes**: `> [!tip] Extra Notes: [Title]\n> [Explanation from external knowledge to clarify unclear parts]`
-
-### 3.3 Code Blocks and Math
-- Use fenced code blocks with language identifiers (e.g., ` ```cpp `).
-- Use LaTeX for formulas: `$E = mc^2$` for inline and `$$ ... $$` for blocks.
+- **Wikilinks**: Connect internal concepts with `[[Note Name#Section|Display Text]]`.
+- **Callouts**:
+  - `> [!info] Definition: [Term]` for formal definitions.
+  - `> [!example] Example: [Title]` for walkthroughs.
+  - `> [!warning] Common Pitfall` for traps, bugs, or constraints.
+  - `> [!tip] Extra Notes: [Context]` for essential supplementary explanations.
+- **Strict Mermaid Syntax**:
+  - Subgraph and node IDs must NOT contain spaces (e.g. `ViewLayer["View Layer"]`).
+  - No special characters (`&`, `{`, `}`) directly inside class members.
+  - Stereotypes on separate lines (e.g., `<<abstract>> Sale`).

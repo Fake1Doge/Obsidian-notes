@@ -3,27 +3,41 @@ const fs = require('fs');
 const path = require('path');
 
 async function splitPdf() {
-    const args = process.argv.slice(2);
-    const inputFile = args[0];
-
-    if (!inputFile) {
-        console.error("Usage:");
-        console.error("  node split_pdf.js <input_pdf_path> <start_page> <end_page>      (Extract page range)");
-        console.error("  node split_pdf.js <input_pdf_path> --chunk <size>               (Split into chunks of size)");
-        console.error("  node split_pdf.js <input_pdf_path>                              (Default: split into 20-page chunks)");
-        process.exit(1);
+    const rawArgs = process.argv.slice(2);
+    if (rawArgs.length === 0 || rawArgs.includes('-h') || rawArgs.includes('--help')) {
+        console.log("Usage:");
+        console.log("  node split_pdf.js <input_pdf> <start_page> <end_page> [-o <output_dir>]  (Extract page range)");
+        console.log("  node split_pdf.js <input_pdf> --chunk <size> [-o <output_dir>]           (Split into chunks of size)");
+        console.log("  node split_pdf.js <input_pdf> [-o <output_dir>]                          (Default: 20-page chunks)");
+        process.exit(rawArgs.length === 0 ? 1 : 0);
     }
 
+    const inputFile = rawArgs[0];
     if (!fs.existsSync(inputFile)) {
         console.error(`Error: File not found: ${inputFile}`);
         process.exit(1);
     }
 
+    // Check for custom output directory
+    let outputDir = path.dirname(inputFile);
+    const oIdx = rawArgs.indexOf('-o') !== -1 ? rawArgs.indexOf('-o') : rawArgs.indexOf('--out');
+    if (oIdx !== -1 && rawArgs[oIdx + 1]) {
+        outputDir = path.resolve(rawArgs[oIdx + 1]);
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
+        }
+    }
+
+    // Filter out output args for positional/chunk parsing
+    const args = [];
+    for (let i = 0; i < rawArgs.length; i++) {
+        if (i === oIdx || i === oIdx + 1) continue;
+        args.push(rawArgs[i]);
+    }
+
     const originalPdfBytes = fs.readFileSync(inputFile);
     const pdfDoc = await PDFDocument.load(originalPdfBytes);
     const numberOfPages = pdfDoc.getPages().length;
-
-    const outputDir = path.dirname(inputFile);
     const baseName = path.basename(inputFile, '.pdf');
 
     // Parse options
@@ -54,8 +68,11 @@ async function splitPdf() {
         process.exit(1);
     }
 
+    console.log(`[split_pdf] Target PDF: ${baseName}.pdf (${numberOfPages} pages total)`);
+    console.log(`[split_pdf] Destination: ${outputDir}`);
+
     if (chunkMode) {
-        console.log(`Splitting PDF into chunks of ${chunkSize} pages (total pages: ${numberOfPages})...`);
+        console.log(`[split_pdf] Splitting into chunks of ${chunkSize} pages...`);
         let partNum = 1;
         for (let i = 0; i < numberOfPages; i += chunkSize) {
             const doc = await PDFDocument.create();
@@ -69,10 +86,10 @@ async function splitPdf() {
             const pdfBytes = await doc.save();
             const outputFile = path.join(outputDir, `${baseName}_part_${partNum}_pages_${start + 1}_to_${end + 1}.pdf`);
             fs.writeFileSync(outputFile, pdfBytes);
-            console.log(`Saved part ${partNum}: ${outputFile}`);
+            console.log(`Saved part ${partNum} (Pages ${start + 1}-${end + 1}): ${outputFile}`);
             partNum++;
         }
-        console.log("Chunk splitting complete.");
+        console.log(`[split_pdf] Chunk splitting complete (${partNum - 1} parts generated).`);
     } else {
         // Extract specific range
         let start = startPage - 1;
@@ -94,8 +111,11 @@ async function splitPdf() {
         const pdfBytes = await doc.save();
         const outputFile = path.join(outputDir, `${baseName}_pages_${start + 1}_to_${end + 1}.pdf`);
         fs.writeFileSync(outputFile, pdfBytes);
-        console.log(`Splitting complete. Saved to ${outputFile}`);
+        console.log(`[split_pdf] Extracted range saved to: ${outputFile}`);
     }
 }
 
-splitPdf().catch(console.error);
+splitPdf().catch(err => {
+    console.error("Fatal error:", err);
+    process.exit(1);
+});

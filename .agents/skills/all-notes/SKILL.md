@@ -9,9 +9,9 @@ This skill provides a hierarchical, repeatable workflow to compile all lecture m
 
 ## 1. Discovery and Planning Phase
 
-When a course is requested (e.g. "CKS121"):
+When a course is requested (e.g. "CKS121", "CCA201"):
 
-1. **Locate Course Directory**: Search the workspace (typically under `Y1S1/` or `Y1S2/`) for the target course directory.
+1. **Locate Course Directory**: Search the workspace (typically under `Y1S1/`, `Y1S2/`, `Y2S1/`, or `Y2S2/`) for the target course directory.
 2. **Identify Master Note**: Find the master note markdown file (e.g., `<CourseCode> <CourseName>.md`). If it doesn't exist, create it.
 3. **Inventory Course Materials**: List all files (PDFs, slides, text files) in the course folder, sorted sequentially. Separate them into different types of materials:
    - **Lectures**: Theoretical content (will become `Chapter` or `Topic` headings).
@@ -45,13 +45,11 @@ When a course is requested (e.g. "CKS121"):
      - Ensure the appended section starts directly with its heading and does not contain YAML frontmatter/properties.
      - Verify that subtopics are correctly aligned to their parent heading's number (e.g., `## X.Y [Subtitle]`).
 4. **Knowledge Base Synchronization**:
-   - Invoke the `update-knowledge` skill to summarize the newly added chapters/course into `knowledge.md`, ensuring all headings, concepts, and definitions link directly to their exact anchors in the master note.
-
-
+   - Invoke the `update-knowledge` skill to summarize the newly added chapters/course into the corresponding year's knowledge base (`knowledge_Y1.md` for Year 1 or `knowledge_Y2.md` for Year 2), ensuring all headings, concepts, and definitions link directly to their exact anchors in the master note.
 
 ---
 
-## 3. Cleanup
+## 3. Temporary Files & Cleanup
 
-Automatically delete any temporary text files (such as `temp_pdf_text.txt`) or split PDFs (like `<FileName>_part_X.pdf` or `<FileName>_pages_X_to_Y.pdf`) created by the `pdf-extractor` skill during the process.
-
+- When extracting or chunking materials using the `pdf-extractor` skill, place intermediate outputs into the scratch directory (`<appDataDir>\brain\<conversation-id>/scratch/`) whenever possible to avoid cluttering the repository.
+- If intermediate files (such as `temp_extracted_content.md`, `temp_pdf_text.txt`, or chunked PDFs) are created in the vault workspace, list them and request user permission before deletion in adherence to vault removal rules.
