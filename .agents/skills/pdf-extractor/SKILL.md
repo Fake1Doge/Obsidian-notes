@@ -34,13 +34,15 @@ node "<path-to-skill>/scripts/extract_document.js" "<path-to-document>" [options
 - `--mode auto` (Default): Extracts slide-by-slide verbatim text and combines it with AnyDoc's structural outline for complete fidelity.
 - `--mode text`: Fast, slide-by-slide text layout dump via `pdf2json`.
 - `--mode anydoc`: Standard AnyDoc conversion.
-- `-o <output.md>`: Specify custom destination path (e.g. scratch directory).
+- `-o <output.md>`: Specify custom destination path (e.g. scratch directory). *Note: If `-o` is omitted, output safely defaults to the system temporary directory (`os.tmpdir()`), completely preventing intermediate clutter from polluting the vault workspace.*
 
 ### 3. Splitting a Large PDF for Topic-by-Topic Processing
 If a PDF file exceeds 40–50 pages, chunk it to avoid LLM context saturation and lost details:
 ```bash
 # Split into 20-page chunks directed to a scratch directory:
 node "<path-to-skill>/scripts/split_pdf.js" "<path-to-pdf>" --chunk 20 -o "<scratch-or-cache-dir>"
+```
+*Note: If `-o` is omitted, chunk directories also safely default to `os.tmpdir()`, protecting the workspace.*
 
 # Extract specific page range (e.g. slides 21 to 40):
 node "<path-to-skill>/scripts/split_pdf.js" "<path-to-pdf>" 21 40 -o "<scratch-or-cache-dir>"

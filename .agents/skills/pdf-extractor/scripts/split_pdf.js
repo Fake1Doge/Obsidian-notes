@@ -1,6 +1,7 @@
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 async function splitPdf() {
     const rawArgs = process.argv.slice(2);
@@ -18,14 +19,17 @@ async function splitPdf() {
         process.exit(1);
     }
 
-    // Check for custom output directory
-    let outputDir = path.dirname(inputFile);
+    // Check for custom output directory (Hardened Scratch Isolation: defaults to OS temp directory to protect vault from clutter)
+    let outputDir = null;
     const oIdx = rawArgs.indexOf('-o') !== -1 ? rawArgs.indexOf('-o') : rawArgs.indexOf('--out');
     if (oIdx !== -1 && rawArgs[oIdx + 1]) {
         outputDir = path.resolve(rawArgs[oIdx + 1]);
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
+    } else {
+        const fileStem = path.basename(inputFile, '.pdf');
+        outputDir = path.join(os.tmpdir(), `${fileStem}_chunks_${Date.now()}`);
+    }
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
     }
 
     // Filter out output args for positional/chunk parsing

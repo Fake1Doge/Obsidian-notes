@@ -1,4 +1,40 @@
-# Chapter 1: Introduction to Software Process & the Product Lifecycle
+# CKS222: Software Process and Life Cycle
+
+> [!abstract] Course Meta-Information & Constructive Alignment
+> - **Institution:** Universiti Sains Malaysia (USM) | School of Computer Sciences
+> - **Course:** CKS222 — Software Process and Life Cycle (Core Undergraduate Specialization, 3 Course Units)
+> - **Academic Term:** Semester 1, 2026/2027
+> - **Course Lecturers:**
+>   - **Ts. Dr. Mohd Heikal Husin** (`heikal@usm.my`, Room 622)
+>   - **Dr. Azleena Mohd Kassim** (`azleena.mk@usm.my`, Room 702)
+> 
+> ### Core Course Objectives
+> 1. **Foundational Principles:** Equip students with vital concepts of the software life cycle, software engineering process models, and industrial standards.
+> 2. **Quality Impact:** Expose students to the quantitative impact of software processes on product quality and software quality assurance (SQA) fundamentals.
+> 3. **Process Tailoring:** Develop critical engineering abilities in choosing, evaluating, adapting, and tailoring process models for actual, diverse software project contexts.
+> 
+> ### Constructive Alignment & Assessment Architecture (100% Total)
+> 
+> | Assessment Component | Weight | Target Learning Level & Mapped Outcomes | Details & Scope |
+> | :--- | :---: | :--- | :--- |
+> | **Final Examination** | **50%** | **CLO1 & CLO2** (PLO1, PLO3, C3, C4) | 2-Hour comprehensive summative assessment evaluating theoretical foundations, formal models, and process analysis. |
+> | **Coursework Total** | **50%** | **Continuous Evaluation** | Progressive project-based, empirical, and analytical evaluations. |
+> | ↳ *Group Project (Milestones)* | 20% | **CLO3** (PLO9, A5, LL3 — 200 marks) | Practical multi-milestone process modeling, EPG construction, and empirical audit. |
+> | ↳ *Tests (x 2)* | 20% | **CLO1 & CLO2** (Test 1 & Test 2) | Mid-semester assessments verifying mastery of lifecycle models, EVM, and agile principles. |
+> | ↳ *Assignments* | 10% | **CLO2** (Assignment — 100 marks) | Rigorous process audit and tailoring of Malaysian software organizations (e.g., Touch 'n Go, Maybank, Grab). |
+> 
+> ### Semester Topic Roadmap
+> - **Week 1:** Introduction to Software Process, Product Lifecycle, Process-Product Causality, Prescriptive Lifecycle Classes.
+> - **Week 2:** Software Process Definition & Descriptive Modeling (8-Step Methodology, MVP-L, SPEM 2.0, EPF Composer).
+> - **Week 3:** Software Processes in the Product Life Cycle, Project Management Controls (Triple Constraint, RACI, Tuckman, EVM, Earned Schedule, EVM Triads & A-SPSRI).
+> - **Week 4:** Agile & Lean Development Processes (Manifesto, Scrum Framework, INVEST User Stories, Definition of Done, XP Practices, Lean Wastes, SDL-Agile & OWASP SAMM).
+> - **Week 5:** Software Process Methodologies Part 1 (Waterfall, Symmetrical V-Model, Throwaway/Evolutionary Prototyping, Process Tailoring with Münch's 4 Ps).
+> - **Week 6:** Software Process Methodologies Part 2 (Spiral Model, Incremental Commitment Spiral Model [ICSM], Cleanroom, DevOps, Multi-Release Reliability Modeling).
+> - **Week 7:** Standards & Continuous Process Improvement (ISO/IEC 12207, CMMI, SPICE, QIP/GQM, Safety Regulations).
+> 
+> ---
+> 
+> # Chapter 1: Introduction to Software Process & the Product Lifecycle
 
 ## 1.1 Fundamentals of Software Engineering & Process
 
@@ -639,19 +675,35 @@ The finalized process model is synthesized into actionable organizational artifa
 
 ## 2.3 Process Modeling Notations & Languages
 
-### 2.3.1 The Eight Requirements for Process Notations (R1–R8)
-A formal process notation must satisfy eight fundamental criteria:
+### 2.3.1 Key Notation Characteristics & The Eight Formal Requirements (R1–R8)
+
+#### Four Key Dimensions of Process Notations
+Before choosing a modeling formalism, process engineers classify notations along four foundational architectural dimensions (Münch & Armbrust, 2012):
+
+```mermaid
+flowchart TD
+    subgraph NotationDimensions["The 4 Foundational Dimensions of Process Notations"]
+        direction TB
+        D1["<b>1. Process Programming vs. Process Improvement</b><br/>• <i>Programming:</i> Formal, machine-interpretable code designed for automated engine execution.<br/>• <i>Improvement:</i> Conceptual, communicative models designed for human understanding and optimization."]
+        D2["<b>2. Hidden vs. Guiding Notations</b><br/>• <i>Hidden:</i> Process rules are implicitly baked inside automated tools (e.g., Jira transitions).<br/>• <i>Guiding:</i> The model explicitly advises and steers human developers through daily tasks."]
+        D3["<b>3. Prescriptive vs. Proscriptive Notations</b><br/>• <i>Prescriptive:</i> Rigidly dictates exact allowable sequences ('Do A, then B').<br/>• <i>Proscriptive:</i> Defines external boundary constraints and forbidden states, granting autonomy within guardrails."]
+        D4["<b>4. Single-Person vs. Multi-Person Notations</b><br/>• <i>Single-Person:</i> Focuses on atomic, individual task execution at the workstation level.<br/>• <i>Multi-Person:</i> Coordinates cross-functional workflows, role handoffs, and distributed team synchronization."]
+    end
+```
+
+#### The Eight Formal Requirements for Process Notations (R1–R8)
+To serve as an effective standard in professional software engineering, a modeling notation must satisfy eight criteria:
 
 | Requirement | Designation | Operational Mandate |
 | :--- | :--- | :--- |
-| **R1** | **Natural Representation** | Captures real-world software engineering concepts intuitively without artificial contortions. |
-| **R2** | **Support of Measurement** | Natively integrates quantitative process and product metrics directly into structural definitions. |
-| **R3** | **Tailorability of Models** | Allows modular adaptation, extension, and customization for diverse project scopes. |
-| **R4** | **Formality** | Establishes unambiguous syntax and execution semantics enabling automated analysis. |
-| **R5** | **Understandability** | Easily comprehended, validated, and enacted by human practitioners (engineers, managers). |
-| **R6** | **Executability** | Machine-interpretable by workflow management systems and automated toolchains. |
-| **R7** | **Flexibility** | Accommodates human cognitive discretion, non-linear creativity, and dynamic exceptions. |
-| **R8** | **Traceability** | Natively links activities to artifacts, roles, tools, and business objectives. |
+| **R1** | **Natural Representation** | Captures real-world software engineering concepts (activities, artifacts, roles) intuitively without artificial contortions. |
+| **R2** | **Support of Measurement** | Natively integrates quantitative process and product metrics directly into structural definitions (GQM alignment). |
+| **R3** | **Tailorability of Models** | Allows modular adaptation, extension, and customization for diverse project scopes and team sizes. |
+| **R4** | **Formality** | Establishes unambiguous syntax and execution semantics enabling automated analysis, consistency checking, and simulation. |
+| **R5** | **Understandability** | Easily comprehended, validated, and enacted by human practitioners across roles (engineers, managers, auditors). |
+| **R6** | **Executability** | Machine-interpretable by workflow management systems, continuous integration toolchains, and process engines. |
+| **R7** | **Flexibility** | Accommodates human cognitive discretion, non-linear creativity, exploratory tinkering, and dynamic exceptions. |
+| **R8** | **Traceability** | Natively links activities to artifacts, roles, tools, and business objectives across the lifecycle. |
 
 ---
 
@@ -966,42 +1018,108 @@ flowchart LR
 ```
 
 ### 3.3.3 The RACI Responsibility Assignment Matrix
-To eliminate role ambiguity and task neglect, projects utilize the RACI matrix:
-- **Responsible (R):** The doer who completes the task or deliverable.
-- **Accountable (A):** The sole individual with final decision-making power and veto authority (Only one 'A' per deliverable).
-- **Consulted (C):** Subject matter experts who provide bidirectional input and advice.
-- **Informed (I):** Stakeholders kept updated on progress unidirectionally.
+To eliminate role ambiguity, overlapping efforts, and task neglect across engineering teams, projects utilize the **RACI Responsibility Assignment Matrix**:
+- **Responsible (R):** The "doer" assigned to complete the task or deliverable.
+- **Accountable (A):** The sole decision-maker with ultimate veto and delivery sign-off authority. *(Rule: Exactly one 'A' per deliverable).*
+- **Consulted (C):** Subject matter experts who provide bidirectional advice and input.
+- **Informed (I):** Stakeholders kept updated unidirectionally on progress and milestones.
 
-#### Sample Enterprise RACI Allocation
-| Project Deliverable | Team Lead / PM | Frontend Lead | Backend Developer | QA / Test Lead |
+#### Official Lecture RACI Allocation (Week 3 Slide 14)
+The authoritative RACI allocation matrix presented in the CKS222 curriculum maps four core software deliverables across four cross-functional engineering roles:
+
+| Project Deliverable | Team Lead | Frontend Lead | Frontend Developer | Backend Developer |
 | :--- | :---: | :---: | :---: | :---: |
-| **Requirements Specification** | Accountable | Consulted | Consulted | Responsible |
-| **Interface / API Design** | Informed | Responsible | Accountable | Consulted |
-| **Backend Implementation** | Informed | Informed | Responsible / Accountable | Informed |
-| **User Acceptance Testing (UAT)** | Accountable | Consulted | Informed | Responsible |
+| **Requirements Specification** | Consulted / Informed | Accountable / Informed | Responsible | Responsible |
+| **Interface / API Design** | Informed | Informed | Responsible | Accountable |
+| **Backend Coding** | Informed | Consulted | Informed | Responsible / Accountable |
+| **User Acceptance Testing (UAT)** | Consulted / Informed | Responsible / Accountable | Responsible | Responsible |
+
+> [!tip] Analysis of the Lecture RACI Architecture
+> 1. **Shared Technical Responsibility:** Both `Frontend Developer` and `Backend Developer` are co-Responsible (`R`) for Requirements Specification and UAT, ensuring developers validate functionality against requirements end-to-end.
+> 2. **Accountability Separation:** Accountability (`A`) is split by architectural expertise: the `Backend Developer` owns API Design and Backend Coding, while the `Frontend Lead` owns Requirements Specification signoff and final UAT approval.
+> 3. **Governance & Anti-Pattern Defense:** In industry coursework audits, examiners enforce strict RACI constraints: each deliverable must have **at least one 'R'** and **strictly one 'A'** to avoid decision gridlock. Dual designations (e.g., `R/A`) signify that the lead both authors the technical core and carries final legal accountability.
 
 ---
 
 ### 3.3.4 Structured Decision-Making: Eisenhower Matrix & Fist of Five
-1. **Eisenhower Prioritization Matrix:**
-   - *Do (Urgent & Important):* Critical production outages, blocking technical dependencies.
-   - *Decide (Not Urgent & Important):* Strategic refactoring, architecture planning, paying down technical debt.
-   - *Delegate (Urgent & Not Important):* Routine administrative filings, non-technical tool setups.
-   - *Delete (Not Urgent & Not Important):* Unused proof-of-concepts, low-value feature brainstorming.
-2. **Fist of Five Consensus Method:**
-   - **Fist (0 fingers):** Strong veto / reject. Major blocking concern; halts progress until resolved.
-   - **1–2 Fingers:** Disapproval / major reservations. Requires immediate plenary discussion.
-   - **3–4 Fingers:** Solid agreement with minor reservations; ready to proceed.
-   - **5 Fingers:** Total endorsement and active championing of the decision.
+
+#### 1. Eisenhower Prioritization Matrix
+Balances development workloads by categorizing incoming tasks across urgency and importance:
+
+```mermaid
+flowchart TD
+    subgraph EisenhowerGrid["The Eisenhower Decision Matrix in Software Projects"]
+        direction TB
+        subgraph TopRow["High Urgency"]
+            direction LR
+            Do["<b>Do (Urgent & Important)</b><br/>Perform immediately and correctly.<br/><i>Lecture Example:</i> Documenting complex code so a newly onboarded engineer can begin work; hotfixing production outages."]
+            Del["<b>Delegate (Urgent & Not Important)</b><br/>Assign to junior roles or automation scripts.<br/><i>Lecture Example:</i> Routine admin ticket filing, updating environment licenses."]
+        end
+        subgraph BottomRow["Low Urgency"]
+            direction LR
+            Dec["<b>Decide (Not Urgent & Important)</b><br/>Schedule dedicated calendar time deliberately.<br/><i>Lecture Example:</i> Strategic code refactoring, paying down technical debt, architecture reviews."]
+            Drop["<b>Delete (Not Urgent & Not Important)</b><br/>Eliminate completely from backlog.<br/><i>Lecture Example:</i> Unused speculative prototypes, vanity features with zero user demand."]
+        end
+    end
+    TopRow --- BottomRow
+```
+
+#### 2. Fist of Five Consensus Method
+A rapid, transparent voting protocol used during sprint planning, architectural reviews, and process tailoring sessions to gauge team consensus and identify hidden reservations:
+
+```mermaid
+flowchart LR
+    subgraph FistOfFive["Fist of Five Consensus Scale (Week 3 Slide 15)"]
+        direction TB
+        Fist["<b>Fist (0 Fingers): Strong Reject</b><br/>• Blocks consensus entirely.<br/>• Major blocking issue halts progress until resolved."]
+        OneTwo["<b>1 to 2 Fingers: Reject</b><br/>• Serious reservations or major/minor issues.<br/>• Requires immediate plenary group discussion & resolution."]
+        ThreeFive["<b>3 to 5 Fingers: Accept</b><br/>• 3: Weak acceptance (minor issues resolved later).<br/>• 4: Solid agreement.<br/>• 5: Total endorsement & strong leadership/championing."]
+    end
+    Fist --> OneTwo --> ThreeFive
+```
+
+> [!important] The "Below Three" Governance Gate
+> In professional agile governance (and USM CKS222 coursework gate assessments), **any vote below a 'Three' (Fist, 1, or 2)** acts as a process halt trigger. The team must pause, document the specific blocking concern, negotiate architectural or process compromises, and re-vote until universal agreement ($\ge 3$) is attained.
 
 ---
 
 ### 3.3.5 Agile Estimation Paradigms & Planning Poker
 To overcome the **planning fallacy** and cognitive optimism bias, agile software processes deploy relative estimation:
 - **Story Points vs. Ideal Days:**
-  - **Story Points:** Relative abstraction representing effort, complexity, and technical risk (typically using modified Fibonacci: $1, 2, 3, 5, 8, 13$).
-  - **Ideal Days:** Absolute calendar duration assuming 100% focused uninterrupted developer time (vulnerable to unrealistic optimism).
+  - **Story Points:** Relative abstraction representing effort, complexity, and technical risk (typically using modified Fibonacci: $1, 2, 3, 5, 8$). Scale is calibrated internally by the team.
+  - **Ideal Days:** Absolute calendar duration assuming a developer works with 100% focus and zero interruptions. Fails to account for typical workplace distractions, context switches, and coordination meetings.
 - **Planning Poker:** Team members privately select point cards simultaneously, exposing discrepancies. Outliers (highest and lowest bidders) explain their reasoning, revealing hidden technical complexities and establishing consensus.
+
+---
+
+### 3.3.6 Scope Management: Traditional Statement of Work (SOW) vs. Agile Backlog
+
+A pivotal governance transition in software engineering is the shift from contractually frozen statements of work to backlog-driven dynamic scope:
+
+```mermaid
+flowchart LR
+    subgraph TraditionalScope["Traditional Scope: Statement of Work (SOW)"]
+        direction TB
+        T1["<b>Rigid Upfront Baseline</b><br/>Scope defined exhaustively in a formal, heavily-documented legal contract."]
+        T2["<b>High Project Failure Risk</b><br/>Unmanaged requirement changes cause massive schedule slips and budget overruns.<br/><i>'Swimming up a waterfall is prohibited.'</i>"]
+        T1 --> T2
+    end
+    
+    subgraph AgileScope["Agile Scope: Backlog-Driven Management"]
+        direction TB
+        A1["<b>Emergent Scope Definition</b><br/>Scope is represented as an adaptable, prioritized list of items (Product & Sprint Backlogs)."]
+        A2["<b>Adaptive Value Commitment</b><br/>Requirements emerge continuously, enabling teams to pivot and address volatile market needs."]
+        A1 --> A2
+    end
+    
+    TraditionalScope -.->|Replaced By| AgileScope
+```
+
+| Scope Dimension | Traditional Statement of Work (SOW) | Agile Backlog-Driven Scope |
+| :--- | :--- | :--- |
+| **Baseline Definition** | Heavily documented, rigid upfront specification legally signed before coding begins. | Emergent, lightweight, ordered list of user stories refined continuously across sprints. |
+| **Change Tolerance** | Inflexible. Mid-project modifications require costly formal contract change orders. | Welcomed. Backlog re-ordering allows new priorities to replace low-value items dynamically. |
+| **Risk Posture** | Extreme risk when market assumptions shift (*"swimming up a waterfall is prohibited"*). | Continuous risk mitigation through 2-to-4 week incremental deliveries and empirical feedback. |
 
 ---
 
@@ -1339,7 +1457,7 @@ flowchart TD
 
 ## 4.3 Agile Requirements Engineering: User Stories & Definition of Done
 
-### 4.3.1 User Story Format and the "Three Cs"
+### 4.3.1 User Story Format, Decomposition Hierarchy & The "Three Cs"
 Traditional waterfall software requirements rely on exhaustive, multi-hundred-page Software Requirements Specifications (SRS) filled with formal, passive-voice "The system shall..." declarations. Agile replaces these disconnected documents with lightweight, conversational artifacts called **User Stories**.
 
 #### The Canonical User Story Template
@@ -1348,6 +1466,36 @@ $$\text{As a } \langle \text{ROLE} \rangle, \text{ I want } \langle \text{FUNCTI
 - **$\langle \text{ROLE} \rangle$:** Defines the specific end-user, persona, or consumer interacting with the feature (e.g., *Registered Customer*, *Store Administrator*, *Billing Auditor*).
 - **$\langle \text{FUNCTIONALITY} \rangle$:** Describes the discrete technical behavior or capability desired.
 - **$\langle \text{BUSINESS BENEFIT} \rangle$:** Articulates the quantifiable underlying business justification, preventing the construction of vanity features that add no measurable value.
+
+#### The 4-Tier Agile Decomposition Hierarchy (Week 4 Slide 10)
+Agile requirements cascade from overarching product backlogs down to daily atomic engineering tasks:
+
+```mermaid
+flowchart TD
+    subgraph DecompositionHierarchy["Agile Requirement Decomposition Hierarchy (Slide 10)"]
+        direction TB
+        PB["<b>Product Backlog</b><br/>High-level, comprehensive repository of all desired system capabilities."]
+        
+        subgraph EpicLevel["Epic Layer (Broad Feature Themes)"]
+            E1["Epic 1: User Profile"]
+            E2["Epic 2: Shopping Cart"]
+        end
+        
+        subgraph StoryLevel["User Story Layer (Conversational Slices)"]
+            S1["User Story 1:<br/><i>'As a registered user, I want to be able to view my order history,<br/>so that I can track my purchases and ensure that all orders have been delivered.'</i>"]
+            S2["User Story 2:<br/><i>'As a customer, I want to be able to add items to my shopping cart and checkout easily,<br/>so that I can quickly purchase the products I need and complete my transaction.'</i>"]
+        end
+        
+        subgraph TaskLevel["Task Layer (Actionable 1-to-3 Day Technical Work)"]
+            T1["Tasks 1, 2, ... n<br/>(e.g., Build GET /orders API, design UI table, write DB query)"]
+            T2["Tasks 1, 2, ... n<br/>(e.g., Redis cart session store, Stripe payment hook, checkout validation)"]
+        end
+        
+        PB --> E1 & E2
+        E1 --> S1 --> T1
+        E2 --> S2 --> T2
+    end
+```
 
 #### Ron Jeffries' "Three Cs" Framework
 A user story is not merely a written specification; it is an ongoing social interaction. Ron Jeffries formalized this through the **Three Cs**:
@@ -1397,12 +1545,19 @@ In traditional projects, teams frequently declare tasks "90% done" for months, m
 
 #### Given-When-Then (GWT) Acceptance Syntax
 Originating from Behavior-Driven Development (BDD), individual user story acceptance criteria are expressed using strict **Given-When-Then** triples:
-- **Given (Context):** Establishes the initial state, preconditions, or system context.
-  - *Example:* `Given an authenticated customer with RM 150 in their shopping cart.`
-- **When (Action):** Specifies the event, command, or action executed by the user or external API.
-  - *Example:* `When the customer enters a valid promotional discount code 'SAVE20' and clicks apply.`
-- **Then (Outcome):** Defines the observable result, state transition, or system postcondition.
-  - *Example:* `Then the cart total updates to RM 120, a '20% Applied' badge renders, and the discount is logged to the transaction ledger.`
+- **Given (Context):** Establishes the initial state, preconditions, or system boundary context.
+- **When (Action):** Specifies the behavior, command, or event triggered by the user or external API.
+- **Then (Outcome):** Declares the expected postconditions, observable state transitions, or verification results.
+
+> [!example] Authoritative Lecture Example (Week 4 Slide 12)
+> - **Given (Context):** `Given the user is logged in as an administrator`
+> - **When (Action):** `When they attempt to deactivate comments`
+> - **Then (Outcome):** `Then the comments section is disabled and a success alert displays`
+
+> [!example] Secondary Commercial Example (E-Commerce)
+> - **Given (Context):** `Given an authenticated customer with RM 150 in their shopping cart`
+> - **When (Action):** `When the customer enters a valid promotional discount code 'SAVE20' and clicks apply`
+> - **Then (Outcome):** `Then the cart total updates to RM 120, a '20% Applied' badge renders, and the discount is logged to the transaction ledger`
 
 #### The Three Structural Layers of the Definition of Done (DoD)
 While acceptance criteria vary per user story, the **Definition of Done (DoD)** is a formal agreement applied globally across *all* Product Backlog items within the organization:
@@ -1622,42 +1777,45 @@ SDL-Agile decentralizes security governance by embedding designated **Security C
 ---
 
 ### 4.6.3 OWASP SAMM: Software Assurance Maturity Model
-The **OWASP Software Assurance Maturity Model (SAMM)** is an open, measurable, and actionable framework designed to evaluate, formulate, and benchmark an organization's software security posture.
+The **OWASP Software Assurance Maturity Model (SAMM 2.0)** is an open, measurable, and actionable framework designed to evaluate, formulate, and benchmark an organization's software security posture.
+
+#### The 5 Business Functions & 15 Security Practices Architecture (Week 4 Slides 20 & 21)
+SAMM decomposes software security assurance into 5 core business functions, each containing 3 security practices, which are further evaluated across **Stream A** and **Stream B**:
 
 ```mermaid
 flowchart TD
-    subgraph SAMMFramework["OWASP SAMM Architecture: 5 Business Functions & 15 Security Practices"]
+    subgraph SAMMFramework["OWASP SAMM Architecture: 5 Business Functions, 15 Practices & Dual Streams"]
         direction TB
-        subgraph F1["1. Governance"]
-            G1["Strategy & Metrics"]
-            G2["Policy & Compliance"]
-            G3["Education & Guidance"]
+        subgraph F1["1. Governance (Strategy, Policy & Education)"]
+            G1["Strategy & Metrics<br/>• Stream A: Create & Promote<br/>• Stream B: Measure & Improve"]
+            G2["Policy & Compliance<br/>• Stream A: Policy & Standards<br/>• Stream B: Compliance Management"]
+            G3["Education & Guidance<br/>• Stream A: Training & Awareness<br/>• Stream B: Organization & Culture"]
         end
-        subgraph F2["2. Design"]
-            D1["Threat Assessment"]
-            D2["Security Requirements"]
-            D3["Security Architecture"]
+        subgraph F2["2. Design (Threat Modeling & Architecture)"]
+            D1["Threat Assessment<br/>• Stream A: Application Risk<br/>• Stream B: Threat Modeling"]
+            D2["Security Requirements<br/>• Stream A: Software Requirements<br/>• Stream B: Supplier Security"]
+            D3["Security Architecture<br/>• Stream A: Architecture Design<br/>• Stream B: Technology Architecture"]
         end
-        subgraph F3["3. Implementation"]
-            I1["Secure Build"]
-            I2["Secure Deployment"]
-            I3["Defect Management"]
+        subgraph F3["3. Implementation (Build, Deploy & Defects)"]
+            I1["Secure Build<br/>• Stream A: Build Process<br/>• Stream B: Software Dependencies"]
+            I2["Secure Deployment<br/>• Stream A: Deployment Process<br/>• Stream B: Secret Management"]
+            I3["Defect Management<br/>• Stream A: Defect Tracking<br/>• Stream B: Metrics & Feedback"]
         end
-        subgraph F4["4. Verification"]
-            V1["Architecture Assessment"]
-            V2["Requirements-Driven Testing"]
-            V3["Security Testing (DAST/SAST)"]
+        subgraph F4["4. Verification (Architecture, Test & Security)"]
+            V1["Architecture Assessment<br/>• Stream A: Architecture Validation<br/>• Stream B: Architecture Mitigation"]
+            V2["Requirements-Driven Testing<br/>• Stream A: Control Verification<br/>• Stream B: Misuse/Abuse Testing"]
+            V3["Security Testing<br/>• Stream A: Scalable Baseline (SAST)<br/>• Stream B: Deep Understanding (DAST/PenTest)"]
         end
-        subgraph F5["5. Operations"]
-            O1["Incident Management"]
-            O2["Environment Management"]
-            O3["Operational Management"]
+        subgraph F5["5. Operations (Incidents, Environment & Ops)"]
+            O1["Incident Management<br/>• Stream A: Incident Detection<br/>• Stream B: Incident Response"]
+            O2["Environment Management<br/>• Stream A: Configuration Hardening<br/>• Stream B: Patch & Update"]
+            O3["Operational Management<br/>• Stream A: Data Protection<br/>• Stream B: Legacy Management"]
         end
     end
 ```
 
 #### The Three SAMM Maturity Levels
-Across each of the 15 security practices, SAMM benchmarks organizational maturity along three progressive levels:
+Across each of the 30 underlying practice streams, SAMM benchmarks organizational maturity along three progressive tiers:
 
 ```mermaid
 flowchart LR

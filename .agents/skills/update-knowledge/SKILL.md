@@ -26,7 +26,7 @@ This skill defines the standardized procedure for summarizing and integrating ne
        - **DO NOT** add its terminology to the Master Glossary.
 
 2. **Automatic Activation & Year-Specific Routing (Core & Field-Electives)**:
-   - Whenever any **Core Course** or **Field-Elective** note, chapter, or lecture material is added, compiled, or significantly modified in the vault (e.g., via `lecture-to-obsidian`, `all-notes`, or manual note creation), you MUST automatically execute this skill to sync the new knowledge into the appropriate year knowledge base:
+   - Whenever any **Core Course** or **Field-Elective** note, chapter, or lecture material is added, compiled, or significantly modified in the vault (e.g., via `lecture-to-obsidian` or manual note creation), you MUST automatically execute this skill to sync the new knowledge into the appropriate year knowledge base:
      - **`knowledge_Y1.md`**: For Year 1 core and field-elective courses located under `Y1S1/` or `Y1S2/`.
      - **`knowledge_Y2.md`**: For Year 2 core and field-elective courses located under `Y2S1/` or `Y2S2/`.
    - Never create a standalone `knowledge.md` at the vault root; always maintain the split `knowledge_Y1.md` and `knowledge_Y2.md` architecture.
@@ -114,12 +114,17 @@ For each new chapter or topic in the source note:
    ```
 3. Maintain alphabetical sorting in the glossary.
 
-### Step 6: Verify Consistency & Formatting
+### Step 6: Verify Consistency, Formatting & Automated Anchor Validation
 1. Verify that all markdown links are valid Obsidian wikilinks.
-2. Check that all Mermaid diagrams follow syntax rules:
+2. Run the automated anchor validator script to verify that every wikilink points to an existing heading in the source notes:
+   ```bash
+   node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js"
+   ```
+   Ensure zero broken anchors are reported before concluding.
+3. Check that all Mermaid diagrams follow syntax rules:
    - Node IDs have no spaces (e.g., `Node_A` or `NodeA["Label with spaces"]`).
    - Class diagrams use valid syntax (`<<abstract>>`, `--|>`, `*--`, `o--`).
-3. Save the modified knowledge base (`knowledge_Y1.md` or `knowledge_Y2.md`) and verify clean formatting.
+4. Save the modified knowledge base (`knowledge_Y1.md` or `knowledge_Y2.md`) and verify clean formatting.
 
 ---
 

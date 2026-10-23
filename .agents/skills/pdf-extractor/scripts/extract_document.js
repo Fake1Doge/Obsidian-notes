@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 // Helper to decode URI component safely
 function safeDecode(str) {
@@ -173,14 +174,14 @@ async function extractDocument() {
         process.exit(0);
     }
 
-    // Determine output path
+    // Determine output path (Hardened Scratch Isolation: defaults to OS temp directory to protect vault from clutter)
     let outputFile = null;
     const oIndex = args.indexOf('-o') !== -1 ? args.indexOf('-o') : args.indexOf('--out');
     if (oIndex !== -1 && args[oIndex + 1]) {
         outputFile = path.resolve(args[oIndex + 1]);
     } else {
-        const outputDir = path.dirname(inputFile);
-        outputFile = path.join(outputDir, "temp_extracted_content.md");
+        const fileStem = path.basename(inputFile, path.extname(inputFile));
+        outputFile = path.join(os.tmpdir(), `${fileStem}_extracted_${Date.now()}.md`);
     }
 
     // Determine mode
@@ -243,14 +244,6 @@ async function extractDocument() {
     // Save to output file
     fs.writeFileSync(outputFile, finalMarkdown, 'utf8');
     console.log(`[Success] Saved extracted content to: ${outputFile}`);
-
-    // Maintain legacy temp_pdf_text.txt if PDF
-    if (ext === '.pdf') {
-        const legacyTxtFile = path.join(path.dirname(inputFile), "temp_pdf_text.txt");
-        try {
-            fs.writeFileSync(legacyTxtFile, finalMarkdown, 'utf8');
-        } catch (_) {}
-    }
 }
 
 extractDocument().catch(err => {
