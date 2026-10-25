@@ -1956,7 +1956,7 @@ flowchart TD
         Blocks["Disk Data Blocks / Clustered Extents<br/>• Raw Byte Streams & Record Offsets<br/>• Internal B+ Tree Storage Pointers<br/>• WAL Transaction Logs on Flash/HDD"]
     end
 
-    LogicalView <==>|RDBMS Abstraction Engine<br/>(Physical Data Independence)| PhysicalView
+    LogicalView <-->|"RDBMS Abstraction Engine<br/>(Physical Data Independence)"| PhysicalView
 ```
 
 - **Relation (Table):** A perceived two-dimensional matrix of horizontal rows and vertical columns representing an entity set.
@@ -2060,8 +2060,8 @@ flowchart LR
             R_T1["Relation State at $t_1$<br/>Set of 3 tuples: {E1, E2, E3}"]
         end
         
-        Relvar <==>|Bound to at $t_0$| R_T0
-        Relvar -.->|Bound to at $t_1$<br/>(After DELETE)| R_T1
+        Relvar <-->|"Bound to at $t_0$"| R_T0
+        Relvar -.->|"Bound to at $t_1$<br/>(After DELETE)"| R_T1
     end
 ```
 
@@ -2106,7 +2106,7 @@ The mathematical cornerstone of the relational database model is **Determination
 
 ```mermaid
 flowchart LR
-    Determinant["Determinant Attribute (A)<br/>e.g. STU_NUM = 321452"] -->|Uniquely Determines (➜)| Dependent["Dependent Attribute (B)<br/>e.g. STU_LNAME = 'Bowser'"]
+    Determinant["Determinant Attribute (A)<br/>e.g. STU_NUM = 321452"] -->|"Uniquely Determines (➜)"| Dependent["Dependent Attribute (B)<br/>e.g. STU_LNAME = 'Bowser'"]
     
     style Determinant fill:#1e293b,stroke:#3b82f6,stroke-width:2px,color:#fff
     style Dependent fill:#1e293b,stroke:#10b981,stroke-width:2px,color:#fff
@@ -2178,7 +2178,7 @@ flowchart TD
         CK["<b>Candidate Key (Minimal Boundary)</b><br/>An irreducible, minimal Superkey.<br/>(No attribute can be removed without losing uniqueness)"]
         PK["<b>Primary Key (Core Choice)</b><br/>The chosen Candidate Key selected by the designer.<br/>(Enforces Entity Integrity: Unique, strictly NOT NULL)"]
         
-        SK -->|Remove Redundancies (Minimal Subset)| CK
+        SK -->|"Remove Redundancies (Minimal Subset)"| CK
         CK -->|Designated by Architect| PK
     end
 ```
@@ -3858,8 +3858,8 @@ In ER modeling, an entity is classified as a **Weak Entity** if and only if it s
 flowchart LR
     subgraph ChenWeakModel["Chen Model: Weak Entity & Identifying Relationship"]
         direction LR
-        EMP["EMPLOYEE<br/>(Parent / Strong)"] ---|1 (0,N)| HAS{{"has"}}
-        HAS ---|M (1,1)| DEP[["DEPENDENT<br/>(Child / Weak)"]]
+        EMP["EMPLOYEE<br/>(Parent / Strong)"] ---|"1 (0,N)"| HAS{{"has"}}
+        HAS ---|"M (1,1)"| DEP[["DEPENDENT<br/>(Child / Weak)"]]
     end
 ```
 *Chen Modeling Convention:* Weak entities are depicted with a **double-walled rectangle** (`DEPENDENT`), and identifying relationships are depicted with a **double-walled diamond** (`has`).
