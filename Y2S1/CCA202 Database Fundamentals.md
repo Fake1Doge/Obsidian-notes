@@ -1340,31 +1340,99 @@ When modeling associations in UML, designers pose diagnostic questions to establ
 ### 2.7.3 Structural Comparison: OO, UML, and ER Models (Slide 39)
 The three paradigms represent the same operational reality (`CUSTOMER` generates `INVOICE` with `LINE` items) using distinct structural mechanisms:
 
+> [!info] Slide 39 Reference Diagram: Comparison of OO, UML, and ER Models
+> ![[comparison_oo_uml_er.png|Structural Comparison of OO, UML, and ER Models]]
+> *Figure 2.4: Architectural and structural comparison of Object Representation, UML Class Diagram, and Crow's Foot ER Model (Slide 39).*
+
+---
+
+#### 2.7.3.1 Paradigm Breakdown & Native Visual Models
+
+##### 2.7.3.1.1 Object Representation (OODM Encapsulation)
+In the **Object-Oriented Data Model (OODM)**, an entity is treated as an autonomous, self-contained object instance with direct internal references. Rather than using external foreign key columns to join records, relationships are embedded directly as internal object attributes or reference pointers:
+- **Attributes:** Encapsulates the internal state (`INV_DATE`, `INV_NUMBER`, `INV_SHIP_DATE`, `INV_TOTAL`).
+- **Single Object Reference:** Holds a direct pointer to the associated `CUSTOMER` object instance ($1$).
+- **Collection Reference:** Holds an internal array or collection of embedded `LINE` item objects ($M$).
+
 ```mermaid
-flowchart TD
-    subgraph ThreeWayComparison["Comparison of OO, UML, and ER Models (Slide 39)"]
+flowchart TB
+    subgraph InvoiceObj["INVOICE Object (Encapsulated Structure)"]
         direction TB
-
-        subgraph OO_View["1. Object Representation"]
+        
+        subgraph StateBox["Internal State (Attributes)"]
             direction TB
-            OO_Inv["<b>INVOICE Object</b><br/>• Attributes: INV_DATE, INV_NUMBER, INV_SHIP_DATE, INV_TOTAL<br/>• Embedded References:<br/>  - CUSTOMER: 1 (Single Object Reference)<br/>  - LINE: M (Collection of Embedded Line Objects)"]
+            Attrs["• <b>INV_NUMBER:</b> Integer<br/>• <b>INV_DATE:</b> Date<br/>• <b>INV_SHIP_DATE:</b> Date<br/>• <b>INV_TOTAL:</b> Double"]
         end
 
-        subgraph UML_View["2. UML Class Diagram"]
-            direction LR
-            UML_C["CUSTOMER"] -->|"+generates (1..1) / (0..*)"| UML_I["INVOICE<br/>+INV_NUMBER: Integer<br/>+INV_DATE: Date<br/>+INV_SHIP_DATE: Date<br/>+INV_TOTAL: Double"]
-            UML_I -->|"+has (1..1) / (1..*)"| UML_L["LINE"]
+        subgraph RefBox["Embedded Object References"]
+            direction TB
+            RefC["<b>CUSTOMER [1]:</b> Direct Object Reference Pointer"]
+            RefL["<b>LINE [M]:</b> Collection / Array of Line Item Objects"]
         end
 
-        subgraph ER_View["3. Crow's Foot ER Model"]
-            direction LR
-            ER_C["CUSTOMER"] ||----o{ ER_I["INVOICE<br/><u>INV_NUMBER</u><br/>INV_DATE<br/>INV_SHIP_DATE<br/>INV_TOTAL"]
-            ER_I ||----|{ ER_L["LINE"]
-        end
-
-        OO_View --- UML_View --- ER_View
+        StateBox --- RefBox
     end
 ```
+
+---
+
+##### 2.7.3.1.2 UML Class Diagram (Structural & Behavioral Modeling)
+The **Unified Modeling Language (UML)** depicts classes within a three-compartment structure (Name, Attributes, Operations). Relationships are modeled as typed associations with explicit multiplicity bounds and directional reading labels:
+- **`CUSTOMER` to `INVOICE`:** A customer generates zero or more invoices (`0..*`), while each invoice belongs to exactly one customer (`1..1`).
+- **`INVOICE` to `LINE`:** An invoice must have one or more line items (`1..*`), and each line item belongs to exactly one invoice (`1..1`).
+
+```mermaid
+classDiagram
+    direction TB
+
+    class CUSTOMER {
+    }
+
+    class INVOICE {
+        +Integer INV_NUMBER
+        +Date INV_DATE
+        +Date INV_SHIP_DATE
+        +Double INV_TOTAL
+    }
+
+    class LINE {
+    }
+
+    CUSTOMER "1..1" -- "0..*" INVOICE : generates >
+    INVOICE "1..1" -- "1..*" LINE : has >
+```
+
+---
+
+##### 2.7.3.1.3 Crow's Foot ER Model (Relational Data Modeling)
+In the **Relational / Entity-Relationship (ER) Model**, independent relational tables are linked dynamically via matching values in primary and foreign keys:
+- **`CUSTOMER` to `INVOICE`:** A $1:M$ relationship (`||` mandatory one on `CUSTOMER` to `o{` optional many on `INVOICE`).
+- **`INVOICE` to `LINE`:** A $1:M$ relationship (`||` mandatory one on `INVOICE` to `|{` mandatory many on `LINE`).
+
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ INVOICE : generates
+    INVOICE ||--|{ LINE : has
+
+    INVOICE {
+        int INV_NUMBER PK
+        date INV_DATE
+        date INV_SHIP_DATE
+        double INV_TOTAL
+    }
+```
+
+---
+
+#### 2.7.3.2 Master Comparative Paradigm Matrix
+
+| Architectural Feature | Object Representation (OODM) | UML Class Diagram | Relational / Crow's Foot ER Model |
+| :--- | :--- | :--- | :--- |
+| **Primary Focus** | Encapsulation of state and object behavior | Object-oriented software design & architecture | Logical & physical data normalization and storage |
+| **Relationship Mechanism** | Direct memory pointers & embedded object collections | Association lines with multiplicity ranges (`1..1`, `0..*`) | Shared common values (Primary Key $\to$ Foreign Key matching) |
+| **Many-to-Many Representation** | Collection attributes holding object lists | Direct $M:N$ association line (`*` to `*`) | Requires an associative composite junction table |
+| **Data Normalization** | Redundant/denormalized nested structures permitted | Logical view, independent of physical normalization | Strict relational normalization to eliminate update anomalies |
+| **Query Mechanism** | Navigational path traversal via pointer chaining | Programmatic API method invocations | Declarative SQL queries (Relational Algebra joins) |
 
 #### Advantages and Disadvantages of OODM
 
