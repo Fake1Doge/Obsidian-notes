@@ -1271,12 +1271,20 @@ classDiagram
 
 #### 2.6.2.3 Crow's Foot Cardinality Terminal Symbols Reference
 
-| Symbol | Syntax | Connectivity Meaning | UML Multiplicity | Verbal Interpretation |
+```mermaid
+erDiagram
+    COURSE ||--|| SYLLABUS : "1..1 to 1..1 (Mandatory One to Mandatory One)"
+    DEPARTMENT ||--|{ PROFESSOR : "1..1 to 1..* (Mandatory One to Mandatory Many)"
+    EMPLOYEE ||--o| PARKING_PASS : "1..1 to 0..1 (Mandatory One to Optional One)"
+    CUSTOMER ||--o{ INVOICE : "1..1 to 0..* (Mandatory One to Optional Many)"
+```
+
+| Symbol (Visual) | Mermaid / ERD Syntax | Connectivity Meaning | UML Multiplicity | Operational Interpretation |
 | :---: | :---: | :--- | :---: | :--- |
-| $\parallel$ | `\|\|` | **Mandatory One** | `1..1` (or `1`) | Exactly one instance must exist |
-| $\bigcirc\parallel$ | `o\|` | **Optional One** | `0..1` | At most one instance (zero or one) |
-| $\parallel\in$ | `\|{` | **Mandatory Many** | `1..*` | At least one, up to many instances |
-| $\bigcirc\in$ | `o{` | **Optional Many** | `0..*` | Zero, one, or many instances |
+| **∥** | <code>&#124;&#124;</code> | **Mandatory One** | `1..1` (or `1`) | Exactly one instance must exist |
+| **◯ ∥** | <code>o&#124;</code> | **Optional One** | `0..1` | At most one instance (zero or one) |
+| **∥ ∈** | <code>&#124;{</code> | **Mandatory Many** | `1..*` | At least one, up to many instances |
+| **◯ ∈** | <code>o{</code> | **Optional Many** | `0..*` | Zero, one, or many instances |
 
 ---
 
