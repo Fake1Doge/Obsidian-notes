@@ -1688,12 +1688,16 @@ The **External Model** represents the data environment from the perspective of s
 
 #### Departmental Case Studies (Slide 55)
 
+> [!info] Slide 55 Reference Diagram: Examples of External Models
+> ![[external_models_examples.jpg|Examples of External Models (Student Registration & Class Scheduling)]]
+> *Figure 2.5: Separate external models (subschemas) designed for Student Registration and Class Scheduling departments (Slide 55).*
+
 ```mermaid
 erDiagram
     %% Student Registration External View
     STUDENT ||--o{ ENROLL : "enrolls in (max 6 classes)"
-    CLASS ||--o{ ENROLL : "is taken by (capped at 35)"
-    COURSE ||--o{ CLASS : "generates"
+    "CLASS" ||--o{ ENROLL : "is taken by (capped at 35)"
+    COURSE ||--o{ "CLASS" : "generates"
 
     STUDENT {
         string STU_NUM PK
@@ -1704,7 +1708,7 @@ erDiagram
         string STU_NUM FK
         string ENROLL_GRADE
     }
-    CLASS {
+    "CLASS" {
         string CLASS_CODE PK
         string CRS_CODE FK
         int CLASS_SEATS
@@ -1718,9 +1722,9 @@ erDiagram
 ```mermaid
 erDiagram
     %% Class Scheduling External View
-    ROOM ||--o{ CLASS : "is used for (many classes)"
-    PROFESSOR ||--o{ CLASS : "teaches (max 3 classes)"
-    COURSE ||--o{ CLASS : "generates"
+    ROOM ||--o{ "CLASS" : "is used for (many classes)"
+    PROFESSOR ||--o{ "CLASS" : "teaches (max 3 classes)"
+    COURSE ||--o{ "CLASS" : "generates"
 
     ROOM {
         string ROOM_CODE PK
@@ -1730,7 +1734,7 @@ erDiagram
         int PROF_NUM PK
         string PROF_NAME
     }
-    CLASS {
+    "CLASS" {
         string CLASS_CODE PK
         string ROOM_CODE FK
         int PROF_NUM FK
@@ -1748,8 +1752,8 @@ erDiagram
      - Each course generates multiple class sections.
    - **Entity Relationships:**
      - `STUDENT` $\parallel$——o{ `ENROLL` (A student enrolls in many classes via the bridge entity `ENROLL`).
-     - `CLASS` $\parallel$——o{ `ENROLL` (A class enrollment contains many student records).
-     - `COURSE` $\parallel$——o{ `CLASS` (A course generates one or more scheduled classes).
+     - `"CLASS"` $\parallel$——o{ `ENROLL` (A class enrollment contains many student records).
+     - `COURSE` $\parallel$——o{ `"CLASS"` (A course generates one or more scheduled classes).
 
 2. **Class Scheduling View:**
    - **Business Rules:**
@@ -1758,9 +1762,9 @@ erDiagram
      - Each class is taught by exactly one professor.
      - A professor may teach up to three classes per academic term ($0..3$).
    - **Entity Relationships:**
-     - `ROOM` $\parallel$——o{ `CLASS` (A room is used for multiple scheduled classes).
-     - `PROFESSOR` $\parallel$——o{ `CLASS` (A professor teaches up to three classes).
-     - `COURSE` $\parallel$——o{ `CLASS` (A course generates scheduled class offerings).
+     - `ROOM` $\parallel$——o{ `"CLASS"` (A room is used for multiple scheduled classes).
+     - `PROFESSOR` $\parallel$——o{ `"CLASS"` (A professor teaches up to three classes).
+     - `COURSE` $\parallel$——o{ `"CLASS"` (A course generates scheduled class offerings).
 
 ---
 
@@ -1776,13 +1780,17 @@ The **Conceptual Model** represents a single, unified, global view of the entire
 #### Unified Global Conceptual ERD (Slide 57)
 The two separate external schemas (Student Registration and Class Scheduling) are synthesized into the enterprise conceptual model:
 
+> [!info] Slide 57 Reference Diagram: Example of Conceptual Model
+> ![[conceptual_model_global_erd.png|Example of Conceptual Model]]
+> *Figure 2.6: Integrated conceptual schema combining the Student Registration and Class Scheduling external views (Slide 57).*
+
 ```mermaid
 erDiagram
     STUDENT ||--o{ ENROLL : "enrolls in"
-    CLASS ||--o{ ENROLL : "is taken by"
-    PROFESSOR ||--o{ CLASS : "teaches"
-    ROOM ||--o{ CLASS : "is used for"
-    COURSE ||--o{ CLASS : "generates"
+    "CLASS" ||--o{ ENROLL : "is taken by"
+    PROFESSOR ||--o{ "CLASS" : "teaches"
+    ROOM ||--o{ "CLASS" : "is used for"
+    COURSE ||--o{ "CLASS" : "generates"
 
     STUDENT {
         number STU_ID PK
@@ -1794,7 +1802,7 @@ erDiagram
         number STU_ID FK
         string ENROLL_GRADE
     }
-    CLASS {
+    "CLASS" {
         number CLASS_ID PK
         string CRS_ID FK
         number PROF_ID FK
@@ -3927,7 +3935,7 @@ EMP_NUM | DEP_NUM | DEP_FNAME | DEP_DOB     | Operational Relationship Analysis
 
 ```mermaid
 erDiagram
-    COURSE ||--o{ CLASS : generates
+    COURSE ||--o{ "CLASS" : generates
 ```
 
 2. **Research Faculty (`PROFESSORS` teach `CLASSES`):**
@@ -3954,7 +3962,7 @@ flowchart LR
 
 ```mermaid
 erDiagram
-    COURSE ||--|{ CLASS : generates
+    COURSE ||--|{ "CLASS" : generates
 ```
 
 2. **Faculty Teaching Assignment:**
@@ -4196,15 +4204,15 @@ erDiagram
     DEPARTMENT ||--|{ STUDENT : has
     DEPARTMENT ||--|{ PROFESSOR : employs
     DEPARTMENT ||--|{ COURSE : offers
-    COURSE ||--o{ CLASS : generates
+    COURSE ||--o{ "CLASS" : generates
     PROFESSOR ||--o| SCHOOL : "is dean of"
     PROFESSOR ||--o| DEPARTMENT : chairs
-    PROFESSOR ||--o{ CLASS : teaches
+    PROFESSOR ||--o{ "CLASS" : teaches
     PROFESSOR ||--o{ STUDENT : advises
     STUDENT ||--|{ ENROLL : registers
-    CLASS ||--|{ ENROLL : "shows in"
+    "CLASS" ||--|{ ENROLL : "shows in"
     BUILDING ||--|{ ROOM : contains
-    ROOM ||--o{ CLASS : "is used for"
+    ROOM ||--o{ "CLASS" : "is used for"
 ```
 
 ---
