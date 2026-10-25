@@ -1112,6 +1112,8 @@ erDiagram
     }
 ```
 
+![[figure2_2_relational_diagram.jpg|Figure 2.2: A Relational Diagram (Slide 26)]]
+
 > [!info] Operational Mechanics of Figure 2.2: A Relational Diagram
 > - In table `AGENT`, `AGENT_CODE` is designated as the **Primary Key (PK)**, guaranteeing that every sales agent is uniquely identified.
 > - In table `CUSTOMER`, `AGENT_CODE` appears as a **Foreign Key (FK)**.
@@ -3847,6 +3849,8 @@ In ER modeling, an entity is classified as a **Weak Entity** if and only if it s
 
 ### 4.4.5 Weak Entity Case Study: Employee and Dependent (Ch04_ShortCo Walkthrough)
 
+![[ch04_slide33_weak_entity_dependent.png|Figure 4.13: A Weak Entity in an ERD (Slide 33)]]
+
 **Dual Notation: Chen and Crow's Foot Representations (Slide 33)**
 
 1. **Chen Model (Double Rectangle for Weak Entity):**
@@ -3933,6 +3937,8 @@ EMP_NUM | DEP_NUM | DEP_FNAME | DEP_DOB     | Operational Relationship Analysis
    - In any given semester, only 35 of those courses are actively scheduled as classes; 15 courses have zero class sections offered.
    - Therefore, `CLASS` is **optional** to `COURSE`. Cardinality bounds: $(1, 1)$ on `COURSE`, $(0, N)$ on `CLASS`.
 
+![[ch04_slide37_optional_participation.jpg|CLASS is Optional to COURSE in Crow's Foot Model (Slide 37)]]
+
 ```mermaid
 erDiagram
     COURSE ||--o{ "CLASS" : generates
@@ -3943,15 +3949,7 @@ erDiagram
    - Therefore, `CLASSES` is **optional** to `PROFESSORS`.
    - In Chen notation, optional participation is depicted by placing a **small circle ($O$)** on the side of the optional entity:
 
-```mermaid
-flowchart LR
-    subgraph ChenOptional["Chen Model: Optional Entity Participation"]
-        direction LR
-        P["PROFESSORS"] --- T{"TEACH"}
-        T --- O(("o"))
-        O --- C["CLASSES"]
-    end
-```
+![[ch04_slide38_chen_optional.jpg|Chen Model: Optional Entity Participation (Slide 38)]]
 
 ---
 
@@ -3970,16 +3968,7 @@ erDiagram
    - Therefore, `PROFESSOR` is **mandatory** to `CLASS` (minimum cardinality = $1$).
    - In Chen notation, mandatory participation is depicted by placing a **vertical line ($|$)** across the relationship line on the mandatory side:
 
-```mermaid
-flowchart LR
-    subgraph ChenMandatory["Chen Model: Mandatory & Optional Combined"]
-        direction LR
-        P["PROFESSORS"] --- M["| (Mandatory)"]
-        M --- T{"taught"}
-        T --- O(("o (Optional)"))
-        O --- C["CLASSES"]
-    end
-```
+![[ch04_slide40_chen_mandatory.jpg|Chen Model: Mandatory and Optional Participation Combined (Slide 40)]]
 
 ---
 
@@ -4006,53 +3995,18 @@ The **Degree** of a relationship indicates the total number of entity sets parti
 2. **Binary Relationship (Degree 2):** An association between **two distinct entity sets** (e.g., `PROFESSOR teaches CLASS`). Binary relationships represent over 90% of real-world database associations.
 3. **Ternary Relationship (Degree 3):** A simultaneous association among **three distinct entity sets**.
 
-```mermaid
-flowchart TD
-    subgraph RelationshipDegrees["Classification by Relationship Degree"]
-        direction TB
-        
-        subgraph UnaryBox["1. Unary (Degree 1)"]
-            U_Ent["EMPLOYEE"] -- "manages" --> U_Ent
-        end
-
-        subgraph BinaryBox["2. Binary (Degree 2)"]
-            B1["PROFESSOR"] -- "teaches" --> B2["CLASS"]
-        end
-
-        subgraph TernaryBox["3. Ternary (Degree 3)"]
-            T_Doc["DOCTOR"] --- T_Rel{"prescribes"}
-            T_Pat["PATIENT"] --- T_Rel
-            T_Drug["DRUG"] --- T_Rel
-        end
-    end
-```
+![[ch04_slide43_relationship_degrees.jpg|Figure 4.24: Three Types of Relationship Degree in Conceptual and Crow's Foot Models (Slide 43)]]
 
 ---
 
 ### 4.6.2 Recursive Topologies: 1:1, 1:M, and M:N
 A recursive relationship occurs when an entity set is related to itself:
 
-```mermaid
-flowchart TD
-    subgraph RecursiveTopologies["The Three Recursive Relationship Patterns"]
-        direction TB
-        
-        subgraph Rec1["1. 1:1 Unary: Marriage"]
-            E1["EMPLOYEE"] -- "is married to (0,1)" --> E1
-            R1_Desc["An employee may be married to one and only one other employee."]
-        end
+![[ch04_slide44_recursive_relationships.png|Figure 4.25: The Various Forms of a Recursive Relationship (Slide 44)]]
 
-        subgraph Rec2["2. 1:M Unary: Management Hierarchy"]
-            E2["EMPLOYEE"] -- "manages (0,N)" --> E2
-            R2_Desc["An employee (manager) manages many employees;<br/>each employee is managed by one employee."]
-        end
-
-        subgraph Rec3["3. M:N Unary: Course Prerequisites"]
-            C1["COURSE"] -- "is prerequisite to (0,N)" --> C1
-            R3_Desc["A course may be a prerequisite to many other courses,<br/>and a course may have many other courses as prerequisites."]
-        end
-    end
-```
+- **1. 1:1 Unary: Marriage:** An employee may be married to one and only one other employee.
+- **2. 1:M Unary: Management Hierarchy:** An employee (manager) manages many employees; each employee is managed by one employee.
+- **3. M:N Unary: Course Prerequisites:** A course may be a prerequisite to many other courses, and a course may have many other courses as prerequisites.
 
 ---
 
@@ -4101,6 +4055,8 @@ To implement an $M:N$ relationship:
 3. The bridge entity inherits the Primary Keys of both parent entities as Foreign Keys.
 4. The combination of these foreign keys forms the **Composite Primary Key** of the bridge entity.
 
+![[ch04_slide46_convert_mn_to_1m.png|Figure 4.27: Converting the M:N Relationship into Two 1:M Relationships (Slide 46)]]
+
 ```mermaid
 flowchart LR
     subgraph DirectMN["Direct Conceptual M:N (Unsupported in RDBMS)"]
@@ -4127,6 +4083,8 @@ flowchart LR
 ---
 
 ### 4.7.4 Concrete Data Walkthrough: TinyCollege Student Enrollment in Class Sections
+
+![[ch04_slide49_relational_diagram_bridge.png|Figure 4.28: Relational Diagram for the Bridge Entity Pattern (Slide 49)]]
 
 ```
 Table: STUDENT (Parent Table 1)
