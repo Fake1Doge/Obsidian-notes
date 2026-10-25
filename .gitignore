@@ -1,74 +1,95 @@
-# Obsidian vault configuration and state files
-.obsidian/workspace
-.obsidian/workspace.json
-.obsidian/workspace-mobile
-.obsidian/workspace-mobile.json
-.obsidian/graph.json
-.obsidian/cache/
-.obsidian/indexeddb/
-.obsidian/plugins/obsidian-git/obsidian_askpass.sh
+# ==============================================================================
+# Obsidian Vault Configuration & State
+# ==============================================================================
+# Entire Obsidian configuration & plugins (device-independent setup)
+.obsidian/
 conflict-files-obsidian-git.md
 .trash/
 
-# Operating System files
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
+# macOS
 .DS_Store
 .AppleDouble
 .LSOverride
 ._*
 .Spotlight-V100
 .Trashes
+
+# Windows
 Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
 desktop.ini
 $RECYCLE.BIN/
+*.lnk
+*.url
+*:Zone.Identifier
+*.Zone.Identifier
+
+# Linux / Generic
 *~
 .fuse_hidden*
 .directory
-*.lnk
-*.url
 
-
-# Package managers and node modules
+# ==============================================================================
+# Package Managers & Node.js
+# ==============================================================================
 node_modules/
+.pnpm-store/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.pnpm-store/
 
-# Python / Scripts
+# ==============================================================================
+# Python & Virtual Environments
+# ==============================================================================
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .venv/
 venv/
 env/
+ENV/
 
-# IDEs and text editors
+# ==============================================================================
+# IDEs & Text Editors
+# ==============================================================================
 .vscode/
 .idea/
+.vs/
 *.swp
 *.swo
 *.bak
-*.tmp
 
-# Temporary, Cache and Download files
+# ==============================================================================
+# Temporary, Cache & Download Files
+# ==============================================================================
 temp_*
 *.tmp
 *.temp
 *.crdownload
 *.part
 *.download
+.cache/
+~$*
+
+# Temporary document extraction artifacts (pdf-extractor skill)
 *_part_*.pdf
 *_pages_*_to_*.pdf
 temp_pdf_text.txt
 temp_extracted_content.md
-~$*
 
-# Large and binary files
+# ==============================================================================
+# Large, Binary & Media Files
+# ==============================================================================
+# Raw course materials (study notes are kept in .md)
 *.pdf
 *.ipynb
 *.pptx
@@ -77,12 +98,16 @@ temp_extracted_content.md
 *.doc
 *.xlsx
 *.xls
+
+# Archives
 *.zip
 *.tar.gz
 *.tar
 *.gz
 *.7z
 *.rar
+
+# Media
 *.mp4
 *.mkv
 *.avi
@@ -90,28 +115,39 @@ temp_extracted_content.md
 *.mp3
 *.wav
 *.flac
+
+# Binaries & Installers
 *.exe
 *.msi
 *.dmg
 *.iso
 
-# Environment and secret files
+# ==============================================================================
+# Environment, Secrets & Logs
+# ==============================================================================
 .env
 .env.*
+!.env.example
+!.env.template
 *.log
+*.pem
+*.key
 
-# Antigravity / Agent CLI local-only files
-.antigravitycli/
+# ==============================================================================
+# Antigravity / AI Agent CLI Local Files
+# ==============================================================================
+# Note: Keep '.agents/' tracked (contains repository skills and rules)
 .antigravity/
+.antigravitycli/
+.gemini/
 .agent/
 Antigravity CLI.bat
-agy-*.log
 
-# Quartz digital garden & build artifacts
+# ==============================================================================
+# Quartz Digital Garden & Build Artifacts
+# ==============================================================================
 /quartz/
 .quartz-cache/
 .quartz/
 public/
 tsconfig.tsbuildinfo
-
-
