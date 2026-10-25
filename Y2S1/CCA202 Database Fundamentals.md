@@ -1157,48 +1157,130 @@ Introduced by **Peter Chen** in 1976, the **Entity-Relationship (ER) Model** ser
 ### 2.6.2 Master Three-Way Notation Comparison
 Database engineering relies on three standardized notation dialects: **Chen Notation**, **Crow's Foot Notation**, and **UML Class Diagram Notation**.
 
+> [!info] Slide 30 Reference Diagram: Master Three-Way ER Notation Comparison
+> ![[er_model_notations_comparison.jpg|The ER Model Notations Comparison]]
+> *Figure 2.3: Visual dialect comparison across One-to-Many (1:M), Many-to-Many (M:N), and One-to-One (1:1) relationship models (Slide 30).*
+
+---
+
+#### 2.6.2.1 Detailed Breakdown by Relationship Case
+
+##### Case 1: One-to-Many (1:M) Relationship
+> **Business Rule:** *"A PAINTER can paint many PAINTINGS; each PAINTING is painted by one PAINTER."*
+
+- **Chen Notation (Entity Rectangles & Relationship Diamonds):**
 ```mermaid
-flowchart TD
-    subgraph NotationComparison["Master Three-Way ER Notation Comparison"]
-        direction TB
-
-        subgraph Case1["Case 1: One-to-Many (1:M) Relationship<br/>'A PAINTER can paint many PAINTINGS; each PAINTING is painted by one PAINTER.'"]
-            direction LR
-            Chen1["<b>Chen Notation:</b><br/>[PAINTER] --- (1) --- &lt;paints&gt; --- (M) --- [PAINTING]"]
-            Crow1["<b>Crow's Foot Notation:</b><br/>PAINTER ||-------|&lt; PAINTING (paints)"]
-            UML1["<b>UML Class Diagram:</b><br/>PAINTER [1..1] ---------------- [1..*] PAINTING<br/>(paints ➔ / ⬅ painted by)"]
-            Chen1 --- Crow1 --- UML1
-        end
-
-        subgraph Case2["Case 2: Many-to-Many (M:N) Relationship<br/>'An EMPLOYEE can learn many SKILLS; each SKILL can be learned by many EMPLOYEES.'"]
-            direction LR
-            Chen2["<b>Chen Notation:</b><br/>[EMPLOYEE] --- (M) --- &lt;learns&gt; --- (N) --- [SKILL]"]
-            Crow2["<b>Crow's Foot Notation:</b><br/>EMPLOYEE }|-------|{ SKILL (learns)"]
-            UML2["<b>UML Class Diagram:</b><br/>EMPLOYEE [1..*] ---------------- [1..*] SKILL<br/>(learns ➔ / ⬅ learned by)"]
-            Chen2 --- Crow2 --- UML2
-        end
-
-        subgraph Case3["Case 3: One-to-One (1:1) Relationship<br/>'An EMPLOYEE manages one STORE; each STORE is managed by one EMPLOYEE.'"]
-            direction LR
-            Chen3["<b>Chen Notation:</b><br/>[EMPLOYEE] --- (1) --- &lt;manages&gt; --- (1) --- [STORE]"]
-            Crow3["<b>Crow's Foot Notation:</b><br/>EMPLOYEE ||-------|| STORE (manages)"]
-            UML3["<b>UML Class Diagram:</b><br/>EMPLOYEE [1..1] ---------------- [1..1] STORE<br/>(manages ➔ / ⬅ managed by)"]
-            Chen3 --- Crow3 --- UML3
-        end
-
-        Case1 --> Case2 --> Case3
-    end
+flowchart LR
+    PAINTER["PAINTER"] ---|1| R1{"paints"} ---|M| PAINTING["PAINTING"]
 ```
 
-#### Detailed Visual Representation of Notations
+- **Crow's Foot Notation (Tables & Cardinality Fork Terminals):**
+```mermaid
+erDiagram
+    PAINTER ||--|{ PAINTING : paints
+```
 
-| Relationship Connectivity | Chen Notation (Diamond & Ratios) | Crow's Foot Notation (Cardinality Ticks) | UML Class Notation (Multiplicity Bounds) |
+- **UML Class Diagram Notation (Classes with Multiplicities & Directional Verbs):**
+```mermaid
+classDiagram
+    direction LR
+    class PAINTER
+    class PAINTING
+    PAINTER "1..1" -- "1..*" PAINTING : paints >
+```
+
+- **Structural Reading & Constraints:**
+  - **PAINTER End ($1$ / $\parallel$ / `1..1`):** Exactly one painter is recorded as the creator of an individual painting.
+  - **PAINTING End ($M$ / $\parallel\in$ / `1..*`):** A painter may produce multiple paintings over time.
+
+---
+
+##### Case 2: Many-to-Many (M:N) Relationship
+> **Business Rule:** *"An EMPLOYEE can learn many SKILLS; each SKILL can be learned by many EMPLOYEES."*
+
+- **Chen Notation (Entity Rectangles & Relationship Diamonds):**
+```mermaid
+flowchart LR
+    EMPLOYEE["EMPLOYEE"] ---|M| R2{"learns"} ---|N| SKILL["SKILL"]
+```
+
+- **Crow's Foot Notation (Tables & Cardinality Fork Terminals):**
+```mermaid
+erDiagram
+    EMPLOYEE }|--|{ SKILL : learns
+```
+
+- **UML Class Diagram Notation (Classes with Multiplicities & Directional Verbs):**
+```mermaid
+classDiagram
+    direction LR
+    class EMPLOYEE
+    class SKILL
+    EMPLOYEE "1..*" -- "1..*" SKILL : learns >
+```
+
+- **Structural Reading & Constraints:**
+  - **EMPLOYEE End ($M$ / $\ni\parallel$ / `1..*`):** A given skill can be mastered by many different employees.
+  - **SKILL End ($N$ / $\parallel\in$ / `1..*`):** An employee can acquire and possess multiple distinct skills.
+  - *Relational Implementation Note:* In physical relational databases, direct $M:N$ relationships cannot be implemented via foreign keys alone without data redundancy. They are normalized into two $1:M$ relationships linked through a composite associative entity (e.g., `EMPLOYEE_SKILL`).
+
+---
+
+##### Case 3: One-to-One (1:1) Relationship
+> **Business Rule:** *"An EMPLOYEE manages one STORE; each STORE is managed by one EMPLOYEE."*
+
+- **Chen Notation (Entity Rectangles & Relationship Diamonds):**
+```mermaid
+flowchart LR
+    EMPLOYEE["EMPLOYEE"] ---|1| R3{"manages"} ---|1| STORE["STORE"]
+```
+
+- **Crow's Foot Notation (Tables & Cardinality Fork Terminals):**
+```mermaid
+erDiagram
+    EMPLOYEE ||--|| STORE : manages
+```
+
+- **UML Class Diagram Notation (Classes with Multiplicities & Directional Verbs):**
+```mermaid
+classDiagram
+    direction LR
+    class EMPLOYEE
+    class STORE
+    EMPLOYEE "1..1" -- "1..1" STORE : manages >
+```
+
+- **Structural Reading & Constraints:**
+  - **EMPLOYEE End ($1$ / $\parallel$ / `1..1`):** Each store has at most one designated managing employee.
+  - **STORE End ($1$ / $\parallel$ / `1..1`):** Each employee manages at most one store branch.
+
+---
+
+#### 2.6.2.2 Master Comparative Notation Matrix
+
+| Design Dimension | Chen Notation | Crow's Foot Notation | UML Class Diagram Notation |
 | :--- | :--- | :--- | :--- |
-| **One-to-Many ($1:M$)** | `[PAINTER]` — $1$ — `<paints>` — $M$ — `[PAINTING]` | `PAINTER` $\parallel$——$\in$ `PAINTING` | `PAINTER` $1..1$ ————— $1..\text{*}$ `PAINTING` |
-| **Many-to-Many ($M:N$)** | `[EMPLOYEE]` — $M$ — `<learns>` — $N$ — `[SKILL]` | `EMPLOYEE` $\ni$——$\in$ `SKILL` | `EMPLOYEE` $1..\text{*}$ ————— $1..\text{*}$ `SKILL` |
-| **One-to-One ($1:1$)** | `[EMPLOYEE]` — $1$ — `<manages>` — $1$ — `[STORE]` | `EMPLOYEE` $\parallel$——$\parallel$ `STORE` | `EMPLOYEE` $1..1$ ————— $1..1$ `STORE` |
+| **Origin & Standard** | Peter Chen (1976) | Gordon Everest / Clive Finkelstein | Rational Software (OMG Standard) |
+| **Entity Representation** | Labeled single rectangular box (`[ENTITY]`) | Rectangular box with optional attribute compartments | Three-compartment class rectangle (Class Name, Attributes, Operations) |
+| **Relationship Representation** | Dedicated **diamond** symbol (`{verb}`) along connecting lines | Direct line with active verb labeled above or below line | Solid association line with verb phrase and reading arrowhead (`paints ▶`) |
+| **Cardinality / Multiplicity Syntax** | Numeric/letter labels on branch lines ($1$, $M$, $N$) | Graphical line endpoints: double bars ($\parallel$), crow's foot fork ($\in$), circle ($\bigcirc$) | Multiplicity range intervals at endpoints (`1..1`, `1..*`, `0..1`, `0..*`) |
+| **Bidirectional Reading** | Single verb phrase centered within relationship diamond | Single verb phrase centered along association line | Supports bidirectional role descriptors (e.g., `paints ▶` / `◀ painted by`) |
+| **Primary Domain / Strength** | Conceptual data modeling; emphasizes relationships as distinct first-class conceptual entities | Logical & physical database schema design; compact and directly translatable to relational tables | Object-oriented application modeling; bridges database persistence with object behavior & methods |
 
-#### Advantages and Disadvantages of the Entity-Relationship Model
+---
+
+#### 2.6.2.3 Crow's Foot Cardinality Terminal Symbols Reference
+
+| Symbol | Syntax | Connectivity Meaning | UML Multiplicity | Verbal Interpretation |
+| :---: | :---: | :--- | :---: | :--- |
+| $\parallel$ | `\|\|` | **Mandatory One** | `1..1` (or `1`) | Exactly one instance must exist |
+| $\bigcirc\parallel$ | `o\|` | **Optional One** | `0..1` | At most one instance (zero or one) |
+| $\parallel\in$ | `\|{` | **Mandatory Many** | `1..*` | At least one, up to many instances |
+| $\bigcirc\in$ | `o{` | **Optional Many** | `0..*` | Zero, one, or many instances |
+
+---
+
+### 2.6.3 Advantages and Disadvantages of the Entity-Relationship Model
 
 | Strategic Advantages | Inherent Disadvantages & Modeling Limits |
 | :--- | :--- |
