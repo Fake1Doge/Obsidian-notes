@@ -2365,21 +2365,21 @@ flowchart TD
 #### Case Study 1: Valid vs. Violated Referential Integrity in Order Management
 Consider an e-commerce database with `Customer` and `Order` tables:
 
-```
-Table: Customer (PK: Cust_ID)
-Cust_ID | Name  | Address
---------|-------|--------
-1       | Jon   | London
-2       | Peter | Glasgow
-3       | Glen  | Glasgow
+**Table: Customer (PK: Cust_ID)**
 
-Table: Order (PK: Order #, FK: Cust_ID)
-Order # | Cust_ID | Validation Status
---------|---------|---------------------------------------------------------
-001     | 1       | VALIDATED (Matches Cust_ID = 1 in Customer)
-002     | 2       | VALIDATED (Matches Cust_ID = 2 in Customer)
-003     | 5       | ERROR! Referential Integrity Violation (Cust_ID 5 does not exist!)
-```
+| Cust_ID | Name | Address |
+| :---: | :--- | :--- |
+| 1 | Jon | London |
+| 2 | Peter | Glasgow |
+| 3 | Glen | Glasgow |
+
+**Table: Order (PK: Order #, FK: Cust_ID)**
+
+| Order # | Cust_ID | Validation Status |
+| :---: | :---: | :--- |
+| 001 | 1 | VALIDATED (Matches Cust_ID = 1 in Customer) |
+| 002 | 2 | VALIDATED (Matches Cust_ID = 2 in Customer) |
+| 003 | 5 | ❌ ERROR! Referential Integrity Violation (Cust_ID 5 does not exist!) |
 
 ```mermaid
 flowchart LR
@@ -2403,23 +2403,23 @@ flowchart LR
 #### Case Study 2: Permissible NULL Foreign Keys in Customer and Agent Relations
 Consider an insurance database where customers are assigned to sales agents:
 
-```
-Table: CUSTOMER (PK: CUS_CODE, FK: AGENT_CODE)
-CUS_CODE | CUS_LNAME | CUS_FNAME | AGENT_CODE | Status Analysis
----------|-----------|-----------|:----------:|:-----------------------------------------------
-10010    | Ramas     | Alfred    | 502        | Valid: Matches Agent 502 in AGENT table.
-10011    | Dunne     | Leona     | 501        | Valid: Matches Agent 501 in AGENT table.
-10012    | Smith     | Kathy     | 502        | Valid: Matches Agent 502 in AGENT table.
-10013    | Olowski   | Paul      | *(null)*   | Valid: Permissible NULL (No agent assigned yet).
-10014    | Orlando   | Myron     | 501        | Valid: Matches Agent 501 in AGENT table.
+**Table: CUSTOMER (PK: CUS_CODE, FK: AGENT_CODE)**
 
-Table: AGENT (PK: AGENT_CODE)
-AGENT_CODE | AGENT_LNAME | AGENT_PHONE
-:---------:|-------------|------------
-501        | Alby        | 228-1249
-502        | Hahn        | 682-1244
-503        | Okon        | 123-5689
-```
+| CUS_CODE | CUS_LNAME | CUS_FNAME | AGENT_CODE | Status Analysis |
+| :---: | :--- | :--- | :---: | :--- |
+| 10010 | Ramas | Alfred | 502 | Valid: Matches Agent 502 in AGENT table. |
+| 10011 | Dunne | Leona | 501 | Valid: Matches Agent 501 in AGENT table. |
+| 10012 | Smith | Kathy | 502 | Valid: Matches Agent 502 in AGENT table. |
+| 10013 | Olowski | Paul | *(null)* | Valid: Permissible NULL (No agent assigned yet). |
+| 10014 | Orlando | Myron | 501 | Valid: Matches Agent 501 in AGENT table. |
+
+**Table: AGENT (PK: AGENT_CODE)**
+
+| AGENT_CODE | AGENT_LNAME | AGENT_PHONE |
+| :---: | :--- | :--- |
+| 501 | Alby | 228-1249 |
+| 502 | Hahn | 682-1244 |
+| 503 | Okon | 123-5689 |
 
 > [!tip] Referential Integrity Analysis: Customer Olowski
 > Customer `10013` (Paul F. Olowski) has `AGENT_CODE = NULL`. Does this violate referential integrity?
@@ -3090,22 +3090,24 @@ flowchart LR
 ```
 
 #### Schema and Table Data (TinyCollege Museum Database)
-```
-Table: PAINTER (PK: PAINTER_NUM, FK: none)
-PAINTER_NUM | PAINTER_LNAME | PAINTER_FNAME | PAINTER_INITIAL
-:---------: | :------------ | :------------ | :-------------:
-123         | Ross          | Georgette     | P
-126         | Itero         | Julio         | G
 
-Table: PAINTING (PK: PAINTING_NUM, FK: PAINTER_NUM)
-PAINTING_NUM | PAINTING_TITLE           | PAINTER_NUM
-:----------: | :----------------------- | :---------:
-1338         | Dawn Thunder             | 123
-1339         | Vanilla Roses To Nowhere | 123
-1340         | Tired Flounders          | 126
-1341         | Hasty Exit               | 123
-1342         | Plastic Paradise         | 126
-```
+**Table: PAINTER (PK: PAINTER_NUM, FK: none)**
+
+| PAINTER_NUM | PAINTER_LNAME | PAINTER_FNAME | PAINTER_INITIAL |
+| :---: | :--- | :--- | :---: |
+| 123 | Ross | Georgette | P |
+| 126 | Itero | Julio | G |
+
+**Table: PAINTING (PK: PAINTING_NUM, FK: PAINTER_NUM)**
+
+| PAINTING_NUM | PAINTING_TITLE | PAINTER_NUM |
+| :---: | :--- | :---: |
+| 1338 | Dawn Thunder | 123 |
+| 1339 | Vanilla Roses To Nowhere | 123 |
+| 1340 | Tired Flounders | 126 |
+| 1341 | Hasty Exit | 123 |
+| 1342 | Plastic Paradise | 126 |
+
 *Operational Analysis:* One painter creates many paintings. Each individual painting is created by exactly one painter. The foreign key `PAINTER_NUM` in `PAINTING` enforces referential integrity back to `PAINTER`.
 
 ---
@@ -3186,30 +3188,32 @@ To implement an $M:N$ relationship:
 5. The bridge entity can host additional descriptive payload attributes describing the transaction (e.g., `ENROLL_GRADE`, `ENROLL_DATE`).
 
 #### Concrete Data Walkthrough: Student Enrollment
-```
-Table: STUDENT (PK: STU_NUM)
-STU_NUM | STU_LNAME
-:-----: | :--------
-321452  | Bowser
-324257  | Smithson
 
-Table: CLASS (PK: CLASS_CODE)
-CLASS_CODE | CRS_CODE | CLASS_SECTION | CLASS_TIME           | CLASS_ROOM | PROF_NUM
-:--------: | :------- | :-----------: | :------------------- | :--------- | :------:
-10014      | ACCT-211 | 3             | TTh 2:30-3:45 p.m.   | BUS252     | 342
-10018      | CIS-220  | 2             | MWF 9:00-9:50 a.m.   | KLR211     | 114
-10021      | QM-261   | 1             | MWF 8:00-8:50 a.m.   | KLR200     | 114
+**Table: STUDENT (PK: STU_NUM)**
 
-Table: ENROLL (Bridge Entity; Composite PK: CLASS_CODE + STU_NUM; FKs: CLASS_CODE, STU_NUM)
-CLASS_CODE | STU_NUM | ENROLL_GRADE | Relational Semantics
-:--------: | :-----: | :----------: | :-----------------------------------------------
-10014      | 321452  | C            | Student Bowser enrolled in ACCT-211 (Grade: C)
-10014      | 324257  | B            | Student Smithson enrolled in ACCT-211 (Grade: B)
-10018      | 321452  | A            | Student Bowser enrolled in CIS-220 (Grade: A)
-10018      | 324257  | B            | Student Smithson enrolled in CIS-220 (Grade: B)
-10021      | 321452  | C            | Student Bowser enrolled in QM-261 (Grade: C)
-10021      | 324257  | C            | Student Smithson enrolled in QM-261 (Grade: C)
-```
+| STU_NUM | STU_LNAME |
+| :---: | :--- |
+| 321452 | Bowser |
+| 324257 | Smithson |
+
+**Table: CLASS (PK: CLASS_CODE)**
+
+| CLASS_CODE | CRS_CODE | CLASS_SECTION | CLASS_TIME | CLASS_ROOM | PROF_NUM |
+| :---: | :--- | :---: | :--- | :--- | :---: |
+| 10014 | ACCT-211 | 3 | TTh 2:30-3:45 p.m. | BUS252 | 342 |
+| 10018 | CIS-220 | 2 | MWF 9:00-9:50 a.m. | KLR211 | 114 |
+| 10021 | QM-261 | 1 | MWF 8:00-8:50 a.m. | KLR200 | 114 |
+
+**Table: ENROLL (Bridge Entity; Composite PK: CLASS_CODE + STU_NUM; FKs: CLASS_CODE, STU_NUM)**
+
+| CLASS_CODE | STU_NUM | ENROLL_GRADE | Relational Semantics |
+| :---: | :---: | :---: | :--- |
+| 10014 | 321452 | C | Student Bowser enrolled in ACCT-211 (Grade: C) |
+| 10014 | 324257 | B | Student Smithson enrolled in ACCT-211 (Grade: B) |
+| 10018 | 321452 | A | Student Bowser enrolled in CIS-220 (Grade: A) |
+| 10018 | 324257 | B | Student Smithson enrolled in CIS-220 (Grade: B) |
+| 10021 | 321452 | C | Student Bowser enrolled in QM-261 (Grade: C) |
+| 10021 | 324257 | C | Student Smithson enrolled in QM-261 (Grade: C) |
 
 ---
 
@@ -3282,13 +3286,12 @@ flowchart TD
 #### Detailed Architecture of a Non-Unique Index (Painting Index on Painter_Num)
 Consider an index built on the `PAINTING` table using `PAINTER_NUM` as the index key (Slide 81, Figure 3.31):
 
-```
-Index Name: PAINTING_PAINTER_NUM_IDX (Non-Unique Secondary Index)
-Index Key (PAINTER_NUM) | Pointers to Matching PAINTING Table Rows
-:---------------------: | :---------------------------------------
-123                     | Row 1 (Dawn Thunder), Row 2 (Vanilla Roses), Row 4 (Hasty Exit)
-126                     | Row 3 (Tired Flounders), Row 5 (Plastic Paradise)
-```
+**Index Name: `PAINTING_PAINTER_NUM_IDX` (Non-Unique Secondary Index)**
+
+| Index Key (`PAINTER_NUM`) | Pointers to Matching `PAINTING` Table Rows |
+| :---: | :--- |
+| 123 | Row 1 (Dawn Thunder), Row 2 (Vanilla Roses), Row 4 (Hasty Exit) |
+| 126 | Row 3 (Tired Flounders), Row 5 (Plastic Paradise) |
 
 - **Unique Index:** Guarantees that each index key maps to exactly one physical pointer. RDBMS engines automatically construct unique indexes upon Primary Key and `UNIQUE` column declarations.
 - **Non-Unique Index:** Permits an index key to map to a dynamic list of multiple row pointers. Essential for accelerating foreign key joins and search columns (e.g. searching customers by `CUS_LNAME`).
@@ -3414,31 +3417,33 @@ erDiagram
 ```
 
 #### Relational Implementation Tables (With Real Data)
-```
-Table: Transaction
-Transaction ID | Customer ID | Product ID | Purchase Date
-:------------: | :---------: | :--------: | :-----------:
-53666          | 24221       | 389        | 06-02-2023
-50333          | 24222       | 789        | 06-02-2023
-54673          | 24223       | 879        | 06-02-2023
-58930          | 24224       | 975        | 06-02-2023
 
-Table: Product
-Product ID | Product Name | Price per kg (RM)
-:--------: | :----------- | :---------------:
-389        | Banana       | 4
-789        | Apple        | 5
-879        | Watermelon   | 5
-975        | Mango        | 7
+**Table: Transaction**
 
-Table: Customer
-Customer ID | Last Name | First Name
-:---------: | :-------- | :---------
-24221       | Smith     | James
-24222       | Jones     | Sam
-24223       | Taylor    | Ann
-24224       | Burton    | Sue
-```
+| Transaction ID | Customer ID | Product ID | Purchase Date |
+| :------------: | :---------: | :--------: | :-----------: |
+| 53666 | 24221 | 389 | 06-02-2023 |
+| 50333 | 24222 | 789 | 06-02-2023 |
+| 54673 | 24223 | 879 | 06-02-2023 |
+| 58930 | 24224 | 975 | 06-02-2023 |
+
+**Table: Product**
+
+| Product ID | Product Name | Price per kg (RM) |
+| :--------: | :----------- | :---------------: |
+| 389 | Banana | 4 |
+| 789 | Apple | 5 |
+| 879 | Watermelon | 5 |
+| 975 | Mango | 7 |
+
+**Table: Customer**
+
+| Customer ID | Last Name | First Name |
+| :---------: | :-------- | :--------- |
+| 24221 | Smith | James |
+| 24222 | Jones | Sam |
+| 24223 | Taylor | Ann |
+| 24224 | Burton | Sue |
 
 *Architectural Bridge:* In the conceptual ER diagram, `PRODUCT` and `CUSTOMER` each maintain a $1:M$ relationship with `TRANSACTION`. In the relational model, this is realized by placing `Product ID` and `Customer ID` as foreign keys inside the `Transaction` table.
 
@@ -3713,23 +3718,23 @@ Database architects evaluate whether to physically persist derived attributes or
 > **Database Name:** `Boston College`  
 > Given the relational data tables below, derive and draw **both the Chen and Crow's Foot models** representing the underlying association. *(Constraint: Attributes should not be stated on the diagrams).*
 
-```
-Table: STUDENT
-Stu_Code | Prof_Code
-:------: | :-------:
-128569   | 2
-512272   | 4
-531235   | 2
-553427   | 1
+**Table: STUDENT**
 
-Table: PROFESSOR
-Prof_Code | Dept_Code
-:-------: | :-------:
-1         | 2
-2         | 6
-3         | 6
-4         | 4
-```
+| Stu_Code | Prof_Code |
+| :---: | :---: |
+| 128569 | 2 |
+| 512272 | 4 |
+| 531235 | 2 |
+| 553427 | 1 |
+
+**Table: PROFESSOR**
+
+| Prof_Code | Dept_Code |
+| :---: | :---: |
+| 1 | 2 |
+| 2 | 6 |
+| 3 | 6 |
+| 4 | 4 |
 
 **Dual-Model Representation (Chen & Crow's Foot):**
 
@@ -3974,27 +3979,27 @@ erDiagram
 ```
 
 #### Real Data Walkthrough (Ch04_ShortCo Database)
-```
-Table: EMPLOYEE (Strong Entity)
-EMP_NUM | EMP_LNAME   | EMP_FNAME | EMP_INITIAL | EMP_DOB    | EMP_HIREDATE
-:-----: | :---------- | :-------- | :---------: | :--------- | :-----------
-1001    | Callifante  | Jeanine   | J           | 12-Mar-64  | 25-May-97
-1002    | Smithson    | William   | K           | 23-Nov-70  | 28-May-97
-1003    | Washington  | Herman    | H           | 15-Aug-68  | 28-May-97
-1006    | Ortega      | Jorge     | G           | 12-Jul-79  | 05-Jan-02
-1008    | Brzenski    | Barbara   | A           | 12-Feb-70  | 01-Nov-03
+**Table: EMPLOYEE (Strong Entity)**
 
-Table: DEPENDENT (Weak Entity: Composite PK = EMP_NUM + DEP_NUM)
-EMP_NUM | DEP_NUM | DEP_FNAME | DEP_DOB     | Operational Relationship Analysis
-:-----: | :-----: | :-------- | :---------- | :---------------------------------
-1001    | 1       | Annelise  | 05-Dec-97   | 1st child of Jeanine Callifante
-1001    | 2       | Jorge     | 30-Sep-02   | 2nd child of Jeanine Callifante
-1003    | 1       | Suzanne   | 25-Jan-04   | 1st child of Herman Washington
-1006    | 1       | Carlos    | 25-May-01   | 1st child of Jorge Ortega
-1008    | 1       | Michael   | 19-Feb-95   | 1st child of Barbara Brzenski
-1008    | 2       | George    | 27-Jun-98   | 2nd child of Barbara Brzenski
-1008    | 3       | Katherine | 18-Aug-03   | 3rd child of Barbara Brzenski
-```
+| EMP_NUM | EMP_LNAME | EMP_FNAME | EMP_INITIAL | EMP_DOB | EMP_HIREDATE |
+| :---: | :--- | :--- | :---: | :---: | :---: |
+| 1001 | Callifante | Jeanine | J | 12-Mar-64 | 25-May-97 |
+| 1002 | Smithson | William | K | 23-Nov-70 | 28-May-97 |
+| 1003 | Washington | Herman | H | 15-Aug-68 | 28-May-97 |
+| 1006 | Ortega | Jorge | G | 12-Jul-79 | 05-Jan-02 |
+| 1008 | Brzenski | Barbara | A | 12-Feb-70 | 01-Nov-03 |
+
+**Table: DEPENDENT (Weak Entity: Composite PK = EMP_NUM + DEP_NUM)**
+
+| EMP_NUM | DEP_NUM | DEP_FNAME | DEP_DOB | Operational Relationship Analysis |
+| :---: | :---: | :--- | :---: | :--- |
+| 1001 | 1 | Annelise | 05-Dec-97 | 1st child of Jeanine Callifante |
+| 1001 | 2 | Jorge | 30-Sep-02 | 2nd child of Jeanine Callifante |
+| 1003 | 1 | Suzanne | 25-Jan-04 | 1st child of Herman Washington |
+| 1006 | 1 | Carlos | 25-May-01 | 1st child of Jorge Ortega |
+| 1008 | 1 | Michael | 19-Feb-95 | 1st child of Barbara Brzenski |
+| 1008 | 2 | George | 27-Jun-98 | 2nd child of Barbara Brzenski |
+| 1008 | 3 | Katherine | 18-Aug-03 | 3rd child of Barbara Brzenski |
 
 - **Why DEPENDENT is a Weak Entity:**
   1. `DEP_NUM` alone (1, 2, 3) cannot uniquely identify a dependent (multiple employees have a "Child 1").
@@ -4174,30 +4179,31 @@ flowchart LR
 
 ![[ch04_slide49_relational_diagram_bridge.png|Figure 4.28: Relational Diagram for the Bridge Entity Pattern (Slide 49)]]
 
-```
-Table: STUDENT (Parent Table 1)
-STU_NUM | STU_LNAME
-:-----: | :--------
-321452  | Bowser
-324257  | Smithson
+**Table: STUDENT (Parent Table 1)**
 
-Table: CLASS (Parent Table 2)
-CLASS_CODE | CRS_CODE | CLASS_SECTION | CLASS_TIME          | ROOM_CODE | PROF_NUM
-:--------: | :------- | :-----------: | :------------------ | :-------- | :------:
-10014      | ACCT-211 | 3             | TTh 2:30-3:45 p.m.  | BUS252    | 342
-10018      | CIS-220  | 2             | MWF 9:00-9:50 a.m.  | KLR211    | 114
-10021      | QM-261   | 1             | MWF 8:00-8:50 a.m.  | KLR200    | 114
+| STU_NUM | STU_LNAME |
+| :---: | :--- |
+| 321452 | Bowser |
+| 324257 | Smithson |
 
-Table: ENROLL (Bridge Entity: PK = CLASS_CODE + STU_NUM)
-CLASS_CODE | STU_NUM | ENROLL_GRADE | Operational Semantics
-:--------: | :-----: | :----------: | :-------------------------------------------
-10014      | 321452  | C            | Student Bowser enrolled in ACCT-211 Section 3
-10014      | 324257  | B            | Student Smithson enrolled in ACCT-211 Sec 3
-10018      | 321452  | A            | Student Bowser enrolled in CIS-220 Section 2
-10018      | 324257  | B            | Student Smithson enrolled in CIS-220 Sec 2
-10021      | 321452  | C            | Student Bowser enrolled in QM-261 Section 1
-10021      | 324257  | C            | Student Smithson enrolled in QM-261 Sec 1
-```
+**Table: CLASS (Parent Table 2)**
+
+| CLASS_CODE | CRS_CODE | CLASS_SECTION | CLASS_TIME | ROOM_CODE | PROF_NUM |
+| :---: | :--- | :---: | :--- | :--- | :---: |
+| 10014 | ACCT-211 | 3 | TTh 2:30-3:45 p.m. | BUS252 | 342 |
+| 10018 | CIS-220 | 2 | MWF 9:00-9:50 a.m. | KLR211 | 114 |
+| 10021 | QM-261 | 1 | MWF 8:00-8:50 a.m. | KLR200 | 114 |
+
+**Table: ENROLL (Bridge Entity: PK = CLASS_CODE + STU_NUM)**
+
+| CLASS_CODE | STU_NUM | ENROLL_GRADE | Operational Semantics |
+| :---: | :---: | :---: | :--- |
+| 10014 | 321452 | C | Student Bowser enrolled in ACCT-211 Section 3 |
+| 10014 | 324257 | B | Student Smithson enrolled in ACCT-211 Sec 3 |
+| 10018 | 321452 | A | Student Bowser enrolled in CIS-220 Section 2 |
+| 10018 | 324257 | B | Student Smithson enrolled in CIS-220 Sec 2 |
+| 10021 | 321452 | C | Student Bowser enrolled in QM-261 Section 1 |
+| 10021 | 324257 | C | Student Smithson enrolled in QM-261 Sec 1 |
 
 ---
 
