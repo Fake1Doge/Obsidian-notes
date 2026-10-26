@@ -2518,34 +2518,49 @@ flowchart TD
 ##### Concrete Walkthrough: Hardware Store Inventory
 Consider the baseline `PRODUCT` inventory relation:
 
-```
-Table: PRODUCT
-P_CODE | P_DESCRIPT  | PRICE
-:----- | :---------- | ----:
-123456 | Flashlight  |  5.26
-123457 | Lamp        | 25.15
-123458 | Box Fan     | 10.99
-213345 | 9v battery  |  1.92
-254467 | 100W bulb   |  1.47
-311452 | Powerdrill  | 34.99
-```
+**Table: PRODUCT**
+
+| P_CODE | P_DESCRIPT | PRICE |
+| :--- | :--- | ---: |
+| 123456 | Flashlight | 5.26 |
+| 123457 | Lamp | 25.15 |
+| 123458 | Box Fan | 10.99 |
+| 213345 | 9v battery | 1.92 |
+| 254467 | 100W bulb | 1.47 |
+| 311452 | Powerdrill | 34.99 |
 
 1. **Unconditional Selection (Yields All Rows):**
    $$\sigma_{\text{TRUE}}(\text{PRODUCT})$$
-   *Output:* All 6 original tuples.
+
+   *Output Relation (All 6 Tuples):*
+
+| P_CODE | P_DESCRIPT | PRICE |
+| :--- | :--- | ---: |
+| 123456 | Flashlight | 5.26 |
+| 123457 | Lamp | 25.15 |
+| 123458 | Box Fan | 10.99 |
+| 213345 | 9v battery | 1.92 |
+| 254467 | 100W bulb | 1.47 |
+| 311452 | Powerdrill | 34.99 |
+
 2. **Horizontal Value Filtering ($\text{PRICE} < 2.00$):**
    $$\sigma_{\text{PRICE} < 2.00}(\text{PRODUCT})$$
+
    *Output Relation (2 Tuples):*
-   | P_CODE | P_DESCRIPT | PRICE |
-   | :--- | :--- | :---: |
-   | 213345 | 9v battery | 1.92 |
-   | 254467 | 100W bulb | 1.47 |
+
+| P_CODE | P_DESCRIPT | PRICE |
+| :--- | :--- | ---: |
+| 213345 | 9v battery | 1.92 |
+| 254467 | 100W bulb | 1.47 |
+
 3. **Exact Primary Key Lookup ($\text{P\_CODE} = '311452'$):**
    $$\sigma_{\text{P\_CODE} = '311452'}(\text{PRODUCT})$$
+
    *Output Relation (1 Tuple):*
-   | P_CODE | P_DESCRIPT | PRICE |
-   | :--- | :--- | :---: |
-   | 311452 | Powerdrill | 34.99 |
+
+| P_CODE | P_DESCRIPT | PRICE |
+| :--- | :--- | ---: |
+| 311452 | Powerdrill | 34.99 |
 
 ---
 
@@ -2557,32 +2572,45 @@ P_CODE | P_DESCRIPT  | PRICE
   $$\pi_{\text{AttributeList}}(\text{Relation})$$
 
 ##### Concrete Projections on the PRODUCT Table
+
 1. **Single Attribute Projection ($\pi_{\text{PRICE}}(\text{PRODUCT})$):**
+   $$\pi_{\text{PRICE}}(\text{PRODUCT})$$
+
    *Output Relation (6 Tuples, 1 Column):*
-   | PRICE |
-   | :---: |
-   | 5.26 |
-   | 25.15 |
-   | 10.99 |
-   | 1.92 |
-   | 1.47 |
-   | 34.99 |
+
+| PRICE |
+| ---: |
+| 5.26 |
+| 25.15 |
+| 10.99 |
+| 1.92 |
+| 1.47 |
+| 34.99 |
 
 2. **Multi-Attribute Projection ($\pi_{\text{P\_DESCRIPT, PRICE}}(\text{PRODUCT})$):**
+   $$\pi_{\text{P\_DESCRIPT, PRICE}}(\text{PRODUCT})$$
+
    *Output Relation (6 Tuples, 2 Columns):*
-   | P_DESCRIPT | PRICE |
-   | :--- | :---: |
-   | Flashlight | 5.26 |
-   | Lamp | 25.15 |
-   | Box Fan | 10.99 |
-   | 9v battery | 1.92 |
-   | 100W bulb | 1.47 |
-   | Powerdrill | 34.99 |
+
+| P_DESCRIPT | PRICE |
+| :--- | ---: |
+| Flashlight | 5.26 |
+| Lamp | 25.15 |
+| Box Fan | 10.99 |
+| 9v battery | 1.92 |
+| 100W bulb | 1.47 |
+| Powerdrill | 34.99 |
 
 3. **Chained Unary Operations (Project-over-Select):**
    Extract only the first and last name of the customer with account code `10010`:
    $$\pi_{\text{CUS\_FNAME, CUS\_LNAME}}(\sigma_{\text{CUS\_CODE} = '10010'}(\text{CUSTOMER}))$$
    *Execution Flow:* The inner $\sigma$ filters horizontally to row `10010`; the outer $\pi$ extracts only the two requested name columns.
+
+   *Output Relation (1 Tuple, 2 Columns):*
+
+| CUS_FNAME | CUS_LNAME |
+| :--- | :--- |
+| Alfred | Ramas |
 
 ---
 
@@ -2612,11 +2640,51 @@ flowchart LR
     end
 ```
 
+##### Baseline Relations for Binary Set Operations
+Consider two union-compatible relations, `STUDENT` and `EMPLOYEE` (both sharing schema: `FNAME`, `LNAME`):
+
+**Table: STUDENT (5 Tuples)**
+
+| STU_FNAME | STU_LNAME |
+| :--- | :--- |
+| George | Jones |
+| Jane | Smith |
+| Peter | Robinson |
+| Franklin | Johnson |
+| Martin | Lopez |
+
+**Table: EMPLOYEE (4 Tuples)**
+
+| EMP_FNAME | EMP_LNAME |
+| :--- | :--- |
+| Franklin | Lopez |
+| William | Turner |
+| Franklin | Johnson |
+| Susan | Rogers |
+
+---
+
 #### 3.4.3.1 UNION ($\cup$)
 - **Symbol:** $\cup$
 - **Operation:** Combines all tuples from relation $R$ and relation $S$, discarding duplicates.
-- **Compatible Example:** If `SUPPLIER` and `VENDOR` share identical structures:
-  $$\text{SUPPLIER} \cup \text{VENDOR}$$
+- **Concrete Walkthrough:**
+  $$\text{STUDENT} \cup \text{EMPLOYEE}$$
+
+  *Output Relation (8 Tuples — Duplicates Removed):*
+
+| FNAME | LNAME |
+| :--- | :--- |
+| George | Jones |
+| Jane | Smith |
+| Peter | Robinson |
+| Franklin | Johnson |
+| Martin | Lopez |
+| Franklin | Lopez |
+| William | Turner |
+| Susan | Rogers |
+
+  *(Note: Franklin Johnson appears in both tables but is included only once because mathematical sets prohibit duplicate tuples).*
+
 - **Non-Compatible Schema Resolution:** If `SUPPLIER` and `VENDOR` have different column counts, project compatible single-column subsets first:
   $$\pi_{\text{SUPPLIER\_NAME}}(\text{SUPPLIER}) \cup \pi_{\text{VENDOR\_NAME}}(\text{VENDOR})$$
 
@@ -2625,32 +2693,11 @@ flowchart LR
 #### 3.4.3.2 INTERSECT ($\cap$)
 - **Symbol:** $\cap$
 - **Operation:** Yields only the tuples that appear simultaneously in both relation $R$ and relation $S$.
+- **Concrete Walkthrough:**
+  $$\text{STUDENT} \cap \text{EMPLOYEE}$$
 
-##### Concrete Student-Employee Intersection Walkthrough
-Consider a university identifying students who are also active campus employees:
+  *Output Relation (1 Tuple):*
 
-```
-Table: STUDENT (Union-Compatible Schema: FNAME, LNAME)
-STU_FNAME | STU_LNAME
-:-------- | :--------
-George    | Jones
-Jane      | Smith
-Peter     | Robinson
-Franklin  | Johnson
-Martin    | Lopez
-
-Table: EMPLOYEE (Union-Compatible Schema: FNAME, LNAME)
-EMP_FNAME | EMP_LNAME
-:-------- | :--------
-Franklin  | Lopez
-William   | Turner
-Franklin  | Johnson
-Susan     | Rogers
-```
-
-$$\text{STUDENT} \cap \text{EMPLOYEE}$$
-
-*Output Relation (1 Tuple):*
 | STU_FNAME | STU_LNAME |
 | :--- | :--- |
 | **Franklin** | **Johnson** |
@@ -2662,12 +2709,11 @@ $$\text{STUDENT} \cap \text{EMPLOYEE}$$
 #### 3.4.3.3 DIFFERENCE ($-$)
 - **Symbol:** $-$
 - **Operation:** Yields all tuples residing in the first relation that do not exist in the second relation ($R - S$). Note that difference is non-commutative: $R - S \ne S - R$.
+- **Concrete Walkthrough (Students who are NOT Employees):**
+  $$\text{STUDENT} - \text{EMPLOYEE}$$
 
-##### Concrete Student-Employee Difference Walkthrough
-Taking the same tables above to find all students who are **not** campus employees:
-$$\text{STUDENT} - \text{EMPLOYEE}$$
+  *Output Relation (4 Tuples):*
 
-*Output Relation (4 Tuples):*
 | STU_FNAME | STU_LNAME |
 | :--- | :--- |
 | George | Jones |
@@ -2676,6 +2722,17 @@ $$\text{STUDENT} - \text{EMPLOYEE}$$
 | Martin | Lopez |
 
 *(Franklin Johnson is removed because he appears in the EMPLOYEE table).*
+
+- **Reverse Difference (Employees who are NOT Students):**
+  $$\text{EMPLOYEE} - \text{STUDENT}$$
+
+  *Output Relation (3 Tuples):*
+
+| EMP_FNAME | EMP_LNAME |
+| :--- | :--- |
+| Franklin | Lopez |
+| William | Turner |
+| Susan | Rogers |
 
 ---
 
@@ -2689,27 +2746,38 @@ $$\text{STUDENT} - \text{EMPLOYEE}$$
 ##### Concrete Walkthrough: Hardware Products and Store Locations
 Consider combining $R = \text{PRODUCT}$ (6 rows, 3 columns) with $S = \text{STORE\_LOCATIONS}$ (3 rows, 3 columns):
 
-```
-Table S: STORE_LOCATIONS (3 Tuples)
-STORE | AISLE | SHELF
-:---: | :---: | :---:
-23    | W     | 5
-24    | K     | 9
-25    | Z     | 6
-```
+**Table S: STORE_LOCATIONS (3 Tuples)**
+
+| STORE | AISLE | SHELF |
+| :---: | :---: | :---: |
+| 23 | W | 5 |
+| 24 | K | 9 |
+| 25 | Z | 6 |
 
 $$\text{PRODUCT} \times \text{STORE\_LOCATIONS}$$
+
 *Result Dimensions:* $6 \times 3 = 18$ tuples; $3 + 3 = 6$ columns:
 
 | P_CODE | P_DESCRIPT | PRICE | STORE | AISLE | SHELF |
-| :---: | :--- | :---: | :---: | :---: | :---: |
+| :---: | :--- | ---: | :---: | :---: | :---: |
 | 123456 | Flashlight | 5.26 | 23 | W | 5 |
 | 123456 | Flashlight | 5.26 | 24 | K | 9 |
 | 123456 | Flashlight | 5.26 | 25 | Z | 6 |
 | 123457 | Lamp | 25.15 | 23 | W | 5 |
 | 123457 | Lamp | 25.15 | 24 | K | 9 |
 | 123457 | Lamp | 25.15 | 25 | Z | 6 |
-| ... | *(12 additional product-store combinations)* | ... | ... | ... | ... |
+| 123458 | Box Fan | 10.99 | 23 | W | 5 |
+| 123458 | Box Fan | 10.99 | 24 | K | 9 |
+| 123458 | Box Fan | 10.99 | 25 | Z | 6 |
+| 213345 | 9v battery | 1.92 | 23 | W | 5 |
+| 213345 | 9v battery | 1.92 | 24 | K | 9 |
+| 213345 | 9v battery | 1.92 | 25 | Z | 6 |
+| 254467 | 100W bulb | 1.47 | 23 | W | 5 |
+| 254467 | 100W bulb | 1.47 | 24 | K | 9 |
+| 254467 | 100W bulb | 1.47 | 25 | Z | 6 |
+| 311452 | Powerdrill | 34.99 | 23 | W | 5 |
+| 311452 | Powerdrill | 34.99 | 24 | K | 9 |
+| 311452 | Powerdrill | 34.99 | 25 | Z | 6 |
 
 ---
 
@@ -2757,18 +2825,26 @@ flowchart TD
 
 #### Step-by-Step Data Walkthrough
 Consider the input tables:
-- `CUSTOMER` (6 tuples): `CUS_CODE, CUS_LNAME, CUS_ZIP, AGENT_CODE`
-  - (1132445, Walker, 32145, 231)
-  - (1217782, Adares, 32145, 125)
-  - (1312243, Rakowski, 34129, 167)
-  - (1321242, Rodriguez, 37134, 125)
-  - (1542311, Smithson, 37134, 421)
-  - (1657399, Vanloo, 32145, 231)
-- `AGENT` (4 tuples): `AGENT_CODE, AGENT_PHONE`
-  - (125, 6152439887)
-  - (167, 6153426778)
-  - (231, 6152431124)
-  - (333, 9041234445)
+
+**Table: CUSTOMER (6 Tuples)**
+
+| CUS_CODE | CUS_LNAME | CUS_ZIP | AGENT_CODE |
+| :---: | :--- | :---: | :---: |
+| 1132445 | Walker | 32145 | 231 |
+| 1217782 | Adares | 32145 | 125 |
+| 1312243 | Rakowski | 34129 | 167 |
+| 1321242 | Rodriguez | 37134 | 125 |
+| 1542311 | Smithson | 37134 | 421 |
+| 1657399 | Vanloo | 32145 | 231 |
+
+**Table: AGENT (4 Tuples)**
+
+| AGENT_CODE | AGENT_PHONE |
+| :---: | :---: |
+| 125 | 6152439887 |
+| 167 | 6153426778 |
+| 231 | 6152431124 |
+| 333 | 9041234445 |
 
 1. **Stage 1 (Cartesian Product $\text{CUSTOMER} \times \text{AGENT}$):**
    Yields $6 \times 4 = 24$ rows and 6 columns (`CUS_CODE, CUS_LNAME, CUS_ZIP, CUSTOMER.AGENT_CODE, AGENT.AGENT_CODE, AGENT_PHONE`).
@@ -2854,28 +2930,29 @@ flowchart LR
 #### Case Study: University Project Completion
 Consider determining which students have completed **all** assigned Database project tasks:
 
-```
-Table R: Completed (Dividend)
-Student | Task
-:------ | :----------
-Fred    | Database1  ✔
-Fred    | Database2  ✔
-Fred    | Compiler1
-Eugene  | Database1  ✔ (Missing Database2!)
-Eugene  | Compiler1
-Sarah   | Database1  ✔
-Sarah   | Database2  ✔
+**Table R: Completed (Dividend)**
 
-Table S: DBProject (Divisor)
-Task
-:----------
-Database1
-Database2
-```
+| Student | Task | Notes |
+| :--- | :--- | :--- |
+| Fred | Database1 | ✔ Completed |
+| Fred | Database2 | ✔ Completed |
+| Fred | Compiler1 | |
+| Eugene | Database1 | ✔ Completed (Missing Database2!) |
+| Eugene | Compiler1 | |
+| Sarah | Database1 | ✔ Completed |
+| Sarah | Database2 | ✔ Completed |
+
+**Table S: DBProject (Divisor)**
+
+| Task |
+| :--- |
+| Database1 |
+| Database2 |
 
 $$\text{Completed} \div \text{DBProject}$$
 
 *Output Relation:*
+
 | Student | Qualification Analysis |
 | :--- | :--- |
 | **Fred** | Completed both `Database1` and `Database2` (Included). |
