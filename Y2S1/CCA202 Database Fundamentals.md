@@ -2997,9 +2997,7 @@ flowchart TD
 #### Detailed Case Study: Sample Enterprise Data Dictionary
 The following comprehensive data dictionary documents the `CUSTOMER` and `AGENT` relations from the `Ch03_InsureCo` database:
 
-```
-Table 3.6: A Comprehensive Sample Data Dictionary
-```
+**Table 3.6: A Comprehensive Sample Data Dictionary**
 
 | Table Name | Attribute Name | Contents / Meaning | Data Type | Storage Format | Range / Domain | Required? | Key Type | FK Referenced Table |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: | :---: | :--- |
@@ -3515,16 +3513,15 @@ In ER modeling, precise terminology is vital to prevent architectural confusion:
 - **Entity (in ER Modeling):** Refers strictly to the **Entity Set** (the entire table or collection of objects, e.g., the `EMPLOYEE` entity set). In the ER model, the term *entity* corresponds to an entire table—**not** to a single row as commonly colloquialized in relational terminology.
 - **Entity Occurrence (Instance):** Refers to an individual, single real-world occurrence within the entity set (corresponds to a single row/tuple in a relational table).
 
-```
-Table: Employees (Entity Type / Entity Set)
-EmpId | ManagerId | Name       | Department | Salary   | City
-:---: | :-------: | :--------- | :--------- | :------- | :-------
-1     | 1         | Alex Smith | Admin      | $90,000  | Boulder
-2     | 1         | Amy Mars   | Admin      | $50,000  | Longmont   <-- Single Entity Occurrence (E1)
-3     | 1         | Logan Mars | Admin      | $70,000  | Longmont
-4     | 1         | James Mont | Marketing  | $55,000  | Boulder
-5     | 6         | John Smith | Marketing  | $60,000  | Boulder    <-- Single Entity Occurrence (E2)
-```
+**Table: Employees (Entity Type / Entity Set)**
+
+| EmpId | ManagerId | Name | Department | Salary | City | Occurrence Mapping |
+| :---: | :---: | :--- | :--- | ---: | :--- | :--- |
+| 1 | 1 | Alex Smith | Admin | $90,000 | Boulder | Tuple |
+| 2 | 1 | Amy Mars | Admin | $50,000 | Longmont | **Single Entity Occurrence ($E_1$)** |
+| 3 | 1 | Logan Mars | Admin | $70,000 | Longmont | Tuple |
+| 4 | 1 | James Mont | Marketing | $55,000 | Boulder | Tuple |
+| 5 | 6 | John Smith | Marketing | $60,000 | Boulder | **Single Entity Occurrence ($E_2$)** |
 
 ```mermaid
 flowchart TD
@@ -4067,9 +4064,7 @@ erDiagram
 
 ### 4.5.4 Comprehensive Reference Table of Crow's Foot Cardinality Symbols
 
-```
-Table 4.3: Crow's Foot Cardinality and Connectivity Symbols
-```
+**Table 4.3: Crow's Foot Cardinality and Connectivity Symbols**
 
 | Crow's Foot Symbol | Cardinality Range | Operational Meaning & Comment | Architectural Context |
 | :---: | :---: | :--- | :--- |
@@ -4231,9 +4226,7 @@ flowchart TD
 ### 4.8.2 Comprehensive Entity-Relationship Matrix of Tiny College (The 12 Enterprise Relationships Blueprint)
 The complete architecture of the `Tiny College` enterprise database encompasses 12 foundational business relationships:
 
-```
-Table 4.4: The Complete Tiny College Entity-Relationship Specification Matrix
-```
+**Table 4.4: The Complete Tiny College Entity-Relationship Specification Matrix**
 
 | # | Participating Entity 1 | Active Verb Relationship | Connectivity | Participating Entity 2 | Architectural Operational Semantics |
 | :-: | :--- | :--- | :---: | :--- | :--- |
