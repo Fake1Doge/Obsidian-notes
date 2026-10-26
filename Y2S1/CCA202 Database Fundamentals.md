@@ -2746,6 +2746,17 @@ Consider two union-compatible relations, `STUDENT` and `EMPLOYEE` (both sharing 
 ##### Concrete Walkthrough: Hardware Products and Store Locations
 Consider combining $R = \text{PRODUCT}$ (6 rows, 3 columns) with $S = \text{STORE\_LOCATIONS}$ (3 rows, 3 columns):
 
+**Table R: PRODUCT (6 Tuples)**
+
+| P_CODE | P_DESCRIPT | PRICE |
+| :---: | :--- | ---: |
+| 123456 | Flashlight | 5.26 |
+| 123457 | Lamp | 25.15 |
+| 123458 | Box Fan | 10.99 |
+| 213345 | 9v battery | 1.92 |
+| 254467 | 100W bulb | 1.47 |
+| 311452 | Powerdrill | 34.99 |
+
 **Table S: STORE_LOCATIONS (3 Tuples)**
 
 | STORE | AISLE | SHELF |
