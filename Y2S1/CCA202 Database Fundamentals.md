@@ -2056,12 +2056,12 @@ flowchart LR
         Relvar["<b>Relvar (Relation Variable)</b><br/>• Named container / variable<br/>• Fixed Heading: (Attribute Name, Type)<br/>• Persists across transactions"]
         
         subgraph DynamicStates["Assigned Relation Values (States over Time)"]
-            R_T0["Relation State at $t_0$<br/>Set of 4 tuples: {E1, E2, E3, E4}"]
-            R_T1["Relation State at $t_1$<br/>Set of 3 tuples: {E1, E2, E3}"]
+            R_T0["Relation State at t₀<br/>Set of 4 tuples: {E1, E2, E3, E4}"]
+            R_T1["Relation State at t₁<br/>Set of 3 tuples: {E1, E2, E3}"]
         end
         
-        Relvar <-->|"Bound to at $t_0$"| R_T0
-        Relvar -.->|"Bound to at $t_1$<br/>(After DELETE)"| R_T1
+        Relvar <-->|"Bound to at t₀"| R_T0
+        Relvar -.->|"Bound to at t₁<br/>(After DELETE)"| R_T1
     end
 ```
 
@@ -2130,8 +2130,8 @@ flowchart LR
 flowchart TD
     subgraph FunctionalDepTypes["Taxonomy of Functional Dependencies"]
         direction TB
-        FD["<b>Standard Functional Dependence:</b> $X \to Y$<br/>Every value of determinant $X$ maps to exactly one value of dependent $Y$."]
-        FFD["<b>Full Functional Dependence:</b> $(X_1, X_2) \to Y$<br/>Dependent $Y$ requires the <i>entire</i> composite determinant $(X_1, X_2)$.<br/>No subset ($X_1 \to Y$ or $X_2 \to Y$) can determine $Y$ independently."]
+        FD["<b>Standard Functional Dependence:</b> X → Y<br/>Every value of determinant X maps to exactly one value of dependent Y."]
+        FFD["<b>Full Functional Dependence:</b> (X₁, X₂) → Y<br/>Dependent Y requires the <i>entire</i> composite determinant (X₁, X₂).<br/>No subset (X₁ → Y or X₂ → Y) can determine Y independently."]
         FD -->|When Determinant is Composite & Minimal| FFD
     end
 ```
@@ -2483,22 +2483,22 @@ flowchart TD
         
         subgraph UnaryGroup["Unary Operators (Single Relation Input)"]
             direction LR
-            Op_Sel["<b>SELECT / RESTRICT</b> ($\sigma$)<br/>Horizontal Row Filtering"]
-            Op_Proj["<b>PROJECT</b> ($\pi$)<br/>Vertical Column Extraction"]
+            Op_Sel["<b>SELECT / RESTRICT</b> (σ)<br/>Horizontal Row Filtering"]
+            Op_Proj["<b>PROJECT</b> (π)<br/>Vertical Column Extraction"]
         end
 
         subgraph BinarySetGroup["Binary Set Operators (Requires Union-Compatibility)"]
             direction LR
-            Op_Union["<b>UNION</b> ($\cup$)<br/>Combines Rows (Set Addition)"]
-            Op_Int["<b>INTERSECT</b> ($\cap$)<br/>Shared Rows (Overlap)"]
-            Op_Diff["<b>DIFFERENCE</b> ($-$)"]
+            Op_Union["<b>UNION</b> (∪)<br/>Combines Rows (Set Addition)"]
+            Op_Int["<b>INTERSECT</b> (∩)<br/>Shared Rows (Overlap)"]
+            Op_Diff["<b>DIFFERENCE</b> (−)"]
         end
 
         subgraph ProductJoinGroup["Multi-Table Joining & Division"]
             direction LR
-            Op_Prod["<b>PRODUCT</b> ($\times$)<br/>Cartesian Pairing"]
-            Op_Join["<b>JOIN</b> ($\bowtie$)<br/>Common-Attribute Matching"]
-            Op_Div["<b>DIVIDE</b> ($\div$)<br/>Universal Qualification"]
+            Op_Prod["<b>PRODUCT</b> (×)<br/>Cartesian Pairing"]
+            Op_Join["<b>JOIN</b> (⋈)<br/>Common-Attribute Matching"]
+            Op_Div["<b>DIVIDE</b> (÷)<br/>Universal Qualification"]
         end
 
         UnaryGroup --> BinarySetGroup --> ProductJoinGroup
@@ -2723,9 +2723,9 @@ flowchart TD
         
         subgraph InnerJoins["1. Inner Joins (Strict Matched Records Only)"]
             direction TB
-            NJ["<b>Natural Join ($\bowtie$):</b><br/>Links on common attribute names; auto-projects out duplicate join column."]
+            NJ["<b>Natural Join (⋈):</b><br/>Links on common attribute names; auto-projects out duplicate join column."]
             EJ["<b>Equijoin (=):</b><br/>Links on explicit equality condition; retains duplicate join columns."]
-            TJ["<b>Theta Join ($\bowtie_\theta$):</b><br/>Links using inequality comparison operators (<, <=, >, >=, !=)."]
+            TJ["<b>Theta Join (⋈θ):</b><br/>Links using inequality comparison operators (<, <=, >, >=, !=)."]
         end
 
         subgraph OuterJoins["2. Outer Joins (Preserves Unmatched Tuples via NULLs)"]
@@ -2748,9 +2748,9 @@ A **Natural Join** ($\text{CUSTOMER} \bowtie \text{AGENT}$) is formally derived 
 flowchart TD
     subgraph NaturalJoin3Steps["The Three-Stage Natural Join Pipeline"]
         direction TB
-        S1["<b>Stage 1: Cartesian Product ($\times$)</b><br/>Generate full pairing of all tuples: <code>CUSTOMER × AGENT</code> (24 rows)"]
-        S2["<b>Stage 2: Equality Selection ($\sigma$)</b><br/>Filter pairs matching on the common key: <code>σ(CUSTOMER.AGENT_CODE = AGENT.AGENT_CODE)</code> (5 rows)"]
-        S3["<b>Stage 3: Vertical Projection ($\pi$)</b><br/>Project out redundant join column, preserving a single copy of <code>AGENT_CODE</code>"]
+        S1["<b>Stage 1: Cartesian Product (×)</b><br/>Generate full pairing of all tuples: <code>CUSTOMER × AGENT</code> (24 rows)"]
+        S2["<b>Stage 2: Equality Selection (σ)</b><br/>Filter pairs matching on the common key: <code>σ(CUSTOMER.AGENT_CODE = AGENT.AGENT_CODE)</code> (5 rows)"]
+        S3["<b>Stage 3: Vertical Projection (π)</b><br/>Project out redundant join column, preserving a single copy of <code>AGENT_CODE</code>"]
         S1 --> S2 --> S3
     end
 ```
