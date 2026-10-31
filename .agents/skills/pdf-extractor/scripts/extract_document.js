@@ -98,7 +98,7 @@ function extractPdfSlideBySlide(inputFile, ocrWarning = null) {
             }
 
             if (totalPages > 45) {
-                header += `> [!tip] Large Document Recommended Action\n> This document contains ${totalPages} pages (> 45). To ensure maximum detail retention and avoid context truncation, consider chunking:\n> \`node split_pdf.js "${inputFile}" --chunk 20\`\n\n`;
+                header += `> [!tip] Large Document Recommended Action\n> This document contains ${totalPages} pages (> 45). To ensure maximum detail retention and avoid context truncation, consider chunking:\n> \`node .agents/skills/pdf-extractor/scripts/split_pdf.js "${inputFile}" --chunk 20\`\n\n`;
             }
 
             header += `---\n\n`;
@@ -152,7 +152,7 @@ async function analyzePdf(inputFile) {
     if (pageCount > 45) {
         console.log(`⚠️  Large PDF (${pageCount} pages > 45):`);
         console.log(`   Run chunk splitting to prevent detail loss:`);
-        console.log(`   node split_pdf.js "${inputFile}" --chunk 20`);
+        console.log(`   node .agents/skills/pdf-extractor/scripts/split_pdf.js "${inputFile}" --chunk 20`);
     } else {
         console.log(`✅ Page count within optimal bounds (${pageCount} <= 45).`);
     }
@@ -162,7 +162,7 @@ async function analyzePdf(inputFile) {
     }
 
     console.log(`💡 Extraction Command:`);
-    console.log(`   node extract_document.js "${inputFile}" --mode auto`);
+    console.log(`   node .agents/skills/pdf-extractor/scripts/extract_document.js "${inputFile}" --mode auto`);
     console.log(`========================================\n`);
 }
 

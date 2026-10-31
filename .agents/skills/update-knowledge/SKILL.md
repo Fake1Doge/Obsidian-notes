@@ -30,19 +30,22 @@ This skill defines the standardized procedure for summarizing and integrating ne
      - **`knowledge_Y1.md`**: For Year 1 core and field-elective courses located under `Y1S1/` or `Y1S2/`.
      - **`knowledge_Y2.md`**: For Year 2 core and field-elective courses located under `Y2S1/` or `Y2S2/`.
    - Never create a standalone `knowledge.md` at the vault root; always maintain the split `knowledge_Y1.md` and `knowledge_Y2.md` architecture.
+
 3. **Deep Obsidian Wikilinking**:
    - Every summarized section, key concept, definition, and glossary term in the knowledge base MUST link directly back to the original source note and exact heading anchor using standard Obsidian wikilinks:
      - Topic Heading link: `### X.Y [[Path/To/Note#Exact Section Heading|Topic Title]]`
      - Inline Concept link: `[[Path/To/Note#Exact Anchor|Concept / Term]]`
      - Glossary link: `- **Term**: [[Path/To/Note#Exact Anchor|One-line definition]]`
-3. **High-Yield Synthesis (No Fluff / No Pure Copy-Paste)**:
+
+4. **High-Yield Synthesis (No Fluff / No Pure Copy-Paste)**:
    - Do not copy the full lecture text. Extract and synthesize:
      - Core definitions and principles.
      - Architecture/framework components.
      - Algorithmic steps, time/space complexities, and formulas (LaTeX).
      - Essential syntax or code design patterns.
      - Key trade-offs, comparisons, and common pitfalls.
-4. **Preserve Master Architecture & Styling**:
+
+5. **Preserve Master Architecture & Styling**:
    - Respect the established structures of each knowledge base:
      - **`knowledge_Y1.md`**:
        - Part I: Year 1 Semester 1 (Y1S1 Core: CCA101, CCA102, CKC111)
@@ -54,7 +57,8 @@ This skill defines the standardized procedure for summarizing and integrating ne
        - Design & Governance Layer (Architecture & Lifecycle: CKS221 Software Architecture, CKS222 Process & Lifecycle)
        - Part III: Cross-Disciplinary Synthesis & Quantitative Controls Matrix
        - Part IV: Master Glossary of Core Terminology
-5. **No Redundant or Broken Anchors**:
+
+6. **No Redundant or Broken Anchors**:
    - Verify that all heading anchors (`#Heading Name`) in wikilinks match the exact heading text present in the source markdown file.
 
 ---
@@ -69,9 +73,7 @@ This skill defines the standardized procedure for summarizing and integrating ne
 3. Identify:
    - The course code and subject title (e.g., `CCA201: Operating Systems`).
    - The academic level and semester (`Y1S1`, `Y1S2`, `Y2S1`, `Y2S2`).
-   - Select the target knowledge base:
-     - `knowledge_Y1.md` for `Y1S1` / `Y1S2`
-     - `knowledge_Y2.md` for `Y2S1` / `Y2S2`
+   - Target knowledge base: `knowledge_Y1.md` (Year 1) or `knowledge_Y2.md` (Year 2).
    - The newly added or modified chapters/topics, including exact heading names.
    - Core terms, definitions, formulas, and cross-course relationships introduced.
 
@@ -114,22 +116,19 @@ For each new chapter or topic in the source note:
    ```
 3. Maintain alphabetical sorting in the glossary.
 
-### Step 6: Verify Consistency, Formatting & Automated Anchor Validation
-1. Verify that all markdown links are valid Obsidian wikilinks.
-2. Run the automated anchor validator script to verify that every wikilink points to an existing heading in the source notes:
+### Step 6: Automated Anchor Validation & Consistency Check
+1. Run the automated anchor validator script to verify that every wikilink points to an existing heading in the source notes:
    ```bash
-   node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js"
+   node .agents/skills/update-knowledge/scripts/validate_links.js
    ```
    - Automatically supports escaped table pipes (`\|`) and same-note links (`[[#Anchor]]`).
    - If any anchors have drifted due to note revisions, run with `--fix` to auto-repair candidate heading anchors:
    ```bash
-   node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js" --fix
+   node .agents/skills/update-knowledge/scripts/validate_links.js --fix
    ```
    Ensure zero broken anchors are reported before concluding.
-3. Check that all Mermaid diagrams follow syntax rules:
-   - Node IDs have no spaces (e.g., `Node_A` or `NodeA["Label with spaces"]`).
-   - Class diagrams use valid syntax (`<<abstract>>`, `--|>`, `*--`, `o--`).
-4. Save the modified knowledge base (`knowledge_Y1.md` or `knowledge_Y2.md`) and verify clean formatting.
+2. Check that all Mermaid diagrams follow syntax constraints (refer to `obsidian-markdown` for rules).
+3. Save the modified knowledge base and verify clean formatting.
 
 ---
 
