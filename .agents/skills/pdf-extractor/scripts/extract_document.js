@@ -37,6 +37,9 @@ function formatPageTexts(page) {
     }).filter(line => line.length > 0).join('\n');
 }
 
+// Regex to detect diagrams, architectural models, or flowcharts in slide content
+const DIAGRAM_KEYWORDS = /\b(architecture|diagram|overview|pipeline|model|workflow|hierarchy|schema|matrix|uml|flowchart|lifecycle|memory\s+layout|entity|class\s+diagram|erd|use\s+case|state\s+machine|data\s+flow|sequence\s+diagram)\b/i;
+
 // Extract PDF page-by-page using pdf2json, preserving slide numbers and reading order
 function extractPdfSlideBySlide(inputFile, ocrWarning = null) {
     return new Promise((resolve, reject) => {
@@ -51,18 +54,27 @@ function extractPdfSlideBySlide(inputFile, ocrWarning = null) {
             const pages = pdfData.Pages || [];
             const totalPages = pages.length;
             const visualPages = [];
+            const hybridPages = [];
             const sections = [];
 
             pages.forEach((page, idx) => {
                 const slideNum = idx + 1;
                 const pageText = formatPageTexts(page);
                 const charCount = pageText.length;
+                const fillsCount = page.Fills ? page.Fills.length : 0;
+                const linesCount = (page.Lines ? page.Lines.length : 0) + (page.HLines ? page.HLines.length : 0) + (page.VLines ? page.VLines.length : 0);
+                const hasVectorDrawings = (fillsCount + linesCount) >= 4;
+                const hasDiagramKeywords = DIAGRAM_KEYWORDS.test(pageText);
 
                 let slideBlock = `\n---\n### 📄 Slide ${slideNum}\n\n`;
 
-                if (charCount < 25) {
+                if (charCount < 40) {
                     visualPages.push(slideNum);
-                    slideBlock += `> [!warning] Visual / Diagram Slide (Low text density: ${charCount} chars)\n> Contains visual diagram, table, or scanned illustration. Inspect directly with \`read_file\` on page ${slideNum} to convert diagrams to Mermaid or math to LaTeX.\n\n`;
+                    slideBlock += `> [!warning] Visual / Low-Text Slide (Density: ${charCount} chars)\n> Contains visual diagram, table, or scanned illustration. Inspect directly with \`read_file\` on page ${slideNum} to convert diagrams to Mermaid or math to LaTeX.\n\n`;
+                } else if (hasVectorDrawings || hasDiagramKeywords) {
+                    hybridPages.push(slideNum);
+                    const reason = hasDiagramKeywords ? 'Diagram/Model keywords' : 'Vector drawings';
+                    slideBlock += `> [!note] Hybrid Visual Slide (${reason} detected)\n> Contains architectural diagram, flowchart, or structured schema alongside text. Verify visual layout via \`read_file\` on page ${slideNum} and transcribe diagram components into Mermaid.\n\n`;
                 }
 
                 if (pageText.length > 0) {
@@ -78,6 +90,7 @@ function extractPdfSlideBySlide(inputFile, ocrWarning = null) {
             header += `> - **Source File**: \`${baseName}\`\n`;
             header += `> - **Total Slides / Pages**: ${totalPages}\n`;
             header += `> - **Visual / Low-Text Slides Flagged**: ${visualPages.length > 0 ? visualPages.join(', ') : 'None'}\n`;
+            header += `> - **Hybrid (Text + Diagram) Slides Flagged**: ${hybridPages.length > 0 ? hybridPages.join(', ') : 'None'}\n`;
             header += `> - **Detail Preservation Mandate**: All ${totalPages} slides must be fully transcribed with no omitted code, formulas, or examples.\n\n`;
 
             if (ocrWarning) {
@@ -92,6 +105,7 @@ function extractPdfSlideBySlide(inputFile, ocrWarning = null) {
             resolve({
                 totalPages,
                 visualPages,
+                hybridPages,
                 markdown: header + sections.join('')
             });
         });
@@ -127,10 +141,12 @@ async function analyzePdf(inputFile) {
     // Quick text audit
     const result = await extractPdfSlideBySlide(inputFile);
     const visualCount = result.visualPages.length;
+    const hybridCount = result.hybridPages.length;
     const textPercent = (((pageCount - visualCount) / pageCount) * 100).toFixed(1);
 
     console.log(`Text-Searchable Slides: ${pageCount - visualCount} / ${pageCount} (${textPercent}%)`);
     console.log(`Visual/Diagram-Only Slides: ${visualCount} ${visualCount > 0 ? `(Slides: ${result.visualPages.slice(0, 10).join(', ')}${visualCount > 10 ? '...' : ''})` : ''}`);
+    console.log(`Hybrid (Text + Diagram) Slides: ${hybridCount} ${hybridCount > 0 ? `(Slides: ${result.hybridPages.slice(0, 10).join(', ')}${hybridCount > 10 ? '...' : ''})` : ''}`);
 
     console.log(`\n--- Recommendations for Maximum Detail Preservation ---`);
     if (pageCount > 45) {
@@ -141,8 +157,8 @@ async function analyzePdf(inputFile) {
         console.log(`✅ Page count within optimal bounds (${pageCount} <= 45).`);
     }
 
-    if (visualCount > 0) {
-        console.log(`🔍 Visual Slides Detected: ${visualCount} slides require multimodal inspection via \`read_file\`.`);
+    if (visualCount > 0 || hybridCount > 0) {
+        console.log(`🔍 Visual Slides Detected: ${visualCount + hybridCount} slides require multimodal inspection via \`read_file\` for diagrams.`);
     }
 
     console.log(`💡 Extraction Command:`);
@@ -202,7 +218,7 @@ async function extractDocument() {
             console.log(`[pdf2json] Extracting slide-by-slide text layout...`);
             const res = await extractPdfSlideBySlide(inputFile);
             finalMarkdown = res.markdown;
-            console.log(`[pdf2json] Extracted ${res.totalPages} slides (${finalMarkdown.length} chars). Visual slides flagged: ${res.visualPages.length}`);
+            console.log(`[pdf2json] Extracted ${res.totalPages} slides (${finalMarkdown.length} chars). Visual slides flagged: ${res.visualPages.length}, Hybrid: ${res.hybridPages.length}`);
         } else if (mode === 'anydoc') {
             // Force AnyDoc
             const anydoc = await import('@firecrawl/anydoc');
@@ -231,13 +247,32 @@ async function extractDocument() {
             } else {
                 finalMarkdown = slideResult.markdown;
             }
-            console.log(`[Auto] Combined extraction complete: ${slideResult.totalPages} slides, ${finalMarkdown.length} characters.`);
+            console.log(`[Auto] Combined extraction complete: ${slideResult.totalPages} slides (${slideResult.visualPages.length} visual, ${slideResult.hybridPages.length} hybrid flagged), ${finalMarkdown.length} characters.`);
         }
     } else {
         // Office documents (.docx, .pptx, .xlsx)
         console.log(`[AnyDoc] Parsing document ${ext}...`);
         const anydoc = await import('@firecrawl/anydoc');
-        finalMarkdown = await anydoc.toMarkdown(inputFile);
+        let rawExtracted = await anydoc.toMarkdown(inputFile);
+        
+        // If PPTX, normalize slide delimiters if separated by horizontal rules
+        if (ext === '.pptx' && rawExtracted.includes('---')) {
+            const rawSections = rawExtracted.split(/\n---\n/);
+            if (rawSections.length > 1) {
+                let slideIndex = 1;
+                rawExtracted = rawSections.map(sec => {
+                    return `\n---\n### 📄 Slide ${slideIndex++}\n\n` + sec.trim();
+                }).join('\n\n');
+            }
+        }
+        
+        const baseName = path.basename(inputFile);
+        let header = `# Course Material: ${baseName}\n\n`;
+        header += `> [!info] Document Metadata\n`;
+        header += `> - **Source File**: \`${baseName}\`\n`;
+        header += `> - **Format**: \`${ext.toUpperCase()}\`\n`;
+        header += `> - **Detail Preservation Mandate**: All content must be fully transcribed with no omitted code, formulas, or examples.\n\n---\n\n`;
+        finalMarkdown = header + rawExtracted;
         console.log(`[AnyDoc] Successfully extracted ${finalMarkdown.length} characters.`);
     }
 

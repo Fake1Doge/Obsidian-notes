@@ -57,11 +57,11 @@ This skill guides you in transforming a **single** raw lecture material (text fi
    - Append or integrate the comprehensive chapter into the course master note (`<CourseCode> <CourseName>.md`).
    - Use `# Chapter X: [Title]` or `# Topic X: [Title]` for theory lectures, and `# Lab X: [Title]` for practicals.
    - Format subheadings as `## X.Y [Subtitle]` and `### X.Y.Z [Topic]`.
-6. **Immediate Renumbering**:
-   - Run `node "<workspace-root>/.agents/skills/rearrange-topics/scripts/rearrange.js" "<path-to-master-note>"` to ensure sequential heading integrity.
+6. **Immediate Renumbering & Vault Link Synchronization**:
+   - Run `node "<workspace-root>/.agents/skills/rearrange-topics/scripts/rearrange.js" "<path-to-master-note>"` to ensure sequential heading integrity. The script automatically updates all incoming wikilinks across the vault pointing to modified headings.
 7. **Knowledge Base Synchronization & Anchor Validation**:
    - For **Core Courses and Field-Electives** (School of Computer Sciences subjects and domain electives), invoke `update-knowledge` to sync deep wikilinks and conceptual summaries into `knowledge_Y1.md` (Year 1) or `knowledge_Y2.md` (Year 2).
-   - Run `node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js"` to automatically verify that all newly added wikilinks resolve to existing headings.
+   - Run `node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js"` to automatically verify that all newly added wikilinks resolve to existing headings. Use `--fix` if candidate headings need auto-repair.
    - For **Free Modules** (such as AKW104 from other faculties), **SKIP** this step entirely. Free modules must never be inserted into knowledge bases.
 8. **Proactive Cleanup Prompting**:
    - In adherence to Rule 4, proactively audit any intermediate extraction files in scratch or temp directories.

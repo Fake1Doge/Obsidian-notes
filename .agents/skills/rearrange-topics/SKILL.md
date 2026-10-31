@@ -15,6 +15,17 @@ Run the bundled script on the target markdown file using the `rtk` command proxy
 rtk node "C:\Users\User\Desktop\Obsidian-notes\.agents\skills\rearrange-topics\scripts\rearrange.js" <path-to-markdown-file>
 ```
 
+### Automatic Two-Way Vault Link Synchronization
+When headings in a master note are renumbered (e.g., `Chapter 1: ...` or `## 1.5 ...`), `rearrange.js` **automatically scans and updates all incoming wikilinks** across `knowledge_Y1.md`, `knowledge_Y2.md`, and other vault notes pointing to those headings. This eliminates broken anchors caused by renumbering.
+- Use `--dry-run` to preview renumbering changes without modifying files:
+  ```bash
+  node rearrange.js <file> --dry-run
+  ```
+- Use `--no-sync` to skip automatic cross-vault link updating:
+  ```bash
+  node rearrange.js <file> --no-sync
+  ```
+
 ### Advanced Multi-Sequence Prefix System
 
 The script categorizes prefixes into two groups:

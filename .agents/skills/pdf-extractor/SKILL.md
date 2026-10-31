@@ -11,7 +11,7 @@ This skill provides automated tools to extract structured content from course ma
 2. **Slide-by-Slide Delimited Extraction (`extract_document.js`)**: Converts documents into Markdown while strictly demarcating every individual slide (`### 📄 Slide X`) and grouping lines in exact reading order so zero code or bullets are lost.
 3. **Smart AnyDoc & pdf2json Engine**: Combines `@firecrawl/anydoc` for structured document outlines with `pdf2json` for verbatim slide-by-slide fidelity.
 4. **Scratch-Aware PDF Chunking (`split_pdf.js`)**: Splits large PDFs (>40–50 pages) into 20-page parts and supports routing directly to temporary scratch directories (`-o <scratch_dir>`).
-5. **Visual Slide Callouts**: Automatically detects low-text / diagram-only slides and inserts actionable callouts to guide visual inspection via `read_file`.
+5. **Dual Visual & Hybrid Slide Detection**: Automatically detects both low-text slides (<40 chars) and hybrid slides containing text alongside architectural diagrams, vector drawings, or UML/ERD models, inserting targeted callouts for multimodal inspection.
 
 ---
 

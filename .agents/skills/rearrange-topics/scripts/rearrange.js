@@ -8,7 +8,94 @@ function cleanTitleText(rest) {
     return rest.replace(/^[\:\-\.\s]+/, '').trim();
 }
 
-function rearrangeHeadings(filePath) {
+// Vault-wide wikilink synchronizer
+function syncVaultWikilinks(workspaceRoot, targetFilePath, headingRenames) {
+    if (headingRenames.size === 0) return;
+
+    const targetAbs = path.resolve(targetFilePath);
+    const relWithExt = path.relative(workspaceRoot, targetAbs).replace(/\\/g, '/');
+    const relNoExt = relWithExt.replace(/\.md$/, '');
+    const baseWithExt = path.basename(targetAbs);
+    const baseNoExt = path.basename(targetAbs, '.md');
+
+    // Possible note target names in wikilinks
+    const targetNames = new Set([
+        relWithExt,
+        relNoExt,
+        baseWithExt,
+        baseNoExt
+    ]);
+
+    // Scan target directory and knowledge bases
+    function getMdFiles(dir) {
+        let results = [];
+        if (!fs.existsSync(dir)) return results;
+        const entries = fs.readdirSync(dir, { withFileTypes: true });
+        for (const entry of entries) {
+            if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+            const fullPath = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                results = results.concat(getMdFiles(fullPath));
+            } else if (entry.isFile() && entry.name.endsWith('.md')) {
+                results.push(fullPath);
+            }
+        }
+        return results;
+    }
+
+    const mdFiles = getMdFiles(workspaceRoot);
+    let totalUpdatedLinks = 0;
+    let filesModified = 0;
+
+    for (const file of mdFiles) {
+        let fileContent = fs.readFileSync(file, 'utf8');
+        const isSelf = path.resolve(file) === targetAbs;
+        let modified = false;
+
+        // Process wikilinks
+        const wikilinkPattern = /\[\[([^[\]]+)\]\]/g;
+        let newContent = fileContent.replace(wikilinkPattern, (match, inner) => {
+            const parts = inner.split(/\\?\|/);
+            const linkPart = parts[0].trim();
+            const aliasPart = parts.length > 1 ? parts.slice(1).join('|').trim() : null;
+
+            const hashIdx = linkPart.indexOf('#');
+            if (hashIdx === -1) return match; // No anchor
+
+            const notePart = linkPart.substring(0, hashIdx).trim();
+            const anchorPart = linkPart.substring(hashIdx + 1).replace(/\\+$/, '').trim();
+
+            const isMatchingTarget = isSelf 
+                ? (notePart === '' || targetNames.has(notePart))
+                : targetNames.has(notePart);
+
+            if (isMatchingTarget && headingRenames.has(anchorPart)) {
+                const newAnchor = headingRenames.get(anchorPart);
+                totalUpdatedLinks++;
+                modified = true;
+                const escapedPipe = match.includes('\\|') ? '\\|' : '|';
+                const newInner = aliasPart !== null
+                    ? `${linkPart.substring(0, hashIdx)}#${newAnchor}${escapedPipe}${aliasPart}`
+                    : `${linkPart.substring(0, hashIdx)}#${newAnchor}`;
+                return `[[${newInner}]]`;
+            }
+
+            return match;
+        });
+
+        if (modified) {
+            fs.writeFileSync(file, newContent, 'utf8');
+            filesModified++;
+            console.log(`  🔗 Synced updated heading links in: ${path.relative(workspaceRoot, file)}`);
+        }
+    }
+
+    if (totalUpdatedLinks > 0) {
+        console.log(`[Link Sync] Automatically updated ${totalUpdatedLinks} wikilink anchor(s) across ${filesModified} vault file(s).`);
+    }
+}
+
+function rearrangeHeadings(filePath, options = {}) {
     if (!fs.existsSync(filePath)) {
         console.error(`File not found: ${filePath}`);
         process.exit(1);
@@ -113,7 +200,8 @@ function rearrangeHeadings(filePath) {
                     index: i,
                     level: level,
                     parsed: parsed,
-                    hashes: hashes
+                    hashes: hashes,
+                    originalHeading: titlePart
                 });
             }
         }
@@ -142,13 +230,16 @@ function rearrangeHeadings(filePath) {
     let mainTopicRenumberedCount = 0;
     let subtopicRenumberedCount = 0;
     const specialStats = {};
+    const headingRenames = new Map();
 
     for (const item of matches) {
-        const { index, level, parsed, hashes } = item;
+        const { index, level, parsed, hashes, originalHeading } = item;
 
         if (level >= currentNums.length) {
             continue; // Ignore excessively deep headings
         }
+
+        let newHeadingTitle = '';
 
         if (level === 1) {
             // Main topic heading (Level 1)
@@ -178,7 +269,8 @@ function rearrangeHeadings(filePath) {
             }
 
             const cleanTitle = cleanTitleText(parsed.rest);
-            lines[index] = `${hashes} ${chosenPrefix} ${assignedNumber}${cleanTitle ? ': ' + cleanTitle : ''}`;
+            newHeadingTitle = `${chosenPrefix} ${assignedNumber}${cleanTitle ? ': ' + cleanTitle : ''}`;
+            lines[index] = `${hashes} ${newHeadingTitle}`;
             mainTopicRenumberedCount++;
         } else {
             // Subtopic heading (Level > 1)
@@ -198,9 +290,22 @@ function rearrangeHeadings(filePath) {
 
             const cleanTitle = cleanTitleText(parsed.rest);
             const hierarchicalNumber = currentNums.slice(1, level + 1).join('.');
-            lines[index] = `${hashes} ${hierarchicalNumber}${cleanTitle ? ' ' + cleanTitle : ''}`;
+            newHeadingTitle = `${hierarchicalNumber}${cleanTitle ? ' ' + cleanTitle : ''}`;
+            lines[index] = `${hashes} ${newHeadingTitle}`;
             subtopicRenumberedCount++;
         }
+
+        if (originalHeading !== newHeadingTitle) {
+            headingRenames.set(originalHeading, newHeadingTitle);
+        }
+    }
+
+    if (options.dryRun) {
+        console.log(`[Dry Run] Would renumber ${headingRenames.size} headings in ${filePath}.`);
+        for (const [oldH, newH] of headingRenames) {
+            console.log(`   "${oldH}" -> "${newH}"`);
+        }
+        return;
     }
 
     // Write back with appropriate newline
@@ -215,12 +320,24 @@ function rearrangeHeadings(filePath) {
     }
 
     console.log(`Success: Renumbered ${mainTopicRenumberedCount} main topics (${statsStr}) and ${subtopicRenumberedCount} subtopics sequentially.`);
+
+    // Perform two-way link synchronization across vault if enabled
+    if (!options.noSync && headingRenames.size > 0) {
+        const workspaceRoot = process.cwd();
+        syncVaultWikilinks(workspaceRoot, filePath, headingRenames);
+    }
 }
 
-const args = process.argv.slice(2);
-if (args.length !== 1) {
-    console.error("Usage: node rearrange.js <file-path>");
+const rawArgs = process.argv.slice(2);
+const options = {
+    noSync: rawArgs.includes('--no-sync'),
+    dryRun: rawArgs.includes('--dry-run')
+};
+const fileArgs = rawArgs.filter(a => !a.startsWith('--'));
+
+if (fileArgs.length !== 1) {
+    console.error("Usage: node rearrange.js <file-path> [--no-sync] [--dry-run]");
     process.exit(1);
 }
 
-rearrangeHeadings(args[0]);
+rearrangeHeadings(path.resolve(fileArgs[0]), options);

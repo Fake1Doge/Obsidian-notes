@@ -126,30 +126,30 @@ flowchart LR
 - **Loop Control & Patterns**: [[Y1S1/CCA101 Principle of Programming#Running Totals & Accumulators|Accumulators & Running Totals]], [[Y1S1/CCA101 Principle of Programming#Sentinels|Sentinel-controlled loops]], [[Y1S1/CCA101 Principle of Programming#Nested Loops|Nested loops]], and [[Y1S1/CCA101 Principle of Programming#Breaking and Continuing|`break` & `continue` statements]].
 
 ### 1.6 [[Y1S1/CCA101 Principle of Programming#File Processing|File Stream Processing]]
-- **File Streams**: [[Y1S1/CCA101 Principle of Programming#Setting Up File Stream Objects|`ifstream` (input), `ofstream` (output), `fstream` (bi-directional)]].
-- **Lifecycle & Validation**: [[Y1S1/CCA101 Principle of Programming#Opening and Closing Files|Opening/closing files]], [[Y1S1/CCA101 Principle of Programming#Detecting the End of the File|Testing stream state (`is_open()`, `fail()`, `eof()`)]], and [[Y1S1/CCA101 Principle of Programming#Passing File Stream Objects to Functions|Passing streams by reference `&` to functions]].
+- **File Streams**: [[Y1S1/CCA101 Principle of Programming#Key Concepts|`ifstream` (input), `ofstream` (output), `fstream` (bi-directional)]].
+- **Lifecycle & Validation**: [[Y1S1/CCA101 Principle of Programming#Steps to Use a File|Opening/closing files]], [[Y1S1/CCA101 Principle of Programming#Processing Files with Loops|Testing stream state (`is_open()`, `fail()`, `eof()`)]], and [[Y1S1/CCA101 Principle of Programming#Advanced File Operations|Passing streams by reference `&` to functions]].
 
 ### 1.7 [[Y1S1/CCA101 Principle of Programming#Computational Thinking|Computational Thinking Framework]]
-- **Four Pillars**: [[Y1S1/CCA101 Principle of Programming#Four Pillars of Computational Thinking|Decomposition, Pattern Recognition, Abstraction, and Algorithm Design]].
-- **Specification Tools**: [[Y1S1/CCA101 Principle of Programming#Flowcharts and Pseudocode|Flowcharts (standard ANSI symbols) and Pseudocode conventions]].
+- **Four Pillars**: [[Y1S1/CCA101 Principle of Programming#The Six Concepts of Computational Thinking|Decomposition, Pattern Recognition, Abstraction, and Algorithm Design]].
+- **Specification Tools**: [[Y1S1/CCA101 Principle of Programming#Algorithm Design Tools|Flowcharts (standard ANSI symbols) and Pseudocode conventions]].
 
 ### 1.8 [[Y1S1/CCA101 Principle of Programming#Functions|Modular Programming & Functions]]
-- **Function Architecture**: [[Y1S1/CCA101 Principle of Programming#Function Prototypes|Function prototypes]], [[Y1S1/CCA101 Principle of Programming#Defining and Calling Functions|Definitions]], and [[Y1S1/CCA101 Principle of Programming#The return Statement and Returning a Value|Return statements]].
+- **Function Architecture**: [[Y1S1/CCA101 Principle of Programming#Key Concepts & Definitions|Function prototypes]], [[Y1S1/CCA101 Principle of Programming#Defining and Calling Functions|Definitions]], and [[Y1S1/CCA101 Principle of Programming#The `return` Statement|Return statements]].
 - **Parameter Passing**:
-  - *Pass-by-Value*: [[Y1S1/CCA101 Principle of Programming#Passing Data by Value|Copies value into local function stack frame]].
-  - *Pass-by-Reference*: [[Y1S1/CCA101 Principle of Programming#Passing by Reference|Direct memory aliasing via `Type &var`]].
+  - *Pass-by-Value*: [[Y1S1/CCA101 Principle of Programming#Sending Data into a Function (Pass by Value)|Copies value into local function stack frame]].
+  - *Pass-by-Reference*: [[Y1S1/CCA101 Principle of Programming#Using Reference Variables as Parameters|Direct memory aliasing via `Type &var`]].
   - *Default Arguments*: [[Y1S1/CCA101 Principle of Programming#Default Arguments|Parameters with default values assigned in prototypes]].
 - **Variable Lifetime**: [[Y1S1/CCA101 Principle of Programming#Local and Global Variables|Automatic stack duration]] vs [[Y1S1/CCA101 Principle of Programming#Static Local Variables|`static` local variables]].
-- **Function Overloading**: [[Y1S1/CCA101 Principle of Programming#Overloading Functions|Overloaded function signatures resolved at compile time]].
+- **Function Overloading**: [[Y1S1/CCA101 Principle of Programming#Function Overloading|Overloaded function signatures resolved at compile time]].
 
 ### 1.9 [[Y1S1/CCA101 Principle of Programming#Arrays|Arrays, Searching & Sorting Algorithms]]
-- **1D & 2D Array Structures**: [[Y1S1/CCA101 Principle of Programming#Arrays Hold Multiple Values|Contiguous array memory layout]], [[Y1S1/CCA101 Principle of Programming#Accessing Array Elements|Subscript bounds]], and [[Y1S1/CCA101 Principle of Programming#Two-Dimensional Arrays|Row-major 2D arrays]].
+- **1D & 2D Array Structures**: [[Y1S1/CCA101 Principle of Programming#Key Concepts & Definitions|Contiguous array memory layout]], [[Y1S1/CCA101 Principle of Programming#Accessing and Processing Arrays|Subscript bounds]], and [[Y1S1/CCA101 Principle of Programming#Two-Dimensional Arrays|Row-major 2D arrays]].
 - **Passing Arrays**: [[Y1S1/CCA101 Principle of Programming#Arrays as Function Arguments|Array decay to pointer (`Type*`)]].
-- **C++11 Features**: [[Y1S1/CCA101 Principle of Programming#The Range-Based for Loop (C++11)|Range-based `for (auto& item : arr)` loops]].
+- **C++11 Features**: [[Y1S1/CCA101 Principle of Programming#Range-Based For Loop (C++11)|Range-based `for (auto& item : arr)` loops]].
 - **Algorithms**: Linear search, binary search, bubble sort, selection sort.
 
 ### 1.10 [[Y1S1/CCA101 Principle of Programming#Pointers|Pointers & Dynamic Memory Foundations]]
-- **Pointer Mechanics**: [[Y1S1/CCA101 Principle of Programming#The Address Operator (&)|Address-of operator (`&`)]], [[Y1S1/CCA101 Principle of Programming#Pointer Variables (*)|Dereference operator (`*`)]], and [[Y1S1/CCA101 Principle of Programming#Pointer Arithmetic|Pointer arithmetic offset calculations]].
+- **Pointer Mechanics**: [[Y1S1/CCA101 Principle of Programming#Getting the Address of a Variable|Address-of operator (`&`)]], [[Y1S1/CCA101 Principle of Programming#Pointer Variables|Dereference operator (`*`)]], and [[Y1S1/CCA101 Principle of Programming#Pointer Arithmetic|Pointer arithmetic offset calculations]].
 - **Pointer-Array Equivalence**: [[Y1S1/CCA101 Principle of Programming#The Relationship Between Arrays and Pointers|`arr[i]` $\equiv$ `*(arr + i)`]].
 - **Dynamic Allocation**: [[Y1S1/CCA101 Principle of Programming#Dynamic Memory Allocation (new and delete)|Heap allocation with `new` and deallocation with `delete` / `delete[]`]].
 - **Hazards**: Memory leaks, dangling pointers, double freeing.

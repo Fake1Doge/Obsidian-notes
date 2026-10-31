@@ -120,6 +120,11 @@ For each new chapter or topic in the source note:
    ```bash
    node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js"
    ```
+   - Automatically supports escaped table pipes (`\|`) and same-note links (`[[#Anchor]]`).
+   - If any anchors have drifted due to note revisions, run with `--fix` to auto-repair candidate heading anchors:
+   ```bash
+   node "<workspace-root>/.agents/skills/update-knowledge/scripts/validate_links.js" --fix
+   ```
    Ensure zero broken anchors are reported before concluding.
 3. Check that all Mermaid diagrams follow syntax rules:
    - Node IDs have no spaces (e.g., `Node_A` or `NodeA["Label with spaces"]`).
