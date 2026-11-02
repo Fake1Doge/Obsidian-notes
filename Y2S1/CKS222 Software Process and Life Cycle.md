@@ -3,38 +3,6 @@
 > [!tip] ⚡ Quick Study Resource for Test 1 (Objective Exam)
 > Preparing for the mid-semester objective test? Review **[[Y2S1/CKS222 Short Notes|CKS222 Short Notes (Test 1 Objective Examination Cram Sheet)]]** for quick fact matrices, timeboxes, formulas, discrimination tables, top 20 traps, and 25 rapid-fire practice questions.
 
-> [!abstract] Course Meta-Information & Constructive Alignment
-> - **Institution:** Universiti Sains Malaysia (USM) | School of Computer Sciences
-> - **Course:** CKS222 — Software Process and Life Cycle (Core Undergraduate Specialization, 3 Course Units)
-> - **Academic Term:** Semester 1, 2026/2027
-> - **Course Lecturers:**
->   - **Ts. Dr. Mohd Heikal Husin** (`heikal@usm.my`, Room 622)
->   - **Dr. Azleena Mohd Kassim** (`azleena.mk@usm.my`, Room 702)
-> 
-> ### Core Course Objectives
-> 1. **Foundational Principles:** Equip students with vital concepts of the software life cycle, software engineering process models, and industrial standards.
-> 2. **Quality Impact:** Expose students to the quantitative impact of software processes on product quality and software quality assurance (SQA) fundamentals.
-> 3. **Process Tailoring:** Develop critical engineering abilities in choosing, evaluating, adapting, and tailoring process models for actual, diverse software project contexts.
-> 
-> ### Constructive Alignment & Assessment Architecture (100% Total)
-> 
-> | Assessment Component | Weight | Target Learning Level & Mapped Outcomes | Details & Scope |
-> | :--- | :---: | :--- | :--- |
-> | **Final Examination** | **50%** | **CLO1 & CLO2** (PLO1, PLO3, C3, C4) | 2-Hour comprehensive summative assessment evaluating theoretical foundations, formal models, and process analysis. |
-> | **Coursework Total** | **50%** | **Continuous Evaluation** | Progressive project-based, empirical, and analytical evaluations. |
-> | ↳ *Group Project (Milestones)* | 20% | **CLO3** (PLO9, A5, LL3 — 200 marks) | Practical multi-milestone process modeling, EPG construction, and empirical audit. |
-> | ↳ *Tests (x 2)* | 20% | **CLO1 & CLO2** (Test 1 & Test 2) | Mid-semester assessments verifying mastery of lifecycle models, EVM, and agile principles. |
-> | ↳ *Assignments* | 10% | **CLO2** (Assignment — 100 marks) | Rigorous process audit and tailoring of Malaysian software organizations (e.g., Touch 'n Go, Maybank, Grab). |
-> 
-> ### Semester Topic Roadmap
-> - **Week 1:** Introduction to Software Process, Product Lifecycle, Process-Product Causality, Prescriptive Lifecycle Classes.
-> - **Week 2:** Software Process Definition & Descriptive Modeling (8-Step Methodology, MVP-L, SPEM 2.0, EPF Composer).
-> - **Week 3:** Software Processes in the Product Life Cycle, Project Management Controls (Triple Constraint, RACI, Tuckman, EVM, Earned Schedule, EVM Triads & A-SPSRI).
-> - **Week 4:** Agile & Lean Development Processes (Manifesto, Scrum Framework, INVEST User Stories, Definition of Done, XP Practices, Lean Wastes, SDL-Agile & OWASP SAMM).
-> - **Week 5:** Software Process Methodologies Part 1 (Waterfall, Symmetrical V-Model, Throwaway/Evolutionary Prototyping, Process Tailoring with Münch's 4 Ps).
-> - **Week 6:** Software Process Methodologies Part 2 (Spiral Model, Incremental Commitment Spiral Model [ICSM], Cleanroom, DevOps, Multi-Release Reliability Modeling).
-> - **Week 7:** Standards & Continuous Process Improvement (ISO/IEC 12207, CMMI, SPICE, QIP/GQM, Safety Regulations).
-
 ---
 
 # Chapter 1: Introduction to Software Process & the Product Lifecycle
