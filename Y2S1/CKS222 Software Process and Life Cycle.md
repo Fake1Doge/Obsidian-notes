@@ -1,11 +1,3 @@
-# CKS222: Software Process and Life Cycle
-
-> [!tip] Quick Revision & Test 1 Cram Guide
-> Preparing for the objective examination (Weeks 1 to 5 + initial Week 6)?
-> Access the companion study guide: **[[CKS222 Short Notes|CKS222 Short Notes (Complete Beginner-to-Mastery Objective Exam Guide)]]** for fast-facts matrices, formulas, discrimination tables, and 35 high-yield practice MCQs.
-
----
-
 # Chapter 1: Introduction to Software Process & the Product Lifecycle
 
 ## 1.1 Fundamentals of Software Engineering & Process
