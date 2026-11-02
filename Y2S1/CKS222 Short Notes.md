@@ -72,8 +72,8 @@ tags:
 | **IEC 61508** | Functional Safety Umbrella Standard | Governs electrical, electronic, and programmable electronic safety-related systems across all industries. | Umbrella Safety |
 | **ISO 26262** | Road Vehicles — Functional Safety | Automotive adaptation of IEC 61508; defines Automotive Safety Integrity Levels (**ASIL A to D**). | Automotive Safety |
 | **IEC 62304** | Medical Device Software | Mandates software lifecycle processes and post-market safety surveillance for medical software. | Medical Devices |
-| **DO-178C** | Airborne Systems & Equipment | Mandates software safety certification for avionics flight systems (Design Assurance Levels DAL A to E). | Avionics Software |
-| **EN 50128** | Railway Applications | Communications, signaling, and processing systems software safety integrity levels (SIL 0 to 4). | Railway Systems |
+| **CMMI / SPICE** | Capability Maturity Model Integration & ISO/IEC 15504 | Standardized process assessment frameworks; strategic necessity for bidding on high-maturity contracts. | Process Maturity |
+| **Texas DIR (2008)** | Texas Department of Information Resources Standard | Mandates 8 essential quality standards for requirements (Correct, Unambiguous, Complete, Consistent, etc.). | Requirements Standards |
 | **ECSS** | European Cooperation for Space Standardization | Mandated by the European Space Agency (ESA) for spacecraft and satellite software engineering. | Space Systems |
 | **SPEM 2.0** | Systems Process Engineering Metamodel (OMG) | International standard metamodel decoupling static Method Content from dynamic Execution Processes. | Process Metamodel |
 | **NASA Mars Climate Orbiter ($125M Loss, 1999)** | Destroyed at 57 km instead of safe 226 km | **Interface Mismatch:** Lockheed Martin ground file used **English Imperial ($\text{lbf}\cdot\text{s}$)**; NASA JPL software expected **Metric SI ($\text{N}\cdot\text{s}$)** ($1\text{ lbf}\cdot\text{s} \approx 4.45\text{ N}\cdot\text{s}$). Failure of constructive interface review. | Units Mismatch Disaster |
@@ -224,9 +224,9 @@ flowchart LR
 - **Verification:** *"Did we build the system right?"* Conformance to engineering specifications (static analysis, inspections, unit tests).
 - **Validation:** *"Did we build the right system?"* Fulfillment of end-user needs and business utility (UAT, beta testing, customer focus groups).
 
-### Technical Debt & 10 Code Smells
+### Technical Debt & Code Smells
 - **Refactoring:** Improving internal code structure **without altering external observable behavior**.
-- **Smells:** (1) Obsolete comments, (2) Commented-out dead code, (3) Duplicate code (copy-paste), (4) Vague identifiers, (5) Multiple responsibilities (SRP violation), (6) Bloated routines ($>10$ lines), (7) Excessive parameter lists ($>4$ arguments), (8) Divergent change / shotgun surgery, (9) Feature envy, (10) Primitive obsession.
+- **Seven Core Lecture Smells (Week 3 Slide 8):** (1) Obsolete comments, (2) Commented-out dead code, (3) Duplicate code (copy-paste), (4) Vague identifiers/naming, (5) Functions with too many jobs (SRP violation), (6) Bloated routines ($>10$ lines), (7) Excessive parameter lists ($>4$ arguments).
 
 ### 8 Engineering Qualities of Requirements (Texas DIR, 2008)
 1. **Correct**, 2. **Unambiguous**, 3. **Complete**, 4. **Consistent**, 5. **Ranked for Priority**, 6. **Verifiable / Testable** (quantitative criteria required), 7. **Modifiable**, 8. **Traceable**.
@@ -461,7 +461,7 @@ flowchart LR
 **Which standard provides the foundational functional safety umbrella requirements from which industry-specific standards like ISO 26262 and IEC 62304 are derived?**
 - A) ISO/IEC/IEEE 24765
 - B) IEC 61508
-- C) DO-178C
+- C) ECSS Standards
 - D) CMMI Level 3
 > **Answer: B** | *Explanation:* IEC 61508 is the generic umbrella functional safety standard for electronic safety-related systems. ISO 26262 adapts it for automotive road vehicles, and IEC 62304 adapts it for medical devices.
 
@@ -698,4 +698,4 @@ flowchart LR
 ---
 
 > [!tip] Final Test Day Recommendation
-> Prior to entering the objective examination, review **[[#Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)|Module 1]]** for numbers and formulas, verify you can identify every trap in **[[#Module 4: Top 20 Objective Test "Trap & Trick" Alerts|Module 4]]**, and re-verify the **[[#1.3 RACI Governance Rules & Authoritative Allocation|Week 3 Slide 14 RACI Allocation]]**!
+> Prior to entering the objective examination, review **[[#Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)|Module 1]]** for numbers and formulas, verify you can identify every trap in **[[#Module 4: Top 20 Objective Test "Trap & Trick" Alerts|Module 4]]**, and re-verify the **[[#RACI Governance Rules & Authoritative Allocation|Week 3 Slide 14 RACI Allocation]]**!

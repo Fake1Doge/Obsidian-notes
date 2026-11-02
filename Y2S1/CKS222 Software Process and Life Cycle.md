@@ -194,7 +194,7 @@ flowchart TD
 ```
 
 > [!important] Why Process Compliance is Legally Enforced
-> If an autonomous vehicle or avionics system experiences a software-induced failure, regulatory authorities audit the organization's development process logs. Demonstrating that developers followed recognized standards (e.g., ISO 26262 ASIL-D or DO-178C) establishes due diligence and shields organizations from catastrophic legal liability.
+> If an autonomous vehicle or safety-critical system experiences a software-induced failure, regulatory authorities audit the organization's development process logs. Demonstrating that developers followed recognized standards (e.g., ISO 26262 ASIL-D, IEC 61508, or IEC 62304) establishes due diligence and shields organizations from catastrophic legal liability.
 
 ### 1.2.4 Pathologies of Insufficient Process Control
 Organizations operating without mature, documented software processes suffer from well-documented systemic failures:
@@ -929,17 +929,15 @@ Taking shortcuts during construction provides temporary velocity but incurs **te
 > [!info] The Refactoring Discipline
 > **Refactoring** is the disciplined practice of modifying internal code structures to enhance readability, reduce complexity, and eliminate technical debt **without altering the observable external functional behavior** of the software.
 
-#### Ten Critical Code Smells to Eliminate
+#### Core Code Smells to Eliminate (Week 3 Slide 8)
+As specified in the lecture slide, developers must keep code clean and pay down technical debt by eliminating:
 1. **Obsolete & Misleading Comments:** Narrative text that contradicts updated code implementations.
 2. **Commented-Out Dead Code:** Blocks of dormant code cluttering files rather than relying on Git version history.
 3. **Duplicate Code ("Copy-Paste Programming"):** Identical logic repeated across multiple routines.
 4. **Vague & Ambiguous Identifiers:** Cryptic variable or function names (e.g., `temp1`, `doProcess()`).
-5. **Functions with Multiple Responsibilities:** Violating the Single Responsibility Principle (SRP).
-6. **Bloated Routines (>10 Lines):** Overly long functions that obscure high-level algorithmic logic.
-7. **Excessive Parameter Lists (>4 Arguments):** Indicating a missing abstraction or object encapsulation.
-8. **Divergent Change & Shotgun Surgery:** Modifying one class requires tiny edits across dozens of files.
-9. **Feature Envy:** A method accesses the data of another object more than its own.
-10. **Primitive Obsession:** Over-relying on basic primitives instead of domain-specific value objects.
+5. **Functions with Too Many Jobs:** Routines performing multiple tasks, violating the Single Responsibility Principle (SRP).
+6. **Bloated Routines (>10 Lines):** Overly long functions exceeding 10 lines of executable code.
+7. **Excessive Parameter Lists (>4 Arguments):** Parameter signatures exceeding 4 arguments, indicating a missing abstraction or object encapsulation.
 
 ---
 
@@ -1889,7 +1887,7 @@ Traditional prescriptive lifecycles were established to counteract the ad-hoc "c
    - Prescriptive models codify lessons learned from historic projects into standardized organizational process assets (OPAs).
    - This institutional knowledge insulates projects from high staff turnover and prevents regression into unverified development practices.
 3. **Contractual and Regulatory Compliance:**
-   - In safety-critical and highly regulated domains—such as avionics (DO-178C), medical devices (IEC 62304), automotive systems (ISO 26262), and railway signaling (EN 50128)—process conformance is a legal prerequisite.
+   - In safety-critical and highly regulated domains—such as medical devices (IEC 62304), automotive systems (ISO 26262), and space engineering (ECSS Standards)—process conformance is a legal prerequisite.
    - Independent certification authorities demand exhaustive, auditable documentation demonstrating that requirements were formally validated and verified prior to production deployment.
 
 ### 5.1.3 Inherent Limitations and the Risks of Volatile Scope
