@@ -495,6 +495,9 @@ flowchart TD
 
 ## 4. 🔄 [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]]
 
+> [!tip] 🎯 Quick Exam Cram Resource
+> For objective test revision covering Weeks 1 to 5 (timelines, formulas, discrimination tables, and practice drills), consult the companion cram sheet: **[[Y2S1/CKS222 Short Notes|CKS222 Short Notes (Test 1 Objective Examination Cram Sheet)]]**.
+
 Focuses on the empirical discipline of software engineering, descriptive process modeling methodologies, lifecycle models, verification vs validation, and quantitative project governance using Earned Value Management (EVM) Triads and Monte Carlo risk simulations.
 
 ```mermaid

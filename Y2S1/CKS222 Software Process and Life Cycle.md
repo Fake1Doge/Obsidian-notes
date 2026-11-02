@@ -1,5 +1,8 @@
 # CKS222: Software Process and Life Cycle
 
+> [!tip] ⚡ Quick Study Resource for Test 1 (Objective Exam)
+> Preparing for the mid-semester objective test? Review **[[Y2S1/CKS222 Short Notes|CKS222 Short Notes (Test 1 Objective Examination Cram Sheet)]]** for quick fact matrices, timeboxes, formulas, discrimination tables, top 20 traps, and 25 rapid-fire practice questions.
+
 > [!abstract] Course Meta-Information & Constructive Alignment
 > - **Institution:** Universiti Sains Malaysia (USM) | School of Computer Sciences
 > - **Course:** CKS222 — Software Process and Life Cycle (Core Undergraduate Specialization, 3 Course Units)
