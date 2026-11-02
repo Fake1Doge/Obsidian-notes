@@ -129,7 +129,7 @@ flowchart LR
 ### 1.1.5 Definition: Software Process Model
 A **software process model** is an abstract, simplified conceptual representation of an actual or desired software process.
 
-> [!tip] The "Recipe" Analogy
+> [!note] Extra Knowledge: The "Recipe" Analogy for Process Models
 > A software process model is to real-world process enactment what a **baking recipe** is to baking a cake in a kitchen. The recipe specifies ingredients, sequential steps, temperature constraints, and expected outcomes, but the actual execution involves human judgment, variations in equipment, and unexpected physical conditions.
 
 #### Essential Building Blocks of a Process Model
@@ -193,7 +193,7 @@ flowchart TD
     IEC61508 --> IEC62304
 ```
 
-> [!important] Why Process Compliance is Legally Enforced
+> [!note] Extra Knowledge: Why Process Compliance is Legally Enforced in Safety-Critical Domains
 > If an autonomous vehicle or safety-critical system experiences a software-induced failure, regulatory authorities audit the organization's development process logs. Demonstrating that developers followed recognized standards (e.g., ISO 26262 ASIL-D, IEC 61508, or IEC 62304) establishes due diligence and shields organizations from catastrophic legal liability.
 
 ### 1.2.4 Pathologies of Insufficient Process Control
@@ -455,7 +455,7 @@ flowchart TD
 ### 2.1.1 The Industrial Imperative for Process Management
 While software development tools, frameworks, and compilers have reached exceptional levels of technological maturity, the organizational discipline of software processes remains emerging, research-active, and highly variable. 
 
-> [!note] Why Modern Industry Demands Formal Process Definition
+> [!note] Extra Knowledge: The Industrial Economic Imperative for Formal Process Modeling
 > 1. **Organizational Scale & Global Distribution:** Coordinating hundreds of developers distributed across multiple continents, time zones, and corporate cultures cannot succeed on informal, tribal knowledge. Explicit, standardized process definitions are mandatory.
 > 2. **Emergence of Process Engineering Roles:** The creation of specialized organizational positions—such as Process Engineers, Agile Coaches, Scrum Masters, and Quality Assurance Specialists—highlights industry's demand for repeatable process management capabilities.
 > 3. **Beyond Textbook Prescriptions:** Generic models (pure Scrum or linear Waterfall) rarely fit enterprise realities out-of-the-box. Organizations must possess the analytical capability to elicit, define, tailor, and evolve custom processes for their specific business contexts.
@@ -518,7 +518,7 @@ flowchart TD
 ### 2.2.1 Step 1: Stating Explicit Objectives and Scope
 Process modeling requires substantial expenditure of engineering hours. Clear boundary definition prevents runaway scoping and determines the required depth of abstraction.
 
-> [!info] Scoping Checklist for Process Engineers
+> [!tip] Extra Knowledge: Scoping Checklist for Industrial Process Engineers
 > - **Why are we modeling?** (Regulatory compliance audit, tool automation, junior developer onboarding, or bottleneck optimization?)
 > - **Who are the primary users?** (Software Engineering Process Group [SEPG], external contractors, project managers, or frontline developers?)
 > - **What level of detail is required?** (Coarse lifecycle milestones vs. atomic, low-level technical work instructions?)
@@ -849,7 +849,7 @@ flowchart TD
     end
 ```
 
-> [!example] Practical Application of Variability
+> [!example] Extra Knowledge: Practical Application of SPEM 2.0 Variability Mechanisms
 > If a high-security defense project requires additional cryptographic validation during code review, the team uses **Contribute** to attach a "Cryptographic Audit Checklist" to the standard corporate "Peer Code Review" task. The base corporate method library remains untouched, yet the published project EPG reflects the specialized security requirements.
 
 
@@ -939,6 +939,12 @@ As specified in the lecture slide, developers must keep code clean and pay down 
 6. **Bloated Routines (>10 Lines):** Overly long functions exceeding 10 lines of executable code.
 7. **Excessive Parameter Lists (>4 Arguments):** Parameter signatures exceeding 4 arguments, indicating a missing abstraction or object encapsulation.
 
+> [!tip] Extra Knowledge: Completing Fowler's 10 Canonical Code Smells
+> While Week 3 Slide 8 focuses on the 7 primary code smells above, Martin Fowler and Kent Beck's seminal refactoring catalog establishes the remaining 3 classic smells to complete the "10 Code Smells" referenced in the slide title:
+> - **8. Divergent Change:** A single class is repeatedly modified in different ways for different reasons, indicating poor cohesion and violating the Single Responsibility Principle.
+> - **9. Shotgun Surgery:** A single logical change forces small edits across many scattered classes simultaneously, causing high maintenance friction.
+> - **10. Data Clumps:** Multiple data items that always appear together across parameter lists (e.g., street, city, postal code or start_date, end_date) but are never encapsulated into an authoritative class.
+
 ---
 
 ## 3.2 Requirements Engineering & Nonfunctional Scope
@@ -969,7 +975,7 @@ flowchart TD
     Q5 --- Q6 --- Q7 --- Q8
 ```
 
-> [!important] The Imperative of Verifiability
+> [!note] Extra Knowledge: The Imperative of Verifiability in Contractual Requirements
 > A requirement that cannot be verified is completely useless. Vague nonfunctional statements such as *"The system shall be fast and responsive"* must be replaced with quantitatively testable thresholds: *"Under peak loads of 10,000 concurrent users, 95% of database queries must return within $\le 500\text{ ms}$."*
 
 ### 3.2.3 Two Pillars of Nonfunctional Scope: Quality Attributes vs. Constraints
@@ -1035,7 +1041,7 @@ The authoritative RACI allocation matrix presented in the CKS222 curriculum maps
 | **Backend Coding** | Informed | Consulted | Informed | Responsible / Accountable |
 | **User Acceptance Testing (UAT)** | Consulted / Informed | Responsible / Accountable | Responsible | Responsible |
 
-> [!tip] Analysis of the Lecture RACI Architecture
+> [!note] Extra Knowledge: Deep Governance Analysis of the Lecture RACI Architecture
 > 1. **Shared Technical Responsibility:** Both `Frontend Developer` and `Backend Developer` are co-Responsible (`R`) for Requirements Specification and UAT, ensuring developers validate functionality against requirements end-to-end.
 > 2. **Accountability Separation:** Accountability (`A`) is split by architectural expertise: the `Backend Developer` owns API Design and Backend Coding, while the `Frontend Lead` owns Requirements Specification signoff and final UAT approval.
 > 3. **Governance & Anti-Pattern Defense:** In industry coursework audits, examiners enforce strict RACI constraints: each deliverable must have **at least one 'R'** and **strictly one 'A'** to avoid decision gridlock. Dual designations (e.g., `R/A`) signify that the lead both authors the technical core and carries final legal accountability.
@@ -1079,7 +1085,7 @@ flowchart LR
     Fist --> OneTwo --> ThreeFive
 ```
 
-> [!important] The "Below Three" Governance Gate
+> [!note] Extra Knowledge: The "Below Three" Governance Gate in A-SPSRI Auditing
 > In professional agile governance (and USM CKS222 coursework gate assessments), **any vote below a 'Three' (Fist, 1, or 2)** acts as a process halt trigger. The team must pause, document the specific blocking concern, negotiate architectural or process compromises, and re-vote until universal agreement ($\ge 3$) is attained.
 
 ---
@@ -1555,7 +1561,7 @@ Originating from Behavior-Driven Development (BDD), individual user story accept
 > - **When (Action):** `When they attempt to deactivate comments`
 > - **Then (Outcome):** `Then the comments section is disabled and a success alert displays`
 
-> [!example] Secondary Commercial Example (E-Commerce)
+> [!example] Extra Knowledge: Secondary Commercial DoD Example (E-Commerce Platform)
 > - **Given (Context):** `Given an authenticated customer with RM 150 in their shopping cart`
 > - **When (Action):** `When the customer enters a valid promotional discount code 'SAVE20' and clicks apply`
 > - **Then (Outcome):** `Then the cart total updates to RM 120, a '20% Applied' badge renders, and the discount is logged to the transaction ledger`
@@ -1574,7 +1580,7 @@ flowchart TD
     L1 --> L2 --> L3
 ```
 
-> [!important] The Inviolability of the DoD
+> [!note] Extra Knowledge: The Inviolability of the Definition of Done in Agile Governance
 > If a Product Backlog item does not meet the Definition of Done, it cannot be released, nor can it be presented as complete at the Sprint Review. Instead, it returns immediately to the Product Backlog for future re-estimation and scheduling.
 
 ---
@@ -1955,7 +1961,7 @@ Royce explicitly argued that a strictly forward-moving, single-pass linear progr
 ### 5.2.3 The Upfront Prototyping Mandate
 To mitigate the catastrophic impact of late-stage testing anomalies, Royce proposed a concrete engineering solution that modern commentators frequently overlook: **the preliminary program design (prototype)**.
 
-> [!important] Royce's Prototyping Mandate (Royce, 1970)
+> [!note] Extra Knowledge: Historical Context on Winston Royce's Often-Misrepresented 1970 Paper
 > To ensure feasibility before committing massive development budgets, Royce mandated:
 > 1. Formulate the program design preliminary to committing full coding resources.
 > 2. Build a pilot model or throwaway prototype to test critical architectural interfaces, compiler throughput, and storage constraints.
@@ -2174,7 +2180,7 @@ The model operates along structured principles:
 ### 5.5.2 Local Waterfall Cycles and Architectural Consolidation
 A central tenet of Basili and Turner's model is that iterations do not merely pile new code atop old layers. Rather, iterations are split between functional expansion and **Architectural Consolidation**:
 
-> [!tip] The Discipline of Architectural Consolidation
+> [!note] Extra Knowledge: Architectural Consolidation as Proactive Technical Debt Payment
 > Each cycle requires active refactoring of the codebase:
 > 1. Analyzing structural weaknesses exposed by the latest feature additions.
 > 2. Re-architecting degraded interfaces and decoupling accumulated class interdependencies.
@@ -2281,7 +2287,7 @@ To manage team coordination and eliminate ambiguity across project lifecycles, p
 | **Unit Source Code & Compilable Builds** | **I** | **C** | **R / A** | **I** |
 | **Validation Test Log & Verification Report** | **I** | **A** | **I** | **R** |
 
-> [!important] The "Single Accountable" Rule
+> [!note] Extra Knowledge: Organizational Dynamics of the Single Accountable Rule
 > To prevent diffusion of responsibility, a RACI matrix mandates that **exactly one role is marked Accountable ($\mathbf{A}$)** for any given work product. Shared accountability creates plausible deniability, leading to unaddressed quality defects and missed milestones.
 
 ### 5.6.3 Process Conformance Reviews and the SQA Audit Checklist
@@ -2313,7 +2319,7 @@ An SQA audit systematically validates engineering behaviors against the organiza
 ### 5.7.1 The Dangers of Over-Formalization and Scope of Validity
 A frequent pathology in software engineering is **over-formalization**: blindly imposing heavyweight, bureaucratic process frameworks onto projects that do not warrant them. Forcing a small web startup to generate voluminous traceability matrices and multi-tiered review boards consumes limited capital, demoralizes engineers, and guarantees market failure.
 
-> [!warning] Process Scope of Validity
+> [!warning] Extra Knowledge: Defining the Boundaries of Process Scope of Validity
 > Every software process model possesses a finite **Scope of Validity** defined by project scale, risk tolerance, and domain constraints. Deploying a model outside its operational validity zone introduces severe inefficiencies. Process engineering requires tailoring standard models to project realities.
 
 ### 5.7.2 Münch's 4 Ps Tailoring Framework: Problem, Project, People, Product
@@ -2362,7 +2368,7 @@ Modern Software Quality Assurance (SQA) balances two complementary verification 
 - **Constructive Quality Assurance (Defect Prevention):** Designing quality into the software upfront through formal architectural modeling, peer reviews, coding standards, and rigorous requirements analysis.
 - **Analytical Quality Assurance (Defect Detection):** Identifying defects after creation through dynamic execution: automated unit testing, integration test suites, fuzz testing, and penetration audits.
 
-> [!danger] Case in Point: The NASA Mars Climate Orbiter Disaster ($125 Million Defect)
+> [!danger] Extra Knowledge: Deep Engineering Breakdown of the NASA Mars Climate Orbiter Mismatch ($125 Million Defect)
 > On September 23, 1999, the **NASA Mars Climate Orbiter** spacecraft was destroyed upon reaching Mars, burning up in the Martian atmosphere due to an avoidable software calculation defect.
 > 
 > ```mermaid
@@ -3181,6 +3187,13 @@ $$u_i(t) = \left( \Lambda_i + \left( \Lambda_{i-1} - u_{i-1}(t) \right) \right) 
 
 - **Operating Range:** $t_{i-1} \le t \le t_i$
 - **Significance:** This general equation enables software organizations to mathematically model defect carryover, accurately forecast testing staffing requirements, and optimize release timing to guarantee target reliability levels across multi-release open-source and commercial software deployments.
+
+> [!tip] Extra Knowledge: Mathematical & Physical Intuition behind Cascading Multi-Release NHPP Equations
+> In the generalized formula $u_i(t) = \left( \Lambda_i + \left( \Lambda_{i-1} - u_{i-1}(t) \right) \right) \cdot F_i(t)$:
+> - $\Lambda_i$ represents the **newly injected defects** originating from fresh code introduced in version $i$.
+> - $(\Lambda_{i-1} - u_{i-1}(t))$ represents the **unremoved legacy defects** that survived testing in the preceding release and cascaded forward into the active codebase.
+> - $F_i(t)$ represents the **Weibull cumulative distribution of defect discovery** over execution time $t$, modeling how quickly test engineers locate and eliminate flaws.
+> - If release $i-1$ is deployed prematurely under deadline pressure, the unremoved defect pool $(\Lambda_{i-1} - u_{i-1}(t))$ balloons, overwhelming testing resources in release $i$ and degrading system reliability.
 
 ---
 

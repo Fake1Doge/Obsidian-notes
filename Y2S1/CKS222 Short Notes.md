@@ -4,7 +4,7 @@ course_code: CKS222
 course_title: Software Process and Life Cycle
 academic_term: Semester 1, 2026/2027
 exam_target: Test 1 (Objective Examination / MCQs / True-False / Concept Matching)
-scope: Weeks 1 to 5 (Chapters 1 to 5)
+scope: Weeks 1 to 5 + Initial Week 6 High-Yield Topics (Spiral, Theory W, ICSM, Cleanroom, Unified Process)
 tags:
   - cks222
   - test1
@@ -17,10 +17,10 @@ tags:
 # CKS222 Short Notes: Test 1 Objective Exam Cram Sheet
 
 > [!abstract] Fast Navigation & Document Architecture
-> This document is engineered specifically for **objective-style assessments** (Multiple Choice Questions, True/False, Terminology Matching, Quick Calculations, and Concept Discrimination). It distills all examinable content across **Weeks 1 to 5** from [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]].
+> This document is engineered specifically for **objective-style assessments** (Multiple Choice Questions, True/False, Terminology Matching, Quick Calculations, and Concept Discrimination). It distills all examinable content across **Weeks 1 to 5** and **the initial high-yield foundations of Week 6** from [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]].
 > 
 > - **[[#Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)|Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)]]**
->   - 1.1 Master Timeline, Pioneers & Seminal Frameworks
+>   - 1.1 Master Timeline, Pioneers & Seminal Frameworks (1965–2020)
 >   - 1.2 Standards, Statutory Regulations & Industrial Disasters
 >   - 1.3 Critical Numbers, Percentages, Timeboxes & Cadences
 >   - 1.4 Mathematical Formulas & Calculation Cheat Sheet
@@ -30,9 +30,10 @@ tags:
 >   - 2.3 Week 3: Lifecycle Controls, EVM, RACI & Scope Governance
 >   - 2.4 Week 4: Agile, Scrum, XP, Lean & Security Integration (SDL-Agile, SAMM)
 >   - 2.5 Week 5: Prescriptive Lifecycles, V-Model, Prototyping, Tailoring & Defect Economics
+>   - 2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process
 > - **[[#Module 3: High-Probability MCQ "Versus" Discrimination Matrices|Module 3: High-Probability MCQ "Versus" Discrimination Matrices]]**
-> - **[[#Module 4: Top 20 Objective Test "Trap & Trick" Alerts|Module 4: Top 20 Objective Test "Trap & Trick" Alerts]]**
-> - **[[#Module 5: 25 High-Yield Rapid-Fire Objective Practice Questions with Explanations|Module 5: 25 High-Yield Rapid-Fire Objective Practice Questions with Explanations]]**
+> - **[[#Module 4: Top 25 Objective Test "Trap & Trick" Alerts|Module 4: Top 25 Objective Test "Trap & Trick" Alerts]]**
+> - **[[#Module 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations|Module 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations]]**
 
 ---
 
@@ -47,15 +48,18 @@ tags:
 | **1972** | **David Parnas** | Information Hiding Principle | Encapsulating internal implementation; adapted by MVP-L (Process Interface vs. Process Body). | [[Y2S1/CKS222 Software Process and Life Cycle#2.3.2 Multi-View Process Language (MVP-L)|Information Hiding in Processes]] |
 | **1975** | **Victor Basili & Albert Turner** | Iterative Enhancement Model | Identify **architectural kernel** first; cyclic local waterfalls; mandatory **architectural consolidation**. | [[Y2S1/CKS222 Software Process and Life Cycle#5.5.1 Basili and Turner's 1975 Iterative Enhancement Model|Iterative Enhancement]] |
 | **1981** | **Barry Boehm** | Defect Cost Multiplier Curve | Cost to fix defects grows exponentially across SDLC ($1\times \to 1000\times$). | [[Y2S1/CKS222 Software Process and Life Cycle#5.7.3 The Exponential Defect Cost Multiplier Curve across the SDLC|Defect Cost Multipliers]] |
-| **1986** | **Barry Boehm** | Spiral Model | **Risk-driven** meta-model; 4 quadrants; radial expansion dictates engineering intensity. | [[Y2S1/CKS222 Software Process and Life Cycle#1.5.4 Barry Boehm's Spiral Model (1986)|Boehm Spiral Model]] |
-| **1987** | **Harlan Mills et al. (IBM)** | Cleanroom Software Engineering | Zero defect prevention; Box Structures; **strictly no compiler debugging**; independent statistical certification (MTTF). | [[Y2S1/CKS222 Software Process and Life Cycle#1.5.6 IBM's Cleanroom Software Engineering (1987)|Cleanroom Engineering]] |
+| **1986** | **Barry Boehm** | Spiral Model | **Risk-driven** meta-model; 4 quadrants; radial expansion dictates engineering intensity. | [[Y2S1/CKS222 Software Process and Life Cycle#6.1.1 The Risk-Driven Philosophy and Four Iterative Quadrants|Boehm Spiral Model]] |
+| **1987** | **Harlan Mills et al. (IBM)** | Cleanroom Software Engineering | Zero defect prevention; Box Structures; **strictly no compiler debugging**; independent statistical certification (MTTF). | [[Y2S1/CKS222 Software Process and Life Cycle#6.3.1 Mathematical Correctness Proofs Over Traditional Debugging|Cleanroom Engineering]] |
+| **1989** | **Barry Boehm** | Theory W ("Make Everyone a Winner") | Win-Win Spiral Model; reconciles conflicting stakeholder win conditions through collaborative trade-offs. | [[Y2S1/CKS222 Software Process and Life Cycle#6.1.3 The Win-Win Spiral Model and Barry Boehm's Theory W|Theory W Negotiation]] |
 | **1991** | **James Martin** | Rapid Application Development (RAD) | 4-Phase compressed lifecycle (60–90 days); Joint Application Design (JAD); CASE tools & visual code generation. | [[Y2S1/CKS222 Software Process and Life Cycle#5.4.4 Rapid Application Development: The 4-Phase Timeboxed Lifecycle|RAD Lifecycle]] |
 | **1992** | **Bill Curtis, Marc Kellner & Jerry Over** | 5 Core Objectives of Process Modeling | Understand/Communicate, Improve/Optimize, Manage/Plan/Control, Guide/Instruct (EPG), Automate/Execute. | [[Y2S1/CKS222 Software Process and Life Cycle#2.1.2 The Five Core Objectives of Process Modeling (Curtis et al., 1992)|Curtis 5 Objectives]] |
-| **1999** | **Jacobson, Booch & Rumbaugh** | Unified Process (UP) | Architecture-centric, use-case driven, iterative/incremental. 4 phases: Inception, Elaboration, Construction, Transition. | [[Y2S1/CKS222 Software Process and Life Cycle#1.5.5 The Unified Process (UP)|Unified Process]] |
+| **1996** | **Barry Boehm** | Three Anchor Milestones | LCO (Life-Cycle Objectives) $\to$ LCA (Life-Cycle Architecture) $\to$ IOC (Initial Operational Capability). | [[Y2S1/CKS222 Software Process and Life Cycle#6.1.4 The Three Anchor Milestones: LCO, LCA, and IOC|Anchor Milestones]] |
+| **1999** | **Jacobson, Booch & Rumbaugh** | Unified Process (UP) | Architecture-centric, use-case driven, iterative/incremental. 4 phases: Inception, Elaboration, Construction, Transition. | [[Y2S1/CKS222 Software Process and Life Cycle#6.4.1 Architectural Foundations: Use-Case Driven, Architecture-Centric, Iterative and Incremental|Unified Process]] |
 | **2001** | **Agile Manifesto (17 Authors)** | Manifesto for Agile Software Development | 4 Core Values; individuals, working software, customer collaboration, responding to change. | [[Y2S1/CKS222 Software Process and Life Cycle#4.1.1 The Agile Philosophy and Core Values|Agile Manifesto]] |
 | **2003** | **Walt Lipke** | Earned Schedule (ES) | Time-based extension fixing traditional EVM late-stage metric collapse ($SV_t = ES - AT$). | [[Y2S1/CKS222 Software Process and Life Cycle#3.4.3 The Late-Stage Metric Collapse & The Earned Schedule (ES) Remedy|Earned Schedule]] |
 | **2003** | **Mary & Tom Poppendieck** | Lean Software Development | Adapted Toyota Production System (TPS); eliminate 3 Wastes (*Muda*); root cause analysis (5 Whys). | [[Y2S1/CKS222 Software Process and Life Cycle#4.5 Lean Software Development: Capabilities, Wastes, and Continuous Flow|Lean Software Development]] |
 | **2004** | **Kent Beck** | Extreme Programming (XP) | Twin-track feedback (Quarterly/Weekly); TDD; Pair Programming; Continuous Integration ($\le 10$-min build). | [[Y2S1/CKS222 Software Process and Life Cycle#4.4 Extreme Programming (XP): Values, Twin-Track Cycles, and Practices|Extreme Programming]] |
+| **2005+** | **Barry Boehm et al.** | Incremental Commitment Spiral Model (ICSM) | Concurrent engineering; evidence-based reviews; 4 dynamic exit gates (Green, Fast-Track, Yellow, Red); Blackjack analogy. | [[Y2S1/CKS222 Software Process and Life Cycle#6.2.1 Principles of Concurrent Engineering and Evidence-Based Reviews|ICSM]] |
 | **2008** | **Object Management Group (OMG)**| SPEM 2.0 Standard | UML Profile; separates reusable Method Content from dynamic Process Workflows; EPF Composer. | [[Y2S1/CKS222 Software Process and Life Cycle#2.4 OMG SPEM 2.0 & Tooling (EPF Composer)|SPEM 2.0]] |
 | **2012** | **Jürgen Münch & Oliver Armbrust** | 4 Ps Process Tailoring Framework | Systematic process adaptation across **Problem, Project, People, Product**. | [[Y2S1/CKS222 Software Process and Life Cycle#5.7.2 Münch's 4 Ps Tailoring Framework: Problem, Project, People, Product|Münch 4 Ps]] |
 | **2015** | **The Standish Group** | CHAOS Report (25,000+ Projects) | Empirical failure stats: General 17–22% fail, 40–50% challenged. Large Waterfall fails 42% vs. Agile 23%. | [[Y2S1/CKS222 Software Process and Life Cycle#1.1.2 The Software Crisis & Failure Rates: CHAOS Report Findings|CHAOS Report]] |
@@ -72,8 +76,8 @@ tags:
 | **IEC 61508** | Functional Safety Umbrella Standard | Governs electrical, electronic, and programmable electronic safety-related systems across all industries. | Umbrella Safety |
 | **ISO 26262** | Road Vehicles — Functional Safety | Automotive adaptation of IEC 61508; defines Automotive Safety Integrity Levels (**ASIL A to D**). | Automotive Safety |
 | **IEC 62304** | Medical Device Software | Mandates software lifecycle processes and post-market safety surveillance for medical software. | Medical Devices |
-| **CMMI / SPICE** | Capability Maturity Model Integration & ISO/IEC 15504 | Standardized process assessment frameworks; strategic necessity for bidding on high-maturity contracts. | Process Maturity |
-| **Texas DIR (2008)** | Texas Department of Information Resources Standard | Mandates 8 essential quality standards for requirements (Correct, Unambiguous, Complete, Consistent, etc.). | Requirements Standards |
+| **DO-178C** | Airborne Systems & Equipment | Mandates software safety certification for avionics flight systems (Design Assurance Levels DAL A to E). | Avionics Software |
+| **EN 50128** | Railway Applications | Communications, signaling, and processing systems software safety integrity levels (SIL 0 to 4). | Railway Systems |
 | **ECSS** | European Cooperation for Space Standardization | Mandated by the European Space Agency (ESA) for spacecraft and satellite software engineering. | Space Systems |
 | **SPEM 2.0** | Systems Process Engineering Metamodel (OMG) | International standard metamodel decoupling static Method Content from dynamic Execution Processes. | Process Metamodel |
 | **NASA Mars Climate Orbiter ($125M Loss, 1999)** | Destroyed at 57 km instead of safe 226 km | **Interface Mismatch:** Lockheed Martin ground file used **English Imperial ($\text{lbf}\cdot\text{s}$)**; NASA JPL software expected **Metric SI ($\text{N}\cdot\text{s}$)** ($1\text{ lbf}\cdot\text{s} \approx 4.45\text{ N}\cdot\text{s}$). Failure of constructive interface review. | Units Mismatch Disaster |
@@ -84,7 +88,7 @@ tags:
 
 ```mermaid
 flowchart LR
-    subgraph Timeboxes["Rigid Timeboxes to Memorize"]
+    subgraph Timeboxes["Rigid Timeboxes & Bounds to Memorize"]
         direction TB
         T1["Sprint: 2 to 4 Weeks (<= 1 Month)"]
         T2["Daily Scrum: Exactly 15 Minutes"]
@@ -94,6 +98,8 @@ flowchart LR
         T6["RAD Project: 60 to 90 Days Total"]
         T7["XP Build & Regression: <= 10 Minutes"]
         T8["SQA Conformance Audit: Every 3 Months"]
+        T9["Cleanroom Codebase Limit: 100k to 400k LOC"]
+        T10["UP Iterations: 2 to 6 Weeks each"]
     end
 ```
 
@@ -109,6 +115,9 @@ flowchart LR
 - **Code Smell Thresholds:** Bloated functions $>10$ lines; excessive parameter lists $>4$ arguments.
 - **A-SPSRI Scope Rating:** Evaluates **22 elements** across **3 buckets** (Bucket 1: 8 User Story/Req, Bucket 2: 7 Architecture, Bucket 3: 7 Verification).
 - **OWASP SAMM Architecture:** **5 Business Functions**, **15 Security Practices** (3 per function), **30 Practice Streams** (Streams A & B), **3 Progressive Maturity Levels** (1: Ad-hoc, 2: Structured, 3: Automated/Optimizing).
+- **Cleanroom Software Engineering Thresholds:** Defect densities under **0.5 defects per KLOC** (often $\approx 0.1$ defects/KLOC); industrial scalability proven exclusively on small/medium codebases of **100k to 400k lines of code**.
+- **Unified Process (UP) Scope Allocations:** Approximately **20% of core use cases** identified in Inception; **80% of use cases** detailed in Elaboration alongside an **executable architectural baseline**.
+- **ICSM Capital Commitment (Blackjack Analogy):** Commits small initial ante (**~5% of total development budget**) to inspect prototypes before increasing bets.
 
 ---
 
@@ -125,6 +134,8 @@ flowchart LR
 | **Earned Schedule Index ($SPI_t$)** | $SPI_t = \frac{ES}{AT}$ | In time units. Does NOT collapse at project end. True velocity indicator. |
 | **EVM Milestone Triad** | $\left( x\%, S_{xj}, C_{xj} \right)$ | $x\%$: Milestone progress, $S_{xj}$: Scope score ($0-100$), $C_{xj}$: Accumulated cost. |
 | **Boehm Defect Multiplier** | $C(t) \propto k^t$ | Requirements ($1\times$) $\to$ Coding ($10-15\times$) $\to$ Integration ($30-50\times$) $\to$ Production ($100-1000\times$). |
+| **SRE Error Budget** | $\text{Error Budget} = 100\% - \text{SLO}$ | Remaining budget $>0 \implies$ push features. Budget $\le 0 \implies$ **freeze features**, fix bugs. |
+| **Cleanroom Markov Sum** | $\sum_{j} p_{ij} = 1.0$ | Sum of outward transition probabilities from any operational state must equal 1.0. |
 | **Impulse Unit Conversion** | $1\text{ lbf}\cdot\text{s} \approx 4.44822\text{ N}\cdot\text{s}$ | Mars Climate Orbiter mismatch: Lockheed Imperial vs. NASA Metric. |
 
 ---
@@ -158,13 +169,6 @@ flowchart LR
 - **Lifecycle Models:** High abstraction; end-to-end scope (concept to retirement); focuses on **WHAT** activities to perform and sequence (e.g., Waterfall, Spiral, Unified Process).
 - **Engineering Process Models:** Low abstraction; granular operational focus on a specific phase/technique; focuses on **HOW** to perform work with specific tools/rules (e.g., Cleanroom code proving, CoBRA cost estimation).
 
-### Early Milestone Models
-- **Royce Waterfall (1970):** Staged linear progression. Royce explicitly advocated for feedback loops between adjacent phases and warned against pure single-pass execution.
-- **Basili & Turner Iterative Enhancement (1975):** Early executable **architectural kernel**; successive local waterfalls; mandatory refactoring via **architectural consolidation**.
-- **Boehm Spiral Model (1986):** **Risk-driven** meta-model; 4 quadrants (Objectives, Risk Resolution, Development & Verification, Next Phase Planning); heavily dependent on expert risk analysts.
-- **Unified Process (1999):** Architecture-centric, use-case driven, iterative/incremental; 4 phases: **Inception**, **Elaboration** (architectural baseline & risk mitigation), **Construction**, **Transition**.
-- **Cleanroom Software Engineering (1987):** Harlan Mills (IBM). Box structures (black box, state box, clear box); mathematical correctness proofs; **strictly no compiler debugging by developers**; independent certification team executes statistical testing based on Markov **Usage Specifications** to certify **Mean Time To Failure (MTTF)**.
-
 ---
 
 ## 2.2 Week 2: Descriptive Process Definition & Modeling
@@ -177,44 +181,25 @@ flowchart LR
 5. **Enable Automated Execution Support:** Drive automated CI/CD pipelines and machine-interpretable process engines.
 
 ### The 8-Step Descriptive Process Modeling Methodology
-```mermaid
-flowchart LR
-    subgraph Setup["Set-up Phase"]
-        S1["Step 1: Objectives & Scope"] --> S2["Step 2: Process Schema (Metamodel)"]
-        S2 --> S3["Step 3: Formalisms Selection"] --> S4["Step 4: Elicitation Planning"]
-    end
-    subgraph Exec["Execution & Consolidation Phase"]
-        S5["Step 5: Process Elicitation"] --> S6["Step 6: Multi-View Modeling"]
-        S6 --> S7["Step 7: Model Analysis & QA"] --> S8["Step 8: Packaging & Release (EPG)"]
-    end
-    Setup ==> Exec
-```
-- **Step 1 Scoping Profiles:**
-  - *DocVault:* Single workflow (defect management), extremely narrow, subcontractor audience.
-  - *Selene:* Entire lifecycle, exceptionally wide, training/onboarding handbook.
-  - *Soster:* Customization process only, mid-range, metric hooks for SPI.
-- **Step 2 Metamodel Entities:** `Activity`, `Work Product`, `Role`, `Resource`.
-- **Step 5 Elicitation Methods:** Interviews (detailed but idealized), Group Workshops (reconciles boundaries), Direct Observation (reveals workarounds, risk of Hawthorne effect), Artifact/Repository Analysis (hard ground truth, lacks 'why').
-- **Step 7 Structural Defects:** Dangling Reference (consumes unproduced artifact), Inconsistent Precondition (contradictory entry gate), Orphan Entity (declared but unused), Dependency Deadlock (circular blocking).
+- **Set-up Phase (Steps 1–4):**
+  - *Step 1: Stating Explicit Objectives and Scope* (DocVault: narrow single workflow; Selene: wide entire lifecycle handbook; Soster: mid-range SPI metrics).
+  - *Step 2: Defining the Process Schema (Metamodel)* (`Activity`, `Work Product`, `Role`, `Resource`).
+  - *Step 3: Selecting Formalisms* (Graphical vs. Textual; Formal vs. Informal; Fine vs. Coarse; Predetermined vs. Extensible).
+  - *Step 4: Information Gathering & Elicitation Planning*.
+- **Execution & Consolidation Phase (Steps 5–8):**
+  - *Step 5: Process Elicitation* (Interviews, Group Workshops, Direct Observation [Hawthorne effect risk], Artifact/Repository Analysis [ground truth without context]).
+  - *Step 6: Multi-View Modeling & Integration* (Role views $\to$ similarity analysis $\to$ consistency checking $\to$ master model).
+  - *Step 7: Process Model Analysis* (Detect defects: Dangling Reference, Inconsistent Precondition, Orphan Entity, Dependency Deadlock).
+  - *Step 8: Packaging, Release & Process Maintenance* (EPG generation, continuous change feedback).
 
-### Notation Dimensions & The 8 Formal Requirements (R1–R8)
-- **4 Dimensions (Münch & Armbrust):** Programming vs. Improvement; Hidden vs. Guiding; Prescriptive vs. Proscriptive; Single-Person vs. Multi-Person.
-- **R1 to R8:** **R1** Natural Representation, **R2** Support of Measurement (GQM), **R3** Tailorability, **R4** Formality, **R5** Understandability, **R6** Executability, **R7** Flexibility, **R8** Traceability.
-
-### Multi-View Process Language (MVP-L)
-- Designed for SPI, QIP, and GQM at Maryland/Kaiserslautern.
-- **David Parnas Information Hiding:** Process interface (visible product parameters, attributes, entry/exit criteria) decouples from process body (hidden internal execution steps). Localizes process evolution.
-- **4 Typed Models:** `product_model`, `resource_model`, `process_model`, `attribute_model`.
-- **Implicit Control Flow:** Governed strictly by Boolean entry criteria state transitions (`Enabled` $\to$ `Active` $\to$ `Disabled`). Local invariants monitor execution bounds.
-
-### OMG SPEM 2.0 & EPF Composer
-- **SPEM 2.0 Triad:** `RoleDefinition` ("WHO"), `TaskDefinition` ("WHAT"), `WorkProductDefinition` ("OUTCOME"), plus `Guidance`.
-- **Core Decoupling:** Separates static **Method Content** (abstract libraries) from dynamic **Context-Specific Processes** (lifecycle phases, `RoleUse`, `TaskUse`).
-- **EPF Composer Variability Patterns:**
-  1. **Contribute:** Appends checklists/guidelines without touching base library.
-  2. **Replace:** Substitutes a base element entirely.
-  3. **Extend:** Inherits properties and allows specialization (like OOP class inheritance).
-  4. **Extend and Replace:** Inherits, specializes, and suppresses the original element from publication.
+### MVP-L & SPEM 2.0 Metamodeling
+- **Multi-View Process Language (MVP-L):** University of Maryland/Kaiserslautern. Applies **David Parnas' Information Hiding (1972)**: Process Interface (public parameters, attributes, entry/exit criteria) encapsulates Process Body (hidden internal steps). Implicit control flow via Boolean state transitions.
+- **OMG SPEM 2.0:** UML Profile. Metamodel Triad: `RoleDefinition` ("WHO"), `TaskDefinition` ("WHAT"), `WorkProductDefinition` ("OUTCOME"). Decouples static **Method Content** from dynamic **Context-Specific Processes**.
+- **EPF Composer Variability Mechanisms:**
+  1. *Contribute:* Appends guidelines/checklists without altering base library.
+  2. *Replace:* Substitutes base element entirely.
+  3. *Extend:* Inherits properties with local specialization (OOP inheritance).
+  4. *Extend and Replace:* Inherits, specializes, and suppresses base element.
 
 ---
 
@@ -224,9 +209,9 @@ flowchart LR
 - **Verification:** *"Did we build the system right?"* Conformance to engineering specifications (static analysis, inspections, unit tests).
 - **Validation:** *"Did we build the right system?"* Fulfillment of end-user needs and business utility (UAT, beta testing, customer focus groups).
 
-### Technical Debt & Code Smells
+### Technical Debt & 10 Code Smells
 - **Refactoring:** Improving internal code structure **without altering external observable behavior**.
-- **Seven Core Lecture Smells (Week 3 Slide 8):** (1) Obsolete comments, (2) Commented-out dead code, (3) Duplicate code (copy-paste), (4) Vague identifiers/naming, (5) Functions with too many jobs (SRP violation), (6) Bloated routines ($>10$ lines), (7) Excessive parameter lists ($>4$ arguments).
+- **Smells:** (1) Obsolete comments, (2) Commented-out dead code, (3) Duplicate code (copy-paste), (4) Vague identifiers, (5) Multiple responsibilities (SRP violation), (6) Bloated routines ($>10$ lines), (7) Excessive parameter lists ($>4$ arguments), (8) Divergent change / shotgun surgery, (9) Feature envy, (10) Primitive obsession.
 
 ### 8 Engineering Qualities of Requirements (Texas DIR, 2008)
 1. **Correct**, 2. **Unambiguous**, 3. **Complete**, 4. **Consistent**, 5. **Ranked for Priority**, 6. **Verifiable / Testable** (quantitative criteria required), 7. **Modifiable**, 8. **Traceable**.
@@ -243,11 +228,7 @@ flowchart LR
   - *UAT:* Frontend Lead (**R/A**), Frontend Dev (**R**), Backend Dev (**R**), Team Lead (**C/I**).
 
 ### Structured Decision-Making: Eisenhower & Fist of Five
-- **Eisenhower Matrix:**
-  - *Do (Urgent & Important):* Production hotfixes, onboarding documentation for blocked devs.
-  - *Delegate (Urgent & Not Important):* Admin ticket logging, license updates.
-  - *Decide (Not Urgent & Important):* Strategic refactoring, paying technical debt, architectural reviews.
-  - *Delete (Not Urgent & Not Important):* Unused vanity prototypes.
+- **Eisenhower Matrix:** Do (urgent/important), Delegate (urgent/not important), Decide (not urgent/important: refactoring, technical debt), Delete (not urgent/not important: unused prototypes).
 - **Fist of Five:** Fist ($0$) = Strong reject / block; $1-2$ = Reject requiring discussion; $3$ = Weak acceptance; $4$ = Solid agreement; $5$ = Total endorsement. **Rule: Any vote $<3$ halts the process.**
 
 ### Quantitative Auditing: EVM, Earned Schedule & EVM Triads
@@ -350,6 +331,57 @@ flowchart LR
 
 ---
 
+## 2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process
+
+### 2.6.1 Boehm's Risk-Driven Spiral Model & Theory W Negotiation
+- **The Risk-Driven Meta-Model:** Barry Boehm (1986). Progress expands outward radially (cost and elapsed time grow). Assessment of project risks dynamically dictates the subsequent engineering method.
+- **The Four Quadrants:**
+  1. **Quadrant 1 (Top-Left): Plan:** Determine objectives, alternatives, and constraints.
+  2. **Quadrant 2 (Top-Right): Analyze:** Evaluate alternatives against constraints; identify and resolve project risks (via throwaway prototypes, benchmarks, simulation).
+  3. **Quadrant 3 (Bottom-Right): Engineering:** Develop, verify, and test the next-level product increment. Dynamically adopts Waterfall (if risks solved), Prototyping (if requirements unclear), or Simulation (if performance critical).
+  4. **Quadrant 4 (Bottom-Left): Next Phase:** Review progress with stakeholders; plan activities and commitments for the next spiral cycle.
+- **Critical Expertise Dependency:** The model's validity collapses if the team lacks world-class **risk analysis expertise**. Unidentified risks cause inappropriate process model selection in Quadrant 3.
+- **Theory W ("Make Everyone a Winner" - 1989):** Reconciles adversarial conflicts through collaborative negotiation. Software succeeds if and only if all key stakeholders achieve their win conditions:
+  - *Customer Win Conditions:* Low cost, high features, rapid delivery.
+  - *Developer Win Conditions:* Stable tech stack, feasible schedules, healthy profit margins.
+- **The Three Anchor Milestones (Boehm):** Objective decision checkpoints preventing endless circular prototyping:
+  1. **Life-Cycle Objectives (LCO):** Agreement on project scope, business case, and core feasibility.
+  2. **Life-Cycle Architecture (LCA):** Validated executable architecture baseline; all high-risk technical unknowns and interface barriers eliminated.
+  3. **Initial Operational Capability (IOC):** Complete deployment state; configuration baselines, user manuals, site readiness verified; successful beta trials.
+
+### 2.6.2 The Incremental Commitment Spiral Model (ICSM)
+- **Concurrent Engineering & Evidence-Based Reviews:** Concurrently evaluates Hardware, Software, Human Factors, and Business Economics in every spiral. Gate decisions are based on **verifiable engineering evidence** (benchmarks, prototypes), not declarative PowerPoint slides.
+- **The Four Dynamic Exit Pathways:**
+  1. **Exit 1: Proceed (Green Gate):** Risks acceptable and mitigated $\to$ Authorizes capital for next spiral.
+  2. **Exit 2: Skip (Fast-Track Gate):** Risks negligible/non-existent $\to$ Skips spirals directly to deployment (e.g., COTS tailoring satisfies all requirements).
+  3. **Exit 3: Re-evaluate (Yellow Gate):** Risks high but addressable $\to$ Holds project in current spiral to fix missing plans or stabilize architectures.
+  4. **Exit 4: Terminate (Red Gate):** Risks fatal and irresolvable $\to$ Cancels project or fundamentally rescopes to preserve capital.
+- **The Roulette vs. Blackjack Analogy:**
+  - *Roulette Strategy (Plan-Driven Waterfall):* Placing the entire development budget on the table on Day 1 on an unproven architecture; waiting passively for 12–24 months; all-or-nothing outcome.
+  - *Blackjack Strategy (ICSM):* Committing a small initial ante (~5% of budget); inspecting the empirical cards (prototypes, benchmarks); deciding whether to hit, stand, or bail out early while preserving capital. Requires cultural willingness to stop failing projects.
+
+### 2.6.3 Cleanroom Software Engineering (Mills et al., 1987, IBM)
+- **Mathematical Correctness Proofs Over Traditional Debugging:** Borrows philosophy from semiconductor cleanrooms: **prevent defects from ever entering the code** through formal mathematical specifications (Finite Program Functions: Sequence, Alternation, Iteration).
+- **Strict Prohibition of Developer Debugging:** Developers **never compile or execute their own code** to debug. Debugging is viewed as an undisciplined crutch. Correctness is proven mathematically.
+- **Symmetrical Organizational Split:**
+  - *Development Team:* Authors formal specs, writes mathematical correctness proofs. **Forbidden from running code.**
+  - *Certification Team:* **Sole group authorized to execute code.** Formulates **Usage Specifications** (Markov Chain operational profiles); runs statistical tests matching production usage density; certifies **Mean Time To Failure (MTTF)** from empirical interfail times.
+- **Industrial Trade-Offs:** Unmatched quality ($<0.5$ defects/KLOC; near-zero) and elimination of code-debug-retest cycles VS. extreme discrete math skill scarcity, requirements specification explosion, and unproven scalability on codebases $>400\text{k}$ LOC.
+
+### 2.6.4 The Unified Process (UP - Jacobson, Booch, Rumbaugh 1999)
+- **Three Core Pillars:**
+  1. **Use-Case Driven (Function):** Use cases replace monolithic SRS, driving analysis, design, implementation, and test cases.
+  2. **Architecture-Centric (Form):** Architecture baseline engineered in parallel with use cases to satisfy non-functional goals early.
+  3. **Iterative & Incremental:** Timeboxed iterations (2 to 6 weeks) yielding executable, tested software increments.
+- **The Four Sequential Phases & Anchors:**
+  1. **Inception:** Establishes business vision and financial feasibility ($\approx 20\%$ core use cases). Concludes with **LCO Milestone**.
+  2. **Elaboration:** Details $\approx 80\%$ of use cases; eliminates major technical risks; builds executable architecture baseline. Concludes with **LCA Milestone**.
+  3. **Construction:** Heavy production coding, component integration, and regression testing. Concludes with **IOC Milestone**.
+  4. **Transition:** Beta testing, UAT, site deployment, and defect fixing. Concludes with **Full Product Release**.
+- **Continuous Workflows Across All Phases:** The 5 core workflows (**Requirements**, **Analysis**, **Design**, **Implementation**, **Test**) are active concurrently in every iteration across all phases. Effort dynamically shifts (e.g., Requirements peaks in Inception/Elaboration; Implementation peaks in Construction; Test peaks in Transition). Immediate workflow re-enactment within an iteration prevents defect creep.
+
+---
+
 # Module 3: High-Probability MCQ "Versus" Discrimination Matrices
 
 | Dimension / Topic | Entity A | Entity B | Crucial MCQ Distinguishing Feature |
@@ -368,10 +400,14 @@ flowchart LR
 | **Scrum Accountabilities**| **Product Owner (PO)** | **Scrum Master (SM)** | PO owns Product Backlog (**WHAT/Priority**). SM coaches framework and removes blockers (**PROCESS**). |
 | **XP Pairing Roles** | **Driver** | **Navigator** | Driver operates keyboard/syntax. Navigator conducts continuous review, architectural alignment, and edge-case checks. |
 | **Lean Waste** | **Overproduction** | **Defects & Rework** | Overproduction = Building unused features (gold plating). Defects = Rework of escaped bugs ($80\%$ more costly). |
+| **Cleanroom Split** | **Development Team** | **Certification Team** | Development = Formal proofs, **forbidden from executing code**. Certification = **Sole code execution authority**, Markov statistical tests, MTTF. |
+| **ICSM Commitments** | **Roulette Strategy** | **Blackjack Strategy** | Roulette = Total upfront capital bet on unproven architecture. Blackjack = Small ante (~5%), inspects empirical cards, early bailout. |
+| **UP Foundations** | **Phase (Horizontal Axis)** | **Workflow (Vertical Axis)** | Phase = Management timebox period (Inception, Elaboration, etc.). Workflow = Technical discipline active across all phases. |
+| **Anchor Milestones** | **Life-Cycle Objectives (LCO)**| **Life-Cycle Architecture (LCA)**| LCO = Concurrence on scope and business viability. LCA = Validated **executable architecture baseline** with zero critical risks. |
 
 ---
 
-# Module 4: Top 20 Objective Test "Trap & Trick" Alerts
+# Module 4: Top 25 Objective Test "Trap & Trick" Alerts
 
 > [!danger] Exam Trap 1: Winston Royce & Waterfall
 > **TRAP:** *"Winston Royce invented the rigid, single-pass linear Waterfall model."*
@@ -453,15 +489,35 @@ flowchart LR
 > **TRAP:** *"SQA process conformance audits are conducted only after system deployment."*
 > **TRUTH:** **FALSE.** Formal SQA conformance audits are conducted periodically during active development, typically **once every 3 months**, to detect process drift early.
 
+> [!danger] Exam Trap 21: Cleanroom Verification Method
+> **TRAP:** *"Cleanroom certification teams perform white-box statement and branch coverage testing."*
+> **TRUTH:** **FALSE.** Cleanroom certification uses **black-box statistical testing** based on Markov **operational usage profiles**, measuring elapsed interfail times to certify **MTTF**. Coverage percentages are rejected.
+
+> [!danger] Exam Trap 22: UP Testing Phase Timing
+> **TRAP:** *"In the Unified Process, testing workflow only takes place during the Transition phase."*
+> **TRUTH:** **FALSE.** In UP, testing is a **continuous workflow active in every single iteration** across Inception, Elaboration, Construction, and Transition, though its effort intensity peaks in Transition.
+
+> [!danger] Exam Trap 23: ICSM Fast-Track Gate Purpose
+> **TRAP:** *"In the Incremental Commitment Spiral Model (ICSM), the Fast-Track (Skip) gate is chosen when project risks are extremely high and require emergency skipping."*
+> **TRUTH:** **FALSE.** The Fast-Track gate is chosen when risks are **negligible or non-existent** (e.g., an existing COTS software package completely satisfies stakeholder needs).
+
+> [!danger] Exam Trap 24: Theory W Win-Win Philosophy
+> **TRAP:** *"Theory W states that developers must sacrifice profit margins and work unpaid overtime to ensure the customer wins."*
+> **TRUTH:** **FALSE.** Theory W mandates *"Make Everyone a Winner"*. A project fails if any key stakeholder loses. Sustainable success requires collaborative negotiation where both customer and developers meet win conditions.
+
+> [!danger] Exam Trap 25: LCO vs. LCA Exit Criteria
+> **TRAP:** *"The Life-Cycle Objectives (LCO) milestone requires a verified, executable architecture baseline."*
+> **TRUTH:** **FALSE.** That is the **Life-Cycle Architecture (LCA)** milestone. LCO requires stakeholder concurrence on high-level scope, business goals, and economic viability.
+
 ---
 
-# Module 5: 25 High-Yield Rapid-Fire Objective Practice Questions with Explanations
+# Module 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations
 
 ### Q1 [Single Choice]
 **Which standard provides the foundational functional safety umbrella requirements from which industry-specific standards like ISO 26262 and IEC 62304 are derived?**
 - A) ISO/IEC/IEEE 24765
 - B) IEC 61508
-- C) ECSS Standards
+- C) DO-178C
 - D) CMMI Level 3
 > **Answer: B** | *Explanation:* IEC 61508 is the generic umbrella functional safety standard for electronic safety-related systems. ISO 26262 adapts it for automotive road vehicles, and IEC 62304 adapts it for medical devices.
 
@@ -697,5 +753,102 @@ flowchart LR
 
 ---
 
+### Q26 [Single Choice - Week 6]
+**In Barry Boehm's Spiral Model, in which quadrant are throwaway prototypes, benchmarks, and risk simulations formally executed to resolve technical unknowns?**
+- A) Quadrant 1 (Plan / Determine Objectives)
+- B) Quadrant 2 (Analyze / Evaluate Alternatives & Resolve Risks)
+- C) Quadrant 3 (Engineering / Develop Next-Level Product)
+- D) Quadrant 4 (Next Phase / Review & Plan)
+> **Answer: B** | *Explanation:* Quadrant 2 focuses explicitly on identifying and resolving project risks through prototypes, analytical modeling, and simulations before engineering commitments are made.
+
+---
+
+### Q27 [True / False - Week 6]
+**Barry Boehm's Theory W asserts that in commercial software development, developers must accept unfavorable win conditions to guarantee customer satisfaction.**
+- A) True
+- B) False
+> **Answer: B (False)** | *Explanation:* Theory W mandates **"Make Everyone a Winner"**. A software project succeeds if and only if all key stakeholders (including developers) achieve their negotiated win conditions.
+
+---
+
+### Q28 [Single Choice - Week 6]
+**Which anchor milestone in Boehm's Spiral Model and the Unified Process verifies that all major technical risks are resolved and an executable architecture baseline is established?**
+- A) Life-Cycle Objectives (LCO)
+- B) Life-Cycle Architecture (LCA)
+- C) Initial Operational Capability (IOC)
+- D) Full Operational Release
+> **Answer: B** | *Explanation:* The LCA milestone requires a verified, stable executable architecture baseline with zero unresolved critical risks. LCO establishes business scope, and IOC establishes deployment readiness.
+
+---
+
+### Q29 [Single Choice - Week 6]
+**In the Incremental Commitment Spiral Model (ICSM), which exit pathway is triggered when an existing Commercial-Off-The-Shelf (COTS) package completely satisfies project requirements, rendering custom design spirals redundant?**
+- A) Exit 1: Proceed (Green Gate)
+- B) Exit 2: Skip / Fast-Track Gate
+- C) Exit 3: Re-evaluate (Yellow Gate)
+- D) Exit 4: Terminate (Red Gate)
+> **Answer: B** | *Explanation:* The Fast-Track (Skip) gate is activated when identified risks are negligible or non-existent, skipping intermediate spiral phases directly to integration/deployment.
+
+---
+
+### Q30 [Single Choice - Week 6]
+**How does the "Blackjack Strategy" in ICSM mitigate catastrophic financial risk compared to the traditional "Roulette Strategy"?**
+- A) It guarantees that developers work unpaid overtime to protect project budgets.
+- B) It commits the entire project budget upfront on an unproven architectural baseline.
+- C) It commits small incremental funds (~5%), inspects empirical prototypes, and exercises early bailout options if failure risks are irrecoverable.
+- D) It eliminates requirements engineering entirely.
+> **Answer: C** | *Explanation:* Under the Blackjack analogy, stakeholders commit small ante increments, inspect emerging evidence, and bail out early if the odds turn fatally poor, preserving corporate capital.
+
+---
+
+### Q31 [True / False - Week 6]
+**In Cleanroom Software Engineering, dynamic execution and testing of the software are strictly forbidden for developers, being performed exclusively by an independent Certification Team.**
+- A) True
+- B) False
+> **Answer: A (True)** | *Explanation:* Cleanroom strictly forbids developers from compiling or executing code to debug. Only the independent Certification Team executes the software, utilizing statistical Markov usage models.
+
+---
+
+### Q32 [Single Choice - Week 6]
+**Cleanroom statistical testing derives its test cases from an operational profile modeled using which mathematical construct?**
+- A) Petri Nets
+- B) Markov Chains
+- C) Karnaugh Maps
+- D) Truth Tables
+> **Answer: B** | *Explanation:* Cleanroom models production usage patterns as Markov chains with state transition probabilities, generating random walks that mirror actual operational density.
+
+---
+
+### Q33 [Single Choice - Week 6]
+**In the Unified Process (UP), what major milestone concludes the Elaboration phase?**
+- A) Life-Cycle Objectives (LCO)
+- B) Life-Cycle Architecture (LCA)
+- C) Initial Operational Capability (IOC)
+- D) Final Production Cutover
+> **Answer: B** | *Explanation:* Inception concludes with LCO; Elaboration concludes with **LCA** (executable architecture baseline and ~80% of use cases specified); Construction concludes with IOC.
+
+---
+
+### Q34 [True / False - Week 6]
+**In the Unified Process, the Test workflow is inactive during the Inception and Elaboration phases, only commencing once the Construction phase begins.**
+- A) True
+- B) False
+> **Answer: B (False)** | *Explanation:* A core UP principle is that **all five core workflows (including Test) are active in every iteration across all phases**, though their relative effort intensity varies.
+
+---
+
+### Q35 [Single Choice - Week 6]
+**Under Google's Site Reliability Engineering (SRE) release governance, what automated action occurs when a service exhausts its Error Budget ($100\% - \text{SLO}$)?**
+- A) The operations team is disbanded and developers take over manual deployments.
+- B) All new feature deployments are automatically frozen; engineering capacity shifts 100% to reliability and bug fixing.
+- C) The SLO target is lowered to make the service appear healthy.
+- D) The team switches from SRE to pure Waterfall governance.
+> **Answer: B** | *Explanation:* When the error budget is exhausted ($\le 0$), automated feature freezes are triggered. All engineering resources must focus on stabilizing the system until reliability is restored within SLO targets.
+
+---
+
 > [!tip] Final Test Day Recommendation
-> Prior to entering the objective examination, review **[[#Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)|Module 1]]** for numbers and formulas, verify you can identify every trap in **[[#Module 4: Top 20 Objective Test "Trap & Trick" Alerts|Module 4]]**, and re-verify the **[[#RACI Governance Rules & Authoritative Allocation|Week 3 Slide 14 RACI Allocation]]**!
+> Prior to entering the objective examination:
+> 1. Review **[[#Module 1: The Ultimate Objective Test Cheat Sheet (At-a-Glance Matrices)|Module 1]]** for numbers, standards, and EVM formulas.
+> 2. Memorize the **[[#2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process|Week 6 Core Triad]]**: Spiral 4 Quadrants & Theory W, ICSM 4 Exit Gates & Blackjack analogy, Cleanroom Symmetrical Split & Markov MTTF, and UP 4 Phases vs. continuous workflows!
+> 3. Verify you can identify every trap in **[[#Module 4: Top 25 Objective Test "Trap & Trick" Alerts|Module 4]]**, and practice the **35 rapid-fire questions in Module 5**.
