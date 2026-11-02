@@ -19,10 +19,13 @@ The local Quartz preview server is configured to accept connections from other d
 
 ### Step 2: Access the server on another device
 1. Connect your other device (phone, tablet, or another computer) to the **same Wi-Fi network**.
-2. Run the preview server on this computer inside the `quartz/` folder:
-   ```powershell
-   npx quartz build --serve
-   ```
+2. Run the preview server on this computer:
+   * Double-click `serve.bat` in this vault folder (or run `.\serve.bat` in PowerShell / terminal).
+   * Or alternatively, navigate to the external Quartz directory:
+     ```powershell
+     cd D:\User\Desktop\quartz
+     npx quartz build --serve
+     ```
 3. On your other device, open a web browser and visit:
    ```
    http://<your-ipv4-address>:8080

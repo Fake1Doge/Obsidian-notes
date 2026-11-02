@@ -33,7 +33,7 @@ function getFileHeadings(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
     const headings = new Set();
     const headingList = [];
-    const lines = content.split('\n');
+    const lines = content.replace(/\r\n/g, '\n').split('\n');
     for (const line of lines) {
         const match = line.match(/^#+\s+(.+)$/);
         if (match) {

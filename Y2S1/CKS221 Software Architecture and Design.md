@@ -898,37 +898,1140 @@ flowchart LR
 
 ---
 
-### 4.2.6 5. Aspects Style & 6. Data Model Style
-The remaining two module styles address specialized structural perspectives:
-- **Aspects Style:** Encapsulates cross-cutting concerns (e.g., authentication, transaction management, performance logging) that weave across standard module boundaries, utilizing Aspect-Oriented Programming (AOP) pointcuts and advice.
-- **Data Model Style:** Captures static data entities, attributes, and relational cardinalities (one-to-one, one-to-many, many-to-many) in a static conceptual schema, governing the structure of relational and object databases.
-
----
-
-## 4.3 Summary Synthesis of CKS221 Curriculum: Structures, Views, Styles
+### 4.2.6 5. The Aspects Style
+The **Aspects Style** models modules that encapsulate **cross-cutting concerns**—system requirements and functionalities that span across standard architectural boundaries—and defines how they bind to functional modules across the codebase.
 
 ```mermaid
 flowchart TD
-    subgraph CKS221_Synthesis["CKS221 Comprehensive Curriculum Framework"]
+    subgraph TangledScattered["Traditional OOP: Code Tangling & Code Scattering"]
         direction TB
-        subgraph Foundations["Foundations (Chapters 1 & 2)"]
-            F1["Software Architecture Definition & Tenets"]
-            F2["Structures vs. Views (Britt's Principle)"]
-            F3["Quality Attributes (Performance, Security, Modifiability)"]
-            F4["Philippe Kruchten's 4+1 View Model"]
+        subgraph Classes["Classes with Intermixed Concerns"]
+            direction LR
+            C_Acc["<b>Account</b><br/>• Business Logic<br/><i>• Access Control</i><br/><i>• Logging</i><br/><i>• Transaction Mgmt</i>"]
+            C_Cust["<b>Customer</b><br/>• Business Logic<br/><i>• Access Control</i><br/><i>• Logging</i>"]
+            C_ATM["<b>ATM</b><br/>• Business Logic<br/><i>• Access Control</i><br/><i>• Logging</i><br/><i>• Transaction Mgmt</i>"]
         end
-        subgraph StylesCategory["Architectural Styles (Chapter 3)"]
-            S1["Client-Server, P2P & Data-Centered"]
-            S2["Event-Driven Architecture (EDA) & Pipes-and-Filters"]
-            S3["Layered, SOA & Microservices"]
+    end
+
+    subgraph AOP_Architecture["Aspect-Oriented Architecture (AOP)"]
+        direction TB
+        subgraph PureClasses["Pure Business Logic Classes"]
+            direction LR
+            P_Acc["Account (Business Only)"]
+            P_Cust["Customer (Business Only)"]
+            P_ATM["ATM (Business Only)"]
         end
-        subgraph ModuleCategory["Module Views & Styles (Chapter 4)"]
-            M1["Modules vs. Subsystems (Mars Rover Case)"]
-            M2["Decomposition & Uses Styles (ATIA-M)"]
-            M3["Generalization (PetStore) & Layered Styles (UNIX)"]
-            M4["Five Visual Notations (Stack, Rings, Sidecars)"]
+        subgraph AspectModules["Modularized Aspect Modules"]
+            direction LR
+            A_Sec["«aspect»<br/><b>AccessControl</b>"]
+            A_Log["«aspect»<br/><b>Logging</b>"]
+            A_Tx["«aspect»<br/><b>TransactionManagement</b>"]
         end
-        Foundations ==> StylesCategory
-        StylesCategory ==> ModuleCategory
+        AspectModules -.->|Weaving Process (Compile/Load/Runtime)| PureClasses
+    end
+
+    TangledScattered ==>|Refactored via Aspects Style| AOP_Architecture
+```
+
+#### Specification Table of the Aspects Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Depicts aspect modules that implement cross-cutting concerns and specifies how they are bound to other modules in the software system. |
+| **Elements** | **Aspect:** A specialized module that encapsulates the implementation of a cross-cutting concern (e.g., security, logging, caching, transaction boundaries). |
+| **Relations** | **Crosscuts:** A binding relation that links an aspect module to the target modules affected by the cross-cutting logic. |
+| **Constraints** | 1. An aspect can crosscut one or more regular modules as well as other aspect modules.<br/>2. An aspect that crosscuts itself may trigger **infinite recursion**, depending on the target runtime implementation. |
+| **What It's For** | 1. Modeling cross-cutting concerns in Object-Oriented Design (OOD).<br/>2. Substantially enhancing **modifiability** and maintainability by isolating orthogonal policies. |
+
+#### Code Tangling vs. Code Scattering
+In standard Object-Oriented Programming (OOP), modules designed to represent cohesive domain entities inevitably become contaminated by non-functional requirements:
+- **Code Tangling:** Occurs when a single class or module contains code addressing multiple distinct concerns simultaneously (e.g., an `Account` class interleaves deposit/withdrawal math with database transaction rollbacks and security audit trails).
+- **Code Scattering:** Occurs when the implementation of a single concern is duplicated and dispersed across numerous independent modules (e.g., access control verification checks copy-pasted across `Account`, `Customer`, and `ATM`).
+
+**Aspect-Oriented Programming (AOP)** directly complements OOP. The cross-cutting logic is factored out of domain classes and isolated into dedicated **aspects**. The language compiler or runtime engine executes a **weaving process** that transparently injects the aspect's advice into the target execution join-points.
+
+#### Documenting Aspects in UML
+Documenting aspects using standard UML poses visual challenges because drawing explicit `crosscuts` dependency arrows from one aspect to dozens of target classes produces unreadable "spaghetti" diagrams. Architects resolve this using two standard conventions:
+1. **Stereotyped Classes:** Aspects are modeled as UML classes adorned with the stereotype `«aspect»` (e.g., `«aspect» TransactionManagement`).
+2. **Comment-Based Binding Specifications:** Instead of connecting dependency lines to every target class, architects attach a UML note/comment box to the aspect specifying pattern-matching predicates (pointcut expressions) that characterize which modules are crosscut:
+   - *Example 1:* Attached to `«aspect» TransactionManagement`: `"Crosscuts calls to any operation within an EJB that contains the @transactional annotation"`.
+   - *Example 2:* Attached to `«aspect» Internationalization`: `"Crosscuts any calls to the Locale library"`.
+
+#### Enterprise Case Study: The IkeWiki System Architecture
+**IkeWiki** is a semantic wiki application implemented in Java EE using the Spring Framework and Google Web Toolkit (GWT). Its architecture employs the Aspects style to enforce separation of concerns across four mission-critical aspects:
+
+```mermaid
+flowchart TD
+    subgraph IkeWikiAspects["IkeWiki Semantic Wiki: Aspects Architecture View"]
+        direction TB
+        
+        subgraph AspectPkg["com.ikaru.ikewiki.aspects"]
+            A_Tx["«aspect»<br/><b>TransactionManagement</b><br/>+checkStatusAndCloseTransaction()"]
+            A_Ex["«aspect»<br/><b>ExceptionHandling</b>"]
+            A_Auth["«aspect»<br/><b>AuthorizationCheck</b>"]
+            A_Enf["«aspect»<br/><b>Enforcement</b>"]
+        end
+
+        subgraph Note_Tx["Binding Rule: TransactionManagement"]
+            N_Tx["Crosscuts all public methods of all classes<br/>with suffix 'ServiceImpl' AND any method<br/>annotated with @transactional"]
+        end
+
+        subgraph Note_Ex["Binding Rule: ExceptionHandling"]
+            N_Ex["Crosscuts:<br/>• All public methods of classes with suffix 'ServiceImpl'<br/>• handleRequest() of Spring Controller classes<br/>• run() method of all threads"]
+        end
+
+        subgraph Note_Auth["Binding Rule: AuthorizationCheck"]
+            N_Auth["Crosscuts any method annotated with<br/>@privilegedAccess"]
+        end
+
+        subgraph Note_Enf["Binding Rule: Enforcement"]
+            N_Enf["Compile-time declarations to detect points in<br/>code that violate layered design or coding policies"]
+        end
+
+        subgraph Helpers["Utility & Infrastructure Dependencies"]
+            H_Ex["com.ikaru.ikewiki.util<br/><b>IkewikiExceptionHandler</b><br/>+handleExceptionInService()<br/>+handleExceptionInThread()"]
+            H_GWT["org.gwtwidgets.server.spring<br/><b>ServletUtils</b>"]
+            E_User["com.ikaru.ikewiki.user<br/>«entity» <b>User</b>"]
+        end
+
+        A_Tx --- N_Tx
+        A_Ex --- N_Ex
+        A_Auth --- N_Auth
+        A_Enf --- N_Enf
+
+        A_Ex ==>|«use»| H_Ex
+        A_Auth ==>|«use»| H_GWT
+        A_Auth ==>|«use»| E_User
     end
 ```
+
+1. **TransactionManagement:** Automatically intercepts incoming requests, verifies transaction status, commits valid operations, and initiates rollbacks upon exceptions, releasing database resources cleanly.
+2. **ExceptionHandling:** Traps unhandled runtime errors across service implementations, UI controllers, and worker threads; logs incidents to persistent storage, dispatches emergency emails to operators, and delivers user-friendly error dialogs.
+3. **AuthorizationCheck:** Intercepts invocations targeting methods annotated with `@privilegedAccess`, inspecting the active `User` session against access control lists via `ServletUtils`.
+4. **Enforcement:** A specialized architectural aspect that does not provide runtime functional logic; rather, it performs compile-time static inspections to detect illegal imports or calls that violate strict layered boundaries.
+
+---
+
+### 4.2.7 6. The Data Model Style
+The **Data Model Style** describes the static structure of persistent and runtime information in terms of **data entities**, their internal attributes, and the **logical relationships** that govern them.
+
+#### Specification Table of the Data Model Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Formalizes the organization of data entities, attributes, primary keys, and relational associations across system data stores. |
+| **Elements** | **Data Entity:** An abstraction representing a persistent or business-relevant informational entity (e.g., `Customer`, `Order`, `Inventory`). Properties include Entity Name, Data Attributes, Primary Key (`id`), and Access Control Rules. |
+| **Relations** | 1. **Cardinality Associations:** One-to-One ($1:1$), One-to-Many ($1:N$), and Many-to-Many ($M:N$) relationships.<br/>2. **Generalization / Specialization:** `is-a` hierarchies among data entities.<br/>3. **Aggregation:** Converts a relationship into a composite aggregate entity. |
+| **Constraints** | **Elimination of Functional Dependencies:** Uncontrolled transitive dependencies must be eliminated through relational database normalization (e.g., 3NF, BCNF) to prevent update anomalies. |
+| **What It's For** | 1. Defining the authoritative structure of data across applications and databases.<br/>2. Performing change-impact analysis when schemas evolve.<br/>3. Enforcing data integrity, avoiding data redundancy, and eliminating update anomalies. |
+
+#### Notation Comparison: Crow's Foot ERD vs. UML Class Diagrams
+Architects express data models using two predominant graphical notations:
+
+```mermaid
+erDiagram
+    EMPLOYEE ||--o{ DEPENDENT : "has identifying"
+    EMPLOYEE }|--o| DEPARTMENT : "assigned to non-identifying"
+    
+    EMPLOYEE {
+        string emp_id PK
+        string name
+        string ssn
+        string dept_id FK
+    }
+    DEPARTMENT {
+        string dept_id PK
+        string dept_name
+    }
+    DEPENDENT {
+        string dependent_id PK
+        string emp_id FK
+        string relation
+    }
+```
+
+```mermaid
+classDiagram
+    class Employee {
+        <<entity>>
+        +String empId [PK]
+        +String name
+        +String ssn
+    }
+    class Department {
+        <<entity>>
+        +String deptId [PK]
+        +String deptName
+    }
+    class Dependent {
+        <<entity>>
+        +String dependentId [PK]
+        +String relation
+    }
+
+    Employee "1..*" --> "0..1" Department : belongs to
+    Employee "1" *--> "0..*" Dependent : has
+```
+
+| Dimension | Crow's Foot ERD Notation | UML Class Diagram Notation |
+| :--- | :--- | :--- |
+| **Entity Representation** | Rectangular boxes (standard entity); rounded boxes (weak entity). | Stereotyped class boxes (`«entity»`). |
+| **Primary Keys** | Explicitly marked in the top compartment (or prefixed with `PK`). | Formatted with stereotype tags (`{id}` or `[PK]`). |
+| **Cardinality Symbols** | Graphic symbols at line endpoints: `||` (Exactly 1), `o|` (Zero or 1), `>|` (One or more), `>o` (Zero or more). | Textual multiplicity bounds at association ends: `1`, `0..1`, `1..*`, `0..*`. |
+| **Identifying Relations** | Solid line = Identifying (child entity is existence-dependent and shares PK); Dashed line = Non-identifying. | Composition diamond (`*--`) denotes identifying lifecycle dependence; simple association arrow denotes non-identifying. |
+
+#### Case Studies: PetShop Application & Library Domain Model
+1. **The PetShop Application Data Model:**
+   - Designed around commercial e-commerce entities: `Supplier`, `Product`, `Category`, `Item`, `Inventory`, `CartItem`, `User`, `Order`, `LineItem`, and `OrderStatus`.
+   - Core functional transactions consist almost entirely of creating, retrieving, updating, and deleting (CRUD) instances of these entities.
+2. **The Library Domain Model:**
+   - Organizes abstract `Book` descriptions (ISBN, Title, Author) separate from physical circulating copies (`BookItem` with barcode, RFID, shelf location, and loan period).
+   - Models relationships between `Patron`, `Account`, `Librarian`, and service interfaces (`Search`, `Manage`), governing borrowing rules and reservation queues.
+
+---
+
+### 4.2.8 Architectural Critique: Flowcharts vs. Architectural Views
+Slide 13 of the curriculum presents a critical diagnostic exercise: *"What is wrong with this flowchart?"*
+
+```mermaid
+flowchart TD
+    Start(["Start"]) --> L1[/"Log Sources (Network devices, cloud services, applications)"/]
+    L1 --> L2[/"Data Preprocessing (Logstash, AWS Lambda)"/]
+    L2 --> L3[/"Input to Machine Learning"/]
+    L3 --> L4[/"Threat Detection"/]
+    L4 -->|Yes| L5[/"Rule-Based Validation"/]
+    L5 --> L6[/"Alert Generation"/]
+    L6 --> L7[/"Visualization"/]
+    L4 -.->|No (Omitted Branch)| L7
+    L7 --> L8[/"Continuous Learning"/]
+    L8 --> End(["End"])
+```
+
+#### Diagnostic Breakdown of Architectural Errors:
+1. **Conflating Algorithms with Architecture:** A flowchart depicts sequential procedural control flow and programmatic execution steps. It is **NOT** a software architecture view. Software architecture specifies elements, relations, public interfaces, and properties—not step-by-step conditional scripts.
+2. **Misuse of Flowchart Geometric Notations:** The diagram depicts processing components (e.g., Logstash, AWS Lambda, Machine Learning models) inside **parallelograms** (which standard flowchart syntax reserves strictly for User Input / Output operations), rather than process rectangles or component nodes.
+3. **Broken Decision Semantics:** The decision step `"Threat Detection"` has a `"Yes"` branch proceeding to `"Rule-Based Validation"`, but the `"No"` branch is completely omitted or merges ambiguously downstream, leaving execution semantics undefined.
+4. **Failure to Depict Architectural Connectors and Views:** The diagram fails to state whether communication is synchronous RPC, asynchronous message queuing (Kafka), or shared storage; nor does it indicate whether it represents a Module, Component-and-Connector, or Allocation structure.
+
+---
+
+### 4.2.9 Comprehensive Summary Matrix of the Six Module Styles
+
+The six module styles address complementary static structural concerns across software systems:
+
+| Module Style | Primary Element | Primary Relation | Core Topological Constraints | Primary Architectural Quality / Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **Decomposition** | Modules & Submodules | **`is-part-of`** (hierarchical decomposition) | Strictly acyclic; single-parent rule (each submodule belongs to exactly one parent). | Work breakdown structures, project management, code repository organization, modifiability. |
+| **Uses** | Modules | **`depends-on`** / **`uses`** (correctness dependency) | Acyclic preferred; cyclic dependencies impede subsetting and unit testing. | Incremental development subsets, high-assurance unit testing, change-impact analysis. |
+| **Generalization** | Modules (Abstract & Concrete) | **`is-a`** (generalization / inheritance) | Directed acyclic graphs; single or multiple inheritance (managing diamond inheritance). | Software reuse, domain commonality exploitation, polymorphic extensibility. |
+| **Layered** | Layers (groups of cohesive modules) | **`allowed-to-use`** (unidirectional downward) | Strict partitioning; minimum 2 layers; circular dependencies strictly forbidden. | Portability, modifiability, technology swapping, separation of concerns. |
+| **Aspects** | Aspects & Functional Modules | **`crosscuts`** (join-point binding) | Aspects can crosscut regular and aspect modules; self-crosscutting can cause infinite loops. | Encapsulating cross-cutting concerns, eliminating code tangling and scattering, maintainability. |
+| **Data Model** | Data Entities & Attributes | **Associations** ($1:1, 1:N, M:N$), **`is-a`**, **Aggregation** | Normalization required (eliminating functional dependencies and update anomalies). | Database schema design, data integrity, avoiding redundancy, data change-impact analysis. |
+
+---
+
+---
+
+# Chapter 5: Component-and-Connector (C&C) Views and Styles
+
+## 5.1 Foundations of Component-and-Connector (C&C) Views
+
+### 5.1.1 Overview and Nature of C&C Views
+While module views capture the static compile-time organization of code into packages and classes, they cannot represent the system in motion. A **Component-and-Connector (C&C) View** depicts the runtime execution architecture—the dynamic behavior, active components, and interaction pathways of an executing software system.
+
+```mermaid
+flowchart TD
+    subgraph CC_Fundamentals["Foundations of Component-and-Connector Views"]
+        direction TB
+        E1["<b>1. Components:</b><br/>Principal runtime execution units & data stores.<br/>Expose <b>ports</b> to the outside world."]
+        E2["<b>2. Connectors:</b><br/>Interaction pathways mediating communication & control.<br/>Expose <b>roles</b> that components fulfill."]
+        R1["<b>3. The Single Relation: Attachment</b><br/>Binds a component's <b>port</b> to a connector's <b>role</b>.<br/>Defines the runtime execution topology."]
+        P1["<b>4. Runtime Properties:</b><br/>Throughput, latency, concurrency, connection limits,<br/>local vs. remote protocols, cryptographic security."]
+        E1 --- R1
+        E2 --- R1
+        R1 --- P1
+    end
+```
+
+### 5.1.2 The Constituent Elements: Components and Connectors
+1. **Components:**
+   - Units of runtime software behavior and persistent storage.
+   - A component's architectural description defines its computational responsibilities, the services it provides, and the external dependencies it requires to execute.
+   - *Representative Examples:* Active OS processes, running daemon threads, client applications, web application servers, message brokers, and database engines.
+   - *Interaction Boundary:* Components expose **ports**. A port represents a discrete point of interaction (an interface) through which data and control flow into and out of the component.
+2. **Connectors:**
+   - Architectural mechanisms that coordinate, mediate, and facilitate interaction between components.
+   - Connectors govern data flow, control transfer, communication protocols, information streaming, and shared storage access.
+   - *Representative Examples:* Remote Procedure Calls (RPC), synchronous REST/HTTP invocations, TCP/IP sockets, Unix pipes, asynchronous message queues (JMS, AMQP), and database connection pools (JDBC/ODBC).
+   - *Interaction Boundary:* Connectors expose **roles**. A role defines the expected interface and behavioral protocol that a connected component port must fulfill (e.g., a *request* role, a *reply* role, a *data-in* role, a *listen* role).
+
+---
+
+### 5.1.3 The Single Foundational Relation: Attachment
+In C&C views, there is **only one foundational structural relation**: the **Attachment Relation**.
+
+> [!info] The Attachment Relation
+> The **attachment relation** specifies how the **ports** of components are hooked to the **roles** of connectors.
+> 
+> $$\text{Component Port} \xleftrightarrow{\quad\text{Attachment}\quad} \text{Connector Role}$$
+> 
+> Attachment lays out the exact computational topology of the executing software system. Components never attach directly to other components; all interactions are mediated through connectors.
+
+---
+
+### 5.1.4 Properties of C&C Views
+Every architectural element in a C&C view must be documented with explicit properties to support downstream engineering analysis:
+- **Element Identity & Type:** Every component and connector has a unique identifier and an architectural category.
+- **Port Capacity & Multiplicity:** Specifies how many concurrent clients or connections a server port can accommodate simultaneously.
+- **Performance Characteristics:** Maximum invocation rates, throughput parameters, and latency thresholds.
+- **Dynamic Introduction Rules:** Documents whether clients and servers can be registered dynamically at runtime (e.g., service discovery) or must be statically configured.
+- **Connector Protocol Properties:** Specifies whether invocations are local in-memory calls or remote network hops, and whether payload streams require cryptographic encryption (e.g., TLS 1.3).
+
+---
+
+### 5.1.5 Usages and Core Questions Answered by C&C Views
+C&C views provide system architects and developers with the primary vehicle for reasoning about runtime qualities:
+
+> [!tip] Core Architectural Questions Answered by C&C Views:
+> 1. *What are the major executing components and how do they interact at runtime?*
+> 2. *What are the major shared data stores and where do communication bottlenecks exist?*
+> 3. *Which parts of the system are replicated for high availability or load balancing?*
+> 4. *How does data progress through the pipeline from inputs to outputs?*
+> 5. *Which components execute concurrently across independent threads or processing nodes?*
+> 6. *Can the system's runtime topology change dynamically during execution, and if so, under what constraints?*
+
+---
+
+### 5.1.6 UML Notations for Component-and-Connector Views
+Documenting C&C views in UML 2.0 relies on **UML Component Diagrams** and **Composite Structure Diagrams**:
+
+```mermaid
+flowchart LR
+    subgraph UML_CC_Notation["UML 2.0 Component-and-Connector Notations"]
+        direction LR
+        subgraph Comp1["Component A"]
+            P1["Port<br/>(Square)"]
+            Prov["Provided Interface<br/>(Ball / Lollipop)"]
+            P1 --- Prov
+        end
+        subgraph Comp2["Component B"]
+            Req["Required Interface<br/>(Socket)"]
+            P2["Port<br/>(Square)"]
+            Req --- P2
+        end
+        Prov ==>|Assembly Connector (Ball-and-Socket)| Req
+    end
+```
+
+- **Structured Classifiers:** Represent components using rectangular boxes adorned with the component symbol (a rectangle with two small protruding tabs) or the stereotype `«component»`.
+- **Ports:** Represented as small squares placed on the component boundary, designating distinct interaction channels.
+- **Provided Interfaces (Lollipops / Balls):** A complete circle connected by a line to a port, signifying services offered by the component.
+- **Required Interfaces (Sockets):** A semi-circle connected by a line to a port, signifying services needed by the component.
+- **Assembly Connectors:** Connect a provided interface (ball) directly into a required interface (socket), forming a "ball-and-socket" joint.
+- **Delegation Connectors:** An arrow linking an external boundary port of a subsystem component to an internal child component port, routing incoming messages inward without exposing private topologies.
+
+---
+
+### 5.1.7 Primary Presentation Case Study: Banking Runtime Architecture
+Slide 7 of the curriculum illustrates a classic C&C primary presentation for a high-availability banking transaction system:
+
+```mermaid
+flowchart TD
+    subgraph BankingRuntime["Banking System Runtime C&C View"]
+        direction TB
+        
+        subgraph ClientTier["Client Layer"]
+            C_Teller["Client Teller 1<br/>(Windows Application)"]
+        end
+
+        subgraph ServerTier["Server Layer"]
+            S_Main["Account Server - Main<br/>(FTX Server Daemon)"]
+            S_Backup["Account Server - Backup<br/>(FTX Server Daemon)"]
+        end
+
+        subgraph StorageAdmin["Data & Administration"]
+            DB[("Account Database<br/>(Data Store)")]
+            Admin["Administrative Component<br/>(Database Application)"]
+        end
+
+        C_Teller ==>|Client-Server Connector (Request/Reply)| S_Main
+        C_Teller -.->|Client-Server Connector (Failover)| S_Backup
+        S_Main <==>|Publish-Subscribe Connector (State Sync)| S_Backup
+        S_Main ==>|Database Access Connector (Transactional Read/Write)| DB
+        S_Backup ==>|Database Access Connector (Transactional Read/Write)| DB
+        Admin ==>|Database Access Connector (Schema/Audit Access)| DB
+    end
+```
+
+- **Components:** `Client Teller 1`, `Account Server-Main`, `Account Server-Backup`, `Account Database`, and `Administrative Component`.
+- **Three Distinct Connectors:**
+  1. **Client-Server Connectors:** Mediate synchronous request/reply calls over TCP sockets, allowing concurrent teller clients to query account balances.
+  2. **Publish-Subscribe Connectors:** Distribute asynchronous state changes and transaction logs between the active main server and standby backup server.
+  3. **Database Access Connectors:** Enforce authenticated, ACID-compliant transactional reading, writing, and locking against the persistent relational store.
+
+---
+
+## 5.2 Taxonomy and The Four Major C&C Style Families
+
+Software architecture formalizes four major style families within the Component-and-Connector category:
+
+```mermaid
+flowchart TD
+    Generic["Generic C&C Style"]
+    
+    Generic --> CR["1. Call-Return Family"]
+    Generic --> DF["2. Data Flow Family"]
+    Generic --> EB["3. Event-Based Family"]
+    Generic --> Rep["4. Repository Family"]
+
+    CR --> CS["Client-Server Style"]
+    CR --> P2P["Peer-to-Peer Style"]
+    CR --> SOA["Service-Oriented Architecture (SOA)"]
+    CS --> MultiTier["Multi-Tier Client-Server"]
+
+    DF --> Batch["Batch Sequential"]
+    DF --> PF["Pipe-and-Filter Style"]
+    PF --> Pipeline["Pipeline"]
+    PF --> UnixPF["UNIX Pipe-and-Filter"]
+
+    EB --> PubSub["Publish-Subscribe Style"]
+    EB --> P2P_Msg["Point-to-Point Messaging"]
+
+    Rep --> SharedData["Shared Data Style"]
+    Rep --> Blackboard["Blackboard Style"]
+```
+
+---
+
+## 5.3 1. Call-Return Styles
+
+### 5.3.1 Architectural Principles of Call-Return
+In the **Call-Return** family of styles:
+1. Components interact through **synchronous invocation** provided by target components.
+2. The invoking component passes execution control and data parameters across a connector.
+3. The calling component blocks (waits) while the recipient executes; upon completion, control and return values flow back to the caller.
+
+---
+
+### 5.3.2 The Client-Server Style
+The **Client-Server Style** is a specialized call-return style representing a computational model where server components provide services invoked by client components.
+
+#### Specification Table of the Client-Server Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Asymmetric computational model where clients request services and servers fulfill them. |
+| **Elements** | 1. **Client Component:** Invokes services exposed by servers.<br/>2. **Server Component:** Listens for and fulfills service requests.<br/>3. **Request/Reply Connector:** Mediates interactions; possesses two distinct roles: a **request role** and a **reply role**. |
+| **Relations** | **Attachment Relation:** Associates client service-request ports with the connector's request role, and server-reply ports with the connector's reply role. |
+| **Constraints** | 1. Clients initiate communication; servers respond.<br/>2. Components are organized into tiers (2-tier, 3-tier, multi-tier). |
+| **Properties** | Server port concurrency limits, maximum invocation rates, dynamic client registration, local vs. remote transport, and TLS encryption. |
+| **What It's For** | 1. Promoting **modifiability and reuse** by factoring common business logic into centralized server components.<br/>2. Improving **scalability and availability** through server replication and load balancing.<br/>3. Rigorous analysis of system dependability, throughput, and network security. |
+
+---
+
+### 5.3.3 Enterprise Case Study: ATM Banking Network
+Slide 19 details an industrial ATM banking architecture organized according to the Client-Server style:
+
+```mermaid
+flowchart TD
+    subgraph ATM_Architecture["ATM Banking System Client-Server C&C View"]
+        direction TB
+
+        subgraph Servers["Server Tier (FTX Server Daemons)"]
+            S_Auth["Bank Transaction Authorizer Server"]
+            S_Mon["ATM Monitoring Server"]
+            S_Rec["ATM Reconfiguration Server"]
+        end
+
+        subgraph Clients["Client Tier (ATM OS/2 & Windows Processes)"]
+            C_Main["ATM Main Process<br/>(OS/2 Client)"]
+            C_Upd["Reconfigure & Update Process<br/>(OS/2 Client)"]
+            C_Stat["Monitoring Station Program<br/>(Windows App)"]
+        end
+
+        C_Main ==>|TCP Socket Connector (Request/Reply)| S_Auth
+        C_Main ==>|TCP Socket Connector (Request/Reply)| S_Mon
+        C_Upd ==>|TCP Socket Connector (Request/Reply)| S_Mon
+        C_Upd ==>|TCP Socket Connector (Request/Reply)| S_Rec
+        C_Stat ==>|TCP Socket Connector (Request/Reply)| S_Mon
+        C_Stat ==>|TCP Socket Connector (Request/Reply)| S_Rec
+    end
+```
+
+- Each client process maintains distinct service-request ports attached via TCP socket connectors to specialized server daemon ports.
+- Transaction authorization is separated from telemetry monitoring and remote software updates, isolating failures in monitoring from affecting cash dispensing.
+
+---
+
+### 5.3.4 Service-Oriented Architecture (SOA) Style
+The **Service-Oriented Architecture (SOA) Style** bridges both Call-Return and Event-Based paradigms, enabling service users to discover and invoke service providers across heterogeneous networks through standardized, published interfaces.
+
+#### Specification Table of the SOA Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Distributed components expose coarse-grained business capabilities via standardized network contracts, enabling seamless cross-platform interoperability. |
+| **Elements** | 1. **Component Types:** Service Consumers, Service Providers, and Infrastructure Components (Enterprise Service Bus [ESB], Service Registries, Orchestration Servers).<br/>2. **Connector Types:** Synchronous call-return connectors (SOAP over HTTP, REST over HTTPS) and asynchronous messaging connectors (JMS, WS-Addressing). |
+| **Relations** | Attachment of a service call port to a published service endpoint role. |
+| **Constraints** | **Bidirectional Roles:** A service provider may concurrently act as a service consumer toward upstream services. |
+| **Properties** | Service latency, availability SLAs, transaction costs, and protocol bindings (WSDL, OpenAPI). |
+| **What It's For** | Unifying distributed enterprise systems across disparate operating platforms and internet domains, enabling dynamic reconfiguration and workflow orchestration. |
+
+---
+
+### 5.3.5 Enterprise Case Study: The Adventure Builder Travel System
+Slides 22–23 detail the **Adventure Builder** travel reservation platform, demonstrating an enterprise SOA implementation:
+
+```mermaid
+flowchart TD
+    subgraph AdventureBuilder["Adventure Builder SOA & Messaging Architecture"]
+        direction TB
+
+        subgraph ClientTier["Client Applications"]
+            Browser["Web Browser"]
+            MailClient["User Email Client"]
+        end
+
+        subgraph ConsumerSite["Consumer Website (Java EE)"]
+            CW["Consumer Website Front-End"]
+            CatDB[("Adventure Catalog DB")]
+            CW --- CatDB
+        end
+
+        subgraph CoreOPC["Order Processing Center (OPC)"]
+            OPC_Core["OPC Engine"]
+            Broker["Web Service Broker"]
+            Reg["Service Registry"]
+            OPC_DB[("Adventure OPC DB")]
+            OPC_Core --- OPC_DB
+            OPC_Core --- Reg
+            OPC_Core --- Broker
+        end
+
+        subgraph ExternalPartners["External Web Service Providers"]
+            Bank["Bank<br/>(CreditCardService)"]
+            Air["Airline Provider<br/>(AirlinePO Service)"]
+            Lodg["Lodging Provider<br/>(LodgingPO Service)"]
+            Act["Activity Provider<br/>(ActivityPO Service)"]
+        end
+
+        Browser ==>|HTTPS| CW
+        CW ==>|OpcPurchaseOrderService (SOAP Call)| OPC_Core
+        CW ==>|OpcOrderTrackingService (SOAP Call)| OPC_Core
+        Broker ==>|CreditCardService (SOAP)| Bank
+        Broker ==>|AirlinePO Service (SOAP)| Air
+        Broker ==>|LodgingPO Service (SOAP)| Lodg
+        Broker ==>|ActivityPO Service (SOAP)| Act
+        OPC_Core -.->|SMTP Email Confirmation| MailClient
+    end
+```
+
+- **Internal Processing Mechanics (Slide 23):** Within the EJB container, incoming purchase orders are ingested by stateless session beans (`PoEndpointBean`), transferred onto JMS message queues (`WorkflowMgrQueue`, `OrderFillerQueue`), and processed asynchronously by message-driven beans (`WorkflowManagerBean`, `OrderFillerBean`).
+- The system gracefully combines **synchronous SOAP call-return connectors** (for credit card checkout and inventory confirmation) with **asynchronous message-driven queues** (for background booking orchestration).
+
+---
+
+## 5.4 2. Data Flow Styles (Pipe-and-Filter)
+
+### 5.4.1 Architectural Principles and Mathematical Form
+The **Data Flow (Pipe-and-Filter)** style treats computation as a progressive stream transformation:
+- Data flows serially from external input sources to external output sinks through an ordered sequence of discrete processing filters.
+- If a pipeline consists of filters $A$, $B$, and $C$, the overall transformation of input stream $x$ into output $y$ is mathematically expressed as functional composition:
+
+$$y = C\Big(B\big(A(x)\big)\Big)$$
+
+```mermaid
+flowchart LR
+    subgraph DataFlowModel["Mathematical Composition of Pipe-and-Filter"]
+        direction LR
+        In(("Input Stream x")) ==>|Pipe 1| A["Filter A"]
+        A ==>|Pipe 2: A(x)| B["Filter B"]
+        B ==>|Pipe 3: B(A(x))| C["Filter C"]
+        C ==>|Pipe 4: y| Out(("Output Stream y"))
+    end
+```
+
+---
+
+### 5.4.2 Specification Table of the Pipe-and-Filter Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Stream-oriented computation where stateless filters consume input streams and emit transformed output streams through unidirectional pipe channels. |
+| **Elements** | 1. **Filter Component:** An independent, stateless computational element that reads data from input ports, performs transformations, and writes results to output ports.<br/>2. **Pipe Connector:** A unidirectional conduit that conveys data streams from one filter's output port to another filter's input port, strictly preserving data order and integrity. |
+| **Relations** | **Attachment Relation:** Links filter output ports to pipe `data-in` roles, and pipe `data-out` roles to downstream filter input ports. |
+| **Constraints** | Connected filters must agree on the format and data types transmitted across the intermediary pipe. |
+| **Properties** | End-of-data signaling protocols, pipe buffer capacity, backpressure rules, and independent OS process isolation. |
+| **What It's For** | Maximizing component reusability, supporting clean functional composition, and optimizing pipeline throughput across concurrent processes. |
+
+---
+
+### 5.4.3 Runtime Properties and Backpressure Mechanics
+Slide 26 outlines critical runtime configurations governing pipe-and-filter architectures:
+1. **End-of-Data Signaling:** Filters must know when an input stream terminates (e.g., transmitting an explicit `EOT` (End-of-Transmission) character, an empty record, or closing the stream socket).
+2. **Buffer Capacity and Backpressure:** Pipes possess finite memory buffer capacities:
+   - *When Full:* Upstream filters block (e.g., `block for 2 sec and retry`), throttling data production.
+   - *When Empty:* Downstream filters block (e.g., `block for 20 sec and retry`), awaiting fresh input.
+3. **Execution Concurrency:** Filters can execute as independent operating system processes or threads, allowing processing stages to run in parallel on multi-core processors.
+
+---
+
+### 5.4.4 Enterprise Case Study: Direct Deposit and Payment Pipeline
+Slide 27 presents a UML Component Diagram of an industrial payroll processing pipeline:
+
+```mermaid
+flowchart LR
+    subgraph PayrollPipeline["Payroll & Direct Deposit Processing Pipeline"]
+        direction LR
+        F1["«filter»<br/><b>XmlToObject</b>"]
+        F2["«filter»<br/><b>ProcessPayment</b>"]
+        F3["«filter»<br/><b>CalculateDirectDeposit</b>"]
+        F4["«filter»<br/><b>FormatDirectDeposit</b>"]
+        F5["«filter»<br/><b>FormatRejectedRecords</b>"]
+
+        F1 ==>|Pipe 1<br/>cap=50, EOT, block 2s| F2
+        F2 ==>|Pipe 2<br/>cap=40, empty rec, block 2s| F3
+        F2 ==>|Pipe 3<br/>cap=10, empty rec, block 2s| F5
+        F3 ==>|Pipe 4<br/>cap=40, empty rec, block 2s| F4
+    end
+```
+
+- `XmlToObject` ingests raw transaction files and parses XML streams into in-memory payment records.
+- `ProcessPayment` validates accounts and splits output: valid payments route to `CalculateDirectDeposit`, while invalid transactions divert into `FormatRejectedRecords`.
+- Each pipe documents buffer limits (`capacity = 40`), end-of-data rules (`empty record`), and retry policies.
+
+---
+
+## 5.5 3. Event-Based Styles (Publish-Subscribe)
+
+### 5.5.1 Architectural Principles of Publish-Subscribe
+The **Publish-Subscribe (Pub-Sub)** style decouples system components completely in time and space:
+- Components interact not through explicit functional invocations or known destination addresses, but through the **announcement and receipt of events**.
+- Event producers (**Publishers**) broadcast state changes without knowing who or how many consumers exist.
+- Event consumers (**Subscribers**) register their interest with an intermediary event broker and receive matching events asynchronously.
+
+```mermaid
+flowchart LR
+    subgraph PubSubModel["Publish-Subscribe C&C Interaction Model"]
+        direction LR
+        P["Publisher Component<br/>(Announces Events)"]
+        B["Publish-Subscribe<br/>Event Distributor / Bus"]
+        S1["Subscriber Component 1<br/>(Listens to Events)"]
+        S2["Subscriber Component 2<br/>(Listens to Events)"]
+
+        P ==>|Port: publish| Role_A["Role: announce"]
+        Role_A --- B
+        B --- Role_L["Role: listen"]
+        Role_L ==>|Port: subscribe| S1
+        Role_L ==>|Port: subscribe| S2
+    end
+```
+
+---
+
+### 5.5.2 Specification Table of the Publish-Subscribe Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Asynchronous communication paradigm where event announcers are decoupled from event handlers by an event broker. |
+| **Elements** | 1. **Component:** Any runtime element exposing at least one publish port or subscribe port.<br/>2. **Event Distributor Connector:** Specialized connector (e.g., Event Bus, Message Broker) exposing **announce roles** and **listen roles**. |
+| **Relations** | **Attachment Relation:** Associates component publish ports with distributor announce roles, and component subscribe ports with distributor listen roles. |
+| **Constraints** | A component may concurrently act as both a publisher and a subscriber by exposing ports of both types. |
+| **Properties** | Catalog of announced and subscribed event types, event filtering predicates, and blocking/non-blocking delivery guarantees. |
+| **What It's For** | Broadcasting updates to an unknown, dynamic set of recipients; insulating event producers from consumer failures; foundation for GUI frameworks, IoT sensor networks, and stock feeds. |
+
+---
+
+## 5.6 4. Repository & Shared Data Styles
+
+### 5.6.1 Architectural Principles of Shared Data
+In the **Shared Data (Repository)** style:
+- Multiple autonomous computational components communicate indirectly by reading from and writing to a **centralized persistent data store**.
+- Data accessor components do not hold direct references to one another; the shared repository serves as the universal mediation medium.
+
+---
+
+### 5.6.2 Specification Table of the Shared Data Style
+| Dimension | Specification |
+| :--- | :--- |
+| **Overview** | Mediates communication across independent components through shared access to a centralized persistent repository. |
+| **Elements** | 1. **Data Store Component:** Persistent central repository managing system data (relational DBMS, blackboard, shared memory).<br/>2. **Data Accessor Component:** Independent computational module that reads, mutates, or polls data in the repository.<br/>3. **Data Access Connector:** Connectors supporting authenticated data reading and writing operations. |
+| **Relations** | Attachment relation linking data accessor ports to repository ports. |
+| **Constraints** | All inter-component communication is mediated through the data store; direct peer-to-peer data links are prohibited. |
+| **Properties** | Data schema formats, access concurrency limits, transaction locking schemes, and distribution across disk clusters. |
+| **What It's For** | Enabling multiple independent components to share large volumes of persistent state; enhancing modifiability by completely decoupling data producers from consumers. |
+
+---
+
+### 5.6.3 Enterprise Case Study: Centralized Security Realm
+Slide 33 presents a comprehensive Shared Data architecture governing enterprise identity and authentication:
+
+```mermaid
+flowchart TD
+    subgraph SecRealm["Enterprise Centralized Security Realm Architecture"]
+        direction TB
+
+        Store[("<b>Centralized Security Realm</b><br/>(Core Shared Data Repository)")]
+
+        subgraph Accessors_Auth["Authentication & User Management Accessors"]
+            A1["Web Sign-In<br/>(Web App)"]
+            A2["Windows Active Directory"]
+            A3["MS Exchange Server"]
+            A4["Authentication Service"]
+            A5["Password Reset"]
+            A6["Self Registration"]
+        end
+
+        subgraph Accessors_Admin["Administration & Auditing Accessors"]
+            A7["Password Synchronizer"]
+            A8["Account Provisioning"]
+            A9["Rights Enablement"]
+            A10["Entitlement Management"]
+            A11["Delegated Administration"]
+            A12["Audit and Monitoring"]
+            A13["Request Tracking"]
+            HR_DB[("HR Database")]
+        end
+
+        A1 <==>|read / write| Store
+        A2 <==>|read / write| Store
+        A3 <==>|read / write| Store
+        A4 <==>|read / write| Store
+        A5 <==>|read / write| Store
+        A6 <==>|read / write| Store
+        A7 <==>|read / write| Store
+        A8 <==>|read / write| Store
+        A9 <==>|read / write| Store
+        A10 <==>|read / write| Store
+        A11 <==>|read / write| Store
+        A12 ==>|read only| Store
+        A13 ==>|read only| Store
+        A8 --- HR_DB
+    end
+```
+
+- The **Centralized Security Realm** repository serves as the single source of truth for identities, credential hashes, and role entitlements.
+- Autonomous accessors (Active Directory synchronizers, Web sign-in portals, HR provisioning pipelines, and audit watchers) operate concurrently without direct coupling.
+
+---
+
+## 5.7 Formative Assessment: C&C Architectural Principles Evaluated
+
+Slide 35 presents seven True/False review questions assessing foundational C&C principles:
+
+| # | Curriculum Evaluation Question | Key | In-Depth Architectural Rationale |
+| :---: | :--- | :---: | :--- |
+| **1** | *The attachment relation in C&C views specifies how ports on components are connected to roles on connectors.* | **TRUE** | Attachment is the sole structural relation in C&C views. Ports represent component interfaces, while roles represent connector interfaces. Attachment binds them together to form runtime topologies. |
+| **2** | *In a Client-Server architectural style, the server component can dynamically introduce new clients without any constraints.* | **FALSE** | Client-server topologies impose strict capacity constraints on server ports (maximum concurrent client connections, resource saturation). Furthermore, dynamic introduction depends on whether dynamic reconfiguration protocols are implemented. |
+| **3** | *Event-based styles allow components to interact through synchronous invocations, meaning that control is transferred explicitly from one component to another.* | **FALSE** | Event-based styles are inherently **asynchronous**. Control transfer occurs indirectly through the generation and distribution of events, never through explicit, blocking point-to-point invocations. |
+| **4** | *The Publish-Subscribe style is characterized by components that directly communicate with each other without any intermediary.* | **FALSE** | Publish-Subscribe mandates an **event distributor (event bus / message broker)** as an intermediary. Publishers and subscribers are completely decoupled and unaware of each other's identities. |
+| **5** | *The Pipe-and-Filter style enhances modularity by allowing each filter to operate independently on data streams.* | **TRUE** | Filters are autonomous, stateless computational units that depend only on their input streams, enabling arbitrary reordering, pipeline recombination, and high reuse. |
+| **6** | *A shared data style architecture is primarily used for real-time data processing applications where immediate feedback is required.* | **FALSE** | Shared data repositories are engineered for centralized state persistence and broad integration across decoupled accessors. Real-time sub-millisecond feedback is hindered by central repository locking and contention. |
+| **7** | *In a Service-Oriented Architecture (SOA), service consumers and service providers must always be located on different platforms.* | **FALSE** | SOA guarantees cross-platform interoperability, but it does **not mandate** physical platform separation. Consumers and providers can reside co-located within the same operating environment. |
+
+---
+
+# Chapter 6: Allocation Views and Allocation Styles
+
+## 6.1 Foundations of Allocation Views
+
+### 6.1.1 Overview and Nature of Allocation Views
+Software does not execute in an abstract void. It requires physical processors, network cables, operating system directories, and human development teams. An **Allocation View** documents the mapping between software elements (from Module and C&C structures) and non-software environmental elements:
+
+```mermaid
+flowchart LR
+    subgraph SoftwareWorld["Software Architecture Elements"]
+        Mod["Module Structures<br/>(Packages, Classes, Subsystems)"]
+        CC["C&C Structures<br/>(Processes, Threads, Components)"]
+    end
+
+    subgraph EnvironmentWorld["Non-Software Environments"]
+        H["Hardware Platform<br/>(CPUs, RAM, Disks, Networks)"]
+        FS["File System & Storage<br/>(Directories, Build Artifacts)"]
+        Org["Development Organization<br/>(Engineers, Squads, Contractors)"]
+    end
+
+    CC ==>|Deployment Style| H
+    CC ==>|Install Style| FS
+    Mod ==>|Work Assignment Style| Org
+```
+
+---
+
+### 6.1.2 The Triad of Allocation Styles
+The curriculum formalizes three foundational allocation styles:
+1. **Deployment Style:** Maps runtime C&C components and connectors onto the hardware and execution environments of the computing platform.
+2. **Install Style:** Maps software components and artifacts onto the file systems and directory structures of production, testing, or development environments.
+3. **Work Assignment Style:** Maps source code modules onto development personnel, teams, or external contracting organizations.
+
+---
+
+## 6.2 1. The Deployment Style
+
+### 6.2.1 Architectural Elements of the Deployment Style
+| Element Category | Description & Concrete Constituents |
+| :--- | :--- |
+| **Software Elements** | Active runtime execution units, usually **processes and threads** derived from C&C views. Documented properties include CPU requirements, RAM footprints, disk bandwidth, and fault tolerance needs. |
+| **Environmental Elements** | Physical or virtualized computing hardware: processors, multi-core CPUs, RAM, storage disks, networking hardware (routers, bridges, firewalls, subnets, switches), and bandwidth capacities. |
+
+---
+
+### 6.2.2 Relations in the Deployment Style
+The Deployment Style models two critical allocation relations:
+1. **`allocated-to`:** The static baseline relation designating the physical computing element or virtual machine where a software element resides and executes.
+2. **Dynamic Migration Relations:**
+   - **`migrates-to`:** Specifies that a running software process can dynamically move its execution from one physical processor to another (e.g., live virtual machine migration, cloud pod failover).
+   - **`copy-migrates-to`:** Specifies that a software element can spawn a dynamic replica of itself onto another processor while retaining the original running instance (e.g., auto-scaling web server clusters).
+
+---
+
+### 6.2.3 Usages and Strategic Value of Deployment Views
+Deployment views serve indispensable engineering functions:
+- **Performance & Latency Modeling:** Evaluates whether network bandwidth and server CPU capacities meet transaction deadlines.
+- **Availability & Disaster Recovery:** Analyzes hardware redundancy and single points of failure.
+- **Security & Attack Surface Analysis:** Maps firewall boundaries, demilitarized zones (DMZ), and public vs. private subnets.
+- **Integration Testing & Procurement Planning:** Informs test engineers of exact environment topologies and provides managers with concrete hardware purchase estimates.
+
+---
+
+### 6.2.4 UML Deployment Diagrams
+UML documents deployment views using **Deployment Diagrams**:
+- **3D Cubes (Nodes):** Represent physical devices (`«device»`) or hosting environments (`«execution environment»`, e.g., `:WebSphere`, `Tomcat 7`).
+- **Communication Paths:** Solid lines connecting node cubes labeled with network protocols (e.g., `«internet»`, `«intranet»`, `TCP/IP`, `T1 line`).
+- **Deployed Artifacts:** Documented as `«artifact»` boxes nested inside nodes or linked via dashed `«deploy»` dependency arrows (e.g., `EnterpriseWebApp.ear`, `app-client.jar`).
+
+```mermaid
+flowchart TD
+    subgraph DeploymentTopology["UML Deployment Topology: WebSphere Application Cluster"]
+        direction TB
+
+        subgraph ClientNode["«device» Internet User PC"]
+            C_Art["«artifact» Web Browser"]
+        end
+
+        subgraph AdminNode["«device» Admin User PC"]
+            A_Art["«artifact» app-client.jar"]
+        end
+
+        subgraph AppServerNode["«device» Sun Fire App Server (Win Server)"]
+            subgraph ExecEnv["«execution environment» WebSphere"]
+                E_Art["«artifact» EnterpriseWebApp.ear"]
+            end
+        end
+
+        subgraph DBNode["«device» Linux Database Server"]
+            DB_Art[("Oracle DB Schemas")]
+        end
+
+        ClientNode ==>|«internet»| AppServerNode
+        AdminNode ==>|«intranet»| AppServerNode
+        AppServerNode ==>|«intranet»| DBNode
+        AdminNode -.->|«deploy»| A_Art
+        AppServerNode -.->|«deploy»| E_Art
+    end
+```
+
+---
+
+## 6.3 2. The Install Style
+
+### 6.3.1 Architectural Principles and Elements
+The **Install Style** bridges software components and the physical storage media where they are packaged, deployed, and executed:
+- **Software Elements:** C&C components, executable binaries, libraries, and packaged modules.
+- **Environmental Elements:** Configuration items within target file systems: folders, directory trees, configuration files (`.xml`, `.properties`), data archives, and log files.
+
+---
+
+### 6.3.2 Relations in the Install Style
+1. **`allocated-to`:** A software component or compiled class is allocated to a specific file or packaged archive.
+2. **`containment`:** Hierarchical part-whole nesting within directory structures (e.g., a file is contained in a folder; a folder is contained in an archive).
+- **Governing Constraint:** File and directory systems are strictly organized in **acyclic tree structures**.
+
+---
+
+### 6.3.3 Strategic Value of Install Views
+- **Automating CI/CD Pipelines:** Outlines build-and-deploy packaging procedures (creating Docker images, RPMs, WARs).
+- **Navigation in Complex Codebases:** Enables system operators to locate critical files among tens of thousands of assets.
+- **Log and Configuration Triage:** Pinpoints exact paths to editable configuration files and operational log directories.
+- **Version Management:** Manages parallel side-by-side installations of different system releases.
+- **Integrity Auditing:** Identifies corrupted, missing, or maliciously altered files during incident recovery.
+
+---
+
+### 6.3.4 UML Artifact Manifestation Diagrams
+In UML 2.0, install views are documented using **Artifact Diagrams**:
+- The stereotype **`«artifact»`** represents a physical file on disk (e.g., `.ear`, `.war`, `.jar`).
+- The dependency arrow adorned with **`«manifest»`** indicates that a runtime component or lower-level artifact is packaged inside a parent archive:
+
+```mermaid
+flowchart TD
+    subgraph InstallView["Duke's Bank Application Install & Manifestation View"]
+        direction TB
+        
+        EAR["«artifact»<br/><b>DukesBankApp.ear</b>"]
+        
+        JAR_Acc["«artifact»<br/>account-ejb.jar"]
+        JAR_Cust["«artifact»<br/>customer-ejb.jar"]
+        JAR_Tx["«artifact»<br/>tx-ejb.jar"]
+        WAR_Web["«artifact»<br/>web-client.war"]
+
+        EAR ==>|«manifest»| JAR_Acc
+        EAR ==>|«manifest»| JAR_Cust
+        EAR ==>|«manifest»| JAR_Tx
+        EAR ==>|«manifest»| WAR_Web
+
+        subgraph AccountBeans["Packaged Components"]
+            C_AccCtrl["«session bean»<br/>AccountControllerEJB"]
+            C_AccEntity["«entity bean»<br/>AccountEJB"]
+        end
+
+        JAR_Acc ==>|«manifest»| C_AccCtrl
+        JAR_Acc ==>|«manifest»| C_AccEntity
+
+        subgraph WebArtifacts["Web Tier Configuration & Dispatchers"]
+            A_WebXml["«artifact»<br/>web.xml"]
+            A_Disp["«servlet»<br/>Dispatcher"]
+            A_JSP["«JSP»<br/>*.jsp"]
+        end
+
+        WAR_Web ==>|«manifest»| A_WebXml
+        WAR_Web ==>|«manifest»| A_Disp
+        WAR_Web ==>|«manifest»| A_JSP
+    end
+```
+
+---
+
+## 6.4 3. The Work Assignment Style
+
+### 6.4.1 Architectural Elements and Principles
+The **Work Assignment Style** maps software architecture directly onto the human organizational structure responsible for realizing it:
+- **Software Elements:** Modules and Subsystems derived from **Module Views**.
+- **Environmental Elements:** Human organizational entities: individual software engineers, development squads, departments, and external contractors.
+- **Single Relation:** **`allocated-to`** (or `assigned-to`), mapping an implementation module to the team responsible for designing, coding, testing, and maintaining it.
+
+---
+
+### 6.4.2 Strategic Value and Conway's Law
+- **Work Breakdown Structure (WBS):** Serves as the primary baseline for project managers to construct realistic resource schedules, cost estimates, and sprint backlog allocations.
+- **Conway's Law Alignment:** Formalizes the reality that *"organizations design systems that mirror their own communication structures."* Clean module interfaces prevent cross-team friction and code merge conflicts.
+- **Onboarding Acceleration:** Provides incoming engineers with an immediate visual roadmap showing which team owns which software subsystem.
+- **Communication Protocol Governance:** Dictates necessary inter-team communication mechanisms (e.g., weekly architecture syncs between the Data Team and UI Squad, shared wikis, dedicated Slack channels).
+
+---
+
+### 6.4.3 Enterprise Case Study: NASA Earth Observing System (EOS)
+Slide 51 details the Work Assignment View for the **Science Data Processing Segment (SDPS)**:
+
+| Segment | Subsystem (Module) | Responsible Organizational Unit | Communication Channel |
+| :--- | :--- | :--- | :--- |
+| **SDPS (Science Data Processing Segment)** | Client Subsystem | **Science Team** | Bi-weekly science panel sync |
+| SDPS | Interoperability Subsystem | **Prime Contractor Team 1** | Daily standup & JIRA board |
+| SDPS | Ingest Subsystem | **Prime Contractor Team 2** | Shared repository PR reviews |
+| SDPS | Data Management Subsystem | **Data Team** | Technical architecture wiki |
+| SDPS | Data Processing Subsystem | **Data Team** | Technical architecture wiki |
+| SDPS | Data Server Subsystem | **Data Team** | Technical architecture wiki |
+| SDPS | Planning Subsystem | **Orbital Vehicle Team** | Systems telemetry reviews |
+| **CSMS (Communications & System Management)** | System Management Subsystem | **Infrastructure Team** | Weekly DevOps operations sync |
+| CSMS | Communications Subsystem | **Infrastructure Team** | Weekly DevOps operations sync |
+| CSMS | Internetworking Subsystem | **Infrastructure Team** | Weekly DevOps operations sync |
+| **FOS (Flight Operations Segment)** | Planning and Scheduling | **Orbital Vehicle Team** | Systems telemetry reviews |
+| FOS | Telemetry Subsystem | **Orbital Vehicle Team** | Systems telemetry reviews |
+| FOS | Commanding Subsystem | **Orbital Vehicle Team** | Systems telemetry reviews |
+| FOS | Resource Management | **Prime Contractor Team 3** | JIRA board & contract milestones |
+| FOS | User Interface Subsystem | **User Interface Team** | Sprint demo & UX reviews |
+
+---
+
+## 6.5 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints
+
+Slides from the supplementary curriculum provide four concrete architectural blueprints illustrating the execution and allocation realities of modern systems:
+
+### 6.5.1 Blueprint 1: Subversion Client-Server C&C Architecture
+Illustrates a complete client-server runtime view mediating between remote developer clients and a centralized Subversion repository:
+
+```mermaid
+flowchart TD
+    subgraph SVN_Runtime["Subversion Runtime C&C Architecture View"]
+        direction TB
+
+        subgraph ClientSide["Client Environment (Remote Repository Access)"]
+            Lib_Remote["Remote Repository Library"]
+            Lib_Local["Local Repository Library"]
+            Lib_SVN["Subversion Repository Access Library"]
+        end
+
+        subgraph ServerSide["Server Host (Apache & Subversion Daemon)"]
+            Apache["«Webserver»<br/>Apache"]
+            Mod_DAV["mod_dav"]
+            Mod_SVN["mod_svn_dav"]
+            SVN_Server["Subversion Server"]
+            SVN_FS["Subversion FileSystem Library"]
+            FS_Store[("fs access<br/>(Local Disk Filesystem)")]
+        end
+
+        Lib_Remote ==>|DAV Protocol| Mod_DAV
+        Lib_SVN ==>|Subversion Protocol| SVN_Server
+        Mod_DAV --> Mod_SVN
+        Mod_SVN ==>|dav request| SVN_Server
+        SVN_Server --> SVN_FS
+        SVN_FS ==>|fs access| FS_Store
+    end
+```
+
+---
+
+### 6.5.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture
+Illustrates a high-reliability embedded control loop for automated exploratory vehicles:
+
+```mermaid
+flowchart TD
+    subgraph EmbeddedControl["Embedded Autonomous Vehicle C&C Architecture"]
+        direction TB
+
+        subgraph InputSubsystems["Sensors & Communications"]
+            Comm["Communication System"]
+            SVM["Sensors Virtual Machine (SVM)<br/>(Cameras, GPS, StarTracker)"]
+        end
+
+        subgraph ControlCore["Control System (CS) Core"]
+            GnC["Guidance & Control (Gn&C)<br/>(Mission Data Loader, Ground Cmds)"]
+            Disp["Task Sequencer & Dispatcher"]
+            Exec["On-Board Executive"]
+            IVHM["Integrated Vehicle Health Management<br/>(Sensor Selection, Redundancy Manager)"]
+        end
+
+        subgraph OutputSubsystems["Actuators & Monitoring"]
+            AVM["Actuator Virtual Machine (AVM)<br/>(Power Controllers, Rover Engines)"]
+            Logger["IVHM Data Logger"]
+            Panel["Operator Panel"]
+        end
+
+        Comm ==> Disp
+        SVM ==>|Sensors Bus Port| IVHM
+        IVHM ==>|Status & Data| GnC
+        GnC ==>|Attitude & Trajectory| Exec
+        Exec ==>|Steering Commands| AVM
+        IVHM ==>|Log Stream| Logger
+        Exec -.->|Telemetry| Panel
+    end
+```
+
+---
+
+### 6.5.3 Blueprint 3: Web Application Deployment View (Sun Fire & SPARC Cluster)
+Documents hardware mapping, servlet containers, and database tiers:
+
+```mermaid
+flowchart TD
+    subgraph ProdDeployment["Sun Microsystems Clustered Deployment View"]
+        direction LR
+
+        subgraph AppHost["«device» Sun Fire X4150 Server"]
+            subgraph Tomcat["«JSP server» Tomcat 7"]
+                subgraph Catalina["«execution environment» Catalina Servlet Container"]
+                    WAR["«artifact» book_club_app.war"]
+                    JAR_User["«artifact» user_services.jar"]
+                    Comp_Order["«component» OnlineOrders"]
+                    WAR -.->|«manifest»| Comp_Order
+                end
+            end
+        end
+
+        subgraph DBHost["«device» Sun SPARC Server"]
+            subgraph Oracle["«database system» Oracle 10g"]
+                S_User[("«schema» Users")]
+                S_Order[("«schema» Orders")]
+                S_Inv[("«schema» Inventory")]
+            end
+        end
+
+        AppHost <==>|«protocol» TCP/IP| DBHost
+    end
+```
+
+---
+
+### 6.5.4 Blueprint 4: Web Application Install / Implementation Directory Tree
+Documents the exact physical packaging layout of Java EE Web archives (`book_club_app.war`):
+
+```mermaid
+flowchart TD
+    subgraph WarStructure["book_club_app.war Physical Disk Hierarchy"]
+        direction TB
+        
+        WAR_Root["book_club_app.war (Root Archive)"]
+
+        subgraph MetaInf["META-INF/"]
+            M_MF["«file» manifest.mf"]
+        end
+
+        subgraph WebInf["WEB-INF/"]
+            W_XML["«file» web.xml"]
+            W_Classes["«folder» classes/"]
+            
+            subgraph LibFolder["lib/"]
+                L_Cart["«library» shp-cart.jar"]
+                L_Ord["«library» orders.jar"]
+                L_Cust["«library» customers.jar"]
+                L_Tools["web-tools-lib.jar"]
+            end
+        end
+
+        subgraph PagesFolder["pages/"]
+            P_JSP["*.jsp templates"]
+        end
+
+        WAR_Root --- MetaInf
+        WAR_Root --- WebInf
+        WAR_Root --- PagesFolder
+
+        L_Cart -.->|«manifest»| C_Cart["«component» ShoppingCart"]
+        L_Ord -.->|«manifest»| C_Ord["«component» Orders"]
+        L_Cust -.->|«manifest»| C_Cust["«component» Customers"]
+    end
+```
+
+---
+
+# Chapter 7: Comprehensive Course Synthesis: Structures, Views, and Styles
+
+## 7.1 The Master Triad: Structures, Views, and Styles
+Across the entire CKS221 curriculum, software architecture is unified by three orthogonal concepts:
+
+```mermaid
+flowchart TD
+    subgraph TheTriad["The Foundational Triad of Software Architecture"]
+        direction TB
+        S["<b>1. Structures (Reality)</b><br/>The actual physical and logical elements as they exist in software and hardware.<br/>Divided into <b>Module</b>, <b>Component-and-Connector</b>, and <b>Allocation</b> structures."]
+        V["<b>2. Views (Representations)</b><br/>Documented architectural descriptions authored for specific stakeholders.<br/>Kruchten's 4+1 View Model (Logical, Process, Development, Physical + Use Cases)."]
+        ST["<b>3. Styles (Proven Patterns)</b><br/>Recurring architectural templates with formalized elements, relations, and topological constraints.<br/>Applied to achieve predictable quality attributes (performance, modifiability, security)."]
+
+        S <==>|Documented As| V
+        ST ==>|Provides Templates For| S
+    end
+```
+
+---
+
+## 7.2 Cross-Structure Mapping: Modules, C&C, and Allocations
+The three architectural structure families are not isolated islands; they represent complementary projections of the same system:
+
+```mermaid
+flowchart LR
+    subgraph StaticSpace["Static Implementation Space"]
+        M["<b>Module View</b><br/>• Packages & Classes<br/>• Decomposition (is-part-of)<br/>• Uses (depends-on)<br/>• Generalization (is-a)<br/>• Layered (allowed-to-use)<br/>• Aspects (crosscuts)<br/>• Data Model (schemas)"]
+    end
+
+    subgraph DynamicSpace["Dynamic Runtime Space"]
+        CC["<b>C&C View</b><br/>• Processes & Threads<br/>• Connectors (RPC, MQ, Pipes)<br/>• Attachment (Ports to Roles)<br/>• Call-Return (Client-Server, SOA)<br/>• Data Flow (Pipe-and-Filter)<br/>• Event-Based (Pub-Sub)<br/>• Repository (Shared Data)"]
+    end
+
+    subgraph PhysicalSpace["Environmental Allocation Space"]
+        AL["<b>Allocation View</b><br/>• Deployment (Hardware Nodes)<br/>• Install (File Directory Trees)<br/>• Work Assignment (Teams/WBS)"]
+    end
+
+    M ==>|Compiles & Packages into| CC
+    CC ==>|Deploys & Executes on| AL
+    M ==>|Assigned to Teams in| AL
+```
+
+1. **A module is not a component:** A single module (e.g., a shared logging utility) may execute across dozens of concurrent runtime components. Conversely, a single component (e.g., an application server process) typically executes code compiled from hundreds of separate modules.
+2. **Architecture drives quality attributes:** 
+   - **Modifiability & Reusability** are governed by **Module Structures**.
+   - **Performance, Availability, and Concurrency** are governed by **Component-and-Connector Structures**.
+   - **Deployability, Cost, and Governance** are governed by **Allocation Structures**.
