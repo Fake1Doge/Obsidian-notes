@@ -21,17 +21,17 @@ tags:
 > 
 > - **[[#Part 0: The Absolute Beginner's Primer — What is CKS222 and Why Does It Exist?|Part 0: The Absolute Beginner's Primer — What is CKS222 & Why Does It Exist?]]**
 > - **[[#Part 1: The Master Exam Cram Matrices (At-a-Glance Facts to Memorize)|Part 1: The Master Exam Cram Matrices (At-a-Glance Facts to Memorize)]]**
->   - 1.1 Complete Chronological Timeline & Pioneer Roster (1965–2020)
->   - 1.2 Statutory Safety Standards & Industrial Disasters
->   - 1.3 Exact Numbers, Percentages, Timeboxes & Cadences
->   - 1.4 Mathematical Formulas & Calculation Cheat Sheet
+>   - [[#1.1 Complete Chronological Timeline & Pioneer Roster (1965–2020)|1.1 Complete Chronological Timeline & Pioneer Roster (1965–2020)]]
+>   - [[#1.2 Statutory Safety Standards & Industrial Disasters|1.2 Statutory Safety Standards & Industrial Disasters]]
+>   - [[#1.3 Exact Numbers, Percentages, Timeboxes & Cadences|1.3 Exact Numbers, Percentages, Timeboxes & Cadences]]
+>   - [[#1.4 Mathematical Formulas & Calculation Cheat Sheet|1.4 Mathematical Formulas & Calculation Cheat Sheet]]
 > - **[[#Part 2: Comprehensive Chapter-by-Chapter Conceptual Mastery|Part 2: Comprehensive Chapter-by-Chapter Conceptual Mastery]]**
->   - 2.1 Week 1: Software Process Foundations, SDLC & Early Models
->   - 2.2 Week 2: Descriptive Process Definition, Modeling & Metamodels (8 Steps, MVP-L, SPEM 2.0)
->   - 2.3 Week 3: Lifecycle Controls, EVM, RACI & Scope Governance
->   - 2.4 Week 4: Agile, Scrum, XP, Lean & Security Integration (SDL-Agile, SAMM)
->   - 2.5 Week 5: Prescriptive Lifecycles, V-Model, Prototyping, Tailoring & Defect Economics
->   - 2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process
+>   - [[#2.1 Week 1: Software Process Foundations, SDLC & Early Models|2.1 Week 1: Software Process Foundations, SDLC & Early Models]]
+>   - [[#2.2 Week 2: Descriptive Process Definition, Modeling & Metamodels|2.2 Week 2: Descriptive Process Definition, Modeling & Metamodels (8 Steps, MVP-L, SPEM 2.0)]]
+>   - [[#2.3 Week 3: Lifecycle Controls, EVM, RACI & Scope Governance|2.3 Week 3: Lifecycle Controls, EVM, RACI & Scope Governance]]
+>   - [[#2.4 Week 4: Agile, Scrum, XP, Lean & Security Integration|2.4 Week 4: Agile, Scrum, XP, Lean & Security Integration (SDL-Agile, SAMM)]]
+>   - [[#2.5 Week 5: Prescriptive Lifecycles, V-Model, Prototyping, Tailoring & Defect Economics|2.5 Week 5: Prescriptive Lifecycles, V-Model, Prototyping, Tailoring & Defect Economics]]
+>   - [[#2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process|2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process]]
 > - **[[#Part 3: The Master "Versus" Discrimination Matrix (MCQ Traps)|Part 3: The Master "Versus" Discrimination Matrix (MCQ Traps)]]**
 > - **[[#Part 4: Top 25 Objective Test "Trap & Trick" Alerts|Part 4: Top 25 Objective Test "Trap & Trick" Alerts]]**
 > - **[[#Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations|Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations]]**
@@ -244,6 +244,16 @@ Every software system progresses through five stages:
 4. **Testing (V&V):** Ensuring correctness and user fulfillment.
 5. **Maintenance & Evolution:** Long-term upkeep post-deployment (corrective bug fixes, adaptive OS upgrades, perfective refactoring).
 
+### 2.1.7 Statutory Safety Standards & Industrial Regulations
+In safety-critical domains, software failure can lead to catastrophic loss of human life or massive environmental and financial devastation. Consequently, regulatory bodies mandate strict compliance with domain-specific statutory standards:
+- **IEC 61508:** The foundational international "umbrella" standard for Functional Safety across all electrical, electronic, and programmable electronic safety-related systems.
+- **ISO 26262:** The automotive adaptation of IEC 61508. Classifies hazards using **Automotive Safety Integrity Levels (ASIL A to D)**, where **ASIL D** represents the most stringent safety integrity level with the most rigorous verification mandates.
+- **IEC 62304:** Mandates software lifecycle processes, risk management, and post-market safety surveillance for **Medical Device Software**.
+- **DO-178C (ED-12C):** Airborne Systems & Equipment. The mandatory standard for commercial **avionics flight software**, evaluated across Design Assurance Levels (**DAL A to E**, where DAL A failure causes catastrophic aircraft loss).
+- **EN 50128:** Governs communications, signaling, and processing software for **Railway Systems**, defining Safety Integrity Levels (**SIL 0 to 4**).
+- **ECSS (European Cooperation for Space Standardization):** Space engineering standards mandated by the European Space Agency (**ESA**) for spacecraft, satellites, and launcher ground segments.
+- **CMMI (Capability Maturity Model Integration):** Appraises organizational process maturity across 5 levels (Initial, Managed, Defined, Quantitatively Managed, Optimizing).
+
 ---
 
 ## 2.2 Week 2: Descriptive Process Definition, Modeling & Metamodels
@@ -337,7 +347,15 @@ Requirements must be: **Correct**, **Unambiguous**, **Complete**, **Consistent**
   - *Backend Coding:* Backend Dev (**R/A**), Frontend Lead (**C**), Frontend Dev (**I**), Team Lead (**I**).
   - *UAT:* Frontend Lead (**R/A**), Frontend Dev (**R**), Backend Dev (**R**), Team Lead (**C/I**).
 
-### 2.3.5 Decision Tools: Eisenhower Matrix & Fist of Five
+### 2.3.5 Bruce Tuckman's Model of Group Development (1965)
+Engineering teams are complex social entities that cannot collaborate effectively on Day 1 without moving through distinct psychological stages. Bruce Tuckman defined five developmental stages:
+1. **Forming (Orientation):** Members are polite, guarded, and anxious. They look to leadership for clear direction, rules, and scope boundaries.
+2. **Storming (Conflict):** Interpersonal friction, power struggles, and disagreements over architectural choices, tooling, and authority emerge. **Exam Truth:** Storming is a natural and necessary stage; attempting to bypass or suppress it leads to passive resistance and toxic workarounds later.
+3. **Norming (Cohesion):** Team members resolve conflicts, establish mutual trust, define ground rules (coding standards, DoD), and clarify role boundaries.
+4. **Performing (Synergy):** Highly autonomous, cross-functional collaboration with minimal managerial intervention. The team reaches maximum sustained delivery velocity.
+5. **Adjourning (Mourning/Dissolution):** Final wrap-up after project delivery, task handover, celebration of achievements, and team dissolution.
+
+### 2.3.6 Decision Tools: Eisenhower Matrix & Fist of Five
 - **Eisenhower Prioritization Matrix:**
   - *Do (Urgent & Important):* Production hotfixes, writing onboarding documentation for blocked teammates.
   - *Delegate (Urgent & Not Important):* Filing administrative tickets, updating software licenses.
@@ -345,7 +363,7 @@ Requirements must be: **Correct**, **Unambiguous**, **Complete**, **Consistent**
   - *Delete (Not Urgent & Not Important):* Unused speculative mock-ups, vanity features.
 - **Fist of Five Voting Protocol:** Fist ($0$) = Strong block/reject; $1-2$ = Reject requiring discussion; $3$ = Weak acceptance; $4$ = Solid agreement; $5$ = Total endorsement. **Rule: Any score below 3 halts the process.**
 
-### 2.3.6 Earned Value Management (EVM), Metric Collapse & Earned Schedule
+### 2.3.7 Earned Value Management (EVM), Metric Collapse & Earned Schedule
 Traditional EVM measures project health against budget and schedule baselines:
 - **Formulas:**
   - $CV = EV - AC \implies (<0 \text{ is Over Budget})$
