@@ -1,8 +1,5 @@
 # CKS222: Software Process and Life Cycle
 
-> [!tip] ⚡ Quick Study Resource for Test 1 (Objective Exam)
-> Preparing for the mid-semester objective test? Review **[[Y2S1/CKS222 Short Notes|CKS222 Short Notes (Test 1 Objective Examination Cram Sheet)]]** for quick fact matrices, timeboxes, formulas, discrimination tables, top 20 traps, and 25 rapid-fire practice questions.
-
 ---
 
 # Chapter 1: Introduction to Software Process & the Product Lifecycle
