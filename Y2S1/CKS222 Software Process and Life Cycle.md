@@ -1,3 +1,23 @@
+---
+title: CKS222 Software Process and Life Cycle
+course_code: CKS222
+course_name: Software Process and Life Cycle
+semester: Y2S1
+tags:
+  - software-process
+  - software-lifecycle
+  - agile-methodology
+  - scrum
+  - devops
+  - sre
+  - cleanroom
+  - spem
+  - comp-sci
+aliases:
+  - CKS222
+  - Software Process and Life Cycle
+---
+
 # Chapter 1: Introduction to Software Process & the Product Lifecycle
 
 ## 1.1 Fundamentals of Software Engineering & Process
