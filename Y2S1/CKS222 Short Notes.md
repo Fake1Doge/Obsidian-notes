@@ -34,7 +34,7 @@ tags:
 >   - [[#2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process|2.6 Week 6 (Initial High-Yield Scope): Spiral Model, ICSM, Cleanroom & Unified Process]]
 > - **[[#Part 3: The Master "Versus" Discrimination Matrix (MCQ Traps)|Part 3: The Master "Versus" Discrimination Matrix (MCQ Traps)]]**
 > - **[[#Part 4: Top 25 Objective Test "Trap & Trick" Alerts|Part 4: Top 25 Objective Test "Trap & Trick" Alerts]]**
-> - **[[#Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations|Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations]]**
+> - **[[#Part 5: 40 High-Yield Rapid-Fire Objective Practice Questions with Explanations|Part 5: 40 High-Yield Rapid-Fire Objective Practice Questions with Explanations]]**
 
 ---
 
@@ -302,12 +302,21 @@ flowchart TD
   - *Inconsistent Precondition:* An entry rule that is logically impossible to satisfy.
   - *Orphan Entity:* A declared role or artifact that is never used in any workflow.
   - *Dependency Deadlock:* Task A waits for Task B, while Task B waits for Task A.
+- **Three Critical Risks in Process Modeling Investments (Lecture Slide 14):**
+  1. *Inaccurate Reporting / Process Embellishment:* Performers describe an idealized "what management wants to hear" process rather than their real shortcuts, resulting in ungrounded models.
+  2. *Budget & Time Overruns (Underestimating Cost):* Modeling consumes massive developer time; without strict bounding, elicitation drains project capital.
+  3. *Model Over-Engineering / Excessive Complexity:* Creating hyper-detailed, bureaucratic models that are unreadable, impossible to maintain, and actively ignored.
 
 ### 2.2.3 Process Modeling Formalisms: MVP-L and SPEM 2.0
 - **Multi-View Process Language (MVP-L):**
   - Developed for Software Process Improvement (SPI) and GQM.
   - Applies **David Parnas' Information Hiding (1972)** to processes: The **Process Interface** (visible inputs, outputs, attributes, entry/exit criteria) is strictly separated from the **Process Body** (hidden task steps). If internal steps change, external processes interacting with the interface remain unaffected.
   - Control flow is **implicit**, driven by Boolean preconditions and state transitions (`Enabled` $\to$ `Active` $\to$ `Disabled`).
+  - **Four Basic Typed Object-Oriented Constructs (Slide 17):**
+    1. `Product_model`: Defines artifact structures, states (e.g., Draft, Inspected, Released), and document attributes.
+    2. `Process_model`: Defines executable task behaviors, consumed/produced products, and implicit entry/exit criteria.
+    3. `Resource_model`: Defines active human roles (developers, reviewers) and passive tooling assets (compilers, test harnesses).
+    4. `Attribute_model`: Defines quantitative measures, formal GQM metric bindings, and quality evaluations.
 - **OMG SPEM 2.0 Standard:**
   - Defined as a UML 2.0 profile.
   - Core Metamodel Triad: **`RoleDefinition`**, **`TaskDefinition`**, and **`WorkProductDefinition`**, plus **`Guidance`**.
@@ -317,6 +326,25 @@ flowchart TD
     2. *Replace:* Substitutes an existing element with a tailored variant.
     3. *Extend:* Inherits properties from a base element and allows specialization (like OOP inheritance).
     4. *Extend and Replace:* Inherits, specializes, and hides the base element from publication.
+
+### 2.2.4 Process Notation Characteristics & The 8 Notation Requirements (R1–R8)
+In objective tests, questions frequently test these foundational modeling dimensions (Week 2 Slide 15):
+- **Four Key Notation Characteristics:**
+  1. *Process Programming vs. Process Improvement:* Is the notation engineered for automated execution by software engines (programming/enactment) or for human comprehension and organizational learning (improvement)?
+  2. *Hidden vs. Guiding:* Is the process hidden inside tools (e.g., automated CI script), or does the model explicitly guide human developers through complex workflows?
+  3. *Prescriptive vs. Proscriptive:* 
+     - **Prescriptive ("Must-Do"):** Rigidly dictates the exact sequence of steps a developer **must** follow.
+     - **Proscriptive ("Must-Not-Do"):** Establishes hard safety boundaries and defines **forbidden actions**, giving developers autonomous discretion within those constraints.
+  4. *Single Person vs. Multiperson:* Focuses on an individual's cognitive tasks vs. multi-role team coordination and artifact handoffs.
+- **The Eight Rigorous Notation Requirements (R1 to R8):**
+  - **R1. Natural Representation:** Captures real-world software engineering concepts intuitively without awkward cognitive translations.
+  - **R2. Support of Measurement:** Natively embeds process and product metrics (e.g., GQM hooks, defect rates, effort tracking).
+  - **R3. Tailorability of Models:** Enables easy adaptation, extension, and variability across diverse project contexts.
+  - **R4. Formality:** Provides mathematically precise syntax and execution semantics to prevent ambiguous interpretations.
+  - **R5. Understandability:** Easily read, interpreted, and validated by non-specialist human stakeholders (managers, developers, clients).
+  - **R6. Executability:** Capable of being directly interpreted and enacted by software tools or automated workflow engines.
+  - **R7. Flexibility:** Accommodates dynamic runtime deviations, exception handling, and human problem-solving discretion.
+  - **R8. Traceability:** Enforces explicit bidirectional linkages between tasks, artifacts, roles, and rationale.
 
 ---
 
@@ -333,8 +361,25 @@ This is an absolute guarantee on any objective exam:
 - **Refactoring:** The disciplined practice of altering internal software structures to enhance readability, reduce complexity, and eliminate code smells **without altering external observable behavior**.
 - **10 Code Smells:** Obsolete comments, commented-out dead code, duplicate copy-paste code, vague identifiers, multi-responsibility classes, bloated routines ($>10$ lines), excessive parameters ($>4$ arguments), divergent change/shotgun surgery, feature envy, and primitive obsession.
 
-### 2.3.3 The 8 Requirements Qualities (Texas DIR, 2008)
-Requirements must be: **Correct**, **Unambiguous**, **Complete**, **Consistent**, **Ranked for Priority**, **Verifiable / Testable** (must have measurable thresholds), **Modifiable**, and **Traceable**.
+### 2.3.3 Requirements Engineering Qualities, Failures & Scope Governance
+- **Three Stakeholder Elicitation Challenges (Week 3 Slide 4):**
+  1. *Lack of Experience:* Stakeholders often lack technical depth and cannot visualize what modern systems can realistically deliver.
+  2. *Fleeting Desires:* Stakeholders frequently alter opinions based on temporary trends or market hype.
+  3. *Imperfect Translation:* Misalignment between domain business terminology and technical software engineering specifications.
+- **Three Project Failure Drivers Eliminated by Explicit Requirements (Slide 9):**
+  1. *Developer Bias:* Developers building what is intellectually interesting or technically comfortable rather than what solves the business problem.
+  2. *Team De-synchronization:* Independent engineering teams (frontend, backend, QA) making conflicting architectural assumptions.
+  3. *Stakeholder Volatility:* Preventing continuous uncontrolled scope creep by establishing a clear, baseline contract.
+- **The Eight Requirements Qualities (Texas DIR, 2008 Checklist - Slide 10):**
+  Requirements must be: (1) **Correct**, (2) **Unambiguous** (only one interpretation), (3) **Complete**, (4) **Consistent** (zero internal contradictions), (5) **Ranked for Priority**, (6) **Verifiable / Testable** (must have measurable numeric thresholds, e.g., $\le 2	ext{s}$ latency), (7) **Modifiable**, and (8) **Traceable**.
+- **Two Pillars of Nonfunctional Scope (Slide 11):**
+  - *Quality Attributes (Chosen Internally):* Properties chosen by engineering to guarantee technical excellence (e.g., maintainability, scalability, test coverage $>85\%$, 99.99% uptime).
+  - *Constraints (Mandated Externally):* Rigid, non-negotiable boundaries imposed by external stakeholders, laws, or physical realities (e.g., GDPR data privacy, IEC 62304 medical compliance, legacy hardware memory limits).
+- **The Triple Constraint Trade-off Matrix (Slide 12):**
+  Balances **Time** (Duration), **Scope** (Features & Quality), and **Cost** (Budget & Personnel) across 3 management strategies:
+  1. *Constrain (Fixed):* Non-negotiable boundary; zero slippage allowed (e.g., hard legal deadline or fixed contractual grant).
+  2. *Optimize (Push):* The primary target dimension where the team seeks maximum competitive edge or performance yield.
+  3. *Accept (Trade-off / Buffer):* The dimension with negotiated flexibility where concessions are accepted to protect the constrained dimension.
 
 ### 2.3.4 The RACI Matrix: Governance & Authority
 - **R (Responsible):** The "doer" who completes the task. Can be multiple people.
@@ -364,19 +409,34 @@ Engineering teams are complex social entities that cannot collaborate effectivel
 - **Fist of Five Voting Protocol:** Fist ($0$) = Strong block/reject; $1-2$ = Reject requiring discussion; $3$ = Weak acceptance; $4$ = Solid agreement; $5$ = Total endorsement. **Rule: Any score below 3 halts the process.**
 
 ### 2.3.7 Earned Value Management (EVM), Metric Collapse & Earned Schedule
-Traditional EVM measures project health against budget and schedule baselines:
-- **Formulas:**
-  - $CV = EV - AC \implies (<0 \text{ is Over Budget})$
-  - $SV = EV - PV \implies (<0 \text{ is Behind Schedule})$
-  - $CPI = \frac{EV}{AC} \implies (<1.0 \text{ is Cost Inefficient})$
-  - $SPI = \frac{EV}{PV} \implies (<1.0 \text{ is Slower than Planned})$
-- **The Late-Stage Metric Collapse (EVM Flaw):**
-  - When a troubled project finishes late, all physical scope is eventually finished ($EV \to BAC$) and planned value is capped at $BAC$ ($PV = BAC$).
-  - As a result, $SV = EV - PV = 0$ and $SPI = \frac{EV}{PV} = 1.00$, making a late project appear "perfectly on schedule"!
-- **The Remedy: Earned Schedule (ES, Walt Lipke 2003):** Converts progress into time units:
-  - $SV_t = ES - AT$ (Negative value indicates exact calendar months of delay).
-  - $SPI_t = \frac{ES}{AT}$ (True time-based velocity index that never collapses to 1.00).
-- **EVM Triads:** Evaluates $(x\%, S_{xj}, C_{xj})$ where $S_{xj}$ is the **A-SPSRI scope score** across 22 elements (Bucket 1: 8 User Story/Req, Bucket 2: 7 Architecture, Bucket 3: 7 Verification).
+Traditional EVM measures project health against budget and schedule baselines (Week 3 Slides 18–25):
+- **Traditional DoD / CMMI Metric Synonyms (Slide 18):**
+  - Planned Value: $PV = BCWS$ (**Budgeted Cost of Work Scheduled**)
+  - Earned Value: $EV = BCWP$ (**Budgeted Cost of Work Performed**)
+  - Actual Cost: $AC = ACWP$ (**Actual Cost of Work Performed**)
+- **Core Formulas & Decision Rules:**
+  - $CV = EV - AC \implies (<0 \text{ is Over Budget}, >0 \text{ is Under Budget})$
+  - $SV = EV - PV \implies (<0 \text{ is Behind Schedule in currency}, >0 \text{ is Ahead of Schedule})$
+  - $CPI = \frac{EV}{AC} \implies (<1.0 \text{ is Cost Inefficient}, >1.0 \text{ is Cost Efficient})$
+  - $SPI = \frac{EV}{PV} \implies (<1.0 \text{ is Slower than Planned}, >1.0 \text{ is Faster than Planned})$
+- **Lecture Worked Scenario 1: Behind Schedule & Over Budget (Slide 19):**
+  - Baseline: 10-month schedule, $BAC = \text{RM } 500,000$ (planned RM 50,000/month).
+  - At Month 6 ($AT = 6$): $PV = \text{RM } 300,000$ (60%), $EV = \text{RM } 200,000$ (40%), $AC = \text{RM } 250,000$, $ES = 4.0\text{ months}$ (RM 200k earned was scheduled at Month 4).
+  - Traditional: $CV = 200,000 - 250,000 = -\text{RM } 50,000$ (Over Budget); $SV = 200,000 - 300,000 = -\text{RM } 100,000$ (Behind Schedule); $CPI = 0.80$; $SPI = 0.67$.
+  - Earned Schedule: $SV_t = ES - AT = 4.0 - 6.0 = -2.0\text{ months}$ (**Exposes 2 months calendar delay!**); $SPI_t = \frac{4.0}{6.0} = 0.67$.
+- **Lecture Worked Scenario 2: The Late-Stage Metric Collapse (Slide 20):**
+  - Core banking portal, 12-month schedule, $BAC = \text{RM } 1,200,000$. Finished late at Month 15 ($AT = 15$).
+  - $PV = \text{RM } 1,200,000$ (capped at $BAC$), $EV = \text{RM } 1,200,000$ ($EV = BAC$), $AC = \text{RM } 1,500,000$, $ES = 12.0\text{ months}$.
+  - Traditional: $CV = -\text{RM } 300,000$; $SV = 1.2M - 1.2M = \text{RM } 0$ (**Deceptive: looks on schedule!**); $SPI = 1.00$ (**Deceptive: looks perfect!**).
+  - Earned Schedule Remedy (Walt Lipke 2003): $SV_t = ES - AT = 12.0 - 15.0 = -3.0\text{ months}$ (**Accurately exposes 3-month calendar delay!**); $SPI_t = \frac{12.0}{15.0} = 0.80$ (**True velocity index that does not collapse to 1.00**).
+- **EVM Triads & A-SPSRI Scope Rating (Slides 22–25):**
+  - Format: $\left( x\%, S_{xj}, C_{xj} \right)$ where $x\%$ is physical completion, $S_{xj}$ is scope health score ($0-100$), and $C_{xj}$ is accumulated cost.
+  - *Project A vs. Project B Case (Slide 24):* Both report identical EVM at 50% ($EV = 250\text{k}, AC = 250\text{k}, CPI = 1.0$). EVM Triads expose reality: Project A is $(50\%, 88/100, \text{RM } 250,000)$ (stable frozen scope, low risk); Project B is $(50\%, 32/100, \text{RM } 250,000)$ (over 68% stories lack acceptance criteria, volatile schemas; catastrophic rework impending).
+  - *22 A-SPSRI Critical Scope Elements in 3 Buckets (Slide 25):*
+    1. **User Story & Requirements Definition (8 Elements):** INVEST criteria, nonfunctional metrics quantified ($\le 2\text{s}$ latency).
+    2. **Design & Architectural Completeness (7 Elements):** UML sequence diagrams, external constraints/compliance.
+    3. **Verification & Environmental Readiness (7 Elements):** Given-When-Then defined for every story, automated CI pipelines active.
+    - Worked Example: IoT Smart Grid at $30\%$ completion (11 satisfied, 6 partial, 5 unaddressed) yields $S_{xj} = 55/100$. Triad: $(30\%, 55/100, \text{RM } 120,000)$.
 
 ---
 
@@ -388,6 +448,15 @@ Formulated by 17 software leaders, establishing four foundational values:
 2. **Working software** over comprehensive documentation.
 3. **Customer collaboration** over contract negotiation.
 4. **Responding to change** over following a plan.
+
+- **HP Industrial Agile Adoption Survey ($N = 601$ Organizations - Week 4 Slide 4):**
+  - **Distribution:** **51%** leaning toward Agile, **24%** hybrid, **16%** pure Agile (**91% total Agile engagement**), **7%** leaning toward Waterfall, and **only 2%** pure Waterfall.
+  - **Top Measured Benefits:**
+    1. **54%** enhanced cross-team collaboration.
+    2. **52%** significant increase in overall software quality.
+    3. **49%** increased customer satisfaction.
+    4. **43%** shortened time-to-market.
+    5. **42%** reduced cost of development.
 
 ### 2.4.2 The Scrum Framework
 Scrum operates on **Empiricism** (knowledge comes from experience and observing reality):
@@ -481,6 +550,29 @@ flowchart TD
 - **Component-Based Development (CBD):** Assembling pre-engineered commercial off-the-shelf (COTS) components via standardized interface contracts.
 
 ### 2.5.5 Process Tailoring & Defect Economics
+- **The Process Selection Matrix (Comparing Foundational Lifecycles - Week 5 Slide 15):**
+
+| Lifecycle Model | Core Engineering Philosophy | Ideal Requirements Context | Stakeholder Involvement Mode | Primary Process Risk Managed |
+| :--- | :--- | :--- | :--- | :--- |
+| **Waterfall** | Linear, sequential creation across abstract design levels. | Highly stable, fully understood upfront; invariant user needs. | Limited to upfront elicitation & final operations delivery. | Configuration drift and early architectural misalignment. |
+| **V-Model** | Symmetrical V&V mapping at every constructive design stage. | Stable, simple, low expected requirements volatility. | Participates in parallel validation test specification. | Late-stage testing disasters via early parallel test planning. |
+| **Rapid Prototyping** | Rapid throwaway mock-up construction to test assumptions. | Highly volatile, poorly understood, exploratory domains. | High direct interaction evaluating executable mock-ups. | Requirements ambiguity and user expectation distortion. |
+| **Iterative Enhancement** | Modular kernel expansion via successive planned waterfall loops. | Partially understood, evolutionary problem domains. | Continuous feedback at the conclusion of each iteration. | Schedule slip via early design refactoring drag. |
+
+- **Standard SQA Conformance Audit Checklist (Week 5 Slide 17):**
+  High-maturity engineering organizations mandate formal process audits at least **once every 3 months** against the Electronic Process Guide (EPG) to prevent process drift:
+  1. *Requirements Traceability:* Functional requirements mapped 1:1 to source code units and test cases.
+  2. *Peer Review Logs:* Documented evidence of peer inspections conducted for all modified code.
+  3. *Configuration Baselining:* All work products formally identified, tagged, and version-controlled.
+  4. *Tool Version Tracking:* Compilers, build scripts, and test harnesses documented as configuration items.
+  5. *Exit Criteria Fulfillment:* All milestone exit postconditions verified using objective quantitative metrics.
+- **Standard SQA Conformance Audit Checklist (Week 5 Slide 17):**
+  High-maturity engineering organizations mandate formal process audits at least **once every 3 months** against the Electronic Process Guide (EPG) to prevent process drift:
+  1. *Requirements Traceability:* Functional requirements mapped 1:1 to source code units and test cases.
+  2. *Peer Review Logs:* Documented evidence of peer inspections conducted for all modified code.
+  3. *Configuration Baselining:* All work products formally identified, tagged, and version-controlled.
+  4. *Tool Version Tracking:* Compilers, build scripts, and test harnesses documented as configuration items.
+  5. *Exit Criteria Fulfillment:* All milestone exit postconditions verified using objective quantitative metrics.
 - **Münch's 4 Ps Tailoring Framework:** Tailor processes based on **Problem** (novelty/volatility), **Project** (budget/team size/distribution), **People** (skills/experience/culture), and **Product** (safety/reliability/lifespan).
 - **Boehm's Exponential Defect Cost Multiplier:** Cost escalates exponentially the later a defect is found: Inception ($1\times$) $\to$ Coding ($10-15\times$) $\to$ Integration ($30-50\times$) $\to$ Live Production ($100-1000\times$).
 - **Constructive vs. Analytical QA:** Constructive prevents defects upfront (reviews, architecture, standards); Analytical detects defects post-creation (dynamic testing).
@@ -564,6 +656,12 @@ Examiners love asking questions that test the difference between two related con
 | **ICSM Commitments** | **Roulette Strategy** | **Blackjack Strategy** | Roulette = Total upfront capital bet on unproven architecture. Blackjack = Small ante (~5%), inspects empirical cards, early bailout. |
 | **UP Foundations** | **Phase (Horizontal Axis)** | **Workflow (Vertical Axis)** | Phase = Management timebox period (Inception, Elaboration, etc.). Workflow = Technical discipline active across all phases. |
 | **Anchor Milestones** | **Life-Cycle Objectives (LCO)**| **Life-Cycle Architecture (LCA)**| LCO = Concurrence on scope and business viability. LCA = Validated **executable architecture baseline** with zero critical risks. |
+| **Notation Orientation** | **Prescriptive Notations** | **Proscriptive Notations** | Prescriptive = Dictates mandatory steps ("What you MUST do"). Proscriptive = Establishes safety boundaries & forbidden actions ("What you MUST NOT do"). |
+| **Notation Purpose** | **Process Programming** | **Process Improvement** | Programming = Automated machine execution & tool compilation. Improvement = Human understanding, communication, & optimization. |
+| **Nonfunctional Scope**| **Quality Attributes** | **Constraints** | Quality Attributes = Internally chosen by engineering (speed, modularity). Constraints = Externally mandated by regulations/hardware (laws, memory limits). |
+| **Triple Constraint** | **Constrain** | **Accept** | Constrain = Non-negotiable boundary (zero slippage). Accept = Negotiated buffer where schedule/budget concessions are accepted. |
+| **EVM Cost Terms** | **Planned Value ($PV$)** | **Earned Value ($EV$)** | $PV = BCWS$ (Budgeted Cost of Work Scheduled). $EV = BCWP$ (Budgeted Cost of Work Performed). |
+| **MVP-L Model Types** | **`Process_model`** | **`Attribute_model`** | `Process_model` = Defines task behaviors & entry/exit rules. `Attribute_model` = Defines quantitative measures & GQM metric bindings. |
 
 ---
 
@@ -671,7 +769,7 @@ Examiners love asking questions that test the difference between two related con
 
 ---
 
-# Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations
+# Part 5: 40 High-Yield Rapid-Fire Objective Practice Questions with Explanations
 
 ### Q1 [Single Choice]
 **Which standard provides the foundational functional safety umbrella requirements from which industry-specific standards like ISO 26262 and IEC 62304 are derived?**
@@ -1007,9 +1105,62 @@ Examiners love asking questions that test the difference between two related con
 
 ---
 
+### Q36 [Single Choice]
+**Under the eight formal Process Notation Requirements (R1 to R8), which requirement mandates that a process notation must natively integrate quantitative process and product metrics (such as GQM hooks and defect rates)?**
+- A) R1: Natural Representation
+- B) R2: Support of Measurement
+- C) R4: Formality
+- D) R8: Traceability
+> **Answer: B** | *Explanation:* **R2: Support of Measurement** dictates that the notation must natively bind quantitative metrics to process tasks, roles, and artifacts. R1 is Natural Representation, R4 is Formality, and R8 is Traceability.
+
+---
+
+### Q37 [Single Choice]
+**A software process modeling language that defines strict boundaries and specifies what developers "MUST NOT DO" (forbidden unsafe actions) while permitting flexible discretion within those constraints is classified as:**
+- A) Prescriptive Notation
+- B) Proscriptive Notation
+- C) Descriptive Notation
+- D) Deterministic Notation
+> **Answer: B** | *Explanation:* **Proscriptive notations** define boundaries and restrictions ("What you MUST NOT do"), allowing human autonomy within constraints. In contrast, **Prescriptive notations** dictate the exact sequence of steps that "MUST be done".
+
+---
+
+### Q38 [Single Choice]
+**In project governance using the Triple Constraint Trade-off Matrix (Time, Scope, Cost), how is a project parameter classified when it represents a hard, non-negotiable legal or regulatory deadline where zero schedule slippage is permitted?**
+- A) Accept
+- B) Optimize
+- C) Constrain
+- D) Float
+> **Answer: C** | *Explanation:* **Constrain** signifies an inflexible boundary that cannot slip under any circumstance. **Optimize** is the target dimension pushed for maximum gains, and **Accept** is the negotiated buffer dimension where trade-offs are tolerated.
+
+---
+
+### Q39 [Single Choice]
+**An e-commerce payment gateway project has a 10-month baseline schedule and a Total Budget at Completion ($BAC$) of RM 500,000. At Month 6, the audit reveals: $PV = \text{RM } 300,000$, $EV = \text{RM } 200,000$, and $AC = \text{RM } 250,000$. What are the project's Cost Performance Index ($CPI$) and Schedule Performance Index ($SPI$)?**
+- A) $CPI = 1.25, SPI = 1.50$
+- B) $CPI = 0.80, SPI = 0.67$
+- C) $CPI = 0.67, SPI = 0.80$
+- D) $CPI = 1.00, SPI = 1.00$
+> **Answer: B** | *Explanation:* 
+> $$CPI = \frac{EV}{AC} = \frac{200,000}{250,000} = 0.80$$
+> $$SPI = \frac{EV}{PV} = \frac{200,000}{300,000} \approx 0.67$$
+> The project is obtaining RM 0.80 of value per RM 1.00 spent (Cost Inefficient) and progressing at 67% of planned speed (Behind Schedule).
+
+---
+
+### Q40 [Single Choice]
+**In traditional Earned Value Management (EVM) literature and US Department of Defense / CMMI standards, what is the alternative acronym for Earned Value ($EV$)?**
+- A) BCWS (Budgeted Cost of Work Scheduled)
+- B) BCWP (Budgeted Cost of Work Performed)
+- C) ACWP (Actual Cost of Work Performed)
+- D) EAC (Estimate at Completion)
+> **Answer: B** | *Explanation:* **$EV = BCWP$** (Budgeted Cost of Work Performed). $PV = BCWS$ (Budgeted Cost of Work Scheduled), and $AC = ACWP$ (Actual Cost of Work Performed).
+
+---
+
 > [!tip] Final Test Day Recommendation
 > Prior to entering the objective examination:
 > 1. Read **[[#Part 0: The Absolute Beginner's Primer — What is CKS222 and Why Does It Exist?|Part 0]]** to anchor your mindset.
 > 2. Memorize the tables in **[[#Part 1: The Master Exam Cram Matrices (At-a-Glance Facts to Memorize)|Part 1]]** (Pioneers, Standards, Numbers, Formulas).
 > 3. Verify you can eliminate every distractor in **[[#Part 3: The Master "Versus" Discrimination Matrix (MCQ Traps)|Part 3]]** and identify all false statements in **[[#Part 4: Top 25 Objective Test "Trap & Trick" Alerts|Part 4]]**.
-> 4. Test yourself with all **[[#Part 5: 35 High-Yield Rapid-Fire Objective Practice Questions with Explanations|35 practice questions in Part 5]]**.
+> 4. Test yourself with all **[[#Part 5: 40 High-Yield Rapid-Fire Objective Practice Questions with Explanations|40 practice questions in Part 5]]**.
