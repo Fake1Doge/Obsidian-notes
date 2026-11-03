@@ -15,7 +15,7 @@ aliases:
   - Software Architecture and Design
 ---
 
-# Chapter 1: Introduction to Software Architecture, Structures & Views
+# Topic 1: Software Architecture
 
 ## 1.1 The Discipline and Foundations of Software Architecture
 
@@ -188,11 +188,8 @@ Architecture design is an iterative synthesis activity that balances structural 
    - *Client-Server Network View:* Web viewed as physical client machines running web browsers connecting over TCP/IP to remote web servers and load balancers.
    - *Service Architecture View:* Web viewed as microservices exposing RESTful JSON endpoints communicating asynchronously via distributed message brokers.
 
----
 
-# Chapter 2: Quality Attributes, Architectural Documentation & Kruchten's 4+1 View Model
-
-## 2.1 The Strategic Importance of Software Architecture
+## 1.6 The Strategic Importance of Software Architecture
 
 ```mermaid
 flowchart TD
@@ -209,7 +206,7 @@ flowchart TD
 
 ---
 
-## 2.2 Quality Attributes (Non-Functional Requirements)
+## 1.7 Quality Attributes (Non-Functional Requirements)
 
 A software system may execute its core functions correctly, but if it is painfully slow, easily hacked, or impossible to modify, it is a catastrophic engineering failure.
 
@@ -229,7 +226,7 @@ flowchart TD
 
 ---
 
-## 2.3 The Rationale and Practice of Architecture Documentation
+## 1.8 The Rationale and Practice of Architecture Documentation
 
 Documenting a software architecture is an indispensable engineering obligation:
 
@@ -239,7 +236,7 @@ Documenting a software architecture is an indispensable engineering obligation:
 
 Documentation represents the physical or electronic crystallization of an architectural design into formal artifacts (whiteboard snapshots, architecture description documents, interactive models, and living wiki repositories).
 
-### 2.3.1 The Three Fundamental Uses of Architecture Documentation
+### 1.8.1 The Three Fundamental Uses of Architecture Documentation
 Architecture documentation serves three vital organizational functions:
 
 ```mermaid
@@ -255,7 +252,7 @@ flowchart LR
 
 ---
 
-## 2.4 Philippe Kruchten's "4+1" Architectural View Model
+## 1.9 Philippe Kruchten's "4+1" Architectural View Model
 
 Published in 1995 by **Philippe Kruchten** (Rational Software / IEEE Software), the **"4+1" View Model** addresses the fundamental reality that **no single visual diagram can satisfy all stakeholders simultaneously**.
 
@@ -285,31 +282,31 @@ flowchart TD
     end
 ```
 
-### 2.4.1 1. The Logical View
+### 1.9.1 1. The Logical View
 - **Focus:** Captures the vocabulary and conceptual model of the problem domain.
 - **Constituents:** Classes, objects, attributes, methods, and relationships (`inheritance`, `aggregation`, `association`).
 - **Primary Audience:** System architects, designers, business analysts, and domain experts.
 - **Representative UML Diagrams:** Class Diagrams, Object Diagrams, State Machine Diagrams, Sequence Diagrams.
 
-### 2.4.2 2. The Process View
+### 1.9.2 2. The Process View
 - **Focus:** Addresses the runtime behavior, concurrency, and communication of the executing system.
 - **Constituents:** Independent processes, execution threads, message passing, synchronization mechanisms, deadlock avoidance, and event handling.
 - **Primary Audience:** Systems integrators, performance analysts, and concurrency engineers.
 - **Representative Notations:** Control Flowcharts, Data Flow Diagrams (DFDs), Activity Diagrams, Concurrency Task Sequence Diagrams.
 
-### 2.4.3 3. The Development View (Implementation View)
+### 1.9.3 3. The Development View (Implementation View)
 - **Focus:** Organizes the actual software codebase and physical module hierarchy.
 - **Constituents:** Software modules, source packages, build targets, libraries, third-party frameworks, and sub-systems.
 - **Primary Audience:** Software engineers, programmers, build managers, and configuration controllers.
 - **Representative UML Diagrams:** Component Diagrams, Package Diagrams, Artifact Diagrams.
 
-### 2.4.4 4. The Physical View (Deployment View)
+### 1.9.4 4. The Physical View (Deployment View)
 - **Focus:** Maps the software elements onto the physical hardware infrastructure and execution environment.
 - **Constituents:** Physical servers, CPU cores, virtual machines, storage networks, networking routers, communication protocols (TCP/IP, Fibre Channel), and topology.
 - **Primary Audience:** Deployment engineers, infrastructure architects, cloud/DevOps specialists, and network administrators.
 - **Representative UML Diagrams:** Deployment Diagrams, Network Topology Charts.
 
-### 2.4.5 +1. The Use Case View (Scenario View)
+### 1.9.5 +1. The Use Case View (Scenario View)
 - **Focus:** Bridges and validates the four architectural views using concrete user requirements, scenarios, and operational workflows.
 - **Constituents:** Actors, use cases, given-when-then scenarios, and system sequences.
 - **The Central "+1" Function:**
@@ -319,7 +316,7 @@ flowchart TD
 
 ---
 
-## 2.5 Summary Comparison of Kruchten's 4+1 Views
+## 1.10 Summary Comparison of Kruchten's 4+1 Views
 
 | View Name | Primary Perspective | Core Artifacts & Elements | Primary Stakeholder Audience | Standard UML Diagrams |
 | :--- | :--- | :--- | :--- | :--- |
@@ -329,18 +326,15 @@ flowchart TD
 | **Physical View** | Hardware topography & hosting | Servers, VMs, networks, cloud nodes | DevOps, Infrastructure Specialists | Deployment Diagrams |
 | **Use Case (+1) View**| User requirements validation | System use cases, actors, scenarios | End Users, Customers, Evaluators | Use Case Diagrams, Scenarios |
 
----
 
-# Chapter 3: Architectural Styles and Design Patterns
-
-## 3.1 Foundations of Architectural Styles
+## 1.11 Foundations of Architectural Styles
 
 > [!quote] G.K. Chesterton
 > *"There is at the back of every artist’s mind, a pattern or type of architecture."*
 
 As software engineers have constructed thousands of systems across diverse application domains, they have observed that certain structural design choices regularly produce solutions with superior, predictable properties. These recurring architectural patterns are formalized as **Architectural Styles**.
 
-### 3.1.1 Formal Definition of an Architectural Style
+### 1.11.1 Formal Definition of an Architectural Style
 An **architectural style** is a specialization of element and relation types, together with a set of constraints on how they can be configured and combined.
 
 ```mermaid
@@ -359,9 +353,9 @@ flowchart TD
 
 ---
 
-## 3.2 Survey of Nine Foundational Architectural Styles
+## 1.12 Survey of Nine Foundational Architectural Styles
 
-### 3.2.1 1. Client-Server Architecture
+### 1.12.1 1. Client-Server Architecture
 The **Client-Server** style partitions a distributed system into two primary cooperating entities: service requestors (**Clients**) and service providers (**Servers**), communicating across a network protocol.
 
 ```mermaid
@@ -394,7 +388,7 @@ flowchart LR
 
 ---
 
-### 3.2.2 2. Peer-to-Peer (P2P) Architecture
+### 1.12.2 2. Peer-to-Peer (P2P) Architecture
 In contrast to the centralized hierarchy of client-server systems, the **Peer-to-Peer (P2P)** style structures a network where every participating node (**peer**) possesses symmetrical capabilities and responsibilities.
 
 ```mermaid
@@ -426,7 +420,7 @@ flowchart TD
 
 ---
 
-### 3.2.3 3. Data-Centered Architecture (Repository / Blackboard)
+### 1.12.3 3. Data-Centered Architecture (Repository / Blackboard)
 The **Data-Centered** (or Repository) architectural style belongs to the Component-and-Connector (C&C) category. It positions a centralized persistent data store at the core of the system, accessed continuously by autonomous client components.
 
 ```mermaid
@@ -449,7 +443,7 @@ flowchart TD
 
 ---
 
-### 3.2.4 4. Event-Driven Architecture (EDA)
+### 1.12.4 4. Event-Driven Architecture (EDA)
 **Event-Driven Architecture (EDA)** centers around the detection, production, transmission, and reaction to state changes termed **Events**. Components communicate asynchronously by emitting and consuming events rather than through synchronous, blocking request-response cycles.
 
 ```mermaid
@@ -490,7 +484,7 @@ When a customer clicks "Place Order" on an e-commerce platform:
 
 ---
 
-### 3.2.5 5. Layered Pattern Architecture
+### 1.12.5 5. Layered Pattern Architecture
 The **Layered Architecture** belongs to the Module type pattern family. It partitions system modules into stacked horizontal layers, where each layer provides a cohesive set of services through a well-defined public interface.
 
 ```mermaid
@@ -519,7 +513,7 @@ flowchart TD
 
 ---
 
-### 3.2.6 6. Service-Oriented Architecture (SOA)
+### 1.12.6 6. Service-Oriented Architecture (SOA)
 **Service-Oriented Architecture (SOA)** is an enterprise Component-and-Connector (C&C) style where business capabilities are encapsulated as discrete, self-contained, loosely coupled software components called **Services**.
 
 ```mermaid
@@ -539,7 +533,7 @@ flowchart TD
 
 ---
 
-### 3.2.7 7. Microservice Architecture
+### 1.12.7 7. Microservice Architecture
 **Microservice Architecture** refines and evolves SOA by decomposing an application into a suite of small, autonomous, independently deployable services organized strictly around business capabilities.
 
 ```mermaid
@@ -586,7 +580,7 @@ flowchart TD
 
 ---
 
-### 3.2.8 8. Data Flow Architecture (Pipe-and-Filter)
+### 1.12.8 8. Data Flow Architecture (Pipe-and-Filter)
 In the **Data Flow** architectural style, the system treats processing as a progressive transformation of a data stream through a sequence of discrete computational components.
 
 ```mermaid
@@ -606,7 +600,7 @@ flowchart LR
 
 ---
 
-### 3.2.9 9. Main Program and Subprogram Architecture
+### 1.12.9 9. Main Program and Subprogram Architecture
 The **Main Program and Subprogram** style is the classical, hierarchical call-and-return structure that dominated early procedural software development.
 
 ```mermaid
@@ -631,7 +625,7 @@ flowchart TD
 
 ---
 
-## 3.3 Synthesis: Structures, Views, and Styles
+## 1.13 Synthesis: Structures, Views, and Styles
 
 ```mermaid
 flowchart TD
@@ -651,11 +645,11 @@ flowchart TD
 
 ---
 
-# Chapter 4: Module Views and Module Styles
+# Topic 2: Software Architecture Styles
 
-## 4.1 Foundations of Module Views
+## 2.1 Foundations of Module Views
 
-### 4.1.1 Overview and Elements of Module Views
+### 2.1.1 Overview and Elements of Module Views
 In software architecture documentation, it is virtually impossible to complete the architectural description of any non-trivial system without at least one **Module View**.
 
 > [!info] Definition: Module
@@ -686,7 +680,7 @@ When documenting module structures, architects distinguish between standard modu
 
 ---
 
-### 4.1.2 Relations in Module Views
+### 2.1.2 Relations in Module Views
 Module views depict three foundational static relations:
 
 ```mermaid
@@ -701,7 +695,7 @@ flowchart TD
 
 ---
 
-### 4.1.3 Usages of Module Views
+### 2.1.3 Usages of Module Views
 Module views serve multiple critical engineering functions across the system lifecycle:
 1. **Blueprint for Source Code Construction:** Provides programmers with the direct organizational blueprint for codebases, directories, and package structures.
 2. **Work Assignment and Project Scheduling:** Serves as the primary unit of work breakdown, allowing managers to assign distinct modules to development squads without cross-team collisions.
@@ -714,7 +708,7 @@ Module views serve multiple critical engineering functions across the system lif
 
 ---
 
-### 4.1.4 Notations for Documenting Module Views
+### 2.1.4 Notations for Documenting Module Views
 Module views are documented using three standard notations:
 - **Informal Box Notations:** Boxes depicting modules nested inside larger boxes, or connected with labeled association arrows.
 - **Unified Modeling Language (UML):** Representing modules as UML Packages, Classes, or Components, with dependency arrows (`<<use>>`), composition diamonds (`is-part-of`), and generalization arrows (`is-a`).
@@ -722,7 +716,7 @@ Module views are documented using three standard notations:
 
 ---
 
-## 4.2 The Six Important Module Styles
+## 2.2 The Six Important Module Styles
 
 Software architecture formalizes six distinct styles within the module category:
 
@@ -741,7 +735,7 @@ flowchart TD
 
 ---
 
-### 4.2.1 1. The Decomposition Style
+### 2.2.1 1. The Decomposition Style
 The **Decomposition Style** partitions a software system into hierarchical units of implementation, detailing how overall system responsibilities are divided among submodules.
 
 ```mermaid
@@ -777,7 +771,7 @@ flowchart TD
 
 ---
 
-### 4.2.2 2. The Uses Style
+### 2.2.2 2. The Uses Style
 The **Uses Style** models functional dependencies between modules, tracking which modules require the correct operation of other modules.
 
 > [!info] The "Uses" Relation
@@ -809,7 +803,7 @@ flowchart TD
 
 ---
 
-### 4.2.3 3. The Generalization Style
+### 2.2.3 3. The Generalization Style
 The **Generalization Style** organizes modules according to their shared commonalities and domain variations using the `is-a` relationship.
 
 ```mermaid
@@ -843,7 +837,7 @@ classDiagram
 
 ---
 
-### 4.2.4 4. The Layered Style
+### 2.2.4 4. The Layered Style
 The **Layered Style** is one of the most widely adopted module patterns in software engineering. Modules are grouped into a set of ordered layers, where each layer exposes a cohesive public interface.
 
 ```mermaid
@@ -872,7 +866,7 @@ flowchart TD
 
 ---
 
-### 4.2.5 Notational Variations and Geometry in Layered Architecture
+### 2.2.5 Notational Variations and Geometry in Layered Architecture
 Architects utilize five visual paradigms to convey distinct topological nuances in layered views:
 
 ```mermaid
@@ -898,7 +892,7 @@ flowchart LR
 
 ---
 
-### 4.2.6 5. The Aspects Style
+### 2.2.6 5. The Aspects Style
 The **Aspects Style** models modules that encapsulate **cross-cutting concerns**—system requirements and functionalities that span across standard architectural boundaries—and defines how they bind to functional modules across the codebase.
 
 ```mermaid
@@ -1011,7 +1005,7 @@ flowchart TD
 
 ---
 
-### 4.2.7 6. The Data Model Style
+### 2.2.7 6. The Data Model Style
 The **Data Model Style** describes the static structure of persistent and runtime information in terms of **data entities**, their internal attributes, and the **logical relationships** that govern them.
 
 #### Specification Table of the Data Model Style
@@ -1088,7 +1082,7 @@ classDiagram
 
 ---
 
-### 4.2.8 Architectural Critique: Flowcharts vs. Architectural Views
+### 2.2.8 Architectural Critique: Flowcharts vs. Architectural Views
 Slide 13 of the curriculum presents a critical diagnostic exercise: *"What is wrong with this flowchart?"*
 
 ```mermaid
@@ -1113,7 +1107,7 @@ flowchart TD
 
 ---
 
-### 4.2.9 Comprehensive Summary Matrix of the Six Module Styles
+### 2.2.9 Comprehensive Summary Matrix of the Six Module Styles
 
 The six module styles address complementary static structural concerns across software systems:
 
@@ -1128,13 +1122,10 @@ The six module styles address complementary static structural concerns across so
 
 ---
 
----
 
-# Chapter 5: Component-and-Connector (C&C) Views and Styles
+## 2.3 Foundations of Component-and-Connector (C&C) Views
 
-## 5.1 Foundations of Component-and-Connector (C&C) Views
-
-### 5.1.1 Overview and Nature of C&C Views
+### 2.3.1 Overview and Nature of C&C Views
 While module views capture the static compile-time organization of code into packages and classes, they cannot represent the system in motion. A **Component-and-Connector (C&C) View** depicts the runtime execution architecture—the dynamic behavior, active components, and interaction pathways of an executing software system.
 
 ```mermaid
@@ -1151,7 +1142,7 @@ flowchart TD
     end
 ```
 
-### 5.1.2 The Constituent Elements: Components and Connectors
+### 2.3.2 The Constituent Elements: Components and Connectors
 1. **Components:**
    - Units of runtime software behavior and persistent storage.
    - A component's architectural description defines its computational responsibilities, the services it provides, and the external dependencies it requires to execute.
@@ -1165,7 +1156,7 @@ flowchart TD
 
 ---
 
-### 5.1.3 The Single Foundational Relation: Attachment
+### 2.3.3 The Single Foundational Relation: Attachment
 In C&C views, there is **only one foundational structural relation**: the **Attachment Relation**.
 
 > [!info] The Attachment Relation
@@ -1177,7 +1168,7 @@ In C&C views, there is **only one foundational structural relation**: the **Atta
 
 ---
 
-### 5.1.4 Properties of C&C Views
+### 2.3.4 Properties of C&C Views
 Every architectural element in a C&C view must be documented with explicit properties to support downstream engineering analysis:
 - **Element Identity & Type:** Every component and connector has a unique identifier and an architectural category.
 - **Port Capacity & Multiplicity:** Specifies how many concurrent clients or connections a server port can accommodate simultaneously.
@@ -1187,7 +1178,7 @@ Every architectural element in a C&C view must be documented with explicit prope
 
 ---
 
-### 5.1.5 Usages and Core Questions Answered by C&C Views
+### 2.3.5 Usages and Core Questions Answered by C&C Views
 C&C views provide system architects and developers with the primary vehicle for reasoning about runtime qualities:
 
 > [!tip] Core Architectural Questions Answered by C&C Views:
@@ -1200,7 +1191,7 @@ C&C views provide system architects and developers with the primary vehicle for 
 
 ---
 
-### 5.1.6 UML Notations for Component-and-Connector Views
+### 2.3.6 UML Notations for Component-and-Connector Views
 Documenting C&C views in UML 2.0 relies on **UML Component Diagrams** and **Composite Structure Diagrams**:
 
 ```mermaid
@@ -1230,7 +1221,7 @@ flowchart LR
 
 ---
 
-### 5.1.7 Primary Presentation Case Study: Banking Runtime Architecture
+### 2.3.7 Primary Presentation Case Study: Banking Runtime Architecture
 Slide 7 of the curriculum illustrates a classic C&C primary presentation for a high-availability banking transaction system:
 
 ```mermaid
@@ -1269,7 +1260,7 @@ flowchart TD
 
 ---
 
-## 5.2 Taxonomy and The Four Major C&C Style Families
+## 2.4 Taxonomy and The Four Major C&C Style Families
 
 Software architecture formalizes four major style families within the Component-and-Connector category:
 
@@ -1301,9 +1292,9 @@ flowchart TD
 
 ---
 
-## 5.3 1. Call-Return Styles
+## 2.5 1. Call-Return Styles
 
-### 5.3.1 Architectural Principles of Call-Return
+### 2.5.1 Architectural Principles of Call-Return
 In the **Call-Return** family of styles:
 1. Components interact through **synchronous invocation** provided by target components.
 2. The invoking component passes execution control and data parameters across a connector.
@@ -1311,7 +1302,7 @@ In the **Call-Return** family of styles:
 
 ---
 
-### 5.3.2 The Client-Server Style
+### 2.5.2 The Client-Server Style
 The **Client-Server Style** is a specialized call-return style representing a computational model where server components provide services invoked by client components.
 
 #### Specification Table of the Client-Server Style
@@ -1326,7 +1317,7 @@ The **Client-Server Style** is a specialized call-return style representing a co
 
 ---
 
-### 5.3.3 Enterprise Case Study: ATM Banking Network
+### 2.5.3 Enterprise Case Study: ATM Banking Network
 Slide 19 details an industrial ATM banking architecture organized according to the Client-Server style:
 
 ```mermaid
@@ -1360,7 +1351,7 @@ flowchart TD
 
 ---
 
-### 5.3.4 Service-Oriented Architecture (SOA) Style
+### 2.5.4 Service-Oriented Architecture (SOA) Style
 The **Service-Oriented Architecture (SOA) Style** bridges both Call-Return and Event-Based paradigms, enabling service users to discover and invoke service providers across heterogeneous networks through standardized, published interfaces.
 
 #### Specification Table of the SOA Style
@@ -1375,7 +1366,7 @@ The **Service-Oriented Architecture (SOA) Style** bridges both Call-Return and E
 
 ---
 
-### 5.3.5 Enterprise Case Study: The Adventure Builder Travel System
+### 2.5.5 Enterprise Case Study: The Adventure Builder Travel System
 Slides 22–23 detail the **Adventure Builder** travel reservation platform, demonstrating an enterprise SOA implementation:
 
 ```mermaid
@@ -1427,9 +1418,9 @@ flowchart TD
 
 ---
 
-## 5.4 2. Data Flow Styles (Pipe-and-Filter)
+## 2.6 2. Data Flow Styles (Pipe-and-Filter)
 
-### 5.4.1 Architectural Principles and Mathematical Form
+### 2.6.1 Architectural Principles and Mathematical Form
 The **Data Flow (Pipe-and-Filter)** style treats computation as a progressive stream transformation:
 - Data flows serially from external input sources to external output sinks through an ordered sequence of discrete processing filters.
 - If a pipeline consists of filters $A$, $B$, and $C$, the overall transformation of input stream $x$ into output $y$ is mathematically expressed as functional composition:
@@ -1449,7 +1440,7 @@ flowchart LR
 
 ---
 
-### 5.4.2 Specification Table of the Pipe-and-Filter Style
+### 2.6.2 Specification Table of the Pipe-and-Filter Style
 | Dimension | Specification |
 | :--- | :--- |
 | **Overview** | Stream-oriented computation where stateless filters consume input streams and emit transformed output streams through unidirectional pipe channels. |
@@ -1461,7 +1452,7 @@ flowchart LR
 
 ---
 
-### 5.4.3 Runtime Properties and Backpressure Mechanics
+### 2.6.3 Runtime Properties and Backpressure Mechanics
 Slide 26 outlines critical runtime configurations governing pipe-and-filter architectures:
 1. **End-of-Data Signaling:** Filters must know when an input stream terminates (e.g., transmitting an explicit `EOT` (End-of-Transmission) character, an empty record, or closing the stream socket).
 2. **Buffer Capacity and Backpressure:** Pipes possess finite memory buffer capacities:
@@ -1471,7 +1462,7 @@ Slide 26 outlines critical runtime configurations governing pipe-and-filter arch
 
 ---
 
-### 5.4.4 Enterprise Case Study: Direct Deposit and Payment Pipeline
+### 2.6.4 Enterprise Case Study: Direct Deposit and Payment Pipeline
 Slide 27 presents a UML Component Diagram of an industrial payroll processing pipeline:
 
 ```mermaid
@@ -1497,9 +1488,9 @@ flowchart LR
 
 ---
 
-## 5.5 3. Event-Based Styles (Publish-Subscribe)
+## 2.7 3. Event-Based Styles (Publish-Subscribe)
 
-### 5.5.1 Architectural Principles of Publish-Subscribe
+### 2.7.1 Architectural Principles of Publish-Subscribe
 The **Publish-Subscribe (Pub-Sub)** style decouples system components completely in time and space:
 - Components interact not through explicit functional invocations or known destination addresses, but through the **announcement and receipt of events**.
 - Event producers (**Publishers**) broadcast state changes without knowing who or how many consumers exist.
@@ -1524,7 +1515,7 @@ flowchart LR
 
 ---
 
-### 5.5.2 Specification Table of the Publish-Subscribe Style
+### 2.7.2 Specification Table of the Publish-Subscribe Style
 | Dimension | Specification |
 | :--- | :--- |
 | **Overview** | Asynchronous communication paradigm where event announcers are decoupled from event handlers by an event broker. |
@@ -1536,16 +1527,16 @@ flowchart LR
 
 ---
 
-## 5.6 4. Repository & Shared Data Styles
+## 2.8 4. Repository & Shared Data Styles
 
-### 5.6.1 Architectural Principles of Shared Data
+### 2.8.1 Architectural Principles of Shared Data
 In the **Shared Data (Repository)** style:
 - Multiple autonomous computational components communicate indirectly by reading from and writing to a **centralized persistent data store**.
 - Data accessor components do not hold direct references to one another; the shared repository serves as the universal mediation medium.
 
 ---
 
-### 5.6.2 Specification Table of the Shared Data Style
+### 2.8.2 Specification Table of the Shared Data Style
 | Dimension | Specification |
 | :--- | :--- |
 | **Overview** | Mediates communication across independent components through shared access to a centralized persistent repository. |
@@ -1557,7 +1548,7 @@ In the **Shared Data (Repository)** style:
 
 ---
 
-### 5.6.3 Enterprise Case Study: Centralized Security Realm
+### 2.8.3 Enterprise Case Study: Centralized Security Realm
 Slide 33 presents a comprehensive Shared Data architecture governing enterprise identity and authentication:
 
 ```mermaid
@@ -1609,7 +1600,7 @@ flowchart TD
 
 ---
 
-## 5.7 Formative Assessment: C&C Architectural Principles Evaluated
+## 2.9 Formative Assessment: C&C Architectural Principles Evaluated
 
 Slide 35 presents seven True/False review questions assessing foundational C&C principles:
 
@@ -1623,13 +1614,10 @@ Slide 35 presents seven True/False review questions assessing foundational C&C p
 | **6** | *A shared data style architecture is primarily used for real-time data processing applications where immediate feedback is required.* | **FALSE** | Shared data repositories are engineered for centralized state persistence and broad integration across decoupled accessors. Real-time sub-millisecond feedback is hindered by central repository locking and contention. |
 | **7** | *In a Service-Oriented Architecture (SOA), service consumers and service providers must always be located on different platforms.* | **FALSE** | SOA guarantees cross-platform interoperability, but it does **not mandate** physical platform separation. Consumers and providers can reside co-located within the same operating environment. |
 
----
 
-# Chapter 6: Allocation Views and Allocation Styles
+## 2.10 Foundations of Allocation Views
 
-## 6.1 Foundations of Allocation Views
-
-### 6.1.1 Overview and Nature of Allocation Views
+### 2.10.1 Overview and Nature of Allocation Views
 Software does not execute in an abstract void. It requires physical processors, network cables, operating system directories, and human development teams. An **Allocation View** documents the mapping between software elements (from Module and C&C structures) and non-software environmental elements:
 
 ```mermaid
@@ -1652,7 +1640,7 @@ flowchart LR
 
 ---
 
-### 6.1.2 The Triad of Allocation Styles
+### 2.10.2 The Triad of Allocation Styles
 The curriculum formalizes three foundational allocation styles:
 1. **Deployment Style:** Maps runtime C&C components and connectors onto the hardware and execution environments of the computing platform.
 2. **Install Style:** Maps software components and artifacts onto the file systems and directory structures of production, testing, or development environments.
@@ -1660,9 +1648,9 @@ The curriculum formalizes three foundational allocation styles:
 
 ---
 
-## 6.2 1. The Deployment Style
+## 2.11 1. The Deployment Style
 
-### 6.2.1 Architectural Elements of the Deployment Style
+### 2.11.1 Architectural Elements of the Deployment Style
 | Element Category | Description & Concrete Constituents |
 | :--- | :--- |
 | **Software Elements** | Active runtime execution units, usually **processes and threads** derived from C&C views. Documented properties include CPU requirements, RAM footprints, disk bandwidth, and fault tolerance needs. |
@@ -1670,7 +1658,7 @@ The curriculum formalizes three foundational allocation styles:
 
 ---
 
-### 6.2.2 Relations in the Deployment Style
+### 2.11.2 Relations in the Deployment Style
 The Deployment Style models two critical allocation relations:
 1. **`allocated-to`:** The static baseline relation designating the physical computing element or virtual machine where a software element resides and executes.
 2. **Dynamic Migration Relations:**
@@ -1679,7 +1667,7 @@ The Deployment Style models two critical allocation relations:
 
 ---
 
-### 6.2.3 Usages and Strategic Value of Deployment Views
+### 2.11.3 Usages and Strategic Value of Deployment Views
 Deployment views serve indispensable engineering functions:
 - **Performance & Latency Modeling:** Evaluates whether network bandwidth and server CPU capacities meet transaction deadlines.
 - **Availability & Disaster Recovery:** Analyzes hardware redundancy and single points of failure.
@@ -1688,7 +1676,7 @@ Deployment views serve indispensable engineering functions:
 
 ---
 
-### 6.2.4 UML Deployment Diagrams
+### 2.11.4 UML Deployment Diagrams
 UML documents deployment views using **Deployment Diagrams**:
 - **3D Cubes (Nodes):** Represent physical devices (`«device»`) or hosting environments (`«execution environment»`, e.g., `:WebSphere`, `Tomcat 7`).
 - **Communication Paths:** Solid lines connecting node cubes labeled with network protocols (e.g., `«internet»`, `«intranet»`, `TCP/IP`, `T1 line`).
@@ -1727,23 +1715,23 @@ flowchart TD
 
 ---
 
-## 6.3 2. The Install Style
+## 2.12 2. The Install Style
 
-### 6.3.1 Architectural Principles and Elements
+### 2.12.1 Architectural Principles and Elements
 The **Install Style** bridges software components and the physical storage media where they are packaged, deployed, and executed:
 - **Software Elements:** C&C components, executable binaries, libraries, and packaged modules.
 - **Environmental Elements:** Configuration items within target file systems: folders, directory trees, configuration files (`.xml`, `.properties`), data archives, and log files.
 
 ---
 
-### 6.3.2 Relations in the Install Style
+### 2.12.2 Relations in the Install Style
 1. **`allocated-to`:** A software component or compiled class is allocated to a specific file or packaged archive.
 2. **`containment`:** Hierarchical part-whole nesting within directory structures (e.g., a file is contained in a folder; a folder is contained in an archive).
 - **Governing Constraint:** File and directory systems are strictly organized in **acyclic tree structures**.
 
 ---
 
-### 6.3.3 Strategic Value of Install Views
+### 2.12.3 Strategic Value of Install Views
 - **Automating CI/CD Pipelines:** Outlines build-and-deploy packaging procedures (creating Docker images, RPMs, WARs).
 - **Navigation in Complex Codebases:** Enables system operators to locate critical files among tens of thousands of assets.
 - **Log and Configuration Triage:** Pinpoints exact paths to editable configuration files and operational log directories.
@@ -1752,7 +1740,7 @@ The **Install Style** bridges software components and the physical storage media
 
 ---
 
-### 6.3.4 UML Artifact Manifestation Diagrams
+### 2.12.4 UML Artifact Manifestation Diagrams
 In UML 2.0, install views are documented using **Artifact Diagrams**:
 - The stereotype **`«artifact»`** represents a physical file on disk (e.g., `.ear`, `.war`, `.jar`).
 - The dependency arrow adorned with **`«manifest»`** indicates that a runtime component or lower-level artifact is packaged inside a parent archive:
@@ -1796,9 +1784,9 @@ flowchart TD
 
 ---
 
-## 6.4 3. The Work Assignment Style
+## 2.13 3. The Work Assignment Style
 
-### 6.4.1 Architectural Elements and Principles
+### 2.13.1 Architectural Elements and Principles
 The **Work Assignment Style** maps software architecture directly onto the human organizational structure responsible for realizing it:
 - **Software Elements:** Modules and Subsystems derived from **Module Views**.
 - **Environmental Elements:** Human organizational entities: individual software engineers, development squads, departments, and external contractors.
@@ -1806,7 +1794,7 @@ The **Work Assignment Style** maps software architecture directly onto the human
 
 ---
 
-### 6.4.2 Strategic Value and Conway's Law
+### 2.13.2 Strategic Value and Conway's Law
 - **Work Breakdown Structure (WBS):** Serves as the primary baseline for project managers to construct realistic resource schedules, cost estimates, and sprint backlog allocations.
 - **Conway's Law Alignment:** Formalizes the reality that *"organizations design systems that mirror their own communication structures."* Clean module interfaces prevent cross-team friction and code merge conflicts.
 - **Onboarding Acceleration:** Provides incoming engineers with an immediate visual roadmap showing which team owns which software subsystem.
@@ -1814,7 +1802,7 @@ The **Work Assignment Style** maps software architecture directly onto the human
 
 ---
 
-### 6.4.3 Enterprise Case Study: NASA Earth Observing System (EOS)
+### 2.13.3 Enterprise Case Study: NASA Earth Observing System (EOS)
 Slide 51 details the Work Assignment View for the **Science Data Processing Segment (SDPS)**:
 
 | Segment | Subsystem (Module) | Responsible Organizational Unit | Communication Channel |
@@ -1837,11 +1825,11 @@ Slide 51 details the Work Assignment View for the **Science Data Processing Segm
 
 ---
 
-## 6.5 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints
+## 2.14 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints
 
 Slides from the supplementary curriculum provide four concrete architectural blueprints illustrating the execution and allocation realities of modern systems:
 
-### 6.5.1 Blueprint 1: Subversion Client-Server C&C Architecture
+### 2.14.1 Blueprint 1: Subversion Client-Server C&C Architecture
 Illustrates a complete client-server runtime view mediating between remote developer clients and a centralized Subversion repository:
 
 ```mermaid
@@ -1875,7 +1863,7 @@ flowchart TD
 
 ---
 
-### 6.5.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture
+### 2.14.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture
 Illustrates a high-reliability embedded control loop for automated exploratory vehicles:
 
 ```mermaid
@@ -1913,7 +1901,7 @@ flowchart TD
 
 ---
 
-### 6.5.3 Blueprint 3: Web Application Deployment View (Sun Fire & SPARC Cluster)
+### 2.14.3 Blueprint 3: Web Application Deployment View (Sun Fire & SPARC Cluster)
 Documents hardware mapping, servlet containers, and database tiers:
 
 ```mermaid
@@ -1946,7 +1934,7 @@ flowchart TD
 
 ---
 
-### 6.5.4 Blueprint 4: Web Application Install / Implementation Directory Tree
+### 2.14.4 Blueprint 4: Web Application Install / Implementation Directory Tree
 Documents the exact physical packaging layout of Java EE Web archives (`book_club_app.war`):
 
 ```mermaid
@@ -1986,11 +1974,8 @@ flowchart TD
     end
 ```
 
----
 
-# Chapter 7: Comprehensive Course Synthesis: Structures, Views, and Styles
-
-## 7.1 The Master Triad: Structures, Views, and Styles
+## 2.15 The Master Triad: Structures, Views, and Styles
 Across the entire CKS221 curriculum, software architecture is unified by three orthogonal concepts:
 
 ```mermaid
@@ -2008,7 +1993,7 @@ flowchart TD
 
 ---
 
-## 7.2 Cross-Structure Mapping: Modules, C&C, and Allocations
+## 2.16 Cross-Structure Mapping: Modules, C&C, and Allocations
 The three architectural structure families are not isolated islands; they represent complementary projections of the same system:
 
 ```mermaid
