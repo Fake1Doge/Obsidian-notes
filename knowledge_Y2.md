@@ -438,7 +438,7 @@ flowchart TD
 - **Physical View**: [[Y2S1/CKS221 Software Architecture and Design#1.9.4 4. The Physical View (Deployment View)|Maps components to hardware processors, virtual machines, and network topology; deployment diagrams]].
 - **+1 Use Case View**: [[Y2S1/CKS221 Software Architecture and Design#1.9.5 +1. The Use Case View (Scenario View)|Binds, exercises, and validates all four views using concrete user scenarios; use case diagrams]].
 
-### 3.7 [[Y2S1/CKS221 Software Architecture and Design#Chapter 3: Architectural Styles and Design Patterns|Architectural Styles and Design Patterns]]
+### 3.7 [[Y2S1/CKS221 Software Architecture and Design#1.11 Foundations of Architectural Styles|Architectural Styles and Design Patterns]]
 - **Definition & Anatomy**: [[Y2S1/CKS221 Software Architecture and Design#1.11.1 Formal Definition of an Architectural Style|Specialization of element and relation types with constraints; consists of Components, Connectors, Topological Constraints, and Semantic Models]].
 - **Nine Core Architectural Styles**:
   1. *Client-Server*: [[Y2S1/CKS221 Software Architecture and Design#1.12.1 1. Client-Server Architecture|Partitions system into service requestors and providers across 2-tier, 3-tier, n-tier, or cloud topologies; centralized data management and client flexibility]].
@@ -451,7 +451,7 @@ flowchart TD
   8. *Data Flow (Pipe-and-Filter)*: [[Y2S1/CKS221 Software Architecture and Design#1.12.8 8. Data Flow Architecture (Pipe-and-Filter)|Progressive data stream transformation through stateless Filters connected by data transmission Pipes]].
   9. *Main Program / Subprogram*: [[Y2S1/CKS221 Software Architecture and Design#1.12.9 9. Main Program and Subprogram Architecture|Hierarchical procedural call-and-return control structure]].
 
-### 3.8 [[Y2S1/CKS221 Software Architecture and Design#Chapter 4: Module Views and Module Styles|Module Views and Module Styles]]
+### 3.8 [[Y2S1/CKS221 Software Architecture and Design#2.1 Foundations of Module Views|Module Views and Module Styles]]
 - **Anatomy & Properties**: [[Y2S1/CKS221 Software Architecture and Design#2.1.1 Overview and Elements of Module Views|Implementation units with coherent responsibilities; Modules vs. Subsystems (Mars Rover case study); properties include responsibilities, visibility, revision history]].
 - **Three Foundational Relations**: [[Y2S1/CKS221 Software Architecture and Design#2.1.2 Relations in Module Views|`is-part-of` (part-whole aggregation), `depends-on` (operational reliance), `is-a` (generalization/specialization)]].
 - **Core Module Styles**:
@@ -465,7 +465,7 @@ flowchart TD
 - **Architectural Critique: Flowcharts vs. Architecture**: [[Y2S1/CKS221 Software Architecture and Design#2.2.8 Architectural Critique: Flowcharts vs. Architectural Views|Flowcharts depict sequential programmatic control flow/algorithms rather than structural elements, interfaces, connectors, or views]].
 - **Six Module Styles Summary**: [[Y2S1/CKS221 Software Architecture and Design#2.2.9 Comprehensive Summary Matrix of the Six Module Styles|Comparative taxonomy matrix cross-referencing primary elements, relations, topological constraints, and target quality attributes across all 6 module styles]].
 
-### 3.9 [[Y2S1/CKS221 Software Architecture and Design#Chapter 5: Component-and-Connector (C&C) Views and Styles|Component-and-Connector (C&C) Views and Styles]]
+### 3.9 [[Y2S1/CKS221 Software Architecture and Design#2.3 Foundations of Component-and-Connector (C&C) Views|Component-and-Connector (C&C) Views and Styles]]
 - **Foundations & Runtime Architecture**: [[Y2S1/CKS221 Software Architecture and Design#2.3.1 Overview and Nature of C&C Views|Dynamic execution behavior of software in motion; components and connectors]].
 - **Constituent Elements & The Attachment Relation**:
   - *Components & Ports*: [[Y2S1/CKS221 Software Architecture and Design#2.3.2 The Constituent Elements: Components and Connectors|Principal runtime computational units and data stores; expose interaction ports]].
@@ -479,7 +479,7 @@ flowchart TD
   - *Repository Family (Shared Data)*: [[Y2S1/CKS221 Software Architecture and Design#2.8.1 Architectural Principles of Shared Data|Centralized persistent storage accessed concurrently by independent data accessors via read/write connectors; Centralized Security Realm Case Study]].
 - **Formative C&C Principles Evaluated**: [[Y2S1/CKS221 Software Architecture and Design#2.9 Formative Assessment: C&C Architectural Principles Evaluated|Comprehensive True/False analysis assessing port/role attachments, server capacity bounds, asynchronous event decoupling, and SOA co-location]].
 
-### 3.10 [[Y2S1/CKS221 Software Architecture and Design#Chapter 6: Allocation Views and Allocation Styles|Allocation Views and Allocation Styles]]
+### 3.10 [[Y2S1/CKS221 Software Architecture and Design#2.10 Foundations of Allocation Views|Allocation Views and Allocation Styles]]
 - **Foundations of Allocation**: [[Y2S1/CKS221 Software Architecture and Design#2.10.1 Overview and Nature of Allocation Views|Documents mapping between software elements (Module and C&C) and non-software environmental elements (hardware, file systems, organizational teams)]].
 - **The Triad of Allocation Styles**:
   - *Deployment Style*: [[Y2S1/CKS221 Software Architecture and Design#2.11.1 Architectural Elements of the Deployment Style|Maps C&C processes to computing hardware]]; relations: `allocated-to`, `migrates-to`, and `copy-migrates-to`; UML deployment diagrams with 3D device nodes and communication paths; evaluated for latency, availability, and security attack surfaces.
@@ -487,7 +487,7 @@ flowchart TD
   - *Work Assignment Style*: [[Y2S1/CKS221 Software Architecture and Design#2.13.1 Architectural Elements and Principles|Maps source code modules to developers, teams, and contractors]]; relations: `allocated-to` / `assigned-to`; governs Work Breakdown Structures (WBS), cost estimation, and Conway's Law alignment ([[Y2S1/CKS221 Software Architecture and Design#2.13.3 Enterprise Case Study: NASA Earth Observing System (EOS)|NASA Earth Observing System Case Study]]).
 - **Supplemental Architecture Blueprints**: [[Y2S1/CKS221 Software Architecture and Design#2.14 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints|Subversion Client-Server C&C runtime view, Embedded Autonomous Vehicle Control Loop, Clustered Web Application deployment view, and WAR physical directory hierarchy]].
 
-### 3.11 [[Y2S1/CKS221 Software Architecture and Design#Chapter 7: Comprehensive Course Synthesis: Structures, Views, and Styles|Comprehensive Course Synthesis: Structures, Views, and Styles]]
+### 3.11 [[Y2S1/CKS221 Software Architecture and Design#2.15 The Master Triad: Structures, Views, and Styles|Comprehensive Course Synthesis: Structures, Views, and Styles]]
 - **The Master Triad**: [[Y2S1/CKS221 Software Architecture and Design#2.15 The Master Triad: Structures, Views, and Styles|Structures (reality: Module, C&C, Allocation) <===> Views (documented representations for stakeholders) <===> Styles (proven recurring design templates)]].
 - **Cross-Structure Mapping**: [[Y2S1/CKS221 Software Architecture and Design#2.16 Cross-Structure Mapping: Modules, C&C, and Allocations|Static modules compile and package into runtime C&C components, which deploy onto physical allocation environments and map to organizational engineering squads]].
 
