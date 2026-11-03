@@ -761,7 +761,7 @@ flowchart TD
         Guidance["Guidance<br/>Supporting templates, checklists, whitepapers, and best practices"]
         
         RoleDef -->|Performs / Is Primary Owner| TaskDef
-        TaskDef -->|Consumes (Mandatory / Optional)| WorkProductDef
+        TaskDef -->|Consumes: Mandatory or Optional| WorkProductDef
         TaskDef -->|Produces / Updates| WorkProductDef
         Guidance -.->|Enriches & Guides| RoleDef
         Guidance -.->|Enriches & Guides| TaskDef
