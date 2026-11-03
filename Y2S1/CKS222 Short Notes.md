@@ -476,9 +476,19 @@ Scrum operates on **Empiricism** (knowledge comes from experience and observing 
   - *Sprint Backlog* $\to$ Committed to the **Sprint Goal**.
   - *Product Increment* $\to$ Committed to the **Definition of Done (DoD)**.
 
-### 2.4.3 Agile Requirements: User Stories, INVEST, GWT & DoD
-- **User Story:** $\text{As a } \langle \text{role} \rangle, \text{ I want } \langle \text{feature} \rangle \text{ so that } \langle \text{benefit} \rangle$.
-- **Ron Jeffries' Three Cs:** **Card** (token representation), **Conversation** (dialogue), **Confirmation** (acceptance tests).
+### 2.4.3 Agile Requirements: User Stories, Decomposition Hierarchy, INVEST, GWT & DoD
+- **User Story Template:** $\text{As a } \langle \text{role} \rangle, \text{ I want } \langle \text{feature} \rangle \text{ so that } \langle \text{benefit} \rangle$. Plain-English perspective bridging the developer-client communication gap.
+- **The 3-Tier Agile Requirements Decomposition Hierarchy (Week 4 Slides 9 & 10):**
+  Agile requirements cascade through three structural levels:
+  1. **Epic (Highest Level):** Broad, high-level business feature themes that span across multiple Sprints (e.g., *Shopping Cart*, *User Profile*). Written on an index card as an overarching placeholder.
+  2. **User Story (Deliverable Level):** Discrete, conversational slices of functionality sized to be designed, coded, and verified comfortably within a single Sprint (typically **1 to 3 days** of engineering effort).
+  3. **Task (Execution Level):** Atomic, technical engineering work items decomposed by developers during Sprint Planning (hours to $\le 1$ day; e.g., *Build database table, create API endpoint, design CSS button*).
+- **The "Three Cs" Framework & Slide 9 vs. Slide 10 Mapping:**
+  In the lecture slides, the Social "Three Cs" concept bridges the structural hierarchy with collaborative teamwork:
+  - **1. Card $\longleftrightarrow$ Epic Level:** The physical index card or digital ticket with a concise written description, serving as a token representing requirement intent.
+  - **2. Conversation $\longleftrightarrow$ User Story Level:** Co-creating details through continuous verbal dialogue between developers, Product Owner, and stakeholders.
+  - **3. Confirmation $\longleftrightarrow$ Task / Acceptance Criteria Level:** The concrete acceptance criteria (Given-When-Then) and verification tests that prove the story is functionally complete.
+  *(Note on author: While Week 4 Slides 9 & 10 cite Ron Jeffries for formalizing the Three Cs, the vital exam takeaway is knowing both the **Hierarchy: Epic $\to$ User Story $\to$ Task** and the **Three Cs: Card $\to$ Conversation $\to$ Confirmation**).*
 - **INVEST Mnemonic (Bill Wake):** **I**ndependent, **N**egotiable, **V**aluable, **E**stimable, **S**mall (1 to 3 days), **T**estable.
 - **Given-When-Then (GWT) Syntax:** Given $\langle \text{Context} \rangle$, When $\langle \text{Action} \rangle$, Then $\langle \text{Outcome} \rangle$.
 - **Definition of Done (DoD):** A global, non-negotiable quality checklist applied across **all** backlog items. Three layers: (1) Core story acceptance criteria pass, (2) Process compliance (refactored, code review approved, zero SAST warnings), (3) Absolute integration (merged into trunk, 100% automated regression pass, deployable build). If an item fails the DoD, it returns to the Product Backlog.
@@ -662,6 +672,9 @@ Examiners love asking questions that test the difference between two related con
 | **Triple Constraint** | **Constrain** | **Accept** | Constrain = Non-negotiable boundary (zero slippage). Accept = Negotiated buffer where schedule/budget concessions are accepted. |
 | **EVM Cost Terms** | **Planned Value ($PV$)** | **Earned Value ($EV$)** | $PV = BCWS$ (Budgeted Cost of Work Scheduled). $EV = BCWP$ (Budgeted Cost of Work Performed). |
 | **MVP-L Model Types** | **`Process_model`** | **`Attribute_model`** | `Process_model` = Defines task behaviors & entry/exit rules. `Attribute_model` = Defines quantitative measures & GQM metric bindings. |
+| **Requirements Sizing** | **Epic** | **User Story** | Epic = High-level broad feature theme (spans multiple Sprints). User Story = 1-to-3 day slice deliverable within a single Sprint. |
+| **Requirements Execution**| **User Story** | **Task** | User Story = Expresses user/business value for the PO. Task = Sub-day technical engineering step decomposed by developers. |
+| **Three Cs vs. Hierarchy**| **Three Cs (Card, Conversation, Confirmation)** | **3-Tier Hierarchy (Epic, Story, Task)** | Three Cs = The social collaboration lifecycle of a story. Hierarchy = Sizing granularity from macro theme to micro implementation code. |
 
 ---
 
@@ -710,6 +723,13 @@ Examiners love asking questions that test the difference between two related con
 > [!danger] Exam Trap 11: User Story Investment Criterion "Small"
 > **TRAP:** *"A small user story under INVEST is one that can be completed within a 6-month release."*
 > **TRUTH:** **FALSE.** A story must be small enough to be designed, coded, and tested within a single Sprint, typically requiring **1 to 3 days** of engineering effort.
+
+> [!danger] Exam Trap 11b: The "Three Cs" vs. The 3-Tier Requirements Hierarchy (Week 4 Slides 9 & 10)
+> **TRAP:** *"The Three Cs of User Stories are Epic, User Stories, and Tasks."*
+> **TRUTH:** **CRITICAL DISTINCTION:** In Agile software engineering:
+> - **The 3-Tier Decomposition Hierarchy** is **Epic $\to$ User Story $\to$ Task** (Slide 9 & 10: sizing from multi-sprint broad themes down to sub-day code tasks).
+> - **The Three Cs Concept** (formalized by Ron Jeffries on Slide 10) are **Card** (token representation on an index card), **Conversation** (co-creating details with developers), and **Confirmation** (acceptance criteria / verification tests).
+> - **Why this confusion exists:** On Week 4 Slide 9, the lecturer mapped the 3 hierarchy levels directly across the Three Cs: (1) Card corresponds to the written *Epic* level, (2) Conversation corresponds to the *User Story* collaborative dialogue, and (3) Confirmation corresponds to the *Task* / acceptance criteria verification level.
 
 > [!danger] Exam Trap 12: Agile Documentation Stance
 > **TRAP:** *"The Agile Manifesto declares that documentation should never be produced."*
