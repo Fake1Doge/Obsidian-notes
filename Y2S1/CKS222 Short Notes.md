@@ -597,13 +597,6 @@ flowchart TD
   3. *Configuration Baselining:* All work products formally identified, tagged, and version-controlled.
   4. *Tool Version Tracking:* Compilers, build scripts, and test harnesses documented as configuration items.
   5. *Exit Criteria Fulfillment:* All milestone exit postconditions verified using objective quantitative metrics.
-- **Standard SQA Conformance Audit Checklist (Week 5 Slide 17):**
-  High-maturity engineering organizations mandate formal process audits at least **once every 3 months** against the Electronic Process Guide (EPG) to prevent process drift:
-  1. *Requirements Traceability:* Functional requirements mapped 1:1 to source code units and test cases.
-  2. *Peer Review Logs:* Documented evidence of peer inspections conducted for all modified code.
-  3. *Configuration Baselining:* All work products formally identified, tagged, and version-controlled.
-  4. *Tool Version Tracking:* Compilers, build scripts, and test harnesses documented as configuration items.
-  5. *Exit Criteria Fulfillment:* All milestone exit postconditions verified using objective quantitative metrics.
 - **Münch's 4 Ps Tailoring Framework:** Tailor processes based on **Problem** (novelty/volatility), **Project** (budget/team size/distribution), **People** (skills/experience/culture), and **Product** (safety/reliability/lifespan).
 - **Boehm's Exponential Defect Cost Multiplier:** Cost escalates exponentially the later a defect is found: Inception ($1\times$) $\to$ Coding ($10-15\times$) $\to$ Integration ($30-50\times$) $\to$ Live Production ($100-1000\times$).
 - **Constructive vs. Analytical QA:** Constructive prevents defects upfront (reviews, architecture, standards); Analytical detects defects post-creation (dynamic testing).
