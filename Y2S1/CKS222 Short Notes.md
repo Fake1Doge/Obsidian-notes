@@ -477,21 +477,42 @@ Scrum operates on **Empiricism** (knowledge comes from experience and observing 
   - *Product Increment* $\to$ Committed to the **Definition of Done (DoD)**.
 
 ### 2.4.3 Agile Requirements: User Stories, Decomposition Hierarchy, INVEST, GWT & DoD
-- **User Story Template:** $\text{As a } \langle \text{role} \rangle, \text{ I want } \langle \text{feature} \rangle \text{ so that } \langle \text{benefit} \rangle$. Plain-English perspective bridging the developer-client communication gap.
-- **The 3-Tier Agile Requirements Decomposition Hierarchy (Week 4 Slides 9 & 10):**
-  Agile requirements cascade through three structural levels:
-  1. **Epic (Highest Level):** Broad, high-level business feature themes that span across multiple Sprints (e.g., *Shopping Cart*, *User Profile*). Written on an index card as an overarching placeholder.
-  2. **User Story (Deliverable Level):** Discrete, conversational slices of functionality sized to be designed, coded, and verified comfortably within a single Sprint (typically **1 to 3 days** of engineering effort).
-  3. **Task (Execution Level):** Atomic, technical engineering work items decomposed by developers during Sprint Planning (hours to $\le 1$ day; e.g., *Build database table, create API endpoint, design CSS button*).
-- **The "Three Cs" Framework & Slide 9 vs. Slide 10 Mapping:**
-  In the lecture slides, the Social "Three Cs" concept bridges the structural hierarchy with collaborative teamwork:
-  - **1. Card $\longleftrightarrow$ Epic Level:** The physical index card or digital ticket with a concise written description, serving as a token representing requirement intent.
-  - **2. Conversation $\longleftrightarrow$ User Story Level:** Co-creating details through continuous verbal dialogue between developers, Product Owner, and stakeholders.
-  - **3. Confirmation $\longleftrightarrow$ Task / Acceptance Criteria Level:** The concrete acceptance criteria (Given-When-Then) and verification tests that prove the story is functionally complete.
-  *(Note on author: While Week 4 Slides 9 & 10 cite Ron Jeffries for formalizing the Three Cs, the vital exam takeaway is knowing both the **Hierarchy: Epic $\to$ User Story $\to$ Task** and the **Three Cs: Card $\to$ Conversation $\to$ Confirmation**).*
-- **INVEST Mnemonic (Bill Wake):** **I**ndependent, **N**egotiable, **V**aluable, **E**stimable, **S**mall (1 to 3 days), **T**estable.
-- **Given-When-Then (GWT) Syntax:** Given $\langle \text{Context} \rangle$, When $\langle \text{Action} \rangle$, Then $\langle \text{Outcome} \rangle$.
-- **Definition of Done (DoD):** A global, non-negotiable quality checklist applied across **all** backlog items. Three layers: (1) Core story acceptance criteria pass, (2) Process compliance (refactored, code review approved, zero SAST warnings), (3) Absolute integration (merged into trunk, 100% automated regression pass, deployable build). If an item fails the DoD, it returns to the Product Backlog.
+- **Why Agile User Stories?** Discards 200–500 page monolithic SRS specs. Plain-English format bridges the **developer-client communication gap**, allowing non-technical business stakeholders to understand, prioritize, and co-create features.
+- **Canonical Template & Anatomy:**
+  $$\text{As a } \langle \text{ROLE} \rangle, \text{ I want } \langle \text{FUNCTIONALITY} \rangle \text{ so that } \langle \text{BUSINESS BENEFIT} \rangle$$
+  - *$\langle \text{ROLE} \rangle$ (Who):* Specific persona consuming the feature (e.g., *Student*, *Admin*). Avoid generic terms like "user" or "the system".
+  - *$\langle \text{FUNCTIONALITY} \rangle$ (What):* Desired business behavior or capability, NOT technical database/code mechanics.
+  - *$\langle \text{BUSINESS BENEFIT} \rangle$ (Why):* Critical economic/functional justification. Prevents building unneeded "vanity features".
+- **The 3-Tier Requirements Sizing Hierarchy (Week 4 Slide 9 & 10):**
+  1. **Epic (Macro Level):** Broad, high-level business feature themes spanning across **multiple Sprints or releases** (e.g., *Shopping Cart*, *User Profile*). Cannot fit in a single Sprint; captured as an overarching placeholder on an index card.
+  2. **User Story (Deliverable Level):** Discrete, conversational slices of functionality sized to be designed, coded, and verified within a **single Sprint** (typically **1 to 3 days** of active engineering effort).
+  3. **Task (Execution Level):** Atomic, technical engineering work items decomposed by developers during Sprint Planning (sized in **hours to $\le 1$ day**; e.g., *Build SQL table, write REST endpoint, design CSS button*).
+- **Ron Jeffries' "Three Cs" Framework (Social Interaction & Workflow):**
+  - **1. Card:** Physical index card or digital ticket (Jira) carrying the brief narrative. Serves as a **token representing an invitation to talk**, NOT an exhaustive specification.
+  - **2. Conversation:** Continuous verbal dialogue between developers, Product Owner, and stakeholders to uncover edge cases, assumptions, and constraints.
+  - **3. Confirmation:** Concrete acceptance criteria and verification tests proving the story is functionally complete.
+  *(Slide 9 vs. Slide 10 nuance: Slide 9 maps Card $\to$ Epic placeholder, Conversation $\to$ User story dialogue, Confirmation $\to$ Tasks/acceptance criteria).*
+- **The INVEST Quality Validation Framework (Bill Wake - Slide 11):**
+  A user story must satisfy all 6 criteria before being accepted into the Sprint Backlog:
+  - **I - Independent:** Stories are decoupled; can be scheduled, developed, and released in any order. *Objective Trap:* Avoid **horizontal/architectural splitting** (e.g., Story 1: Database, Story 2: API, Story 3: UI), which creates hard serial dependencies. Agile mandates **vertical slices**.
+  - **N - Negotiable:** Not a rigid legal contract; details are co-created with developers during sprint planning. *Objective Trap:* Avoid micro-specifying technical implementation (e.g., exact SQL column data types, UI pixel offsets) on the card.
+  - **V - Valuable:** Delivers clear, recognizable value to an **end-user or customer**, never just internal developer convenience (e.g., pure technical refactoring chores do not belong as standalone user stories).
+  - **E - Estimable:** Scope and technical uncertainty are bounded enough for developers to assign Story Points or sizing. (Vague, unbounded stories require a time-boxed technical *Spike* first).
+  - **S - Small:** Typically decomposed into **1 to 3 days** of engineering effort to comfortably finish within a 2-week Sprint without risk of spillover.
+  - **T - Testable:** Must have objective, verifiable acceptance criteria. *Objective Trap:* Subjective adjectives (*"fast, modern, beautiful, user-friendly"*) cannot be objectively tested or automated.
+- **Given-When-Then (GWT) Syntax (Behavior-Driven Development - Slide 12):**
+  Formalizes acceptance criteria on the back of the card:
+  - **Given (Context / Precondition):** Sets up initial system state (e.g., `Given the user is logged in as an administrator`).
+  - **When (Action / Trigger):** Specifies the behavior or event initiated by user (e.g., `When they attempt to deactivate comments`).
+  - **Then (Outcome / Postcondition):** Declares observable postcondition or state change (e.g., `Then the comments section is disabled and a success alert displays`).
+- **Acceptance Criteria vs. Definition of Done (DoD) — High-Yield Exam Distinction:**
+  - **Acceptance Criteria (Story-Specific):** Unique to each individual story; verifies that specific feature behavior passes functional requirements.
+  - **Definition of Done (DoD - Global Standard):** An invariant, non-negotiable quality gate applied universally to **ALL** backlog items across the organization.
+  - **The 3 Mandatory DoD Layers (Slide 12):**
+    1. *Layer 1: Core Story Acceptance Criteria:* 100% of story-specific Given-When-Then criteria pass functional validation with PO sign-off.
+    2. *Layer 2: Process Compliance Guidelines:* Source code refactored to eliminate technical debt, peer code review completed and approved, and **zero** static analysis (SAST/linters) high/critical warnings.
+    3. *Layer 3: Absolute Integration Verification:* Code merged into mainline trunk, automated regression tests pass **100%**, and a deployable build container is verified.
+  - **Inviolability Rule:** Scrum work is binary ($0$ or $1$). There is no "90% done". If an item fails even one DoD item (e.g., unreviewed code or skipped regression test), it **cannot** be released or presented at the Sprint Review; it returns to the Product Backlog.
 
 ### 2.4.4 Extreme Programming (XP - Kent Beck)
 - **Nested Planning Loops:** Quarterly Theme Cycle (strategic release themes, project slack) and Weekly Story Cycle (tactical execution).
