@@ -125,6 +125,50 @@ Consider the human body as an anatomical architecture:
 
 Each view looks completely different, serves a distinct diagnostic purpose, and suppresses irrelevant organs, yet all describe the **same unified biological entity**. To communicate meaningfully about software architecture, engineers must always make clear which specific structure and view they are discussing.
 
+### 1.3.2 One System, Multiple Structures: Decomposition View vs. Client-Server View
+Slide 23 of Lecture 1 demonstrates that a single software system inevitably possesses multiple distinct, orthogonal structures simultaneously. Consider a standard networked client-server application:
+
+```mermaid
+flowchart TD
+    subgraph DecompView["1. Module Structure: Decomposition View (Static Code Units)"]
+        direction LR
+        Mod_Sys["System Implementation Codebase"]
+        Mod_Client["Client Module<br/>(UI, Local Validation)"]
+        Mod_Server["Server Module<br/>(Business Rules, Data Access)"]
+        Mod_Sys --> Mod_Client
+        Mod_Sys --> Mod_Server
+    end
+
+    subgraph CCView["2. Component-and-Connector (C&C) Structure: Client-Server View (Runtime Dynamics)"]
+        direction TB
+        subgraph Clients["10 Concurrent Client Components"]
+            C1["Client 1"]
+            C2["Client 2"]
+            C3["Client 3"]
+            CDots["..."]
+            C10["Client 10"]
+        end
+        
+        Conn["Request-Reply Connector<br/>(TCP/IP Sockets / HTTP / TLS)"]
+        S1["Server Component S1<br/>(Single Active Server Process)"]
+        
+        C1 <==>|Port-to-Role| Conn
+        C2 <==>|Port-to-Role| Conn
+        C3 <==>|Port-to-Role| Conn
+        CDots <==>|Port-to-Role| Conn
+        C10 <==>|Port-to-Role| Conn
+        Conn <==>|Role-to-Port| S1
+    end
+```
+
+| Structural Dimension | Decomposition View (Module Structure) | Client-Server View (C&C Structure) |
+| :--- | :--- | :--- |
+| **Nature of Elements** | Static software units of implementation (modules, source files, packages). | Dynamic runtime entities (executing processes, threads, server daemons). |
+| **Element Count** | **2 static modules:** The Client module and the Server module. | **11 runtime components:** 10 active client processes + 1 server daemon ($S1$). |
+| **Relations** | `is-part-of` decomposition hierarchy. | Runtime attachment between component **ports** and connector **roles**. |
+| **Primary Audience** | Programmers, build release engineers, configuration managers. | Network architects, performance engineers, capacity planners. |
+| **Architectural Insight** | Informs how source code is organized, compiled, and modularized. | Analyzes network throughput, server bottleneck saturation, and concurrency. |
+
 ---
 
 ## 1.4 The Three Primary Categories of Architectural Structures
@@ -181,12 +225,172 @@ flowchart TD
 
 ## 1.5 Architecture Design Activities: The CS-One-Stop Portal Case Study
 
-Architecture design is an iterative synthesis activity that balances structural perspectives:
-1. **Contextual Analysis:** Examining how the system interacts with external users, legacy databases, and third-party APIs.
-2. **Multi-Perspective Synthesis (Web Architecture Example):**
-   - *Document View:* Web viewed as a hypertext graph of interrelated HTML/MIME documents navigable via URLs and HTTP.
-   - *Client-Server Network View:* Web viewed as physical client machines running web browsers connecting over TCP/IP to remote web servers and load balancers.
-   - *Service Architecture View:* Web viewed as microservices exposing RESTful JSON endpoints communicating asynchronously via distributed message brokers.
+Architecture design is an iterative synthesis activity that transforms business and quality drivers into concrete architectural structures.
+
+### 1.5.1 The Architecture Design Activity Framework
+Slide 28 of Lecture 1 formalizes the architectural design lifecycle. The software architect operates as the central synthesiser bridging drivers and structures:
+
+```mermaid
+flowchart LR
+    subgraph Drivers["Architectural Drivers"]
+        direction TB
+        D1["Purpose & Business Context"]
+        D2["Functional Requirements"]
+        D3["Quality Attributes (NFRs)"]
+        D4["Technical & Resource Constraints"]
+        D5["Stakeholder Concerns"]
+    end
+
+    subgraph Architect["Software Architect"]
+        SA["<b>Design Synthesis Engine</b><br/>Applies Design Concepts & Trade-off Analysis"]
+    end
+
+    subgraph Concepts["Design Concepts"]
+        direction TB
+        C1["Reference Architectures"]
+        C2["Architectural Tactics"]
+        C3["Architectural Patterns & Styles"]
+        C4["COTS & Commercial Frameworks"]
+    end
+
+    subgraph Structures["Architectural Structures"]
+        direction TB
+        S1["Module Structures<br/>(Static Code Packages)"]
+        S2["C&C Structures<br/>(Runtime Dynamic Topologies)"]
+        S3["Allocation Structures<br/>(Physical Hosting & Deployments)"]
+    end
+
+    Drivers --> SA
+    Concepts --> SA
+    SA --> Structures
+```
+
+### 1.5.2 Enterprise Case Study: The CS-One-Stop Portal System
+Slides 29–31 of Lecture 1 present the architectural blueprint of the **CS-One-Stop Portal** (an enterprise university portal for computer science students and faculty) represented across the three primary architectural views:
+
+#### 1.5.2.1 CS-One-Stop Module View (Package Hierarchy)
+The static code structure organizes system capabilities into two distinct vertical layers:
+
+```mermaid
+flowchart TD
+    subgraph CS_Portal_Modules["CS-One-Stop Portal: Module Decomposition View"]
+        direction TB
+        
+        subgraph PresLayer["Presentation Layer (UI Modules)"]
+            direction LR
+            M_Login["Login Module"]
+            M_SignUp["Sign Up Module"]
+            M_StuView["Student View"]
+            M_LecView["Lecturer View"]
+            M_AdminView["Admin View"]
+            M_Dash["Dashboard Module"]
+        end
+
+        subgraph BizLayer["Business Logic Layer (Services)"]
+            direction TB
+            M_UserMgmt["User Management Module<br/>(Authentication & Role Authorization)"]
+            
+            subgraph SubServices["Specialized Functional Modules"]
+                direction LR
+                M_Event["Event & Scheduling"]
+                M_Announce["Announcement"]
+                M_Files["File Sharing & Resources"]
+                M_Email["Email Service"]
+                M_Collab["Collaboration & Discussion"]
+            end
+        end
+
+        PresLayer ==>|«use»| M_UserMgmt
+        M_UserMgmt -->|«import»| M_Event
+        M_UserMgmt -->|«import»| M_Announce
+        M_UserMgmt -->|«import»| M_Files
+        M_UserMgmt -->|«import»| M_Email
+        M_UserMgmt -->|«import»| M_Collab
+    end
+```
+
+#### 1.5.2.2 CS-One-Stop C&C View (5-Tier Runtime Network Architecture)
+The runtime view visualizes concurrent processes, network communication boundaries, and cloud middle-tier integrations:
+
+```mermaid
+flowchart TD
+    subgraph CSTierArch["CS-One-Stop Portal: 5-Tier Component-and-Connector View"]
+        direction TB
+        
+        subgraph Tier1["1. Client Tier"]
+            direction LR
+            B_Desktop["Desktop Web Browser"]
+            B_Mobile["Mobile Browser"]
+        end
+
+        subgraph TierNet["2. Network Boundary"]
+            InternetCloud["Public Internet<br/>(HTTPS / WSS / TLS 1.3)"]
+        end
+
+        subgraph Tier2["3. Server Tier"]
+            WebServer["Next.js Web Server Node<br/>(SSR, Reverse Proxy, Route Handlers)"]
+        end
+
+        subgraph Tier3["4. Middle Tier (Cloud Microservices & APIs)"]
+            direction LR
+            Clerk["Clerk Auth Service<br/>(OAuth, JWT, Session Tokens)"]
+            NeonSvc["Neon Serverless Middleware<br/>(Connection Pooling, Query Engine)"]
+            OpenAI["OpenAI API Service<br/>(AI Academic Advisory Agent)"]
+        end
+
+        subgraph Tier4["5. Data Tier"]
+            DB[("CS-One-Stop Database<br/>PostgreSQL Serverless Cluster")]
+        end
+
+        Tier1 <==> InternetCloud
+        InternetCloud <==> WebServer
+        WebServer <==>|Secure RPC / REST| Clerk
+        WebServer <==>|REST API| OpenAI
+        WebServer <==>|Postgres Wire Protocol| NeonSvc
+        NeonSvc <==>|TLS Connection Pool| DB
+    end
+```
+
+#### 1.5.2.3 CS-One-Stop Allocation View (Cloud Deployment Architecture)
+The allocation view maps software execution units to physical hardware and serverless cloud infrastructure:
+
+```mermaid
+flowchart LR
+    subgraph AllocationCS["CS-One-Stop Portal: Physical Deployment Architecture"]
+        direction LR
+        
+        subgraph DevNode["User Hardware Node"]
+            UserDevice["User's Computing Device<br/>(Windows / macOS / iOS / Android)"]
+            BrowserProc["«process»<br/>Modern Web Browser"]
+            UserDevice --- BrowserProc
+        end
+
+        subgraph NetlifyCloud["Netlify Edge Cloud Infrastructure"]
+            NetlifyNode["«execution environment»<br/>Netlify Global Edge Network"]
+            NextApp["«artifact»<br/>CS-One-Stop Next.js Application"]
+            ServerlessFunc["«execution environment»<br/>Serverless Route Handlers"]
+            NetlifyNode --- NextApp
+            NetlifyNode --- ServerlessFunc
+        end
+
+        subgraph AuthCloud["Clerk Cloud Infrastructure"]
+            ClerkNode["«device»<br/>Clerk Authentication Server"]
+            ClerkSvc["«component»<br/>Clerk Auth Provider Engine"]
+            ClerkNode --- ClerkSvc
+        end
+
+        subgraph NeonCloud["Neon Cloud Datacenter"]
+            NeonNode["«device»<br/>Neon Cloud PostgreSQL Instance"]
+            DBEngine["«database system»<br/>PostgreSQL 16 Engine"]
+            NeonNode --- DBEngine
+        end
+
+        BrowserProc ==>|HTTPS / Port 443| NetlifyNode
+        BrowserProc -.->|Client-Side SDK Auth| ClerkNode
+        ServerlessFunc ==>|Server-Side Verification| ClerkNode
+        ServerlessFunc ==>|Encrypted TCP / Port 5432| NeonNode
+    end
+```
 
 
 ## 1.6 The Strategic Importance of Software Architecture
@@ -256,6 +460,13 @@ flowchart LR
 
 Published in 1995 by **Philippe Kruchten** (Rational Software / IEEE Software), the **"4+1" View Model** addresses the fundamental reality that **no single visual diagram can satisfy all stakeholders simultaneously**.
 
+> [!note] Theoretical Extension: Hofmeister, Nord & Soni (2000)
+> Slide 15 of Lecture 2 notes that alongside Kruchten's 4+1 Model, software architecture literature includes the four-view model proposed by **Hofmeister, Nord, and Soni (2000)**:
+> 1. **Conceptual View:** Characterizes domain entities and relationships purely at the problem level, independent of implementation platforms.
+> 2. **Module View:** Structures the codebase into subsystems, modules, and layers.
+> 3. **Execution View:** Depicts runtime dynamic processes, threads, and interprocess communication.
+> 4. **Code Architecture View:** Organizes source files, binaries, build libraries, and physical packaging.
+
 ```mermaid
 flowchart TD
     subgraph FourPlusOne["Philippe Kruchten's 4+1 Architectural View Model (1995)"]
@@ -282,37 +493,131 @@ flowchart TD
     end
 ```
 
+---
+
 ### 1.9.1 1. The Logical View
-- **Focus:** Captures the vocabulary and conceptual model of the problem domain.
-- **Constituents:** Classes, objects, attributes, methods, and relationships (`inheritance`, `aggregation`, `association`).
+- **Focus:** Captures the vocabulary, entities, and conceptual services of the problem domain.
+- **Constituents:** Classes, objects, interfaces, operations, and relationships (`generalization`, `association`, `dependency`).
 - **Primary Audience:** System architects, designers, business analysts, and domain experts.
-- **Representative UML Diagrams:** Class Diagrams, Object Diagrams, State Machine Diagrams, Sequence Diagrams.
+- **Concrete Slide Example (Slide 19 of Lecture 2):** A **UML Sequence Diagram** tracing dynamic message exchange between actors and system objects:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Clerk as «actor»<br/>Clerk
+    participant Sys as «system»<br/>:System
+    
+    Note over Clerk,Sys: Inquiry Interaction Workflow
+    Clerk ->> Sys: inquire(itemCode, branchId)
+    activate Sys
+    Sys -->> Clerk: return itemDetails(title, price, stockQuantity)
+    deactivate Sys
+```
+
+---
 
 ### 1.9.2 2. The Process View
-- **Focus:** Addresses the runtime behavior, concurrency, and communication of the executing system.
-- **Constituents:** Independent processes, execution threads, message passing, synchronization mechanisms, deadlock avoidance, and event handling.
+- **Focus:** Addresses the runtime concurrency, execution threads, communication mechanisms, and synchronization of the running system.
+- **Constituents:** Independent processes, execution threads, synchronization semaphores, deadlock avoidance, and event queues.
 - **Primary Audience:** Systems integrators, performance analysts, and concurrency engineers.
-- **Representative Notations:** Control Flowcharts, Data Flow Diagrams (DFDs), Activity Diagrams, Concurrency Task Sequence Diagrams.
+- **Concrete Slide Example (Slide 20 of Lecture 2):** A **UML Activity Diagram** formalizing the execution workflow of the `Rental::setRental` operation:
+
+```mermaid
+flowchart TD
+    StartNode((Start)) --> A1["Calculate Rental Duration"]
+    A1 --> Dec1{"Duration > Max Allowed?"}
+    
+    Dec1 -- "[True / Overdue]" --> A_Flag["Flag Overdue & Apply Penalty Surcharge"]
+    Dec1 -- "[False / Valid]" --> A_Fee["Compute Base Rental Fee"]
+    
+    A_Flag --> Join1[ ]
+    A_Fee --> Join1
+    
+    Join1 --> Fork1{Fork}
+    Fork1 --> A_Inv["Update Rental Inventory"]
+    Fork1 --> A_Charge["Charge Customer Credit Card"]
+    
+    A_Inv --> Join2{Join}
+    A_Charge --> Join2
+    Join2 --> EndNode(((End)))
+```
+
+---
 
 ### 1.9.3 3. The Development View (Implementation View)
-- **Focus:** Organizes the actual software codebase and physical module hierarchy.
-- **Constituents:** Software modules, source packages, build targets, libraries, third-party frameworks, and sub-systems.
+- **Focus:** Organizes the actual software codebase, compilation packages, and physical artifact manifests.
+- **Constituents:** Software modules, JAR/WAR/EAR packages, source directories, libraries, and third-party frameworks.
 - **Primary Audience:** Software engineers, programmers, build managers, and configuration controllers.
-- **Representative UML Diagrams:** Component Diagrams, Package Diagrams, Artifact Diagrams.
+- **Concrete Slide Example (Slide 21 of Lecture 2):** A **UML Manifestation Diagram** showing a compiled Java archive manifesting a runtime component:
+
+```mermaid
+flowchart TD
+    subgraph DevViewManifest["Development View: UML Artifact Manifestation"]
+        direction TB
+        JarArtifact["«artifact»<br/><b>CRSClient.jar</b><br/>(Client Desktop Binary Package)"]
+        Comp["«component»<br/><b>CRS Client</b><br/>(Customer Reservation System GUI)"]
+        
+        JarArtifact ..->|«manifest»| Comp
+    end
+```
+
+---
 
 ### 1.9.4 4. The Physical View (Deployment View)
-- **Focus:** Maps the software elements onto the physical hardware infrastructure and execution environment.
-- **Constituents:** Physical servers, CPU cores, virtual machines, storage networks, networking routers, communication protocols (TCP/IP, Fibre Channel), and topology.
+- **Focus:** Maps the software elements onto the physical hardware infrastructure, computing nodes, and execution networks.
+- **Constituents:** Physical servers, network routers, communication links (TCP/IP, HTTP), virtual machines, and cloud containers.
 - **Primary Audience:** Deployment engineers, infrastructure architects, cloud/DevOps specialists, and network administrators.
-- **Representative UML Diagrams:** Deployment Diagrams, Network Topology Charts.
+- **Concrete Slide Example (Slide 22 of Lecture 2):** A **UML Deployment Diagram** illustrating multi-tier hardware hosting:
+
+```mermaid
+flowchart LR
+    subgraph ClientNode["«device»<br/>Client PC Node"]
+        BrowserProc["«process»<br/>Web Browser"]
+    end
+
+    subgraph ServerNode["«device»<br/>Enterprise Server Node"]
+        direction TB
+        IntServer["«execution environment»<br/>Internet Server (Apache HTTPD)"]
+        AppServer["«execution environment»<br/>Application Server (Tomcat / WebSphere)"]
+        DBSystem["«database system»<br/>DatabaseSystem (Oracle / PostgreSQL)"]
+        
+        IntServer -->|Internal Pipe / AJP| AppServer
+        AppServer -->|JDBC Connection Pool| DBSystem
+    end
+
+    BrowserProc <==>|HTTP / HTTPS Port 443| IntServer
+```
+
+---
 
 ### 1.9.5 +1. The Use Case View (Scenario View)
-- **Focus:** Bridges and validates the four architectural views using concrete user requirements, scenarios, and operational workflows.
-- **Constituents:** Actors, use cases, given-when-then scenarios, and system sequences.
+- **Focus:** Bridges, harmonizes, and validates the four architectural views using concrete user requirements, scenarios, and operational workflows.
+- **Constituents:** Actors, use cases, scenarios, and preconditions.
 - **The Central "+1" Function:**
   - Serves as the unifying core that binds the four orthogonal views together.
   - Used during architectural reviews (e.g., ATAM) to validate whether the structures defined in the Logical, Process, Development, and Physical views correctly realize stakeholder functional and non-functional requirements.
-- **Representative UML Diagrams:** Use Case Diagrams, System Context Diagrams.
+- **Concrete Slide Example (Slide 23 of Lecture 2):** A **UML Use Case Diagram** of a Library Management System:
+
+```mermaid
+flowchart LR
+    User["«actor»<br/>Library User"]
+    Lib["«actor»<br/>Librarian"]
+
+    subgraph LibraryBoundary["Library Management System"]
+        UC1(["Borrow Book"])
+        UC2(["Return Book"])
+        UC3(["Search Catalog"])
+        UC4(["Add New Book Title"])
+        UC5(["Update Member Account"])
+    end
+
+    User --- UC1
+    User --- UC2
+    User --- UC3
+    Lib --- UC3
+    Lib --- UC4
+    Lib --- UC5
+```
 
 ---
 
@@ -531,6 +836,73 @@ flowchart TD
 - **Core Architectural Mechanism:** Services communicate over a centralized communication platform termed the **Enterprise Service Bus (ESB)**, which performs protocol translation, message transformation, and routing.
 - **Architectural Benefits:** High service reusability across disparate enterprise applications, allowing heterogeneous legacy systems to interface seamlessly.
 
+#### Enterprise Architectural Transformation: Before SOA vs. After SOA
+Slide 14 of Lecture 3 demonstrates the structural revolution brought by SOA across enterprise IT landscapes:
+
+```mermaid
+flowchart TD
+    subgraph BeforeSOA["Before SOA: Closed - Monolithic - Brittle"]
+        direction TB
+        subgraph MonolithApps["Application-Dependent Business Functions"]
+            direction LR
+            AF1["<b>Service Scheduling</b><br/>• Check Customer Status<br/>• Determine Availability"]
+            AF2["<b>Order Processing</b><br/>• Check Customer Status<br/>• Verify Customer Credit<br/>• Order Status Tracking"]
+            AF3["<b>Account Management</b><br/>• Calculate Shipping Charges<br/>• Order Status Tracking<br/>• Check Credit"]
+        end
+        
+        subgraph DataSilos["Siloed Data Repositories"]
+            direction LR
+            D_Mkt["Marketing"]
+            D_Sales["Sales"]
+            D_CRM["CRM"]
+            D_Fin["Finance"]
+            D_DW["Data Warehouse"]
+            D_Ext["External Partner"]
+        end
+
+        AF1 -.->|Tangled Point-to-Point Links| DataSilos
+        AF2 -.->|Tangled Point-to-Point Links| DataSilos
+        AF3 -.->|Tangled Point-to-Point Links| DataSilos
+    end
+```
+
+```mermaid
+flowchart TD
+    subgraph AfterSOA["After SOA: Shared Services - Collaborative - Interoperable - Integrated"]
+        direction TB
+        
+        subgraph CompositeApps["Composite Applications (Composed Business Processes)"]
+            direction LR
+            CA_Order["Order Processing Workflow"]
+            CA_Acct["Account Management Portal"]
+            CA_Sched["Service Scheduling System"]
+        end
+
+        subgraph ReusableServices["Reusable Business Services Layer"]
+            direction LR
+            S_Inv["Create Invoice"]
+            S_Cust["Check Customer Status"]
+            S_Ord["Check Order Status"]
+            S_Cred["Check Credit"]
+            S_Stock["Check Inventory"]
+            S_Gen["Shared Utility Services"]
+        end
+
+        subgraph SharedData["Unified Enterprise Data Repositories"]
+            direction LR
+            R_Mkt["Marketing"]
+            R_Sales["Sales"]
+            R_CRM["CRM"]
+            R_Fin["Finance"]
+            R_DW["Data Warehouse"]
+            R_Ext["External Partner"]
+        end
+
+        CompositeApps ==>|Service Orchestration| ReusableServices
+        ReusableServices ==>|Standard Data Access Connectors| SharedData
+    end
+```
+
 ---
 
 ### 1.12.7 7. Microservice Architecture
@@ -569,6 +941,69 @@ flowchart TD
 - **Architectural Properties:**
   - **Decoupled Deployment:** Services can be upgraded, deployed, or rolled back independently without touching the rest of the application.
   - **Polyglot Engineering:** Each microservice can be authored in the programming language, framework, and data store best suited to its domain problem.
+
+#### Architectural Evolution: Monolithic vs. Service-Oriented vs. Microservices
+Slide 16 of Lecture 3 illustrates the historical progression across the three primary application architectures:
+
+```mermaid
+flowchart LR
+    subgraph Mono["1. Monolithic Architecture"]
+        direction TB
+        M_UI["User Interface"]
+        M_AC["Access Control"]
+        M_BL["Business Logic"]
+        M_DL["Data Layer"]
+        M_DB[("Single Central Database")]
+        M_UI --> M_AC --> M_BL --> M_DL --> M_DB
+    end
+
+    subgraph SOA_Arch["2. Service-Oriented Architecture"]
+        direction TB
+        SOA_UI["Clients<br/>(Web / Mobile / App)"]
+        subgraph ESB_Bus["Enterprise Service Bus (ESB)"]
+            ESB_Msg["Messaging & Transport"]
+            ESB_Sec["Security & Transform"]
+        end
+        SOA_S1["Order Service"]
+        SOA_S2["Payment Service"]
+        SOA_DB[("Shared DB Cluster")]
+        SOA_UI --> ESB_Bus
+        ESB_Bus --> SOA_S1
+        ESB_Bus --> SOA_S2
+        SOA_S1 --> SOA_DB
+        SOA_S2 --> SOA_DB
+    end
+
+    subgraph Micro_Arch["3. Microservice Architecture"]
+        direction TB
+        MS_UI["Client Applications"]
+        MS_GW["API Gateway"]
+        subgraph MS_Cluster["Autonomous Microservices"]
+            direction LR
+            subgraph uS1["μS 1"]
+                S1_C["Logic"]
+                S1_D[("DB 1")]
+                S1_C --- S1_D
+            end
+            subgraph uS2["μS 2"]
+                S2_C["Logic"]
+                S2_D[("DB 2")]
+                S2_C --- S2_D
+            end
+            subgraph uS3["μS 3"]
+                S3_C["Logic"]
+                S3_D[("DB 3")]
+                S3_C --- S3_D
+            end
+        end
+        MS_UI --> MS_GW
+        MS_GW --> uS1
+        MS_GW --> uS2
+        MS_GW --> uS3
+    end
+
+    Mono ==>|Evolution| SOA_Arch ==>|Evolution| Micro_Arch
+```
 
 #### Comparative Analysis: Layered Pattern vs. SOA vs. Microservices
 | Dimension | Layered Pattern | Service-Oriented Architecture (SOA) | Microservice Architecture |
@@ -693,6 +1128,55 @@ flowchart TD
     end
 ```
 
+#### Module Interface Encapsulation and Visibility Constraints
+Slide 10 of Lecture 4 illustrates **Figure 1.1**, formalizing the two primary mechanisms by which an aggregate parent module controls interface exposure and information hiding:
+
+```mermaid
+flowchart TD
+    subgraph Figure1_1["Figure 1.1: Module Interface Encapsulation Mechanisms"]
+        direction LR
+        
+        subgraph Opaque["(a) Opaque Interface Encapsulation"]
+            direction TB
+            Int_C1["Interface C.1 (Public)"]
+            Int_C2["Interface C.2 (Public)"]
+            subgraph ModC_A["Aggregate Module C"]
+                direction LR
+                subgraph ModA["Submodule A"]
+                    Int_A1["Interface A.1 (Hidden)"]
+                    Int_A2["Interface A.2 (Hidden)"]
+                end
+                subgraph ModB["Submodule B"]
+                    Int_B1["Interface B.1 (Hidden)"]
+                    Int_B2["Interface B.2 (Hidden)"]
+                    Int_B3["Interface B.3 (Hidden)"]
+                end
+            end
+            Int_C1 --- ModC_A
+            Int_C2 --- ModC_A
+        end
+
+        subgraph Transparent["(b) Interface Pass-Through / Delegation"]
+            direction TB
+            subgraph ModC_B["Aggregate Module C"]
+                direction LR
+                subgraph ModA_T["Submodule A"]
+                    Int_A_Exposed["Interface A.1 (Exposed to Parent)"]
+                end
+                subgraph ModB_T["Submodule B"]
+                    Int_B_Exposed["Interface B.1 (Exposed to Parent)"]
+                    Int_B_Hidden["Interface B.2 (Hidden)"]
+                end
+            end
+            Int_PubA["Exposed Public Interface (from A)"] --- Int_A_Exposed
+            Int_PubB["Exposed Public Interface (from B)"] --- Int_B_Exposed
+        end
+    end
+```
+
+- **Pattern (a) - Opaque Interface Encapsulation:** Aggregate Module $C$ exposes its own distinct public interface contracts, completely concealing the internal interfaces of submodules $A$ and $B$. Callers interact purely with $C$, achieving complete information hiding.
+- **Pattern (b) - Interface Pass-Through (Delegation):** Aggregate Module $C$ selectively promotes and exposes a subset of the internal interfaces of submodules $A$ and $B$ as its own public interface, allowing external callers direct access to specified submodule services while keeping others encapsulated.
+
 ---
 
 ### 2.1.3 Usages of Module Views
@@ -759,6 +1243,12 @@ flowchart TD
         CM --> CM2["Enrollment Manager"]
         LD --> LD1["Video Streaming Engine"]
         LD --> LD2["Document/Slide Viewer"]
+        QZ --> QZ1["Quiz Evaluation Engine"]
+        QZ --> QZ2["Question Bank Repository"]
+        UM --> UM1["Profile & Identity Manager"]
+        UM --> UM2["Role & Access Controller"]
+        PT --> PT1["Gradebook Analytics"]
+        PT --> PT2["Milestone Tracker"]
     end
 ```
 
@@ -768,6 +1258,70 @@ flowchart TD
 | **Relations** | **Decomposition Relation** (a strict form of the `is-part-of` relation). |
 | **Constraints** | 1. **Strictly Acyclic:** No loops or circular decompositions permitted.<br/>2. **Single-Parent Rule:** Every submodule belongs to exactly one parent module. |
 | **Usage** | Reasoning about code organization, planning team work assignments, and localizing modifications. |
+
+#### Case Study: The ATIA-M System Decomposition View
+Slides 18 and 25 of Lecture 4 document the enterprise decomposition hierarchy of the US Army Training Information Architecture - Migrated (ATIA-M) system (**Figures 2.2 & 2.3**):
+
+```mermaid
+flowchart TD
+    subgraph ATIA_Top["Figure 2.2: Top-Level ATIA-M Decomposition View"]
+        direction TB
+        ATIA["«package»<br/><b>ATIA-M System</b>"]
+        
+        subgraph WinApps["«package» Windows apps (Thick Clients)"]
+            direction LR
+            CommonCode["Common code for thick clients"]
+            TDDC["TDDC Windows app"]
+            UTMC["UTMC Windows app"]
+        end
+        
+        WebMods["«package»<br/>ATIA server-side Web modules"]
+        JavaMods["«package»<br/>ATIA server-side Java modules"]
+        
+        ATIA --> WinApps
+        ATIA --> WebMods
+        ATIA --> JavaMods
+    end
+```
+
+```mermaid
+flowchart TD
+    subgraph ATIA_Refined["Figure 2.3: Refinement of ATIA Server-Side Java Modules"]
+        direction TB
+        
+        subgraph Subsystems["Core Enterprise Subsystems"]
+            direction LR
+            S_ADLSC["«subsystem»<br/>adlsc"]
+            S_ITC["«subsystem»<br/>itc"]
+            S_TDC["«subsystem»<br/>tdc"]
+            S_CCS["«subsystem»<br/>CCS"]
+        end
+
+        subgraph JavaPackages["Functional Java Implementation Packages"]
+            direction LR
+            P_Ctrl["controller"]
+            P_Biz["business"]
+            P_Serv["servlet"]
+            P_Util["utils"]
+            P_Client["client"]
+            P_Fac["facades"]
+            P_Ent["entity"]
+            P_Obj["objects"]
+            P_Test["test"]
+            P_Tag["taglibs"]
+        end
+
+        subgraph CCSSubmodules["Refinement of Subsystem CCS"]
+            direction LR
+            CCS_WS["webservice"]
+            CCS_Port["portal"]
+            CCS_Sec["security"]
+            CCS_Com["common"]
+        end
+
+        S_CCS --> CCSSubmodules
+    end
+```
 
 ---
 
@@ -790,50 +1344,306 @@ flowchart TD
         subgraph Subset2["Subset 2 (Business Logic)"]
             M_Biz["Transaction Engine"]
         end
-        M_Biz ==>|<<use>>| M_Data
-        M_Data ==>|<<use>>| M_Kernel
+        M_Biz ==>|«use»| M_Data
+        M_Data ==>|«use»| M_Kernel
     end
 ```
 
-- **Topological Constraints:** The Uses style imposes no hard topological limits; however, architectural anti-patterns such as cyclic dependencies ($A \text{ uses } B \text{ uses } A$), high fan-out, or deeply nested chains severely degrade the architecture's capacity for incremental delivery and test isolation.
-- **Architectural Value:**
-  - **Incremental Subset Delivery:** Enables engineering teams to define minimal viable subsets (Subsets 0, 1, 2) that can be compiled, tested, and shipped independently.
-  - **Testing and Debugging:** High-confidence unit testing requires isolating modules that have zero dependencies on uncompleted modules.
-- **Case Study: The ATIA-M System:** The US Army Training Information Architecture - Migrated (ATIA-M) system utilized the Uses style to decouple heavy Windows C# desktop thick clients from server-side Java EE Web services, allowing server business logic to be tested and deployed months before GUI completion.
+- **Topological Constraints:** The Uses style imposes no hard topological limits; however, architectural anti-patterns such as cyclic dependencies ($A 	ext{ uses } B 	ext{ uses } A$), broad fan-out, or long dependency chains severely degrade the architecture's capacity for incremental delivery and test isolation.
+
+#### Notations for Documenting the Uses Style (Figure 2.7)
+Slide 24 of Lecture 4 illustrates **Figure 2.7**, showing the progression from coarse-grained to fine-grained UML representations of uses relations:
+
+```mermaid
+flowchart TD
+    subgraph Fig2_7["Figure 2.7: UML Representation Levels for the Uses Style"]
+        direction LR
+        
+        subgraph LevelA["(a) Aggregate Package Uses"]
+            direction LR
+            Pkg_UI["User Interface"]
+            Pkg_DA["Data Access"]
+            Pkg_UI -.->|«use»| Pkg_DA
+        end
+
+        subgraph LevelB["(b) Submodule Internal Dependency"]
+            direction LR
+            subgraph Pkg_UI_B["User Interface"]
+                SubA["Submodule A"]
+                SubB["Submodule B"]
+                SubC["Submodule C"]
+                SubB -.->|«use»| SubC
+            end
+            Pkg_DA_B["Data Access"]
+            SubB -.->|«use»| Pkg_DA_B
+        end
+
+        subgraph LevelC["(c) Explicit Interface Socket Binding"]
+            direction LR
+            subgraph Pkg_UI_C["User Interface"]
+                C_ModB["Submodule B"]
+                C_ModC["Submodule C"]
+            end
+            subgraph Pkg_DA_C["Data Access Module"]
+                direction TB
+                Int_Queries(("data queries"))
+                Int_Admin(("admin"))
+            end
+            C_ModC -.->|«use»| Int_Queries
+            C_ModB -.->|«use»| Int_Admin
+        end
+    end
+```
+
+#### The Dependency Structure Matrix (DSM)
+Alongside UML, architects employ a square **Dependency Structure Matrix (DSM)** to rigorously analyze dependency structures and detect circular loops. A value of `1` in row $i$, column $j$ indicates that the module in column $j$ **uses** the module in row $i$:
+
+| Used Module (Row) \ Using Module (Col) | `client` | `ejb` | `cc` | `god` | `restart` | `common` | `vo` |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **`client`** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **`ejb`** | **1** | 0 | 0 | **1** | 0 | 0 | 0 |
+| **`cc`** | 0 | **1** | 0 | 0 | 0 | 0 | 0 |
+| **`god`** | **1** | 0 | 0 | 0 | 0 | 0 | 0 |
+| **`restart`** | 0 | 0 | 0 | **1** | 0 | 0 | 0 |
+| **`common`** | **1** | **1** | 0 | 0 | 0 | 0 | 0 |
+| **`vo`** | **1** | **1** | **1** | 0 | 0 | **1** | 0 |
+
+> [!tip] DSM Architectural Analysis
+> - Column `client` has `1`s in rows `ejb`, `god`, `common`, and `vo`, indicating that the client module depends directly on all four.
+> - Row `vo` (Value Objects) is used by `client`, `ejb`, `cc`, and `common`, demonstrating that `vo` is a foundational shared data module at the base of the dependency tree.
+
+#### Enterprise Case Study: ATIA-M Uses View (Figure 2.10)
+Slide 25 of Lecture 4 presents **Figure 2.10**, showing the top-level uses dependencies of the ATIA-M system:
+
+```mermaid
+flowchart TD
+    subgraph ATIA_Uses["Figure 2.10: ATIA-M Top-Level Uses View"]
+        direction TB
+        
+        subgraph WinAppsBox["Windows apps (C# Thick Clients)"]
+            direction TB
+            CommonThick["Common code for thick clients"]
+            TDDCApp["TDDC Windows app"]
+            UTMCApp["UTMC Windows app"]
+            TDDCApp -.->|«use»| CommonThick
+            UTMCApp -.->|«use»| CommonThick
+        end
+
+        WebMod["ATIA server-side Web modules"]
+        JavaMod["ATIA server-side Java modules"]
+
+        WinAppsBox -.->|«use»| WebMod
+        WinAppsBox -.->|«use»| JavaMod
+        WebMod -.->|«use»| JavaMod
+    end
+```
+
+#### Incremental Development Planning Using the Uses View (Figure 2.6)
+Slide 26 of Lecture 4 illustrates **Figure 2.6**, demonstrating how the Uses style enables engineering leaders to calculate the exact subset of code required for an incremental release:
+
+```mermaid
+flowchart TD
+    subgraph IncrementalPlan["Figure 2.6: Incremental Release Planning for admin.client"]
+        direction TB
+        
+        AdminClient["<b>admin.client</b><br/>(Target Release Module)"]
+        
+        subgraph RequiredSubset["Required Prerequisite Modules (Must Be Present & Verified)"]
+            direction LR
+            AdminCore["admin.core"]
+            DAO["dao"]
+            Util["util"]
+        end
+
+        subgraph OtherModules["Other Unrelated System Modules"]
+            direction LR
+            EStoreWeb["estore.webapp"]
+            EStoreCore["estore.core"]
+            WebShared["web::shared"]
+            WebAccess["web::accessControl"]
+        end
+
+        AdminClient ==>|«use»| AdminCore
+        AdminClient ==>|«use»| WebAccess
+        AdminCore ==>|«use»| DAO
+        AdminCore ==>|«use»| Util
+        DAO ==>|«use»| Util
+
+        EStoreWeb -.->|«use»| EStoreCore
+        EStoreWeb -.->|«use»| WebShared
+    end
+```
+
+> [!important] Release Rule Derived from Figure 2.6
+> If the incremental project plan calls for delivering **`admin.client`** in the next sprint, the diagram proves that the deployment package **MUST** include:
+> 1. `admin.client`
+> 2. `admin.core` (directly used by `admin.client`)
+> 3. `dao` (used by `admin.core`)
+> 4. `util` (used by `admin.core` and `dao`)
+> 
+> Modules `estore.webapp` and `estore.core` are completely omitted from the build, dramatically reducing verification scope and testing overhead.
 
 ---
 
 ### 2.2.3 3. The Generalization Style
 The **Generalization Style** organizes modules according to their shared commonalities and domain variations using the `is-a` relationship.
 
+#### UML Notations for the Generalization Style (Figures 2.12 & 2.13)
+Slide 29 of Lecture 4 formalizes the two standard UML notations:
+1. **Class Inheritance (Figure 2.12):** Depicted as a solid line with a closed, hollow arrowhead pointing toward the general parent. UML allows an ellipsis (`...`) in place of a submodule to indicate that a module has additional specialized descendants not shown.
+2. **Interface Realization (Figure 2.13):** Depicted either as:
+   - A dashed line with a closed hollow arrowhead directed from the implementing module to the `«interface»`.
+   - A lollipop (ball-and-socket) symbol connected to the implementing module.
+
 ```mermaid
 classDiagram
-    class PetStoreComponent {
+    class Shape {
         <<Abstract>>
-        +String componentId
-        +initialize()
+        +draw()
+        +getArea()
     }
-    class CatalogModule {
-        +searchProducts()
-        +displayCategories()
+    class Polygon {
+        +int numberOfSides
     }
-    class ShoppingCartModule {
-        +addItem()
-        +calculateTax()
+    class Circle {
+        +float radius
     }
-    class SecureCheckoutModule {
-        +processCreditCard()
-        +generateReceipt()
+    class Spline {
+        +Point controlPoints
     }
-    PetStoreComponent <|-- CatalogModule : is-a
-    PetStoreComponent <|-- ShoppingCartModule : is-a
-    ShoppingCartModule <|-- SecureCheckoutModule : specializes
+    Shape <|-- Polygon
+    Shape <|-- Circle
+    Shape <|-- Spline
+
+    class Printable {
+        <<Interface>>
+        +printDocument()
+    }
+    class OrderConfirmation {
+        +String orderId
+        +printDocument()
+    }
+    Printable <|.. OrderConfirmation : realizes
 ```
 
-- **Elements:** Modules, specialized into abstract modules (containing interface definitions or incomplete implementations) and concrete modules.
-- **Relations:** Generalization (`is-a`), specializing into class inheritance, interface inheritance, or implementation realization.
-- **Constraints:** A module may have multiple parents (multiple inheritance), though multiple inheritance introduces well-known structural ambiguities (the Diamond Problem).
-- **Architectural Value:** Captures domain commonalities at high levels of abstraction, supporting software reuse, framework extensibility, and polymorphic evolution.
+#### Enterprise Case Study: The PetStore Application Generalization View (Figure 2.15)
+Slide 30 of Lecture 4 presents **Figure 2.15**, illustrating how the PetStore enterprise web application organizes web controller events:
+
+```mermaid
+classDiagram
+    class EventSupport {
+        <<Package: waf::event>>
+        +processEvent()
+        +dispatch()
+    }
+    class EventResponse {
+        <<Interface>>
+        +getResponseStatus()
+    }
+    
+    class CartEvent {
+        +addItem()
+        +removeItem()
+    }
+    class SignOnEvent {
+        +username
+        +credentials
+    }
+    class CustomerEvent {
+        +customerId
+    }
+    class CreateUserEvent {
+        +email
+        +password
+    }
+    class OrderEvent {
+        +orderTotal
+    }
+    class OrderEventResponse {
+        +confirmationNumber
+        +getResponseStatus()
+    }
+
+    EventSupport <|-- CartEvent
+    EventSupport <|-- SignOnEvent
+    EventSupport <|-- CustomerEvent
+    EventSupport <|-- CreateUserEvent
+    EventSupport <|-- OrderEvent
+    EventResponse <|.. OrderEventResponse : realizes
+```
+
+#### Generalization Refactoring Exercise: LinenRegistrationForm (Slide 31)
+Slide 31 of Lecture 4 presents an architectural exercise refactoring duplicate domain models into a clean Generalization hierarchy:
+
+```mermaid
+classDiagram
+    note "BEFORE REFACTORING: Duplicate Attributes & High Coupling"
+    class LinenRegistrationForm {
+        +registerItems()
+    }
+    class BadInvoice {
+        +UniqueID
+        +Price
+        +IssueDate
+        +PaymentDate
+        +Create()
+        +Issue()
+        +Pay()
+    }
+    class BadReceipt {
+        +UniqueID
+        +DueDate
+        +Price
+        -Weight
+        +IssueDate
+        +Create()
+        +Issue()
+        +ProvideToClerk()
+    }
+    class OrdersList {
+        +orderRecords
+    }
+
+    LinenRegistrationForm --> BadInvoice
+    LinenRegistrationForm --> BadReceipt
+    BadReceipt --> OrdersList
+```
+
+```mermaid
+classDiagram
+    note "AFTER REFACTORING: Factored Document Superclass (Generalization Style)"
+    class Document {
+        <<Generalization Parent>>
+        +UniqueID
+        +Price
+        +IssueDate
+        +Create()
+        +Issue()
+    }
+    class Invoice {
+        +PaymentDate
+        +Pay()
+    }
+    class Receipt {
+        +DueDate
+        -Weight
+        +ProvideToClerk()
+    }
+    class LinenRegistrationForm {
+        +registerItems()
+    }
+    class OrdersList {
+        +orderRecords
+    }
+
+    Document <|-- Invoice : is-a
+    Document <|-- Receipt : is-a
+    LinenRegistrationForm --> Document : topological relation
+    Receipt --> OrdersList : topological relation
+```
+
+> [!tip] Refactoring Analysis
+> Attributes `UniqueID`, `Price`, `IssueDate` and operations `Create()`, `Issue()` are shared identically across `Invoice` and `Receipt`. Factoring them into the general `Document` superclass eliminates redundancy, isolates changes, and allows `LinenRegistrationForm` to bind generically to `Document`.
 
 ---
 
@@ -863,6 +1673,88 @@ flowchart TD
 #### Architectural Benefits
 - **Modifiability & Portability:** Swapping or refactoring an internal layer (e.g., replacing a SQL database with a NoSQL store in Layer 1) does not impact upper application layers as long as the public interface contract remains invariant.
 - **Separation of Concerns:** Developers specialize within distinct layers (UI specialists in Layer 4, database engineers in Layer 1).
+
+#### Case Study: Layer Structure of the UNIX System V Operating System
+Slide 34 of Lecture 4 documents the classic two-realm layered architecture of **UNIX System V**:
+
+```mermaid
+flowchart TD
+    subgraph UnixLayerArch["UNIX System V Layered Architecture"]
+        direction TB
+        
+        subgraph UserLevel["User-Level Layer"]
+            UserProg["User Programs"]
+            Libraries["Standard System Libraries (libc)"]
+            UserProg --> Libraries
+        end
+
+        subgraph SysCallBoundary["System Call Interface Layer"]
+            SysCall["System Call Interface (open, read, fork, exec)"]
+        end
+
+        subgraph KernelLevel["Kernel-Level Layer"]
+            direction LR
+            
+            subgraph FileSubsys["File Subsystem"]
+                Buffer["Buffering Mechanism"]
+                CharDev["Character Device Drivers"]
+                BlockDev["Block I/O Device Drivers"]
+                Buffer --> BlockDev
+                Buffer --> CharDev
+            end
+            
+            subgraph ProcSubsys["Process Control Subsystem"]
+                IPC["Interprocess Communication (IPC)"]
+                Sched["Scheduler"]
+                MemMgmt["Memory Management"]
+            end
+        end
+
+        subgraph HardwareLevel["Hardware Control Layer"]
+            HW["Hardware Control & CPU Execution"]
+        end
+
+        UserProg ==> SysCall
+        Libraries ==> SysCall
+        SysCall ==> FileSubsys
+        SysCall ==> ProcSubsys
+        ProcSubsys <-->|Synchronization & Page Swapping| FileSubsys
+        FileSubsys ==> HW
+        ProcSubsys ==> HW
+    end
+```
+
+#### UML Stereotyped Packages for Layered Designs (Figure 2.24)
+Slide 36 of Lecture 4 presents **Figure 2.24**, illustrating how UML documents segmented layers:
+
+```mermaid
+flowchart TD
+    subgraph Fig2_24["Figure 2.24: Documenting Segmented Layers in UML"]
+        direction TB
+        
+        subgraph LayerA["«layer» A"]
+            ModA_Dummy["Submodules of A"]
+        end
+
+        subgraph LayerB["«layer» B"]
+            direction LR
+            B1["«segment» B1"]
+            B2["«segment» B2"]
+            B3["«segment» B3"]
+            B2 -.->|«allowed to use»| B3
+        end
+
+        subgraph LayerC["«layer» C"]
+            ModC_Dummy["Submodules of C"]
+        end
+
+        LayerA -.->|«allowed to use»| LayerB
+        LayerB -.->|«allowed to use»| LayerC
+    end
+```
+
+> [!important] Segment Usage Rules
+> In segmented layers, modules in Layer $A$ are allowed to use Layer $B$. Within Layer $B$, segment $B2$ is explicitly allowed to use segment $B3$, while segments $B1$ and $B2$ are prohibited from using each other unless explicitly declared in the architecture key.
 
 ---
 
@@ -1200,24 +2092,83 @@ flowchart LR
         direction LR
         subgraph Comp1["Component A"]
             P1["Port<br/>(Square)"]
-            Prov["Provided Interface<br/>(Ball / Lollipop)"]
+            Prov["Provided Interface<br/>(Lollipop / Ball)"]
             P1 --- Prov
         end
+
         subgraph Comp2["Component B"]
-            Req["Required Interface<br/>(Socket)"]
             P2["Port<br/>(Square)"]
-            Req --- P2
+            Req["Required Interface<br/>(Socket / Cup)"]
+            P2 --- Req
         end
-        Prov ==>|Assembly Connector (Ball-and-Socket)| Req
+
+        Prov <==>|Assembly Connector<br/>(Ball-and-Socket)| Req
     end
 ```
 
-- **Structured Classifiers:** Represent components using rectangular boxes adorned with the component symbol (a rectangle with two small protruding tabs) or the stereotype `«component»`.
-- **Ports:** Represented as small squares placed on the component boundary, designating distinct interaction channels.
-- **Provided Interfaces (Lollipops / Balls):** A complete circle connected by a line to a port, signifying services offered by the component.
-- **Required Interfaces (Sockets):** A semi-circle connected by a line to a port, signifying services needed by the component.
-- **Assembly Connectors:** Connect a provided interface (ball) directly into a required interface (socket), forming a "ball-and-socket" joint.
-- **Delegation Connectors:** An arrow linking an external boundary port of a subsystem component to an internal child component port, routing incoming messages inward without exposing private topologies.
+- **Ports:** Small square boxes drawn on the component boundary representing distinct interaction points.
+- **Provided Interfaces:** Depicted as "lollipops" (balls) indicating services the component supplies to the environment.
+- **Required Interfaces:** Depicted as "sockets" (half-circles/cups) indicating external services the component demands from peers.
+- **Connectors:**
+  - **Assembly Connectors:** Wire a provided lollipop directly into a required socket between two components at the same abstraction level.
+  - **Delegation Connectors:** Directed arrows routing internal component ports up to the enclosing subsystem's external port boundary.
+
+#### Enterprise Case Study: WebStore, Warehouses, and Accounting Subsystems (Slide 12)
+Slide 12 of Lecture 6 presents a comprehensive UML Component Diagram featuring internal structure compartments, ports, delegation connectors, and ball-and-socket assembly connectors across three major subsystems:
+
+```mermaid
+flowchart TD
+    subgraph WebStoreSubsys["«subsystem» WebStore"]
+        direction TB
+        Port_PS["Port: ProductSearch"]
+        Port_OS["Port: OnlineShopping"]
+        Port_US["Port: UserSession"]
+        
+        subgraph WS_Internal["Internal Structure Compartment"]
+            C_Search[":SearchEngine"]
+            C_Cart[":Shopping Cart"]
+            C_Auth[":Authentication"]
+        end
+
+        Port_PS -->|Delegation Connector| C_Search
+        Port_OS -->|Delegation Connector| C_Cart
+        Port_US -->|Delegation Connector| C_Auth
+        C_Cart <==>|Assembly Connector: UserSession| C_Auth
+    end
+
+    subgraph WarehousesSubsys["«subsystem» Warehouses"]
+        direction TB
+        Port_SI["Port: SearchInventory"]
+        Port_MI["Port: ManageInventory"]
+        
+        subgraph WH_Internal["Internal Structure Compartment"]
+            C_Inv[":Inventory"]
+        end
+
+        Port_SI -->|Delegation Connector| C_Inv
+        Port_MI -->|Delegation Connector| C_Inv
+    end
+
+    subgraph AccountingSubsys["«subsystem» Accounting"]
+        direction TB
+        Port_MO["Port: ManageOrders"]
+        Port_MC["Port: ManageCustomers"]
+        
+        subgraph AC_Internal["Internal Structure Compartment"]
+            C_Orders[":Orders"]
+            C_Cust[":Customers"]
+        end
+
+        Port_MO -->|Delegation Connector| C_Orders
+        Port_MC -->|Delegation Connector| C_Cust
+        C_Orders <==>|Assembly Connector: ManageCustomers| C_Cust
+    end
+
+    C_Search <==>|Assembly Connector: Search Inventory| Port_SI
+    C_Cart <==>|Assembly Connector: Manage Orders| Port_MO
+    C_Orders -.->|Required Interface Dependency| Port_MI
+
+```
 
 ---
 
@@ -1654,62 +2605,117 @@ The curriculum formalizes three foundational allocation styles:
 | Element Category | Description & Concrete Constituents |
 | :--- | :--- |
 | **Software Elements** | Active runtime execution units, usually **processes and threads** derived from C&C views. Documented properties include CPU requirements, RAM footprints, disk bandwidth, and fault tolerance needs. |
-| **Environmental Elements** | Physical or virtualized computing hardware: processors, multi-core CPUs, RAM, storage disks, networking hardware (routers, bridges, firewalls, subnets, switches), and bandwidth capacities. |
-
----
+| **Environmental Elements** | Computing hardware nodes: physical servers, multiprocessors, storage arrays, virtual machines, hypervisors, network switches, routers, firewalls, and gateways. |
 
 ### 2.11.2 Relations in the Deployment Style
-The Deployment Style models two critical allocation relations:
-1. **`allocated-to`:** The static baseline relation designating the physical computing element or virtual machine where a software element resides and executes.
-2. **Dynamic Migration Relations:**
-   - **`migrates-to`:** Specifies that a running software process can dynamically move its execution from one physical processor to another (e.g., live virtual machine migration, cloud pod failover).
-   - **`copy-migrates-to`:** Specifies that a software element can spawn a dynamic replica of itself onto another processor while retaining the original running instance (e.g., auto-scaling web server clusters).
-
----
+Slide 40 of Lecture 6 formalizes the three relations governing deployment views:
+1. **`allocated-to`:** Maps a software execution element directly onto the physical computing element where it resides and runs.
+2. **`migrates-to`:** Defines dynamic re-allocation where a software execution element moves entirely from one physical processor to another during runtime (e.g., failover migration, virtual machine live migration).
+3. **`copy-migrates-to`:** Similar to `migrates-to`, except that the software element spawns an active replica of itself onto the destination processor while retaining the original instance on the host processor (e.g., auto-scaling elasticity, cloud replica spawning).
 
 ### 2.11.3 Usages and Strategic Value of Deployment Views
-Deployment views serve indispensable engineering functions:
-- **Performance & Latency Modeling:** Evaluates whether network bandwidth and server CPU capacities meet transaction deadlines.
-- **Availability & Disaster Recovery:** Analyzes hardware redundancy and single points of failure.
-- **Security & Attack Surface Analysis:** Maps firewall boundaries, demilitarized zones (DMZ), and public vs. private subnets.
-- **Integration Testing & Procurement Planning:** Informs test engineers of exact environment topologies and provides managers with concrete hardware purchase estimates.
-
----
+Deployment views allow engineers and stakeholders to:
+- Perform rigorous capacity planning and quantitative analysis of **performance**, **availability**, **network latency**, and **physical security**.
+- Allow testers to design integration test suites based on real network topologies and firewall configurations.
+- Provide procurement and operations teams with precise hardware requirement specifications and cost estimations.
 
 ### 2.11.4 UML Deployment Diagrams
-UML documents deployment views using **Deployment Diagrams**:
-- **3D Cubes (Nodes):** Represent physical devices (`«device»`) or hosting environments (`«execution environment»`, e.g., `:WebSphere`, `Tomcat 7`).
-- **Communication Paths:** Solid lines connecting node cubes labeled with network protocols (e.g., `«internet»`, `«intranet»`, `TCP/IP`, `T1 line`).
-- **Deployed Artifacts:** Documented as `«artifact»` boxes nested inside nodes or linked via dashed `«deploy»` dependency arrows (e.g., `EnterpriseWebApp.ear`, `app-client.jar`).
+UML represents physical hardware nodes as 3D rectangular cuboids (`«device»` or `«execution environment»`), connected by physical communication paths annotated with network protocols (e.g., HTTP, TCP/IP, Intranet, T1 line).
+
+#### Enterprise Case Study: Mainframe Deployment Architecture (Slide 42)
+Slide 42 of Lecture 6 documents a legacy enterprise deployment architecture featuring a central mainframe and partitioned network channels:
 
 ```mermaid
 flowchart TD
-    subgraph DeploymentTopology["UML Deployment Topology: WebSphere Application Cluster"]
+    subgraph MainframeDeployment["Enterprise Mainframe Deployment Topology"]
         direction TB
+        
+        InternetCloud["Public Internet"]
+        T1["T1 Leased Line"]
+        RouterNode["«device»<br/>Enterprise Router / Gateway"]
 
-        subgraph ClientNode["«device» Internet User PC"]
-            C_Art["«artifact» Web Browser"]
+        subgraph TrustedZone["Demilitarized / Trusted Server Realm"]
+            direction LR
+            DNS_Web["«device»<br/>DNS & Web Server"]
+            FTP_Mail["«device»<br/>FTP / SSL / SQL / Mail Server"]
         end
 
-        subgraph AdminNode["«device» Admin User PC"]
-            A_Art["«artifact» app-client.jar"]
+        subgraph MainframeNode["«device» Enterprise Mainframe"]
+            CMDB[("Configuration Management<br/>Database (CMDB)")]
         end
 
-        subgraph AppServerNode["«device» Sun Fire App Server (Win Server)"]
-            subgraph ExecEnv["«execution environment» WebSphere"]
-                E_Art["«artifact» EnterpriseWebApp.ear"]
+        subgraph InternalWorkstations["Internal Office Clients"]
+            direction LR
+            UnixTerm["«device»<br/>UNIX / Java Terminal"]
+            OfficePC["«device»<br/>Office Suite PC"]
+        end
+
+        InternetCloud --- T1
+        T1 --- RouterNode
+        RouterNode --- DNS_Web
+        RouterNode --- FTP_Mail
+        RouterNode --- MainframeNode
+        RouterNode --- UnixTerm
+        RouterNode --- OfficePC
+    end
+```
+
+#### Enterprise Case Study: The Adventure Builder SOA Deployment Architecture (Slide 43)
+Slide 43 of Lecture 6 presents the multi-server hardware deployment view of the Adventure Builder travel system:
+
+```mermaid
+flowchart TD
+    subgraph AdvBuilderDeployment["Adventure Builder Enterprise Cloud Deployment View"]
+        direction TB
+        
+        subgraph ExternalClients["End User & External Partner Machines"]
+            direction LR
+            EndUsers["«device»<br/>End User Client Machines"]
+            BankMachine["«device»<br/>Bank Server Machine"]
+            AirlineMachine["«device»<br/>Airline Provider Machine"]
+            LodgingMachine["«device»<br/>Lodging Provider Machine"]
+            ActivityMachine["«device»<br/>Activity Provider Machine"]
+        end
+
+        ExtNet["Public Internet / T1 Links"]
+        FirewallNode["«device»<br/>Enterprise Firewall"]
+        LocalNet["Adventure Builder Local Gigabit Network Backbone"]
+
+        subgraph IntranodeServers["Internal Clustered Server Racks"]
+            direction TB
+            
+            subgraph WebCluster["Clustered Web Tier (srv-web1 & srv-web2)"]
+                direction LR
+                Web1["srv-web1<br/>• web1a<br/>• web1b"]
+                Web2["srv-web2<br/>• web2a<br/>• web2b"]
             end
+
+            subgraph DBCluster["Catalog Database Tier (srv-db1 & srv-db2)"]
+                DB_Cat[("srv-db1 / srv-db2<br/>Adventure Catalog DB")]
+            end
+
+            subgraph OPCCluster["Order Processing Tier (srv-opc)"]
+                OPC_GF["srv-opc<br/>GlassFish Instance (OpcGF)"]
+            end
+
+            subgraph OPCDBTier["OPC Data Tier (srv-dbopc)"]
+                OPC_DB[("Adventure OPC DB")]
+                Svc_Reg["Service Registry"]
+            end
+
+            AdminNode["«device»<br/>Admin User Machine"]
+            MailerNode["«device»<br/>srv-mailer"]
         end
 
-        subgraph DBNode["«device» Linux Database Server"]
-            DB_Art[("Oracle DB Schemas")]
-        end
-
-        ClientNode ==>|«internet»| AppServerNode
-        AdminNode ==>|«intranet»| AppServerNode
-        AppServerNode ==>|«intranet»| DBNode
-        AdminNode -.->|«deploy»| A_Art
-        AppServerNode -.->|«deploy»| E_Art
+        ExternalClients <==> ExtNet
+        ExtNet <==> FirewallNode
+        FirewallNode <==> LocalNet
+        LocalNet <==> WebCluster
+        LocalNet <==> DBCluster
+        LocalNet <==> OPCCluster
+        LocalNet <==> OPCDBTier
+        LocalNet <==> AdminNode
+        LocalNet <==> MailerNode
     end
 ```
 
@@ -1720,67 +2726,163 @@ flowchart TD
 ### 2.12.1 Architectural Principles and Elements
 The **Install Style** bridges software components and the physical storage media where they are packaged, deployed, and executed:
 - **Software Elements:** C&C components, executable binaries, libraries, and packaged modules.
-- **Environmental Elements:** Configuration items within target file systems: folders, directory trees, configuration files (`.xml`, `.properties`), data archives, and log files.
+- **Environmental Elements:** Configuration items within target file systems: folders, directory trees, configuration scripts, and packaged archives (`.ear`, `.war`, `.jar`).
+- **Relations:**
+  - `allocated-to`: A software component is allocated to a configuration item or directory path.
+  - `containment`: One directory or packaged archive contains another file or configuration item in a hierarchical tree structure.
 
----
+### 2.12.2 Strategic Value of Install Views
+- Enables release and DevOps engineers to construct automated build, packaging, and installation scripts (Dockerfiles, Helm charts, Kubernetes manifests).
+- Directs system administrators to locate critical configuration files, security certificates, and log directories.
+- Prevents version collisions when multiple instances of a system are deployed side-by-side on the same host.
 
-### 2.12.2 Relations in the Install Style
-1. **`allocated-to`:** A software component or compiled class is allocated to a specific file or packaged archive.
-2. **`containment`:** Hierarchical part-whole nesting within directory structures (e.g., a file is contained in a folder; a folder is contained in an archive).
-- **Governing Constraint:** File and directory systems are strictly organized in **acyclic tree structures**.
-
----
-
-### 2.12.3 Strategic Value of Install Views
-- **Automating CI/CD Pipelines:** Outlines build-and-deploy packaging procedures (creating Docker images, RPMs, WARs).
-- **Navigation in Complex Codebases:** Enables system operators to locate critical files among tens of thousands of assets.
-- **Log and Configuration Triage:** Pinpoints exact paths to editable configuration files and operational log directories.
-- **Version Management:** Manages parallel side-by-side installations of different system releases.
-- **Integrity Auditing:** Identifies corrupted, missing, or maliciously altered files during incident recovery.
-
----
-
-### 2.12.4 UML Artifact Manifestation Diagrams
-In UML 2.0, install views are documented using **Artifact Diagrams**:
-- The stereotype **`«artifact»`** represents a physical file on disk (e.g., `.ear`, `.war`, `.jar`).
-- The dependency arrow adorned with **`«manifest»`** indicates that a runtime component or lower-level artifact is packaged inside a parent archive:
+### 2.12.3 Enterprise Case Study: Adventure Builder Install View (Slide 47)
+Slide 47 of Lecture 6 presents the comprehensive artifact deployment tree of the Adventure Builder system, showing how enterprise Java archives package WARs, EJBs, WSDLs, and XML descriptors:
 
 ```mermaid
 flowchart TD
-    subgraph InstallView["Duke's Bank Application Install & Manifestation View"]
+    subgraph AdvBuilderInstall["Adventure Builder Production Install View"]
         direction TB
         
-        EAR["«artifact»<br/><b>DukesBankApp.ear</b>"]
-        
-        JAR_Acc["«artifact»<br/>account-ejb.jar"]
-        JAR_Cust["«artifact»<br/>customer-ejb.jar"]
-        JAR_Tx["«artifact»<br/>tx-ejb.jar"]
-        WAR_Web["«artifact»<br/>web-client.war"]
+        subgraph EarWeb["«artifact» consumerwebsite.ear"]
+            direction TB
+            WarAdv["«artifact» adventure.war"]
+            AppXml1["«artifact» application.xml"]
+            EjbWeb["«artifact» consumerwebsite-ejb.jar"]
 
-        EAR ==>|«manifest»| JAR_Acc
-        EAR ==>|«manifest»| JAR_Cust
-        EAR ==>|«manifest»| JAR_Tx
-        EAR ==>|«manifest»| WAR_Web
+            subgraph WarContents["adventure.war Contents"]
+                direction LR
+                Filt["«Filter» SignOnFilter"]
+                MServ["«Servlet» MainServlet"]
+                TServ["«Servlet» TemplateServlet"]
+                ConfXml["web.xml, sign-on-config.xml"]
+                JspFiles["index.jsp, mappings.xml, screendefinitions.xml"]
+            end
 
-        subgraph AccountBeans["Packaged Components"]
-            C_AccCtrl["«session bean»<br/>AccountControllerEJB"]
-            C_AccEntity["«entity bean»<br/>AccountEJB"]
+            subgraph EjbWebContents["consumerwebsite-ejb.jar Contents"]
+                direction LR
+                OFacade["«SLSB» OrderFacade"]
+                CFacade["«SLSB» CatalogFacade"]
+                UFacade["«SLSB» UserMgmtFacade"]
+                EjbDesc1["EJB deployment descriptor files"]
+            end
+
+            WarAdv --> WarContents
+            EjbWeb --> EjbWebContents
         end
 
-        JAR_Acc ==>|«manifest»| C_AccCtrl
-        JAR_Acc ==>|«manifest»| C_AccEntity
+        subgraph EarOPC["«artifact» opc.ear"]
+            direction TB
+            SvcLoc["«artifact» servicelocator.jar"]
+            OpcEjb["«artifact» opc-ejb.jar"]
+            AppXml2["«artifact» application.xml"]
+            ProcMgr["«artifact» processmanager-ejb.jar"]
 
-        subgraph WebArtifacts["Web Tier Configuration & Dispatchers"]
-            A_WebXml["«artifact»<br/>web.xml"]
-            A_Disp["«servlet»<br/>Dispatcher"]
-            A_JSP["«JSP»<br/>*.jsp"]
+            subgraph OpcEjbContents["opc-ejb.jar Contents"]
+                direction LR
+                POBean["«entity» PurchaseOrderBean"]
+                OFBean["«MDB» OrderFillerBean"]
+                WFBean["«MDB» WorkflowManagerBean"]
+                WsdlFiles["WSDLs: OpcPurchaseOrderService, OpcOrderTrackingService"]
+            end
+
+            subgraph ProcMgrContents["processmanager-ejb.jar Contents"]
+                direction LR
+                PMBean["«SLSB» ProcessManagerBean"]
+                MgrBean["«entity» ManagerBean"]
+            end
+
+            OpcEjb --> OpcEjbContents
+            ProcMgr --> ProcMgrContents
         end
 
-        WAR_Web ==>|«manifest»| A_WebXml
-        WAR_Web ==>|«manifest»| A_Disp
-        WAR_Web ==>|«manifest»| A_JSP
+        EarWeb -.->|«manifest»| WarAdv
+        EarWeb -.->|«manifest»| EjbWeb
+        EarOPC -.->|«manifest»| OpcEjb
+        EarOPC -.->|«manifest»| ProcMgr
     end
 ```
+
+### 2.12.4 Enterprise Case Study: DukesBankApp.ear Manifest (Slide 48)
+Slide 48 of Lecture 6 presents the second comprehensive install style case study, documenting the enterprise archive breakdown of the **DukesBankApp.ear** banking application using UML 2.0 artifact stereotypes:
+
+```mermaid
+flowchart TD
+    subgraph DukesBankEAR["«artifact» DukesBankApp.ear (Enterprise Banking Package)"]
+        direction TB
+        
+        EarRoot["«artifact»<br/><b>DukesBankApp.ear</b>"]
+        
+        subgraph EJBArchives["Enterprise Java Bean (EJB) JAR Archives"]
+            direction LR
+            AccountJAR["«artifact»<br/><b>account-ejb.jar</b>"]
+            CustomerJAR["«artifact»<br/><b>customer-ejb.jar</b>"]
+            TxJAR["«artifact»<br/><b>tx-ejb.jar</b>"]
+        end
+
+        subgraph ClientAndWebArchives["Client & Web Deployment Archives"]
+            direction LR
+            AppClientJAR["«artifact»<br/><b>app-client.jar</b>"]
+            WebClientWAR["«artifact»<br/><b>web-client.war</b>"]
+        end
+
+        EarRoot ..->|«manifest»| AccountJAR
+        EarRoot ..->|«manifest»| CustomerJAR
+        EarRoot ..->|«manifest»| TxJAR
+        EarRoot ..->|«manifest»| AppClientJAR
+        EarRoot ..->|«manifest»| WebClientWAR
+
+        subgraph AccountInternal["account-ejb.jar Manifests"]
+            direction TB
+            AccCtrl["«session bean»<br/>AccountControllerEJB"]
+            AccEntity["«entity bean»<br/>AccountEJB"]
+        end
+        AccountJAR ..->|«manifest»| AccCtrl
+        AccountJAR ..->|«manifest»| AccEntity
+
+        subgraph CustomerInternal["customer-ejb.jar Manifests"]
+            direction TB
+            CustCtrl["«session bean»<br/>CustomerControllerEJB"]
+            CustEntity["«entity bean»<br/>CustomerEJB"]
+        end
+        CustomerJAR ..->|«manifest»| CustCtrl
+        CustomerJAR ..->|«manifest»| CustEntity
+
+        subgraph TxInternal["tx-ejb.jar Manifests"]
+            direction TB
+            TxCtrl["«session bean»<br/>TxControllerEJB"]
+            TxEntity["«entity bean»<br/>TxEJB"]
+        end
+        TxJAR ..->|«manifest»| TxCtrl
+        TxJAR ..->|«manifest»| TxEntity
+
+        subgraph AppClientInternal["app-client.jar Manifests"]
+            direction TB
+            BankAdmin["«J2EE app.client»<br/>BankAdmin"]
+            AdminProps["«artifact»<br/>AdminMessages.properties"]
+        end
+        AppClientJAR ..->|«manifest»| BankAdmin
+        AppClientJAR ..->|«manifest»| AdminProps
+
+        subgraph WebClientInternal["web-client.war Manifests"]
+            direction LR
+            WebDisp["«servlet»<br/>Dispatcher"]
+            JspFiles["«JSP»<br/>*.jsp"]
+            StaticArt["«artifact»<br/>*.tld, *.gif, *.html"]
+            WebProps["«artifact»<br/>WebMessages.properties"]
+            StrutsJAR["«artifact»<br/>struts.jar"]
+        end
+        WebClientWAR ..->|«manifest»| WebDisp
+        WebClientWAR ..->|«manifest»| JspFiles
+        WebClientWAR ..->|«manifest»| StaticArt
+        WebClientWAR ..->|«manifest»| WebProps
+        WebClientWAR ..->|«manifest»| StrutsJAR
+    end
+```
+
+> [!important] UML 2.0 Install Stereotypes Formalized
+> - **`«artifact»`**: Denotes a physical file on disk (e.g., `.ear`, `.war`, `.jar`, `.xml`, `.properties`).
+> - **`«manifest»`**: Denotes containment and manifestation: either that an artifact is packaged inside another artifact (e.g., a WAR nested within an EAR) or that a logical runtime component is manifested by a physical artifact on disk.
 
 ---
 
@@ -1827,153 +2929,386 @@ Slide 51 details the Work Assignment View for the **Science Data Processing Segm
 
 ## 2.14 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints
 
-Slides from the supplementary curriculum provide four concrete architectural blueprints illustrating the execution and allocation realities of modern systems:
+Slides from the supplementary curriculum provide eight concrete architectural blueprints illustrating the execution and allocation realities of modern systems:
 
 ### 2.14.1 Blueprint 1: Subversion Client-Server C&C Architecture
-Illustrates a complete client-server runtime view mediating between remote developer clients and a centralized Subversion repository:
+Illustrates a complete client-server runtime view mediating between remote developer clients and a central Subversion version control server:
 
 ```mermaid
 flowchart TD
-    subgraph SVN_Runtime["Subversion Runtime C&C Architecture View"]
+    subgraph SVN_Client["Remote Client Environment (Remote Repository Access)"]
         direction TB
+        RemoteLib["Remote Repository Library"]
+        LocalLib["Local Repository Library"]
+        SubvAccess["Subversion Repository Access Library"]
+        
+        RemoteLib -.->|DAV Protocol| WebDAV_Conn["WebDAV Connector"]
+        SubvAccess -.->|SVN Protocol| SVN_Conn["Subversion Protocol Connector"]
+        LocalLib -.->|fs access| FS_Conn["Local Filesystem Connector"]
+    end
 
-        subgraph ClientSide["Client Environment (Remote Repository Access)"]
-            Lib_Remote["Remote Repository Library"]
-            Lib_Local["Local Repository Library"]
-            Lib_SVN["Subversion Repository Access Library"]
+    subgraph SVN_Server["Server Environment (Apache HTTPD & SVN Daemons)"]
+        direction TB
+        subgraph ApacheHost["«webserver» Apache"]
+            ApacheCore["Apache Core"]
+            ModDAV["mod_dav"]
+            ModSVN["mod_svn_dav"]
+            ApacheCore --- ModDAV
+            ModDAV --- ModSVN
         end
 
-        subgraph ServerSide["Server Host (Apache & Subversion Daemon)"]
-            Apache["«Webserver»<br/>Apache"]
-            Mod_DAV["mod_dav"]
-            Mod_SVN["mod_svn_dav"]
-            SVN_Server["Subversion Server"]
-            SVN_FS["Subversion FileSystem Library"]
-            FS_Store[("fs access<br/>(Local Disk Filesystem)")]
-        end
+        SVNDaemon["Subversion Server (svnserve)"]
+        SVN_FS["Subversion FileSystem Library"]
+        LocalDisk[("Subversion FSFS Repository Storage")]
 
-        Lib_Remote ==>|DAV Protocol| Mod_DAV
-        Lib_SVN ==>|Subversion Protocol| SVN_Server
-        Mod_DAV --> Mod_SVN
-        Mod_SVN ==>|dav request| SVN_Server
-        SVN_Server --> SVN_FS
-        SVN_FS ==>|fs access| FS_Store
+        WebDAV_Conn ==> ModDAV
+        SVN_Conn ==> SVNDaemon
+        ModSVN ==>|dav request| SVN_FS
+        SVNDaemon ==>|svn request| SVN_FS
+        FS_Conn ==> SVN_FS
+        SVN_FS ==>|Disk I/O| LocalDisk
     end
 ```
 
 ---
 
 ### 2.14.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture
-Illustrates a high-reliability embedded control loop for automated exploratory vehicles:
+Visualizes a real-time, fault-tolerant embedded control system for an autonomous rover or spacecraft:
 
 ```mermaid
 flowchart TD
-    subgraph EmbeddedControl["Embedded Autonomous Vehicle C&C Architecture"]
+    subgraph RoverArchitecture["Autonomous Rover Embedded Control C&C Architecture"]
         direction TB
 
-        subgraph InputSubsystems["Sensors & Communications"]
-            Comm["Communication System"]
-            SVM["Sensors Virtual Machine (SVM)<br/>(Cameras, GPS, StarTracker)"]
+        subgraph IngestSubsys["Sensors Virtual Machine (SVM)"]
+            direction LR
+            Cam["Cameras Virtual Machine"]
+            GPS["GPS Receivers VM"]
+            Star["Star Tracker VM"]
+            Gyro["Rate Gyros VM"]
         end
 
-        subgraph ControlCore["Control System (CS) Core"]
-            GnC["Guidance & Control (Gn&C)<br/>(Mission Data Loader, Ground Cmds)"]
-            Disp["Task Sequencer & Dispatcher"]
-            Exec["On-Board Executive"]
-            IVHM["Integrated Vehicle Health Management<br/>(Sensor Selection, Redundancy Manager)"]
+        subgraph CS_Core["Control System (CS) Core"]
+            direction TB
+            subgraph GnC_Top["Guidance, Navigation & Control (Gn&C)"]
+                MissionLoad["Gn&C Mission Data Loader"]
+                CmdProc["Gn&C Ground Command-Data Processing"]
+                Sequencer["Gn&C Task Sequencer & Dispatcher"]
+            end
+            
+            subgraph GnC_Execution["Executive & Trajectory"]
+                GnC_Exec["Gn&C Executive"]
+                GnC_Nav["Gn&C Navigation Domain"]
+                GnC_Guid["Gn&C Guidance Domain"]
+                GnC_Ctrl["Gn&C Control Domain"]
+            end
         end
 
-        subgraph OutputSubsystems["Actuators & Monitoring"]
-            AVM["Actuator Virtual Machine (AVM)<br/>(Power Controllers, Rover Engines)"]
-            Logger["IVHM Data Logger"]
-            Panel["Operator Panel"]
+        subgraph IVHM["Integrated Vehicle Health Management (IVHM)"]
+            direction LR
+            IVHM_Sensor["Sensor Selection"]
+            IVHM_Sim["Simulation & Diagnosis Engine"]
+            IVHM_Redund["Redundancy Management System"]
+            IVHM_Log["IVHM Data Logger"]
         end
 
-        Comm ==> Disp
-        SVM ==>|Sensors Bus Port| IVHM
-        IVHM ==>|Status & Data| GnC
-        GnC ==>|Attitude & Trajectory| Exec
-        Exec ==>|Steering Commands| AVM
-        IVHM ==>|Log Stream| Logger
-        Exec -.->|Telemetry| Panel
+        subgraph ActuatorSubsys["Actuator Virtual Machine (AVM)"]
+            direction LR
+            PowerCtrl["Power Controller"]
+            MotorAct["Wheel Actuators VM"]
+            RoverEng["Rover Engine Controller"]
+        end
+
+        IngestSubsys ==>|Sensors Bus Port| CS_Core
+        IngestSubsys ==>|Sensors Bus Port| IVHM
+        CS_Core ==>|Command Bus Port| ActuatorSubsys
+        IVHM ==>|Health Status & Robust Regulators| ActuatorSubsys
+        CS_Core <==>|Telemetry & Health| IVHM
     end
 ```
 
 ---
 
 ### 2.14.3 Blueprint 3: Web Application Deployment View (Sun Fire & SPARC Cluster)
-Documents hardware mapping, servlet containers, and database tiers:
+Documents the physical deployment of an enterprise web application onto clustered Sun Microsystems server hardware:
 
 ```mermaid
-flowchart TD
-    subgraph ProdDeployment["Sun Microsystems Clustered Deployment View"]
-        direction LR
-
-        subgraph AppHost["«device» Sun Fire X4150 Server"]
-            subgraph Tomcat["«JSP server» Tomcat 7"]
-                subgraph Catalina["«execution environment» Catalina Servlet Container"]
-                    WAR["«artifact» book_club_app.war"]
-                    JAR_User["«artifact» user_services.jar"]
-                    Comp_Order["«component» OnlineOrders"]
-                    WAR -.->|«manifest»| Comp_Order
-                end
+flowchart LR
+    subgraph WebTier["«device» Sun Fire X4150 Server"]
+        direction TB
+        subgraph JSP_Server["«JSP server» Apache Tomcat 7"]
+            subgraph CatalinaContainer["«executionEnvironment» Catalina Servlet Container"]
+                WarArtifact["«artifact»<br/><b>book_club_app.war</b>"]
+                CompOrders["«component»<br/>OnlineOrders"]
+                DepSpec["«deployment spec»<br/>web.xml"]
+                UserLib["«artifact»<br/>user_services.jar"]
+                WebTools["«artifact»<br/>web-tools-lib.jar"]
+                
+                WarArtifact ..->|«manifest»| CompOrders
+                DepSpec --> WarArtifact
+                UserLib --> WarArtifact
+                WebTools --> WarArtifact
             end
         end
-
-        subgraph DBHost["«device» Sun SPARC Server"]
-            subgraph Oracle["«database system» Oracle 10g"]
-                S_User[("«schema» Users")]
-                S_Order[("«schema» Orders")]
-                S_Inv[("«schema» Inventory")]
-            end
-        end
-
-        AppHost <==>|«protocol» TCP/IP| DBHost
     end
+
+    subgraph DBTier["«device» Sun SPARC Enterprise Server"]
+        direction TB
+        subgraph OracleInstance["«database system» Oracle 10g Enterprise"]
+            SchemaUsers["«schema»<br/>Users"]
+            SchemaOrders["«schema»<br/>Orders"]
+            SchemaInv["«schema»<br/>Inventory"]
+        end
+    end
+
+    WebTier <==>|«protocol»<br/>TCP/IP (JDBC Port 1521)| DBTier
 ```
 
 ---
 
 ### 2.14.4 Blueprint 4: Web Application Install / Implementation Directory Tree
-Documents the exact physical packaging layout of Java EE Web archives (`book_club_app.war`):
+Maps the internal logical components of the Book Club web application directly into a standard J2EE WAR file system directory tree:
+
+```
+book_club_app.war
+│
+├── META-INF/
+│   └── manifest.mf                        <-- Manifest file defining package dependencies
+│
+├── WEB-INF/
+│   ├── web.xml                            <-- Primary J2EE deployment descriptor
+│   │
+│   ├── classes/                           <-- Compiled servlet bytecode & domain models
+│   │   ├── BookClubServlet.class
+│   │   └── OrderController.class
+│   │
+│   └── lib/                               <-- Packaged reusable JAR library dependencies
+│       ├── shp-cart.jar                   <-- Manifests «component» Shopping Cart
+│       ├── orders.jar                     <-- Manifests «component» Orders
+│       ├── customers.jar                  <-- Manifests «component» Customers
+│       └── web-tools-lib.jar              <-- Shared web utility routines & helpers
+│
+└── pages/                                 <-- Public web presentation resources
+    ├── index.jsp
+    ├── checkout.jsp
+    └── styles/
+        └── global.css
+```
+
+---
+
+### 2.14.5 Blueprint 5: Multi-Tier Layered Application UML Module Diagram (Supplementary Slide 2)
+Documents an enterprise multi-tier web application structured across Presentation, Business, and Data Layer module models:
 
 ```mermaid
 flowchart TD
-    subgraph WarStructure["book_club_app.war Physical Disk Hierarchy"]
+    subgraph LayeredApp["«model» Layered Application"]
         direction TB
         
-        WAR_Root["book_club_app.war (Root Archive)"]
-
-        subgraph MetaInf["META-INF/"]
-            M_MF["«file» manifest.mf"]
+        subgraph PresLayer["«model» Presentation Layer"]
+            direction LR
+            Pkg_UI["«package»<br/>User Interface"]
+            Pkg_PresLog["«package»<br/>Presentation Logic"]
+            Pkg_UI -.->|«dependency»| Pkg_PresLog
         end
 
-        subgraph WebInf["WEB-INF/"]
-            W_XML["«file» web.xml"]
-            W_Classes["«folder» classes/"]
-            
-            subgraph LibFolder["lib/"]
-                L_Cart["«library» shp-cart.jar"]
-                L_Ord["«library» orders.jar"]
-                L_Cust["«library» customers.jar"]
-                L_Tools["web-tools-lib.jar"]
+        subgraph BizLayer["«model» Business Layer"]
+            direction TB
+            Pkg_Facade["«package»<br/>Application Facade"]
+            subgraph BizSubPackages["Business Sub-packages"]
+                direction LR
+                Pkg_Workflow["«package»<br/>Business Workflow"]
+                Pkg_BizComp["«package»<br/>Business Components"]
+                Pkg_BizEnt["«package»<br/>Business Entities"]
             end
+            Pkg_Facade -.->|«dependency»| Pkg_Workflow
+            Pkg_Facade -.->|«dependency»| Pkg_BizComp
+            Pkg_Facade -.->|«dependency»| Pkg_BizEnt
         end
 
-        subgraph PagesFolder["pages/"]
-            P_JSP["*.jsp templates"]
+        subgraph DataLayer["«model» Data Layer"]
+            direction LR
+            Pkg_DataAcc["«package»<br/>Data Access"]
+            Pkg_SvcAgents["«package»<br/>Service Agents"]
         end
 
-        WAR_Root --- MetaInf
-        WAR_Root --- WebInf
-        WAR_Root --- PagesFolder
-
-        L_Cart -.->|«manifest»| C_Cart["«component» ShoppingCart"]
-        L_Ord -.->|«manifest»| C_Ord["«component» Orders"]
-        L_Cust -.->|«manifest»| C_Cust["«component» Customers"]
+        PresLayer ==>|«dependency between models»| BizLayer
+        BizLayer ==>|«dependency between models»| DataLayer
     end
 ```
 
+---
+
+### 2.14.6 Blueprint 6: Customer Services & Order Processing Subsystem Architecture (Supplementary Slide 3)
+Illustrates subsystem partitioning, import relations, domain package access, and relational database abstraction interfaces:
+
+```mermaid
+flowchart TD
+    subgraph CustOrderArch["Customer Services & Order Processing Subsystem Architecture"]
+        direction TB
+        
+        subgraph Subsys_Cust["«subsystem» Customer Services"]
+            CustProb["Customer Problem Tracking"]
+        end
+
+        subgraph Subsys_Order["«subsystem» Order Processing System"]
+            Invoicing["Invoicing"]
+            OrderTrack["Order Tracking"]
+            Shipping["Shipping"]
+            Invoicing -.->|«import»| OrderTrack
+            OrderTrack --> Shipping
+        end
+
+        subgraph Pkg_Domain["«package» Domain"]
+            direction LR
+            CustDomain["Customers"]
+            OrderDomain["Orders"]
+            CustDomain --> OrderDomain
+        end
+
+        subgraph DBInterfaces["Database Abstraction Interfaces"]
+            direction LR
+            RelationalDB["Relational DB Interface"]
+            OracleDB["Oracle Interface"]
+            InformixDB["Informix Interface"]
+            OracleDB -->|independent| RelationalDB
+            InformixDB -->|independent| RelationalDB
+        end
+
+        Subsys_Cust -.->|«access» dependency| Pkg_Domain
+        Subsys_Cust -.->|«access» dependency| RelationalDB
+        Subsys_Order -.->|«access» dependency| Pkg_Domain
+        Subsys_Order -.->|dependent| RelationalDB
+    end
+```
+
+---
+
+### 2.14.7 Blueprint 7: University Seminar Domain Model UML Class Diagram (Supplementary Slide 5)
+Slide 5 of Supplementary Material presents the formal **Scott W. Ambler (2002-2006)** university domain model capturing seminar enrollment, professor faculty assignments, course offerings, and student residence addresses:
+
+```mermaid
+classDiagram
+    class Student {
+        +String name
+        +String phoneNumber
+        +String emailAddress
+        +int studentNumber
+        +float averageMark
+        +isEligible(name, studentNumber) bool
+        +getSeminarsTaken() List
+        +purchaseParkingPass() void
+    }
+
+    class SeminarEnrollment {
+        +float marksReceived
+        +getAverageToDate() float
+        +getFinalMark() float
+    }
+
+    class Seminar {
+        +String seminarNumber
+        +List waitingList
+        +addStudent(student) void
+        +dropStudent(student) void
+    }
+
+    class Course {
+        +String name
+        +String courseNumber
+        +float fees
+        +getFullName() String
+    }
+
+    class Professor {
+        +String name
+        +String phoneNumber
+        +String emailAddress
+        +float salary
+        +getInformation() String
+        +purchaseParkingPass() void
+    }
+
+    class Address {
+        +String street
+        +String city
+        +String state
+        +String postalCode
+        +String country
+        +validate() bool
+        +outputAsLabel() String
+    }
+
+    Student "1" --> "1..*" SeminarEnrollment : enrolled in
+    SeminarEnrollment "1..*" --> "1" Seminar : enrolled in
+    Student "0..*" --> "0..*" Seminar : {ordered, FIFO} on waiting list
+    Seminar "0..*" --> "1" Course : offering of
+    Professor "0..1" --> "0..*" Seminar : instructs
+    Professor "0..1" --> "0..*" Student : advisor to
+    Professor "0..1" --> "0..*" Professor : mentors associate
+    Student "0..1" --> "1" Address : lives at
+    Professor "0..1" --> "1" Address : lives at
+```
+
+---
+
+### 2.14.8 Blueprint 8: Academic Seminar Scheduling Runtime C&C Architecture (Supplementary Slide 8)
+Slide 8 of Supplementary Material details the runtime Component-and-Connector architecture of the Seminar Management system, showing client UI components, domain service components, infrastructure persistence, and JDBC database access:
+
+```mermaid
+flowchart TD
+    subgraph SeminarCCArch["Academic Seminar Scheduling: Runtime C&C Architecture"]
+        direction TB
+
+        subgraph UIClients["Runtime Client Components"]
+            direction LR
+            UI_Sem["«UI»<br/>Seminar Management"]
+            UI_Stu["«UI»<br/>Student Administration"]
+        end
+
+        subgraph DomainComponents["Domain Service Components"]
+            direction LR
+            C_Fac["Facilities"]
+            C_Stu["Student"]
+            C_Sem["Seminar"]
+            C_Sched["«component»<br/>Schedule"]
+        end
+
+        subgraph InfraServices["Infrastructure Services"]
+            direction LR
+            C_Sec["«infrastructure»<br/>Security<br/>(Encryption & Access Control)"]
+            C_Persist["«infrastructure»<br/>Persistence<br/>(Persistence Interface)"]
+        end
+
+        subgraph DatabaseNode["Enterprise Database System"]
+            DB_Univ[("«database»<br/>University DB")]
+        end
+
+        UI_Sem ==>|DataAccess & Facilities| C_Fac
+        UI_Sem ==>|DataAccess & Student| C_Stu
+        UI_Sem ==>|DataAccess & Seminar| C_Sem
+        UI_Sem ==>|DataAccess & Schedule| C_Sched
+
+        UI_Stu ==>|DataAccess & Facilities| C_Fac
+        UI_Stu ==>|DataAccess & Student| C_Stu
+        UI_Stu ==>|DataAccess & Seminar| C_Sem
+        UI_Stu ==>|DataAccess & Schedule| C_Sched
+
+        C_Fac ==> C_Sec
+        C_Stu ==> C_Sec
+        C_Sem ==> C_Sec
+        C_Sched ==> C_Sec
+
+        C_Fac ==> C_Persist
+        C_Stu ==> C_Persist
+        C_Sem ==> C_Persist
+        C_Sched ==> C_Persist
+
+        C_Persist ==>|«requires» JDBC| DB_Univ
+    end
+```
+
+---
 
 ## 2.15 The Master Triad: Structures, Views, and Styles
 Across the entire CKS221 curriculum, software architecture is unified by three orthogonal concepts:

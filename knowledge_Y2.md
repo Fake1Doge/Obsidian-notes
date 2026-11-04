@@ -483,7 +483,7 @@ flowchart TD
 - **Foundations of Allocation**: [[Y2S1/CKS221 Software Architecture and Design#2.10.1 Overview and Nature of Allocation Views|Documents mapping between software elements (Module and C&C) and non-software environmental elements (hardware, file systems, organizational teams)]].
 - **The Triad of Allocation Styles**:
   - *Deployment Style*: [[Y2S1/CKS221 Software Architecture and Design#2.11.1 Architectural Elements of the Deployment Style|Maps C&C processes to computing hardware]]; relations: `allocated-to`, `migrates-to`, and `copy-migrates-to`; UML deployment diagrams with 3D device nodes and communication paths; evaluated for latency, availability, and security attack surfaces.
-  - *Install Style*: [[Y2S1/CKS221 Software Architecture and Design#2.12.1 Architectural Principles and Elements|Maps software components and libraries to file system directory trees and archives]]; relations: `allocated-to` and `containment`; UML artifact manifestation diagrams (`«manifest»`); automates CI/CD packaging and configuration triage ([[Y2S1/CKS221 Software Architecture and Design#2.12.4 UML Artifact Manifestation Diagrams|Duke's Bank Application Case Study]]).
+  - *Install Style*: [[Y2S1/CKS221 Software Architecture and Design#2.12.1 Architectural Principles and Elements|Maps software components and libraries to file system directory trees and archives]]; relations: `allocated-to` and `containment`; UML artifact manifestation diagrams (`«manifest»`); automates CI/CD packaging and configuration triage ([[Y2S1/CKS221 Software Architecture and Design#2.12.4 Enterprise Case Study: DukesBankApp.ear Manifest (Slide 48)|Duke's Bank Application Case Study]]).
   - *Work Assignment Style*: [[Y2S1/CKS221 Software Architecture and Design#2.13.1 Architectural Elements and Principles|Maps source code modules to developers, teams, and contractors]]; relations: `allocated-to` / `assigned-to`; governs Work Breakdown Structures (WBS), cost estimation, and Conway's Law alignment ([[Y2S1/CKS221 Software Architecture and Design#2.13.3 Enterprise Case Study: NASA Earth Observing System (EOS)|NASA Earth Observing System Case Study]]).
 - **Supplemental Architecture Blueprints**: [[Y2S1/CKS221 Software Architecture and Design#2.14 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints|Subversion Client-Server C&C runtime view, Embedded Autonomous Vehicle Control Loop, Clustered Web Application deployment view, and WAR physical directory hierarchy]].
 
@@ -494,9 +494,6 @@ flowchart TD
 ---
 
 ## 4. 🔄 [[Y2S1/CKS222 Software Process and Life Cycle|CKS222: Software Process and Life Cycle]]
-
-> [!tip] 🎯 Quick Exam Cram Resource
-> For objective test revision covering Weeks 1 to 5 (timelines, formulas, discrimination tables, and practice drills), consult the companion cram sheet: **[[Y2S1/CKS222 Short Notes|CKS222 Short Notes (Test 1 Objective Examination Cram Sheet)]]**.
 
 Focuses on the empirical discipline of software engineering, descriptive process modeling methodologies, lifecycle models, verification vs validation, and quantitative project governance using Earned Value Management (EVM) Triads and Monte Carlo risk simulations.
 
