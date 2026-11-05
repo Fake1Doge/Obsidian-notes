@@ -172,7 +172,7 @@ flowchart TD
         RAM["Main Memory (DRAM)"]
         Disk["Secondary Storage"]
     end
-    CPU <-->|System Bus (Control, Address, Data)| L1
+    CPU <-->|"System Bus (Control, Address, Data)"| L1
     L1 <--> RAM
     RAM <--> Disk
 ```

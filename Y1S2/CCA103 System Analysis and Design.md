@@ -1749,12 +1749,12 @@ A **System Sequence Diagram (SSD)** describes the flow of information (inputs an
 
 ```mermaid
 sequenceDiagram
-    actor Actor as Actor (User)
-    participant System as :System
+    actor UserActor as "Actor (User)"
+    participant System as ":System"
     
-    Actor->>System: inputMessage(arguments)
+    UserActor->>System: inputMessage(arguments)
     Note over System: System processes data (Black Box)
-    System-->>Actor: returnData (output)
+    System-->>UserActor: returnData (output)
 ```
 
 ---
@@ -1846,13 +1846,13 @@ Requirements models are highly integrated and must remain consistent:
 
 ```mermaid
 graph TD
-    subgraph Behavior Models (Use Cases)
+    subgraph BehaviorModels ["Behavior Models (Use Cases)"]
         UCD[Use Case Diagram] --> UCD_Desc[Use Case Description]
         UCD_Desc --> AD[Activity Diagram]
         AD --> SSD[System Sequence Diagram]
     end
     
-    subgraph Data Models (Domain Classes)
+    subgraph DataModels ["Data Models (Domain Classes)"]
         DMCD[Domain Class Diagram] --> SMD[State Machine Diagram]
     end
     
@@ -3885,8 +3885,8 @@ Below is the Mermaid class diagram illustrating the first-cut DCD navigation vis
 
 ```mermaid
 classDiagram
-    <<controller>> SaleHandler
     class SaleHandler {
+        <<controller>>
     }
     class Customer {
         -accountNo: string
@@ -4098,8 +4098,8 @@ Below is the Mermaid class diagram illustrating the updated DCD with method sign
 
 ```mermaid
 classDiagram
-    <<controller>> SaleHandler
     class SaleHandler {
+        <<controller>>
         +processNewSale() void
         +addItemsToSale() void
         +makePayment() void
@@ -4483,14 +4483,14 @@ Once detailed sequence flows are modeled, the First-Cut Design Class Diagram is 
 
 ```mermaid
 classDiagram
-    <<controller>> CustHandler
     class CustHandler {
+        <<controller>>
         +createNewCustomer() void
         +enterAddress() void
         +enterCreditCard() void
     }
-    <<controller>> CartHandler
     class CartHandler {
+        <<controller>>
         +addItemToCart() void
         +addAccessToCart() void
     }

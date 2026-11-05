@@ -677,7 +677,7 @@ flowchart LR
             DB[("Central Database")]
             S1 <--> DB
         end
-        Clients <==>|Network Protocols (HTTP/REST, gRPC, TCP/IP)| Server
+        Clients <==>|"Network Protocols (HTTP/REST, gRPC, TCP/IP)"| Server
     end
 ```
 
@@ -1813,7 +1813,7 @@ flowchart TD
             A_Log["«aspect»<br/><b>Logging</b>"]
             A_Tx["«aspect»<br/><b>TransactionManagement</b>"]
         end
-        AspectModules -.->|Weaving Process (Compile/Load/Runtime)| PureClasses
+        AspectModules -.->|"Weaving Process (Compile/Load/Runtime)"| PureClasses
     end
 
     TangledScattered ==>|Refactored via Aspects Style| AOP_Architecture
@@ -1986,7 +1986,7 @@ flowchart TD
     L4 -->|Yes| L5[/"Rule-Based Validation"/]
     L5 --> L6[/"Alert Generation"/]
     L6 --> L7[/"Visualization"/]
-    L4 -.->|No (Omitted Branch)| L7
+    L4 -.->|"No (Omitted Branch)"| L7
     L7 --> L8[/"Continuous Learning"/]
     L8 --> End(["End"])
 ```
@@ -2102,7 +2102,7 @@ flowchart LR
             P2 --- Req
         end
 
-        Prov <==>|Assembly Connector<br/>(Ball-and-Socket)| Req
+        Prov <==>|"Assembly Connector<br/>(Ball-and-Socket)"| Req
     end
 ```
 
@@ -2194,12 +2194,12 @@ flowchart TD
             Admin["Administrative Component<br/>(Database Application)"]
         end
 
-        C_Teller ==>|Client-Server Connector (Request/Reply)| S_Main
-        C_Teller -.->|Client-Server Connector (Failover)| S_Backup
-        S_Main <==>|Publish-Subscribe Connector (State Sync)| S_Backup
-        S_Main ==>|Database Access Connector (Transactional Read/Write)| DB
-        S_Backup ==>|Database Access Connector (Transactional Read/Write)| DB
-        Admin ==>|Database Access Connector (Schema/Audit Access)| DB
+        C_Teller ==>|"Client-Server Connector (Request/Reply)"| S_Main
+        C_Teller -.->|"Client-Server Connector (Failover)"| S_Backup
+        S_Main <==>|"Publish-Subscribe Connector (State Sync)"| S_Backup
+        S_Main ==>|"Database Access Connector (Transactional Read/Write)"| DB
+        S_Backup ==>|"Database Access Connector (Transactional Read/Write)"| DB
+        Admin ==>|"Database Access Connector (Schema/Audit Access)"| DB
     end
 ```
 
@@ -2288,12 +2288,12 @@ flowchart TD
             C_Stat["Monitoring Station Program<br/>(Windows App)"]
         end
 
-        C_Main ==>|TCP Socket Connector (Request/Reply)| S_Auth
-        C_Main ==>|TCP Socket Connector (Request/Reply)| S_Mon
-        C_Upd ==>|TCP Socket Connector (Request/Reply)| S_Mon
-        C_Upd ==>|TCP Socket Connector (Request/Reply)| S_Rec
-        C_Stat ==>|TCP Socket Connector (Request/Reply)| S_Mon
-        C_Stat ==>|TCP Socket Connector (Request/Reply)| S_Rec
+        C_Main ==>|"TCP Socket Connector (Request/Reply)"| S_Auth
+        C_Main ==>|"TCP Socket Connector (Request/Reply)"| S_Mon
+        C_Upd ==>|"TCP Socket Connector (Request/Reply)"| S_Mon
+        C_Upd ==>|"TCP Socket Connector (Request/Reply)"| S_Rec
+        C_Stat ==>|"TCP Socket Connector (Request/Reply)"| S_Mon
+        C_Stat ==>|"TCP Socket Connector (Request/Reply)"| S_Rec
     end
 ```
 
@@ -2354,12 +2354,12 @@ flowchart TD
         end
 
         Browser ==>|HTTPS| CW
-        CW ==>|OpcPurchaseOrderService (SOAP Call)| OPC_Core
-        CW ==>|OpcOrderTrackingService (SOAP Call)| OPC_Core
-        Broker ==>|CreditCardService (SOAP)| Bank
-        Broker ==>|AirlinePO Service (SOAP)| Air
-        Broker ==>|LodgingPO Service (SOAP)| Lodg
-        Broker ==>|ActivityPO Service (SOAP)| Act
+        CW ==>|"OpcPurchaseOrderService (SOAP Call)"| OPC_Core
+        CW ==>|"OpcOrderTrackingService (SOAP Call)"| OPC_Core
+        Broker ==>|"CreditCardService (SOAP)"| Bank
+        Broker ==>|"AirlinePO Service (SOAP)"| Air
+        Broker ==>|"LodgingPO Service (SOAP)"| Lodg
+        Broker ==>|"ActivityPO Service (SOAP)"| Act
         OPC_Core -.->|SMTP Email Confirmation| MailClient
     end
 ```
@@ -2383,8 +2383,8 @@ flowchart LR
     subgraph DataFlowModel["Mathematical Composition of Pipe-and-Filter"]
         direction LR
         In(("Input Stream x")) ==>|Pipe 1| A["Filter A"]
-        A ==>|Pipe 2: A(x)| B["Filter B"]
-        B ==>|Pipe 3: B(A(x))| C["Filter C"]
+        A ==>|"Pipe 2: A(x)"| B["Filter B"]
+        B ==>|"Pipe 3: B(A(x))"| C["Filter C"]
         C ==>|Pipe 4: y| Out(("Output Stream y"))
     end
 ```

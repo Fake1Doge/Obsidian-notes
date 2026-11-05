@@ -682,7 +682,7 @@ flowchart TD
         S3["Fraud Detection Service"]
     end
 
-    P1 & P2 -->|Publish Event (Anonymously)| EB
+    P1 & P2 -->|"Publish Event (Anonymously)"| EB
     EB -->|Dispatch to Registered Listeners| S1 & S2 & S3
 ```
 

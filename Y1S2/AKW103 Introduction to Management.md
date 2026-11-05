@@ -2228,9 +2228,9 @@ Expectancy theory suggests that employees make rational decisions about how much
 
 ```mermaid
 graph LR
-    Effort["Effort"] -->|Expectancy (E)| Performance["Performance"]
-    Performance -->|Instrumentality (I)| Reward["Reward"]
-    Reward -->|Valence (V)| PersonalGoal["Personal Goals"]
+    Effort["Effort"] -->|"Expectancy (E)"| Performance["Performance"]
+    Performance -->|"Instrumentality (I)"| Reward["Reward"]
+    Reward -->|"Valence (V)"| PersonalGoal["Personal Goals"]
 ```
 
 #### The E-I-V Formula:

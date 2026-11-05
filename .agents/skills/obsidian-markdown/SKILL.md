@@ -159,14 +159,17 @@ To prevent syntax and rendering errors in Obsidian and Quartz, you must strictly
    - Subgraph and node identifiers must not contain spaces (e.g., use `ViewLayer` instead of `View Layer`).
    - Wrap display labels containing spaces in double quotes:
      ```mermaid
+     flowchart TD
      subgraph ViewLayer ["View Layer - PHP, HTML/CSS"]
          homePage["Home Page"]
      end
      ```
 2. **No Special Characters in Class Member Types/Names**:
    - Avoid using characters like `&`, `{`, `}`, or `*` directly inside class diagrams' attributes or methods (replace `shipping&Handling` with `shippingAndHandling`).
-3. **Stereotype Syntax**:
-   - Stereotypes for classes must be applied on a separate line (e.g., `<<abstract>> Sale`) instead of inside the class braces.
+3. **Stereotype Syntax in Class Diagrams**:
+   - Stereotypes for classes must ALWAYS be placed INSIDE the class definition braces (e.g. `class Sale { <<abstract>> ... }`). Placing them on a separate line outside the class causes Mermaid runtime parser crashes.
+4. **Always Quote Edge / Link Labels with Parentheses**:
+   - In flowcharts, if an arrow label contains parentheses, colons, or slashes, you MUST wrap the label in double quotes: `A -->|"Label (with parens)"| B` or `A ==>|"Protocol (TCP/IP)"| B`. Unquoted parentheses inside `|...|` trigger instant syntax errors.
 4. **No Markdown Lists in Node Labels (Unsupported markdown: list)**:
    - Node labels and titles must not contain text that parses as a Markdown list item (e.g., text starting with `- `, `* `, `+ `, or `1. `).
    - If a numbered label is needed, escape the period with a backslash (e.g. `Step1["1\. Classification"]`) or use a colon (e.g. `Step1[1: Classification]`).
