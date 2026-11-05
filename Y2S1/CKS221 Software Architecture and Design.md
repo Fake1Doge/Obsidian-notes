@@ -1820,13 +1820,13 @@ flowchart TD
 ```
 
 #### Specification Table of the Aspects Style
-| Dimension | Specification |
-| :--- | :--- |
-| **Overview** | Depicts aspect modules that implement cross-cutting concerns and specifies how they are bound to other modules in the software system. |
-| **Elements** | **Aspect:** A specialized module that encapsulates the implementation of a cross-cutting concern (e.g., security, logging, caching, transaction boundaries). |
-| **Relations** | **Crosscuts:** A binding relation that links an aspect module to the target modules affected by the cross-cutting logic. |
-| **Constraints** | 1. An aspect can crosscut one or more regular modules as well as other aspect modules.<br/>2. An aspect that crosscuts itself may trigger **infinite recursion**, depending on the target runtime implementation. |
-| **What It's For** | 1. Modeling cross-cutting concerns in Object-Oriented Design (OOD).<br/>2. Substantially enhancing **modifiability** and maintainability by isolating orthogonal policies. |
+| Dimension         | Specification                                                                                                                                                                                                     |
+| :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Overview**      | Depicts aspect modules that implement cross-cutting concerns and specifies how they are bound to other modules in the software system.                                                                            |
+| **Elements**      | **Aspect:** A specialized module that encapsulates the implementation of a cross-cutting concern (e.g., security, logging, caching, transaction boundaries).                                                      |
+| **Relations**     | **Crosscuts:** A binding relation that links an aspect module to the target modules affected by the cross-cutting logic.                                                                                          |
+| **Constraints**   | 1. An aspect can crosscut one or more regular modules as well as other aspect modules.<br/>2. An aspect that crosscuts itself may trigger **infinite recursion**, depending on the target runtime implementation. |
+| **What It's For** | 1. Modeling cross-cutting concerns in Object-Oriented Design (OOD).<br/>2. Substantially enhancing **modifiability** and maintainability by isolating orthogonal policies.                                        |
 
 #### Code Tangling vs. Code Scattering
 In standard Object-Oriented Programming (OOP), modules designed to represent cohesive domain entities inevitably become contaminated by non-functional requirements:
