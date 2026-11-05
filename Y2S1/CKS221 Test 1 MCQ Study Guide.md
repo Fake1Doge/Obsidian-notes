@@ -247,15 +247,15 @@ flowchart TD
     subgraph Kruchten["Philippe Kruchten's 4+1 View Model"]
         direction TB
         subgraph TopTier["Static & Conceptual Views"]
-            LV["<b>Logical View</b><br/>Stakeholder: End-User<br/>Focus: Functional Requirements, Business Logic<br/>UML: Class & Object Diagrams"]
-            DV["<b>Development View</b><br/>Stakeholder: Programmers / Managers<br/>Focus: Static Code Organization, Subsystems<br/>UML: Package & Component Diagrams"]
+            LV["<b>Logical View</b><br/>Stakeholder: End-User<br/>Focus: Functional Requirements, Business Logic<br/>Diagrams: Class, Object, State, Sequence, Communication"]
+            DV["<b>Development View</b><br/>Stakeholder: Programmers / Managers<br/>Focus: Static Code Organization, Subsystems<br/>Diagrams: Package & Component Diagrams"]
         end
 
-        UC["<b>+1: Use Case / Scenario View</b><br/>Stakeholder: Architects & All Stakeholders<br/>Focus: Binds, Drives & Validates All 4 Views<br/>UML: Use Case Diagrams"]
+        UC["<b>+1: Use Case / Scenario View</b><br/>Stakeholder: Architects & All Stakeholders<br/>Focus: Binds, Drives & Validates All 4 Views<br/>Diagrams: Use Case Diagrams"]
 
         subgraph BottomTier["Dynamic & Environmental Views"]
-            PV["<b>Process View</b><br/>Stakeholder: Integrators / Performance Engineers<br/>Focus: Concurrency, Threads, Performance, Fault Tolerance<br/>UML: Activity & Sequence Diagrams"]
-            PhV["<b>Physical View</b><br/>Stakeholder: System Engineers / DevOps<br/>Focus: Hardware Mapping, Servers, Network Topologies<br/>UML: Deployment Diagrams"]
+            PV["<b>Process View</b><br/>Stakeholder: Integrators / Performance Engineers<br/>Focus: Concurrency, Interacting Processes, Synchronization<br/>Diagrams: Control Flow Charts, Data Flow Charts"]
+            PhV["<b>Physical View</b><br/>Stakeholder: System Engineers / DevOps<br/>Focus: Hardware Mapping, Servers, Network Topologies<br/>Diagrams: Deployment Diagrams"]
         end
 
         LV --- UC
@@ -267,13 +267,13 @@ flowchart TD
 
 ### High-Yield MCQ View Decoupling Matrix
 
-| View Name | Primary Stakeholder | Core Concerns Addressed | Key UML Notations | Exam Keyword Clues |
+| View Name | Primary Stakeholder | Core Concerns Addressed | Key Diagrams (Lecture 2 Slides 19–23) | Exam Keyword Clues |
 | :--- | :--- | :--- | :--- | :--- |
-| **Logical View** | **End-Users** | **Functional requirements**, business domain vocabulary, services provided to users. | Class Diagrams, Object Diagrams, State Machines. | *"Domain entities"*, *"Business concepts"*, *"User functions"*. |
-| **Process View** | **System Integrators** | **Runtime dynamics**, concurrency, threads, processes, synchronization, system throughput. | Activity Diagrams, Sequence Diagrams. | *"Concurrency"*, *"Multithreading"*, *"Deadlocks"*, *"Integrators"*. |
-| **Development View** *(Implementation View)* | **Programmers & Software Managers** | **Static code organization**, packages, build dependencies, libraries, software configuration. | Package Diagrams, Component Diagrams. | *"Software modules"*, *"Build hierarchy"*, *"Package structure"*. |
-| **Physical View** *(Deployment View)* | **System Engineers & IT Operations** | **Hardware infrastructure**, network topologies, physical server nodes, execution environments. | Deployment Diagrams (`«device»`, `«executionEnvironment»`). | *"Hardware nodes"*, *"CPUs"*, *"Network links"*, *"System engineers"*. |
-| **+1 Use Case View** *(Scenario View)* | **Architects & All Stakeholders** | **Unifies and validates** the other four views; proves that the architecture satisfies requirements. | Use Case Diagrams, Interaction Scenarios. | *"Redundant if all 4 views exist? NO! It binds and validates them"*. |
+| **Logical View** | **End-Users** | **Functional requirements**, domain vocabulary, business logic, interactions between classes/objects. | **Class diagrams**, **Object diagrams**, **State diagrams**, **Sequence diagrams**, **Communication diagrams** | *"Domain entities"*, *"Business concepts"*, *"Sequence/Communication between objects"*. |
+| **Process View** | **System Integrators** | **Runtime dynamics**, interacting processes, concurrency, threads, synchronization, throughput. | **Control Flow Charts**, **Data Flow Charts** (Activity diagrams for concurrency) | *"Concurrency"*, *"Multithreading"*, *"Deadlocks"*, *"Control flow"*, *"Data flow"*. |
+| **Development View** *(Implementation View)* | **Programmers & Software Managers** | **Static code organization**, physical codebase, packages, libraries, subsystems. | **Component diagrams**, **Package diagrams** | *"Software modules"*, *"Build hierarchy"*, *"Package structure"*. |
+| **Physical View** *(Deployment View)* | **System Engineers & IT Operations** | **Hardware infrastructure**, network topologies, physical server nodes, execution environments. | **Deployment diagrams** (`«device»`, `«executionEnvironment»`) | *"Hardware nodes"*, *"CPUs"*, *"Network links"*, *"System engineers"*. |
+| **+1 Use Case View** *(Scenario View)* | **Architects & All Stakeholders** | **Unifies and validates** the other four views; proves that the architecture satisfies requirements. | **Use Case diagrams**, Scenarios | *"Redundant if all 4 views exist? NO! It binds and validates them"*. |
 
 > [!danger] MCQ Exam Radar: Kruchten Traps
 > - **Trap Question 1:** *"Which view in Kruchten's 4+1 model is aimed at programmers to manage code development and build environments?"*  
