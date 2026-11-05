@@ -15,10 +15,6 @@ aliases:
   - Software Architecture and Design
 ---
 
-> [!tip] Exam Preparation
-> Studying for Test 1? Check the dedicated revision guide:
-> - [[Y2S1/CKS221 Test 1 MCQ Study Guide|CKS221 Test 1 MCQ High-Yield Revision Guide]] (Lectures 1–6 / Topics 1 & 2)
-
 # Topic 1: Software Architecture
 
 ## 1.1 The Discipline and Foundations of Software Architecture
