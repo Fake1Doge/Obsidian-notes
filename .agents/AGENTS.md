@@ -14,3 +14,10 @@
 - **Core Syllabus Focus**: Only primary source files located directly under the course directory representing official lecture slides, lab manuals, or assignment sheets may be processed into master notes.
 - **Explicit User Opt-In Only**: Materials residing in `Extra` folders must NEVER be converted or integrated into master notes or year knowledge bases (`knowledge_Y1.md`, `knowledge_Y2.md`) unless the user explicitly instructs: *"Process the files in the extra folder"*.
 - **Preserve Study Leanliness**: Ensure notes strictly mirror the examinable lecture slides so students do not waste time studying extraneous reference books or supplemental decks.
+
+## Mermaid Diagram Syntax Guardrails
+- **Double-Quote Link/Edge Labels with Parentheses**: In flowcharts and graphs, arrow labels containing parentheses or punctuation MUST be enclosed in double quotes (e.g., `-->|"Label (Details)"|` or `==>|"Protocol (TCP/IP)"|`). Unquoted parentheses inside `|...|` crash Mermaid's lexer.
+- **Stereotypes Inside Class Braces**: In `classDiagram`, class stereotypes/annotations must ALWAYS be placed inside the class body (e.g., `class Name { <<stereotype>> ... }`). Declaring them on separate lines outside the class (`<<stereotype>> ClassName`) crashes Mermaid's parser.
+- **Always Quote Subgraph Titles with Special Characters**: Subgraphs with spaces or parentheses must specify an alphanumeric identifier and quoted label (e.g., `subgraph ID ["Title (Details)"]`).
+- **Avoid Sequence Diagram Keyword Collisions**: Never name participants or actors `Actor` (e.g., use `actor UserActor as "Actor"`).
+- **Automated Validation**: Run `node .agents/skills/obsidian-markdown/scripts/lint_mermaid.js` on modified files to verify 100% parse compliance.

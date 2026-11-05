@@ -3658,6 +3658,7 @@ classDiagram
         major
     }
     class Design_Student {
+        <<entity>>
         -studentID: integer
         -name: string
         -address: string
@@ -3668,7 +3669,6 @@ classDiagram
         +updateCreditHours() void
         +findStudentsAboveHours(hours) Array
     }
-    <<entity>> Design_Student
 ```
 *Note: `findStudentsAboveHours` is static (class-level), so its method name is underlined in DCDs. The class name `Student` maps directly to code class structure.*
 
@@ -3818,6 +3818,7 @@ The following design classes represent RMO's sales classification:
 ```mermaid
 classDiagram
     class Sale {
+        <<abstract>>
         -saleID: int
         -saleDate: date
         -priorityCode: string
@@ -3846,7 +3847,6 @@ classDiagram
         -noOfStoreSales: int
         +cancelSale() void
     }
-    <<abstract>> Sale
     Sale <|-- PhoneSale
     Sale <|-- InternetSale
     Sale <|-- StoreSale
