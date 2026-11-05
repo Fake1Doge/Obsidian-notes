@@ -286,6 +286,8 @@ flowchart TD
 >   $\rightarrow$ **Correct: Process View** (Integrators + Concurrency).
 > - **Trap Question 3:** *"Why is the Use Case view called '+1'?"*  
 >   $\rightarrow$ Because it is not an orthogonal structural view itself; it is the **unifying scenario layer** that exercises and validates the other four views.
+> - **Trap Question 4 (High-Frequency Exam Trap):** *"In Kruchten's 4+1 View Model, which view utilizes Sequence Diagrams?"*  
+>   $\rightarrow$ **Correct: Logical View** (Lecture 2 Slide 19 explicitly lists Class, Object, State, **Sequence**, and Communication diagrams under the Logical View because they capture functional message collaboration between domain objects; Process View uses Control Flow & Data Flow charts for concurrency/threads).
 
 ---
 
@@ -828,7 +830,7 @@ flowchart TD
 
 ---
 
-# Part 6: 25 High-Yield Scenario-Based Practice MCQs
+# Part 6: 26 High-Yield Scenario-Based Practice MCQs
 
 > [!question] Q1: An architect models a system that processes gigabytes of telemetry data in streaming chunks. The processing involves decompression, format normalization, and anomaly detection. Each stage must run independently on separate CPU cores without sharing memory or database state. Which architectural style MUST be selected?
 > - A) Shared Data Blackboard Style  
@@ -1054,3 +1056,12 @@ flowchart TD
 > 
 > **Answer: A**  
 > *Reasoning:* Coarse-grained enterprise services communicating over an ESB via SOAP/WSDL is **Service-Oriented Architecture (SOA)**.
+
+> [!question] Q26: According to Kruchten's "4+1" View Model, which of the following UML diagrams is explicitly classified under the Logical View to illustrate the message flow and collaboration between problem domain objects?
+> - A) Deployment Diagram  
+> - B) Sequence Diagram  
+> - C) Package Diagram  
+> - D) Control Flow Chart  
+> 
+> **Answer: B**  
+> *Reasoning:* Lecture 2 Slide 19 explicitly enumerates the diagrams for the Logical View: Class diagrams, Object diagrams, State diagrams, **Sequence diagrams**, and Communication diagrams. Deployment belongs to Physical View; Package belongs to Development View; Control Flow Charts belong to Process View.
