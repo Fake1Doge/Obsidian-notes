@@ -80,13 +80,13 @@ flowchart TD
 
 ---
 
-## 1.2 Functions and Strategic Value of Software Architecture
+## 1.2 Functions of Software Architecture (Lecture 1, Slide 12)
 
-Software architecture delivers immense strategic value across the software lifecycle:
-1. **Stakeholder Visualization & Analysis:** Enables non-technical clients, project sponsors, developers, and QA engineers to visualize and reason about system behavior and quality attributes.
-2. **Early Anticipation of Expensive Decisions:** Architectural modifications become exponentially more expensive as development proceeds. Architecture allows teams to simulate trade-offs and evaluate risks before concrete implementation begins.
-3. **Focus on Component Assembly:** Shifts the engineering focus from writing primitive code from scratch toward assembling, configuring, and orchestrating robust, reusable components and commercial off-the-shelf (COTS) frameworks.
-4. **Reusable Transferable Model:** A mature software architecture serves as the foundation for **Software Product Lines (SPL)**, enabling organizations to instantiate multiple related software products from a common architectural base.
+According to Lecture 1 (Slide 12), software architecture fulfills four primary functions:
+1. **Visualisation & Quality Analysis:** Helps stakeholders to visualise, understand, and analyse a system’s qualities.
+2. **Focus on Structure:** Focuses on the system's high-level structure (rather than implementation).
+3. **Anticipating Expensive Choices:** Can be used to anticipate expensive choices in a project before they are made.
+4. **Basis for Core Decisions:** Used as the foundational basis for making core decisions to ensure high-quality work.
 
 ---
 
@@ -595,7 +595,7 @@ flowchart LR
 - **Constituents:** Actors, use cases, scenarios, and preconditions.
 - **The Central "+1" Function:**
   - Serves as the unifying core that binds the four orthogonal views together.
-  - Used during architectural reviews (e.g., ATAM) to validate whether the structures defined in the Logical, Process, Development, and Physical views correctly realize stakeholder functional and non-functional requirements.
+  - Used during architectural reviews to validate whether the structures defined in the Logical, Process, Development, and Physical views correctly realize stakeholder functional and non-functional requirements.
 - **Concrete Slide Example (Slide 23 of Lecture 2):** A **UML Use Case Diagram** of a Library Management System:
 
 ```mermaid
@@ -761,7 +761,7 @@ flowchart LR
             P3["Microservices"]
         end
         subgraph Broker["Event Broker / Bus"]
-            B["Message Queue / Log<br/>(Apache Kafka, RabbitMQ, AWS EventBridge)"]
+            B["Message Queue / Log<br/>(Apache Kafka, RabbitMQ, AWS Lambda)"]
         end
         subgraph Consumers["Event Consumers"]
             C1["Inventory Service"]
@@ -1011,7 +1011,7 @@ flowchart LR
 | **Architecture Scope** | Single application / Monolith | Enterprise-wide multi-system integration | Fine-grained single application decomposition |
 | **Data Storage** | Centralized single database | Shared database or legacy repositories | **Database-per-Service** (strict isolation) |
 | **Communication** | In-memory function/method calls | Enterprise Service Bus (ESB), SOAP/XML | Lightweight APIs (HTTP/REST, gRPC), Kafka |
-| **Deployment Unit** | Single monolithic build package | Coarse-grained enterprise services | Independently containerized microservices (Docker/K8s) |
+| **Deployment Unit** | Single monolithic build package | Coarse-grained enterprise services | Independently deployable microservices |
 
 ---
 
@@ -2403,13 +2403,21 @@ flowchart LR
 
 ---
 
-### 2.6.3 Runtime Properties and Backpressure Mechanics
-Slide 26 outlines critical runtime configurations governing pipe-and-filter architectures:
-1. **End-of-Data Signaling:** Filters must know when an input stream terminates (e.g., transmitting an explicit `EOT` (End-of-Transmission) character, an empty record, or closing the stream socket).
-2. **Buffer Capacity and Backpressure:** Pipes possess finite memory buffer capacities:
-   - *When Full:* Upstream filters block (e.g., `block for 2 sec and retry`), throttling data production.
-   - *When Empty:* Downstream filters block (e.g., `block for 20 sec and retry`), awaiting fresh input.
-3. **Execution Concurrency:** Filters can execute as independent operating system processes or threads, allowing processing stages to run in parallel on multi-core processors.
+### 2.6.3 Runtime Properties, Constraints, and Usages (Slide 26)
+Slide 26 of Lecture 6 outlines the runtime properties, constraints, and purposes of the pipe-and-filter style:
+- **Properties:**
+  1. **End-of-Data Signaling:** How end-of-data is signaled (so filters recognize stream termination).
+  2. **Capacity of the Pipes:** Governs pipe buffer capacity, throughput, and performance parameters.
+  3. **Process Isolation:** Whether or not each filter is executed as a separate operating system process.
+- **Constraints:**
+  - Pipes connect filters. Therefore, connected filters must agree on the type of data being passed along the connecting pipe.
+- **What It's For:**
+  - Improving reuse (each filter is independent).
+  - Supporting functional composition data analysis ($y = C(B(A(x)))$).
+  - Improving throughput in systems in which data is transformed serially.
+
+> [!note] Extra Notes / Implementation Context: Pipe Buffer Mechanics (Not tested on core slides)
+> In operating system implementations, pipes have finite buffer capacities: when full, upstream filters block until space frees; when empty, downstream filters wait for incoming data.
 
 ---
 
@@ -2731,10 +2739,14 @@ The **Install Style** bridges software components and the physical storage media
   - `allocated-to`: A software component is allocated to a configuration item or directory path.
   - `containment`: One directory or packaged archive contains another file or configuration item in a hierarchical tree structure.
 
-### 2.12.2 Strategic Value of Install Views
-- Enables release and DevOps engineers to construct automated build, packaging, and installation scripts (Dockerfiles, Helm charts, Kubernetes manifests).
-- Directs system administrators to locate critical configuration files, security certificates, and log directories.
-- Prevents version collisions when multiple instances of a system are deployed side-by-side on the same host.
+### 2.12.2 What the Install Style is For (Slide 46)
+Lecture 6 (Slide 46) defines six concrete uses for the install style:
+1. **Understanding File and Folder Organization:** Clarifies the organization and directory tree of the files and folders of the installed software.
+2. **Creating Build-and-Deploy Procedures:** Outlines the file layouts needed to construct build-and-deploy procedures.
+3. **Navigating Large File Hierarchies:** Enables engineers and operators to navigate through a large number of files and folders efficiently.
+4. **Locating Critical Files:** Helps administrators quickly locate specific files requiring attention (e.g., log files and configuration files).
+5. **Configuring and Versioning:** Facilitates selecting and updating configuration files, as well as managing multiple installed versions of the same system.
+6. **Troubleshooting File Integrity:** Identifies the expected content of missing or damaged files during diagnostics and system recovery.
 
 ### 2.12.3 Enterprise Case Study: Adventure Builder Install View (Slide 47)
 Slide 47 of Lecture 6 presents the comprehensive artifact deployment tree of the Adventure Builder system, showing how enterprise Java archives package WARs, EJBs, WSDLs, and XML descriptors:
@@ -2896,11 +2908,16 @@ The **Work Assignment Style** maps software architecture directly onto the human
 
 ---
 
-### 2.13.2 Strategic Value and Conway's Law
-- **Work Breakdown Structure (WBS):** Serves as the primary baseline for project managers to construct realistic resource schedules, cost estimates, and sprint backlog allocations.
-- **Conway's Law Alignment:** Formalizes the reality that *"organizations design systems that mirror their own communication structures."* Clean module interfaces prevent cross-team friction and code merge conflicts.
-- **Onboarding Acceleration:** Provides incoming engineers with an immediate visual roadmap showing which team owns which software subsystem.
-- **Communication Protocol Governance:** Dictates necessary inter-team communication mechanisms (e.g., weekly architecture syncs between the Data Team and UI Squad, shared wikis, dedicated Slack channels).
+### 2.13.2 Strategic Value and Usages of the Work Assignment Style (Slide 49)
+Slide 49 of Lecture 6 defines the primary usages and strategic value of the work assignment style:
+1. **Major Units & Production Ownership:** Shows the major units of software that must be present to form a working system and **who will produce them**.
+2. **Development Environments & Toolchains:** Identifies the specific tools and environments in which the software is developed.
+3. **Managing Team Resource Allocations:** Well-suited for managing team resource allocations and division of labor across departments or subcontractors.
+4. **Onboarding New Hires:** Explains the organizational structure and module ownership of a project to a new hire.
+5. **WBS, Budget, and Schedule Estimates:** Serves as the direct basis for work breakdown structures (WBS) and for detailed budget and schedule estimates.
+
+> [!note] Extra Notes / Industry Context: Conway's Law (Not directly tested on core slides)
+> The work assignment style reflects Conway's Law (*"organizations design systems that mirror their own communication structures"*), highlighting how organizational divisions map to architectural modularity.
 
 ---
 
@@ -2929,9 +2946,10 @@ Slide 51 details the Work Assignment View for the **Science Data Processing Segm
 
 ## 2.14 Supplemental Case Study Catalog: Concrete UML Architectural Blueprints
 
-Slides from the supplementary curriculum provide eight concrete architectural blueprints illustrating the execution and allocation realities of modern systems:
+> [!note] Source Reference: Supplementary material-views.pdf
+> The following blueprints are the exact architectural diagrams provided in the official course supplementary slides (`Supplementary material-views.pdf`) illustrating concrete implementations of Module, Component-and-Connector, and Allocation views.
 
-### 2.14.1 Blueprint 1: Subversion Client-Server C&C Architecture
+### 2.14.1 Blueprint 1: Subversion Client-Server C&C Architecture (Supplementary Slide 7)
 Illustrates a complete client-server runtime view mediating between remote developer clients and a central Subversion version control server:
 
 ```mermaid
@@ -2972,7 +2990,7 @@ flowchart TD
 
 ---
 
-### 2.14.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture
+### 2.14.2 Blueprint 2: Mission-Critical Embedded Control System C&C Architecture (Supplementary Slide 9)
 Visualizes a real-time, fault-tolerant embedded control system for an autonomous rover or spacecraft:
 
 ```mermaid
@@ -3029,7 +3047,7 @@ flowchart TD
 
 ---
 
-### 2.14.3 Blueprint 3: Web Application Deployment View (Sun Fire & SPARC Cluster)
+### 2.14.3 Blueprint 3: Web Application Deployment View - Sun Fire & SPARC Cluster (Supplementary Slide 10)
 Documents the physical deployment of an enterprise web application onto clustered Sun Microsystems server hardware:
 
 ```mermaid
@@ -3066,7 +3084,7 @@ flowchart LR
 
 ---
 
-### 2.14.4 Blueprint 4: Web Application Install / Implementation Directory Tree
+### 2.14.4 Blueprint 4: Web Application Install / Implementation Directory Tree (Supplementary Slide 11)
 Maps the internal logical components of the Book Club web application directly into a standard J2EE WAR file system directory tree:
 
 ```
@@ -3311,6 +3329,10 @@ flowchart TD
 ---
 
 ## 2.15 The Master Triad: Structures, Views, and Styles
+
+> [!note] Course Synthesis & Review Summary (Consolidates Lectures 1 to 6)
+> This section unifies the core concepts taught across Lectures 1 to 6. It serves as an executive review connecting Structures (Reality), Views (Representations), and Styles (Proven Templates) to aid final revision.
+
 Across the entire CKS221 curriculum, software architecture is unified by three orthogonal concepts:
 
 ```mermaid
@@ -3329,6 +3351,10 @@ flowchart TD
 ---
 
 ## 2.16 Cross-Structure Mapping: Modules, C&C, and Allocations
+
+> [!note] Course Synthesis & Review Summary (Consolidates Lectures 1 to 6)
+> This summary diagram maps the relationships across the three primary structure families (Static Module Space, Dynamic C&C Space, and Physical Allocation Space) to reinforce architectural synthesis.
+
 The three architectural structure families are not isolated islands; they represent complementary projections of the same system:
 
 ```mermaid
