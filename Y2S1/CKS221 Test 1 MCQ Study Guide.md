@@ -36,7 +36,7 @@ aliases:
 ### The Building Architecture Analogy
 In civil engineering, constructing a skyscraper does not begin with pouring concrete or ordering bricks. An architect first models spatial layouts, structural loads, utility shafts, and safety egresses to balance client needs with zoning laws and structural physics.
 
-![[Lecture 1_Sw Architecture_NAA-2026-p1.pdf#page=5]]
+![[cks221_lec1_slide5_building_analogy.png|750]]
 
 ```mermaid
 flowchart TD
@@ -73,7 +73,7 @@ flowchart TD
 3. **Every System Has an Architecture:** Whether an engineering team explicitly documented their system on Day 1 or haphazardly threw together spaghetti code, every executing system can be mapped to elements and relations.
 4. **Not All Architectures Are Good Architectures:** Architecture is a *descriptive* engineering concept, not an accolade. A system can possess an architecture that is fragile, insecure, and unscalable—yet that remains its architecture.
 
-![[Lecture 1_Sw Architecture_NAA-2026-p1.pdf#page=10]]
+![[cks221_lec1_slide10_four_tenets.png|750]]
 
 > [!tip] MCQ Exam Radar: Definitions & Tenets
 > - **Trap Question:** *"Which of the following systems does NOT possess a software architecture?"*  
@@ -91,7 +91,7 @@ flowchart TD
 * **View:** A **written, human-readable documented representation** of a coherent set of architectural elements and relations, authored for specific stakeholders.
 * **Core Rule:** *"Architects design structures. They document views of those structures."*
 
-![[Lecture 1_Sw Architecture_NAA-2026-p1.pdf#page=16]]
+![[cks221_lec1_slide16_structure_vs_view.png|750]]
 
 ### The Human Body Analogy
 Consider the human body as an anatomical architecture:
@@ -123,7 +123,7 @@ flowchart TD
 ### The Slide 23 Classic Dilemma: One System, Multiple Structures
 Lecture 1 Slide 23 presents a classic software architecture scenario that is frequently adapted into objective exam questions.
 
-![[Lecture 1_Sw Architecture_NAA-2026-p1.pdf#page=23]]
+![[cks221_lec1_slide23_one_system_multiple_structures.png|750]]
 
 Consider a networked Client-Server application where **10 concurrent users** access a central database server:
 
@@ -181,7 +181,7 @@ flowchart TD
 
 All architectural structures fall into one of three orthogonal categories:
 
-![[Lecture 1_Sw Architecture_NAA-2026-p1.pdf#page=27]]
+![[cks221_lec1_slide27_three_categories.png|750]]
 
 ```mermaid
 flowchart LR
@@ -226,7 +226,7 @@ flowchart LR
 * **Quality Attributes (Non-Functional Requirements / NFRs):** *How well* the system executes its functions (performance, security, availability, modifiability, testability, scalability).
 * **Core Tenet:** **Architecture is the primary determinant of quality attributes.** You cannot achieve high availability or extreme modifiability merely through clean coding if the underlying architectural partitioning is flawed!
 
-![[Lecture 2_Sw Architecture_NAA-2026-p2.pdf#page=9]]
+![[cks221_lec2_slide9_quality_attributes.png|750]]
 
 > [!tip] MCQ Exam Radar: Quality Attributes
 > - **MCQ Question:** *"Can quality attributes be salvaged during implementation if the architecture is flawed?"*  
@@ -240,7 +240,7 @@ flowchart LR
 
 Philippe Kruchten (1995) recognized that different stakeholders require completely different perspectives of a software system. The "4+1" model organizes architectural descriptions into four specialized views, unified by a central scenario view.
 
-![[Lecture 2_Sw Architecture_NAA-2026-p2.pdf#page=14]]
+![[cks221_lec2_slide14_kruchten_4plus1.png|750]]
 
 ```mermaid
 flowchart TD
@@ -294,7 +294,7 @@ flowchart TD
 ### What is an Architectural Style?
 > An **architectural style** is a specialization of element and relation types, together with a set of constraints on how they can be used. It defines a whole family of systems that share a common structural pattern.
 
-![[Lecture 3_Sw Architecture-NAA2026-p3.pdf#page=3]]
+![[cks221_lec3_slide3_architectural_styles.png|750]]
 
 ```mermaid
 flowchart TD
@@ -368,7 +368,7 @@ flowchart TD
 ### What is a Module View?
 A **Module View** documents the **static structure** of the system's implementation units (source code files, packages, classes, subsystems). It answers compile-time and development questions.
 
-![[Lecture 4-NAA2026.pdf#page=4]]
+![[cks221_lec4_slide4_module_views_overview.png|750]]
 
 ### Modules vs. Subsystems
 * **Module:** A general static software unit of implementation providing a coherent set of responsibilities (e.g., a class, package, or library).
@@ -397,7 +397,7 @@ flowchart TD
 
 ## 2.2 Style 1: The Decomposition Style (Lecture 4)
 
-![[Lecture 4-NAA2026.pdf#page=16]]
+![[cks221_lec4_slide16_decomposition_style.png|750]]
 
 * **Defining Relation:** `is-part-of` / submodule.
 * **Mechanism:** A large system is recursively decomposed into smaller, more manageable submodules. Submodules are completely encapsulated within their parent module.
@@ -412,7 +412,7 @@ flowchart TD
 
 ## 2.3 Style 2: The Uses Style & The DSM (Lecture 4)
 
-![[Lecture 4-NAA2026.pdf#page=23]]
+![[cks221_lec4_slide23_uses_style.png|750]]
 
 * **Defining Relation:** `depends-on` / `requires` / `uses`.
 * **Formal Definition:** Module A **uses** Module B if the **correct functioning of Module A depends on the presence of a correct implementation of Module B**.
@@ -423,7 +423,7 @@ A square $N \times N$ matrix used to analyze dependencies across modules:
 - An entry at Row $i$, Column $j$ indicates that **Module $i$ depends on (uses) Module $j$**.
 - Used by architects to detect **circular dependencies** (e.g., A uses B, and B uses A) which destroy testability.
 
-![[Lecture 4-NAA2026.pdf#page=25]]
+![[cks221_lec4_slide25_dsm_matrix.png|750]]
 
 ```mermaid
 flowchart LR
@@ -447,7 +447,7 @@ flowchart LR
 
 ## 2.4 Style 3: The Generalization Style (Lecture 4)
 
-![[Lecture 4-NAA2026.pdf#page=28]]
+![[cks221_lec4_slide28_generalization_style.png|750]]
 
 * **Defining Relation:** `is-a` (inheritance / specialization).
 * **Mechanism:** Common features, interfaces, and methods are extracted into a parent supermodule. Child submodules inherit these attributes and specialize or override behaviors.
@@ -461,7 +461,7 @@ flowchart LR
 
 ## 2.5 Style 4: The Layered Style (Lecture 4)
 
-![[Lecture 4-NAA2026.pdf#page=33]]
+![[cks221_lec4_slide33_layered_style.png|750]]
 
 * **Defining Relation:** `allowed-to-use` (strictly unidirectional, downward).
 * **Mechanism:** Modules are partitioned into an ordered stack of horizontal layers. Each layer provides a cohesive set of services to the layer above it.
@@ -469,7 +469,7 @@ flowchart LR
 
 ### Strict vs. Relaxed (Open) Layering
 
-![[Lecture 4-NAA2026.pdf#page=35]]
+![[cks221_lec4_slide35_strict_vs_relaxed_layering.png|750]]
 
 ```mermaid
 flowchart TD
@@ -501,7 +501,7 @@ flowchart TD
 
 ### Geometric Topologies: Stack vs. Concentric Rings vs. Sidecars
 
-![[Lecture 4-NAA2026.pdf#page=38]]
+![[cks221_lec4_slide38_stack_concentric_sidecars.png|750]]
 
 1. **Vertical Stack:** Standard horizontal bands (UI $\rightarrow$ Business $\rightarrow$ Data).
 2. **Concentric Rings:** The innermost ring represents the core kernel / hardware abstraction; outer rings represent higher-level applications and utilities. Outer rings are allowed to use inner rings, but inner rings cannot use outer rings.
@@ -516,12 +516,12 @@ flowchart TD
 
 ## 2.6 Style 5: The Aspects Style (Lecture 5)
 
-![[Lecture 5-NAA2026.pdf#page=2]]
+![[cks221_lec5_slide2_aspects_style_overview.png|750]]
 
 ### The Core Problem Solved: Cross-Cutting Concerns
 In traditional Object-Oriented design, certain system requirements cannot be cleanly encapsulated inside a single class. For example, **logging**, **user authentication**, **transaction management**, and **error handling** cut across dozens of unrelated modules. This creates two catastrophic code smells:
 
-![[Lecture 5-NAA2026.pdf#page=4]]
+![[cks221_lec5_slide4_code_tangling_scattering.png|750]]
 
 ```mermaid
 flowchart LR
@@ -551,7 +551,7 @@ flowchart LR
 
 ### The Mechanism of Aspect-Oriented Programming (AOP)
 
-![[Lecture 5-NAA2026.pdf#page=5]]
+![[cks221_lec5_slide5_pointcut_joinpoint_advice.png|750]]
 
 Aspects extract cross-cutting concerns into a dedicated module called an **Aspect**. It uses four fundamental mechanics:
 
@@ -570,7 +570,7 @@ Aspects extract cross-cutting concerns into a dedicated module called an **Aspec
 
 ## 2.7 Style 6: The Data Model Style (Lecture 5)
 
-![[Lecture 5-NAA2026.pdf#page=10]]
+![[cks221_lec5_slide10_data_model_style.png|750]]
 
 * **Constituents:** Entities, Attributes, Relationships.
 * **Cardinalities / Multiplicities:** $1:1$, $1:N$, $M:N$ (mandatory vs. optional).
@@ -585,7 +585,7 @@ Aspects extract cross-cutting concerns into a dedicated module called an **Aspec
 
 A **Component-and-Connector (C&C) View** documents the runtime behavior of executing software. It answers questions about **performance, concurrency, security, and network bottlenecks**.
 
-![[Lecture 6-NAA2026.pdf#page=4]]
+![[cks221_lec6_slide4_cc_views_overview.png|750]]
 
 ```mermaid
 flowchart LR
@@ -625,13 +625,13 @@ flowchart LR
 * **Client-Server C&C:** Components (Client, Server); Connectors (RPC, HTTP). Asymmetric request-reply. Clients initiate; server responds.
 * **SOA C&C:** Enterprise services communicating over an Enterprise Service Bus (ESB). Supports protocol transformation, message routing, and service choreography.
 
-![[Lecture 6-NAA2026.pdf#page=16]]
+![[cks221_lec6_slide16_client_server_cc.png|750]]
 
 ---
 
 ### 2. Data Flow Family: The Pipe-and-Filter Style
 
-![[Lecture 6-NAA2026.pdf#page=25]]
+![[cks221_lec6_slide25_pipe_and_filter_cc.png|750]]
 
 ```mermaid
 flowchart LR
@@ -665,7 +665,7 @@ flowchart LR
 
 ### 3. Event-Based Family: The Publish-Subscribe Style
 
-![[Lecture 6-NAA2026.pdf#page=29]]
+![[cks221_lec6_slide29_publish_subscribe_cc.png|750]]
 
 ```mermaid
 flowchart TD
@@ -696,7 +696,7 @@ flowchart TD
 
 ### 4. Shared Data Family: Passive Repository vs. Active Blackboard
 
-![[Lecture 6-NAA2026.pdf#page=32]]
+![[cks221_lec6_slide32_shared_data_blackboard.png|750]]
 
 | Feature | Passive Repository Style | Active Blackboard Style |
 | :--- | :--- | :--- |
@@ -714,7 +714,7 @@ flowchart TD
 > [!important] Definition: Allocation Views
 > An **Allocation View** maps **software elements** onto **non-software / environmental elements** (hardware servers, network switches, disk directory hierarchies, or human organizational teams).
 
-![[Lecture 6-NAA2026.pdf#page=36]]
+![[cks221_lec6_slide36_allocation_styles_overview.png|750]]
 
 ```mermaid
 flowchart TD
@@ -730,7 +730,7 @@ flowchart TD
 
 ## 4.2 Style 1: The Deployment Style (Lecture 6)
 
-![[Lecture 6-NAA2026.pdf#page=38]]
+![[cks221_lec6_slide38_deployment_style.png|750]]
 
 * **Software Elements:** Executable runtime processes, threads, component instances.
 * **Environmental Elements:** **Hardware nodes, physical servers, virtual machines, CPUs, network routers, and physical communication links**.
@@ -744,7 +744,7 @@ flowchart TD
 
 ## 4.3 Style 2: The Install Style (Lecture 6)
 
-![[Lecture 6-NAA2026.pdf#page=44]]
+![[cks221_lec6_slide44_install_style.png|750]]
 
 * **Software Elements:** Compiled binary artifacts, `.jar`/`.war`/`.ear` packages, DLL files, configuration `.yaml` files, database initialization scripts.
 * **Environmental Elements:** **File systems, directory hierarchies, disk partitions, flash memory blocks, and installer manifests**.
@@ -761,7 +761,7 @@ flowchart TD
 
 ## 4.4 Style 3: The Work Assignment Style & Conway's Law (Lecture 6)
 
-![[Lecture 6-NAA2026.pdf#page=49]]
+![[cks221_lec6_slide49_work_assignment_style.png|750]]
 
 * **Software Elements:** Static modules, subsystems, and code repositories.
 * **Environmental Elements:** **Human organizational entities, engineering teams, external contractors, or individual programmers**.
@@ -771,7 +771,7 @@ flowchart TD
 
 ### Conway's Law (Guaranteed MCQ Target)
 
-![[Lecture 6-NAA2026.pdf#page=52]]
+![[cks221_lec6_slide52_conways_law.png|750]]
 
 > [!important] Melvin Conway's Law (1968)
 > *"Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations."*

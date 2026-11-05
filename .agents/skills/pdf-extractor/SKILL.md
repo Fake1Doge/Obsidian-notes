@@ -18,7 +18,7 @@ This skill provides automated tools to extract structured content from course ma
 ## Workflows
 
 ### 1. Pre-Flight Inspection (Recommended First Step)
-Before processing any new PDF material, run the pre-flight analyzer:
+Before processing any new PDF material, run the pre-flight analyzer (ensure target path is directly in the course root and **not** inside an `Extra/` or `Extras/` subdirectory):
 ```bash
 node .agents/skills/pdf-extractor/scripts/extract_document.js "<path-to-pdf>" --analyze
 ```

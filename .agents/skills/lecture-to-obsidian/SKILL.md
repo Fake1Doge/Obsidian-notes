@@ -37,6 +37,9 @@ This skill orchestrates the end-to-end transformation of raw course materials (P
 5. **Curriculum Scope Gate**:
    - **Core Courses & Field-Electives**: Must be synchronized into the year's master knowledge base (`knowledge_Y1.md` or `knowledge_Y2.md`).
    - **Free Modules** (external non-CS electives like AKW104): Strictly self-contained course notes; **NEVER** insert into knowledge bases.
+6. **Extra / Supplemental Folder Isolation**:
+   - **NEVER** process files residing in any subdirectories named `Extra`, `Extras`, `extra`, or `extras`.
+   - Supplementary materials, textbooks, and non-examinable reference packs placed in these folders must be strictly ignored unless the user explicitly commands: *"Process the files in the extra folder"*.
 
 ---
 
@@ -99,6 +102,6 @@ This skill orchestrates the end-to-end transformation of raw course materials (P
 ## 3. Multi-Lecture Sequential Queue Protocol
 
 When processing multiple lectures, chapters, or an entire course directory:
-1. **Inventory & Order**: Enumerate all source files in the course folder chronologically or numerically.
+1. **Inventory & Order**: Enumerate all source files directly in the course folder chronologically or numerically, strictly excluding any files inside `Extra/` or `Extras/` subdirectories.
 2. **Strict Single-Lecture Isolation**: Process **one lecture at a time**. Complete all 4 phases (Ingest ➔ Author ➔ Merge/Renumber ➔ Sync/Validate) before advancing to the next file.
 3. **Zero Bulk Generation**: Never compile multiple lectures concurrently in a single turn to avoid context loss.
