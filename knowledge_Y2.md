@@ -369,9 +369,6 @@ flowchart TD
 
 ## 3. 🏛️ [[Y2S1/CKS221 Software Architecture and Design|CKS221: Software Architecture and Design]]
 
-> [!tip] Test 1 Preparation
-> Direct link to exam study sheet: [[Y2S1/CKS221 Test 1 MCQ Study Guide|CKS221 Test 1 MCQ High-Yield Revision Guide]] (Lectures 1–6 / Topics 1 & 2).
-
 Covers the principles of software architecture, the distinction between structures and documented views, architectural quality attributes (performance, security, modifiability, scalability), and Philippe Kruchten's foundational "4+1" View Model.
 
 ```mermaid
